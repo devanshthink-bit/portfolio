@@ -1,65 +1,274 @@
-import Image from "next/image";
+import Hero from "../components/Hero";
+import ProjectCard from "../components/ProjectCard";
+import WeatherLocation from "../components/WeatherLocation";
+
+const experience = [
+  { company: "Anthropic", role: "Software Engineer", year: "2024" },
+  { company: "Meta", role: "Product Engineer", year: "2022" },
+  { company: "Razorpay", role: "Frontend Engineer", year: "2020" },
+];
+
+const education = [
+  { school: "IIT Delhi", program: "B.Tech Computer Science", year: "2016–2020" },
+  { school: "Coursera / Fast.ai", program: "ML & Deep Learning", year: "2021" },
+];
+
+const recentWork = [
+  {
+    title: "Design system, Anthropic Console",
+    gradient: "linear-gradient(to right, #ffe8c8, #ffd49a, #ffe8c8)",
+  },
+  {
+    title: "End-to-end product, Meta Reels",
+    gradient: "linear-gradient(#c9caD1, #bbc7d3, #b7c6d5)",
+  },
+  {
+    title: "Payments infrastructure, Razorpay",
+    gradient: "linear-gradient(to right top, #dae8fc, #c8dfff, #e6f0fe, #b7d5ff)",
+  },
+];
+
+const sideProjects = [
+  {
+    title: "Beautifully Designed Objects",
+    description: "A curated collection of functional and well-designed objects.",
+    slug: "objects",
+    thumbColor: "#e8e2d9",
+  },
+  {
+    title: "Sunset Skies",
+    description: "Gradients generated from all the sunsets I photographed.",
+    slug: "sunsets",
+    thumbColor: "#f4c88a",
+  },
+  {
+    title: "Open Source Tools",
+    description: "Small utilities I built and published for developers.",
+    slug: "tools",
+    thumbColor: "#1f1f1f",
+  },
+];
+
+const flags = [
+  "🇦🇺","🇦🇹","🇧🇸","🇧🇪","🇧🇹","🇧🇷","🇨🇦","🇨🇿","🇫🇷","🇩🇪",
+  "🇬🇷","🇭🇰","🇮🇳","🇮🇹","🇯🇵","🇱🇮","🇱🇺","🇲🇻","🇲🇾","🇳🇱",
+  "🇵🇭","🇸🇬","🇪🇸","🇱🇰","🇨🇭","🇦🇪","🇬🇧","🇺🇸","🇻🇦","🇵🇹",
+];
+
+const healthStats = [
+  { value: "🏋️ 247 days", label: "Streak" },
+  { value: "💗 56 bpm", label: "RHR" },
+  { value: "🚶 9,000 steps", label: "Daily goal" },
+  { value: "🫀 58 ms", label: "HRV" },
+];
+
+const principles = [
+  "People always remember how you made them feel.",
+  "Caring deeply about something is rare, and beautiful.",
+  "Don't judge people. You rarely know their full story.",
+  "Focus on improving your technique, outcomes will follow.",
+  "Just showing up every day can change your life.",
+  "Being fun to work with is a competitive advantage.",
+  "Stay humble. You're not above anyone.",
+  "Good taste is a muscle that can be built.",
+  "There is no such thing as a bad decision.",
+  "Being on time is a sign of respect.",
+  "There's no meaning to life. Find what gives you joy and do more of it.",
+];
+
+const events = [
+  { icon: "🧐", label: "Tech x Biz Quizzing", date: "Mar '26" },
+  { icon: "🛠️", label: "Builders Who Design", date: "Active Community" },
+  { icon: "🎄", label: "White Elephant x Devs", date: "Dec '25" },
+  { icon: "♟️", label: "Chess & Code Meetup", date: "Oct '25" },
+];
+
+const tweets = [
+  {
+    text: "if i were starting my dev journey today, i would –\n\n• build something small every week\n• read code from great engineers\n• focus on fundamentals before frameworks\n• ship early, get feedback fast",
+    likes: 632,
+    date: "Feb 14, 2026",
+  },
+  {
+    text: "6am in sf is a whole mood 🌃🌉🌙",
+    likes: 446,
+    date: "Nov 3, 2025",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      <Hero />
+
+      {/* Experience */}
+      <section className="section">
+        <h3 className="section-title">Experience</h3>
+        <div className="list-table">
+          {experience.map((item) => (
+            <div key={item.company} className="list-row">
+              <span className="list-item-primary">{item.company}</span>
+              <span className="list-item-secondary">{item.role}</span>
+              <span className="list-item-year">{item.year}</span>
+            </div>
+          ))}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Education */}
+      <section className="section">
+        <h3 className="section-title">Education</h3>
+        <div className="list-table">
+          {education.map((item) => (
+            <div key={item.school} className="list-row">
+              <span className="list-item-primary">{item.school}</span>
+              <span className="list-item-secondary">{item.program}</span>
+              <span className="list-item-year">{item.year}</span>
+            </div>
+          ))}
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* Recent Work */}
+      <section className="section">
+        <h3 className="section-title">Recent Work</h3>
+        <div className="work-list">
+          {recentWork.map((item) => (
+            <div key={item.title} className="work-card">
+              <div
+                className="work-card-media"
+                style={{ background: item.gradient }}
+              />
+              <p className="work-card-title">{item.title}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Side Projects */}
+      <section className="section">
+        <h3 className="section-title">Side Projects</h3>
+        <p className="section-body">I&apos;m learning how to design and exploring new AI tools.</p>
+        <p className="section-body">
+          I&apos;ve shipped a few side projects along the way — some serious, some just for fun.
+        </p>
+        <div className="project-list" style={{ paddingTop: 12 }}>
+          {sideProjects.map((project) => (
+            <ProjectCard key={project.slug} {...project} />
+          ))}
+        </div>
+      </section>
+
+      {/* Travel */}
+      <section className="section">
+        <h3 className="section-title">Travel</h3>
+        <p className="section-body">
+          Growing up, my family moved cities every few years. I was usually the new kid, adjusting
+          to a fresh school and making new friends.
+        </p>
+        <p className="section-body">
+          Perhaps that&apos;s made me curious about people and cultures, and why so many places feel
+          like home. I try visiting one new place every year.
+        </p>
+        <div className="flag-grid">
+          {flags.map((flag, i) => (
+            <span key={i} className="flag-circle">{flag}</span>
+          ))}
+        </div>
+      </section>
+
+      {/* Health */}
+      <section className="section">
+        <h3 className="section-title">Health</h3>
+        <p className="section-body">
+          Sports have played a big role in how I live life today. I play basketball, run, and track
+          a few stats along the way.
+        </p>
+        <div className="health-stats">
+          {healthStats.map((stat) => (
+            <div key={stat.label}>
+              <p className="health-stat-value">{stat.value}</p>
+              <p className="health-stat-label">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Principles */}
+      <section className="section">
+        <h3 className="section-title">Principles</h3>
+        <p className="section-body">In no particular order:</p>
+        <ul className="principles-list">
+          {principles.map((p, i) => (
+            <li key={i} className="principle-item">{p}</li>
+          ))}
+        </ul>
+      </section>
+
+      {/* Events Calendar */}
+      <section className="section">
+        <h3 className="section-title">Events Calendar</h3>
+        <p className="section-body">
+          I am curious about people&apos;s lives and like bringing them together. Lately, I&apos;ve
+          been planning and hosting small curated events.
+        </p>
+        <div className="list-table" style={{ marginTop: 8 }}>
+          {events.map((event) => (
+            <div key={event.label} className="hosted-row">
+              <span className="hosted-icon">{event.icon}</span>
+              <span className="hosted-label">{event.label}</span>
+              <span className="hosted-date">{event.date}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Around the Internet */}
+      <section className="section">
+        <h3 className="section-title">Around the Internet</h3>
+        <p className="section-body">
+          I have recently started sharing more about my dev journey on YouTube.
+        </p>
+        <p className="section-body">
+          A video where I explored AI-assisted coding workflows →
+        </p>
+        <div className="internet-video">
+          <iframe
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            title="YouTube video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
+        <p className="section-body" style={{ marginTop: 32 }}>
+          Twitter is where I share my hot takes and observations from everyday life.
+        </p>
+        <div className="tweet-list">
+          {tweets.map((tweet, i) => (
+            <div key={i} className="tweet-card">
+              <div className="tweet-header">
+                <div className="tweet-avatar" />
+                <div>
+                  <div className="tweet-name">Devansh</div>
+                  <div className="tweet-handle">@devansh</div>
+                </div>
+              </div>
+              <p className="tweet-text" style={{ whiteSpace: "pre-line" }}>{tweet.text}</p>
+              <div className="tweet-meta">❤️ {tweet.likes} · {tweet.date}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="site-footer">
+        <WeatherLocation />
+        <div className="footer-links">
+          <a href="https://twitter.com" className="footer-link" target="_blank" rel="noopener noreferrer">Twitter</a>
+          <a href="https://github.com" className="footer-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="mailto:devansh.think@gmail.com" className="footer-link">Email</a>
+        </div>
+      </footer>
+    </>
   );
 }
