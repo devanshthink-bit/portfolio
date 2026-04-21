@@ -61,8 +61,8 @@ function NavLink({ href, children, onClick, target, rel, isActive }: {
     >
       {children}
       <span ref={underlineRef} aria-hidden="true" style={{
-        position: "absolute", bottom: "2px", left: isActive ? "0" : "-100%", height: "1px",
-        background: "var(--text-muted)", width: "100%", transition: "none",
+        position: "absolute", bottom: "2px", left: isActive ? "0" : "-100%", height: "1.4px",
+        background: isActive ? "var(--text-primary)" : "var(--text-muted)", width: "100%", transition: "none", borderRadius: "2px",
       }} />
     </Link>
   );
@@ -155,9 +155,7 @@ export default function Navbar() {
             <NavLink href="/about" isActive={pathname === "/about"}>About</NavLink>
             <NavLink href="https://drive.google.com/file/d/1xA0DnODA92bD-NuVYvKs31syY_7wmwWc/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume</NavLink>
             <button onClick={toggleTheme} aria-label="Toggle theme"
-              style={{ background: "none", border: "none", padding: 0, paddingBottom: "6px", color: "var(--text-muted)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", transition: "color 0.2s", lineHeight: "1", position: "relative", width: 16, height: 16 }}
-              onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = "var(--text-primary)")}
-              onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = "var(--text-muted)")}
+              style={{ background: "none", border: "none", padding: 0, paddingBottom: "6px", color: "var(--text-muted)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", lineHeight: "1", position: "relative", width: 16, height: 16 }}
             >
               <SunIcon opacity={isDark ? 0 : 1} />
               <MoonIcon opacity={isDark ? 1 : 0} />
@@ -171,7 +169,7 @@ export default function Navbar() {
             onMouseLeave={() => setIsIconsHovered(false)}
           >
             <button onClick={toggleTheme} aria-label="Toggle theme"
-              style={{ background: "none", border: "none", padding: 0, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", width: 16, height: 16, color: "inherit" }}
+              style={{ background: "none", border: "none", padding: 0, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", width: 16, height: 16, color: "var(--text-muted)" }}
             >
               <SunIcon opacity={isDark ? 0 : 1} />
               <MoonIcon opacity={isDark ? 1 : 0} />
