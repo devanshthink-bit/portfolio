@@ -27,47 +27,43 @@ function MoonIcon({ size = 16 }: { size?: number }) {
   );
 }
 
-const shimmerStyle: React.CSSProperties = {
-  position: "absolute", top: 0, left: "-60%", width: "50%", height: "100%",
-  background: "linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.2) 20%, rgba(255,255,255,0.5), rgba(255,255,255,0))",
-  pointerEvents: "none", transition: "none",
-};
-
-function NavShimmerLink({ href, children, onClick, target, rel }: {
+function NavLink({ href, children, onClick, target, rel, isActive }: {
   href: string;
   children: React.ReactNode;
   onClick?: (e: React.MouseEvent) => void;
   target?: string;
   rel?: string;
+  isActive?: boolean;
 }) {
-  const shimmerRef = useRef<HTMLSpanElement>(null);
+  const underlineRef = useRef<HTMLSpanElement>(null);
   const linkStyle: React.CSSProperties = {
     fontFamily: "var(--font-geist-mono), monospace",
     fontSize: "14px", fontWeight: 600, letterSpacing: "-0.01em",
-    textTransform: "uppercase", color: "var(--text-muted)",
-    lineHeight: "1", position: "relative", overflow: "hidden",
-    display: "inline-block",
+    textTransform: "uppercase", color: isActive ? "var(--text-primary)" : "var(--text-muted)",
+    lineHeight: "1", position: "relative",
+    display: "inline-block", transition: "color 0.2s",
+    paddingBottom: "6px", overflow: "hidden",
   };
   return (
     <Link href={href} style={linkStyle} onClick={onClick} target={target} rel={rel}
       onMouseEnter={() => {
-        if (shimmerRef.current) {
-          shimmerRef.current.style.transition = "none";
-          shimmerRef.current.style.left = "-60%";
-          void shimmerRef.current.offsetWidth;
-          shimmerRef.current.style.transition = "left 0.6s ease-out";
-          shimmerRef.current.style.left = "110%";
+        if (underlineRef.current) {
+          underlineRef.current.style.left = "0";
+          underlineRef.current.style.transition = "left 0.25s ease-out";
         }
       }}
       onMouseLeave={() => {
-        if (shimmerRef.current) {
-          shimmerRef.current.style.transition = "none";
-          shimmerRef.current.style.left = "-60%";
+        if (underlineRef.current && !isActive) {
+          underlineRef.current.style.transition = "none";
+          underlineRef.current.style.left = "-100%";
         }
       }}
     >
-      <span ref={shimmerRef} aria-hidden="true" style={shimmerStyle} />
       {children}
+      <span ref={underlineRef} aria-hidden="true" style={{
+        position: "absolute", bottom: "2px", left: isActive ? "0" : "-100%", height: "1px",
+        background: "var(--text-muted)", width: "100%", transition: "none",
+      }} />
     </Link>
   );
 }
@@ -119,7 +115,11 @@ export default function Navbar() {
     if (pathname === "/") {
       e.preventDefault();
       setIsMenuOpen(false);
-      document.getElementById("recent-work")?.scrollIntoView({ behavior: "smooth" });
+      const el = document.getElementById("recent-work");
+      if (el) {
+        const top = el.getBoundingClientRect().top + window.scrollY - 48;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
     } else {
       setIsMenuOpen(false);
     }
@@ -140,22 +140,21 @@ export default function Navbar() {
       <header className="site-header">
         <Link href="/" className="header-left"
           style={{ lineHeight: "1", display: "flex", alignItems: "center", position: "relative", zIndex: 1001 }}
-          onMouseEnter={() => { if (nameRef.current) nameRef.current.style.opacity = "0"; if (hoverRef.current) hoverRef.current.style.opacity = "1"; }}
-          onMouseLeave={() => { if (nameRef.current) nameRef.current.style.opacity = "1"; if (hoverRef.current) hoverRef.current.style.opacity = "0"; }}
+          onMouseEnter={() => { if (pathname === "/" && nameRef.current) nameRef.current.style.opacity = "0"; if (pathname === "/" && hoverRef.current) hoverRef.current.style.opacity = "1"; }}
+          onMouseLeave={() => { if (pathname === "/" && nameRef.current) nameRef.current.style.opacity = "1"; if (pathname === "/" && hoverRef.current) hoverRef.current.style.opacity = "0"; }}
         >
-          <span className="header-shimmer" aria-hidden="true" />
           <span ref={nameRef} style={{ transition: "opacity 0.15s" }}>Devansh Somvanshi</span>
-          <span ref={hoverRef} style={{ position: "absolute", left: 0, opacity: 0, transition: "opacity 0.15s", whiteSpace: "nowrap" }}>Hey there!</span>
+          {pathname === "/" && <span ref={hoverRef} style={{ position: "absolute", left: 0, opacity: 0, transition: "opacity 0.15s", whiteSpace: "nowrap" }}>Hey there!</span>}
         </Link>
 
         {/* isMobile=null means not yet measured — render nothing to avoid flash */}
         {isMobile === false && (
           <nav className="nav-links">
-            <NavShimmerLink href="/#recent-work" onClick={scrollToWork}>Work</NavShimmerLink>
-            <NavShimmerLink href="/about">About</NavShimmerLink>
-            <NavShimmerLink href="https://drive.google.com/file/d/1xA0DnODA92bD-NuVYvKs31syY_7wmwWc/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume</NavShimmerLink>
+            <NavLink href="/#recent-work" onClick={scrollToWork}>Work</NavLink>
+            <NavLink href="/about" isActive={pathname === "/about"}>About</NavLink>
+            <NavLink href="https://drive.google.com/file/d/1xA0DnODA92bD-NuVYvKs31syY_7wmwWc/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume</NavLink>
             <button onClick={toggleTheme} aria-label="Toggle theme"
-              style={{ background: "none", border: "none", padding: 0, color: "var(--text-muted)", cursor: "pointer", display: "flex", alignItems: "center", transition: "color 0.2s" }}
+              style={{ background: "none", border: "none", padding: 0, paddingBottom: "6px", color: "var(--text-muted)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", transition: "color 0.2s", lineHeight: "1" }}
               onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = "var(--text-primary)")}
               onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = "var(--text-muted)")}
             >

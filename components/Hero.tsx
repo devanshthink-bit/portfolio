@@ -5,7 +5,7 @@ export default function Hero() {
     <section className="intro">
       <div className="avatar">
         <Image
-          src="/avatar.jpg"
+          src="/images/avatar.jpg"
           alt="Devansh"
           width={140}
           height={140}

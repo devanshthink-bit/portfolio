@@ -1,5 +1,4 @@
 import Image from "next/image";
-import StackTicker from "../../components/StackTicker";
 
 export default function About() {
   return (
@@ -8,7 +7,7 @@ export default function About() {
         <h3 className="section-title">About Me</h3>
         <div style={{ position: "relative", width: "100%", aspectRatio: "16/9", borderRadius: 10, overflow: "hidden" }}>
           <Image
-            src="/about.jpg"
+            src="/images/about.jpg"
             alt="Devansh at the beach"
             fill
             style={{ objectFit: "cover", objectPosition: "center top" }}
@@ -16,37 +15,25 @@ export default function About() {
           />
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 20, marginTop: 34 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 24, marginTop: 32 }}>
+          <h2 style={{ fontFamily: "var(--font-manrope), sans-serif", fontSize: "26px", fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 1.4, color: "var(--text-primary)", margin: 0 }}>Designing with craft, building with code.</h2>
           <p className="section-body" style={{ margin: 0 }}>
-            I&apos;m a former Software Development Engineer (SDE) pivoting into Product
-            Design, where I&apos;m currently focused on designing AI-powered experiences.
-            My journey began in Computer Science, but I quickly became fascinated by
-            the &ldquo;Why&rdquo; behind the code. This curiosity led me to explore UX design,
-            where I discovered my passion for solving complex problems through
-            intuitive interfaces.
+            I didn&apos;t grow up calling it design, but I was always curious about how things worked.
           </p>
           <p className="section-body" style={{ margin: 0 }}>
-            While my official title is Product Designer, I see myself as a
-            design-engineer hybrid. I&apos;m passionate about bridging the gap between
-            design and engineering, capable of leading projects from initial research
-            through to development. I&apos;m particularly excited about leveraging AI in
-            my design process and creating new user experiences, using tools like
-            Cursor, Claude Code and Codex to enhance my workflow.
+            My first exposure to it was on my mom&apos;s Samsung Galaxy R — I&apos;d spend hours exploring apps, downloading random ones, almost in awe of how they worked. I didn&apos;t have the word for it back then, but I was already falling in love with <strong>product design</strong>.
           </p>
           <p className="section-body" style={{ margin: 0 }}>
-            During my career as an SDE, I&apos;ve worked on shipping exciting products at
-            Affinidi, Stanza Living and Devic Earth, which have shaped my approach to
-            creating technology that enhances user experiences.
+            Before screens took over, I was obsessed with cars. That instinct for how things feel and function stayed — it just shifted from physical objects to digital products.
           </p>
           <p className="section-body" style={{ margin: 0 }}>
-            <a className="inline-link" href="mailto:devansh.think@gmail.com">
-              Get in touch →
-            </a>
+            Today, I see myself as a <strong>design–engineer </strong>hybrid working at the intersection of design, engineering, and product. I don&apos;t just design — I build and ship product features, integrating agentic AI into my workflows.
+          </p>
+          <p className="section-body" style={{ margin: 0 }}>
+            My Workflow includes tools like Claude Code, Cursor, and Codex to accelerate development and translate ideas into production-ready features. As a Software Development Engineer previously, I&apos;ve worked on shipping flagship products across workforce enablement, hospitality, and greentech at <strong>GoodWorker</strong>, <strong>Stanza Living</strong>, and <strong>Devic Earth</strong>, with products serving over a <strong>million</strong> users.
           </p>
         </div>
       </div>
-
-      <StackTicker />
     </div>
   );
 }
