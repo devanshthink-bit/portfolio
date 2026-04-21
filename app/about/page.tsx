@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function About() {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 56 }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 56, marginTop: 24 }}>
       <div className="section">
         <h3 className="section-title">About Me</h3>
         <div style={{ position: "relative", width: "100%", aspectRatio: "16/9", borderRadius: 10, overflow: "hidden" }}>

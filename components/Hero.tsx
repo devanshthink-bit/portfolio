@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="intro">
+    <section className="intro" style={{ marginTop: 24 }}>
       <div className="avatar">
         <Image
           src="/images/avatar.jpg"

@@ -23,6 +23,9 @@ export default function Home() {
       <Hero />
 
       {/* Recent Work */}
+
+
+      {/* Recent Work */}
       <section id="recent-work" className="section">
         <h3 className="section-title">Recent Work</h3>
         <div className="work-list">

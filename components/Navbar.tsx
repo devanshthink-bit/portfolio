@@ -3,25 +3,25 @@ import { useState, useRef, useLayoutEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-function SunIcon({ size = 16 }: { size?: number }) {
+function SunIcon({ size = 16, opacity = 1 }: { size?: number; opacity?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round" style={{ opacity, transition: "opacity 0.3s ease", position: "absolute", color: "inherit" }}>
       <circle cx="12" cy="12" r="4" />
       <line x1="12" y1="2" x2="12" y2="5" />
       <line x1="12" y1="19" x2="12" y2="22" />
-      <line x1="4.22" y1="4.22" x2="6.34" y2="6.34" />
-      <line x1="17.66" y1="17.66" x2="19.78" y2="19.78" />
       <line x1="2" y1="12" x2="5" y2="12" />
       <line x1="19" y1="12" x2="22" y2="12" />
-      <line x1="4.22" y1="19.78" x2="6.34" y2="17.66" />
-      <line x1="17.66" y1="6.34" x2="19.78" y2="4.22" />
+      <line x1="4.93" y1="4.93" x2="7.07" y2="7.07" />
+      <line x1="19.07" y1="4.93" x2="16.93" y2="7.07" />
+      <line x1="4.93" y1="19.07" x2="7.07" y2="16.93" />
+      <line x1="19.07" y1="19.07" x2="16.93" y2="16.93" />
     </svg>
   );
 }
 
-function MoonIcon({ size = 16 }: { size?: number }) {
+function MoonIcon({ size = 16, opacity = 1 }: { size?: number; opacity?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round" style={{ opacity, transition: "opacity 0.3s ease", position: "absolute", color: "inherit" }}>
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
     </svg>
   );
@@ -71,7 +71,7 @@ function NavLink({ href, children, onClick, target, rel, isActive }: {
 function HamburgerIcon({ isOpen }: { isOpen: boolean }) {
   const bar: React.CSSProperties = {
     position: "absolute", display: "block",
-    height: 2, width: "100%",
+    height: 1.7, width: "80%",
     background: "var(--text-muted)", borderRadius: 2,
   };
   return (
@@ -87,6 +87,7 @@ export default function Navbar() {
   const [isDark, setIsDark] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState<boolean | null>(null);
+  const [isIconsHovered, setIsIconsHovered] = useState(false);
   const pathname = usePathname();
 
   useLayoutEffect(() => {
@@ -130,7 +131,7 @@ export default function Navbar() {
 
   const overlayLinkStyle: React.CSSProperties = {
     fontFamily: "var(--font-geist-mono), monospace",
-    fontSize: "22px", fontWeight: 600, letterSpacing: "-0.02em",
+    fontSize: "28px", fontWeight: 600, letterSpacing: "-0.02em",
     textTransform: "uppercase", color: "var(--text-muted)",
     position: "relative", overflow: "hidden", display: "inline-block",
   };
@@ -139,7 +140,7 @@ export default function Navbar() {
     <>
       <header className="site-header">
         <Link href="/" className="header-left"
-          style={{ lineHeight: "1", display: "flex", alignItems: "center", position: "relative", zIndex: 1001 }}
+          style={{ lineHeight: "1", display: "flex", alignItems: "center", position: "relative", zIndex: 1001, visibility: isMobile && isMenuOpen ? "hidden" : "visible" }}
           onMouseEnter={() => { if (pathname === "/" && nameRef.current) nameRef.current.style.opacity = "0"; if (pathname === "/" && hoverRef.current) hoverRef.current.style.opacity = "1"; }}
           onMouseLeave={() => { if (pathname === "/" && nameRef.current) nameRef.current.style.opacity = "1"; if (pathname === "/" && hoverRef.current) hoverRef.current.style.opacity = "0"; }}
         >
@@ -154,21 +155,33 @@ export default function Navbar() {
             <NavLink href="/about" isActive={pathname === "/about"}>About</NavLink>
             <NavLink href="https://drive.google.com/file/d/1xA0DnODA92bD-NuVYvKs31syY_7wmwWc/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume</NavLink>
             <button onClick={toggleTheme} aria-label="Toggle theme"
-              style={{ background: "none", border: "none", padding: 0, paddingBottom: "6px", color: "var(--text-muted)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", transition: "color 0.2s", lineHeight: "1" }}
+              style={{ background: "none", border: "none", padding: 0, paddingBottom: "6px", color: "var(--text-muted)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", transition: "color 0.2s", lineHeight: "1", position: "relative", width: 16, height: 16 }}
               onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = "var(--text-primary)")}
               onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = "var(--text-muted)")}
             >
-              {isDark ? <MoonIcon /> : <SunIcon />}
+              <SunIcon opacity={isDark ? 0 : 1} />
+              <MoonIcon opacity={isDark ? 1 : 0} />
             </button>
           </nav>
         )}
 
         {isMobile === true && (
-          <button onClick={() => setIsMenuOpen(p => !p)} aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-            style={{ background: "none", border: "none", padding: "4px", cursor: "pointer", display: "flex", alignItems: "center", position: "relative", zIndex: 1001 }}
+          <div style={{ display: "flex", alignItems: "center", gap: 16, zIndex: 1001, color: isIconsHovered ? "var(--text-primary)" : "var(--text-muted)", transition: "color 0.2s" }}
+            onMouseEnter={() => setIsIconsHovered(true)}
+            onMouseLeave={() => setIsIconsHovered(false)}
           >
-            <HamburgerIcon isOpen={isMenuOpen} />
-          </button>
+            <button onClick={toggleTheme} aria-label="Toggle theme"
+              style={{ background: "none", border: "none", padding: 0, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", width: 16, height: 16, color: "inherit" }}
+            >
+              <SunIcon opacity={isDark ? 0 : 1} />
+              <MoonIcon opacity={isDark ? 1 : 0} />
+            </button>
+            <button onClick={() => setIsMenuOpen(p => !p)} aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+              style={{ background: "none", border: "none", padding: "4px", cursor: "pointer", display: "flex", alignItems: "center", position: "relative", color: "inherit" }}
+            >
+              <HamburgerIcon isOpen={isMenuOpen} />
+            </button>
+          </div>
         )}
       </header>
 
@@ -187,11 +200,6 @@ export default function Navbar() {
           <Link href="/about" style={overlayLinkStyle}>About</Link>
           <a href="https://drive.google.com/file/d/1xA0DnODA92bD-NuVYvKs31syY_7wmwWc/view?usp=sharing"
             style={overlayLinkStyle} target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)}>Resume</a>
-          <button onClick={toggleTheme} aria-label="Toggle theme"
-            style={{ ...overlayLinkStyle, background: "none", border: "none", padding: 0, cursor: "pointer", display: "flex", alignItems: "center" }}
-          >
-            {isDark ? <MoonIcon size={22} /> : <SunIcon size={22} />}
-          </button>
         </div>
       )}
     </>

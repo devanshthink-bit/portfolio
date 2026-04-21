@@ -65,7 +65,7 @@
     padding: 40px 60px 48px;
     display: flex;
     flex-direction: column;
-    gap: 88px;
+    gap: 40px;
   }
 
   .content-wrapper {
@@ -84,9 +84,6 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    max-width: 860px;
-    margin-left: auto;
-    margin-right: auto;
   }
 
   .header-left,
