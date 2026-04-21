@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Manrope, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "../components/Navbar";
+import PageTransition from "../components/PageTransition";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope" });
@@ -26,7 +27,7 @@ export default function RootLayout({
       <body suppressHydrationWarning>
         <div className="page-wrapper">
           <Navbar />
-          <div className="content-wrapper">{children}</div>
+          <PageTransition>{children}</PageTransition>
         </div>
       </body>
     </html>

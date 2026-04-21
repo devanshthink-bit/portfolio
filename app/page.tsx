@@ -39,7 +39,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="site-footer">
+      <footer className="site-footer" style={{ paddingTop: 16, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <WeatherLocation />
         <div className="footer-links">
           <a href="https://twitter.com" className="footer-link" target="_blank" rel="noopener noreferrer">Twitter</a>
