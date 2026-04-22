@@ -59,6 +59,21 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.typing-cursor {
+  display: inline-block;
+  width: 0;
+  height: 0.82em;
+  border-right: 2.5px solid currentColor;
+  margin-left: 2px;
+  vertical-align: -0.06em;
+  animation: cursor-blink 0.55s step-end infinite;
+}
+
 @layer components {
   /* Page layout */
   .page-wrapper {
@@ -231,8 +246,8 @@
     flex-direction: column;
     gap: 10px;
     border-radius: 4px;
-    padding: 0;
-    margin-inline: 0;
+    padding: 12px;
+    margin-inline: -12px;
     cursor: pointer;
     transition: background-color 0.16s;
   }

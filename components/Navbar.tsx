@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useLayoutEffect } from "react";
+import { useState, useRef, useLayoutEffect, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -92,12 +92,26 @@ function HamburgerIcon({ isOpen }: { isOpen: boolean }) {
   );
 }
 
+const FULL_NAME = "Devansh Somvanshi";
+const HOVER_TEXT = "Hey there!";
+
 export default function Navbar() {
   const [isDark, setIsDark] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState<boolean | null>(null);
   const [isIconsHovered, setIsIconsHovered] = useState(false);
   const pathname = usePathname();
+
+  const [displayedName, setDisplayedName] = useState("");
+  const [displayedHover, setDisplayedHover] = useState("");
+  const [nameCursor, setNameCursor] = useState(true);
+  const [hoverCursor, setHoverCursor] = useState(false);
+  const [nameVisible, setNameVisible] = useState(true);
+  const [hoverVisible, setHoverVisible] = useState(false);
+
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const nameLenRef = useRef(0);
+  const hoverLenRef = useRef(0);
 
   useLayoutEffect(() => {
     const mql = window.matchMedia("(max-width: 640px)");
@@ -110,10 +124,81 @@ export default function Navbar() {
     return () => mql.removeEventListener("change", handler);
   }, []);
 
-  // Close menu on route change
   useLayoutEffect(() => {
     setIsMenuOpen(false);
   }, [pathname]);
+
+  const clearTimer = () => {
+    if (timerRef.current) { clearTimeout(timerRef.current); timerRef.current = null; }
+  };
+
+  const charDelay = (char: string, prevChar: string): number => {
+    const jitter = Math.random() * 50;
+    if (prevChar === ' ') return 145 + jitter; // first char of new word — cognitive pause
+    if (char === ' ') return 115 + jitter;     // space — slight hesitation
+    if ('!.,?'.includes(char)) return 70 + jitter; // punctuation — quick muscle memory
+    return 88 + jitter; // normal character
+  };
+
+  const animate = (
+    full: string,
+    fromLen: number,
+    toLen: number,
+    lenRef: React.MutableRefObject<number>,
+    setState: (s: string) => void,
+    onDone?: () => void
+  ) => {
+    clearTimer();
+    let i = fromLen;
+
+    const step = () => {
+      i += 1;
+      lenRef.current = i;
+      setState(full.slice(0, i));
+      if (i === toLen) { onDone?.(); return; }
+      const nextChar = full[i];
+      const prevChar = full[i - 1] ?? '';
+      timerRef.current = setTimeout(step, charDelay(nextChar, prevChar));
+    };
+
+    timerRef.current = setTimeout(step, charDelay(full[fromLen] ?? '', ''));
+  };
+
+  // Type name on mount
+  useEffect(() => {
+    setNameCursor(true);
+    animate(FULL_NAME, 0, FULL_NAME.length, nameLenRef, setDisplayedName, () => {
+      setNameCursor(false);
+    });
+    return clearTimer;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleMouseEnter = () => {
+    if (pathname !== "/") return;
+    setNameCursor(false);
+    setNameVisible(false);
+    setHoverVisible(true);
+    setHoverCursor(true);
+    hoverLenRef.current = 0;
+    setDisplayedHover("");
+    animate(HOVER_TEXT, 0, HOVER_TEXT.length, hoverLenRef, setDisplayedHover, () => {
+      setHoverCursor(false);
+    });
+  };
+
+  const handleMouseLeave = () => {
+    if (pathname !== "/") return;
+    setHoverVisible(false);
+    setHoverCursor(false);
+    setNameVisible(true);
+    nameLenRef.current = 0;
+    setDisplayedName("");
+    setNameCursor(true);
+    animate(FULL_NAME, 0, FULL_NAME.length, nameLenRef, setDisplayedName, () => {
+      setNameCursor(false);
+    });
+  };
 
   const toggleTheme = () => {
     const next = !isDark;
@@ -135,9 +220,6 @@ export default function Navbar() {
     }
   };
 
-  const nameRef = useRef<HTMLSpanElement>(null);
-  const hoverRef = useRef<HTMLSpanElement>(null);
-
   const overlayLinkStyle: React.CSSProperties = {
     fontFamily: "var(--font-geist-mono), monospace",
     fontSize: "28px", fontWeight: 600, letterSpacing: "-0.02em",
@@ -149,15 +231,26 @@ export default function Navbar() {
     <>
       <header className="site-header">
         <Link href="/" className="header-left"
-          style={{ lineHeight: "1", display: "flex", alignItems: "center", position: "relative", zIndex: 1001, visibility: isMobile && isMenuOpen ? "hidden" : "visible" }}
-          onMouseEnter={() => { if (pathname === "/" && nameRef.current) nameRef.current.style.opacity = "0"; if (pathname === "/" && hoverRef.current) hoverRef.current.style.opacity = "1"; }}
-          onMouseLeave={() => { if (pathname === "/" && nameRef.current) nameRef.current.style.opacity = "1"; if (pathname === "/" && hoverRef.current) hoverRef.current.style.opacity = "0"; }}
+          style={{ lineHeight: "1", display: "inline-flex", alignItems: "center", position: "relative", zIndex: 1001, visibility: isMobile && isMenuOpen ? "hidden" : "visible" }}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
         >
-          <span ref={nameRef} style={{ transition: "opacity 0.15s" }}>Devansh Somvanshi</span>
-          {pathname === "/" && <span ref={hoverRef} style={{ position: "absolute", left: 0, opacity: 0, transition: "opacity 0.15s", whiteSpace: "nowrap" }}>Hey there!</span>}
+          {/* Ghost span keeps link width constant */}
+          <span aria-hidden style={{ opacity: 0, userSelect: "none", pointerEvents: "none" }}>{FULL_NAME}</span>
+          {/* Animated name */}
+          <span style={{ position: "absolute", left: 0, whiteSpace: "nowrap", opacity: nameVisible ? 1 : 0, transition: "opacity 0.18s ease" }}>
+            {displayedName}
+            {nameCursor && <span className="typing-cursor" />}
+          </span>
+          {/* Hover text */}
+          {pathname === "/" && (
+            <span style={{ position: "absolute", left: 0, whiteSpace: "nowrap", opacity: hoverVisible ? 1 : 0, transition: "opacity 0.18s ease" }}>
+              {displayedHover}
+              {hoverCursor && <span className="typing-cursor" />}
+            </span>
+          )}
         </Link>
 
-        {/* isMobile=null means not yet measured — render nothing to avoid flash */}
         {isMobile === false && (
           <nav className="nav-links">
             <NavLink href="/#recent-work" onClick={scrollToWork}>Work</NavLink>
