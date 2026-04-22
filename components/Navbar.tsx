@@ -19,6 +19,15 @@ function SunIcon({ size = 16, opacity = 1 }: { size?: number; opacity?: number }
   );
 }
 
+function ArrowUpRight({ size = 10 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: "inline-flex", verticalAlign: "middle", marginLeft: 4, position: "relative", top: "-0.05em" }}>
+      <line x1="7" y1="17" x2="17" y2="7" />
+      <polyline points="7 7 17 7 17 17" />
+    </svg>
+  );
+}
+
 function MoonIcon({ size = 16, opacity = 1 }: { size?: number; opacity?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round" style={{ opacity, transition: "opacity 0.3s ease", position: "absolute", color: "inherit" }}>
@@ -153,7 +162,7 @@ export default function Navbar() {
           <nav className="nav-links">
             <NavLink href="/#recent-work" onClick={scrollToWork}>Work</NavLink>
             <NavLink href="/about" isActive={pathname === "/about"}>About</NavLink>
-            <NavLink href="https://drive.google.com/file/d/1xA0DnODA92bD-NuVYvKs31syY_7wmwWc/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume</NavLink>
+            <NavLink href="https://drive.google.com/file/d/1xA0DnODA92bD-NuVYvKs31syY_7wmwWc/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume<ArrowUpRight size={13} /></NavLink>
             <button onClick={toggleTheme} aria-label="Toggle theme"
               style={{ background: "none", border: "none", padding: 0, paddingBottom: "6px", color: "var(--text-muted)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", lineHeight: "1", position: "relative", width: 16, height: 16 }}
             >
@@ -196,8 +205,13 @@ export default function Navbar() {
         }}>
           <Link href="/#recent-work" style={overlayLinkStyle} onClick={scrollToWork}>Work</Link>
           <Link href="/about" style={overlayLinkStyle}>About</Link>
-          <a href="https://drive.google.com/file/d/1xA0DnODA92bD-NuVYvKs31syY_7wmwWc/view?usp=sharing"
-            style={overlayLinkStyle} target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)}>Resume</a>
+          <div style={{ position: "relative", display: "inline-flex", alignItems: "center" }}>
+            <a href="https://drive.google.com/file/d/1xA0DnODA92bD-NuVYvKs31syY_7wmwWc/view?usp=sharing"
+              style={overlayLinkStyle} target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)}>
+              Resume
+            </a>
+            <span style={{ position: "absolute", left: "100%", marginLeft: 2, display: "flex", alignItems: "center", color: "var(--text-muted)" }}><ArrowUpRight size={22} /></span>
+          </div>
         </div>
       )}
     </>

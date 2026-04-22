@@ -28,7 +28,7 @@ export default function Hero() {
           Most good conversations start with a simple hello.{" "}
           <a
             className="inline-link"
-            href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER}?text=Hi%20Devansh%2C%20I%20came%20across%20your%20portfolio%20and%20would%20love%20to%20connect.`}
+            href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER}?text=Hi%20Devansh%2C%20I%20came%20across%20your%20portfolio%20and%20would%20like%20to%20connect.`}
             target="_blank"
             rel="noopener noreferrer"
           >
