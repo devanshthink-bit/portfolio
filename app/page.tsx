@@ -1,5 +1,6 @@
 import Hero from "../components/Hero";
 import WeatherLocation from "../components/WeatherLocation";
+import FooterLinks from "../components/FooterLinks";
 
 const recentWork = [
   {
@@ -44,11 +45,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="site-footer" style={{ paddingTop: 16, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <WeatherLocation />
-        <div className="footer-links">
-          <a href="https://twitter.com" className="footer-link" target="_blank" rel="noopener noreferrer">Twitter</a>
-          <a href="https://github.com" className="footer-link" target="_blank" rel="noopener noreferrer">GitHub</a>
-          <a href="mailto:devansh.think@gmail.com" className="footer-link">Email</a>
-        </div>
+        <FooterLinks />
       </footer>
     </>
   );

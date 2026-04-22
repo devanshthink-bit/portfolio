@@ -5,23 +5,27 @@ import { useLayoutEffect, useRef, useState } from "react";
 const testimonials = [
   {
     quote: "Played a key role in building Goodworker's flagship product, contributing to critical projects with structured problem-solving, strong technical skills, and clear communication across teams.",
-    name: "Priyam Kumar Shaw",
+    name: "Priyam Shaw",
     role: "EM @ Goodworker, Ex-Myntra",
+    avatar: "/images/testimonial-priyam.jpg",
   },
   {
     quote: "Delivered high-quality mobile features across iOS and Android, owning end-to-end development with strong React expertise, maintainable solutions, and dependable collaboration under tight timelines.",
     name: "Kunal Sagar",
     role: "STPM @ LinkedIn, Ex-Nineleaps",
+    avatar: "/images/testimonial-kunal.jpg",
   },
   {
     quote: "Demonstrates expertise in React, TypeScript, and design patterns, enabling frontend development while collaborating with attention to detail and bringing enthusiasm to team dynamics.",
     name: "Swaraj Kausik",
     role: "SE-2 @ Pinelabs, Ex-Goodworker",
+    avatar: "/images/testimonial-swaraj.jpg",
   },
   {
     quote: "Consistently goes above and beyond to support team goals, showing reliability with ownership, proactive initiative, eagerness to improve, and strong work ethic in collaborative environments.",
     name: "Ashish Shetty",
     role: "SSE @ EPAM, Ex-Goodworker",
+    avatar: "/images/testimonial-ashish.jpg",
   },
 ];
 
@@ -74,7 +78,7 @@ export default function About() {
 
       {/* Testimonials */}
       <div className="section">
-        <h3 className="section-title">Testimonials</h3>
+        <h3 className="section-title">In Their Words</h3>
         <div ref={gridRef} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)", gap: 16 }}>
           {testimonials.map((t, i) => (
             <div key={i} style={{ background: "var(--card-bg)", borderRadius: 10, padding: "20px", display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 16 }}>
@@ -82,9 +86,12 @@ export default function About() {
                 <span style={{ fontSize: 28, lineHeight: 1, display: "block", marginBottom: -8, color: "var(--text-muted)", fontFamily: "Georgia, serif", userSelect: "none" }}>&ldquo;</span>
                 <p style={{ fontSize: 12, fontWeight: 400, lineHeight: 1.55, letterSpacing: "-0.01em", color: "var(--text-secondary)", margin: 0 }}>{t.quote}</p>
               </div>
-              <div>
-                <p style={{ fontSize: 12, fontWeight: 500, letterSpacing: "-0.01em", color: "var(--text-primary)", margin: 0 }}>{t.name}</p>
-                <p style={{ fontSize: 11, color: "var(--text-muted)", letterSpacing: "-0.01em", margin: "2px 0 0" }}>{t.role}</p>
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <img src={t.avatar} alt={t.name} style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
+                <div>
+                  <p style={{ fontSize: 12, fontWeight: 500, letterSpacing: "-0.01em", color: "var(--text-primary)", margin: 0 }}>{t.name}</p>
+                  <p style={{ fontSize: 11, color: "var(--text-muted)", letterSpacing: "-0.01em", margin: "2px 0 0" }}>{t.role}</p>
+                </div>
               </div>
             </div>
           ))}

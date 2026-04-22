@@ -15,25 +15,24 @@ export default function Hero() {
       </div>
       <div className="intro-headings">
         <h1>Designer & Developer.</h1>
-        <h1>Curious about how things work and why they matter.</h1>
+        <h1>Curious about how things work and building them right.</h1>
       </div>
       <div className="intro-body">
         <p>
-          I was lucky to have fallen in love with design and code early in life,
-          and luckier to still feel the same way.
+          An AI-first product designer, with a background in engineering where I spent three years shipping 0→1 flagship products used by millions across greentech, workforce enablement, and hospitality, at both startups and scale.
         </p>
         <p>
-          I care deeply about craft and polish — building products that are both
-          functional and beautiful.
+          I care deeply about craft and detail — building products that are both functional and delightful.
         </p>
         <p>
-          Some of the best conversations I&apos;ve had started with a random
-          hello on the internet. So…{" "}
+          Most good conversations start with a simple hello.{" "}
           <a
             className="inline-link"
-            href="mailto:devansh.think@gmail.com"
+            href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER}?text=Hi%20Devansh%2C%20I%20came%20across%20your%20portfolio%20and%20would%20love%20to%20connect.`}
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            Message me →
+            Let&apos;s make it one →
           </a>
         </p>
       </div>
