@@ -7,6 +7,7 @@
     --text-secondary: #4a4948;
     --text-muted: #918e89;
     --border: #f1ede5;
+    --card-bg: #f2f2f0;
   }
 
   html.nerd-mode {
@@ -15,6 +16,7 @@
     --text-secondary: #c9c5bf;
     --text-muted: #8f8a82;
     --border: rgba(255, 255, 255, 0.08);
+    --card-bg: rgba(255, 255, 255, 0.06);
   }
 
   *, *::before, *::after {
@@ -273,7 +275,19 @@
     margin: 0;
   }
 
+  /* Testimonial card */
+  .testimonial-card {
+    background: rgba(0, 0, 0, 0.035);
+    border-radius: 10px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
 
+  html.nerd-mode .testimonial-card {
+    background: rgba(255, 255, 255, 0.05);
+  }
 
   /* Footer */
   .site-footer {
