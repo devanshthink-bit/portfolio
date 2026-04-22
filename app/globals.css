@@ -369,7 +369,8 @@
     font-size: 24px;
   }
 
-  .intro-body p {
+  .intro-body p,
+  .section-body {
     font-size: 15px;
   }
 
