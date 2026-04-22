@@ -14,7 +14,7 @@ export default function Hero() {
         />
       </div>
       <div className="intro-headings">
-        <h1>Designer & Developer.</h1>
+        <h1>Product Designer & Developer.</h1>
         <h1>Curious about how things work and building them right.</h1>
       </div>
       <div className="intro-body">
