@@ -71,7 +71,7 @@ export default function About() {
             Today, I see myself as a <strong>design–engineer </strong>hybrid working at the intersection of design, engineering, and product. I don&apos;t just design — I build and ship product features, integrating agentic AI into my workflows.
           </p>
           <p className="section-body" style={{ margin: 0 }}>
-            With tools like Claude Code, Cursor, and Codex, I accelerate development and move ideas from concept to shipped features. As a Software Development Engineer previously, I&apos;ve worked on shipping flagship products across workforce enablement, hospitality, and greentech at <strong>GoodWorker</strong>, <strong>Stanza Living</strong>, and <strong>Devic Earth</strong>, with products serving over a <strong>million</strong> users.
+            With tools like Claude Code, Cursor, and Codex, I accelerate development and move ideas from concept to shipped features. Previously, as a Software Development Engineer (SDE), I&apos;ve worked on shipping flagship products across workforce enablement, hospitality, and greentech at <strong>GoodWorker</strong>, <strong>Stanza Living</strong>, and <strong>Devic Earth</strong>, with products serving over a <strong>million</strong> users.
           </p>
         </div>
       </div>
