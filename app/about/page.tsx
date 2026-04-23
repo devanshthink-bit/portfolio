@@ -1,6 +1,52 @@
 "use client";
 import Image from "next/image";
-import { useLayoutEffect, useRef, useState, useEffect } from "react";
+import React, { useLayoutEffect, useRef, useState, useEffect } from "react";
+
+type TickerItem = { text: string; label?: boolean };
+
+const PILL_STYLE: React.CSSProperties = {
+  flexShrink: 0,
+  fontFamily: "var(--font-geist-mono), monospace",
+  fontSize: 11,
+  fontWeight: 600,
+  letterSpacing: "0.02em",
+  textTransform: "uppercase",
+  color: "var(--text-muted)",
+  border: "1px solid var(--border)",
+  borderRadius: 999,
+  padding: "5px 13px",
+  background: "var(--card-bg)",
+  whiteSpace: "nowrap",
+};
+
+const LABEL_STYLE: React.CSSProperties = {
+  flexShrink: 0,
+  fontFamily: "var(--font-geist-mono), monospace",
+  fontSize: 11,
+  fontWeight: 700,
+  letterSpacing: "0.02em",
+  textTransform: "uppercase",
+  color: "var(--bg)",
+  background: "var(--text-muted)",
+  borderRadius: 999,
+  padding: "5px 13px",
+  whiteSpace: "nowrap",
+};
+
+const row1: TickerItem[] = [
+  { text: "Design", label: true },
+  { text: "Figma" }, { text: "FigJam" }, { text: "Framer" },
+  { text: "Protopie" }, { text: "After Effects" }, { text: "Illustrator" },
+  { text: "Maze" }, { text: "Lottie" }, { text: "Principle" },
+];
+
+const row2: TickerItem[] = [
+  { text: "Dev", label: true },
+  { text: "React" }, { text: "Next.js" }, { text: "TypeScript" },
+  { text: "React Native" }, { text: "Node.js" }, { text: "Tailwind" }, { text: "Expo" },
+  { text: "AI", label: true },
+  { text: "Claude" }, { text: "Cursor" }, { text: "Codex" }, { text: "MCP" },
+];
 
 const testimonials = [
   {
@@ -119,7 +165,30 @@ export default function About() {
           <p className="section-body" style={{ margin: 0 }}>My first exposure to it was on my mom&apos;s Samsung Galaxy R — I&apos;d spend hours exploring apps, downloading random ones, almost in awe of how they worked. I didn&apos;t have the word for it back then, but I was already falling in love with <strong>product design</strong>.</p>
           <p className="section-body" style={{ margin: 0 }}>Before screens took over, I was obsessed with cars. That instinct for how things feel and function stayed — it just shifted from physical objects to digital products.</p>
           <p className="section-body" style={{ margin: 0 }}>Today, I see myself as a <strong>design–engineer </strong>hybrid working at the intersection of design, engineering, and product. I don&apos;t just design — I build and ship product features, integrating agentic AI into my workflows.</p>
-          <p className="section-body" style={{ margin: 0 }}>With tools like Claude Code, Cursor, and Codex, I accelerate development and move ideas from concept to shipped features. Previously, as a Software Development Engineer (SDE), I&apos;ve worked on shipping flagship products across workforce enablement, hospitality, and greentech at <strong>GoodWorker</strong>, <strong>Stanza Living</strong>, and <strong>Devic Earth</strong>, with products serving over a <strong>million</strong> users.</p>
+          <p className="section-body" style={{ margin: 0 }}>Previously, as a Software Development Engineer (SDE), I&apos;ve worked on shipping flagship products across workforce enablement, hospitality, and greentech at <strong>GoodWorker</strong>, <strong>Stanza Living</strong>, and <strong>Devic Earth</strong>, with products serving over a <strong>million</strong> users.</p>
+        </div>
+      </div>
+
+      {/* Skills & Tools ticker */}
+      <div className="section">
+        <h3 className="section-title">Skills & Tools</h3>
+        <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 6 }}>
+          {([
+            { items: row1, anim: "ticker-left 30s linear infinite" },
+            { items: row2, anim: "ticker-right 24s linear infinite" },
+          ] as const).map(({ items, anim }, rowIdx) => (
+            <div key={rowIdx} style={{ position: "relative", overflow: "hidden" }}>
+              {/* Left fade */}
+              <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, width: 72, zIndex: 2, background: "linear-gradient(to right, var(--bg), transparent)", pointerEvents: "none" }} />
+              {/* Right fade */}
+              <div style={{ position: "absolute", top: 0, bottom: 0, right: 0, width: 72, zIndex: 2, background: "linear-gradient(to left, var(--bg), transparent)", pointerEvents: "none" }} />
+              <div style={{ display: "flex", alignItems: "center", gap: 8, width: "max-content", padding: "2px 0", animation: anim }}>
+                {[...items, ...items].map((item, i) => (
+                  <span key={i} style={item.label ? LABEL_STYLE : PILL_STYLE}>{item.text}</span>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
