@@ -2,51 +2,168 @@
 import Image from "next/image";
 import React, { useLayoutEffect, useRef, useState, useEffect } from "react";
 
-type TickerItem = { text: string; label?: boolean };
+const CAT_COLORS = { design: "#6B9FE4", ai: "#A07FD8", dev: "#5FB896" } as const;
+type Cat = keyof typeof CAT_COLORS;
 
-const PILL_STYLE: React.CSSProperties = {
-  flexShrink: 0,
-  fontFamily: "var(--font-geist-mono), monospace",
-  fontSize: 11,
-  fontWeight: 600,
-  letterSpacing: "0.02em",
-  textTransform: "uppercase",
-  color: "var(--text-muted)",
-  border: "1px solid var(--border)",
-  borderRadius: 999,
-  padding: "5px 13px",
-  background: "var(--card-bg)",
-  whiteSpace: "nowrap",
-};
+type StripItem =
+  | { kind: "label"; text: string; cat: Cat }
+  | { kind: "skill"; name: string; cat: Cat }
+  | { kind: "tool"; name: string; cat: Cat; slug?: string; src?: string };
 
-const LABEL_STYLE: React.CSSProperties = {
-  flexShrink: 0,
-  fontFamily: "var(--font-geist-mono), monospace",
-  fontSize: 11,
-  fontWeight: 700,
-  letterSpacing: "0.02em",
-  textTransform: "uppercase",
-  color: "var(--bg)",
-  background: "var(--text-muted)",
-  borderRadius: 999,
-  padding: "5px 13px",
-  whiteSpace: "nowrap",
-};
-
-const row1: TickerItem[] = [
-  { text: "Design", label: true },
-  { text: "Figma" }, { text: "FigJam" }, { text: "Framer" },
-  { text: "Protopie" }, { text: "After Effects" }, { text: "Illustrator" },
-  { text: "Maze" }, { text: "Lottie" }, { text: "Principle" },
+const DESIGN_STRIP: StripItem[] = [
+  { kind: "label",  text: "Design",          cat: "design" },
+  { kind: "skill",  name: "Interaction Design", cat: "design" },
+  { kind: "skill",  name: "Rapid Prototyping",  cat: "design" },
+  { kind: "skill",  name: "Product Thinking",   cat: "design" },
+  { kind: "skill",  name: "User Research",       cat: "design" },
+  { kind: "skill",  name: "Systems Thinking",    cat: "design" },
+  { kind: "skill",  name: "Design Systems",      cat: "design" },
+  { kind: "skill",  name: "Visual Design",       cat: "design" },
+  { kind: "tool",   name: "Figma",            cat: "design", src: "/icons/figma.svg" },
+  { kind: "tool",   name: "FigJam",           cat: "design", src: "/icons/figma.svg" },
+  { kind: "tool",   name: "Framer",           cat: "design", src: "/icons/framer.svg" },
+  { kind: "tool",   name: "Miro",             cat: "design", src: "/icons/miro.svg" },
+  { kind: "tool",   name: "Protopie",         cat: "design", src: "/icons/protopie.svg" },
+  { kind: "tool",   name: "Maze",             cat: "design", src: "/icons/maze.svg" },
 ];
 
-const row2: TickerItem[] = [
-  { text: "Dev", label: true },
-  { text: "React" }, { text: "Next.js" }, { text: "TypeScript" },
-  { text: "React Native" }, { text: "Node.js" }, { text: "Tailwind" }, { text: "Expo" },
-  { text: "AI", label: true },
-  { text: "Claude" }, { text: "Cursor" }, { text: "Codex" }, { text: "MCP" },
+const AI_DEV_STRIP: StripItem[] = [
+  { kind: "label", text: "AI",  cat: "ai" },
+  { kind: "skill", name: "Prompt Engineering", cat: "ai" },
+  { kind: "skill", name: "Agentic AI Workflows", cat: "ai" },
+  { kind: "skill", name: "AI Product Design",  cat: "ai" },
+  { kind: "skill", name: "LLM Integration",    cat: "ai" },
+  { kind: "tool",  name: "Claude Code",        cat: "ai", src: "/icons/claudecode.svg" },
+  { kind: "tool",  name: "Cursor",             cat: "ai", src: "/icons/cursor.svg" },
+  { kind: "tool",  name: "Codex",              cat: "ai", src: "/icons/codex.svg" },
+  { kind: "tool",  name: "Antigravity",        cat: "ai", src: "/icons/antigravity.svg" },
+  { kind: "tool",  name: "Figma Make",         cat: "ai", src: "/icons/figma.svg" },
+  { kind: "tool",  name: "MCPs",               cat: "ai" },
+  { kind: "label", text: "Dev", cat: "dev" },
+  { kind: "tool",  name: "React.js",     cat: "dev", src: "/icons/react.svg" },
+  { kind: "tool",  name: "Next.js",      cat: "dev", src: "/icons/nextdotjs.svg" },
+  { kind: "tool",  name: "TypeScript",   cat: "dev", src: "/icons/typescript.svg" },
+  { kind: "tool",  name: "React Native", cat: "dev", src: "/icons/react.svg" },
+  { kind: "tool",  name: "PWAs",         cat: "dev", src: "/icons/pwa.svg" },
+  { kind: "tool",  name: "Flutter",      cat: "dev", src: "/icons/flutter.svg" },
+  { kind: "tool",  name: "Redux",        cat: "dev", src: "/icons/redux.svg" },
+  { kind: "tool",  name: "GraphQL",      cat: "dev", src: "/icons/graphql.svg" },
+  { kind: "tool",  name: "Tailwind",     cat: "dev", src: "/icons/tailwindcss.svg" },
+  { kind: "tool",  name: "Git",          cat: "dev", src: "/icons/git.svg" },
 ];
+
+const INITIAL_COLORS = ["#e07b54","#5b8de0","#9b6dd6","#4aad7a","#d4a03a","#d45480","#3abfbf","#7aad4a","#d46b3a","#5b6dd6"];
+function nameColor(name: string): string {
+  let h = 0;
+  for (let i = 0; i < name.length; i++) h = name.charCodeAt(i) + ((h << 5) - h);
+  return INITIAL_COLORS[Math.abs(h) % INITIAL_COLORS.length];
+}
+
+function ToolCircle({ src, name }: { slug?: string; src?: string; name: string; accent: string }) {
+  const [failed, setFailed] = useState(false);
+  const showImg = src && !failed;
+  return (
+    <span style={{
+      width: 22, height: 22, borderRadius: "50%", flexShrink: 0,
+      display: "inline-flex", alignItems: "center", justifyContent: "center",
+      background: showImg ? "rgba(255,255,255,0.92)" : nameColor(name),
+      overflow: "hidden", padding: 3,
+    }}>
+      {showImg ? (
+        <img src={src} alt=""
+          style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
+          onError={() => setFailed(true)}
+        />
+      ) : (
+        <span style={{ fontSize: 10, fontWeight: 700, color: "#fff", lineHeight: 1 }}>
+          {name[0].toUpperCase()}
+        </span>
+      )}
+    </span>
+  );
+}
+
+function LabelPill({ text }: { text: string; cat: Cat }) {
+  return (
+    <span style={{
+      display: "inline-flex", alignItems: "center", justifyContent: "center",
+      width: 72, padding: "5px 0", borderRadius: 24,
+      background: "var(--text-secondary)",
+      color: "var(--bg)",
+      fontSize: 10, fontWeight: 700, letterSpacing: "0.09em",
+      textTransform: "uppercase", whiteSpace: "nowrap",
+      flexShrink: 0, userSelect: "none",
+      boxShadow: "0 2px 6px rgba(0,0,0,0.22)",
+    }}>
+      {text}
+    </span>
+  );
+}
+
+function TickerPill({ name, cat, slug, src }: { name: string; cat: Cat; slug?: string; src?: string }) {
+  const accent = CAT_COLORS[cat];
+  return (
+    <span
+      style={{
+        display: "inline-flex", alignItems: "center", gap: 8,
+        padding: "7px 14px", borderRadius: 24,
+        background: "var(--card-bg)",
+        fontSize: 13, fontWeight: 500, letterSpacing: "-0.01em",
+        color: "var(--text-primary)", whiteSpace: "nowrap",
+        userSelect: "none", cursor: "default", flexShrink: 0,
+        transition: "background 0.2s, box-shadow 0.2s",
+      }}
+      onMouseEnter={e => {
+        const el = e.currentTarget;
+        el.style.background = "rgba(128,128,128,0.2)";
+        el.style.boxShadow = "0 2px 12px rgba(0,0,0,0.1)";
+      }}
+      onMouseLeave={e => {
+        const el = e.currentTarget;
+        el.style.background = "var(--card-bg)";
+        el.style.boxShadow = "none";
+      }}
+    >
+      {(slug || src) && <ToolCircle slug={slug} src={src} name={name} accent={accent} />}
+      {name}
+    </span>
+  );
+}
+
+function TickerStrip({ items, copies, duration, direction }: {
+  items: StripItem[];
+  copies: number;
+  duration: number;
+  direction: "left" | "right";
+}) {
+  return (
+    <div style={{
+      overflow: "hidden",
+      padding: "16px 0", margin: "-16px 0",
+      WebkitMaskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
+      maskImage: "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
+    }}>
+      <div
+        style={{
+          display: "inline-flex", gap: 10,
+          animation: `${direction === "left" ? "ticker-left" : "ticker-right"} ${duration}s linear infinite`,
+          willChange: "transform",
+        }}
+        onMouseEnter={e => { e.currentTarget.style.animationPlayState = "paused"; }}
+        onMouseLeave={e => { e.currentTarget.style.animationPlayState = "running"; }}
+      >
+        {Array.from({ length: copies }).flatMap((_, ci) =>
+          items.map((item, ii) => {
+            const key = `${ci}-${ii}`;
+            if (item.kind === "label") return <LabelPill key={key} text={item.text} cat={item.cat} />;
+            if (item.kind === "skill") return <TickerPill key={key} name={item.name} cat={item.cat} />;
+            return <TickerPill key={key} name={item.name} cat={item.cat} slug={item.slug} src={item.src} />;
+          })
+        )}
+      </div>
+    </div>
+  );
+}
 
 const testimonials = [
   {
@@ -75,7 +192,7 @@ const testimonials = [
   },
 ];
 
-const N = testimonials.length; // 4
+const N = testimonials.length;
 
 const TRANSITION = "transform 0.38s cubic-bezier(0.4, 0, 0.2, 1)";
 const CARD_GAP = 16;
@@ -103,7 +220,6 @@ export default function About() {
   const [trackPos, setTrackPos] = useState(0);
   const [mobileAnimating, setMobileAnimating] = useState(false);
 
-  // Desktop carousel
   const [desktopOffset, setDesktopOffset] = useState(0);
   const desktopRef = useRef<HTMLDivElement>(null);
   const [desktopWidth, setDesktopWidth] = useState(0);
@@ -154,6 +270,8 @@ export default function About() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 56, marginTop: 24 }}>
+
+      {/* About Me */}
       <div className="section">
         <h3 className="section-title">About Me</h3>
         <div style={{ position: "relative", width: "100%", aspectRatio: "16/9", borderRadius: 10, overflow: "hidden" }}>
@@ -169,26 +287,12 @@ export default function About() {
         </div>
       </div>
 
-      {/* Skills & Tools ticker */}
+      {/* Skills & Tools */}
       <div className="section">
         <h3 className="section-title">Skills & Tools</h3>
-        <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 6 }}>
-          {([
-            { items: row1, anim: "ticker-left 30s linear infinite" },
-            { items: row2, anim: "ticker-right 24s linear infinite" },
-          ] as const).map(({ items, anim }, rowIdx) => (
-            <div key={rowIdx} style={{ position: "relative", overflow: "hidden" }}>
-              {/* Left fade */}
-              <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, width: 72, zIndex: 2, background: "linear-gradient(to right, var(--bg), transparent)", pointerEvents: "none" }} />
-              {/* Right fade */}
-              <div style={{ position: "absolute", top: 0, bottom: 0, right: 0, width: 72, zIndex: 2, background: "linear-gradient(to left, var(--bg), transparent)", pointerEvents: "none" }} />
-              <div style={{ display: "flex", alignItems: "center", gap: 8, width: "max-content", padding: "2px 0", animation: anim }}>
-                {[...items, ...items].map((item, i) => (
-                  <span key={i} style={item.label ? LABEL_STYLE : PILL_STYLE}>{item.text}</span>
-                ))}
-              </div>
-            </div>
-          ))}
+        <div style={{ display: "flex", flexDirection: "column", gap: 14, marginTop: 8 }}>
+          <TickerStrip items={DESIGN_STRIP} copies={2} duration={40} direction="right" />
+          <TickerStrip items={AI_DEV_STRIP} copies={2} duration={60} direction="left" />
         </div>
       </div>
 
@@ -197,7 +301,6 @@ export default function About() {
         <h3 className="section-title">In Their Words</h3>
 
         {isMobile ? (
-          /* Viewport — no extra margin, aligns with page content */
           <div style={{ overflow: "hidden", borderRadius: 12, width: "100%" }}>
             <div
               style={{ display: "flex", width: `${N * 100}%`, transform: mobileTranslate, transition: TRANSITION }}
@@ -222,10 +325,9 @@ export default function About() {
                   }}
                 >
                   <div style={{ display: "flex", flexDirection: "column" }}>
-                    <span style={{ fontSize: 28, lineHeight: 1, display: "block", marginBottom: -8, color: "var(--text-muted)", fontFamily: "Georgia, serif", userSelect: "none" }}>&ldquo;</span>
+                    <span style={{ fontSize: 42, lineHeight: 1, display: "block", marginBottom: -12, color: "var(--text-muted)", fontFamily: "Georgia, serif", userSelect: "none" }}>&ldquo;</span>
                     <p style={{ fontSize: 16, fontWeight: 400, lineHeight: 1.55, letterSpacing: "-0.01em", color: "var(--text-secondary)", margin: 0 }}>{tc.quote}</p>
                   </div>
-                  {/* Footer: author on left, nav arrows on right */}
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                       <img src={tc.avatar} alt={tc.name} style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
@@ -261,7 +363,7 @@ export default function About() {
                 {testimonials.map((tc, i) => (
                   <div key={i} style={{ flex: `0 0 ${desktopCardWidth}px`, aspectRatio: "1", background: "var(--card-bg)", borderRadius: 10, padding: 20, display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 16 }}>
                     <div style={{ display: "flex", flexDirection: "column" }}>
-                      <span style={{ fontSize: 28, lineHeight: 1, display: "block", marginBottom: -8, color: "var(--text-muted)", fontFamily: "Georgia, serif", userSelect: "none" }}>&ldquo;</span>
+                      <span style={{ fontSize: 42, lineHeight: 1, display: "block", marginBottom: -12, color: "var(--text-muted)", fontFamily: "Georgia, serif", userSelect: "none" }}>&ldquo;</span>
                       <p style={{ fontSize: 16, fontWeight: 400, lineHeight: 1.55, letterSpacing: "-0.01em", color: "var(--text-secondary)", margin: 0 }}>{tc.quote}</p>
                     </div>
                     <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -281,6 +383,7 @@ export default function About() {
           </div>
         )}
       </div>
+
     </div>
   );
 }
