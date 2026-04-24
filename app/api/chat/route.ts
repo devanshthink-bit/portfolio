@@ -1,7 +1,9 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest, NextResponse } from "next/server";
 
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_API_KEY);
+const client = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
+});
 
 const SYSTEM = `You are an assistant on Devansh Somvanshi's portfolio website. Answer questions about Devansh concisely and warmly, as if you know him well. Keep responses to 2-4 sentences max.
 
@@ -37,15 +39,16 @@ If asked something you genuinely don't know, say so honestly. Don't make up deta
 export async function POST(req: NextRequest) {
   try {
     const { messages } = await req.json();
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-    const chat = model.startChat({
-      history: messages.slice(0, -1).map(m => ({
-        role: m.role === "user" ? "user" : "model",
-        parts: [{ text: m.content }],
+    const result = await client.messages.create({
+      model: "claude-3-5-haiku-20241022",
+      max_tokens: 1024,
+      system: SYSTEM,
+      messages: messages.map(m => ({
+        role: m.role,
+        content: m.content,
       })),
     });
-    const result = await chat.sendMessage(messages[messages.length - 1].content);
-    const text = result.response.text();
+    const text = result.content[0].type === "text" ? result.content[0].text : "";
     return NextResponse.json({ content: text });
   } catch (e) {
     console.error("Chat API error:", e);
