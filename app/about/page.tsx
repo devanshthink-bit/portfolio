@@ -28,17 +28,6 @@ const DESIGN_STRIP: StripItem[] = [
 ];
 
 const AI_DEV_STRIP: StripItem[] = [
-  { kind: "label", text: "AI",  cat: "ai" },
-  { kind: "skill", name: "Prompt Engineering", cat: "ai" },
-  { kind: "skill", name: "Agentic AI Workflows", cat: "ai" },
-  { kind: "skill", name: "AI Product Design",  cat: "ai" },
-  { kind: "skill", name: "LLM Integration",    cat: "ai" },
-  { kind: "tool",  name: "Claude Code",        cat: "ai", src: "/icons/claudecode.svg" },
-  { kind: "tool",  name: "Cursor",             cat: "ai", src: "/icons/cursor.svg" },
-  { kind: "tool",  name: "Codex",              cat: "ai", src: "/icons/codex.svg" },
-  { kind: "tool",  name: "Antigravity",        cat: "ai", src: "/icons/antigravity.svg" },
-  { kind: "tool",  name: "Figma Make",         cat: "ai", src: "/icons/figma.svg" },
-  { kind: "tool",  name: "MCPs",               cat: "ai" },
   { kind: "label", text: "Dev", cat: "dev" },
   { kind: "tool",  name: "React.js",     cat: "dev", src: "/icons/react.svg" },
   { kind: "tool",  name: "Next.js",      cat: "dev", src: "/icons/nextdotjs.svg" },
@@ -50,6 +39,16 @@ const AI_DEV_STRIP: StripItem[] = [
   { kind: "tool",  name: "GraphQL",      cat: "dev", src: "/icons/graphql.svg" },
   { kind: "tool",  name: "Tailwind",     cat: "dev", src: "/icons/tailwindcss.svg" },
   { kind: "tool",  name: "Git",          cat: "dev", src: "/icons/git.svg" },
+  { kind: "label", text: "AI",  cat: "ai" },
+  { kind: "skill", name: "Agentic AI Workflows", cat: "ai" },
+  { kind: "skill", name: "AI Product Design",  cat: "ai" },
+  { kind: "skill", name: "Prompt Engineering", cat: "ai" },
+  { kind: "tool",  name: "Claude Code",        cat: "ai", src: "/icons/claudecode.svg" },
+  { kind: "tool",  name: "Cursor",             cat: "ai", src: "/icons/cursor.svg" },
+  { kind: "tool",  name: "Codex",              cat: "ai", src: "/icons/codex.svg" },
+  { kind: "tool",  name: "Antigravity",        cat: "ai", src: "/icons/antigravity.svg" },
+  { kind: "tool",  name: "Figma Make",         cat: "ai", src: "/icons/figma.svg" },
+  { kind: "tool",  name: "MCPs",               cat: "ai" },
 ];
 
 const INITIAL_COLORS = ["#e07b54","#5b8de0","#9b6dd6","#4aad7a","#d4a03a","#d45480","#3abfbf","#7aad4a","#d46b3a","#5b6dd6"];
@@ -67,7 +66,8 @@ function ToolCircle({ src, name }: { slug?: string; src?: string; name: string; 
       width: 22, height: 22, borderRadius: "50%", flexShrink: 0,
       display: "inline-flex", alignItems: "center", justifyContent: "center",
       background: showImg ? "rgba(255,255,255,0.92)" : nameColor(name),
-      overflow: "hidden", padding: 3,
+      overflow: "hidden", padding: 4,
+      boxSizing: "border-box",
     }}>
       {showImg ? (
         <img src={src} alt=""
@@ -109,7 +109,7 @@ function TickerPill({ name, cat, slug, src }: { name: string; cat: Cat; slug?: s
         padding: "7px 14px", borderRadius: 24,
         background: "var(--card-bg)",
         fontSize: 13, fontWeight: 500, letterSpacing: "-0.01em",
-        color: "var(--text-primary)", whiteSpace: "nowrap",
+        color: "var(--text-secondary)", whiteSpace: "nowrap",
         userSelect: "none", cursor: "default", flexShrink: 0,
         transition: "background 0.2s, box-shadow 0.2s",
       }}
@@ -130,11 +130,12 @@ function TickerPill({ name, cat, slug, src }: { name: string; cat: Cat; slug?: s
   );
 }
 
-function TickerStrip({ items, copies, duration, direction }: {
+function TickerStrip({ items, copies, duration, direction, startOffset = 0 }: {
   items: StripItem[];
   copies: number;
   duration: number;
   direction: "left" | "right";
+  startOffset?: number;
 }) {
   return (
     <div style={{
@@ -147,6 +148,8 @@ function TickerStrip({ items, copies, duration, direction }: {
         style={{
           display: "inline-flex", gap: 10,
           animation: `${direction === "left" ? "ticker-left" : "ticker-right"} ${duration}s linear infinite`,
+          animationDelay: startOffset ? `${-duration * startOffset}s` : undefined,
+          animationFillMode: "both",
           willChange: "transform",
         }}
         onMouseEnter={e => { e.currentTarget.style.animationPlayState = "paused"; }}
@@ -206,6 +209,17 @@ const ArrowRight = () => (
   <svg width={16} height={16} viewBox="0 0 16 16" fill="none">
     <path d="M6 4l4 4-4 4" stroke="var(--text-primary)" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
   </svg>
+);
+const ModernQuote = ({ size = 42 }: { size?: number }) => (
+  <span style={{
+    fontFamily: "Georgia, serif",
+    fontSize: size,
+    lineHeight: 1,
+    color: "var(--text-muted)",
+    display: "block",
+    userSelect: "none",
+    opacity: 0.6,
+  }}>&ldquo;</span>
 );
 const arrowBtn: React.CSSProperties = {
   position: "absolute", top: "50%", transform: "translateY(-50%)", zIndex: 10,
@@ -292,7 +306,7 @@ export default function About() {
         <h3 className="section-title">Skills & Tools</h3>
         <div style={{ display: "flex", flexDirection: "column", gap: 14, marginTop: 8 }}>
           <TickerStrip items={DESIGN_STRIP} copies={2} duration={40} direction="right" />
-          <TickerStrip items={AI_DEV_STRIP} copies={2} duration={60} direction="left" />
+          <TickerStrip items={AI_DEV_STRIP} copies={2} duration={62} direction="left" startOffset={0.18} />
         </div>
       </div>
 
@@ -325,7 +339,7 @@ export default function About() {
                   }}
                 >
                   <div style={{ display: "flex", flexDirection: "column" }}>
-                    <span style={{ fontSize: 42, lineHeight: 1, display: "block", marginBottom: -12, color: "var(--text-muted)", fontFamily: "Georgia, serif", userSelect: "none" }}>&ldquo;</span>
+                    <div style={{ marginBottom: -14 }}><ModernQuote size={32} /></div>
                     <p style={{ fontSize: 16, fontWeight: 400, lineHeight: 1.55, letterSpacing: "-0.01em", color: "var(--text-secondary)", margin: 0 }}>{tc.quote}</p>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
@@ -363,7 +377,7 @@ export default function About() {
                 {testimonials.map((tc, i) => (
                   <div key={i} style={{ flex: `0 0 ${desktopCardWidth}px`, aspectRatio: "1", background: "var(--card-bg)", borderRadius: 10, padding: 20, display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 16 }}>
                     <div style={{ display: "flex", flexDirection: "column" }}>
-                      <span style={{ fontSize: 42, lineHeight: 1, display: "block", marginBottom: -12, color: "var(--text-muted)", fontFamily: "Georgia, serif", userSelect: "none" }}>&ldquo;</span>
+                      <div style={{ marginBottom: -18 }}><ModernQuote size={38} /></div>
                       <p style={{ fontSize: 16, fontWeight: 400, lineHeight: 1.55, letterSpacing: "-0.01em", color: "var(--text-secondary)", margin: 0 }}>{tc.quote}</p>
                     </div>
                     <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
