@@ -1,16 +1,16 @@
-import Anthropic from "@anthropic-ai/sdk";
+import OpenAI from "openai";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey || apiKey.trim() === "") {
     return NextResponse.json({ available: false, error: "No API key" });
   }
 
   try {
-    const client = new Anthropic({ apiKey });
-    await client.messages.create({
-      model: "claude-3-5-haiku-20241022",
+    const client = new OpenAI({ apiKey });
+    await client.chat.completions.create({
+      model: "gpt-4o-mini",
       max_tokens: 10,
       messages: [{ role: "user", content: "test" }],
     });
