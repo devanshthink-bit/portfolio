@@ -1,10 +1,6 @@
 import OpenAI from "openai";
 import { NextRequest, NextResponse } from "next/server";
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 const SYSTEM = `You are an assistant on Devansh Somvanshi's portfolio website. Answer questions about Devansh concisely and warmly, as if you know him well. Keep responses to 2-4 sentences max.
 
 About Devansh:
@@ -38,6 +34,7 @@ If asked something you genuinely don't know, say so honestly. Don't make up deta
 
 export async function POST(req: NextRequest) {
   try {
+    const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     const { messages } = await req.json();
     const result = await client.chat.completions.create({
       model: "gpt-4o-mini",
