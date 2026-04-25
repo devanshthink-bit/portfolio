@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
       max_tokens: 1024,
       messages: [
         { role: "system", content: SYSTEM },
-        ...messages.map(m => ({ role: m.role, content: m.content })),
+        ...messages.map((m: { role: string; content: string }) => ({ role: m.role, content: m.content })),
       ],
     });
     const text = result.choices[0].message.content ?? "";
