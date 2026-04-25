@@ -112,6 +112,7 @@ export default function Navbar() {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const nameLenRef = useRef(0);
   const hoverLenRef = useRef(0);
+  const hoveredOnHome = useRef(false);
 
   useLayoutEffect(() => {
     const mql = window.matchMedia("(max-width: 640px)");
@@ -126,6 +127,13 @@ export default function Navbar() {
 
   useLayoutEffect(() => {
     setIsMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    setHoverVisible(false);
+    setHoverCursor(false);
+    setDisplayedHover("");
+    hoverLenRef.current = 0;
   }, [pathname]);
 
   const clearTimer = () => {
@@ -175,7 +183,8 @@ export default function Navbar() {
   }, []);
 
   const handleMouseEnter = () => {
-    if (pathname !== "/") return;
+    if (pathname !== "/") { hoveredOnHome.current = false; return; }
+    hoveredOnHome.current = true;
     setNameCursor(false);
     setNameVisible(false);
     setHoverVisible(true);
@@ -188,7 +197,8 @@ export default function Navbar() {
   };
 
   const handleMouseLeave = () => {
-    if (pathname !== "/") return;
+    if (!hoveredOnHome.current) return;
+    hoveredOnHome.current = false;
     setHoverVisible(false);
     setHoverCursor(false);
     setNameVisible(true);

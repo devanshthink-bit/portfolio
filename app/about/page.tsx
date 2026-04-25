@@ -12,19 +12,20 @@ type StripItem =
 
 const DESIGN_STRIP: StripItem[] = [
   { kind: "label",  text: "Design",          cat: "design" },
+  { kind: "skill",  name: "Product Thinking",   cat: "design" },
   { kind: "skill",  name: "Interaction Design", cat: "design" },
   { kind: "skill",  name: "Rapid Prototyping",  cat: "design" },
-  { kind: "skill",  name: "Product Thinking",   cat: "design" },
-  { kind: "skill",  name: "User Research",       cat: "design" },
+  { kind: "skill",  name: "UX Research",       cat: "design" },
   { kind: "skill",  name: "Systems Thinking",    cat: "design" },
   { kind: "skill",  name: "Design Systems",      cat: "design" },
+  { kind: "skill",  name: "Information Architecture",       cat: "design" },
   { kind: "skill",  name: "Visual Design",       cat: "design" },
+  { kind: "skill",  name: "Accessibility",       cat: "design" },
   { kind: "tool",   name: "Figma",            cat: "design", src: "/icons/figma.svg" },
-  { kind: "tool",   name: "FigJam",           cat: "design", src: "/icons/figma.svg" },
   { kind: "tool",   name: "Framer",           cat: "design", src: "/icons/framer.svg" },
-  { kind: "tool",   name: "Miro",             cat: "design", src: "/icons/miro.svg" },
-  { kind: "tool",   name: "Protopie",         cat: "design", src: "/icons/protopie.svg" },
-  { kind: "tool",   name: "Maze",             cat: "design", src: "/icons/maze.svg" },
+  { kind: "tool",   name: "FigJam",           cat: "design", src: "/icons/figjam.svg" },
+  { kind: "tool",   name: "Google Analytics", cat: "design", src: "/icons/googleanalytics.svg" },
+  { kind: "tool",   name: "Notion",            cat: "design", src: "/icons/notion.svg" },
 ];
 
 const AI_DEV_STRIP: StripItem[] = [
@@ -34,21 +35,23 @@ const AI_DEV_STRIP: StripItem[] = [
   { kind: "tool",  name: "TypeScript",   cat: "dev", src: "/icons/typescript.svg" },
   { kind: "tool",  name: "React Native", cat: "dev", src: "/icons/react.svg" },
   { kind: "tool",  name: "PWAs",         cat: "dev", src: "/icons/pwa.svg" },
-  { kind: "tool",  name: "Flutter",      cat: "dev", src: "/icons/flutter.svg" },
-  { kind: "tool",  name: "Redux",        cat: "dev", src: "/icons/redux.svg" },
-  { kind: "tool",  name: "GraphQL",      cat: "dev", src: "/icons/graphql.svg" },
+  { kind: "tool",  name: "Flutter", cat: "dev", src: "/icons/flutter.svg" },
+  { kind: "tool",  name: "Storybook", cat: "dev", src: "/icons/storybook.svg" },
   { kind: "tool",  name: "Tailwind",     cat: "dev", src: "/icons/tailwindcss.svg" },
   { kind: "tool",  name: "Git",          cat: "dev", src: "/icons/git.svg" },
   { kind: "label", text: "AI",  cat: "ai" },
-  { kind: "skill", name: "Agentic AI Workflows", cat: "ai" },
-  { kind: "skill", name: "AI Product Design",  cat: "ai" },
-  { kind: "skill", name: "Prompt Engineering", cat: "ai" },
+  { kind: "skill", name: "Agent Orchestration", cat: "ai" },
+  { kind: "skill", name: "Design Workflow Automation",  cat: "ai" },
+  { kind: "skill", name: "Design-to-Code Workflows",  cat: "ai" },
+  { kind: "skill", name: "Prompt Systems", cat: "ai" },
+  { kind: "skill", name: "Context Design", cat: "ai" },
+  { kind: "skill", name: "LLM Integration", cat: "ai" },
+  { kind: "skill", name: "AI Research & Synthesis", cat: "ai" },
   { kind: "tool",  name: "Claude Code",        cat: "ai", src: "/icons/claudecode.svg" },
   { kind: "tool",  name: "Cursor",             cat: "ai", src: "/icons/cursor.svg" },
   { kind: "tool",  name: "Codex",              cat: "ai", src: "/icons/codex.svg" },
   { kind: "tool",  name: "Antigravity",        cat: "ai", src: "/icons/antigravity.svg" },
-  { kind: "tool",  name: "Figma Make",         cat: "ai", src: "/icons/figma.svg" },
-  { kind: "tool",  name: "MCPs",               cat: "ai" },
+  { kind: "tool",  name: "Figma Make",         cat: "ai", src: "/icons/figmamake.svg" },
 ];
 
 const INITIAL_COLORS = ["#e07b54","#5b8de0","#9b6dd6","#4aad7a","#d4a03a","#d45480","#3abfbf","#7aad4a","#d46b3a","#5b6dd6"];
@@ -221,12 +224,6 @@ const ModernQuote = ({ size = 42 }: { size?: number }) => (
     opacity: 0.6,
   }}>&ldquo;</span>
 );
-const arrowBtn: React.CSSProperties = {
-  position: "absolute", top: "50%", transform: "translateY(-50%)", zIndex: 10,
-  width: 40, height: 40, borderRadius: "50%", background: "var(--bg)",
-  border: "1px solid var(--border)", display: "flex", alignItems: "center",
-  justifyContent: "center", cursor: "pointer", boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
-};
 
 export default function About() {
   const [isMobile, setIsMobile] = useState(false);
@@ -256,7 +253,7 @@ export default function About() {
     return () => ro.disconnect();
   }, []);
 
-  const desktopCardWidth = desktopWidth > 0 ? (desktopWidth - 2 * CARD_GAP) / 3 : 0;
+  const desktopCardWidth = desktopWidth > 0 ? Math.floor((desktopWidth - 2 * CARD_GAP) / 3) : 0;
 
   const mobileGoNext = () => {
     if (mobileAnimating || trackPos >= N - 1) return;
@@ -339,7 +336,7 @@ export default function About() {
                   }}
                 >
                   <div style={{ display: "flex", flexDirection: "column" }}>
-                    <div style={{ marginBottom: -14 }}><ModernQuote size={32} /></div>
+                    <div style={{ marginBottom: -14 }}><ModernQuote size={34} /></div>
                     <p style={{ fontSize: 16, fontWeight: 400, lineHeight: 1.55, letterSpacing: "-0.01em", color: "var(--text-secondary)", margin: 0 }}>{tc.quote}</p>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
@@ -368,11 +365,8 @@ export default function About() {
             </div>
           </div>
         ) : (
-          <div style={{ position: "relative" }}>
-            {desktopOffset === 1 && (
-              <button onClick={() => setDesktopOffset(0)} style={{ ...arrowBtn, left: -20 }}><ArrowLeft /></button>
-            )}
-            <div ref={desktopRef} style={{ overflow: "hidden" }}>
+          <div ref={desktopRef} style={{ position: "relative" }}>
+            <div style={{ overflow: "hidden" }}>
               <div style={{ display: "flex", gap: CARD_GAP, transform: `translateX(-${desktopOffset * (desktopCardWidth + CARD_GAP)}px)`, transition: TRANSITION }}>
                 {testimonials.map((tc, i) => (
                   <div key={i} style={{ flex: `0 0 ${desktopCardWidth}px`, aspectRatio: "1", background: "var(--card-bg)", borderRadius: 10, padding: 20, display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 16 }}>
@@ -380,20 +374,23 @@ export default function About() {
                       <div style={{ marginBottom: -18 }}><ModernQuote size={38} /></div>
                       <p style={{ fontSize: 16, fontWeight: 400, lineHeight: 1.55, letterSpacing: "-0.01em", color: "var(--text-secondary)", margin: 0 }}>{tc.quote}</p>
                     </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
                       <img src={tc.avatar} alt={tc.name} style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
-                      <div>
-                        <p style={{ fontSize: 12, fontWeight: 500, letterSpacing: "-0.01em", color: "var(--text-primary)", margin: 0 }}>{tc.name}</p>
-                        <p style={{ fontSize: 11, color: "var(--text-muted)", letterSpacing: "-0.01em", margin: "2px 0 0" }}>{tc.role}</p>
+                      <div style={{ minWidth: 0 }}>
+                        <p style={{ fontSize: 12, fontWeight: 500, letterSpacing: "-0.01em", color: "var(--text-primary)", margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{tc.name}</p>
+                        <p style={{ fontSize: 11, color: "var(--text-muted)", letterSpacing: "-0.01em", margin: "2px 0 0", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{tc.role}</p>
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
-            {desktopOffset === 0 && (
-              <button onClick={() => setDesktopOffset(1)} style={{ ...arrowBtn, right: -20 }}><ArrowRight /></button>
-            )}
+            <button
+              onClick={() => setDesktopOffset(desktopOffset === 0 ? 1 : 0)}
+              style={{ position: "absolute", right: -16, top: "50%", transform: "translateY(-50%)", width: 32, height: 32, borderRadius: "50%", background: "var(--bg)", border: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", boxShadow: "0 1px 6px rgba(0,0,0,0.07)", zIndex: 1 }}
+            >
+              {desktopOffset === 0 ? <ArrowRight /> : <ArrowLeft />}
+            </button>
           </div>
         )}
       </div>
