@@ -11,21 +11,21 @@ type StripItem =
   | { kind: "tool"; name: string; cat: Cat; slug?: string; src?: string };
 
 const DESIGN_STRIP: StripItem[] = [
-  { kind: "label",  text: "Design",          cat: "design" },
-  { kind: "skill",  name: "Product Thinking",   cat: "design" },
-  { kind: "skill",  name: "Interaction Design", cat: "design" },
-  { kind: "skill",  name: "Rapid Prototyping",  cat: "design" },
-  { kind: "skill",  name: "UX Research",       cat: "design" },
-  { kind: "skill",  name: "Systems Thinking",    cat: "design" },
-  { kind: "skill",  name: "Design Systems",      cat: "design" },
-  { kind: "skill",  name: "Information Architecture",       cat: "design" },
-  { kind: "skill",  name: "Visual Design",       cat: "design" },
-  { kind: "skill",  name: "Accessibility",       cat: "design" },
-  { kind: "tool",   name: "Figma",            cat: "design", src: "/icons/figma.svg" },
-  { kind: "tool",   name: "Framer",           cat: "design", src: "/icons/framer.svg" },
-  { kind: "tool",   name: "FigJam",           cat: "design", src: "/icons/figjam.svg" },
-  { kind: "tool",   name: "Google Analytics", cat: "design", src: "/icons/googleanalytics.svg" },
   { kind: "tool",   name: "Notion",            cat: "design", src: "/icons/notion.svg" },
+  { kind: "tool",   name: "Google Analytics", cat: "design", src: "/icons/googleanalytics.svg" },
+  { kind: "tool",   name: "FigJam",           cat: "design", src: "/icons/figjam.svg" },
+  { kind: "tool",   name: "Framer",           cat: "design", src: "/icons/framer.svg" },
+  { kind: "tool",   name: "Figma",            cat: "design", src: "/icons/figma.svg" },
+  { kind: "skill",  name: "Accessibility",       cat: "design" },
+  { kind: "skill",  name: "Visual Design",       cat: "design" },
+  { kind: "skill",  name: "Information Architecture",       cat: "design" },
+  { kind: "skill",  name: "Design Systems",      cat: "design" },
+  { kind: "skill",  name: "Systems Thinking",    cat: "design" },
+  { kind: "skill",  name: "UX Research",       cat: "design" },
+  { kind: "skill",  name: "Rapid Prototyping",  cat: "design" },
+  { kind: "skill",  name: "Interaction Design", cat: "design" },
+  { kind: "skill",  name: "Product Thinking",   cat: "design" },
+  { kind: "label",  text: "Design",          cat: "design" },
 ];
 
 const AI_DEV_STRIP: StripItem[] = [
