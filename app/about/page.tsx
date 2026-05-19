@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import PhysicsSkills from "../../components/PhysicsSkills";
 import React, { useLayoutEffect, useRef, useState, useEffect } from "react";
 
 const CAT_COLORS = { design: "#6B9FE4", ai: "#A07FD8", dev: "#5FB896" } as const;
@@ -301,9 +302,8 @@ export default function About() {
       {/* Skills & Tools */}
       <div className="section">
         <h3 className="section-title">Skills & Tools</h3>
-        <div style={{ display: "flex", flexDirection: "column", gap: 14, marginTop: 8 }}>
-          <TickerStrip items={DESIGN_STRIP} copies={2} duration={40} direction="right" />
-          <TickerStrip items={AI_DEV_STRIP} copies={2} duration={62} direction="left" startOffset={0.18} />
+        <div style={{ marginTop: 16 }}>
+          <PhysicsSkills />
         </div>
       </div>
 
@@ -337,7 +337,7 @@ export default function About() {
                 >
                   <div style={{ display: "flex", flexDirection: "column" }}>
                     <div style={{ marginBottom: -14 }}><ModernQuote size={34} /></div>
-                    <p style={{ fontSize: 16, fontWeight: 400, lineHeight: 1.55, letterSpacing: "-0.01em", color: "var(--text-secondary)", margin: 0 }}>{tc.quote}</p>
+                    <p style={{ fontStyle: "italic", fontSize: 15, fontWeight: 400, lineHeight: 1.6, letterSpacing: "-0.01em", color: "var(--text-secondary)", margin: 0 }}>{tc.quote}</p>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -372,7 +372,7 @@ export default function About() {
                   <div key={i} style={{ flex: `0 0 ${desktopCardWidth}px`, aspectRatio: "1", background: "var(--card-bg)", borderRadius: 10, padding: 20, display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 16 }}>
                     <div style={{ display: "flex", flexDirection: "column" }}>
                       <div style={{ marginBottom: -18 }}><ModernQuote size={38} /></div>
-                      <p style={{ fontSize: 16, fontWeight: 400, lineHeight: 1.55, letterSpacing: "-0.01em", color: "var(--text-secondary)", margin: 0 }}>{tc.quote}</p>
+                      <p style={{ fontStyle: "italic", fontSize: 15, fontWeight: 400, lineHeight: 1.6, letterSpacing: "-0.01em", color: "var(--text-secondary)", margin: 0 }}>{tc.quote}</p>
                     </div>
                     <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
                       <img src={tc.avatar} alt={tc.name} style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
