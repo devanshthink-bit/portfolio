@@ -19,11 +19,6 @@ const recentWork = [
     gradient: "linear-gradient(#c9caD1, #bbc7d3, #b7c6d5)",
     slug: null,
   },
-  {
-    title: "Payments infrastructure, Razorpay",
-    gradient: "linear-gradient(to right top, #dae8fc, #c8dfff, #e6f0fe, #b7d5ff)",
-    slug: null,
-  },
 ];
 
 export default function Home() {

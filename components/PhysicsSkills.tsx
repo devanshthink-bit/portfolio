@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Cat = "design" | "engineering";
 
@@ -53,20 +53,30 @@ const ALL_ITEMS: { id: string; label: string; cat: Cat; src?: string }[] = [
   { id: "prompt",     label: "Prompt Systems",             cat: "engineering" },
 ];
 
-const TAG_H  = 36;
-const PAD_X  = 14;
-const ICON_W = 15;
+const TAG_H  = 40;
+const PAD_X  = 16;
+const ICON_W = 17;
 
 function Bucket({ cat }: { cat: Cat }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const items = ALL_ITEMS.filter((i) => i.cat === cat);
   const color = CAT_COLOR[cat];
+  const [bucketH, setBucketH] = useState(420);
+
+  useEffect(() => {
+    const update = () => setBucketH(window.innerWidth < 768 ? 540 : 420);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container || typeof window === "undefined") return;
 
+    let cancelled = false;
     let animId: number;
+    let rafRetry: number;
     let MatterLib: typeof import("matter-js");
     let runner: import("matter-js").Runner;
     let engine: import("matter-js").Engine;
@@ -76,11 +86,27 @@ function Bucket({ cat }: { cat: Cat }) {
     container.addEventListener("dragstart", (e) => e.preventDefault());
 
     const init = async () => {
-      MatterLib = await import("matter-js");
-      const { Engine, Runner, Bodies, Body, Composite, Mouse, MouseConstraint } = MatterLib;
+      // Import once; subsequent retries skip the await
+      if (!MatterLib) MatterLib = await import("matter-js");
+      if (cancelled) return;
 
-      const W = container.offsetWidth;
-      const H = container.offsetHeight;
+      const { Engine, Runner, Bodies, Body, Composite, Mouse, MouseConstraint, Sleeping } = MatterLib;
+
+      // Wait for container to have real dimensions (page transitions can delay layout)
+      const W = container.offsetWidth  || container.getBoundingClientRect().width;
+      const H = container.offsetHeight || container.getBoundingClientRect().height;
+      if (W < 10 || H < 10) {
+        rafRetry = requestAnimationFrame(() => { if (!cancelled) init(); });
+
+        return;
+      }
+
+      // Use smaller tag dimensions on narrow (mobile) containers
+      const isMobileW = W < 640;
+      const tagH  = isMobileW ? 30 : TAG_H;
+      const padX  = isMobileW ? 11 : PAD_X;
+      const iconW = isMobileW ? 13 : ICON_W;
+      const fontSize = isMobileW ? "11px" : "14px";
 
       // enableSleeping stops jitter once bodies come to rest
       engine = Engine.create({
@@ -100,21 +126,16 @@ function Bucket({ cat }: { cat: Cat }) {
           position: absolute;
           top: 0; left: 0;
           width: max-content;
-          height: ${TAG_H}px;
+          height: ${tagH}px;
           display: flex;
           align-items: center;
           gap: 6px;
-          padding: 0 ${PAD_X}px;
-          background: var(--bg);
+          padding: 0 ${padX}px;
+          background: var(--tag-bg);
           border: 1.5px solid ${color}40;
           border-radius: 10px;
-          box-shadow:
-            0 1px 2px rgba(0,0,0,0.07),
-            0 3px 7px rgba(0,0,0,0.09),
-            0 8px 18px rgba(0,0,0,0.06),
-            inset 0 1px 0 rgba(255,255,255,0.70),
-            inset 0 -1px 0 rgba(0,0,0,0.05);
-          font-size: 13px;
+          box-shadow: var(--tag-shadow);
+          font-size: ${fontSize};
           font-family: inherit;
           letter-spacing: -0.01em;
           color: var(--text-secondary);
@@ -130,7 +151,7 @@ function Bucket({ cat }: { cat: Cat }) {
           const img = document.createElement("img");
           img.src = item.src;
           img.draggable = false;
-          img.style.cssText = `width:${ICON_W}px;height:${ICON_W}px;object-fit:contain;flex-shrink:0;-webkit-user-drag:none;`;
+          img.style.cssText = `width:${iconW}px;height:${iconW}px;object-fit:contain;flex-shrink:0;-webkit-user-drag:none;filter:var(--icon-filter);`;
           img.onerror = () => { img.style.display = "none"; };
           el.appendChild(img);
         }
@@ -153,27 +174,29 @@ function Bucket({ cat }: { cat: Cat }) {
         const el = tagEls[i];
         const w  = Math.max(el.offsetWidth, 60);
 
-        const cols = Math.max(1, Math.floor((W - BPAD * 2) / (w + 8)));
-        const col  = i % cols;
-        const row  = Math.floor(i / cols);
-        const x    = BPAD + col * (w + 8) + w / 2;
-        const y    = BPAD + row * (TAG_H + 8) + TAG_H / 2;
+        // Spread evenly across full width so tags don't pile up on load
+        const cols     = Math.max(1, Math.floor((W - BPAD * 2) / (w + 8)));
+        const colWidth = (W - BPAD * 2) / cols;
+        const col      = i % cols;
+        const row      = Math.floor(i / cols);
+        const x        = BPAD + col * colWidth + colWidth / 2;
+        const y        = BPAD + row * (tagH + 10) + tagH / 2;
 
         const body = Bodies.rectangle(
-          Math.min(x, W - BPAD - w / 2),
-          Math.min(y, H * 0.5),
-          w, TAG_H,
+          Math.min(Math.max(x, BPAD + w / 2), W - BPAD - w / 2),
+          Math.min(y, H * 0.45),
+          w, tagH,
           {
             restitution: 0.05,
-            friction: 0.8,
-            frictionAir: 0.04,
-            frictionStatic: 0.8,
-            sleepThreshold: 40,
+            friction: 0.4,
+            frictionAir: 0.018,  // low so angular momentum builds when grabbed at an end
+            frictionStatic: 0.2, // low so rotation can initiate from edge grabs
+            sleepThreshold: 60,
           }
         );
 
-        Body.setVelocity(body, { x: (Math.random() - 0.5) * 0.4, y: Math.random() * 0.3 });
-        Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.06);
+        Body.setVelocity(body, { x: (Math.random() - 0.5) * 0.3, y: Math.random() * 0.2 });
+        Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.04);
         tagData.push({ body, el, w });
       });
 
@@ -195,8 +218,13 @@ function Bucket({ cat }: { cat: Cat }) {
       Composite.add(engine.world, mc);
 
       let audioCtx: AudioContext | null = null;
-      const getAudio = () => { if (!audioCtx) audioCtx = new AudioContext(); return audioCtx; };
-      // Prime AudioContext on first interaction so initial-drop sounds can play
+      const getAudio = () => {
+        if (!audioCtx) audioCtx = new AudioContext();
+        // iOS Safari suspends AudioContext until resumed inside a user gesture
+        if (audioCtx.state === "suspended") audioCtx.resume();
+        return audioCtx;
+      };
+      // Prime on first touch/click so subsequent sounds play immediately
       const primeAudio = () => { getAudio(); container.removeEventListener("pointerdown", primeAudio); };
       container.addEventListener("pointerdown", primeAudio);
 
@@ -273,6 +301,7 @@ function Bucket({ cat }: { cat: Cat }) {
       MatterLib.Events.on(mc, "startdrag", (e: any) => {
         const t = tagData.find((d) => d.body === e.body);
         if (t) {
+          Sleeping.set(e.body, false); // wake sleeping body so rotation responds immediately
           t.el.style.cursor = "grabbing";
           t.el.style.zIndex = (++zTop).toString();
           playPickup();
@@ -306,7 +335,7 @@ function Bucket({ cat }: { cat: Cat }) {
         const sorted = [...tagData].sort((a, b) => a.body.position.y - b.body.position.y);
         sorted.forEach(({ body, el, w }, rank) => {
           const { x, y } = body.position;
-          el.style.transform = `translate(${x - w / 2}px, ${y - TAG_H / 2}px) rotate(${body.angle}rad)`;
+          el.style.transform = `translate(${x - w / 2}px, ${y - tagH / 2}px) rotate(${body.angle}rad)`;
           if (el.style.cursor !== "grabbing") el.style.zIndex = (rank + 1).toString();
           el.style.visibility = "visible";
           el.style.pointerEvents = "auto";
@@ -319,7 +348,9 @@ function Bucket({ cat }: { cat: Cat }) {
     init();
 
     return () => {
+      cancelled = true;
       cancelAnimationFrame(animId);
+      cancelAnimationFrame(rafRetry);
       if (runner && MatterLib) MatterLib.Runner.stop(runner);
       if (engine && MatterLib) MatterLib.Engine.clear(engine);
       tagEls.forEach((el) => el.remove());
@@ -334,7 +365,7 @@ function Bucket({ cat }: { cat: Cat }) {
         style={{
           position: "relative",
           width: "100%",
-          height: 420,
+          height: bucketH,
           background: "var(--card-bg)",
           borderRadius: 12,
           overflow: "hidden",
