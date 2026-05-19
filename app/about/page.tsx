@@ -285,7 +285,7 @@ export default function About() {
       {/* About Me */}
       <div className="section">
         <h3 className="section-title">About Me</h3>
-        <div style={{ position: "relative", width: "100%", aspectRatio: "16/9", borderRadius: 10, overflow: "hidden" }}>
+        <div style={{ position: "relative", width: "100%", aspectRatio: "16/9", borderRadius: 6, overflow: "hidden" }}>
           <Image src="/images/about.jpg" alt="Devansh at the beach" fill style={{ objectFit: "cover", objectPosition: "center top" }} priority />
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 24, marginTop: 32 }}>

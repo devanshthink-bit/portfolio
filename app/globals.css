@@ -8,6 +8,8 @@
     --text-muted: #918e89;
     --border: #f1ede5;
     --card-bg: #f2f2f0;
+    --cs-callout-bg: rgba(0, 0, 0, 0.028);
+    --cs-stat-gap: #e8e4df;
   }
 
   html.nerd-mode {
@@ -17,6 +19,8 @@
     --text-muted: #8f8a82;
     --border: rgba(255, 255, 255, 0.08);
     --card-bg: rgba(255, 255, 255, 0.06);
+    --cs-callout-bg: rgba(255, 255, 255, 0.06);
+    --cs-stat-gap: rgba(255, 255, 255, 0.08);
   }
 
   *, *::before, *::after {
@@ -27,7 +31,7 @@
     margin: 0;
     background-color: var(--bg);
     color: var(--text-secondary);
-    font-family: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
+    font-family: var(--font-inter), "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Helvetica Neue", Arial, sans-serif;
     font-size: 16px;
     line-height: 1.48;
     letter-spacing: -0.02em;
@@ -91,7 +95,7 @@
   .page-wrapper {
     max-width: 980px;
     margin: 0 auto;
-    padding: 40px 60px 48px;
+    padding: 40px 80px 48px;
     display: flex;
     flex-direction: column;
     gap: 40px;
@@ -101,9 +105,7 @@
     display: flex;
     flex-direction: column;
     gap: 56px;
-    max-width: 860px;
     width: 100%;
-    margin: 0 auto;
     animation: page-enter 0.25s ease;
   }
 
@@ -318,8 +320,6 @@
 
   /* Footer */
   .site-footer {
-    max-width: 860px;
-    margin: 0 auto;
     width: 100%;
     padding-top: 16px;
     border-top: 1px solid var(--border);
@@ -427,7 +427,7 @@
   /* ── Tablet (641px–1024px) ── */
   @media (min-width: 641px) and (max-width: 1024px) {
     .page-wrapper {
-      padding: 32px 40px 48px;
+      padding: 32px 52px 48px;
     }
 
     .flag-grid {
@@ -436,4 +436,3 @@
   }
 
 } /* end @layer components */
-

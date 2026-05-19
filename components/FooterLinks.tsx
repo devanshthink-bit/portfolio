@@ -45,6 +45,7 @@ export default function FooterLinks() {
           {copied ? <CheckIcon /> : <CopyIcon />}
         </button>
       </span>
+      <a href="https://X.com/DevanshThink" className="footer-link" target="_blank" rel="noopener noreferrer">X.com</a>
       <a href="https://www.instagram.com/i.pretend.here" className="footer-link" target="_blank" rel="noopener noreferrer">Instagram</a>
     </div>
   );
