@@ -1,82 +1,47 @@
 "use client";
 import { useEffect, useRef } from "react";
 
-const LIFETIME = 650;
-
-interface Point { x: number; y: number; t: number; }
-
 export default function CursorGlow() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
+  const pos = useRef({ x: -100, y: -100 });
+  const current = useRef({ x: -100, y: -100 });
+  const raf = useRef<number>(0);
+
+  const hidden = useRef(false);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas || window.matchMedia("(pointer: coarse)").matches) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    resize();
-    window.addEventListener("resize", resize);
-
-    const points: Point[] = [];
-    let frameId: number;
-
     const onMove = (e: MouseEvent) => {
-      points.push({ x: e.clientX, y: e.clientY, t: Date.now() });
+      pos.current = { x: e.clientX, y: e.clientY };
     };
+    const onHide = () => { hidden.current = true; if (ref.current) ref.current.style.opacity = "0"; };
+    const onShow = () => { hidden.current = false; if (ref.current) ref.current.style.opacity = "1"; };
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("cursorglow:hide", onHide);
+    window.addEventListener("cursorglow:show", onShow);
 
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const now = Date.now();
+    const SIZE = 20;
+    const HALF = SIZE / 2;
+    // spring constants — lower = more lag (heavier feel)
+    const STIFFNESS = 0.12;
 
-      while (points.length > 0 && now - points[0].t > LIFETIME) points.shift();
+    const tick = () => {
+      current.current.x += (pos.current.x - current.current.x) * STIFFNESS;
+      current.current.y += (pos.current.y - current.current.y) * STIFFNESS;
 
-      // Need at least 3 points to form a bezier segment
-      if (points.length >= 3) {
-        for (let i = 1; i < points.length - 1; i++) {
-          const prev = points[i - 1];
-          const curr = points[i];
-          const next = points[i + 1];
-
-          // Midpoints — the bezier starts and ends here so segments join seamlessly
-          const startX = (prev.x + curr.x) / 2;
-          const startY = (prev.y + curr.y) / 2;
-          const endX   = (curr.x + next.x) / 2;
-          const endY   = (curr.y + next.y) / 2;
-
-          const t = Math.max(0, 1 - (now - curr.t) / LIFETIME);
-
-          ctx.beginPath();
-          ctx.moveTo(startX, startY);
-          // curr is the control point — this produces a smooth G1-continuous curve
-          ctx.quadraticCurveTo(curr.x, curr.y, endX, endY);
-          ctx.strokeStyle = `rgba(55, 53, 50, ${t * 0.72})`;
-          ctx.lineWidth = 1.8;
-          ctx.lineCap = "round";
-          ctx.lineJoin = "round";
-          ctx.stroke();
-        }
+      if (ref.current) {
+        ref.current.style.transform = `translate(${current.current.x - HALF}px, ${current.current.y - HALF}px)`;
       }
-
-      frameId = requestAnimationFrame(draw);
+      raf.current = requestAnimationFrame(tick);
     };
-    draw();
+    raf.current = requestAnimationFrame(tick);
 
-    window.addEventListener("mousemove", onMove, { passive: true });
     return () => {
       window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("resize", resize);
-      cancelAnimationFrame(frameId);
+      window.removeEventListener("cursorglow:hide", onHide);
+      window.removeEventListener("cursorglow:show", onShow);
+      cancelAnimationFrame(raf.current);
     };
   }, []);
 
-  return (
-    <canvas ref={canvasRef} aria-hidden style={{
-      position: "fixed", top: 0, left: 0,
-      pointerEvents: "none", zIndex: 9989,
-    }} />
-  );
+  return null;
 }

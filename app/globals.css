@@ -58,6 +58,7 @@
     font-weight: 500;
   }
 
+
   strong {
     font-weight: 600;
   }
@@ -380,6 +381,11 @@
     border-bottom-color: rgba(245, 243, 239, 0.35);
   }
 
+  .cs-meta-strip {
+    display: flex;
+    justify-content: space-between;
+  }
+
   /* ── Mobile (≤640px) ── */
   @media (max-width: 640px) {
 
@@ -437,6 +443,16 @@
 
   .footer-links {
     justify-content: center;
+  }
+
+  .cs-meta-strip {
+    flex-wrap: wrap;
+    gap: 16px 40px;
+    justify-content: flex-start;
+  }
+
+  .cs-meta-strip > div {
+    flex: 1 1 120px;
   }
   } /* end @media mobile */
 

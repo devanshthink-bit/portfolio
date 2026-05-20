@@ -64,7 +64,7 @@ function Bucket({ cat }: { cat: Cat }) {
   const [bucketH, setBucketH] = useState(420);
 
   useEffect(() => {
-    const update = () => setBucketH(window.innerWidth < 768 ? 540 : 420);
+    const update = () => setBucketH(window.innerWidth < 768 ? 360 : 420);
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
@@ -210,7 +210,13 @@ function Bucket({ cat }: { cat: Cat }) {
       Composite.add(engine.world, [...tagData.map((t) => t.body), floor, ceiling, wallLeft, wallRight]);
 
       // Mouse drag
+      // Patch addEventListener before Mouse.create so Matter.js never captures wheel events
+      const origAddEventListener = container.addEventListener.bind(container);
+      (container as any).addEventListener = (type: string, ...args: any[]) =>
+        type === "wheel" ? undefined : origAddEventListener(type, ...args);
       const mouse = Mouse.create(container);
+      (container as any).addEventListener = origAddEventListener;
+
       const mc    = MouseConstraint.create(engine, {
         mouse,
         constraint: { stiffness: 0.3, damping: 0.08, render: { visible: false } } as never,
@@ -362,6 +368,8 @@ function Bucket({ cat }: { cat: Cat }) {
     <div style={{ display: "flex", flexDirection: "column", gap: 0, flex: 1 }}>
       <div
         ref={containerRef}
+        onMouseEnter={() => window.dispatchEvent(new Event("cursorglow:hide"))}
+        onMouseLeave={() => window.dispatchEvent(new Event("cursorglow:show"))}
         style={{
           position: "relative",
           width: "100%",

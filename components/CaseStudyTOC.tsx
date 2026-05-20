@@ -26,21 +26,22 @@ export default function CaseStudyTOC() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Track active section
+  // Track active section via scroll position
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActive(entry.target.id);
-        });
-      },
-      { rootMargin: "-10% 0px -80% 0px" }
-    );
-    sections.forEach(({ id }) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-    return () => observer.disconnect();
+    const handleScroll = () => {
+      const threshold = window.scrollY + window.innerHeight * 0.25;
+      let current = sections[0].id;
+      for (const { id } of sections) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top + window.scrollY <= threshold) {
+          current = id;
+        }
+      }
+      setActive(current);
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Close menu on scroll (mobile)
@@ -54,7 +55,10 @@ export default function CaseStudyTOC() {
   const scrollTo = (id: string) => {
     setMenuOpen(false);
     setTimeout(() => {
-      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      const el = document.getElementById(id);
+      if (!el) return;
+      const top = el.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
     }, 80);
   };
 
@@ -67,13 +71,13 @@ export default function CaseStudyTOC() {
         aria-label="Table of contents"
         style={{
           position: "fixed",
-          right: 28,
+          right: 32,
           top: "50%",
           transform: "translateY(-50%)",
           zIndex: 50,
           display: "flex",
           flexDirection: "column",
-          gap: 4,
+          borderLeft: "1px solid var(--border)",
         }}
       >
         {sections.map(({ id, label }) => {
@@ -85,23 +89,13 @@ export default function CaseStudyTOC() {
               style={{
                 background: "none",
                 border: "none",
+                borderLeft: `2px solid ${isActive ? "var(--text-primary)" : "transparent"}`,
+                marginLeft: -1,
                 cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                padding: "3px 0",
+                padding: "5px 12px",
                 textAlign: "left",
               }}
             >
-              <span style={{
-                width: isActive ? 18 : 10,
-                height: 1.5,
-                borderRadius: 2,
-                background: isActive ? "var(--text-primary)" : "var(--text-muted)",
-                flexShrink: 0,
-                opacity: isActive ? 1 : 0.4,
-                transition: "width 0.2s ease, background 0.2s ease, opacity 0.2s ease",
-              }} />
               <span style={{
                 fontFamily: "var(--font-geist-mono)",
                 fontSize: 10,
@@ -109,9 +103,10 @@ export default function CaseStudyTOC() {
                 textTransform: "uppercase",
                 color: isActive ? "var(--text-primary)" : "var(--text-muted)",
                 fontWeight: isActive ? 600 : 400,
-                opacity: isActive ? 1 : 0.55,
+                opacity: 1,
                 transition: "color 0.2s ease, opacity 0.2s ease",
                 whiteSpace: "nowrap",
+                display: "block",
               }}>
                 {label}
               </span>

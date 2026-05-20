@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import PhysicsSkills from "../../components/PhysicsSkills";
+import MachineMode from "../../components/MachineMode";
 import React, { useLayoutEffect, useRef, useState, useEffect } from "react";
 
 const CAT_COLORS = { design: "#6B9FE4", ai: "#A07FD8", dev: "#5FB896" } as const;
@@ -214,16 +215,11 @@ const ArrowRight = () => (
     <path d="M6 4l4 4-4 4" stroke="var(--text-primary)" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
-const ModernQuote = ({ size = 42 }: { size?: number }) => (
-  <span style={{
-    fontFamily: "Georgia, serif",
-    fontSize: size,
-    lineHeight: 1,
-    color: "var(--text-muted)",
-    display: "block",
-    userSelect: "none",
-    opacity: 0.6,
-  }}>&ldquo;</span>
+const ModernQuote = () => (
+  <svg width="18" height="14" viewBox="0 0 28 22" fill="none" style={{ display: "block", marginBottom: 12, userSelect: "none" }}>
+    <path d="M0 14C0 6.268 4.925 1.343 11.5 0L12.5 2.4C8.925 3.543 7 6.268 7 9H11.5V22H0V14Z" fill="var(--text-muted)" opacity="0.5" />
+    <path d="M15.5 14C15.5 6.268 20.425 1.343 27 0L28 2.4C24.425 3.543 22.5 6.268 22.5 9H27V22H15.5V14Z" fill="var(--text-muted)" opacity="0.5" />
+  </svg>
 );
 
 export default function About() {
@@ -281,6 +277,7 @@ export default function About() {
   const mobileTranslate = `translateX(-${trackPos * (100 / N)}%)`;
 
   return (
+    <MachineMode>
     <div style={{ display: "flex", flexDirection: "column", gap: 56, marginTop: 24 }}>
 
       {/* About Me */}
@@ -304,6 +301,48 @@ export default function About() {
         <h3 className="section-title">Skills & Tools</h3>
         <div style={{ marginTop: 16 }}>
           <PhysicsSkills />
+        </div>
+      </div>
+
+      {/* How I Think */}
+      <div className="section">
+        <h3 className="section-title">How I think</h3>
+        <div style={{ display: "flex", flexDirection: "column", marginTop: 8 }}>
+          {[
+            {
+              n: "01",
+              title: "Complexity is a design failure",
+              body: "Every extra tap, every unexplained label, every 'just in case' toggle is a debt. Simplicity isn't a visual style — it's a product discipline. The simplest version that solves the real problem is always harder to build, and always more right.",
+            },
+            {
+              n: "02",
+              title: "Design for the system, not the screen",
+              body: "A single frame is never the full story. Edge cases, error states, empty screens, returning users — the experience lives in the transitions, not the happy path. I think in flows before I think in components.",
+            },
+            {
+              n: "03",
+              title: "Shipping code changes how I design",
+              body: "I ask different questions in design reviews because I've shipped production features. What's expensive to change, what's cheap to animate, what's a two-day build vs a two-week one. That makes me a more honest collaborator and a more grounded designer.",
+            },
+            {
+              n: "04",
+              title: "AI should reduce friction, not add features",
+              body: "The bar for AI in a product: does this make the user faster, or just more dependent? AI that helps you think better is good design. AI that replaces thinking for you is a different kind of problem entirely.",
+            },
+            {
+              n: "05",
+              title: "Ship early, then learn",
+              body: "Real insight comes from usage, not from debates in Figma. I'd rather put something in front of users in week two than perfect it in week six. The feedback you get from shipping is always the research you couldn't plan for.",
+            },
+          ].map((p, i) => (
+            <div key={p.n} style={{ display: "flex", gap: 20, padding: "20px 0", borderTop: "1px solid var(--border)" }}>
+              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, fontWeight: 600, color: "var(--text-muted)", letterSpacing: "0.08em", textTransform: "uppercase" as const, marginTop: 5, flexShrink: 0, width: 20 }}>{p.n}</span>
+              <div>
+                <p style={{ fontFamily: "var(--font-manrope)", fontSize: 16, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.02em", margin: "0 0 6px 0" }}>{p.title}</p>
+                <p className="section-body" style={{ margin: 0 }}>{p.body}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -336,11 +375,11 @@ export default function About() {
                   }}
                 >
                   <div style={{ display: "flex", flexDirection: "column" }}>
-                    <div style={{ marginBottom: -14 }}><ModernQuote size={34} /></div>
-                    <p style={{ fontStyle: "italic", fontSize: 15, fontWeight: 400, lineHeight: 1.6, letterSpacing: "-0.01em", color: "var(--text-secondary)", margin: 0 }}>{tc.quote}</p>
+                    <ModernQuote />
+                    <p style={{ fontFamily: "var(--font-manrope)", fontStyle: "normal", fontSize: 14, fontWeight: 500, lineHeight: 1.65, letterSpacing: "-0.01em", color: "var(--text-secondary)", margin: 0 }}>{tc.quote}</p>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 20 }}>
                       <img src={tc.avatar} alt={tc.name} style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
                       <div>
                         <p style={{ fontSize: 12, fontWeight: 500, letterSpacing: "-0.01em", color: "var(--text-primary)", margin: 0 }}>{tc.name}</p>
@@ -371,10 +410,10 @@ export default function About() {
                 {testimonials.map((tc, i) => (
                   <div key={i} style={{ flex: `0 0 ${desktopCardWidth}px`, aspectRatio: "1", background: "var(--card-bg)", borderRadius: 10, padding: 20, display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 16 }}>
                     <div style={{ display: "flex", flexDirection: "column" }}>
-                      <div style={{ marginBottom: -18 }}><ModernQuote size={38} /></div>
-                      <p style={{ fontStyle: "italic", fontSize: 15, fontWeight: 400, lineHeight: 1.6, letterSpacing: "-0.01em", color: "var(--text-secondary)", margin: 0 }}>{tc.quote}</p>
+                      <ModernQuote />
+                      <p style={{ fontFamily: "var(--font-manrope)", fontStyle: "normal", fontSize: 14, fontWeight: 500, lineHeight: 1.65, letterSpacing: "-0.01em", color: "var(--text-secondary)", margin: 0 }}>{tc.quote}</p>
                     </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0, marginTop: 20 }}>
                       <img src={tc.avatar} alt={tc.name} style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
                       <div style={{ minWidth: 0 }}>
                         <p style={{ fontSize: 12, fontWeight: 500, letterSpacing: "-0.01em", color: "var(--text-primary)", margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{tc.name}</p>
@@ -396,5 +435,6 @@ export default function About() {
       </div>
 
     </div>
+    </MachineMode>
   );
 }

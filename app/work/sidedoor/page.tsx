@@ -1,6 +1,7 @@
-import { DM_Serif_Display, Poppins } from "next/font/google";
+import { Poppins } from "next/font/google";
 import Link from "next/link";
 import CaseStudyTOC from "../../../components/CaseStudyTOC";
+import RubberBackButton from "../../../components/RubberBackButton";
 
 const poppins = Poppins({ weight: "700", subsets: ["latin"] });
 
@@ -13,45 +14,17 @@ function E({ children }: { children: string }) {
   );
 }
 
-const dmSerif = DM_Serif_Display({
-  weight: "400",
-  style: ["normal", "italic"],
-  subsets: ["latin"],
-});
-
-function ImagePlaceholder({ label, aspect = "16/9" }: { label: string; aspect?: string }) {
+function ImagePlaceholder({ label: _label, aspect = "16/9" }: { label: string; aspect?: string }) {
   return (
     <div
       style={{
         width: "100%",
         aspectRatio: aspect,
-        background: "var(--card-bg)",
-        border: "1.5px dashed var(--text-muted)",
-        borderRadius: 8,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: 8,
+        background: "linear-gradient(135deg, #dce8ff 0%, #b8ccff 45%, #d4e3ff 100%)",
+        borderRadius: 10,
         margin: "28px 0",
-        opacity: 0.6,
       }}
-    >
-      <span style={{ fontSize: 22 }}>📷</span>
-      <span
-        style={{
-          fontFamily: "var(--font-geist-mono)",
-          fontSize: 11,
-          color: "var(--text-muted)",
-          textAlign: "center",
-          padding: "0 32px",
-          lineHeight: 1.6,
-          letterSpacing: "0.02em",
-        }}
-      >
-        {label}
-      </span>
-    </div>
+    />
   );
 }
 
@@ -70,6 +43,31 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
     >
       {children}
     </p>
+  );
+}
+
+// Pill badge used inside SectionLabel for numbered solution screens
+function ScreenBadge({ n, color }: { n: string; color: string }) {
+  return (
+    <span
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        background: color,
+        color: "#fff",
+        borderRadius: 4,
+        padding: "1px 7px",
+        fontSize: 10,
+        fontWeight: 700,
+        letterSpacing: "0.05em",
+        marginRight: 10,
+        verticalAlign: "2px",
+        textTransform: "none",
+        lineHeight: 1.5,
+      }}
+    >
+      {n}
+    </span>
   );
 }
 
@@ -94,11 +92,11 @@ function Callout({ children }: { children: React.ReactNode }) {
   );
 }
 
-function StoryBlock({ children, color }: { children: React.ReactNode; color?: string }) {
+function StoryBlock({ children, color, bg }: { children: React.ReactNode; color?: string; bg?: string }) {
   return (
     <div
       style={{
-        background: "var(--bg)",
+        background: bg || "var(--bg)",
         borderTop: "1px solid var(--border)",
         borderRight: "1px solid var(--border)",
         borderBottom: "1px solid var(--border)",
@@ -155,30 +153,37 @@ function StatBlock() {
   );
 }
 
-const body: React.CSSProperties = { fontSize: 15, color: "var(--text-secondary)", lineHeight: 1.75, letterSpacing: "-0.01em", margin: "0 0 14px 0" };
-const bodyLast: React.CSSProperties = { fontSize: 15, color: "var(--text-secondary)", lineHeight: 1.75, letterSpacing: "-0.01em", margin: 0 };
-const h3Style: React.CSSProperties = { fontFamily: "var(--font-manrope)", fontSize: 18, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.03em", margin: "0 0 14px 0" };
-const h3Gap: React.CSSProperties = { fontFamily: "var(--font-manrope)", fontSize: 18, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.03em", margin: "36px 0 14px 0" };
-const problemQ: React.CSSProperties = { fontFamily: "var(--font-manrope)", fontSize: 19, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.03em", lineHeight: 1.35, margin: "0 0 16px 0" };
-const decisionH: React.CSSProperties = { fontFamily: "var(--font-manrope)", fontSize: 17, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.03em", margin: "36px 0 14px 0" };
-const decisionHFirst: React.CSSProperties = { fontFamily: "var(--font-manrope)", fontSize: 17, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.03em", margin: "0 0 14px 0" };
+// ── Shared type scale ─────────────────────────────────────────────────────────
+const T = {
+  h2:        { fontFamily: "var(--font-manrope)", fontSize: 26,  fontWeight: 700, color: "var(--text-primary)",   letterSpacing: "-0.04em", lineHeight: 1.3,  margin: 0 } as React.CSSProperties,
+  h3:        { fontFamily: "var(--font-manrope)", fontSize: 18,  fontWeight: 700, color: "var(--text-primary)",   letterSpacing: "-0.03em", lineHeight: 1.4,  margin: "0 0 12px 0" } as React.CSSProperties,
+  h3gap:     { fontFamily: "var(--font-manrope)", fontSize: 18,  fontWeight: 700, color: "var(--text-primary)",   letterSpacing: "-0.03em", lineHeight: 1.4,  margin: "36px 0 12px 0" } as React.CSSProperties,
+  body:      { fontSize: 15, color: "var(--text-secondary)", lineHeight: 1.7,  letterSpacing: "-0.01em", margin: "0 0 14px 0" } as React.CSSProperties,
+  bodyLast:  { fontSize: 15, color: "var(--text-secondary)", lineHeight: 1.7,  letterSpacing: "-0.01em", margin: 0 } as React.CSSProperties,
+  small:     { fontSize: 13, color: "var(--text-muted)",     lineHeight: 1.5,  letterSpacing: "-0.01em", margin: 0 } as React.CSSProperties,
+  eyebrow:   { fontFamily: "var(--font-geist-mono)", fontSize: 10, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "var(--text-muted)", margin: 0 } as React.CSSProperties,
+  callout:   { fontFamily: "var(--font-manrope)", fontSize: 16, fontWeight: 600, color: "var(--text-primary)",   letterSpacing: "-0.02em", lineHeight: 1.55, margin: "0 0 10px 0" } as React.CSSProperties,
+  calloutSub:{ fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.65, letterSpacing: "-0.01em", margin: 0 } as React.CSSProperties,
+  quote:     { fontFamily: "var(--font-manrope)", fontStyle: "italic" as const, fontSize: 16, fontWeight: 500, color: "var(--text-primary)", lineHeight: 1.65, margin: 0 } as React.CSSProperties,
+};
+
+// Legacy aliases
+const body = T.body;
+const bodyLast = T.bodyLast;
+const h3Style = T.h3;
+const h3Gap = T.h3gap;
+const problemQ = { ...T.h3, fontSize: 18, margin: "0 0 16px 0" } as React.CSSProperties;
+const decisionH = { ...T.h3, margin: "36px 0 12px 0" } as React.CSSProperties;
+const decisionHFirst = { ...T.h3, margin: "0 0 12px 0" } as React.CSSProperties;
 
 export default function SideDoorCaseStudy() {
   return (
     <main style={{ padding: "40px 0 96px" }}>
       <CaseStudyTOC />
-
-      {/* Back */}
-      <Link href="/" style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "var(--text-muted)", letterSpacing: "0.08em", textTransform: "uppercase", display: "inline-block", marginBottom: 48 }}>
-        ← Back
-      </Link>
+      <RubberBackButton />
 
       {/* Cover */}
-      <div style={{ width: "100%", aspectRatio: "16/9", background: "linear-gradient(135deg, #dce8ff 0%, #b8ccff 45%, #d4e3ff 100%)", borderRadius: 10, marginBottom: 40, display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "rgba(0,0,0,0.3)", letterSpacing: "0.08em", textTransform: "uppercase" }}>
-          📷 Replace with hero mockup / prototype screenshot
-        </span>
-      </div>
+      <div style={{ width: "100%", aspectRatio: "16/9", background: "linear-gradient(135deg, #dce8ff 0%, #b8ccff 45%, #d4e3ff 100%)", borderRadius: 10, marginBottom: 40 }} />
 
       {/* Title */}
       <SectionLabel>Case Study · Product Design</SectionLabel>
@@ -190,7 +195,7 @@ export default function SideDoorCaseStudy() {
       </p>
 
       {/* Metadata strip */}
-      <div style={{ display: "flex", justifyContent: "space-between", padding: "20px 0", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", marginBottom: 52 }}>
+      <div className="cs-meta-strip" style={{ padding: "20px 0", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", marginBottom: 52 }}>
         {[
           { label: "Role", value: "Solo Product Designer", align: "left" as const },
           { label: "Timeline", value: "10 weeks", align: "left" as const },
@@ -210,7 +215,7 @@ export default function SideDoorCaseStudy() {
       </div>
 
       {/* Hook */}
-      <p className={dmSerif.className} style={{ fontStyle: "italic", fontSize: 26, color: "var(--text-primary)", lineHeight: 1.45, margin: "0 0 20px 0", letterSpacing: "-0.01em" }}>
+      <p style={{ fontFamily: "var(--font-manrope)", fontSize: 28, fontWeight: 700, color: "var(--text-primary)", lineHeight: 1.3, margin: "0 0 20px 0", letterSpacing: "-0.04em" }}>
         <E>💭</E>Have you ever sent 40 LinkedIn messages asking for a referral , and heard back from 3?
       </p>
       <p style={body}>
@@ -225,7 +230,7 @@ export default function SideDoorCaseStudy() {
           "Both sides track every stage after the referral is submitted , no black box, no repeated follow-ups.",
         ].map((point, i) => (
           <div key={i} style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
-            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "var(--text-muted)", marginTop: 4, flexShrink: 0, letterSpacing: "0.04em" }}>
+            <span style={{ ...T.eyebrow, marginTop: 4, flexShrink: 0 }}>
               0{i + 1}
             </span>
             <p style={{ fontSize: 15, color: "var(--text-secondary)", lineHeight: 1.65, letterSpacing: "-0.01em", margin: 0 }}>{point}</p>
@@ -240,12 +245,11 @@ export default function SideDoorCaseStudy() {
       <Divider />
 
       <div id="toc-problem" style={{ scrollMarginTop: 40 }} />
-      {/* The problem, lived */}
       <SectionLabel>The problem, lived</SectionLabel>
       <StoryBlock color="#10B981">
-        <p className={dmSerif.className} style={{ fontSize: 18, color: "var(--text-primary)", lineHeight: 1.55, margin: 0 }}>
-          Meet Ishaan. 2 years into his career as a frontend developer. He finds a role he&apos;s genuinely
-          excited about: Frontend Engineer at Google. He opens LinkedIn, searches for Google employees,
+        <p style={{ fontFamily: "var(--font-manrope)", fontSize: 20, fontWeight: 700, color: "var(--text-primary)", lineHeight: 1.55, margin: 0 }}>
+          Meet Ishaan. 2 years into his career as a product designer. He finds a role he&apos;s genuinely
+          excited about: Product Designer at CRED. He opens LinkedIn, searches for CRED employees,
           and starts messaging.
         </p>
       </StoryBlock>
@@ -264,8 +268,8 @@ export default function SideDoorCaseStudy() {
         &quot;will check&quot; reply. Nothing more.
       </p>
       <Callout>
-        <p className={dmSerif.className} style={{ fontStyle: "italic", fontSize: 17, color: "var(--text-secondary)", lineHeight: 1.55, margin: 0 }}>
-          &quot;I don&apos;t even know if they submitted it. I have no way to track it.&quot; — Candidate, interview
+        <p style={T.quote}>
+          &quot;I don&apos;t even know if they submitted it. I have no way to track it.&quot; <span style={{ fontFamily: "var(--font-geist-mono)", fontStyle: "normal", fontSize: 10, fontWeight: 500, color: "var(--text-muted)", letterSpacing: "0.06em", textTransform: "uppercase" }}>— Candidate, interview</span>
         </p>
       </Callout>
       <p style={bodyLast}>
@@ -277,7 +281,6 @@ export default function SideDoorCaseStudy() {
       <Divider />
 
       <div id="toc-why" style={{ scrollMarginTop: 40 }} />
-      {/* Why this matters */}
       <SectionLabel>Why this matters</SectionLabel>
       <p style={body}>
         Referrals are the highest-converting hiring channel that exists.
@@ -289,16 +292,16 @@ export default function SideDoorCaseStudy() {
 
       {/* Who this was built for */}
       <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", margin: "0 0 12px 0" }}>Who I was designing for</p>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 1, background: "var(--cs-stat-gap)", borderRadius: 10, overflow: "hidden" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 12 }}>
         {[
-          { label: "Candidates", sub: "0–5 yrs exp", desc: "They know referrals work. They've tried cold applying. They just can't reach the right people.", accent: "#10B981" },
-          { label: "Referrers", sub: "Mid-level, tech", desc: "Every referral puts their reputation on the line. The ask feels social. The risk is professional.", accent: "#2563EB" },
-          { label: "Recruiters", sub: "Secondary", desc: "They value referrals in theory, but bonus gaming has made them skeptical. Trust needs rebuilding.", accent: "#94a3b8" },
+          { label: "Candidates", sub: "0–5 yrs exp", desc: "They know referrals work. They've tried cold applying. They just can't reach the right people.", bg: "#E7F8F2", borderRadius: 8 },
+          { label: "Referrers", sub: "Mid-level, tech", desc: "Every referral puts their reputation on the line. The ask feels social. The risk is professional.", bg: "#E9EFFD", borderRadius: 8 },
+          { label: "Recruiters", sub: "Secondary", desc: "They value referrals in theory, but bonus gaming has made them skeptical. Trust needs rebuilding.", bg: "#F0F1F2", borderRadius: 8 },
         ].map((u) => (
-          <div key={u.label} style={{ background: "var(--bg)", padding: "16px 18px", borderTop: `3px solid ${u.accent}` }}>
-            <p style={{ fontFamily: "var(--font-manrope)", fontSize: 13, fontWeight: 700, color: "var(--text-primary)", margin: "0 0 2px 0" }}>{u.label}</p>
-            <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "var(--text-muted)", letterSpacing: "0.04em", margin: "0 0 8px 0" }}>{u.sub}</p>
-            <p style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.55, margin: 0 }}>{u.desc}</p>
+          <div key={u.label} style={{ background: u.bg, padding: "16px 18px", borderRadius: u.borderRadius }}>
+            <p style={{ fontFamily: "var(--font-manrope)", fontSize: 14, fontWeight: 700, color: "var(--text-primary)", margin: "0 0 2px 0" }}>{u.label}</p>
+            <p style={{ ...T.small, color: "var(--text-muted)", margin: "0 0 8px 0" }}>{u.sub}</p>
+            <p style={{ ...T.small, color: "var(--text-secondary)" }}>{u.desc}</p>
           </div>
         ))}
       </div>
@@ -306,7 +309,6 @@ export default function SideDoorCaseStudy() {
       <Divider />
 
       <div id="toc-solution" style={{ scrollMarginTop: 40 }} />
-      {/* Enter SideDoor */}
       <SectionLabel>The solution</SectionLabel>
       <h2 style={{ fontFamily: "var(--font-manrope)", fontSize: 26, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.04em", margin: "0 0 6px 0", lineHeight: 1.3 }}>
         Now Ishaan opens SideDoor.
@@ -321,20 +323,20 @@ export default function SideDoorCaseStudy() {
       <Divider />
 
       {/* 01 */}
-      <SectionLabel>01 · Referrer Discovery</SectionLabel>
+      <SectionLabel><ScreenBadge n="01" color="#10B981" />Referrer Discovery</SectionLabel>
       <h2 style={problemQ}><E>➡️</E>How can a candidate find the right person to approach, not just any random employee?</h2>
-      <StoryBlock color="#10B981">
-        <p className={dmSerif.className} style={{ fontSize: 17, color: "var(--text-primary)", lineHeight: 1.55, margin: "0 0 12px 0" }}>
-          Ishaan clicks &quot;Get Referral&quot; on the Frontend Engineer role at Google. Instead of a search bar,
-          he sees a curated, ranked list of Google employees.
+      <StoryBlock color="#10B981" bg="#E7F8F2">
+        <p style={T.callout}>
+          Ishaan clicks &quot;Get Referral&quot; on the Product Designer role at CRED. Instead of a search bar,
+          he sees a curated, ranked list of CRED employees.
         </p>
-        <p style={{ fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.65, margin: 0 }}>
+        <p style={T.calloutSub}>
           Diya Sharma is at the top: 92% match, Same College, responds in ~8 hrs, has referred 12
           people before. That&apos;s not a stranger anymore.
         </p>
       </StoryBlock>
       <Callout>
-        <p className={dmSerif.className} style={{ fontStyle: "italic", fontSize: 17, color: "var(--text-primary)", lineHeight: 1.55, margin: 0 }}>
+        <p style={{ ...T.callout, margin: 0 }}>
           <E>🎯</E>Ishaan isn&apos;t messaging into the void. He&apos;s reaching out to the most relevant person for
           this exact role, with clear evidence they&apos;ll actually respond.
         </p>
@@ -347,20 +349,20 @@ export default function SideDoorCaseStudy() {
       <Divider />
 
       {/* 02 */}
-      <SectionLabel>02 · Structured Request</SectionLabel>
+      <SectionLabel><ScreenBadge n="02" color="#10B981" />Structured Request</SectionLabel>
       <h2 style={problemQ}><E>➡️</E>How can a candidate send a request a stranger actually wants to respond to?</h2>
-      <StoryBlock color="#10B981">
-        <p className={dmSerif.className} style={{ fontSize: 17, color: "var(--text-primary)", lineHeight: 1.55, margin: "0 0 12px 0" }}>
+      <StoryBlock color="#10B981" bg="#E7F8F2">
+        <p style={T.callout}>
           Ishaan doesn&apos;t write a DM. He fills a guided form: role is pre-filled, fit points are
           suggested from the JD, he writes a short pitch. Preview screen. Send.
         </p>
-        <p style={{ fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.65, margin: 0 }}>
+        <p style={T.calloutSub}>
           Diya receives Ishaan&apos;s request and understands the fit in under 30 seconds. No back-and-forth.
           No chasing for details.
         </p>
       </StoryBlock>
       <Callout>
-        <p className={dmSerif.className} style={{ fontStyle: "italic", fontSize: 17, color: "var(--text-primary)", lineHeight: 1.55, margin: 0 }}>
+        <p style={{ ...T.callout, margin: 0 }}>
           <E>🎯</E>Every request is structured the same way: clear, scannable, easy to evaluate. No more &quot;refer me anywhere&quot; messages.
         </p>
       </Callout>
@@ -371,7 +373,7 @@ export default function SideDoorCaseStudy() {
 
       <div style={{ margin: "60px 0", display: "flex", flexDirection: "column", alignItems: "center", gap: 28 }}>
         <span style={{ fontSize: 20 }}>🍿</span>
-        <p className={dmSerif.className} style={{ fontSize: 17, color: "var(--text-secondary)", lineHeight: 1.6, textAlign: "center", margin: "-14px 0 0 0", maxWidth: 520 }}>
+        <p style={{ ...T.calloutSub, textAlign: "center", margin: "-14px 0 0 0", maxWidth: 520 }}>
           Diya got a notification on her lunch break. Instead of a wall of text begging for a referral, she saw a clean card: 85% role match, three fit points, a short pitch. She read it in under 30 seconds. For once, the request did the work for him.
         </p>
         <div style={{ display: "flex", justifyContent: "center", gap: 32, alignItems: "flex-end", marginTop: 8 }}>
@@ -381,21 +383,21 @@ export default function SideDoorCaseStudy() {
       </div>
 
       {/* 03 */}
-      <SectionLabel>03 · Referrer Evaluation</SectionLabel>
+      <SectionLabel><ScreenBadge n="03" color="#2563EB" />Referrer Evaluation</SectionLabel>
       <h2 style={problemQ}><E>➡️</E>How can a referrer decide confidently without risking their own reputation?</h2>
-      <StoryBlock color="#2563EB">
-        <p className={dmSerif.className} style={{ fontSize: 17, color: "var(--text-primary)", lineHeight: 1.55, margin: "0 0 12px 0" }}>
+      <StoryBlock color="#2563EB" bg="#E9EFFD">
+        <p style={T.callout}>
           Diya opens Ishaan&apos;s request. He doesn&apos;t see a resume dump. He sees a structured evaluation —
           85% overall match with breakdown, key strengths (green), potential concerns (orange), and
           Ishaan&apos;s own pitch.
         </p>
-        <p style={{ fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.65, margin: 0 }}>
+        <p style={T.calloutSub}>
           Instead of &quot;Refer or Don&apos;t Refer,&quot; he has four options: Decline / Review Later / Refer /
           Strongly Recommend. He clicks Strongly Recommend. Adds a private note for the recruiter.
         </p>
       </StoryBlock>
       <Callout>
-        <p className={dmSerif.className} style={{ fontStyle: "italic", fontSize: 17, color: "var(--text-primary)", lineHeight: 1.55, margin: 0 }}>
+        <p style={{ ...T.callout, margin: 0 }}>
           <E>🎯</E>Diya didn&apos;t guess. He made a confident, informed decision in under 2 minutes.
         </p>
       </Callout>
@@ -406,27 +408,27 @@ export default function SideDoorCaseStudy() {
 
       <div style={{ margin: "60px 0", display: "flex", flexDirection: "column", alignItems: "center", gap: 28 }}>
         <span style={{ fontSize: 20 }}>🍿</span>
-        <p className={dmSerif.className} style={{ fontSize: 17, color: "var(--text-secondary)", lineHeight: 1.6, textAlign: "center", margin: "-14px 0 0 0", maxWidth: 520 }}>
+        <p style={{ ...T.calloutSub, textAlign: "center", margin: "-14px 0 0 0", maxWidth: 520 }}>
           Diya clicked &quot;Strongly Recommend.&quot; Ishaan&apos;s phone buzzed a minute later. Request accepted. And for the first time in his job hunt, the silence that followed didn&apos;t feel like being ignored. He could see exactly what was happening next.
         </p>
         <img src="/images/diya-4.PNG" alt="" style={{ width: 180, objectFit: "contain", marginTop: 8 }} />
       </div>
 
       {/* 04 */}
-      <SectionLabel>04 · Shared Pipeline</SectionLabel>
+      <SectionLabel><ScreenBadge n="04" color="#10B981" />Shared Pipeline</SectionLabel>
       <h2 style={problemQ}><E>➡️</E>How can both sides know what&apos;s happening after the referral is submitted?</h2>
-      <StoryBlock color="#10B981">
-        <p className={dmSerif.className} style={{ fontSize: 17, color: "var(--text-primary)", lineHeight: 1.55, margin: "0 0 12px 0" }}>
+      <StoryBlock color="#10B981" bg="#E7F8F2">
+        <p style={T.callout}>
           Ishaan gets a notification. He opens SideDoor and sees a shared timeline: Request Accepted →
           Referral Submitted → Application Under Review → Screening → Interview → Outcome.
         </p>
-        <p style={{ fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.65, margin: 0 }}>
+        <p style={T.calloutSub}>
           At each stage, he can see who owns the next action: &quot;Recruiter reviewing your application.&quot;
           No ambiguity. No need to follow up.
         </p>
       </StoryBlock>
       <Callout>
-        <p className={dmSerif.className} style={{ fontStyle: "italic", fontSize: 17, color: "var(--text-primary)", lineHeight: 1.55, margin: 0 }}>
+        <p style={{ ...T.callout, margin: 0 }}>
           <E>🎯</E>Ishaan doesn&apos;t check his email 20 times a day anymore. He knows exactly where things stand, and so does Diya.
         </p>
       </Callout>
@@ -438,7 +440,7 @@ export default function SideDoorCaseStudy() {
       <Divider />
 
       {/* 05 */}
-      <SectionLabel>05 · Quality Over Volume</SectionLabel>
+      <SectionLabel><ScreenBadge n="05" color="#2563EB" />Quality Over Volume</SectionLabel>
       <h2 style={problemQ}><E>➡️</E>How do we stop spam without making it harder for serious candidates?</h2>
       <p style={body}>
         Candidates mass-message because response rates are low. Response rates are low because messages
@@ -452,7 +454,7 @@ export default function SideDoorCaseStudy() {
         ].map((item) => (
           <div key={item.label} style={{ paddingLeft: 16, borderLeft: "2px solid var(--border)" }}>
             <p style={{ fontFamily: "var(--font-manrope)", fontSize: 14, fontWeight: 700, color: "var(--text-primary)", margin: "0 0 4px 0", letterSpacing: "-0.02em" }}>{item.label}</p>
-            <p style={{ fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.65, margin: 0, letterSpacing: "-0.01em" }}>{item.desc}</p>
+            <p style={T.calloutSub}>{item.desc}</p>
           </div>
         ))}
       </div>
@@ -460,7 +462,7 @@ export default function SideDoorCaseStudy() {
 
       <div style={{ margin: "60px 0", display: "flex", flexDirection: "column", alignItems: "center", gap: 28 }}>
         <span style={{ fontSize: 20 }}>🍿</span>
-        <p className={dmSerif.className} style={{ fontSize: 17, color: "var(--text-secondary)", lineHeight: 1.6, textAlign: "center", margin: "-14px 0 0 0", maxWidth: 520 }}>
+        <p style={{ ...T.calloutSub, textAlign: "center", margin: "-14px 0 0 0", maxWidth: 520 }}>
           Ishaan sent one request. Got one referral. And watched it move through screening, without sending a single follow-up message. Diya saw the same thing from her end. No one was left guessing.
         </p>
         <img src="/images/ishaan-4.PNG" alt="" style={{ width: 220, objectFit: "contain", marginTop: 8 }} />
@@ -469,7 +471,6 @@ export default function SideDoorCaseStudy() {
       <Divider />
 
       <div id="toc-metrics" style={{ scrollMarginTop: 40 }} />
-      {/* Business Metrics */}
       <SectionLabel>Success Metrics</SectionLabel>
       <h2 style={{ fontFamily: "var(--font-manrope)", fontSize: 26, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.04em", margin: "0 0 16px 0", lineHeight: 1.3 }}>
         If this ships, here&apos;s what moves.
@@ -486,7 +487,7 @@ export default function SideDoorCaseStudy() {
         <p style={{ fontFamily: "var(--font-manrope)", fontSize: 20, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.03em", margin: "0 0 8px 0", lineHeight: 1.3 }}>
           Accepted referral requests per active user
         </p>
-        <p style={{ fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.65, margin: 0, letterSpacing: "-0.01em" }}>
+        <p style={T.calloutSub}>
           The goal was never more requests. <em>Better</em> ones. When acceptance rates go up, trust is working and both sides are getting real value.
         </p>
       </div>
@@ -508,7 +509,7 @@ export default function SideDoorCaseStudy() {
                 {m.label}
               </p>
             </div>
-            <p style={{ fontSize: 13, color: "var(--text-muted)", lineHeight: 1.55, margin: 0, letterSpacing: "-0.01em" }}>
+            <p style={{ ...T.small, color: "var(--text-muted)" }}>
               {m.desc}
             </p>
           </div>
@@ -516,17 +517,17 @@ export default function SideDoorCaseStudy() {
       </div>
 
       {/* Business impact */}
-      <div style={{ display: "flex", flexDirection: "column", gap: 1, background: "var(--cs-stat-gap)", borderRadius: 10, overflow: "hidden" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 12 }}>
         {[
-          { who: "Candidates", impact: "Higher conversion from outreach to referral. Less time wasted messaging people who won't reply.", color: "#10B981" },
-          { who: "Referrers", impact: "Less effort, less risk to their reputation. Participating feels normal, not like a personal favour.", color: "#2563EB" },
-          { who: "Recruiters", impact: "Better-quality signals. Less time screening bad referrals, more confidence in the ones that come through.", color: "var(--text-muted)" },
+          { who: "Candidates", impact: "Higher conversion from outreach to referral. Less time wasted messaging people who won't reply.", bg: "#E7F8F2" },
+          { who: "Referrers", impact: "Less effort, less risk to their reputation. Participating feels normal, not like a personal favour.", bg: "#E9EFFD" },
+          { who: "Recruiters", impact: "Better-quality signals. Less time screening bad referrals, more confidence in the ones that come through.", bg: "#F0F1F2" },
         ].map((item) => (
-          <div key={item.who} style={{ background: "var(--bg)", padding: "14px 20px", display: "flex", gap: 16 }}>
-            <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, fontWeight: 600, color: item.color, textTransform: "uppercase", letterSpacing: "0.08em", margin: 0, flexShrink: 0, paddingTop: 2, minWidth: 80 }}>
+          <div key={item.who} style={{ background: item.bg, padding: "16px 18px", borderRadius: 8 }}>
+            <p style={{ fontFamily: "var(--font-manrope)", fontSize: 14, fontWeight: 700, color: "var(--text-primary)", margin: "0 0 8px 0", letterSpacing: "-0.02em" }}>
               {item.who}
             </p>
-            <p style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.55, margin: 0, letterSpacing: "-0.01em" }}>
+            <p style={{ ...T.small, color: "var(--text-secondary)" }}>
               {item.impact}
             </p>
           </div>
@@ -536,7 +537,6 @@ export default function SideDoorCaseStudy() {
       <Divider />
 
       <div id="toc-process" style={{ scrollMarginTop: 40 }} />
-      {/* Process */}
       <SectionLabel>The process</SectionLabel>
       <h2 style={{ fontFamily: "var(--font-manrope)", fontSize: 26, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.04em", margin: "0 0 6px 0", lineHeight: 1.3 }}>
         That&apos;s the product. Now here&apos;s how I got there.
@@ -563,7 +563,7 @@ export default function SideDoorCaseStudy() {
           ].map((c, i) => (
             <div key={i} style={{ display: "flex", gap: 10 }}>
               <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "var(--text-muted)", marginTop: 3, flexShrink: 0 }}>—</span>
-              <p style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.55, margin: 0 }}>{c}</p>
+              <p style={T.small}>{c}</p>
             </div>
           ))}
         </div>
@@ -580,7 +580,7 @@ export default function SideDoorCaseStudy() {
           { quote: "I messaged 40 people. 9 replied. 3 actually submitted. I have no idea what happened after.", who: "Candidate" },
         ].map((item) => (
           <div key={item.who} style={{ background: "var(--cs-callout-bg)", borderRadius: 8, padding: "16px 20px" }}>
-            <p className={dmSerif.className} style={{ fontStyle: "italic", fontSize: 16, color: "var(--text-primary)", lineHeight: 1.55, margin: "0 0 8px 0" }}>
+            <p style={{ ...T.quote, margin: "0 0 10px 0" }}>
               &quot;{item.quote}&quot;
             </p>
             <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.08em", margin: 0 }}>
@@ -603,7 +603,7 @@ export default function SideDoorCaseStudy() {
           { number: "92%", label: "application drop-off rate. The funnel leaks everywhere before a referral even enters it." },
         ].map((stat) => (
           <div key={stat.number} style={{ background: "var(--bg)", padding: "20px 24px" }}>
-            <div style={{ fontFamily: "var(--font-geist-mono)", fontSize: 26, fontWeight: 600, color: "var(--text-primary)", letterSpacing: "-0.03em", marginBottom: 4 }}>
+            <div style={{ fontFamily: "var(--font-geist-mono)", fontSize: 26, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.03em", marginBottom: 4 }}>
               {stat.number}
             </div>
             <div style={{ fontSize: 13, color: "var(--text-muted)", lineHeight: 1.5, letterSpacing: "-0.01em" }}>
@@ -634,14 +634,17 @@ export default function SideDoorCaseStudy() {
       <ImagePlaceholder label="Competitive Benchmarking Table · 11 platforms across 6 dimensions" aspect="4/3" />
       <div style={{ display: "flex", flexDirection: "column", gap: 28, margin: "24px 0" }}>
         {[
-          { insight: "01 · Discovery is largely solved", detail: "LinkedIn and AI matching are strong. The problem isn't finding jobs or companies. It's everything that happens after." },
-          { insight: "02 · Tracking is universally broken", detail: "Zero post-referral visibility on every single platform. Not one solved this. Not even the referral-specific ones." },
-          { insight: "03 · Trust exists but is shallow", detail: "Profiles and ratings exist, but no platform helped referrers actually decide." },
-          { insight: "04 · No one owns the full journey", detail: "Discovery → LinkedIn. Communication → WhatsApp. Submission → ATS. Tracking → nowhere. All disconnected." },
+          { n: "01", insight: "Discovery is largely solved", detail: "LinkedIn and AI matching are strong. The problem isn't finding jobs or companies. It's everything that happens after." },
+          { n: "02", insight: "Tracking is universally broken", detail: "Zero post-referral visibility on every single platform. Not one solved this. Not even the referral-specific ones." },
+          { n: "03", insight: "Trust exists but is shallow", detail: "Profiles and ratings exist, but no platform helped referrers actually decide." },
+          { n: "04", insight: "No one owns the full journey", detail: "Discovery → LinkedIn. Communication → WhatsApp. Submission → ATS. Tracking → nowhere. All disconnected." },
         ].map((item) => (
-          <div key={item.insight}>
-            <p style={{ fontFamily: "var(--font-manrope)", fontSize: 14, fontWeight: 700, color: "var(--text-primary)", margin: "0 0 4px 0", letterSpacing: "-0.02em" }}>{item.insight}</p>
-            <p style={{ fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.65, margin: 0, letterSpacing: "-0.01em" }}>{item.detail}</p>
+          <div key={item.insight} style={{ display: "flex", gap: 14 }}>
+            <span style={{ ...T.eyebrow, marginTop: 3, flexShrink: 0 }}>{item.n}</span>
+            <div>
+              <p style={{ fontFamily: "var(--font-manrope)", fontSize: 14, fontWeight: 700, color: "var(--text-primary)", margin: "0 0 4px 0", letterSpacing: "-0.02em" }}>{item.insight}</p>
+              <p style={T.calloutSub}>{item.detail}</p>
+            </div>
           </div>
         ))}
       </div>
@@ -655,15 +658,15 @@ export default function SideDoorCaseStudy() {
       <p style={{ ...body, marginBottom: 16 }}>
         One filter for v1: does this solve the core trust and workflow problem, or does it add complexity? If the latter, it waited.
       </p>
-      <div style={{ display: "flex", flexDirection: "column", gap: 1, background: "var(--cs-stat-gap)", borderRadius: 10, overflow: "hidden", marginBottom: 28 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 12, marginBottom: 28 }}>
         {[
-          { label: "P0 · built", items: "Trust layer (structured profile, context signals), decision framework for referrers, unified referral flow, shared pipeline visibility" },
-          { label: "P1 · next", items: "Auto-fill referral submission, in-app messaging, notification system, status updates" },
+          { label: "P0 · Built", items: "Trust layer (structured profile, context signals), decision framework for referrers, unified referral flow, shared pipeline visibility" },
+          { label: "P1 · Next", items: "Auto-fill referral submission, in-app messaging, notification system, status updates" },
           { label: "Cut", items: "Deep ATS integration (too much company dependency), AI-heavy matching (black-box trust problem), complex incentive/payout system (a separate product problem entirely)" },
         ].map((row) => (
-          <div key={row.label} style={{ background: "var(--bg)", padding: "14px 20px", display: "flex", gap: 16 }}>
-            <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.08em", margin: 0, flexShrink: 0, paddingTop: 2, minWidth: 76 }}>{row.label}</p>
-            <p style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.55, margin: 0 }}>{row.items}</p>
+          <div key={row.label} style={{ background: "#F0F1F2", padding: "16px 18px", borderRadius: 8 }}>
+            <p style={{ fontFamily: "var(--font-manrope)", fontSize: 14, fontWeight: 700, color: "var(--text-primary)", margin: "0 0 8px 0", letterSpacing: "-0.02em" }}>{row.label}</p>
+            <p style={{ ...T.small, color: "var(--text-secondary)" }}>{row.items}</p>
           </div>
         ))}
       </div>
@@ -671,7 +674,6 @@ export default function SideDoorCaseStudy() {
       <Divider />
 
       <div id="toc-decisions" style={{ scrollMarginTop: 40 }} />
-      {/* Key Design Decisions */}
       <SectionLabel>Key Design Decisions</SectionLabel>
       <h2 style={{ fontFamily: "var(--font-manrope)", fontSize: 26, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.04em", margin: "0 0 6px 0", lineHeight: 1.3 }}>
         I got several things wrong. Here&apos;s what broke and how I fixed it.
@@ -691,7 +693,7 @@ export default function SideDoorCaseStudy() {
         People trust things they can see: shared college, response rate, how many people they've referred before. That's what gets surfaced upfront.
       </p>
       <Callout>
-        <p style={{ fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.65, margin: 0 }}>
+        <p style={T.calloutSub}>
           <strong>Trade-off accepted:</strong> Candidates see fewer referrers, meaning lower discovery freedom.
           But quality interactions matter more than volume in referral systems. That was a conscious choice.
         </p>
@@ -708,7 +710,7 @@ export default function SideDoorCaseStudy() {
         Structured input wasn&apos;t about removing freedom. It was about making it easy to send something good. Pre-suggested fit points and a preview screen before sending helped with both.
       </p>
       <Callout>
-        <p style={{ fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.65, margin: 0 }}>
+        <p style={T.calloutSub}>
           <strong>Intentional friction is a feature, not a bug.</strong> A small amount of effort acts
           as a commitment filter that discourages low-intent behavior without blocking serious candidates.
         </p>
@@ -737,7 +739,7 @@ export default function SideDoorCaseStudy() {
         Users don&apos;t need real-time ATS data — they need enough visibility to stop the anxiety. Lightweight stages (Submitted → Screening → Interview → Offer) solve the emotional problem without the technical dependency.
       </p>
       <Callout>
-        <p style={{ fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.65, margin: 0 }}>
+        <p style={T.calloutSub}>
           <strong>Perceived clarity matters more than perfect automation.</strong>
         </p>
       </Callout>
@@ -754,7 +756,7 @@ export default function SideDoorCaseStudy() {
           { case: "Candidate hits request limit", response: "Show cooldown. Prompt to improve request quality, not just wait it out." },
         ].map((e, i, arr) => (
           <div key={e.case} style={{ display: "flex", gap: 16, padding: "12px 0", borderBottom: i < arr.length - 1 ? "1px solid var(--border)" : "none" }}>
-            <p style={{ fontFamily: "var(--font-manrope)", fontSize: 13, fontWeight: 600, color: "var(--text-primary)", margin: 0, flexShrink: 0, width: 220 }}>{e.case}</p>
+            <p style={{ fontFamily: "var(--font-manrope)", fontSize: 13, fontWeight: 700, color: "var(--text-primary)", margin: 0, flexShrink: 0, width: 220 }}>{e.case}</p>
             <p style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.6, margin: 0 }}>{e.response}</p>
           </div>
         ))}
@@ -763,7 +765,6 @@ export default function SideDoorCaseStudy() {
       <Divider />
 
       <div id="toc-principles" style={{ scrollMarginTop: 40 }} />
-      {/* Design Principles */}
       <SectionLabel>Design Principles</SectionLabel>
       <h2 style={{ fontFamily: "var(--font-manrope)", fontSize: 22, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.04em", margin: "0 0 20px 0" }}>
         What guided every decision
@@ -777,10 +778,10 @@ export default function SideDoorCaseStudy() {
           { n: "05", title: "Ensure transparency across the entire journey", desc: "Status, ownership, and outcomes visible to both sides. No black boxes." },
         ].map((p) => (
           <div key={p.n} style={{ background: "var(--bg)", padding: "16px 20px", display: "flex", gap: 16, alignItems: "flex-start" }}>
-            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "var(--text-muted)", flexShrink: 0, marginTop: 3, letterSpacing: "0.04em" }}>{p.n}</span>
+            <span style={{ ...T.eyebrow, flexShrink: 0, marginTop: 3 }}>{p.n}</span>
             <div>
-              <p style={{ fontFamily: "var(--font-manrope)", fontSize: 14, fontWeight: 600, color: "var(--text-primary)", margin: "0 0 3px 0", letterSpacing: "-0.02em" }}>{p.title}</p>
-              <p style={{ fontSize: 13, color: "var(--text-secondary)", lineHeight: 1.55, margin: 0, letterSpacing: "-0.01em" }}>{p.desc}</p>
+              <p style={{ fontFamily: "var(--font-manrope)", fontSize: 14, fontWeight: 700, color: "var(--text-primary)", margin: "0 0 3px 0", letterSpacing: "-0.02em" }}>{p.title}</p>
+              <p style={T.small}>{p.desc}</p>
             </div>
           </div>
         ))}
@@ -793,7 +794,7 @@ export default function SideDoorCaseStudy() {
         <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 10px 0" }}>
           North Star
         </p>
-        <p className={dmSerif.className} style={{ fontSize: 22, color: "var(--text-primary)", lineHeight: 1.45, margin: 0 }}>
+        <p style={{ fontFamily: "var(--font-manrope)", fontSize: 24, fontWeight: 700, color: "var(--text-primary)", lineHeight: 1.45, margin: 0 }}>
           &quot;Enable high-quality referral matches through trust, relevance, and clarity.&quot;
         </p>
       </Callout>
@@ -801,7 +802,6 @@ export default function SideDoorCaseStudy() {
       <Divider />
 
       <div id="toc-next" style={{ scrollMarginTop: 40 }} />
-      {/* What's next */}
       <SectionLabel>What&apos;s next</SectionLabel>
       <h2 style={{ fontFamily: "var(--font-manrope)", fontSize: 22, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.04em", margin: "0 0 24px 0" }}>
         There&apos;s still a lot on the table.
@@ -813,10 +813,10 @@ export default function SideDoorCaseStudy() {
           { n: "03", title: "Unhappy paths and edge cases", body: "This covers the happy flow. Real edge cases — referrer drops, ATS fails, company goes silent — are documented but not designed yet. That's next." },
         ].map((item) => (
           <div key={item.n} style={{ display: "flex", gap: 16 }}>
-            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "var(--text-muted)", flexShrink: 0, marginTop: 3, letterSpacing: "0.04em" }}>{item.n}</span>
+            <span style={{ ...T.eyebrow, flexShrink: 0, marginTop: 3 }}>{item.n}</span>
             <div>
               <p style={{ fontFamily: "var(--font-manrope)", fontSize: 15, fontWeight: 700, color: "var(--text-primary)", margin: "0 0 5px 0", letterSpacing: "-0.02em" }}>{item.title}</p>
-              <p style={{ fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.65, margin: 0, letterSpacing: "-0.01em" }}>{item.body}</p>
+              <p style={T.calloutSub}>{item.body}</p>
             </div>
           </div>
         ))}
@@ -825,7 +825,6 @@ export default function SideDoorCaseStudy() {
       <Divider />
 
       <div id="toc-reflection" style={{ scrollMarginTop: 40 }} />
-      {/* Honest reflection */}
       <SectionLabel>Honest reflection</SectionLabel>
       <h2 style={{ fontFamily: "var(--font-manrope)", fontSize: 22, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.04em", margin: "0 0 16px 0" }}>
         If I started over, here&apos;s what I&apos;d do differently.
@@ -840,7 +839,7 @@ export default function SideDoorCaseStudy() {
       <Divider />
 
       {/* Closing */}
-      <p className={dmSerif.className} style={{ fontStyle: "italic", fontSize: 22, color: "var(--text-primary)", lineHeight: 1.5, margin: "0 0 16px 0" }}>
+      <p style={{ fontFamily: "var(--font-manrope)", fontSize: 22, fontWeight: 600, color: "var(--text-primary)", lineHeight: 1.5, margin: "0 0 16px 0" }}>
         Ishaan didn&apos;t need to message 40 people. He needed one good match, one structured ask, and the ability to see what happened next.
       </p>
       <p style={body}>

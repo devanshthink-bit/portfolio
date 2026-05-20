@@ -3,6 +3,7 @@ import Hero from "../components/Hero";
 import WeatherLocation from "../components/WeatherLocation";
 import FooterLinks from "../components/FooterLinks";
 import Link from "next/link";
+import MachineMode from "../components/MachineMode";
 import { useEffect, useRef, useState } from "react";
 
 const STATS = [
@@ -18,8 +19,7 @@ const recentWork = [
     desc: "0→1 referral platform — research, design & shipped MVP.",
     tag: "Product Design · 0→1",
     gradient: "linear-gradient(135deg, #dce8ff 0%, #c2d6ff 45%, #d8e6ff 100%)",
-    tooltipBg: "#dce8ff",
-    tooltipColor: "#2a4a8a",
+    tooltipBg: "#3d6bc4",
     slug: "sidedoor",
   },
   {
@@ -27,8 +27,7 @@ const recentWork = [
     desc: "Component system powering Claude across 12+ surfaces.",
     tag: "Design Systems · FAANG",
     gradient: "linear-gradient(to right, #ffe8c8, #ffd49a, #ffe8c8)",
-    tooltipBg: "#ffecd4",
-    tooltipColor: "#7a4a10",
+    tooltipBg: "#b86c10",
     slug: null,
   },
   {
@@ -36,8 +35,7 @@ const recentWork = [
     desc: "Reels core experience — creator tooling for 3B+ users.",
     tag: "Product Design · Scale",
     gradient: "linear-gradient(#c9caD1, #bbc7d3, #b7c6d5)",
-    tooltipBg: "#dde4ea",
-    tooltipColor: "#2e3d4a",
+    tooltipBg: "#3d5a6e",
     slug: null,
   },
 ];
@@ -102,7 +100,7 @@ function StatCounter({ value, unit, label, active, countTo, suffix, startFrom, i
 
 function WorkCard({ item }: { item: typeof recentWork[0] }) {
   const [hovered, setHovered] = useState(false);
-  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     setPos({ x: e.clientX, y: e.clientY });
@@ -111,23 +109,14 @@ function WorkCard({ item }: { item: typeof recentWork[0] }) {
   const inner = (
     <div
       className="work-card"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseEnter={() => { setHovered(true); window.dispatchEvent(new Event("cursorglow:hide")); }}
+      onMouseLeave={() => { setHovered(false); setPos(null); window.dispatchEvent(new Event("cursorglow:show")); }}
       onMouseMove={handleMouseMove}
-      style={{ textDecoration: "none", cursor: item.slug ? "pointer" : "default" }}
+      style={{ textDecoration: "none", cursor: "none" }}
     >
       <div className="work-card-media" style={{ background: item.gradient }} />
-      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 16 }}>
-        <p className="work-card-title" style={{ margin: 0 }}>{item.title}</p>
-        <span style={{
-          fontFamily: "var(--font-geist-mono)", fontSize: 10, fontWeight: 500,
-          letterSpacing: "0.05em", textTransform: "uppercase",
-          color: "var(--text-muted)", whiteSpace: "nowrap", flexShrink: 0,
-        }}>
-          {item.tag}
-        </span>
-      </div>
-      {hovered && (
+      <p className="work-card-title" style={{ margin: 0 }}>{item.title}</p>
+      {hovered && pos && (
         <div style={{
           position: "fixed",
           left: pos.x + 18,
@@ -136,9 +125,10 @@ function WorkCard({ item }: { item: typeof recentWork[0] }) {
           borderRadius: 6,
           padding: "7px 12px",
           fontSize: 12,
-          fontFamily: "var(--font-geist-mono)",
+          fontFamily: "var(--font-manrope)",
+          fontWeight: 700,
           letterSpacing: "-0.01em",
-          color: item.tooltipColor,
+          color: "#ffffff",
           pointerEvents: "none",
           zIndex: 9999,
           whiteSpace: "nowrap",
@@ -167,7 +157,7 @@ export default function Home() {
   }, []);
 
   return (
-    <>
+    <MachineMode>
       <Hero />
 
       {/* Stats strip */}
@@ -176,6 +166,7 @@ export default function Home() {
         paddingTop: 16, paddingBottom: 16,
         borderTop: "1px solid var(--border)",
         borderBottom: "1px solid var(--border)",
+        marginTop: -20,
       }}>
         {STATS.map((s, i) => (
           <StatCounter key={s.label} {...s} active={statsVisible} isLast={i === STATS.length - 1} />
@@ -195,6 +186,6 @@ export default function Home() {
         <WeatherLocation />
         <FooterLinks />
       </footer>
-    </>
+    </MachineMode>
   );
 }
