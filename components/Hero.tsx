@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+
 export default function Hero() {
   return (
     <section className="intro" style={{ marginTop: 24 }}>
@@ -13,10 +14,12 @@ export default function Hero() {
           priority
         />
       </div>
+
       <div className="intro-headings">
-        <h1>Designer & Developer.</h1>
+        <h1>Designer &amp; Developer.</h1>
         <h1>Curious about how things work and building them right.</h1>
       </div>
+
       <div className="intro-body">
         <p>
           An AI-first product designer, with a background in engineering where I spent three years shipping 0→1 flagship products used by millions across greentech, workforce enablement, and hospitality, at both startups and scale.
@@ -36,6 +39,7 @@ export default function Hero() {
           </a>
         </p>
       </div>
+
     </section>
   );
 }
