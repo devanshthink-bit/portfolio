@@ -1,9 +1,9 @@
-import { Poppins } from "next/font/google";
-import Link from "next/link";
+import { Poppins, Caveat } from "next/font/google";
 import CaseStudyTOC from "../../../components/CaseStudyTOC";
 import RubberBackButton from "../../../components/RubberBackButton";
 
 const poppins = Poppins({ weight: "700", subsets: ["latin"] });
+const caveat = Caveat({ subsets: ["latin"], variable: "--font-caveat" });
 
 // Prevents italic/serif font transforms from skewing emoji characters
 function E({ children }: { children: string }) {
@@ -164,7 +164,7 @@ const T = {
   eyebrow:   { fontFamily: "var(--font-geist-mono)", fontSize: 10, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "var(--text-muted)", margin: 0 } as React.CSSProperties,
   callout:   { fontFamily: "var(--font-manrope)", fontSize: 16, fontWeight: 600, color: "var(--text-primary)",   letterSpacing: "-0.02em", lineHeight: 1.55, margin: "0 0 10px 0" } as React.CSSProperties,
   calloutSub:{ fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.65, letterSpacing: "-0.01em", margin: 0 } as React.CSSProperties,
-  quote:     { fontFamily: "var(--font-manrope)", fontStyle: "italic" as const, fontSize: 16, fontWeight: 500, color: "var(--text-primary)", lineHeight: 1.65, margin: 0 } as React.CSSProperties,
+  quote:     { fontFamily: "var(--font-caveat)", fontStyle: "normal" as const, fontSize: 22, fontWeight: 500, color: "var(--text-primary)", lineHeight: 1.55, margin: 0 } as React.CSSProperties,
 };
 
 // Legacy aliases
@@ -178,7 +178,7 @@ const decisionHFirst = { ...T.h3, margin: "0 0 12px 0" } as React.CSSProperties;
 
 export default function SideDoorCaseStudy() {
   return (
-    <main style={{ padding: "40px 0 96px" }}>
+    <main className={caveat.variable} style={{ padding: "40px 0 96px" }}>
       <CaseStudyTOC />
       <RubberBackButton />
 
@@ -468,6 +468,21 @@ export default function SideDoorCaseStudy() {
         <img src="/images/ishaan-4.PNG" alt="" style={{ width: 220, objectFit: "contain", marginTop: 8 }} />
       </div>
 
+      {/* Who gains what */}
+      <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", margin: "0 0 12px 0" }}>Who gains what</p>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 12, marginBottom: 0 }}>
+        {[
+          { who: "Candidates", impact: "Higher conversion from outreach to referral. Less time wasted messaging people who won't reply.", bg: "#E7F8F2" },
+          { who: "Referrers", impact: "Less effort, less risk to their reputation. Participating feels normal, not like a personal favour.", bg: "#E9EFFD" },
+          { who: "Recruiters", impact: "Better-quality signals. Less time screening bad referrals, more confidence in the ones that come through.", bg: "#F0F1F2" },
+        ].map((item) => (
+          <div key={item.who} style={{ background: item.bg, padding: "16px 18px", borderRadius: 8 }}>
+            <p style={{ fontFamily: "var(--font-manrope)", fontSize: 14, fontWeight: 700, color: "var(--text-primary)", margin: "0 0 8px 0", letterSpacing: "-0.02em" }}>{item.who}</p>
+            <p style={{ ...T.small, color: "var(--text-secondary)" }}>{item.impact}</p>
+          </div>
+        ))}
+      </div>
+
       <Divider />
 
       <div id="toc-metrics" style={{ scrollMarginTop: 40 }} />
@@ -492,43 +507,90 @@ export default function SideDoorCaseStudy() {
         </p>
       </div>
 
-      {/* Metrics grid — 4 core metrics */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, background: "var(--cs-stat-gap)", borderRadius: 10, overflow: "hidden", marginBottom: 24 }}>
+      {/* Metrics — flat list */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 1, background: "var(--cs-stat-gap)", borderRadius: 10, overflow: "hidden", marginBottom: 24 }}>
         {[
-          { dir: "↑", label: "Request acceptance rate", desc: "Ranked referrers + trust signals mean candidates reach people who are likely to say yes." },
-          { dir: "↑", label: "Referral submission rate", desc: "Graded recommendations reduce perceived risk, so more referrers actually follow through." },
-          { dir: "↓", label: "Spam rate", desc: "Intentional friction filters out low-effort senders before they waste a referrer's time." },
-          { dir: "↓", label: "Time to first response", desc: "Pre-filled context and ranked discovery cut the time between sending a request and hearing back." },
+          { dir: "↑", label: "Request acceptance rate",  story: "Diya said yes to Ishaan's request" },
+          { dir: "↑", label: "Referral submission rate", story: "Diya followed through and submitted it" },
+          { dir: "↓", label: "Spam rate",                story: "Diya got 1 good request, not 40 random ones" },
+          { dir: "↓", label: "Time to first response",   story: "Diya responded on her lunch break" },
         ].map((m) => (
-          <div key={m.label} style={{ background: "var(--bg)", padding: "18px 20px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
-              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 12, fontWeight: 700, color: "#4a9e6e", background: "rgba(74,158,110,0.1)", borderRadius: 4, padding: "2px 7px", letterSpacing: "0.02em" }}>
-                {m.dir}
-              </span>
-              <p style={{ fontFamily: "var(--font-manrope)", fontSize: 14, fontWeight: 700, color: "var(--text-primary)", margin: 0, letterSpacing: "-0.02em" }}>
+          <div key={m.label} style={{ background: "var(--bg)", padding: "13px 18px", display: "flex", alignItems: "flex-start", gap: 12 }}>
+            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, fontWeight: 700, color: "#4a9e6e", background: "rgba(74,158,110,0.1)", borderRadius: 4, padding: "2px 7px", letterSpacing: "0.02em", flexShrink: 0, marginTop: 2 }}>
+              {m.dir}
+            </span>
+            <div>
+              <p style={{ fontFamily: "var(--font-manrope)", fontSize: 14, fontWeight: 600, color: "var(--text-primary)", margin: "0 0 2px 0", letterSpacing: "-0.02em" }}>
                 {m.label}
               </p>
+              <p style={{ fontSize: 11, color: "var(--text-muted)", fontStyle: "italic", margin: 0, letterSpacing: "-0.01em" }}>
+                {m.story}
+              </p>
             </div>
-            <p style={{ ...T.small, color: "var(--text-muted)" }}>
-              {m.desc}
-            </p>
           </div>
         ))}
       </div>
 
-      {/* Business impact */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 12 }}>
+      {/* Before / After funnel */}
+      <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", margin: "28px 0 14px 0" }}>
+        Referral funnel · before vs. SideDoor
+      </p>
+      <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: 1, background: "var(--cs-stat-gap)", borderRadius: "10px 10px 0 0", overflow: "hidden" }}>
+        <div style={{ background: "var(--bg)", padding: "10px 16px" }} />
+        <div style={{ background: "var(--bg)", padding: "10px 16px" }}>
+          <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, fontWeight: 600, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.08em", margin: 0 }}>Old way</p>
+        </div>
+        <div style={{ background: "#E7F8F2", padding: "10px 16px" }}>
+          <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, fontWeight: 600, color: "#10B981", textTransform: "uppercase", letterSpacing: "0.08em", margin: 0 }}>SideDoor</p>
+        </div>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 1, background: "var(--cs-stat-gap)", borderRadius: "0 0 10px 10px", overflow: "hidden", marginBottom: 28 }}>
         {[
-          { who: "Candidates", impact: "Higher conversion from outreach to referral. Less time wasted messaging people who won't reply.", bg: "#E7F8F2" },
-          { who: "Referrers", impact: "Less effort, less risk to their reputation. Participating feels normal, not like a personal favour.", bg: "#E9EFFD" },
-          { who: "Recruiters", impact: "Better-quality signals. Less time screening bad referrals, more confidence in the ones that come through.", bg: "#F0F1F2" },
-        ].map((item) => (
-          <div key={item.who} style={{ background: item.bg, padding: "16px 18px", borderRadius: 8 }}>
-            <p style={{ fontFamily: "var(--font-manrope)", fontSize: 14, fontWeight: 700, color: "var(--text-primary)", margin: "0 0 8px 0", letterSpacing: "-0.02em" }}>
-              {item.who}
+          { stage: "Request accepted",    note: "Ranked discovery + structured form replace cold DMs",  before: "~20%", beforeNote: "cold DM reply rate",                        after: "~60%", delta: "3×" },
+          { stage: "Referral submitted",  note: "Graded recommendations reduce referrer drop-off",      before: "~7%",  beforeNote: "of requests sent (40 msgs → 3 submitted)", after: "~45%", delta: "6×" },
+          { stage: "Hire (per 100 sent)", note: "Quality filtering compounds across every stage",       before: "~1%",  beforeNote: "cold apply baseline",                     after: "~8%",  delta: "8×" },
+        ].map((row) => (
+          <div key={row.stage} style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: 1, background: "var(--cs-stat-gap)" }}>
+            <div style={{ background: "var(--bg)", padding: "14px 16px" }}>
+              <p style={{ fontFamily: "var(--font-manrope)", fontSize: 13, fontWeight: 700, color: "var(--text-primary)", margin: "0 0 3px 0", letterSpacing: "-0.02em" }}>{row.stage}</p>
+              <p style={{ fontSize: 11, color: "var(--text-muted)", margin: 0, lineHeight: 1.5, letterSpacing: "-0.01em" }}>{row.note}</p>
+            </div>
+            <div style={{ background: "var(--bg)", padding: "14px 16px" }}>
+              <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 18, fontWeight: 700, color: "var(--text-muted)", margin: "0 0 3px 0", letterSpacing: "-0.02em" }}>{row.before}</p>
+              <p style={{ fontSize: 11, color: "var(--text-muted)", margin: 0, lineHeight: 1.5, letterSpacing: "-0.01em" }}>{row.beforeNote}</p>
+            </div>
+            <div style={{ background: "#E7F8F2", padding: "14px 16px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3 }}>
+                <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 18, fontWeight: 700, color: "#10B981", margin: 0, letterSpacing: "-0.02em" }}>{row.after}</p>
+                <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, fontWeight: 700, color: "#fff", background: "#10B981", borderRadius: 4, padding: "2px 6px", letterSpacing: "0.02em" }}>↑{row.delta}</span>
+              </div>
+              <p style={{ fontSize: 11, color: "#4a9e6e", margin: 0, lineHeight: 1.5, letterSpacing: "-0.01em" }}>design target</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Business outcome metrics */}
+      <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", margin: "28px 0 14px 0" }}>
+        Business outcomes
+      </p>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 1, background: "var(--cs-stat-gap)", borderRadius: 10, overflow: "hidden" }}>
+        {[
+          { number: "8–10%",    label: "Referral-to-hire rate",      note: "vs ~1% cold apply" },
+          { number: "≤29 days", label: "Time to hire",                note: "vs 44–55 days portals" },
+          { number: ">70%",     label: "Recruiter signal quality",    note: "referrals rated strong fit" },
+          { number: ">50%",     label: "Referrer activation",         note: "first eval within 7 days" },
+          { number: ">35%",     label: "Referrer return rate",        note: "returns within 30 days" },
+        ].map((m) => (
+          <div key={m.label} style={{ background: "var(--bg)", padding: "16px 18px" }}>
+            <div style={{ fontFamily: "var(--font-geist-mono)", fontSize: 20, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.03em", marginBottom: 5 }}>
+              {m.number}
+            </div>
+            <p style={{ fontFamily: "var(--font-manrope)", fontSize: 12, fontWeight: 700, color: "var(--text-primary)", margin: "0 0 3px 0", letterSpacing: "-0.02em" }}>
+              {m.label}
             </p>
-            <p style={{ ...T.small, color: "var(--text-secondary)" }}>
-              {item.impact}
+            <p style={{ fontSize: 11, color: "var(--text-muted)", margin: 0, letterSpacing: "-0.01em" }}>
+              {m.note}
             </p>
           </div>
         ))}
@@ -845,12 +907,9 @@ export default function SideDoorCaseStudy() {
       <p style={body}>
         That&apos;s what SideDoor was built around: not making referrals faster, but making them work the way they were supposed to. The channel works. The experience doesn&apos;t. This was my attempt to close that gap — for Ishaan, for Diya, and for everyone doing this the hard way.
       </p>
-      <p style={{ ...body, marginBottom: 40 }}>
+      <p style={body}>
         If you made it this far, thank you. Always happy to talk. ❤️
       </p>
-      <Link href="/" style={{ display: "inline-block", fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "var(--text-muted)", letterSpacing: "0.08em", textTransform: "uppercase", borderBottom: "1px solid var(--border)", paddingBottom: 2 }}>
-        ← Back to work
-      </Link>
     </main>
   );
 }

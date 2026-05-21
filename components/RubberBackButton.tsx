@@ -1,5 +1,7 @@
 "use client";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+
 
 function playRubber() {
   try {
@@ -23,28 +25,42 @@ function playRubber() {
 }
 
 export default function RubberBackButton() {
+  const [pos, setPos] = useState<{ top?: number; bottom?: number; left: number } | null>(null);
+
+  useEffect(() => {
+    const calc = () => window.innerWidth <= 640
+      ? { bottom: 24, left: 16 }
+      : { top: 30,   left: 20 };
+    const t = setTimeout(() => {
+      setPos(calc());
+      const onResize = () => setPos(calc());
+      window.addEventListener("resize", onResize);
+    }, 350);
+    return () => clearTimeout(t);
+  }, []);
+
+  if (!pos) return null;
+
   return (
     <Link
       href="/"
       onClick={playRubber}
       style={{
         position: "fixed",
-        top: 30,
-        left: 20,
+        top: pos.top ?? "auto",
+        bottom: pos.bottom ?? "auto",
+        left: pos.left,
         zIndex: 200,
         display: "flex",
         alignItems: "center",
         gap: 6,
-        padding: "6px 12px",
-        borderRadius: 8,
-        background: "var(--text-primary)",
-        fontFamily: "var(--font-geist-mono)",
-        fontSize: 11,
+        padding: "6px 4px",
+        fontFamily: "var(--font-geist-mono), monospace",
+        fontSize: 14,
         fontWeight: 600,
-        color: "var(--bg)",
+        color: "var(--text-primary)",
         letterSpacing: "-0.01em",
         textTransform: "uppercase",
-        boxShadow: "0 2px 12px rgba(0,0,0,0.18)",
       }}
     >
       ← Back
