@@ -213,7 +213,7 @@ function Bucket({ cat }: { cat: Cat }) {
       // Patch addEventListener before Mouse.create so Matter.js never captures wheel events
       const origAddEventListener = container.addEventListener.bind(container);
       (container as any).addEventListener = (type: string, ...args: any[]) =>
-        type === "wheel" ? undefined : origAddEventListener(type, ...args);
+        type === "wheel" ? undefined : (origAddEventListener as any)(type, ...args);
       const mouse = Mouse.create(container);
       (container as any).addEventListener = origAddEventListener;
 
