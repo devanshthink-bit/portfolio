@@ -224,6 +224,7 @@ function Bucket({ cat }: { cat: Cat }) {
       Composite.add(engine.world, mc);
 
       let audioCtx: AudioContext | null = null;
+      let interacted = false;
       const getAudio = () => {
         if (!audioCtx) audioCtx = new AudioContext();
         // iOS Safari suspends AudioContext until resumed inside a user gesture
@@ -231,7 +232,7 @@ function Bucket({ cat }: { cat: Cat }) {
         return audioCtx;
       };
       // Prime on first touch/click so subsequent sounds play immediately
-      const primeAudio = () => { getAudio(); container.removeEventListener("pointerdown", primeAudio); };
+      const primeAudio = () => { interacted = true; getAudio(); container.removeEventListener("pointerdown", primeAudio); };
       container.addEventListener("pointerdown", primeAudio);
 
       // Shaped noise buffer — exponential decay envelope baked in
@@ -286,6 +287,7 @@ function Bucket({ cat }: { cat: Cat }) {
       // Rubber bump — tags colliding: soft mid "thump" at ~260Hz
       let lastCollisionSound = 0;
       const playTick = () => {
+        if (!interacted) return;
         const now = Date.now(); if (now - lastCollisionSound < 90) return; lastCollisionSound = now;
         try {
           const ctx = getAudio(); const t = ctx.currentTime;

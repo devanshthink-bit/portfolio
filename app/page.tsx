@@ -140,7 +140,7 @@ function WorkCard({ item }: { item: typeof recentWork[0] }) {
   );
 
   return item.slug
-    ? <Link href={`/work/${item.slug}`} style={{ textDecoration: "none" }}>{inner}</Link>
+    ? <Link href={`/work/${item.slug}`} style={{ textDecoration: "none", cursor: "none" }}>{inner}</Link>
     : inner;
 }
 

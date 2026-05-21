@@ -277,7 +277,7 @@
     border-radius: 4px;
     padding: 12px;
     margin-inline: -12px;
-    cursor: pointer;
+    cursor: none;
     transition: background-color 0.16s;
   }
 

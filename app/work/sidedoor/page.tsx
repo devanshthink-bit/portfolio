@@ -317,7 +317,7 @@ export default function SideDoorCaseStudy() {
         Here&apos;s what changes.
       </p>
       <p style={{ fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.7, letterSpacing: "-0.01em", margin: 0 }}>
-        These five problems aren&apos;t isolated — they&apos;re a system. Fix one without the others and you just move the problem somewhere else. Every solution had to work as part of the whole.
+        These five problems aren&apos;t isolated: they&apos;re a system. Fix one without the others and you just move the problem somewhere else. Every solution had to work as part of the whole.
       </p>
 
       <Divider />
@@ -345,6 +345,14 @@ export default function SideDoorCaseStudy() {
       <p style={bodyLast}>
         Referrers are ranked by role relevance, shared context (alumni, mutuals), response rate, and past referral activity. People trust what they can verify, not just what someone writes about themselves.
       </p>
+
+      <div style={{ margin: "60px 0", display: "flex", flexDirection: "column", alignItems: "center", gap: 28 }}>
+        <span style={{ fontSize: 20 }}>🍿</span>
+        <p style={{ ...T.calloutSub, textAlign: "center", margin: "-14px 0 0 0", maxWidth: 520 }}>
+          Ishaan had treated referrals like a numbers game. Then he saw the ranked list. Diya Sharma: 92% match, same university, responds in under 8 hours. For the first time, a name on his screen felt like a real lead, not a lottery ticket.
+        </p>
+        <img src="/images/ishaan-3.PNG" alt="" style={{ width: 180, objectFit: "contain", marginTop: 8 }} />
+      </div>
 
       <Divider />
 
@@ -376,10 +384,7 @@ export default function SideDoorCaseStudy() {
         <p style={{ ...T.calloutSub, textAlign: "center", margin: "-14px 0 0 0", maxWidth: 520 }}>
           Diya got a notification on her lunch break. Instead of a wall of text begging for a referral, she saw a clean card: 85% role match, three fit points, a short pitch. She read it in under 30 seconds. For once, the request did the work for him.
         </p>
-        <div style={{ display: "flex", justifyContent: "center", gap: 32, alignItems: "flex-end", marginTop: 8 }}>
-          <img src="/images/ishaan-2.PNG" alt="" style={{ width: 140, objectFit: "contain", transform: "scaleX(-1)" }} />
-          <img src="/images/diya-2.PNG" alt="" style={{ width: 140, objectFit: "contain" }} />
-        </div>
+        <img src="/images/diya-2.PNG" alt="" style={{ width: 180, objectFit: "contain", marginTop: 8 }} />
       </div>
 
       {/* 03 */}
@@ -387,7 +392,7 @@ export default function SideDoorCaseStudy() {
       <h2 style={problemQ}><E>➡️</E>How can a referrer decide confidently without risking their own reputation?</h2>
       <StoryBlock color="#2563EB" bg="#E9EFFD">
         <p style={T.callout}>
-          Diya opens Ishaan&apos;s request. He doesn&apos;t see a resume dump. He sees a structured evaluation —
+          Diya opens Ishaan&apos;s request. He doesn&apos;t see a resume dump. He sees a structured evaluation:
           85% overall match with breakdown, key strengths (green), potential concerns (orange), and
           Ishaan&apos;s own pitch.
         </p>
@@ -403,7 +408,7 @@ export default function SideDoorCaseStudy() {
       </Callout>
       <ImagePlaceholder label="Screen 3 · Referrer Evaluation · Match % breakdown, Strengths & Concerns, Graded recommendation levels (Decline / Review Later / Refer / Strongly Recommend)" />
       <p style={bodyLast}>
-        Referrers aren&apos;t unwilling — they&apos;re uncertain. Building an evaluation assistant instead of just a profile view reduces that. The private note adds context for the recruiter without the candidate ever seeing it.
+        Referrers aren&apos;t unwilling: they&apos;re uncertain. Building an evaluation assistant instead of just a profile view reduces that. The private note adds context for the recruiter without the candidate ever seeing it.
       </p>
 
       <div style={{ margin: "60px 0", display: "flex", flexDirection: "column", alignItems: "center", gap: 28 }}>
@@ -437,6 +442,14 @@ export default function SideDoorCaseStudy() {
         Both sides see the same timeline. People tolerate slow hiring. What they can&apos;t tolerate is uncertainty. This fixes that, without ATS dependency.
       </p>
 
+      <div style={{ margin: "60px 0", display: "flex", flexDirection: "column", alignItems: "center", gap: 28 }}>
+        <span style={{ fontSize: 20 }}>🍿</span>
+        <p style={{ ...T.calloutSub, textAlign: "center", margin: "-14px 0 0 0", maxWidth: 520 }}>
+          Ishaan tapped the notification expecting another follow-up to send. Instead: a timeline. Request Accepted. Referral Submitted. Under Review. He put his phone down and didn&apos;t pick it back up to check his email. Not once.
+        </p>
+        <img src="/images/ishaan-5.PNG" alt="" style={{ width: 180, objectFit: "contain", marginTop: 8 }} />
+      </div>
+
       <Divider />
 
       {/* 05 */}
@@ -465,7 +478,7 @@ export default function SideDoorCaseStudy() {
         <p style={{ ...T.calloutSub, textAlign: "center", margin: "-14px 0 0 0", maxWidth: 520 }}>
           Ishaan sent one request. Got one referral. And watched it move through screening, without sending a single follow-up message. Diya saw the same thing from her end. No one was left guessing.
         </p>
-        <img src="/images/ishaan-4.PNG" alt="" style={{ width: 220, objectFit: "contain", marginTop: 8 }} />
+        <img src="/images/ishaan-4.PNG" alt="" style={{ width: 180, objectFit: "contain", marginTop: 8 }} />
       </div>
 
       {/* Who gains what */}
@@ -507,7 +520,7 @@ export default function SideDoorCaseStudy() {
         </p>
       </div>
 
-      {/* Metrics — flat list */}
+      {/* Metrics: flat list */}
       <div style={{ display: "flex", flexDirection: "column", gap: 1, background: "var(--cs-stat-gap)", borderRadius: 10, overflow: "hidden", marginBottom: 24 }}>
         {[
           { dir: "↑", label: "Request acceptance rate",  story: "Diya said yes to Ishaan's request" },
@@ -624,7 +637,7 @@ export default function SideDoorCaseStudy() {
             "MVP scope: incentive systems, AI matching, and recruiter tools had to wait for v2",
           ].map((c, i) => (
             <div key={i} style={{ display: "flex", gap: 10 }}>
-              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "var(--text-muted)", marginTop: 3, flexShrink: 0 }}>—</span>
+              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "var(--text-muted)", marginTop: 3, flexShrink: 0 }}>·</span>
               <p style={T.small}>{c}</p>
             </div>
           ))}
@@ -798,7 +811,7 @@ export default function SideDoorCaseStudy() {
       </p>
       <ImagePlaceholder label="Pipeline iterations · Full ATS sync concept vs lightweight shared stages (final)" />
       <p style={body}>
-        Users don&apos;t need real-time ATS data — they need enough visibility to stop the anxiety. Lightweight stages (Submitted → Screening → Interview → Offer) solve the emotional problem without the technical dependency.
+        Users don&apos;t need real-time ATS data: they need enough visibility to stop the anxiety. Lightweight stages (Submitted → Screening → Interview → Offer) solve the emotional problem without the technical dependency.
       </p>
       <Callout>
         <p style={T.calloutSub}>
@@ -871,8 +884,8 @@ export default function SideDoorCaseStudy() {
       <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
         {[
           { n: "01", title: "Recruiter-side analytics", body: "Companies have zero visibility into their referral funnel. A B2B dashboard with conversion rates, referrer quality scores, and time-to-hire is real, underserved, and where the business model lives." },
-          { n: "02", title: "Better incentive design", body: "Referral bonuses are delayed, unclear, and tied to hires only. A platform-level system rewarding quality referrals — not just conversions — could change participation entirely." },
-          { n: "03", title: "Unhappy paths and edge cases", body: "This covers the happy flow. Real edge cases — referrer drops, ATS fails, company goes silent — are documented but not designed yet. That's next." },
+          { n: "02", title: "Better incentive design", body: "Referral bonuses are delayed, unclear, and tied to hires only. A platform-level system rewarding quality referrals, not just conversions, could change participation entirely." },
+          { n: "03", title: "Unhappy paths and edge cases", body: "This covers the happy flow. Real edge cases (referrer drops, ATS fails, company goes silent) are documented but not designed yet. That's next." },
         ].map((item) => (
           <div key={item.n} style={{ display: "flex", gap: 16 }}>
             <span style={{ ...T.eyebrow, flexShrink: 0, marginTop: 3 }}>{item.n}</span>
@@ -892,7 +905,7 @@ export default function SideDoorCaseStudy() {
         If I started over, here&apos;s what I&apos;d do differently.
       </h2>
       <p style={body}>
-        I spent too much early time on the candidate&apos;s side — they were easier to reach. But referrers were the harder design problem. The hesitation, the fear of referring someone bad, the pressure of a yes/no choice — I only really understood those after building and scrapping my first evaluation screen.
+        I spent too much early time on the candidate&apos;s side, they were easier to reach. But referrers were the harder design problem. The hesitation, the fear of referring someone bad, the pressure of a yes/no choice: I only really understood those after building and scrapping my first evaluation screen.
       </p>
       <p style={bodyLast}>
         If I started over, I&apos;d prototype the referrer evaluation flow first and test it with real employees before anything else. Starting with the harder side would&apos;ve made everything else clearer.
@@ -905,7 +918,7 @@ export default function SideDoorCaseStudy() {
         Ishaan didn&apos;t need to message 40 people. He needed one good match, one structured ask, and the ability to see what happened next.
       </p>
       <p style={body}>
-        That&apos;s what SideDoor was built around: not making referrals faster, but making them work the way they were supposed to. The channel works. The experience doesn&apos;t. This was my attempt to close that gap — for Ishaan, for Diya, and for everyone doing this the hard way.
+        That&apos;s what SideDoor was built around: not making referrals faster, but making them work the way they were supposed to. The channel works. The experience doesn&apos;t. This was my attempt to close that gap, for Ishaan, for Diya, and for everyone doing this the hard way.
       </p>
       <p style={body}>
         If you made it this far, thank you. Always happy to talk. ❤️

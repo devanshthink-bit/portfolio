@@ -304,15 +304,15 @@ export default function About() {
         </div>
       </div>
 
-      {/* How I Think */}
+      {/* How I Work */}
       <div className="section">
-        <h3 className="section-title">How I think</h3>
+        <h3 className="section-title">How I work</h3>
         <div style={{ display: "flex", flexDirection: "column", marginTop: 8 }}>
           {[
             {
               n: "01",
-              title: "Complexity is a design failure",
-              body: "Every extra tap, every unexplained label, every 'just in case' toggle is a debt. Simplicity isn't a visual style — it's a product discipline. The simplest version that solves the real problem is always harder to build, and always more right.",
+              title: "Engineering makes design more honest",
+              body: "I spent three years as an SDE before moving into design. That means I ask different questions — what's expensive to change, where state gets messy, what takes two hours versus two weeks to build. My design decisions are grounded in what can actually ship, not just what looks right in a frame.",
             },
             {
               n: "02",
@@ -321,20 +321,15 @@ export default function About() {
             },
             {
               n: "03",
-              title: "Shipping code changes how I design",
-              body: "I ask different questions in design reviews because I've shipped production features. What's expensive to change, what's cheap to animate, what's a two-day build vs a two-week one. That makes me a more honest collaborator and a more grounded designer.",
+              title: "Close the loop by shipping",
+              body: "When an interaction can't be shown in a static mock, I build it. Working in code is how I catch what prototypes hide — the edge cases, the timing, the state transitions. It also means I can move fast: design, build, ship, iterate.",
             },
             {
               n: "04",
-              title: "AI should reduce friction, not add features",
-              body: "The bar for AI in a product: does this make the user faster, or just more dependent? AI that helps you think better is good design. AI that replaces thinking for you is a different kind of problem entirely.",
+              title: "AI as leverage, not a crutch",
+              body: "Agentic AI is part of how I work — research synthesis, rapid prototyping, design-to-code iteration. The bar I hold it to: does it help me think better, or does it replace the thinking? The second kind is always the wrong call.",
             },
-            {
-              n: "05",
-              title: "Ship early, then learn",
-              body: "Real insight comes from usage, not from debates in Figma. I'd rather put something in front of users in week two than perfect it in week six. The feedback you get from shipping is always the research you couldn't plan for.",
-            },
-          ].map((p, i) => (
+          ].map((p) => (
             <div key={p.n} style={{ display: "flex", gap: 20, padding: "20px 0", borderTop: "1px solid var(--border)" }}>
               <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, fontWeight: 600, color: "var(--text-muted)", letterSpacing: "0.08em", textTransform: "uppercase" as const, marginTop: 5, flexShrink: 0, width: 20 }}>{p.n}</span>
               <div>
