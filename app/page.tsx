@@ -109,10 +109,10 @@ function WorkCard({ item }: { item: typeof recentWork[0] }) {
   const inner = (
     <div
       className="work-card"
-      onMouseEnter={() => { setHovered(true); window.dispatchEvent(new Event("cursorglow:hide")); }}
-      onMouseLeave={() => { setHovered(false); setPos(null); window.dispatchEvent(new Event("cursorglow:show")); }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => { setHovered(false); setPos(null); }}
       onMouseMove={handleMouseMove}
-      style={{ textDecoration: "none", cursor: "none" }}
+      style={{ textDecoration: "none" }}
     >
       <div className="work-card-media" style={{ background: item.gradient }} />
       <p className="work-card-title" style={{ margin: 0 }}>{item.title}</p>

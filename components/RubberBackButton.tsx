@@ -11,7 +11,6 @@ function playRubber() {
     const gain = ctx.createGain();
     osc.connect(gain);
     gain.connect(ctx.destination);
-    osc.type = "sine";
     osc.type = "triangle";
     osc.frequency.setValueAtTime(260, ctx.currentTime);
     osc.frequency.exponentialRampToValueAtTime(120, ctx.currentTime + 0.05);
