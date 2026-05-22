@@ -6,6 +6,8 @@ const sections = [
   { id: "toc-why",        label: "Why It Matters" },
   { id: "toc-solution",   label: "The Solution" },
   { id: "toc-metrics",    label: "Success Metrics" },
+  { id: "toc-funnel",    label: "Referral Funnel" },
+  { id: "toc-business",  label: "Business Outcomes" },
   { id: "toc-process",    label: "The Process" },
   { id: "toc-decisions",  label: "Decisions" },
   { id: "toc-principles", label: "Principles" },
@@ -17,13 +19,20 @@ export default function CaseStudyTOC() {
   const [active, setActive]     = useState("");
   const [isWide, setIsWide]     = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [ready, setReady]       = useState(false);
 
-  // Track screen width
+  // Track screen width — delay render to avoid flash
   useEffect(() => {
     const check = () => setIsWide(window.innerWidth >= 1360);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
+    const t = setTimeout(() => {
+      check();
+      setReady(true);
+      window.addEventListener("resize", check);
+    }, 350);
+    return () => {
+      clearTimeout(t);
+      window.removeEventListener("resize", check);
+    };
   }, []);
 
   // Track active section via scroll position
@@ -63,6 +72,8 @@ export default function CaseStudyTOC() {
   };
 
   const activeLabel = sections.find((s) => s.id === active)?.label ?? "Contents";
+
+  if (!ready) return null;
 
   // ── Desktop sidebar ──────────────────────────────────────────────
   if (isWide) {
@@ -139,7 +150,7 @@ export default function CaseStudyTOC() {
       <div
         style={{
           position: "fixed",
-          bottom: menuOpen ? 0 : "-100%",
+          bottom: 0,
           left: 0,
           right: 0,
           zIndex: 49,
@@ -147,7 +158,8 @@ export default function CaseStudyTOC() {
           borderTop: "1px solid var(--border)",
           borderRadius: "16px 16px 0 0",
           padding: "12px 0 40px 0",
-          transition: "bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+          transform: menuOpen ? "translateY(0)" : "translateY(110%)",
+          transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
           maxHeight: "75vh",
           overflowY: "auto",
         }}

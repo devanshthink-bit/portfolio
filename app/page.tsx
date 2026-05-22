@@ -6,6 +6,7 @@ import Link from "next/link";
 import MachineMode from "../components/MachineMode";
 import { useEffect, useRef, useState } from "react";
 
+
 const STATS = [
   { value: "3+",    unit: "yrs", label: "Engg. experience", countTo: 3, suffix: "+",  startFrom: 1 },
   { value: "4",     unit: "",    label: "Products shipped",  countTo: 4, suffix: "" },
@@ -109,8 +110,8 @@ function WorkCard({ item }: { item: typeof recentWork[0] }) {
   const inner = (
     <div
       className="work-card"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => { setHovered(false); setPos(null); }}
+      onMouseEnter={() => { setHovered(true); window.dispatchEvent(new Event("cursor:hide")); }}
+      onMouseLeave={() => { setHovered(false); setPos(null); window.dispatchEvent(new Event("cursor:show")); }}
       onMouseMove={handleMouseMove}
       style={{ textDecoration: "none" }}
     >
@@ -140,7 +141,7 @@ function WorkCard({ item }: { item: typeof recentWork[0] }) {
   );
 
   return item.slug
-    ? <Link href={`/work/${item.slug}`} style={{ textDecoration: "none", cursor: "none" }}>{inner}</Link>
+    ? <Link href={`/work/${item.slug}`} style={{ textDecoration: "none" }}>{inner}</Link>
     : inner;
 }
 

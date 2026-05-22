@@ -170,7 +170,7 @@ function Bucket({ cat }: { cat: Cat }) {
       const WT   = 60;
 
       // Pass 2: read actual rendered widths
-      items.forEach((item, i) => {
+      items.forEach((_item, i) => {
         const el = tagEls[i];
         const w  = Math.max(el.offsetWidth, 60);
 
@@ -309,9 +309,10 @@ function Bucket({ cat }: { cat: Cat }) {
       MatterLib.Events.on(mc, "startdrag", (e: any) => {
         const t = tagData.find((d) => d.body === e.body);
         if (t) {
-          Sleeping.set(e.body, false); // wake sleeping body so rotation responds immediately
-          t.el.style.cursor = "grabbing";
+          Sleeping.set(e.body, false);
           t.el.style.zIndex = (++zTop).toString();
+          container.classList.add("is-grabbing");
+          document.documentElement.classList.add("physics-grabbing");
           playPickup();
           if (navigator.vibrate) navigator.vibrate(6);
         }
@@ -320,7 +321,8 @@ function Bucket({ cat }: { cat: Cat }) {
       MatterLib.Events.on(mc, "enddrag", (e: any) => {
         const t = tagData.find((d) => d.body === e.body);
         if (t) {
-          t.el.style.cursor = "grab";
+          container.classList.remove("is-grabbing");
+          document.documentElement.classList.remove("physics-grabbing");
           playDrop();
           if (navigator.vibrate) navigator.vibrate(28);
         }
@@ -370,8 +372,9 @@ function Bucket({ cat }: { cat: Cat }) {
     <div style={{ display: "flex", flexDirection: "column", gap: 0, flex: 1 }}>
       <div
         ref={containerRef}
-        onMouseEnter={() => window.dispatchEvent(new Event("cursorglow:hide"))}
-        onMouseLeave={() => window.dispatchEvent(new Event("cursorglow:show"))}
+        onMouseEnter={() => window.dispatchEvent(new Event("cursor:hide"))}
+        onMouseLeave={() => window.dispatchEvent(new Event("cursor:show"))}
+        className="physics-cursor-zone"
         style={{
           position: "relative",
           width: "100%",
@@ -379,7 +382,6 @@ function Bucket({ cat }: { cat: Cat }) {
           background: "var(--card-bg)",
           borderRadius: 12,
           overflow: "hidden",
-          cursor: "default",
           border: `1px solid ${color}22`,
         }}
       >

@@ -1,22 +1,48 @@
 "use client";
 import { useState } from "react";
 
-function playRubber() {
+function playBoot() {
   try {
     const Ctx = window.AudioContext || (window as any).webkitAudioContext;
     const ctx = new Ctx();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.type = "triangle";
-    osc.frequency.setValueAtTime(260, ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(120, ctx.currentTime + 0.05);
-    gain.gain.setValueAtTime(0, ctx.currentTime);
-    gain.gain.linearRampToValueAtTime(0.12, ctx.currentTime + 0.004);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.07);
-    osc.start(ctx.currentTime);
-    osc.stop(ctx.currentTime + 0.07);
+    const t = ctx.currentTime;
+    // Three ascending blips
+    [200, 400, 800].forEach((freq, i) => {
+      const osc = ctx.createOscillator(); const g = ctx.createGain();
+      const s = t + i * 0.07;
+      osc.type = "square";
+      osc.frequency.setValueAtTime(freq, s);
+      g.gain.setValueAtTime(0.05, s);
+      g.gain.exponentialRampToValueAtTime(0.001, s + 0.05);
+      osc.connect(g); g.connect(ctx.destination);
+      osc.start(s); osc.stop(s + 0.05);
+    });
+    // Rising confirmation sweep
+    const osc2 = ctx.createOscillator(); const g2 = ctx.createGain();
+    osc2.type = "sine";
+    osc2.frequency.setValueAtTime(500, t + 0.26);
+    osc2.frequency.exponentialRampToValueAtTime(1400, t + 0.42);
+    g2.gain.setValueAtTime(0.07, t + 0.26);
+    g2.gain.exponentialRampToValueAtTime(0.001, t + 0.45);
+    osc2.connect(g2); g2.connect(ctx.destination);
+    osc2.start(t + 0.26); osc2.stop(t + 0.45);
+    setTimeout(() => ctx.close(), 800);
+  } catch (_) {}
+}
+
+function playShutdown() {
+  try {
+    const Ctx = window.AudioContext || (window as any).webkitAudioContext;
+    const ctx = new Ctx();
+    const t = ctx.currentTime;
+    const osc = ctx.createOscillator(); const g = ctx.createGain();
+    osc.type = "square";
+    osc.frequency.setValueAtTime(700, t);
+    osc.frequency.exponentialRampToValueAtTime(90, t + 0.3);
+    g.gain.setValueAtTime(0.06, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + 0.34);
+    osc.connect(g); g.connect(ctx.destination);
+    osc.start(t); osc.stop(t + 0.34);
     osc.onended = () => ctx.close();
   } catch (_) {}
 }
@@ -28,9 +54,8 @@ const C = {
   text:   "#e2e0db",
   dim:    "#2a2a2a",
   muted:  "#555",
-  faint:  "rgba(255,255,255,0.06)",
   border: "rgba(255,255,255,0.07)",
-  green:  "#10B981",
+  cyan:   "#22D3EE",
 };
 
 function Rule() {
@@ -40,15 +65,15 @@ function Rule() {
 function SectionLabel({ children }: { children: string }) {
   return (
     <p style={{ fontFamily: mono, fontSize: 10, fontWeight: 700, letterSpacing: "0.14em", color: C.muted, textTransform: "uppercase", margin: "0 0 18px 0" }}>
-      {children}
+      <span style={{ color: C.cyan, marginRight: 8 }}>//</span>{children}
     </p>
   );
 }
 
 function Row({ k, v }: { k: string; v: string }) {
   return (
-    <div style={{ display: "flex", gap: 20, alignItems: "baseline" }}>
-      <span style={{ fontFamily: mono, fontSize: 10, color: C.muted, letterSpacing: "0.08em", textTransform: "uppercase", width: 88, flexShrink: 0 }}>{k}</span>
+    <div className="machine-row" style={{ display: "flex", gap: 20, alignItems: "baseline" }}>
+      <span className="machine-row-key" style={{ fontFamily: mono, fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", width: 88, flexShrink: 0 }}>{k}</span>
       <span style={{ fontFamily: mono, fontSize: 13, color: C.text, lineHeight: 1.6 }}>{v}</span>
     </div>
   );
@@ -57,12 +82,19 @@ function Row({ k, v }: { k: string; v: string }) {
 function MachineContent() {
   return (
     <div style={{ position: "fixed", inset: 0, background: C.bg, overflowY: "auto", zIndex: 9990, fontFamily: mono }}>
+      {/* Scan lines overlay */}
+      <div style={{
+        position: "fixed", inset: 0, pointerEvents: "none", zIndex: 9992,
+        backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.13) 3px, rgba(0,0,0,0.13) 4px)",
+      }} />
+
       <div style={{ maxWidth: 980, margin: "0 auto", padding: "40px 56px 120px" }}>
 
         {/* Header */}
-        <p style={{ fontFamily: mono, fontSize: 10, color: C.muted, letterSpacing: "0.14em", textTransform: "uppercase", margin: "0 0 10px 0" }}>
-          portfolio · machine-readable view
-        </p>
+        <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 10 }}>
+          <span style={{ width: 6, height: 6, borderRadius: "50%", background: C.cyan, display: "inline-block", flexShrink: 0, animation: "machine-blink 1.2s step-end infinite" }} />
+          <span style={{ fontFamily: mono, fontSize: 10, color: C.cyan, letterSpacing: "0.14em", textTransform: "uppercase" }}>System Online</span>
+        </div>
         <h1 style={{ fontFamily: mono, fontSize: 24, fontWeight: 700, color: C.text, letterSpacing: "-0.02em", margin: "0 0 6px 0" }}>
           Devansh Somvanshi
         </h1>
@@ -73,7 +105,7 @@ function MachineContent() {
         <Rule />
 
         {/* Status */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <Row k="status"    v="Open to opportunities" />
           <Row k="whatsapp"  v="+91 6396483499" />
           <Row k="email"     v="devansh.think@gmail.com" />
@@ -102,8 +134,8 @@ function MachineContent() {
             ["2M+ users",   "reached"],
             ["0→1 & scale", "both ends"],
           ].map(([num, label]) => (
-            <div key={num} style={{ display: "flex", gap: 10, alignItems: "baseline" }}>
-              <span style={{ fontFamily: mono, fontSize: 16, fontWeight: 700, color: C.green }}>{num}</span>
+            <div key={num} className="machine-row" style={{ display: "flex", gap: 10, alignItems: "baseline" }}>
+              <span style={{ fontFamily: mono, fontSize: 16, fontWeight: 700, color: C.cyan }}>{num}</span>
               <span style={{ fontFamily: mono, fontSize: 11, color: C.muted }}>{label}</span>
             </div>
           ))}
@@ -117,8 +149,8 @@ function MachineContent() {
 
           {/* 01 Sidedoor */}
           <div>
-            <div style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 10 }}>
-              <span style={{ fontFamily: mono, fontSize: 10, color: C.muted }}>01</span>
+            <div className="machine-row" style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 10 }}>
+              <span style={{ fontFamily: mono, fontSize: 10, color: C.cyan }}>01</span>
               <span style={{ fontFamily: mono, fontSize: 14, fontWeight: 700, color: C.text }}>Sidedoor — Job Referral Platform</span>
             </div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "3px 14px", marginBottom: 14, paddingLeft: 26 }}>
@@ -141,7 +173,7 @@ function MachineContent() {
                   ["04", "Shared Pipeline",      "Both sides see same status timeline, no ATS dependency"],
                   ["05", "Quality Over Volume",  "Request limits, ranked inbox, intentional friction filters low-intent senders"],
                 ].map(([n, title, desc]) => (
-                  <div key={n} style={{ display: "flex", gap: 10 }}>
+                  <div key={n} className="machine-row" style={{ display: "flex", gap: 10 }}>
                     <span style={{ fontFamily: mono, fontSize: 10, color: C.muted, width: 16, flexShrink: 0, marginTop: 2 }}>{n}</span>
                     <p style={{ fontFamily: mono, fontSize: 12, color: C.text, lineHeight: 1.65, margin: 0 }}>
                       <span style={{ fontWeight: 700 }}>{title}</span> — {desc}
@@ -160,8 +192,8 @@ function MachineContent() {
 
           {/* 02 Anthropic */}
           <div>
-            <div style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 10 }}>
-              <span style={{ fontFamily: mono, fontSize: 10, color: C.muted }}>02</span>
+            <div className="machine-row" style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 10 }}>
+              <span style={{ fontFamily: mono, fontSize: 10, color: C.cyan }}>02</span>
               <span style={{ fontFamily: mono, fontSize: 14, fontWeight: 700, color: C.text }}>Anthropic Console — Design System</span>
             </div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "3px 14px", marginBottom: 14, paddingLeft: 26 }}>
@@ -178,8 +210,8 @@ function MachineContent() {
 
           {/* 03 Meta Reels */}
           <div>
-            <div style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 10 }}>
-              <span style={{ fontFamily: mono, fontSize: 10, color: C.muted }}>03</span>
+            <div className="machine-row" style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 10 }}>
+              <span style={{ fontFamily: mono, fontSize: 10, color: C.cyan }}>03</span>
               <span style={{ fontFamily: mono, fontSize: 14, fontWeight: 700, color: C.text }}>Meta Reels — End-to-end Product</span>
             </div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "3px 14px", marginBottom: 14, paddingLeft: 26 }}>
@@ -205,7 +237,7 @@ function MachineContent() {
             { company: "Stanza Living", role: "SDE",                    domain: "Hospitality tech",     note: "Mobile-first products" },
             { company: "Devic Earth",   role: "SDE",                    domain: "Greentech",            note: "Product + engineering" },
           ].map((item, i, arr) => (
-            <div key={item.company} style={{ display: "flex", gap: 16, padding: "12px 0", borderBottom: i < arr.length - 1 ? `1px solid ${C.dim}` : "none" }}>
+            <div key={item.company} className="machine-row" style={{ display: "flex", gap: 16, padding: "12px 8px", margin: "0 -8px", borderBottom: i < arr.length - 1 ? `1px solid ${C.dim}` : "none" }}>
               <span style={{ fontFamily: mono, fontSize: 13, fontWeight: 700, color: C.text, width: 130, flexShrink: 0 }}>{item.company}</span>
               <div>
                 <span style={{ fontFamily: mono, fontSize: 12, color: C.text }}>{item.role}</span>
@@ -225,8 +257,8 @@ function MachineContent() {
             { cat: "Dev",    items: ["React", "Next.js", "TypeScript", "React Native", "Flutter", "Storybook", "Tailwind", "Git", "PWAs"] },
             { cat: "AI",     items: ["Claude Code", "Cursor", "Codex", "Figma Make", "Antigravity", "Agent Orchestration", "Design-to-Code Workflows", "Prompt Systems", "LLM Integration", "Design Workflow Automation", "AI Research & Synthesis"] },
           ].map(({ cat, items }) => (
-            <div key={cat} style={{ display: "flex", gap: 16 }}>
-              <span style={{ fontFamily: mono, fontSize: 10, color: C.muted, letterSpacing: "0.08em", textTransform: "uppercase", width: 52, flexShrink: 0, paddingTop: 2 }}>{cat}</span>
+            <div key={cat} className="machine-row" style={{ display: "flex", gap: 16 }}>
+              <span className="machine-row-key" style={{ fontFamily: mono, fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", width: 52, flexShrink: 0, paddingTop: 2 }}>{cat}</span>
               <p style={{ fontFamily: mono, fontSize: 12, color: C.text, lineHeight: 1.9, margin: 0 }}>
                 {items.join("  ·  ")}
               </p>
@@ -246,8 +278,8 @@ function MachineContent() {
             { n: "04", title: "AI should reduce friction, not add features", body: "Does this make the user faster, or just more dependent? AI that helps you think better is good design." },
             { n: "05", title: "Ship early, then learn",                   body: "Real insight comes from usage, not debates in Figma. The feedback from shipping is the research you couldn't plan for." },
           ].map(p => (
-            <div key={p.n} style={{ display: "flex", gap: 16 }}>
-              <span style={{ fontFamily: mono, fontSize: 10, color: C.muted, width: 20, flexShrink: 0, paddingTop: 3 }}>{p.n}</span>
+            <div key={p.n} className="machine-row" style={{ display: "flex", gap: 16 }}>
+              <span style={{ fontFamily: mono, fontSize: 10, color: C.cyan, width: 20, flexShrink: 0, paddingTop: 3 }}>{p.n}</span>
               <div>
                 <p style={{ fontFamily: mono, fontSize: 13, fontWeight: 700, color: C.text, margin: "0 0 4px 0" }}>{p.title}</p>
                 <p style={{ fontFamily: mono, fontSize: 12, color: C.muted, lineHeight: 1.65, margin: 0 }}>{p.body}</p>
@@ -260,7 +292,7 @@ function MachineContent() {
 
         {/* Contact */}
         <SectionLabel>Contact</SectionLabel>
-        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <Row k="whatsapp" v="+91 6396483499" />
           <Row k="email"    v="devansh.think@gmail.com" />
           <Row k="resume"   v="Available on request" />
@@ -302,7 +334,7 @@ export default function MachineMode({ children }: { children: React.ReactNode })
         }}
       >
         <button
-          onClick={() => { playRubber(); setMachine(false); }}
+          onClick={() => { playShutdown(); setMachine(false); }}
           style={{
             background: !machine ? "rgba(255,255,255,0.13)" : "transparent",
             border: "none",
@@ -322,9 +354,9 @@ export default function MachineMode({ children }: { children: React.ReactNode })
           Human
         </button>
         <button
-          onClick={() => { playRubber(); setMachine(true); }}
+          onClick={() => { playBoot(); setMachine(true); }}
           style={{
-            background: machine ? "rgba(16,185,129,0.18)" : "transparent",
+            background: machine ? "rgba(34,211,238,0.15)" : "transparent",
             border: "none",
             cursor: "pointer",
             padding: "6px 12px",
@@ -334,7 +366,7 @@ export default function MachineMode({ children }: { children: React.ReactNode })
             fontWeight: 600,
             letterSpacing: "-0.01em",
             textTransform: "uppercase",
-            color: machine ? C.green : "rgba(255,255,255,0.35)",
+            color: machine ? C.cyan : "rgba(255,255,255,0.35)",
             transition: "all 0.18s ease",
             whiteSpace: "nowrap",
           }}

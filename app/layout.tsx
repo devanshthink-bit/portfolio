@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "../components/Navbar";
 import PageTransition from "../components/PageTransition";
 import Assistant from "../components/Assistant";
+import CustomCursor from "../components/CustomCursor";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope" });
@@ -25,6 +26,7 @@ export default function RootLayout({
       className={`${inter.variable} ${manrope.variable} ${geistMono.variable}`}
     >
       <body suppressHydrationWarning>
+        <CustomCursor />
         <div className="page-wrapper">
           <Navbar />
           <PageTransition>{children}</PageTransition>

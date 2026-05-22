@@ -206,13 +206,15 @@ const TRANSITION = "transform 0.38s cubic-bezier(0.4, 0, 0.2, 1)";
 const CARD_GAP = 16;
 
 const ArrowLeft = () => (
-  <svg width={16} height={16} viewBox="0 0 16 16" fill="none">
-    <path d="M10 12L6 8l4-4" stroke="var(--text-primary)" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
+  <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="var(--text-primary)" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+    <line x1="19" y1="12" x2="5" y2="12" />
+    <polyline points="12 19 5 12 12 5" />
   </svg>
 );
 const ArrowRight = () => (
-  <svg width={16} height={16} viewBox="0 0 16 16" fill="none">
-    <path d="M6 4l4 4-4 4" stroke="var(--text-primary)" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
+  <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="var(--text-primary)" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+    <line x1="5" y1="12" x2="19" y2="12" />
+    <polyline points="12 5 19 12 12 19" />
   </svg>
 );
 const ModernQuote = () => (
@@ -307,33 +309,33 @@ export default function About() {
       {/* How I Work */}
       <div className="section">
         <h3 className="section-title">How I work</h3>
-        <div style={{ display: "flex", flexDirection: "column", marginTop: 8 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 1, background: "var(--border)", borderRadius: 10, overflow: "hidden", marginTop: 8 }}>
           {[
             {
               n: "01",
               title: "Engineering makes design more honest",
-              body: "I spent three years as an SDE before moving into design. That means I ask different questions — what's expensive to change, where state gets messy, what takes two hours versus two weeks to build. My design decisions are grounded in what can actually ship, not just what looks right in a frame.",
+              body: "I spent three years as an SDE before moving into design. That means I ask different questions: what's expensive to change, where state gets messy, what takes two hours versus two weeks to build. My design decisions are grounded in what can actually ship, not just what looks right in a frame.",
             },
             {
               n: "02",
               title: "Design for the system, not the screen",
-              body: "A single frame is never the full story. Edge cases, error states, empty screens, returning users — the experience lives in the transitions, not the happy path. I think in flows before I think in components.",
+              body: "A single frame is never the full story. Edge cases, error states, empty screens, returning users: the experience lives in the transitions, not the happy path. I think in flows before I think in components.",
             },
             {
               n: "03",
               title: "Close the loop by shipping",
-              body: "When an interaction can't be shown in a static mock, I build it. Working in code is how I catch what prototypes hide — the edge cases, the timing, the state transitions. It also means I can move fast: design, build, ship, iterate.",
+              body: "When an interaction can't be shown in a static mock, I build it. Working in code is how I catch what prototypes hide: the edge cases, the timing, the state transitions. It also means I can move fast: design, build, ship, iterate.",
             },
             {
               n: "04",
               title: "AI as leverage, not a crutch",
-              body: "Agentic AI is part of how I work — research synthesis, rapid prototyping, design-to-code iteration. The bar I hold it to: does it help me think better, or does it replace the thinking? The second kind is always the wrong call.",
+              body: "Agentic AI is part of how I work: research synthesis, rapid prototyping, design-to-code iteration. The bar I hold it to: does it help me think better, or does it replace the thinking? The second kind is always the wrong call.",
             },
           ].map((p) => (
-            <div key={p.n} style={{ display: "flex", gap: 20, padding: "20px 0", borderTop: "1px solid var(--border)" }}>
-              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, fontWeight: 600, color: "var(--text-muted)", letterSpacing: "0.08em", textTransform: "uppercase" as const, marginTop: 5, flexShrink: 0, width: 20 }}>{p.n}</span>
+            <div key={p.n} style={{ display: "flex", gap: 20, padding: "16px 20px", background: "var(--bg)" }}>
+              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, fontWeight: 600, color: "var(--text-muted)", letterSpacing: "0.08em", textTransform: "uppercase" as const, marginTop: 4, flexShrink: 0, width: 20 }}>{p.n}</span>
               <div>
-                <p style={{ fontFamily: "var(--font-manrope)", fontSize: 16, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.02em", margin: "0 0 6px 0" }}>{p.title}</p>
+                <p style={{ fontFamily: "var(--font-manrope)", fontSize: 15, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.02em", margin: "0 0 5px 0" }}>{p.title}</p>
                 <p className="section-body" style={{ margin: 0 }}>{p.body}</p>
               </div>
             </div>
