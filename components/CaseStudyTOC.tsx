@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 
-const sections = [
+const defaultSections = [
   { id: "toc-problem",    label: "The Problem" },
   { id: "toc-why",        label: "Why It Matters" },
   { id: "toc-solution",   label: "The Solution" },
@@ -14,7 +14,7 @@ const sections = [
   { id: "toc-reflection", label: "Reflection" },
 ];
 
-export default function CaseStudyTOC() {
+export default function CaseStudyTOC({ sections = defaultSections }: { sections?: typeof defaultSections }) {
   const [active, setActive]     = useState("");
   const [isWide, setIsWide]     = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
