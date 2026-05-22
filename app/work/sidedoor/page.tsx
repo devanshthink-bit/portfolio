@@ -113,10 +113,10 @@ function StoryBlock({ children, color, bg }: { children: React.ReactNode; color?
 
 function StatBlock() {
   const stats = [
-    { number: "5–10×", label: "more likely to get hired via referral vs portals" },
-    { number: "29 days", label: "avg time-to-hire vs 44–55 days through portals" },
-    { number: "46%", label: "1-year retention vs 33% through job boards" },
-    { number: "~20%", label: "cold LinkedIn DM reply rate (on a good day)" },
+    { number: "5–10×", label: "more likely to get hired via referral vs portals", source: "Jobera" },
+    { number: "29 days", label: "avg time-to-hire vs 44–55 days through portals", source: "salesso.com" },
+    { number: "46%", label: "1-year retention vs 33% through job boards", source: "Sci-Tech Today" },
+    { number: "~20%", label: "cold LinkedIn DM reply rate (on a good day)", source: "LinkedIn" },
   ];
   return (
     <div
@@ -147,6 +147,11 @@ function StatBlock() {
           <div style={{ fontSize: 13, color: "var(--text-muted)", lineHeight: 1.5, letterSpacing: "-0.01em" }}>
             {stat.label}
           </div>
+          {stat.source && (
+            <div style={{ fontSize: 10, color: "var(--text-muted)", marginTop: 6, letterSpacing: "0.02em", fontStyle: "italic", opacity: 0.7 }}>
+              via {stat.source}
+            </div>
+          )}
         </div>
       ))}
     </div>
@@ -244,6 +249,7 @@ export default function SideDoorCaseStudy() {
 
       <Divider />
 
+      {/* ── The problem, lived ─────────────────────────────────────── */}
       <div id="toc-problem" style={{ scrollMarginTop: 40 }} />
       <SectionLabel>The problem, lived</SectionLabel>
       <StoryBlock color="#10B981">
@@ -281,6 +287,7 @@ export default function SideDoorCaseStudy() {
 
       <Divider />
 
+      {/* ── Why this matters ──────────────────────────────────────── */}
       <div id="toc-why" style={{ scrollMarginTop: 40 }} />
       <SectionLabel>Why this matters</SectionLabel>
       <p style={body}>
@@ -309,8 +316,9 @@ export default function SideDoorCaseStudy() {
 
       <Divider />
 
+      {/* ── Five screens. One system. ──────────────────────────────── */}
       <div id="toc-solution" style={{ scrollMarginTop: 40 }} />
-      <SectionLabel>The solution</SectionLabel>
+      <SectionLabel>The solution, in five screens</SectionLabel>
       <h2 style={{ fontFamily: "var(--font-manrope)", fontSize: 26, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.04em", margin: "0 0 6px 0", lineHeight: 1.3 }}>
         Now Ishaan opens SideDoor.
       </h2>
@@ -344,7 +352,7 @@ export default function SideDoorCaseStudy() {
       </Callout>
       <ImagePlaceholder label="Screen 1 · Referrer Discovery · Ranked referrers with match %, alumni badges, response rate, activity signals" />
       <p style={bodyLast}>
-        Referrers are ranked by role relevance, shared context (alumni, mutuals), response rate, and past referral activity. People trust what they can verify, not just what someone writes about themselves.
+        Referrers carry real professional risk when they put their name behind someone. A bad referral doesn&apos;t just waste their time — it reflects on their judgment with their recruiter, their manager, their team. Ranked signals — role overlap, shared alumni, past referral activity — do two things at once: they help candidates find the most relevant person to reach out to, and they help referrers recognise which requests are worth taking seriously. Trust has to flow both ways before either side commits.
       </p>
 
       <div style={{ margin: "60px 0", display: "flex", flexDirection: "column", alignItems: "center", gap: 28 }}>
@@ -393,18 +401,18 @@ export default function SideDoorCaseStudy() {
       <h2 style={problemQ}><E>➡️</E>How can a referrer decide confidently without risking their own reputation?</h2>
       <StoryBlock color="#2563EB" bg="#E9EFFD">
         <p style={T.callout}>
-          Diya opens Ishaan&apos;s request. He doesn&apos;t see a resume dump. He sees a structured evaluation:
+          Diya opens Ishaan&apos;s request. She doesn&apos;t see a resume dump. She sees a structured evaluation:
           85% overall match with breakdown, key strengths (green), potential concerns (orange), and
           Ishaan&apos;s own pitch.
         </p>
         <p style={T.calloutSub}>
-          Instead of &quot;Refer or Don&apos;t Refer,&quot; he has four options: Decline / Review Later / Refer /
-          Strongly Recommend. He clicks Strongly Recommend. Adds a private note for the recruiter.
+          Instead of &quot;Refer or Don&apos;t Refer,&quot; she has four options: Decline / Review Later / Refer /
+          Strongly Recommend. She clicks Strongly Recommend. Adds a private note for the recruiter.
         </p>
       </StoryBlock>
       <Callout>
         <p style={{ ...T.callout, margin: 0 }}>
-          <E>🎯</E>Diya didn&apos;t guess. He made a confident, informed decision in under 2 minutes.
+          <E>🎯</E>Diya didn&apos;t guess. She made a confident, informed decision in under 2 minutes.
         </p>
       </Callout>
       <ImagePlaceholder label="Screen 3 · Referrer Evaluation · Match % breakdown, Strengths & Concerns, Graded recommendation levels (Decline / Review Later / Refer / Strongly Recommend)" />
@@ -499,173 +507,9 @@ export default function SideDoorCaseStudy() {
 
       <Divider />
 
-      <div id="toc-metrics" style={{ scrollMarginTop: 40 }} />
-      <SectionLabel>Success Metrics</SectionLabel>
-      <h2 style={{ fontFamily: "var(--font-manrope)", fontSize: 26, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.04em", margin: "0 0 16px 0", lineHeight: 1.3 }}>
-        If this ships, here&apos;s what moves.
-      </h2>
-      <p style={{ fontSize: 15, color: "var(--text-secondary)", lineHeight: 1.75, letterSpacing: "-0.01em", margin: "0 0 28px 0" }}>
-        Ishaan&apos;s story is what good looks like. But design doesn&apos;t ship on stories. It ships on metrics. Here&apos;s what every decision was tied to.
-      </p>
-
-      {/* North Star */}
-      <div style={{ background: "var(--cs-callout-bg)", borderRadius: 8, padding: "20px 24px", marginBottom: 24 }}>
-        <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 10px 0" }}>
-          North Star Metric
-        </p>
-        <p style={{ fontFamily: "var(--font-manrope)", fontSize: 20, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.03em", margin: "0 0 8px 0", lineHeight: 1.3 }}>
-          Accepted referral requests per active user
-        </p>
-        <p style={T.calloutSub}>
-          The goal was never more requests. <em>Better</em> ones. When acceptance rates go up, trust is working and both sides are getting real value.
-        </p>
-      </div>
-
-      {/* Metrics: flat list */}
-      <div style={{ display: "flex", flexDirection: "column", gap: 1, background: "var(--cs-stat-gap)", borderRadius: 10, overflow: "hidden", marginBottom: 24 }}>
-        {[
-          { dir: "↑", label: "Request acceptance rate",  story: "Diya said yes to Ishaan's request" },
-          { dir: "↑", label: "Referral submission rate", story: "Diya followed through and submitted it" },
-          { dir: "↓", label: "Spam rate",                story: "Diya got 1 good request, not 40 random ones" },
-          { dir: "↓", label: "Time to first response",   story: "Diya responded on her lunch break" },
-        ].map((m) => (
-          <div key={m.label} style={{ background: "var(--bg)", padding: "13px 18px", display: "flex", alignItems: "flex-start", gap: 12 }}>
-            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, fontWeight: 700, color: "#4a9e6e", background: "rgba(74,158,110,0.1)", borderRadius: 4, padding: "2px 7px", letterSpacing: "0.02em", flexShrink: 0, marginTop: 2 }}>
-              {m.dir}
-            </span>
-            <div>
-              <p style={{ fontFamily: "var(--font-manrope)", fontSize: 14, fontWeight: 600, color: "var(--text-primary)", margin: "0 0 2px 0", letterSpacing: "-0.02em" }}>
-                {m.label}
-              </p>
-              <p style={{ fontSize: 11, color: "var(--text-muted)", fontStyle: "italic", margin: 0, letterSpacing: "-0.01em" }}>
-                {m.story}
-              </p>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <Divider />
-
-      <div id="toc-funnel" style={{ scrollMarginTop: 40 }} />
-      {/* Before / After funnel */}
-      <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", margin: "0 0 20px 0" }}>
-        Referral funnel · before vs. SideDoor
-      </p>
-
-      {/* Legend */}
-      <div style={{ display: "flex", gap: 20, marginBottom: 28 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-          <div style={{ width: 10, height: 10, borderRadius: 2, background: "#c8c4be" }} />
-          <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "var(--text-muted)", letterSpacing: "0.04em" }}>Old way</span>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-          <div style={{ width: 10, height: 10, borderRadius: 2, background: "#2563EB" }} />
-          <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "#2563EB", letterSpacing: "0.04em" }}>Referrer side</span>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-          <div style={{ width: 10, height: 10, borderRadius: 2, background: "#10B981" }} />
-          <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "#10B981", letterSpacing: "0.04em" }}>Candidate side</span>
-        </div>
-      </div>
-
-      <div style={{ display: "flex", flexDirection: "column", gap: 0, marginBottom: 28 }}>
-        {[
-          { stage: "Requests sent",       note: "Candidate sends referral requests",                    before: 100, beforeNote: "baseline",              after: null, delta: null, color: null, bgColor: null, textColor: null },
-          { stage: "Request accepted",    note: "Ranked discovery + structured form replace cold DMs",  before: 20,  beforeNote: "cold DM reply rate",    after: 60,   delta: "3×", color: "#2563EB", bgColor: "#E9EFFD", textColor: "#1d4bb5" },
-          { stage: "Referral submitted",  note: "Graded recommendations reduce referrer drop-off",      before: 7,   beforeNote: "of requests sent",      after: 45,   delta: "6×", color: "#2563EB", bgColor: "#E9EFFD", textColor: "#1d4bb5" },
-          { stage: "Hire (per 100 sent)", note: "Quality filtering compounds across every stage",       before: 1,   beforeNote: "cold apply baseline",   after: 8,    delta: "8×", color: "#10B981", bgColor: "#E7F8F2", textColor: "#4a9e6e" },
-        ].map((row, i, arr) => (
-          <div key={row.stage}>
-            {/* Stage header */}
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
-              <div>
-                <span style={{ fontFamily: "var(--font-manrope)", fontSize: 14, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.02em" }}>{row.stage}</span>
-                <span style={{ fontSize: 13, color: "var(--text-muted)", marginLeft: 10, letterSpacing: "-0.01em" }}>{row.note}</span>
-              </div>
-              {row.delta && (
-                <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, fontWeight: 700, color: "#fff", background: row.color!, borderRadius: 4, padding: "2px 8px", letterSpacing: "0.04em", flexShrink: 0 }}>↑{row.delta}</span>
-              )}
-            </div>
-
-            {row.after === null ? (
-              /* Baseline row */
-              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                <div style={{ flex: 1, height: 36, background: "#10B981", borderRadius: 6, display: "flex", alignItems: "center", paddingLeft: 12 }}>
-                  <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 14, fontWeight: 700, color: "#fff", letterSpacing: "-0.02em" }}>100 requests sent</span>
-                </div>
-                <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "var(--text-muted)", width: 110, flexShrink: 0, letterSpacing: "-0.01em", textAlign: "right" }}>{row.beforeNote}</span>
-              </div>
-            ) : (
-              <>
-                {/* Old way bar */}
-                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }}>
-                  <div style={{ flex: 1, height: 36, background: "var(--cs-stat-gap)", borderRadius: 6, overflow: "hidden" }}>
-                    <div style={{ width: `${Math.max(row.before, 2)}%`, height: "100%", background: "#c8c4be", borderRadius: 6, display: "flex", alignItems: "center", paddingLeft: 12 }}>
-                      <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 14, fontWeight: 700, color: "var(--bg)", letterSpacing: "-0.02em", whiteSpace: "nowrap" }}>~{row.before}%</span>
-                    </div>
-                  </div>
-                  <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "var(--text-muted)", width: 110, flexShrink: 0, letterSpacing: "-0.01em", textAlign: "right" }}>{row.beforeNote}</span>
-                </div>
-
-                {/* SideDoor bar */}
-                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                  <div style={{ flex: 1, height: 36, background: row.bgColor!, borderRadius: 6, overflow: "hidden" }}>
-                    <div style={{ width: `${row.after}%`, height: "100%", background: row.color!, borderRadius: 6, display: "flex", alignItems: "center", paddingLeft: 12 }}>
-                      <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 14, fontWeight: 700, color: "#fff", letterSpacing: "-0.02em", whiteSpace: "nowrap" }}>~{row.after}%</span>
-                    </div>
-                  </div>
-                  <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: row.textColor!, width: 110, flexShrink: 0, letterSpacing: "-0.01em", textAlign: "right" }}>design target</span>
-                </div>
-              </>
-            )}
-
-            {/* Stage connector */}
-            {i < arr.length - 1 && (
-              <div style={{ display: "flex", gap: 12, margin: "10px 0" }}>
-                <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "flex-start", paddingLeft: `${row.before / 2}%` }}>
-                  <div style={{ width: 1, height: 12, background: "var(--cs-stat-gap)" }} />
-                </div>
-                <div style={{ width: 110, flexShrink: 0 }} />
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-
-      <Divider />
-
-      <div id="toc-business" style={{ scrollMarginTop: 40 }} />
-      {/* Business outcome metrics */}
-      <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", margin: "0 0 14px 0" }}>
-        Business outcomes
-      </p>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 1, background: "var(--cs-stat-gap)", borderRadius: 10, overflow: "hidden" }}>
-        {[
-          { number: "8–10%",    label: "Referral-to-hire rate",      note: "vs ~1% cold apply" },
-          { number: "≤29 days", label: "Time to hire",                note: "vs 44–55 days portals" },
-          { number: ">70%",     label: "Recruiter signal quality",    note: "referrals rated strong fit" },
-          { number: ">50%",     label: "Referrer activation",         note: "first eval within 7 days" },
-          { number: ">35%",     label: "Referrer return rate",        note: "returns within 30 days" },
-        ].map((m) => (
-          <div key={m.label} style={{ background: "var(--bg)", padding: "16px 18px" }}>
-            <div style={{ fontFamily: "var(--font-geist-mono)", fontSize: 20, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.03em", marginBottom: 5 }}>
-              {m.number}
-            </div>
-            <p style={{ fontFamily: "var(--font-manrope)", fontSize: 12, fontWeight: 700, color: "var(--text-primary)", margin: "0 0 3px 0", letterSpacing: "-0.02em" }}>
-              {m.label}
-            </p>
-            <p style={{ fontSize: 11, color: "var(--text-muted)", margin: 0, letterSpacing: "-0.01em" }}>
-              {m.note}
-            </p>
-          </div>
-        ))}
-      </div>
-
-      <Divider />
-
+      {/* ── How I got here ────────────────────────────────────────── */}
       <div id="toc-process" style={{ scrollMarginTop: 40 }} />
-      <SectionLabel>The process</SectionLabel>
+      <SectionLabel>The design process, unfiltered</SectionLabel>
       <h2 style={{ fontFamily: "var(--font-manrope)", fontSize: 26, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.04em", margin: "0 0 6px 0", lineHeight: 1.3 }}>
         That&apos;s the product. Now here&apos;s how I got there.
       </h2>
@@ -677,11 +521,11 @@ export default function SideDoorCaseStudy() {
       <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 0, marginBottom: 40 }}>
         {[
           { n: "01", label: "Assumptions",   href: "#process-assumptions" },
-          { n: "02", label: "User Research",  href: "#process-research" },
-          { n: "03", label: "Desk Research",  href: "#process-desk" },
-          { n: "04", label: "Journey Maps",   href: "#process-journey" },
-          { n: "05", label: "Competitive",    href: "#process-competitive" },
-          { n: "06", label: "Scoping",        href: "#process-scoping" },
+          { n: "02", label: "10 Conversations", href: "#process-research" },
+          { n: "03", label: "The Data",      href: "#process-desk" },
+          { n: "04", label: "Journey Maps",  href: "#process-journey" },
+          { n: "05", label: "Competitive",   href: "#process-competitive" },
+          { n: "06", label: "Scoping",       href: "#process-scoping" },
         ].map((step, i, arr) => (
           <div key={step.n} style={{ display: "flex", alignItems: "center" }}>
             <a href={step.href} className="process-step" style={{ textDecoration: "none", background: "var(--card-bg)", borderRadius: 8, padding: "10px 14px", display: "flex", alignItems: "center", gap: 8 }}>
@@ -754,7 +598,7 @@ export default function SideDoorCaseStudy() {
         </div>
       </div>
 
-      <h3 id="process-research" style={{ ...h3Gap, scrollMarginTop: 80 }}>Primary research</h3>
+      <h3 id="process-research" style={{ ...h3Gap, scrollMarginTop: 80 }}>What 10 people told me</h3>
       <p style={body}>
         I interviewed 10 people: 2 recruiters, 4 referrers, 4 candidates. All in India&apos;s tech ecosystem. The same things kept coming up.
       </p>
@@ -776,16 +620,16 @@ export default function SideDoorCaseStudy() {
       </div>
       <ImagePlaceholder label="FigJam · Interview transcripts · Affinity map · Research synthesis · Pain points · Key insights" />
 
-      <h3 id="process-desk" style={{ ...h3Gap, scrollMarginTop: 80 }}>Desk research</h3>
+      <h3 id="process-desk" style={{ ...h3Gap, scrollMarginTop: 80 }}>What the numbers confirmed</h3>
       <p style={{ ...body, marginBottom: 8 }}>
         The numbers confirmed what people were telling me.
       </p>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, background: "var(--cs-stat-gap)", borderRadius: 10, overflow: "hidden", margin: "28px 0" }}>
         {[
-          { number: "191", label: "avg applicants per tech hire. Most résumés never get opened." },
-          { number: "15–25%", label: "cold LinkedIn DM reply rate vs 40–50% for warm outreach. Context changes everything." },
-          { number: "<10%", label: "generic outreach reply rate. Copy-paste messages get copy-paste results." },
-          { number: "92%", label: "application drop-off rate. The funnel leaks everywhere before a referral even enters it." },
+          { number: "191", label: "avg applicants per tech hire. Most résumés never get opened.", source: "gem.com" },
+          { number: "15–25%", label: "cold LinkedIn DM reply rate vs 40–50% for warm outreach. Context changes everything.", source: "LinkedIn" },
+          { number: "<10%", label: "generic outreach reply rate. Copy-paste messages get copy-paste results.", source: "LinkedIn" },
+          { number: "92%", label: "application drop-off rate. The funnel leaks everywhere before a referral even enters it.", source: "shrm.org" },
         ].map((stat) => (
           <div key={stat.number} style={{ background: "var(--bg)", padding: "20px 24px" }}>
             <div style={{ fontFamily: "var(--font-geist-mono)", fontSize: 26, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.03em", marginBottom: 4 }}>
@@ -794,6 +638,11 @@ export default function SideDoorCaseStudy() {
             <div style={{ fontSize: 13, color: "var(--text-muted)", lineHeight: 1.5, letterSpacing: "-0.01em" }}>
               {stat.label}
             </div>
+            {stat.source && (
+              <div style={{ fontSize: 10, color: "var(--text-muted)", marginTop: 6, letterSpacing: "0.02em", fontStyle: "italic", opacity: 0.7 }}>
+                via {stat.source}
+              </div>
+            )}
           </div>
         ))}
       </div>
@@ -819,15 +668,39 @@ export default function SideDoorCaseStudy() {
       <ImagePlaceholder label="Competitive Benchmarking Table · 11 platforms across 6 dimensions" />
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, margin: "24px 0" }}>
         {[
-          { n: "01", icon: "✅", insight: "Discovery is largely solved", detail: "LinkedIn and AI matching are strong. The problem isn't finding jobs, it's everything that happens after.", color: "#10B981", bg: "#E7F8F2" },
-          { n: "02", icon: "❌", insight: "Tracking is universally broken", detail: "Zero post-referral visibility on every platform. Not one solved this, not even referral-specific ones.", color: "#ef4444", bg: "#FEF2F2" },
-          { n: "03", icon: "⚠️", insight: "Trust exists but is shallow", detail: "Profiles and ratings exist, but no platform helped referrers actually decide whether to refer.", color: "#f59e0b", bg: "#FFFBEB" },
-          { n: "04", icon: "🔗", insight: "No one owns the full journey", detail: "Discovery → LinkedIn. Communication → WhatsApp. Submission → ATS. Tracking → nowhere.", color: "#6366f1", bg: "#EEF2FF" },
+          {
+            icon: <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>,
+            insight: "Discovery is largely solved",
+            detail: "LinkedIn and AI matching are strong. The problem isn't finding jobs, it's everything that happens after.",
+            color: "#10B981", iconBg: "rgba(16,185,129,0.15)", bg: "#E7F8F2",
+          },
+          {
+            icon: <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
+            insight: "Tracking is universally broken",
+            detail: "Zero post-referral visibility on every platform. Not one solved this, not even referral-specific ones.",
+            color: "#ef4444", iconBg: "rgba(239,68,68,0.12)", bg: "#FEF2F2",
+          },
+          {
+            icon: <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17" strokeWidth="3"/></svg>,
+            insight: "Trust exists but is shallow",
+            detail: "Profiles and ratings exist, but no platform helped referrers actually decide whether to refer.",
+            color: "#f59e0b", iconBg: "rgba(245,158,11,0.12)", bg: "#FFFBEB",
+          },
+          {
+            icon: <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="6" height="6" rx="1"/><rect x="16" y="3" width="6" height="6" rx="1"/><rect x="9" y="15" width="6" height="6" rx="1"/><path d="M5 9v3a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/><line x1="12" y1="13" x2="12" y2="15"/></svg>,
+            insight: "No one owns the full journey",
+            detail: "Discovery → LinkedIn. Communication → WhatsApp. Submission → ATS. Tracking → nowhere.",
+            color: "#6366f1", iconBg: "rgba(99,102,241,0.12)", bg: "#EEF2FF",
+          },
         ].map((item) => (
-          <div key={item.insight} style={{ background: item.bg, borderRadius: 10, padding: "18px 20px" }}>
-            <span style={{ fontSize: 22, display: "block", marginBottom: 10 }}>{item.icon}</span>
-            <p style={{ fontFamily: "var(--font-manrope)", fontSize: 13, fontWeight: 700, color: "var(--text-primary)", margin: "0 0 6px 0", letterSpacing: "-0.02em", lineHeight: 1.4 }}>{item.insight}</p>
-            <p style={{ fontSize: 12, color: "var(--text-secondary)", margin: 0, lineHeight: 1.6, letterSpacing: "-0.01em" }}>{item.detail}</p>
+          <div key={item.insight} style={{ background: item.bg, borderRadius: 10, padding: "16px 18px", display: "flex", gap: 14, alignItems: "flex-start" }}>
+            <div style={{ width: 36, height: 36, borderRadius: 8, background: item.iconBg, color: item.color, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              {item.icon}
+            </div>
+            <div>
+              <p style={{ fontFamily: "var(--font-manrope)", fontSize: 13, fontWeight: 700, color: "var(--text-primary)", margin: "0 0 6px 0", letterSpacing: "-0.02em", lineHeight: 1.4 }}>{item.insight}</p>
+              <p style={{ fontSize: 12, color: "var(--text-secondary)", margin: 0, lineHeight: 1.6, letterSpacing: "-0.01em" }}>{item.detail}</p>
+            </div>
           </div>
         ))}
       </div>
@@ -856,8 +729,45 @@ export default function SideDoorCaseStudy() {
 
       <Divider />
 
+      {/* ── The rules that guided everything ──────────────────────── */}
+      <div id="toc-principles" style={{ scrollMarginTop: 40 }} />
+      <SectionLabel>Design principles, behind every screen</SectionLabel>
+      <h2 style={{ fontFamily: "var(--font-manrope)", fontSize: 22, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.04em", margin: "0 0 20px 0" }}>
+        What every screen had to answer to
+      </h2>
+      <div style={{ display: "flex", flexDirection: "column", gap: 1, background: "var(--cs-stat-gap)", borderRadius: 10, overflow: "hidden" }}>
+        {[
+          { n: "01", title: "Make trust visible before interaction", desc: "Surface strong signals: fit, context, alumni, intent, before any message is sent." },
+          { n: "02", title: "Enable fast, low-risk referral decisions", desc: "Give referrers structured information and safe action options. Remove uncertainty, not choice." },
+          { n: "03", title: "Replace unstructured outreach with guided requests", desc: "Every request should be clear, relevant, and easy to evaluate. Blank messages don't belong here." },
+          { n: "04", title: "Design for end-to-end, low-friction flow", desc: "Discovery → request → referral → tracking in one system. No tool switching." },
+          { n: "05", title: "Ensure transparency across the entire journey", desc: "Status, ownership, and outcomes visible to both sides. No black boxes." },
+        ].map((p) => (
+          <div key={p.n} style={{ background: "var(--bg)", padding: "16px 20px", display: "flex", gap: 16, alignItems: "flex-start" }}>
+            <span style={{ ...T.eyebrow, flexShrink: 0, marginTop: 3 }}>{p.n}</span>
+            <div>
+              <p style={{ fontFamily: "var(--font-manrope)", fontSize: 14, fontWeight: 700, color: "var(--text-primary)", margin: "0 0 4px 0", letterSpacing: "-0.02em" }}>{p.title}</p>
+              <p style={T.calloutSub}>{p.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* North Star */}
+      <Callout>
+        <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 10px 0" }}>
+          North Star
+        </p>
+        <p style={{ fontFamily: "var(--font-manrope)", fontSize: 24, fontWeight: 700, color: "var(--text-primary)", lineHeight: 1.45, margin: 0 }}>
+          &quot;Enable high-quality referral matches through trust, relevance, and clarity.&quot;
+        </p>
+      </Callout>
+
+      <Divider />
+
+      {/* ── Where I got it wrong first ────────────────────────────── */}
       <div id="toc-decisions" style={{ scrollMarginTop: 40 }} />
-      <SectionLabel>Key Design Decisions</SectionLabel>
+      <SectionLabel>Key decisions that shaped the final design</SectionLabel>
       <h2 style={{ fontFamily: "var(--font-manrope)", fontSize: 26, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.04em", margin: "0 0 6px 0", lineHeight: 1.3 }}>
         I got several things wrong. Here&apos;s what broke and how I fixed it.
       </h2>
@@ -927,9 +837,16 @@ export default function SideDoorCaseStudy() {
         </p>
       </Callout>
 
-      <h3 style={{ ...decisionH, marginTop: 36 }}>What happens when things go wrong</h3>
-      <p style={{ ...body, marginBottom: 16 }}>
-        The happy flow is never the whole story. Here are the failure modes I mapped.
+      <Divider />
+
+      {/* ── When the happy path breaks ────────────────────────────── */}
+      <div id="toc-usecases" style={{ scrollMarginTop: 40 }} />
+      <SectionLabel>Designing for the edge cases</SectionLabel>
+      <h2 style={{ fontFamily: "var(--font-manrope)", fontSize: 26, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.04em", margin: "0 0 16px 0", lineHeight: 1.3 }}>
+        SideDoor doesn&apos;t just handle the good days.
+      </h2>
+      <p style={{ fontSize: 15, color: "var(--text-secondary)", lineHeight: 1.75, letterSpacing: "-0.01em", margin: "0 0 24px 0" }}>
+        Every referral flow has a moment where something slips. The referrer gets busy. The ATS drops the submission. A company goes quiet for three weeks. Here&apos;s what the design does when that happens.
       </p>
       <div style={{ display: "flex", flexDirection: "column" }}>
         {[
@@ -947,24 +864,51 @@ export default function SideDoorCaseStudy() {
 
       <Divider />
 
-      <div id="toc-principles" style={{ scrollMarginTop: 40 }} />
-      <SectionLabel>Design Principles</SectionLabel>
-      <h2 style={{ fontFamily: "var(--font-manrope)", fontSize: 22, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.04em", margin: "0 0 20px 0" }}>
-        What guided every decision
+      {/* ── How we'd know it worked ───────────────────────────────── */}
+      <div id="toc-metrics" style={{ scrollMarginTop: 40 }} />
+      <SectionLabel>Target metrics that tell the real story</SectionLabel>
+      <h2 style={{ fontFamily: "var(--font-manrope)", fontSize: 26, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.04em", margin: "0 0 16px 0", lineHeight: 1.3 }}>
+        If this ships, here&apos;s what moves.
       </h2>
-      <div style={{ display: "flex", flexDirection: "column", gap: 1, background: "var(--cs-stat-gap)", borderRadius: 10, overflow: "hidden" }}>
+      <p style={{ fontSize: 15, color: "var(--text-secondary)", lineHeight: 1.75, letterSpacing: "-0.01em", margin: "0 0 16px 0" }}>
+        Ishaan&apos;s story is what good looks like. But design doesn&apos;t ship on stories. It ships on metrics. Here&apos;s what every decision was tied to.
+      </p>
+      <p style={{ fontSize: 12, color: "var(--text-muted)", fontStyle: "italic", letterSpacing: "-0.01em", margin: "0 0 28px 0" }}>
+        These are design-time targets — what success looks like if this ships, not measured outcomes.
+      </p>
+
+      {/* North Star Metric */}
+      <div style={{ background: "var(--cs-callout-bg)", borderRadius: 8, padding: "20px 24px", marginBottom: 24 }}>
+        <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 10px 0" }}>
+          North Star Metric
+        </p>
+        <p style={{ fontFamily: "var(--font-manrope)", fontSize: 20, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.03em", margin: "0 0 8px 0", lineHeight: 1.3 }}>
+          Accepted referral requests per active user
+        </p>
+        <p style={T.calloutSub}>
+          The goal was never more requests. <em>Better</em> ones. When acceptance rates go up, trust is working and both sides are getting real value.
+        </p>
+      </div>
+
+      {/* Metrics: flat list */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 1, background: "var(--cs-stat-gap)", borderRadius: 10, overflow: "hidden", marginBottom: 24 }}>
         {[
-          { n: "01", title: "Make trust visible before interaction", desc: "Surface strong signals: fit, context, alumni, intent, before any message is sent." },
-          { n: "02", title: "Enable fast, low-risk referral decisions", desc: "Give referrers structured information and safe action options. Remove uncertainty, not choice." },
-          { n: "03", title: "Replace unstructured outreach with guided requests", desc: "Every request should be clear, relevant, and easy to evaluate. Blank messages don't belong here." },
-          { n: "04", title: "Design for end-to-end, low-friction flow", desc: "Discovery → request → referral → tracking in one system. No tool switching." },
-          { n: "05", title: "Ensure transparency across the entire journey", desc: "Status, ownership, and outcomes visible to both sides. No black boxes." },
-        ].map((p) => (
-          <div key={p.n} style={{ background: "var(--bg)", padding: "16px 20px", display: "flex", gap: 16, alignItems: "flex-start" }}>
-            <span style={{ ...T.eyebrow, flexShrink: 0, marginTop: 3 }}>{p.n}</span>
+          { dir: "↑", label: "Request acceptance rate",  story: "Diya said yes to Ishaan's request" },
+          { dir: "↑", label: "Referral submission rate", story: "Diya followed through and submitted it" },
+          { dir: "↓", label: "Spam rate",                story: "Diya got 1 good request, not 40 random ones" },
+          { dir: "↓", label: "Time to first response",   story: "Diya responded on her lunch break" },
+        ].map((m) => (
+          <div key={m.label} style={{ background: "var(--bg)", padding: "13px 18px", display: "flex", alignItems: "flex-start", gap: 12 }}>
+            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, fontWeight: 700, color: "#2563EB", background: "rgba(37,99,235,0.1)", borderRadius: 4, padding: "2px 7px", letterSpacing: "0.02em", flexShrink: 0, marginTop: 2 }}>
+              {m.dir}
+            </span>
             <div>
-              <p style={{ fontFamily: "var(--font-manrope)", fontSize: 14, fontWeight: 700, color: "var(--text-primary)", margin: "0 0 4px 0", letterSpacing: "-0.02em" }}>{p.title}</p>
-              <p style={T.calloutSub}>{p.desc}</p>
+              <p style={{ fontFamily: "var(--font-manrope)", fontSize: 14, fontWeight: 600, color: "var(--text-primary)", margin: "0 0 2px 0", letterSpacing: "-0.02em" }}>
+                {m.label}
+              </p>
+              <p style={{ fontSize: 11, color: "var(--text-muted)", fontStyle: "italic", margin: 0, letterSpacing: "-0.01em" }}>
+                {m.story}
+              </p>
             </div>
           </div>
         ))}
@@ -972,18 +916,157 @@ export default function SideDoorCaseStudy() {
 
       <Divider />
 
-      {/* North Star */}
-      <Callout>
-        <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.1em", margin: "0 0 10px 0" }}>
-          North Star
-        </p>
-        <p style={{ fontFamily: "var(--font-manrope)", fontSize: 24, fontWeight: 700, color: "var(--text-primary)", lineHeight: 1.45, margin: 0 }}>
-          &quot;Enable high-quality referral matches through trust, relevance, and clarity.&quot;
-        </p>
-      </Callout>
+      <div id="toc-funnel" style={{ scrollMarginTop: 40 }} />
+      {/* Before / After funnel */}
+      <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", margin: "0 0 20px 0" }}>
+        Referral funnel — Before Vs SideDoor
+      </p>
+
+      {/* Legend */}
+      <div style={{ display: "flex", gap: 20, marginBottom: 28 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+          <div style={{ width: 10, height: 10, borderRadius: 2, background: "#a8a4a0" }} />
+          <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "var(--text-muted)", letterSpacing: "0.04em" }}>Old way</span>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+          <div style={{ width: 10, height: 10, borderRadius: 2, background: "#2563EB" }} />
+          <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "#2563EB", letterSpacing: "0.04em" }}>Referrer side</span>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+          <div style={{ width: 10, height: 10, borderRadius: 2, background: "#10B981" }} />
+          <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "#10B981", letterSpacing: "0.04em" }}>Candidate side</span>
+        </div>
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 0, marginBottom: 28 }}>
+        {[
+          { stage: "Requests sent",       note: "Candidate sends referral requests",                    before: 100, beforeNote: "baseline",              after: null, delta: null, color: null, bgColor: null, textColor: null },
+          { stage: "Request accepted",    note: "Ranked discovery + structured form replace cold DMs",  before: 20,  beforeNote: "cold DM reply rate",    after: 60,   delta: "3×", color: "#2563EB", bgColor: "#E9EFFD", textColor: "#1d4bb5" },
+          { stage: "Referral submitted",  note: "Graded recommendations reduce referrer drop-off",      before: 7,   beforeNote: "of requests sent",      after: 45,   delta: "6×", color: "#2563EB", bgColor: "#E9EFFD", textColor: "#1d4bb5" },
+          { stage: "Hire (per 100 sent)", note: "Quality filtering compounds across every stage",       before: 1,   beforeNote: "cold apply baseline",   after: 8,    delta: "8×", color: "#10B981", bgColor: "#E7F8F2", textColor: "#4a9e6e" },
+        ].map((row, i, arr) => (
+          <div key={row.stage}>
+            {/* Stage header */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
+              <div>
+                <span style={{ fontFamily: "var(--font-manrope)", fontSize: 14, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.02em" }}>{row.stage}</span>
+                <span style={{ fontSize: 13, color: "var(--text-muted)", marginLeft: 10, letterSpacing: "-0.01em" }}>{row.note}</span>
+              </div>
+              {row.delta && (
+                <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, fontWeight: 700, color: "#fff", background: row.color!, borderRadius: 4, padding: "2px 8px", letterSpacing: "0.04em", flexShrink: 0 }}>↑{row.delta}</span>
+              )}
+            </div>
+
+            {row.after === null ? (
+              /* Baseline row */
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <div style={{ flex: 1, height: 36, background: "#10B981", borderRadius: 6, display: "flex", alignItems: "center", paddingLeft: 12 }}>
+                  <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 14, fontWeight: 700, color: "#fff", letterSpacing: "-0.02em" }}>100 requests sent</span>
+                </div>
+                <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "var(--text-muted)", width: 110, flexShrink: 0, letterSpacing: "-0.01em", textAlign: "right" }}>{row.beforeNote}</span>
+              </div>
+            ) : (
+              <>
+                {/* Old way bar */}
+                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }}>
+                  <div style={{ flex: 1, height: 36, background: "#ece9e4", borderRadius: 6, overflow: "hidden" }}>
+                    <div style={{ width: `${Math.max(row.before, 2)}%`, height: "100%", background: "#a8a4a0", borderRadius: 6, display: "flex", alignItems: "center", paddingLeft: 12 }}>
+                      <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 14, fontWeight: 700, color: "var(--bg)", letterSpacing: "-0.02em", whiteSpace: "nowrap" }}>~{row.before}%</span>
+                    </div>
+                  </div>
+                  <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "var(--text-muted)", width: 110, flexShrink: 0, letterSpacing: "-0.01em", textAlign: "right" }}>{row.beforeNote}</span>
+                </div>
+
+                {/* SideDoor bar */}
+                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <div style={{ flex: 1, height: 36, background: row.bgColor!, borderRadius: 6, overflow: "hidden" }}>
+                    <div style={{ width: `${row.after}%`, height: "100%", background: row.color!, borderRadius: 6, display: "flex", alignItems: "center", paddingLeft: 12 }}>
+                      <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 14, fontWeight: 700, color: "#fff", letterSpacing: "-0.02em", whiteSpace: "nowrap" }}>~{row.after}%</span>
+                    </div>
+                  </div>
+                  <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: row.textColor!, width: 110, flexShrink: 0, letterSpacing: "-0.01em", textAlign: "right" }}>design target</span>
+                </div>
+              </>
+            )}
+
+            {/* Stage connector */}
+            {i < arr.length - 1 && (
+              <div style={{ display: "flex", gap: 12, margin: "10px 0" }}>
+                <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "flex-start", paddingLeft: `${row.before / 2}%` }}>
+                  <div style={{ width: 1, height: 12, background: "var(--cs-stat-gap)" }} />
+                </div>
+                <div style={{ width: 110, flexShrink: 0 }} />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
 
       <Divider />
 
+      <div id="toc-business" style={{ scrollMarginTop: 40 }} />
+      {/* Business outcome metrics */}
+      <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--text-muted)", margin: "0 0 20px 0" }}>
+        Target Business Outcomes
+      </p>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12 }}>
+        {[
+          {
+            number: "8–10%",
+            label: "Referral-to-hire rate",
+            story: "One good request. One hire.",
+            before: { pct: 11, label: "~1% cold apply" },
+            after:  { pct: 90, label: "SideDoor target" },
+            color: "#10B981", bg: "#E7F8F2", trackBg: "rgba(16,185,129,0.15)",
+          },
+          {
+            number: "≤29 days",
+            label: "Time to hire",
+            story: "Ishaan didn't wait 6 weeks.",
+            before: { pct: 92, label: "44–55 days portals" },
+            after:  { pct: 48, label: "SideDoor target" },
+            color: "#2563EB", bg: "#E9EFFD", trackBg: "rgba(37,99,235,0.12)",
+          },
+          {
+            number: "46%",
+            label: "1-year retention",
+            story: "Better matches stay longer.",
+            before: { pct: 55, label: "33% job boards" },
+            after:  { pct: 77, label: "SideDoor target" },
+            color: "#10B981", bg: "#E7F8F2", trackBg: "rgba(16,185,129,0.15)",
+          },
+        ].map((m) => (
+          <div key={m.label} style={{ background: m.bg, borderRadius: 12, padding: "24px" }}>
+            <div style={{ fontFamily: "var(--font-geist-mono)", fontSize: 34, fontWeight: 700, color: m.color, letterSpacing: "-0.04em", marginBottom: 6 }}>
+              {m.number}
+            </div>
+            <p style={{ fontFamily: "var(--font-manrope)", fontSize: 14, fontWeight: 700, color: "var(--text-primary)", margin: "0 0 4px 0", letterSpacing: "-0.02em" }}>
+              {m.label}
+            </p>
+            <p style={{ fontFamily: "var(--font-caveat)", fontSize: 15, color: m.color, margin: "0 0 20px 0", opacity: 0.85 }}>
+              {m.story}
+            </p>
+            {/* Before bar */}
+            <div style={{ marginBottom: 8 }}>
+              <div style={{ height: 4, background: "rgba(0,0,0,0.08)", borderRadius: 2, overflow: "hidden", marginBottom: 4 }}>
+                <div style={{ width: `${m.before.pct}%`, height: "100%", background: "#a8a4a0", borderRadius: 2 }} />
+              </div>
+              <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "var(--text-muted)", margin: 0, letterSpacing: "0.02em" }}>{m.before.label}</p>
+            </div>
+            {/* After bar */}
+            <div>
+              <div style={{ height: 4, background: m.trackBg, borderRadius: 2, overflow: "hidden", marginBottom: 4 }}>
+                <div style={{ width: `${m.after.pct}%`, height: "100%", background: m.color, borderRadius: 2 }} />
+              </div>
+              <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: m.color, margin: 0, letterSpacing: "0.02em", fontWeight: 600 }}>{m.after.label}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <Divider />
+
+      {/* ── What's next ───────────────────────────────────────────── */}
       <div id="toc-next" style={{ scrollMarginTop: 40 }} />
       <SectionLabel>What&apos;s next</SectionLabel>
       <h2 style={{ fontFamily: "var(--font-manrope)", fontSize: 22, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.04em", margin: "0 0 24px 0" }}>
@@ -1007,6 +1090,7 @@ export default function SideDoorCaseStudy() {
 
       <Divider />
 
+      {/* ── Honest reflection ─────────────────────────────────────── */}
       <div id="toc-reflection" style={{ scrollMarginTop: 40 }} />
       <SectionLabel>Honest reflection</SectionLabel>
       <h2 style={{ fontFamily: "var(--font-manrope)", fontSize: 22, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.04em", margin: "0 0 16px 0" }}>
@@ -1014,6 +1098,12 @@ export default function SideDoorCaseStudy() {
       </h2>
       <p style={body}>
         I spent too much early time on the candidate&apos;s side, they were easier to reach. But referrers were the harder design problem. The hesitation, the fear of referring someone bad, the pressure of a yes/no choice: I only really understood those after building and scrapping my first evaluation screen.
+      </p>
+      <p style={body}>
+        The ATS constraint initially felt like a wall. It turned out to be a forcing function. Removing the dependency pushed me toward a simpler, lighter pipeline model that&apos;s more resilient — it works regardless of what ATS a company uses. I&apos;ve started thinking of constraints that way: not as blockers, but as the thing that stops you from overbuilding.
+      </p>
+      <p style={body}>
+        My research sample was skewed. The four referrers I interviewed had all opted into the conversation, which means they were probably already more thoughtful about referrals than average. The real resistance — the employee who ignores every request — I never got to talk to. That&apos;s a gap. You should design for the skeptic, not just the willing.
       </p>
       <p style={bodyLast}>
         If I started over, I&apos;d prototype the referrer evaluation flow first and test it with real employees before anything else. Starting with the harder side would&apos;ve made everything else clearer.
