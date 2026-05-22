@@ -81,6 +81,8 @@ function Bucket({ cat }: { cat: Cat }) {
     let runner: import("matter-js").Runner;
     let engine: import("matter-js").Engine;
     const tagEls: HTMLDivElement[] = [];
+    // Declared here so cleanup can reference it even if init() completes async
+    let forceRelease: () => void;
 
     // Prevent browser native drag ghost on the whole container
     container.addEventListener("dragstart", (e) => e.preventDefault());
@@ -223,6 +225,14 @@ function Bucket({ cat }: { cat: Cat }) {
       });
       Composite.add(engine.world, mc);
 
+      // Force-release the constraint when mouse/touch ends anywhere on the page.
+      // Without this, releasing outside the container leaves the spring active and
+      // pulls the tag back toward wherever the cursor last was.
+      forceRelease = () => { (mouse as any).button = -1; };
+      window.addEventListener("mouseup",   forceRelease);
+      window.addEventListener("touchend",  forceRelease);
+      window.addEventListener("pointerup", forceRelease);
+
       let audioCtx: AudioContext | null = null;
       let interacted = false;
       const getAudio = () => {
@@ -305,10 +315,34 @@ function Bucket({ cat }: { cat: Cat }) {
       // z-index counter — dragged tag always stays on top of peers
       let zTop = items.length + 10;
 
+      // Rolling mouse velocity tracker — used to apply a throw impulse on release.
+      // Matter.js's spring constraint gives near-zero velocity on release; we override it.
+      const throwVel = { x: 0, y: 0 };
+      let lastPointer = { x: 0, y: 0, t: 0 };
+      let dragging = false;
+
+      container.addEventListener("pointermove", (pe) => {
+        if (!dragging) return;
+        const rect = container.getBoundingClientRect();
+        const cx = pe.clientX - rect.left;
+        const cy = pe.clientY - rect.top;
+        const now = performance.now();
+        const dt  = now - lastPointer.t;
+        if (dt > 0 && dt < 80) {
+          // Convert px/ms → px/frame (60fps ≈ 16.67ms per frame)
+          throwVel.x = ((cx - lastPointer.x) / dt) * 16.67;
+          throwVel.y = ((cy - lastPointer.y) / dt) * 16.67;
+        }
+        lastPointer = { x: cx, y: cy, t: now };
+      });
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       MatterLib.Events.on(mc, "startdrag", (e: any) => {
         const t = tagData.find((d) => d.body === e.body);
         if (t) {
+          dragging = true;
+          throwVel.x = 0;
+          throwVel.y = 0;
           Sleeping.set(e.body, false);
           t.el.style.zIndex = (++zTop).toString();
           container.classList.add("is-grabbing");
@@ -319,13 +353,23 @@ function Bucket({ cat }: { cat: Cat }) {
       });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       MatterLib.Events.on(mc, "enddrag", (e: any) => {
+        dragging = false;
         const t = tagData.find((d) => d.body === e.body);
         if (t) {
+          // Apply throw velocity — cap at ±40 px/frame so tags don't escape the walls
+          const cap = 40;
+          const vx = Math.max(-cap, Math.min(cap, throwVel.x));
+          const vy = Math.max(-cap, Math.min(cap, throwVel.y));
+          if (Math.abs(vx) > 0.3 || Math.abs(vy) > 0.3) {
+            Body.setVelocity(e.body, { x: vx, y: vy });
+          }
           container.classList.remove("is-grabbing");
           document.documentElement.classList.remove("physics-grabbing");
           playDrop();
           if (navigator.vibrate) navigator.vibrate(28);
         }
+        throwVel.x = 0;
+        throwVel.y = 0;
       });
 
       // Play tick only when bodies are actually moving — ignores resting micro-contacts
@@ -364,6 +408,11 @@ function Bucket({ cat }: { cat: Cat }) {
       if (runner && MatterLib) MatterLib.Runner.stop(runner);
       if (engine && MatterLib) MatterLib.Engine.clear(engine);
       tagEls.forEach((el) => el.remove());
+      if (forceRelease) {
+        window.removeEventListener("mouseup",   forceRelease);
+        window.removeEventListener("touchend",  forceRelease);
+        window.removeEventListener("pointerup", forceRelease);
+      }
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
