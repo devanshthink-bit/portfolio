@@ -4,12 +4,11 @@ import WeatherLocation from "../components/WeatherLocation";
 import FooterLinks from "../components/FooterLinks";
 import Link from "next/link";
 import MachineMode from "../components/MachineMode";
-import { useEffect, useRef, useState } from "react";
-
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 const STATS = [
   { value: "3+",    unit: "yrs", label: "Engg. experience", countTo: 3, suffix: "+",  startFrom: 1 },
-  { value: "4",     unit: "",    label: "Products shipped",  countTo: 4, suffix: "" },
+  { value: "3",     unit: "",    label: "Products shipped",  countTo: 3, suffix: "" },
   { value: "2M+",   unit: "",    label: "Users reached",     countTo: 2, suffix: "M+", startFrom: 1 },
   { value: "0 → 1", unit: "",    label: "& at scale",        countTo: null },
 ];
@@ -17,33 +16,33 @@ const STATS = [
 const recentWork = [
   {
     title: "Sidedoor — Job referral platform",
-    desc: "0→1 referral platform — research, design & shipped MVP.",
+    desc: "0→1 referral platform — research & concept design.",
     tag: "Product Design · 0→1",
-    gradient: "linear-gradient(135deg, #dce8ff 0%, #c2d6ff 45%, #d8e6ff 100%)",
+    gradient: "linear-gradient(135deg, #d4e2ff 0%, #7aa5fb 45%, #b0caff 100%)",
     tooltipBg: "#3d6bc4",
     slug: "sidedoor",
   },
   {
-    title: "Zoom AI Agent — Meeting orchestration",
-    desc: "AI agent that turns meetings into executed decisions.",
-    tag: "AI Product Design · 0→1",
-    gradient: "linear-gradient(135deg, #dbeafe 0%, #93c5fd 45%, #bfdbfe 100%)",
-    tooltipBg: "#1a6fd4",
-    slug: "zoom-agent",
+    title: "Case Study 2",
+    desc: "Case Study 2",
+    tag: "Case Study",
+    gradient: "linear-gradient(135deg, #ffecd4 0%, #fbc27a 45%, #ffe0b0 100%)",
+    tooltipBg: "#c4691a",
+    slug: null,
   },
   {
-    title: "Zepto — Intent-based grocery shopping",
-    desc: "Redesigning how 70M users discover and plan groceries.",
-    tag: "Consumer UX · AI · 0→1 Feature",
-    gradient: "linear-gradient(135deg, #f0e8ff 0%, #c9a8f7 50%, #7b2ff7 100%)",
-    tooltipBg: "#5a1fb5",
-    slug: "zepto",
+    title: "Case Study 3",
+    desc: "Case Study 3",
+    tag: "Case Study",
+    gradient: "linear-gradient(135deg, #d9f7e6 0%, #7ad9a8 45%, #bdeed2 100%)",
+    tooltipBg: "#1a7a45",
+    slug: null,
   },
 ];
 
-function StatCounter({ value, unit, label, active, countTo, suffix, startFrom, isLast }: {
+function StatCounter({ value, unit, label, active, countTo, suffix, startFrom }: {
   value: string; unit: string; label: string; active: boolean;
-  countTo?: number | null; suffix?: string; startFrom?: number; isLast?: boolean;
+  countTo?: number | null; suffix?: string; startFrom?: number;
 }) {
   const from = startFrom ?? 0;
   const [counted, setCounted] = useState(from);
@@ -67,9 +66,7 @@ function StatCounter({ value, unit, label, active, countTo, suffix, startFrom, i
 
   return (
     <div style={{
-      display: "flex", flexDirection: "column", gap: 6, flex: 1,
-      paddingRight: isLast ? 0 : 32,
-      borderRight: isLast ? "none" : "1px solid var(--border)",
+      display: "flex", flexDirection: "column", gap: 6,
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: 3 }}>
         <span style={{
@@ -82,7 +79,7 @@ function StatCounter({ value, unit, label, active, countTo, suffix, startFrom, i
         </span>
         {unit && (
           <span style={{
-            fontFamily: "var(--font-geist-mono)", fontSize: 13,
+            fontFamily: "var(--font-geist-mono)", fontSize: 12,
             color: "var(--text-muted)", letterSpacing: "0",
           }}>
             {unit}
@@ -102,10 +99,19 @@ function StatCounter({ value, unit, label, active, countTo, suffix, startFrom, i
 function WorkCard({ item }: { item: typeof recentWork[0] }) {
   const [hovered, setHovered] = useState(false);
   const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
+  const [left, setLeft] = useState<number | null>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     setPos({ x: e.clientX, y: e.clientY });
   };
+
+  useLayoutEffect(() => {
+    if (!hovered || !pos) { setLeft(null); return; }
+    const width = tooltipRef.current?.offsetWidth ?? 0;
+    const maxLeft = window.innerWidth - width - 12;
+    setLeft(Math.max(12, Math.min(pos.x + 18, maxLeft)));
+  }, [hovered, pos]);
 
   const inner = (
     <div
@@ -118,9 +124,9 @@ function WorkCard({ item }: { item: typeof recentWork[0] }) {
       <div className="work-card-media" style={{ background: item.gradient }} />
       <p className="work-card-title" style={{ margin: 0 }}>{item.title}</p>
       {hovered && pos && (
-        <div style={{
+        <div ref={tooltipRef} style={{
           position: "fixed",
-          left: pos.x + 18,
+          left: left ?? pos.x + 18,
           top: pos.y + 18,
           background: item.tooltipBg,
           borderRadius: 6,
@@ -163,14 +169,11 @@ export default function Home() {
 
       {/* Stats strip */}
       <div ref={statsRef} style={{
-        display: "flex", gap: 32, flexWrap: "wrap",
-        paddingTop: 16, paddingBottom: 16,
-        borderTop: "1px solid var(--border)",
-        borderBottom: "1px solid var(--border)",
-        marginTop: -20,
+        display: "flex", justifyContent: "space-between", flexWrap: "wrap", rowGap: 24,
+        marginTop: -8,
       }}>
-        {STATS.map((s, i) => (
-          <StatCounter key={s.label} {...s} active={statsVisible} isLast={i === STATS.length - 1} />
+        {STATS.map((s) => (
+          <StatCounter key={s.label} {...s} active={statsVisible} />
         ))}
       </div>
 

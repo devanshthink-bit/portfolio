@@ -1,8 +1,7 @@
 "use client";
 import Image from "next/image";
 import PhysicsSkills from "../../components/PhysicsSkills";
-import MachineMode from "../../components/MachineMode";
-import React, { useLayoutEffect, useRef, useState, useEffect } from "react";
+import { useState } from "react";
 
 const CAT_COLORS = { design: "#6B9FE4", ai: "#A07FD8", dev: "#5FB896" } as const;
 type Cat = keyof typeof CAT_COLORS;
@@ -200,23 +199,8 @@ const testimonials = [
   },
 ];
 
-const N = testimonials.length;
-
-const TRANSITION = "transform 0.38s cubic-bezier(0.4, 0, 0.2, 1)";
 const CARD_GAP = 16;
 
-const ArrowLeft = () => (
-  <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="var(--text-primary)" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-    <line x1="19" y1="12" x2="5" y2="12" />
-    <polyline points="12 19 5 12 12 5" />
-  </svg>
-);
-const ArrowRight = () => (
-  <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="var(--text-primary)" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-    <line x1="5" y1="12" x2="19" y2="12" />
-    <polyline points="12 5 19 12 12 19" />
-  </svg>
-);
 const ModernQuote = () => (
   <svg width="18" height="14" viewBox="0 0 28 22" fill="none" style={{ display: "block", marginBottom: 12, userSelect: "none" }}>
     <path d="M0 14C0 6.268 4.925 1.343 11.5 0L12.5 2.4C8.925 3.543 7 6.268 7 9H11.5V22H0V14Z" fill="var(--text-muted)" opacity="0.5" />
@@ -225,61 +209,7 @@ const ModernQuote = () => (
 );
 
 export default function About() {
-  const [isMobile, setIsMobile] = useState(false);
-
-  const [trackPos, setTrackPos] = useState(0);
-  const [mobileAnimating, setMobileAnimating] = useState(false);
-
-  const [desktopOffset, setDesktopOffset] = useState(0);
-  const desktopRef = useRef<HTMLDivElement>(null);
-  const [desktopWidth, setDesktopWidth] = useState(0);
-
-  const touchStartX = useRef<number | null>(null);
-
-  useLayoutEffect(() => {
-    const mql = window.matchMedia("(max-width: 640px)");
-    setIsMobile(mql.matches);
-    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-    mql.addEventListener("change", handler);
-    return () => mql.removeEventListener("change", handler);
-  }, []);
-
-  useEffect(() => {
-    const el = desktopRef.current;
-    if (!el) return;
-    const ro = new ResizeObserver(e => setDesktopWidth(e[0].contentRect.width));
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
-
-  const desktopCardWidth = desktopWidth > 0 ? Math.floor((desktopWidth - 2 * CARD_GAP) / 3) : 0;
-
-  const mobileGoNext = () => {
-    if (mobileAnimating || trackPos >= N - 1) return;
-    setMobileAnimating(true);
-    setTrackPos(p => p + 1);
-  };
-  const mobileGoPrev = () => {
-    if (mobileAnimating || trackPos <= 0) return;
-    setMobileAnimating(true);
-    setTrackPos(p => p - 1);
-  };
-
-  const handleTransitionEnd = () => setMobileAnimating(false);
-
-  const handleTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return;
-    const dx = e.changedTouches[0].clientX - touchStartX.current;
-    touchStartX.current = null;
-    if (dx < -40) mobileGoNext();
-    else if (dx > 40) mobileGoPrev();
-  };
-
-  const mobileTranslate = `translateX(-${trackPos * (100 / N)}%)`;
-
   return (
-    <MachineMode>
     <div style={{ display: "flex", flexDirection: "column", gap: 56, marginTop: 24 }}>
 
       {/* About Me */}
@@ -294,7 +224,7 @@ export default function About() {
           <p className="section-body" style={{ margin: 0 }}>My first exposure to it was on my mom&apos;s Samsung Galaxy R — I&apos;d spend hours exploring apps, downloading random ones, almost in awe of how they worked. I didn&apos;t have the word for it back then, but I was already falling in love with <strong>product design</strong>.</p>
           <p className="section-body" style={{ margin: 0 }}>Before screens took over, I was obsessed with cars. That instinct for how things feel and function stayed — it just shifted from physical objects to digital products.</p>
           <p className="section-body" style={{ margin: 0 }}>Today, I see myself as a <strong>design–engineer </strong>hybrid working at the intersection of design, engineering, and product. I don&apos;t just design — I build and ship product features, integrating agentic AI into my workflows.</p>
-          <p className="section-body" style={{ margin: 0 }}>Previously, as a Software Development Engineer (SDE), I&apos;ve worked on shipping flagship products across workforce enablement, hospitality, and greentech at <strong>GoodWorker</strong>, <strong>Stanza Living</strong>, and <strong>Devic Earth</strong>, with products serving over a <strong>million</strong> users.</p>
+          <p className="section-body" style={{ margin: 0 }}>Previously, as a Software Development Engineer (SDE), I&apos;ve worked on shipping flagship products across workforce enablement, hospitality, and greentech at <strong>GoodWorker</strong>, <strong>Stanza Living</strong>, and <strong>Devic Earth</strong>, with products serving over a million users.</p>
         </div>
       </div>
 
@@ -306,132 +236,42 @@ export default function About() {
         </div>
       </div>
 
-      {/* How I Work */}
-      <div className="section">
-        <h3 className="section-title">How I work</h3>
-        <div style={{ display: "flex", flexDirection: "column", gap: 1, background: "var(--border)", borderRadius: 10, overflow: "hidden", marginTop: 8 }}>
-          {[
-            {
-              n: "01",
-              title: "Engineering makes design more honest",
-              body: "I spent three years as an SDE before moving into design. That means I ask different questions: what's expensive to change, where state gets messy, what takes two hours versus two weeks to build. My design decisions are grounded in what can actually ship, not just what looks right in a frame.",
-            },
-            {
-              n: "02",
-              title: "Design for the system, not the screen",
-              body: "A single frame is never the full story. Edge cases, error states, empty screens, returning users: the experience lives in the transitions, not the happy path. I think in flows before I think in components.",
-            },
-            {
-              n: "03",
-              title: "Close the loop by shipping",
-              body: "When an interaction can't be shown in a static mock, I build it. Working in code is how I catch what prototypes hide: the edge cases, the timing, the state transitions. It also means I can move fast: design, build, ship, iterate.",
-            },
-            {
-              n: "04",
-              title: "AI as leverage, not a crutch",
-              body: "Agentic AI is part of how I work: research synthesis, rapid prototyping, design-to-code iteration. The bar I hold it to: does it help me think better, or does it replace the thinking? The second kind is always the wrong call.",
-            },
-          ].map((p) => (
-            <div key={p.n} style={{ display: "flex", gap: 20, padding: "16px 20px", background: "var(--bg)" }}>
-              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, fontWeight: 600, color: "var(--text-muted)", letterSpacing: "0.08em", textTransform: "uppercase" as const, marginTop: 4, flexShrink: 0, width: 20 }}>{p.n}</span>
-              <div>
-                <p style={{ fontFamily: "var(--font-manrope)", fontSize: 15, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.02em", margin: "0 0 5px 0" }}>{p.title}</p>
-                <p className="section-body" style={{ margin: 0 }}>{p.body}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
       {/* Testimonials */}
       <div className="section">
         <h3 className="section-title">In Their Words</h3>
 
-        {isMobile ? (
-          <div style={{ overflow: "hidden", borderRadius: 12, width: "100%" }}>
-            <div
-              style={{ display: "flex", width: `${N * 100}%`, transform: mobileTranslate, transition: TRANSITION }}
-              onTransitionEnd={handleTransitionEnd}
-              onTouchStart={handleTouchStart}
-              onTouchEnd={handleTouchEnd}
-            >
-              {testimonials.map((tc, i) => (
-                <div
-                  key={i}
-                  style={{
-                    flex: `0 0 ${100 / N}%`,
-                    background: "var(--card-bg)",
-                    border: "1px solid var(--border)",
-                    borderRadius: 12,
-                    padding: 20,
-                    boxSizing: "border-box",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    gap: 16,
-                  }}
-                >
-                  <div style={{ display: "flex", flexDirection: "column" }}>
-                    <ModernQuote />
-                    <p style={{ fontFamily: "var(--font-manrope)", fontStyle: "normal", fontSize: 14, fontWeight: 500, lineHeight: 1.65, letterSpacing: "-0.01em", color: "var(--text-secondary)", margin: 0 }}>{tc.quote}</p>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexShrink: 0 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 20 }}>
-                      <img src={tc.avatar} alt={tc.name} style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
-                      <div>
-                        <p style={{ fontSize: 12, fontWeight: 500, letterSpacing: "-0.01em", color: "var(--text-primary)", margin: 0 }}>{tc.name}</p>
-                        <p style={{ fontSize: 11, color: "var(--text-muted)", letterSpacing: "-0.01em", margin: "2px 0 0" }}>{tc.role}</p>
-                      </div>
-                    </div>
-                    <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
-                      {trackPos > 0 && (
-                        <button onClick={mobileGoPrev} style={{ width: 32, height: 32, borderRadius: "50%", background: "var(--bg)", border: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", boxShadow: "0 1px 6px rgba(0,0,0,0.07)" }}>
-                          <ArrowLeft />
-                        </button>
-                      )}
-                      {trackPos < N - 1 && (
-                        <button onClick={mobileGoNext} style={{ width: 32, height: 32, borderRadius: "50%", background: "var(--bg)", border: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", boxShadow: "0 1px 6px rgba(0,0,0,0.07)" }}>
-                          <ArrowRight />
-                        </button>
-                      )}
-                    </div>
+        <div style={{ overflow: "hidden", width: "100%" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              gap: CARD_GAP,
+              width: "max-content",
+              animation: "ticker-left 36s linear infinite",
+              willChange: "transform",
+            }}
+            onMouseEnter={e => { e.currentTarget.style.animationPlayState = "paused"; }}
+            onMouseLeave={e => { e.currentTarget.style.animationPlayState = "running"; }}
+          >
+            {[...testimonials, ...testimonials].map((tc, i) => (
+              <div key={i} style={{ flex: `0 0 320px`, background: "var(--card-bg)", borderRadius: 10, padding: 20, display: "flex", flexDirection: "column", gap: 40 }}>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <ModernQuote />
+                  <p style={{ fontFamily: "var(--font-manrope)", fontStyle: "normal", fontSize: 14, fontWeight: 500, lineHeight: 1.65, letterSpacing: "-0.01em", color: "var(--text-secondary)", margin: 0 }}>{tc.quote}</p>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
+                  <img src={tc.avatar} alt={tc.name} style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
+                  <div style={{ minWidth: 0 }}>
+                    <p style={{ fontSize: 12, fontWeight: 500, letterSpacing: "-0.01em", color: "var(--text-primary)", margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{tc.name}</p>
+                    <p style={{ fontSize: 11, color: "var(--text-muted)", letterSpacing: "-0.01em", margin: "2px 0 0", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{tc.role}</p>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div ref={desktopRef} style={{ position: "relative" }}>
-            <div style={{ overflow: "hidden" }}>
-              <div style={{ display: "flex", gap: CARD_GAP, transform: `translateX(-${desktopOffset * (desktopCardWidth + CARD_GAP)}px)`, transition: TRANSITION }}>
-                {testimonials.map((tc, i) => (
-                  <div key={i} style={{ flex: `0 0 ${desktopCardWidth}px`, aspectRatio: "1", background: "var(--card-bg)", borderRadius: 10, padding: 20, display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 16 }}>
-                    <div style={{ display: "flex", flexDirection: "column" }}>
-                      <ModernQuote />
-                      <p style={{ fontFamily: "var(--font-manrope)", fontStyle: "normal", fontSize: 14, fontWeight: 500, lineHeight: 1.65, letterSpacing: "-0.01em", color: "var(--text-secondary)", margin: 0 }}>{tc.quote}</p>
-                    </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0, marginTop: 20 }}>
-                      <img src={tc.avatar} alt={tc.name} style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
-                      <div style={{ minWidth: 0 }}>
-                        <p style={{ fontSize: 12, fontWeight: 500, letterSpacing: "-0.01em", color: "var(--text-primary)", margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{tc.name}</p>
-                        <p style={{ fontSize: 11, color: "var(--text-muted)", letterSpacing: "-0.01em", margin: "2px 0 0", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{tc.role}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
               </div>
-            </div>
-            <button
-              onClick={() => setDesktopOffset(desktopOffset === 0 ? 1 : 0)}
-              style={{ position: "absolute", right: -16, top: "50%", transform: "translateY(-50%)", width: 32, height: 32, borderRadius: "50%", background: "var(--bg)", border: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", boxShadow: "0 1px 6px rgba(0,0,0,0.07)", zIndex: 1 }}
-            >
-              {desktopOffset === 0 ? <ArrowRight /> : <ArrowLeft />}
-            </button>
+            ))}
           </div>
-        )}
+        </div>
       </div>
 
     </div>
-    </MachineMode>
   );
 }

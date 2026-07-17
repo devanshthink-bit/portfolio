@@ -22,7 +22,7 @@ export default function Hero() {
 
       <div className="intro-body">
         <p>
-          An AI-first product designer, with a background in engineering where I spent three years shipping 0→1 flagship products used by millions across greentech, workforce enablement, and hospitality, at both startups and scale.
+          A product designer, with a background in engineering where I spent three years shipping 0→1 flagship products used by millions across greentech, workforce enablement, and hospitality, at both startups and scale.
         </p>
         <p>
           I care deeply about craft and detail — building products that are both functional and delightful.

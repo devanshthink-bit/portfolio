@@ -33,7 +33,7 @@ const ALL_ITEMS: { id: string; label: string; cat: Cat; src?: string }[] = [
   { id: "context",    label: "Context Design",             cat: "design" },
   { id: "workflow",   label: "Design Workflow Automation", cat: "design" },
   { id: "d2c",        label: "Design-to-Code Workflows",   cat: "design" },
-  { id: "airesearch", label: "AI Research & Synthesis",    cat: "design" },
+  { id: "airesearch", label: "Research Synthesis",         cat: "design" },
   // Engineering — dev stack and AI coding tools
   { id: "claudecode", label: "Claude Code",                cat: "engineering", src: "/icons/claudecode.svg" },
   { id: "cursor",     label: "Cursor",                     cat: "engineering", src: "/icons/cursor.svg" },
@@ -434,23 +434,39 @@ function Bucket({ cat }: { cat: Cat }) {
           border: `1px solid ${color}22`,
         }}
       >
-        {/* Label pinned inside top-center, behind tags */}
+        {/* Label as a faint watermark across the whole bucket, behind tags */}
         <div style={{
           position: "absolute",
-          top: 16, left: 0, right: 0,
+          inset: 0,
           display: "flex",
+          alignItems: "center",
           justifyContent: "center",
+          gap: 12,
           pointerEvents: "none",
           zIndex: 0,
+          color,
+          opacity: 0.25,
         }}>
+          {cat === "design" ? (
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 2a10 10 0 1 0 0 20c1.1 0 2-.9 2-2 0-.5-.2-1-.5-1.4-.3-.4-.5-.9-.5-1.4a2 2 0 0 1 2-2h2.3A4.2 4.2 0 0 0 22 11c0-5-4.5-9-10-9Z" />
+              <circle cx="7.5" cy="11.5" r="1.4" fill="currentColor" stroke="none" />
+              <circle cx="12" cy="7.5" r="1.4" fill="currentColor" stroke="none" />
+              <circle cx="16.5" cy="11.5" r="1.4" fill="currentColor" stroke="none" />
+            </svg>
+          ) : (
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.6} strokeLinecap="round" strokeLinejoin="round">
+              <path d="M7 6 2 12 7 18" />
+              <path d="M17 6 22 12 17 18" />
+              <path d="M13 4 11 20" />
+            </svg>
+          )}
           <span style={{
             fontFamily: "var(--font-geist-mono)",
-            fontSize: 10,
+            fontSize: 30,
             fontWeight: 700,
-            letterSpacing: "0.14em",
+            letterSpacing: "0.06em",
             textTransform: "uppercase",
-            color,
-            opacity: 0.7,
           }}>
             {CAT_LABEL[cat]}
           </span>
