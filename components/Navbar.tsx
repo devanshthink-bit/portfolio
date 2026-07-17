@@ -265,7 +265,7 @@ export default function Navbar() {
           <nav className="nav-links">
             <NavLink href="/#recent-work" onClick={scrollToWork}>Work</NavLink>
             <NavLink href="/about" isActive={pathname === "/about"}>About</NavLink>
-            <NavLink href="https://drive.google.com/file/d/1xA0DnODA92bD-NuVYvKs31syY_7wmwWc/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume<ArrowUpRight size={13} /></NavLink>
+            <NavLink href="https://drive.google.com/file/d/1iIkDZW26ryQ-rZq2ZDsd5e6rqMfPyctX/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Resume<ArrowUpRight size={13} /></NavLink>
             <button onClick={toggleTheme} aria-label="Toggle theme"
               style={{ background: "none", border: "none", padding: 0, paddingBottom: "6px", color: "var(--text-muted)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", lineHeight: "1", position: "relative", width: 16, height: 16 }}
             >
@@ -309,7 +309,7 @@ export default function Navbar() {
           <Link href="/#recent-work" style={overlayLinkStyle} onClick={scrollToWork}>Work</Link>
           <Link href="/about" style={overlayLinkStyle}>About</Link>
           <div style={{ position: "relative", display: "inline-flex", alignItems: "center" }}>
-            <a href="https://drive.google.com/file/d/1xA0DnODA92bD-NuVYvKs31syY_7wmwWc/view?usp=sharing"
+            <a href="https://drive.google.com/file/d/1iIkDZW26ryQ-rZq2ZDsd5e6rqMfPyctX/view?usp=drive_link"
               style={overlayLinkStyle} target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)}>
               Resume
             </a>

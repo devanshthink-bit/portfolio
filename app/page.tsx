@@ -65,11 +65,11 @@ function StatCounter({ value, unit, label, active, countTo, suffix, startFrom }:
   const displayValue = countTo != null ? `${counted}${suffix ?? ""}` : value;
 
   return (
-    <div style={{
+    <div className="stat-item" style={{
       display: "flex", flexDirection: "column", gap: 6,
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: 3 }}>
-        <span style={{
+        <span className="stat-value" style={{
           fontFamily: "var(--font-manrope)", fontSize: 28, fontWeight: 700,
           color: "var(--text-primary)", letterSpacing: "-0.03em",
           opacity: active ? 1 : 0, transform: active ? "none" : "translateY(8px)",
@@ -86,7 +86,7 @@ function StatCounter({ value, unit, label, active, countTo, suffix, startFrom }:
           </span>
         )}
       </div>
-      <span style={{
+      <span className="stat-label" style={{
         fontFamily: "var(--font-geist-mono)", fontSize: 10, fontWeight: 500,
         letterSpacing: "0.07em", textTransform: "uppercase", color: "var(--text-muted)",
       }}>
@@ -168,7 +168,7 @@ export default function Home() {
       <Hero />
 
       {/* Stats strip */}
-      <div ref={statsRef} style={{
+      <div ref={statsRef} className="stats-strip" style={{
         display: "flex", justifyContent: "space-between", flexWrap: "wrap", rowGap: 24,
         marginTop: -8,
       }}>

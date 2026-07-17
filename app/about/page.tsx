@@ -216,7 +216,7 @@ export default function About() {
       <div className="section">
         <h3 className="section-title">About Me</h3>
         <div style={{ position: "relative", width: "100%", aspectRatio: "16/9", borderRadius: 6, overflow: "hidden" }}>
-          <Image src="/images/about.jpg" alt="Devansh at the beach" fill style={{ objectFit: "cover", objectPosition: "center top" }} priority />
+          <Image src="/images/about.jpg" alt="Devansh at the beach" fill sizes="(max-width: 980px) 100vw, 868px" style={{ objectFit: "cover", objectPosition: "center top" }} priority />
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 24, marginTop: 32 }}>
           <h2 style={{ fontFamily: "var(--font-manrope), sans-serif", fontSize: "26px", fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 1.4, color: "var(--text-primary)", margin: 0 }}>Designing with craft, building with code.</h2>
@@ -242,6 +242,7 @@ export default function About() {
 
         <div style={{ overflow: "hidden", width: "100%" }}>
           <div
+            className="testimonial-track"
             style={{
               display: "flex",
               alignItems: "flex-start",

@@ -513,6 +513,30 @@
   .cs-meta-strip > div {
     flex: 1 1 120px;
   }
+
+  /* Stats strip — 2-column grid, smaller type so labels don't collide */
+  .stats-strip {
+    row-gap: 20px !important;
+    column-gap: 16px;
+  }
+
+  .stat-item {
+    flex: 0 0 calc(50% - 8px);
+  }
+
+  .stat-value {
+    font-size: 22px !important;
+  }
+
+  .stat-label {
+    font-size: 9px !important;
+    letter-spacing: 0.05em !important;
+  }
+
+  /* Testimonial marquee — slow down so perceived speed matches desktop */
+  .testimonial-track {
+    animation-duration: 70s !important;
+  }
   } /* end @media mobile */
 
   /* ── Tablet (641px–1024px) ── */

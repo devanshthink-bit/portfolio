@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const SIZE = 20;
 const HALF = SIZE / 2;
@@ -10,8 +10,14 @@ export default function CustomCursor() {
   const pos = useRef({ x: -200, y: -200 });
   const cur = useRef({ x: -200, y: -200 });
   const raf = useRef<number>(0);
+  const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
+    setEnabled(window.matchMedia("(pointer: fine)").matches);
+  }, []);
+
+  useEffect(() => {
+    if (!enabled) return;
     const onMove = (e: MouseEvent) => {
       pos.current = { x: e.clientX, y: e.clientY };
     };
@@ -19,12 +25,20 @@ export default function CustomCursor() {
     const onEnter  = () => { if (ref.current) ref.current.style.opacity = "1"; };
     const onHide   = () => { if (ref.current) ref.current.style.opacity = "0"; };
     const onShow   = () => { if (ref.current) ref.current.style.opacity = "1"; };
+    const onOverImg = (e: MouseEvent) => {
+      if ((e.target as HTMLElement).closest("img")) onHide();
+    };
+    const onOutImg = (e: MouseEvent) => {
+      if ((e.target as HTMLElement).closest("img")) onShow();
+    };
 
     window.addEventListener("mousemove", onMove);
     document.addEventListener("mouseleave", onLeave);
     document.addEventListener("mouseenter", onEnter);
     window.addEventListener("cursor:hide", onHide);
     window.addEventListener("cursor:show", onShow);
+    document.addEventListener("mouseover", onOverImg);
+    document.addEventListener("mouseout", onOutImg);
 
     const tick = () => {
       cur.current.x += (pos.current.x - cur.current.x) * STIFFNESS;
@@ -42,9 +56,13 @@ export default function CustomCursor() {
       document.removeEventListener("mouseenter", onEnter);
       window.removeEventListener("cursor:hide", onHide);
       window.removeEventListener("cursor:show", onShow);
+      document.removeEventListener("mouseover", onOverImg);
+      document.removeEventListener("mouseout", onOutImg);
       cancelAnimationFrame(raf.current);
     };
-  }, []);
+  }, [enabled]);
+
+  if (!enabled) return null;
 
   return (
     <div

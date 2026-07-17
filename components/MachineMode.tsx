@@ -99,7 +99,7 @@ function MachineContent() {
           Devansh Somvanshi
         </h1>
         <p style={{ fontFamily: mono, fontSize: 13, color: C.muted, letterSpacing: "0.02em", margin: 0 }}>
-          Product Designer · Design-Engineer Hybrid · AI-first
+          Product Designer · Design-Engineer Hybrid
         </p>
 
         <Rule />
@@ -117,7 +117,7 @@ function MachineContent() {
         {/* Profile */}
         <SectionLabel>Profile</SectionLabel>
         <p style={{ fontFamily: mono, fontSize: 13, color: C.text, lineHeight: 1.8, margin: "0 0 12px 0" }}>
-          AI-first product designer who also ships code. 3+ years as a Software Development Engineer before moving fully into design. Works at the intersection of product, design, and engineering — with agentic AI integrated into the day-to-day workflow.
+          Product designer who also ships code. 3+ years as a Software Development Engineer before moving fully into design. Works at the intersection of product, design, and engineering — with agentic AI integrated into the day-to-day workflow.
         </p>
         <p style={{ fontFamily: mono, fontSize: 13, color: C.muted, lineHeight: 1.8, margin: 0 }}>
           Previously shipped flagship products across workforce enablement (GoodWorker), hospitality (Stanza Living), and greentech (Devic Earth) — products serving 2M+ users total.
@@ -130,7 +130,7 @@ function MachineContent() {
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px 40px" }}>
           {[
             ["3+ years",    "engineering experience"],
-            ["4 products",  "shipped"],
+            ["3 products",  "shipped"],
             ["2M+ users",   "reached"],
             ["0→1 & scale", "both ends"],
           ].map(([num, label]) => (
@@ -190,38 +190,38 @@ function MachineContent() {
             </div>
           </div>
 
-          {/* 02 Anthropic */}
+          {/* 02 Case Study 2 */}
           <div>
             <div className="machine-row" style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 10 }}>
               <span style={{ fontFamily: mono, fontSize: 10, color: C.cyan }}>02</span>
-              <span style={{ fontFamily: mono, fontSize: 14, fontWeight: 700, color: C.text }}>Anthropic Console — Design System</span>
+              <span style={{ fontFamily: mono, fontSize: 14, fontWeight: 700, color: C.text }}>Case Study 2</span>
             </div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "3px 14px", marginBottom: 14, paddingLeft: 26 }}>
-              {["Design System", "12+ surfaces", "Product Designer"].map(t => (
+              {["Case Study"].map(t => (
                 <span key={t} style={{ fontFamily: mono, fontSize: 11, color: C.muted }}>{t}</span>
               ))}
             </div>
             <div style={{ paddingLeft: 26 }}>
               <p style={{ fontFamily: mono, fontSize: 13, color: C.text, lineHeight: 1.75, margin: 0 }}>
-                Component system powering Claude's interface across the Anthropic console, API playground, documentation, and internal tooling — consistent at 12+ product surfaces.
+                Not public yet.
               </p>
             </div>
           </div>
 
-          {/* 03 Meta Reels */}
+          {/* 03 Case Study 3 */}
           <div>
             <div className="machine-row" style={{ display: "flex", gap: 12, alignItems: "center", marginBottom: 10 }}>
               <span style={{ fontFamily: mono, fontSize: 10, color: C.cyan }}>03</span>
-              <span style={{ fontFamily: mono, fontSize: 14, fontWeight: 700, color: C.text }}>Meta Reels — End-to-end Product</span>
+              <span style={{ fontFamily: mono, fontSize: 14, fontWeight: 700, color: C.text }}>Case Study 3</span>
             </div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "3px 14px", marginBottom: 14, paddingLeft: 26 }}>
-              {["End-to-end Product", "3B+ users", "Mobile", "Product Designer / SDE"].map(t => (
+              {["Case Study"].map(t => (
                 <span key={t} style={{ fontFamily: mono, fontSize: 11, color: C.muted }}>{t}</span>
               ))}
             </div>
             <div style={{ paddingLeft: 26 }}>
               <p style={{ fontFamily: mono, fontSize: 13, color: C.text, lineHeight: 1.75, margin: 0 }}>
-                End-to-end product design and creator tooling for Meta Reels at 3B+ user scale.
+                Not public yet.
               </p>
             </div>
           </div>
@@ -255,7 +255,7 @@ function MachineContent() {
           {[
             { cat: "Design", items: ["Figma", "FigJam", "Framer", "Notion", "Google Analytics", "Design Systems", "UX Research", "Interaction Design", "Information Architecture", "Visual Design", "Accessibility", "Rapid Prototyping", "Systems Thinking", "Product Thinking"] },
             { cat: "Dev",    items: ["React", "Next.js", "TypeScript", "React Native", "Flutter", "Storybook", "Tailwind", "Git", "PWAs"] },
-            { cat: "AI",     items: ["Claude Code", "Cursor", "Codex", "Figma Make", "Antigravity", "Agent Orchestration", "Design-to-Code Workflows", "Prompt Systems", "LLM Integration", "Design Workflow Automation", "AI Research & Synthesis"] },
+            { cat: "AI",     items: ["Claude Code", "Cursor", "Codex", "Figma Make", "Antigravity", "Agent Orchestration", "Design-to-Code Workflows", "Prompt Systems", "LLM Integration", "Design Workflow Automation", "Research Synthesis"] },
           ].map(({ cat, items }) => (
             <div key={cat} className="machine-row" style={{ display: "flex", gap: 16 }}>
               <span className="machine-row-key" style={{ fontFamily: mono, fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", width: 52, flexShrink: 0, paddingTop: 2 }}>{cat}</span>
