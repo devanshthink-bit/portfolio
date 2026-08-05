@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { playDockClick } from "@/lib/dockSound";
 
 /* Lucide icon set (MIT) — reproduced inline to avoid adding a dependency */
 const ICON = { width: 20, height: 20, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.75, strokeLinecap: "round", strokeLinejoin: "round" } as const;
@@ -48,12 +49,13 @@ function MoonIcon() {
 
 const RESUME_URL = "https://drive.google.com/file/d/1iIkDZW26ryQ-rZq2ZDsd5e6rqMfPyctX/view?usp=drive_link";
 
-function DockItem({ label, hovered, onHover, children }: {
-  label: string; hovered: boolean; onHover: (v: boolean) => void; children: React.ReactNode;
+function DockItem({ label, hovered, pitch, onHover, children }: {
+  label: string; hovered: boolean; pitch: number; onHover: (v: boolean) => void; children: React.ReactNode;
 }) {
   return (
     <span
       style={{ position: "relative", display: "inline-flex" }}
+      onPointerDown={() => playDockClick(pitch)}
       onMouseEnter={() => onHover(true)}
       onMouseLeave={() => onHover(false)}
     >
@@ -125,19 +127,19 @@ export default function BottomNav() {
       }}
     >
       <Link href="/" aria-label="Home" style={{ display: "inline-flex" }}>
-        <DockItem label="Home" hovered={hovered === "home"} onHover={v => setHovered(v ? "home" : null)}><HomeIcon /></DockItem>
+        <DockItem label="Home" pitch={1} hovered={hovered === "home"} onHover={v => setHovered(v ? "home" : null)}><HomeIcon /></DockItem>
       </Link>
       <Link href="/#recent-work" aria-label="Work" onClick={scrollToWork} style={{ display: "inline-flex" }}>
-        <DockItem label="Work" hovered={hovered === "work"} onHover={v => setHovered(v ? "work" : null)}><WorkIcon /></DockItem>
+        <DockItem label="Work" pitch={1.06} hovered={hovered === "work"} onHover={v => setHovered(v ? "work" : null)}><WorkIcon /></DockItem>
       </Link>
       <Link href="/about" aria-label="About" style={{ display: "inline-flex" }}>
-        <DockItem label="About" hovered={hovered === "about"} onHover={v => setHovered(v ? "about" : null)}><AboutIcon /></DockItem>
+        <DockItem label="About" pitch={1.12} hovered={hovered === "about"} onHover={v => setHovered(v ? "about" : null)}><AboutIcon /></DockItem>
       </Link>
       <a href={RESUME_URL} target="_blank" rel="noopener noreferrer" aria-label="Resume" style={{ display: "inline-flex" }}>
-        <DockItem label="Resume" hovered={hovered === "resume"} onHover={v => setHovered(v ? "resume" : null)}><ResumeIcon /></DockItem>
+        <DockItem label="Resume" pitch={1.19} hovered={hovered === "resume"} onHover={v => setHovered(v ? "resume" : null)}><ResumeIcon /></DockItem>
       </a>
       <span onClick={toggleTheme} style={{ display: "inline-flex" }}>
-        <DockItem label="Theme" hovered={hovered === "theme"} onHover={v => setHovered(v ? "theme" : null)}>
+        <DockItem label="Theme" pitch={1.26} hovered={hovered === "theme"} onHover={v => setHovered(v ? "theme" : null)}>
           {isDark ? <MoonIcon /> : <SunIcon />}
         </DockItem>
       </span>
