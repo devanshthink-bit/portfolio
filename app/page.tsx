@@ -1,9 +1,7 @@
 "use client";
 import Hero from "../components/Hero";
-import WeatherLocation from "../components/WeatherLocation";
 import FooterLinks from "../components/FooterLinks";
 import Link from "next/link";
-import MachineMode from "../components/MachineMode";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 const STATS = [
@@ -163,33 +161,47 @@ export default function Home() {
     return () => obs.disconnect();
   }, []);
 
-  return (
-    <MachineMode>
-      <Hero />
+  // Home page base background is gray (like the hero) so only the overlay panel is white
+  useEffect(() => {
+    document.body.classList.add("home-page");
+    return () => document.body.classList.remove("home-page");
+  }, []);
 
-      {/* Stats strip */}
-      <div ref={statsRef} className="stats-strip" style={{
-        display: "flex", justifyContent: "space-between", flexWrap: "wrap", rowGap: 24,
-        marginTop: -8,
-      }}>
-        {STATS.map((s) => (
-          <StatCounter key={s.label} {...s} active={statsVisible} />
-        ))}
+  return (
+    <>
+      <div className="home-stack">
+        {/* Hero + stats — the only thing visible on landing */}
+        <section className="stack-hero">
+          <div className="stack-hero-inner">
+            <Hero />
+            <div ref={statsRef} className="stats-strip" style={{
+              display: "flex", justifyContent: "space-between", flexWrap: "wrap", rowGap: 24,
+              marginTop: -8,
+            }}>
+              {STATS.map((s) => (
+                <StatCounter key={s.label} {...s} active={statsVisible} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Recent Work — one panel rises up and overlays the hero; all case studies live inside it */}
+        <div className="stack-overlay">
+          <div className="stack-overlay-inner">
+            <section id="recent-work" className="section">
+              <h3 className="section-title">Recent Work</h3>
+              <div className="work-list">
+                {recentWork.map(item => <WorkCard key={item.title} item={item} />)}
+              </div>
+            </section>
+          </div>
+        </div>
       </div>
 
-      {/* Recent Work */}
-      <section id="recent-work" className="section">
-        <h3 className="section-title">Recent Work</h3>
-        <div className="work-list">
-          {recentWork.map(item => <WorkCard key={item.title} item={item} />)}
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="site-footer" style={{ paddingTop: 16, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-        <WeatherLocation />
+      {/* Footer — sits on the gray home-page background */}
+      <footer className="site-footer" style={{ position: "relative", zIndex: 3, paddingTop: 40 }}>
         <FooterLinks />
       </footer>
-    </MachineMode>
+    </>
   );
 }

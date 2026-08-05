@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Manrope, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "../components/Navbar";
+import BottomNav from "../components/BottomNav";
 import PageTransition from "../components/PageTransition";
 import Assistant from "../components/Assistant";
 import CustomCursor from "../components/CustomCursor";
@@ -30,10 +30,10 @@ export default function RootLayout({
         <SmoothScroll />
         <CustomCursor />
         <div className="page-wrapper">
-          <Navbar />
           <PageTransition>{children}</PageTransition>
           <Assistant />
         </div>
+        <BottomNav />
       </body>
     </html>
   );
