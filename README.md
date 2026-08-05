@@ -6,7 +6,7 @@ I spent 3+ years as a software engineer before moving into product design, so I 
 Figma files and hope for the best — I design the thing, then build it. This repo is the portfolio
 site itself: designed in Figma, written in Next.js, deployed as one person's end-to-end output.
 
-🔗 **Live site:** _add your deployed URL here_
+🔗 **Live site:** [devanshsomvanshi.com](https://www.devanshsomvanshi.com/)
 📄 **Resume:** [Google Drive](https://drive.google.com/file/d/1iIkDZW26ryQ-rZq2ZDsd5e6rqMfPyctX/view?usp=drive_link)
 💼 [LinkedIn](https://www.linkedin.com/in/devansh-somvanshi) · 🐙 [GitHub](https://github.com/devanshthink-bit) · 🐦 [X](https://X.com/devanshmusings)
 
