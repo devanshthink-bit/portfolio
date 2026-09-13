@@ -675,6 +675,284 @@
     background: #f6e2e4;
   }
 
+  /* ── iPhone mock (components/IPhone.tsx) ──
+     Same construction as the RedBus prototype viewer: drawn at 430 x 902 and scaled as one
+     piece, so the screen inside is always 402 x 874. --n is the frame width in px. */
+  .iphone {
+    --n: 272;
+    width: calc(var(--n) * 1px);
+    height: calc(var(--n) * 902px / 430);
+    flex: 0 0 auto;
+    position: relative;
+  }
+
+  .iphone-frame {
+    width: 430px;
+    height: 902px;
+    transform: scale(calc(var(--n) / 430));
+    transform-origin: top left;
+    background: #060607;
+    border-radius: 62px;
+    padding: 14px;
+    position: relative;
+    box-shadow: inset 0 0 0 3.5px #1c1d20, inset 0 0 0 5px #050506,
+      0 70px 110px -46px rgba(90, 20, 30, 0.45), 0 26px 44px -18px rgba(0, 0, 0, 0.36), 0 4px 10px rgba(0, 0, 0, 0.16);
+  }
+
+  .iphone-frame::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 62px;
+    padding: 3px;
+    pointer-events: none;
+    background: linear-gradient(145deg, #e4e4e7 0%, #8b8c91 14%, #45464b 36%, #2c2d31 52%, #5b5c61 70%, #a9aaaf 86%, #eeeef0 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+
+  .iphone-frame::after {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    border-radius: 57px;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.07);
+    pointer-events: none;
+  }
+
+  .iphone-btn {
+    position: absolute;
+    width: 4px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #9a9ba0 0%, #4a4b50 45%, #2a2b2f 100%);
+    box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.35);
+  }
+
+  .iphone-btn.silent { left: -4px; top: 132px; height: 32px; }
+  .iphone-btn.up { left: -4px; top: 186px; height: 58px; }
+  .iphone-btn.down { left: -4px; top: 256px; height: 58px; }
+  .iphone-btn.power {
+    right: -4px;
+    top: 210px;
+    height: 92px;
+    background: linear-gradient(270deg, #9a9ba0 0%, #4a4b50 45%, #2a2b2f 100%);
+  }
+
+  .iphone-island {
+    position: absolute;
+    top: 25px;
+    left: 50%;
+    width: 124px;
+    height: 36px;
+    margin-left: -62px;
+    border-radius: 20px;
+    background: #000;
+    z-index: 5;
+    pointer-events: none;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  }
+
+  .iphone-screen {
+    width: 402px;
+    height: 874px;
+    border-radius: 48px;
+    overflow: hidden;
+    background: #fff;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .iphone-shot {
+    position: relative;
+    flex: 1 1 auto;
+  }
+
+  .iphone-screen iframe {
+    width: 402px;
+    height: 874px;
+    border: 0;
+    display: block;
+  }
+
+  /* The lo-fi builds have no status bar, so the mock draws the viewer's own. */
+  .iphone-sbar {
+    height: 49px;
+    flex: 0 0 49px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px 0 28px;
+    box-sizing: border-box;
+    background: #fff;
+  }
+
+  .iphone-sbar b {
+    font: 600 17px/21px var(--font-inter), -apple-system, system-ui, sans-serif;
+    letter-spacing: -0.4px;
+    color: #1d1d1d;
+  }
+
+  .iphone-sbar img {
+    width: 79px;
+    height: 14px;
+    display: block;
+  }
+
+  /* Phone + handwritten notes */
+  .phone-shot {
+    display: flex;
+    align-items: center;
+    gap: 56px;
+    padding: 40px 32px;
+    background: var(--cs-callout-bg);
+    border-radius: 12px;
+    justify-content: center;
+  }
+
+  .phone-notes {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    max-width: 320px;
+  }
+
+  .phone-note-title {
+    font-family: var(--font-caveat), cursive;
+    font-size: 28px;
+    line-height: 1.15;
+    color: #8A1C2B;
+    margin: 0;
+  }
+
+  .phone-note-sub {
+    font-family: var(--font-caveat), cursive;
+    font-size: 21px;
+    line-height: 1.25;
+    color: #A8424F;
+    margin: 4px 0 0;
+  }
+
+  html.nerd-mode .phone-note-title { color: #F2A7B1; }
+  html.nerd-mode .phone-note-sub { color: #D98A95; }
+
+  .phone-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 26px;
+    padding: 40px 24px;
+    background: var(--cs-callout-bg);
+    border-radius: 12px;
+  }
+
+  .phone-row.bare {
+    background: none;
+    padding: 0;
+  }
+
+  .phone-fig {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .phone-fig figcaption {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    text-align: center;
+    max-width: 272px;
+  }
+
+  .phone-fig-label {
+    font-family: var(--font-manrope), sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .phone-fig-cap {
+    font-size: 14px;
+    color: var(--text-muted);
+    letter-spacing: -0.01em;
+  }
+
+  /* The live prototype: bigger than the screens, on its own red stage, so it reads as the
+     thing you can use. The glow is the viewer's own. */
+  .cs-proto-stage {
+    position: relative;
+    border-radius: 16px;
+    padding: 64px 24px 72px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    overflow: hidden;
+    background:
+      radial-gradient(circle 520px at 50% 58%, rgba(214, 22, 48, 0.92) 0%, rgba(232, 30, 56, 0.78) 22%, rgba(236, 76, 96, 0.5) 45%, rgba(243, 132, 146, 0.18) 70%, rgba(251, 190, 198, 0) 100%),
+      #fdf1f3;
+  }
+
+  html.nerd-mode .cs-proto-stage {
+    background:
+      radial-gradient(circle 520px at 50% 58%, rgba(214, 22, 48, 0.85) 0%, rgba(232, 30, 56, 0.6) 25%, rgba(180, 30, 50, 0.3) 55%, rgba(60, 20, 25, 0) 100%),
+      #2a1f21;
+  }
+
+  .cs-proto-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 100px;
+    background: #1d1d1d;
+    color: #fff;
+    font-family: var(--font-geist-mono), monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .cs-proto-badge i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #3DDC84;
+    box-shadow: 0 0 0 0 rgba(61, 220, 132, 0.6);
+    animation: proto-pulse 1.8s ease-out infinite;
+  }
+
+  @keyframes proto-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(61, 220, 132, 0.55); }
+    100% { box-shadow: 0 0 0 10px rgba(61, 220, 132, 0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cs-proto-badge i { animation: none; }
+  }
+
+  .cs-proto-stage .iphone { --n: 430; }
+
+  /* Home card: three phones in the panel, cut at the bottom like Jahanvi's cards. */
+  .work-card-phones {
+    height: 380px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    padding-top: 12px;
+  }
+
+  .work-card-phones .iphone { --n: 220; }
+
   /* Warning ink, redBus's amber. Lighter on the dark theme so it keeps its contrast. */
   .cs-warn {
     color: #A45729;
@@ -756,6 +1034,41 @@
   .work-card-panel-text {
     padding: 20px 20px 4px;
   }
+
+  .work-card-phones {
+    height: 300px;
+    gap: 0;
+  }
+
+  .work-card-phones .iphone { --n: 170; }
+
+  .work-card-phones .iphone:not(:nth-child(2)),
+  .phone-row.hero .phone-fig:not(:nth-child(2)) {
+    display: none;
+  }
+
+  .phone-shot {
+    flex-direction: column;
+    gap: 28px;
+    padding: 32px 16px;
+  }
+
+  .phone-notes {
+    gap: 20px;
+    max-width: none;
+    align-items: center;
+    text-align: center;
+  }
+
+  .phone-row {
+    padding: 32px 16px;
+  }
+
+  .cs-proto-stage {
+    padding: 48px 8px 56px;
+  }
+
+  .cs-proto-stage .iphone { --n: 300; }
 
   .work-card-brand {
     font-size: 22px;

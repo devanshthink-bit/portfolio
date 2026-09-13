@@ -2,6 +2,7 @@
 import Hero from "../components/Hero";
 import FooterLinks from "../components/FooterLinks";
 import Link from "next/link";
+import { IPhone } from "../components/IPhone";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 const STATS = [
@@ -25,18 +26,17 @@ const recentWork = [
     title: "Booking the trip home",
     desc: "View project",
     tag: "Product Design · Concept",
-    // Matches cover.webp's top row pixel for pixel, so the panel and the image read as one surface.
-    gradient: "linear-gradient(90deg, #fae9ed 0%, #fbf0f1 25%, #fdf4f5 50%, #fbf0f1 75%, #faeaeb 100%)",
+    gradient: "linear-gradient(180deg, #fdf2f4 0%, #f7e2e6 100%)",
     tooltipBg: "#1d1d1d",
     slug: "redbus",
-    image: "/images/redbus/cover.webp",
+    phones: ["hifi_06a", "hifi_05", "hifi_16"],
     // Jahanvi's card anatomy: brand, what I did, tags, image, title + year, one line, impact.
-    brand: "redBus",
+    brand: "RedBus",
     brandColor: "#E81E38",
     did: "Designed a way to book the bus home before you know the date",
     tags: ["Travel", "B2C", "iOS App", "Concept"],
     year: "2026",
-    blurb: "A self-initiated concept for redBus. Hold a return seat and fare without naming a day, then move it once when plans settle.",
+    blurb: "A self-initiated concept for RedBus. Hold a return seat and fare without naming a day, then move it once when plans settle.",
     impact: "Tested with 3 travellers. The two ways it failed shaped the final design.",
   },
   // Hidden for now at Devansh's request (13 Sep 2026). Kept, not deleted: uncomment to bring back.
@@ -108,7 +108,7 @@ function StatCounter({ value, unit, label, active, countTo, suffix, startFrom }:
 
 type Work = {
   title: string; desc: string; tag: string; gradient: string; tooltipBg: string; slug: string | null; image?: string;
-  brand?: string; brandColor?: string; did?: string; tags?: string[]; year?: string; blurb?: string; impact?: string;
+  phones?: string[]; brand?: string; brandColor?: string; did?: string; tags?: string[]; year?: string; blurb?: string; impact?: string;
 };
 
 function WorkCard({ item }: { item: Work }) {
@@ -144,7 +144,11 @@ function WorkCard({ item }: { item: Work }) {
               <p className="work-card-did">{item.did}</p>
               {item.tags && <p className="work-card-tags">{item.tags.join("  •  ")}</p>}
             </div>
-            {item.image && <img src={item.image} alt="" />}
+            {item.phones && (
+              <div className="work-card-phones">
+                {item.phones.map((f) => <IPhone key={f} src={`/images/redbus/screens/${f}.webp`} />)}
+              </div>
+            )}
           </div>
           <div className="work-card-meta">
             <p className="work-card-title work-card-title-lg">
