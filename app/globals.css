@@ -941,6 +941,126 @@
 
   .cs-proto-stage .iphone { --n: 430; }
 
+  /* ── Story furniture: acts, the "in short" box, credits ── */
+  .cs-act {
+    margin: 40px 0 72px;
+    padding: 48px 0 0;
+    border-top: 1px solid var(--border);
+    scroll-margin-top: 48px;
+  }
+
+  .cs-act-kicker {
+    font-family: var(--font-geist-mono), monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #E81E38;
+    margin: 0 0 10px;
+  }
+
+  .cs-act-title {
+    font-family: var(--font-manrope), sans-serif;
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    color: var(--text-primary);
+    margin: 0 0 12px;
+  }
+
+  .cs-act-sub {
+    font-family: var(--font-caveat), cursive;
+    font-size: 26px;
+    line-height: 1.25;
+    color: var(--text-secondary);
+    margin: 0;
+    max-width: 640px;
+  }
+
+  .cs-inshort {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--cs-stat-gap);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 0 0 24px;
+  }
+
+  .cs-inshort > div {
+    background: var(--bg);
+    padding: 20px 22px;
+  }
+
+  .cs-credits {
+    text-align: center;
+    padding: 72px 24px 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .cs-credits dl {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 20px;
+    max-width: 520px;
+    margin: 32px auto;
+  }
+
+  .cs-credits dt {
+    text-align: right;
+    font-family: var(--font-geist-mono), monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding-top: 3px;
+  }
+
+  .cs-credits dd {
+    text-align: left;
+    margin: 0;
+    font-size: 15px;
+    color: var(--text-primary);
+  }
+
+  .cs-moscow {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .cs-ideas {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .cs-swatches {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .cs-artefact {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 12px 32px -12px rgba(0, 0, 0, 0.18);
+    transform: rotate(-0.6deg);
+  }
+
+  @media (max-width: 640px) {
+    .cs-act-title { font-size: 30px; }
+    .cs-act-sub { font-size: 22px; }
+    .cs-inshort,
+    .cs-moscow,
+    .cs-swatches { grid-template-columns: minmax(0, 1fr); }
+    .cs-ideas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .cs-credits dl { grid-template-columns: 1fr; gap: 2px; }
+    .cs-credits dt { text-align: center; padding-top: 12px; }
+    .cs-credits dd { text-align: center; }
+  }
+
   /* Home card: three phones in the panel, cut at the bottom like Jahanvi's cards. */
   .work-card-phones {
     height: 380px;

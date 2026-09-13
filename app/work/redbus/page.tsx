@@ -5,7 +5,7 @@ import { Caveat } from "next/font/google";
 import RubberBackButton from "../../../components/RubberBackButton";
 import RedbusTOCClient from "../../../components/RedbusTOCClient";
 import ProtoEmbed from "../../../components/ProtoEmbed";
-import { RED, T, SectionLabel, Beat, Card, Chip, Numbered, Pill, MetaStrip } from "../../../components/caseStudy";
+import { RED, T, SectionLabel, Beat, Figure, Card, Chip, Numbered, Pill, MetaStrip } from "../../../components/caseStudy";
 import { PhoneShot, PhoneRow } from "../../../components/IPhone";
 
 const caveat = Caveat({ subsets: ["latin"], variable: "--font-caveat" });
@@ -17,8 +17,39 @@ export const metadata: Metadata = {
 
 // The full viewer, with its screen list. The embed (ProtoEmbed) uses the same URL with ?test.
 const PROTO_FULL = "https://devanshthink-bit.github.io/redbus-return-capture/?fidelity=hifi";
+// A walkthrough video. Empty until Devansh records one; the link only shows when it is set.
+const VIDEO_URL = "";
 // Full-screen renders of the real builds and the live app, one phone screen each.
 const scr = (f: string) => `/images/redbus/screens/${f}.webp`;
+
+// ── Story furniture ──────────────────────────────────────────────────────────
+function Act({ id, n, title, sub }: { id?: string; n: string; title: string; sub: string }) {
+  return (
+    <header id={id} className="cs-act">
+      <p className="cs-act-kicker">{n}</p>
+      <h2 className="cs-act-title">{title}</h2>
+      <p className="cs-act-sub">{sub}</p>
+    </header>
+  );
+}
+
+function InShort() {
+  const rows = [
+    { k: "The problem", v: "73.9% of travellers I surveyed booked the way home later, most often because they didn't know the date yet." },
+    { k: "What I designed", v: "A return you can book without a date. Say how sure you are, pick a day from your window, and move it once if plans change." },
+    { k: "How it went", v: "Three travellers tried it and it failed my own test. The fixes from that round are what you'll see here." },
+  ];
+  return (
+    <div className="cs-inshort">
+      {rows.map((r) => (
+        <div key={r.k}>
+          <p style={{ ...T.eyebrow, marginBottom: 8 }}>{r.k}</p>
+          <p style={{ ...T.body, fontSize: 15, color: "var(--text-primary)" }}>{r.v}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 // ── Visuals built in code ────────────────────────────────────────────────────
 function TripStrip() {
@@ -59,6 +90,50 @@ function Stats() {
   );
 }
 
+// Two products, and the rule that ties them in a knot.
+function Knot() {
+  const cols = [
+    { h: "FlexiTicket", sub: "free, on some buses", rules: ["Change the date once", "Pay the difference if it costs more", "Nothing back if it costs less", "Up to 8 hours before"] },
+    { h: "Free Cancellation", sub: "₹60 per passenger", rules: ["Cancel for a full refund", "Up to 6 hours before"] },
+  ];
+  return (
+    <div>
+      <div className="cs-grid-2">
+        {cols.map((c) => (
+          <Card key={c.h}>
+            <p style={T.cardH}>{c.h}</p>
+            <p style={{ ...T.small, margin: "2px 0 12px" }}>{c.sub}</p>
+            {c.rules.map((r) => <p key={r} style={{ ...T.body, marginBottom: 6 }}>· {r}</p>)}
+          </Card>
+        ))}
+      </div>
+      <Card accent="#A45729" style={{ marginTop: 12 }}>
+        <p style={{ ...T.cardH, color: "#A45729" }}>Change the date, and the ticket can never be cancelled.</p>
+        <p style={{ ...T.body, marginTop: 4 }}>The Free Cancellation you paid for is gone too. RedBus&apos;s own help page says so.</p>
+      </Card>
+    </div>
+  );
+}
+
+function WhyRedBus() {
+  const cards = [
+    { n: "26.1%", h: "booked it on another app", b: "For RedBus, waiting often means losing the return." },
+    { n: "2×", h: "commissions, one booking", b: "A return added now costs nothing extra to win." },
+    { n: "↓", h: "Free Cancellation sales", b: "The risk: a movable return might replace the add-on." },
+  ];
+  return (
+    <div className="cs-swatches">
+      {cards.map((c) => (
+        <Card key={c.h}>
+          <div style={{ fontFamily: "var(--font-geist-mono)", fontSize: 26, fontWeight: 600, color: "var(--text-primary)" }}>{c.n}</div>
+          <p style={{ ...T.cardH, fontSize: 15, margin: "4px 0 6px" }}>{c.h}</p>
+          <p style={{ ...T.body, fontSize: 13 }}>{c.b}</p>
+        </Card>
+      ))}
+    </div>
+  );
+}
+
 function Rules() {
   const rules = [
     "One change, ever",
@@ -78,6 +153,28 @@ function Rules() {
         ))}
       </ul>
     </Card>
+  );
+}
+
+function Ideas() {
+  const ideas = [
+    "Add-your-return card", "How-sure slider", "Book both, save ₹X", "Badge flexible buses",
+    "Remind in two days", "Save the return, unbooked", "Ask the group", "Show what waiting costs",
+    "Let the app decide", "Ask when to remind", "Book a duration", "Operator now, date later",
+    "Catch the moment plans settle", "Teach it your rule", "Guaranteed seat at today's fare", "Book the last day you can travel",
+  ];
+  return (
+    <div className="cs-ideas">
+      {ideas.map((t, i) => {
+        const win = i === 15, parked = i === 12;
+        return (
+          <div key={t} style={{ borderRadius: 8, padding: "10px 12px", background: win ? "rgba(232,30,56,0.10)" : "var(--cs-callout-bg)", border: win ? `1.5px solid ${RED}` : "1.5px solid transparent" }}>
+            <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: win ? RED : "var(--text-muted)", margin: "0 0 2px" }}>{String(i + 1).padStart(2, "0")}{win ? " · PICKED" : parked ? " · PARKED" : ""}</p>
+            <p style={{ ...T.body, fontSize: 13, color: win ? "var(--text-primary)" : "var(--text-muted)", textDecoration: win || parked ? "none" : "line-through", fontWeight: win ? 600 : 400 }}>{t}</p>
+          </div>
+        );
+      })}
+    </div>
   );
 }
 
@@ -101,16 +198,16 @@ function Merit() {
   );
 }
 
-function BeforeAfter() {
+function BeforeAfter({ before, after, beforeLabel = "Before", afterLabel = "After" }: { before: string; after: string; beforeLabel?: string; afterLabel?: string }) {
   return (
     <div className="cs-grid-2">
       <Card accent="#A45729">
-        <p style={{ ...T.eyebrow, marginBottom: 8 }}>Version 1 said</p>
-        <p style={{ ...T.cardH, textDecoration: "line-through", textDecorationColor: "var(--text-muted)" }}>&quot;You cannot move it to a later day.&quot;</p>
+        <p style={{ ...T.eyebrow, marginBottom: 8 }}>{beforeLabel}</p>
+        <p style={{ ...T.cardH, textDecoration: "line-through", textDecorationColor: "var(--text-muted)" }}>{before}</p>
       </Card>
       <Card>
-        <p style={{ ...T.eyebrow, marginBottom: 8 }}>Now it says</p>
-        <p style={T.cardH}>&quot;Earlier days, in one tap. For a later day, use Change date in My Bookings.&quot;</p>
+        <p style={{ ...T.eyebrow, marginBottom: 8 }}>{afterLabel}</p>
+        <p style={T.cardH}>{after}</p>
       </Card>
     </div>
   );
@@ -175,6 +272,95 @@ function Quotes() {
   );
 }
 
+function MoSCoW() {
+  const cols = [
+    { h: "Must", tone: "red" as const, items: ["Book without a date", "One change, to any date", "Every rule as a heading", "Failure states"] },
+    { h: "Should", tone: "green" as const, items: ["Better buses under your day", "The full cancel flow"] },
+    { h: "Could", tone: "amber" as const, items: ["Move a whole group together", "Routes with one bus a day"] },
+    { h: "Won't", tone: "grey" as const, items: ["Reminders (0% forgot)", "Hide buses that can't move", "Charge for flexibility", "Return seat and stop screens"] },
+  ];
+  return (
+    <div className="cs-moscow">
+      {cols.map((c) => (
+        <Card key={c.h}>
+          <div style={{ marginBottom: 10 }}><Chip tone={c.tone}>{c.h}</Chip></div>
+          {c.items.map((t) => <p key={t} style={{ ...T.body, fontSize: 13, marginBottom: 8 }}>{t}</p>)}
+        </Card>
+      ))}
+    </div>
+  );
+}
+
+function Palette() {
+  const sw = [
+    { c: "#E81E38", h: "Action", b: "The thing to tap" },
+    { c: "#A45729", h: "Warning", b: "Something you give up" },
+    { c: "#458442", h: "Rating", b: "Ratings, nothing else" },
+  ];
+  return (
+    <div className="cs-swatches">
+      {sw.map((s) => (
+        <Card key={s.c} style={{ padding: 0, overflow: "hidden" }}>
+          <div style={{ height: 72, background: s.c }} />
+          <div style={{ padding: "14px 16px" }}>
+            <p style={{ ...T.cardH, fontSize: 15 }}>{s.h} <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "var(--text-muted)", fontWeight: 500 }}>{s.c}</span></p>
+            <p style={{ ...T.body, fontSize: 13 }}>{s.b}</p>
+          </div>
+        </Card>
+      ))}
+    </div>
+  );
+}
+
+function Watch() {
+  const rows = [
+    { h: "Returns added before paying", b: "The number this should move", tone: "green" as const, t: "Goal" },
+    { h: "Outbound bookings, at least 95%", b: "Must not drop", tone: "red" as const, t: "Limit" },
+    { h: "Free Cancellation sales", b: "Might dip, so watch it", tone: "amber" as const, t: "Risk" },
+  ];
+  return (
+    <div className="cs-swatches">
+      {rows.map((r) => (
+        <Card key={r.h}>
+          <div style={{ marginBottom: 10 }}><Chip tone={r.tone}>{r.t}</Chip></div>
+          <p style={{ ...T.cardH, fontSize: 15 }}>{r.h}</p>
+          <p style={{ ...T.body, fontSize: 13, marginTop: 4 }}>{r.b}</p>
+        </Card>
+      ))}
+    </div>
+  );
+}
+
+function Credits() {
+  const rows = [
+    ["Starring", "Soumya, Vivek and Sai"],
+    ["Research", "8 interviews, 61 survey responses"],
+    ["Reviews", "My mentor, twice"],
+    ["Built with", "Figma, Claude Code"],
+    ["Screens", "38, plus 13 states"],
+    ["Directed by", "Devansh Somvanshi"],
+  ];
+  return (
+    <section id="toc-credits" className="cs-credits">
+      <p className="cs-act-kicker">The end</p>
+      <h2 className="cs-act-title">Thanks for reading.</h2>
+      <dl>
+        {rows.map(([k, v]) => (
+          <div key={k} style={{ display: "contents" }}>
+            <dt>{k}</dt>
+            <dd>{v}</dd>
+          </div>
+        ))}
+      </dl>
+      <p className="cs-act-sub" style={{ margin: "0 auto 20px" }}>Got a question, or a better idea? I&apos;d love to hear it.</p>
+      <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
+        <Pill href="https://mail.google.com/mail/?view=cm&fs=1&to=devansh.think@gmail.com" primary external>Email me</Pill>
+        <Pill href="https://www.linkedin.com/in/devansh-somvanshi" external>LinkedIn ↗</Pill>
+      </div>
+    </section>
+  );
+}
+
 // ── Page ─────────────────────────────────────────────────────────────────────
 export default function RedbusCaseStudy() {
   return (
@@ -194,37 +380,38 @@ export default function RedbusCaseStudy() {
       <h1 style={T.h1}>
         <span style={{ color: RED }}>RedBus</span> · Booking the trip home
       </h1>
-      <p style={T.lede}>
-        A concept for booking the ride home before you know which day it is. Never shipped. I tested it with three travellers.
-      </p>
+      <p style={T.lede}>Ever put off booking your bus home because you didn&apos;t know which day you&apos;d leave?</p>
 
+      <InShort />
       <MetaStrip items={[
         { label: "Role", value: "Product designer, solo, self-initiated" },
         { label: "Timeline", value: "6 weeks" },
         { label: "Platform", value: "RedBus iOS app" },
         { label: "Tools", value: "Figma, Claude Code" },
       ]} />
-      <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 88 }}>
+      <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 24 }}>
         <Pill href="#toc-try" primary>Try the prototype ↓</Pill>
         <Pill href={PROTO_FULL} external>Open it full screen ↗</Pill>
+        {VIDEO_URL && <Pill href={VIDEO_URL} external>Watch the walkthrough ▶</Pill>}
       </div>
 
-      {/* Hook */}
-      <Beat id="toc-problem" label="01 · Soumya" title="Soumya booked her bus home early once. Never again."
-        sub={<>Her plans moved and the ticket couldn&apos;t. &quot;We regretted it,&quot; she told me. Now she books a day or two before, and ends up at the back of the bus, where she gets motion sick.</>}
-        caption="How most trips in my research looked: the way out booked, the way home left open.">
+      {/* ── ACT 1 ── */}
+      <Act id="toc-problem" n="Act 1 · The problem" title="A trip home with no date"
+        sub="It starts with one traveller and a ticket she couldn't move." />
+
+      <Beat label="Soumya" title="Soumya booked her bus home early once. Never again."
+        sub={<>Her plans moved and the ticket couldn&apos;t. &quot;We regretted it,&quot; she told me. Now she books a day or two before and ends up at the back of the bus, where she gets motion sick.</>}>
         <TripStrip />
       </Beat>
 
-      <Beat label="02 · The pattern" title="Most people wait to book the return. Nobody forgets."
-        sub="I interviewed 8 travellers and ran a survey with 61 responses, 23 of whom had taken a round trip by bus. Not one said they forgot. Every late booking was a choice."
+      <Beat label="The pattern" title="Most people wait to book the return. Nobody forgets."
+        sub="I interviewed 8 travellers and ran a survey with 61 responses, 23 of whom had taken a round trip by bus. Every late booking was a choice."
         caption="Survey figures are out of those 23.">
         <Stats />
       </Beat>
 
-      {/* Pinch 1 */}
-      <Beat label="03 · What RedBus has" title="The fix already exists. It's a badge on a bus."
-        sub="FlexiTicket lets you change your date for free. You meet it as a banner and a badge, never at the moment you decide about the return, and 39.1% of my survey had heard of neither it nor the cancellation add-on."
+      <Beat label="What RedBus has" title="The fix already exists. It's a badge on a bus."
+        sub="FlexiTicket lets you change your date for free. You meet it on a bus card, never when you decide about the return, and 39.1% of my survey had never heard of it or the add-on."
         caption="The live RedBus app, August 2026.">
         <PhoneShot src={scr("real_4553")} alt="The live RedBus bus list: a FlexiTicket banner, a Free date change badge on one bus, and a 10% return deal."
           notes={[
@@ -234,45 +421,126 @@ export default function RedbusCaseStudy() {
           ]} />
       </Beat>
 
-      <Beat label="04 · The limits" title="I couldn't hold a seat, set a fare or change a rule."
+      <Beat label="The knot" title="The rules made waiting the safe choice."
+        sub="Staying flexible means juggling seven rules across two products. One of them cancels the other, so people keep their options open by booking nothing.">
+        <Knot />
+      </Beat>
+
+      <Beat label="Why RedBus should care" title="A return booked later is often booked elsewhere."
+        sub="Winning the return inside the first booking is cheap. Losing it is a whole second ticket gone.">
+        <WhyRedBus />
+      </Beat>
+
+      <Beat label="The limits" title="I couldn't hold a seat, set a fare or change a rule."
         sub="Someone who doesn't know their return date has no way to hold a return on RedBus. Since RedBus sells other companies' buses, I could only change what the app asks and when."
-        caption="What I'd measure: how many bookings add a return before paying. What must not drop: at least 95% of people still finish the booking they came for. Both are my targets, not RedBus's.">
+        caption="My own limit: adding a step must keep at least 95% of people finishing the booking they came for.">
         <Rules />
       </Beat>
 
-      {/* Plot turn 1 */}
-      <Beat id="toc-idea" label="05 · The idea" title="So I stopped asking for the date."
-        sub="Four of my eight interviewees described their return as a limit, like having to be back for Monday office. People know their limit even when they don't know their day, so I booked that day and let them move it once."
-        caption="Version 1, 3 Aug. Of 16 ideas, this one scored 2 out of 10 on how predictable it was. The obvious ones scored 8 or 9.">
-        <PhoneShot src={scr("lofi_v1")} lofi alt="Version 1: a Last day screen with a field reading 'The last day I can travel is'."
+      {/* ── ACT 2 ── */}
+      <Act id="toc-design" n="Act 2 · The trip" title="Soumya's next trip home"
+        sub="Imagine her next trip with this. Every scene is a screen from the working prototype." />
+
+      <Beat label="Scene 1 · Booking the way out" title="She books her bus to Nainital. Then the app asks about the way back."
+        sub={<>How do you book a day you don&apos;t know? You say so. It opens on &quot;I&apos;m not sure yet&quot;, the answer 65.2% of my survey gave.</>}>
+        <PhoneShot src={scr("hifi_05")} alt="Hi-fi return calendar with 'I'm not sure yet' selected and a fare under every day."
           notes={[
-            { title: "\"The last day I can travel is\"", sub: "first person, so it reads as a limit you have, not a guess" },
-            { title: "We book that day.", sub: "If you can leave earlier, one change, no fee" },
+            { title: "Opens on \"I'm not sure yet\"", sub: "people who know their date lose one tap" },
+            { title: "Every day shows its cheapest fare", sub: "so price is visible before she commits" },
           ]} />
       </Beat>
 
-      {/* Midpoint */}
-      <Beat id="toc-doubts" label="06 · Attacking it" title="Then I attacked my own idea, and it came second."
+      <Beat label="Scene 2 · Picking a day" title="She marks the days she could come back, then picks one."
+        sub="How does she choose without comparing thirty buses? The days stay a short list, and her bus opens right under the day she picks.">
+        <PhoneShot src={scr("hifi_06a")} alt="Hi-fi day list with Thu 17 Sep picked and the recommended bus open under it."
+          notes={[
+            { title: "The days stay a fixed list", sub: "whether a day has 2 buses or 30" },
+            { title: "Her bus sits under her day", sub: "with the ones that beat it on price or rating" },
+          ]} />
+      </Beat>
+
+      <Beat label="Scene 3 · Before paying" title="She sees the one catch before she pays."
+        sub="One change, to any date. The only line in warning colour is the one that costs her: no cancelling after a change.">
+        <PhoneShot src={scr("hifi_08")} alt="Hi-fi review screen with the Free date change card: one change, and 'You cannot cancel it after that' in red."
+          notes={[
+            { title: "One change, to any date", sub: "she pays only the difference" },
+            { title: "The only warning on the page", sub: "no cancelling after a change" },
+          ]} />
+      </Beat>
+
+      <Beat label="Scene 4 · A week later" title="Her plans move, so she moves the ticket."
+        sub="What will it cost? Every day on the calendar says. The new bus stays with the same operator, as RedBus requires.">
+        <PhoneShot src={scr("hifi_13")} alt="Hi-fi Change day screen: the booking, the note that a changed ticket can't be cancelled, and a calendar with the cost of each day."
+          notes={[
+            { title: "The rule, before the choice", sub: "once she changes, no cancelling" },
+            { title: "Every day says what the move costs", sub: "+₹170, None, Full" },
+          ]} />
+      </Beat>
+
+      <Beat label="Scene 5 · Done" title="The app tells her what changed, and what she gave up."
+        sub="The new day is ₹30 cheaper and she doesn't get that back. I kept celebration out of payment, so the good news waits for this screen.">
+        <PhoneShot src={scr("hifi_16")} alt="Hi-fi Date changed screen: return moved to Tue 15 Sep, ₹30 cheaper and not refunded, and a note that this was the one change."
+          notes={[
+            { title: "What moved, and what it cost", sub: "even when the answer is \"nothing back\"" },
+            { title: "That was her one change", sub: "said plainly, where it happens" },
+          ]} />
+      </Beat>
+
+      <Beat label="Scene 6 · When things break" title="When it can't keep a promise, it says what still holds."
+        sub="There are 13 of these states. Here are three: still loading, nowhere to move to, and a seat someone else just took."
+        caption="Success is scene 5.">
+        <PhoneRow phones={[
+          { src: scr("hifi_S6"), label: "Loading", caption: "The list's shape, before the data", alt: "Loading state: five skeleton day cards." },
+          { src: scr("hifi_S9"), label: "Empty", caption: "\"Your booking is safe. Nothing was charged.\"", alt: "Empty state: no other days to pick, the booking is safe." },
+          { src: scr("hifi_S3"), label: "Error", caption: "Which seat went, then what's still fine", alt: "Error state: your return seat is gone, your onward trip is fine." },
+        ]} />
+      </Beat>
+
+      <Beat id="toc-try" label="Try it" title="Now try it yourself."
+        sub="This is the working prototype: 38 screens and 13 states, built from the Figma file. Tap From, then To, then Search buses."
+        caption={<>It loads from the live link, so give it a second, or <a className="inline-link" href={PROTO_FULL} target="_blank" rel="noopener noreferrer">open it full screen</a>.</>}>
+        <ProtoEmbed />
+      </Beat>
+
+      {/* ── ACT 3 ── */}
+      <Act id="toc-behind" n="Act 3 · Behind the scenes" title="Getting here wasn't this clean"
+        sub="I won't walk you through every version. These are the moments that changed the design." />
+
+      <Beat label="The mess" title="It started as 102 sticky notes."
+        sub="Eight interviews and a survey, one observation per note, nothing deleted. Sorting them gave me six clusters and one problem to solve."
+        caption="Part of the research board. Surnames hidden.">
+        <div className="cs-artefact">
+          <Figure src="/images/redbus/artefacts/board_notes.webp" w={1200} h={1060} alt="The research board: sticky notes from each interview, grouped by traveller." />
+        </div>
+      </Beat>
+
+      <Beat label="Sixteen ideas" title="The obvious ideas died first."
+        sub="Reminders died because nobody forgot. Four more died because RedBus already ships them. The one left standing: stop asking for the date, book the last day they could travel, and let them move it once."
+        caption="Idea 13 lost only on scope. It's what I'd build next.">
+        <Ideas />
+      </Beat>
+
+      <Beat label="Attacking it" title="Then I attacked my own idea, and it came second."
         sub="I wrote eight attacks on it. The worst: after a change you can't cancel, so the people least sure of their plans could end up with the least refundable ticket."
-        caption="When I scored every idea on merit, the window idea beat mine. So I built it next, as version 2.">
+        caption="When I scored every idea on merit, the window idea beat mine. So I built that next.">
         <Merit />
       </Beat>
 
-      <Beat label="07 · My mistake" title="I also wrote something false into the product."
+      <Beat label="My mistake" title="I also wrote something false into the product."
         sub="Version 1 told travellers the date could only move earlier. That limit was mine, a shortcut I had stopped questioning. FlexiTicket always allowed later."
-        caption="I found it rehearsing a stakeholder's questions. Then I fixed it on the screens after payment first, and missed the one where people form the belief.">
-        <BeforeAfter />
+        caption="I fixed it on the screens after payment first, and missed the one where people form the belief.">
+        <BeforeAfter beforeLabel="Version 1 said" afterLabel="Now it says"
+          before={"\"You cannot move it to a later day.\""}
+          after={"\"Earlier days, in one tap. For a later day, use Change date in My Bookings.\""} />
       </Beat>
 
-      <Beat label="08 · The demo" title="My mentor asked three questions I couldn't answer."
-        sub="Two of them rested on facts I had collected in screenshots and never written down. Now I start by agreeing: it is FlexiTicket underneath, and what changes is what the app asks for."
-        caption="The same demo found a real gap. He couldn't tell you could pick a range. I didn't add a toggle for it. I should have.">
+      <Beat label="The demo" title="My mentor asked three questions I couldn't answer."
+        sub="Two of them rested on facts I had in screenshots and never wrote down. Now I start by agreeing: it is FlexiTicket underneath, and what changes is what the app asks for.">
         <MentorQA />
       </Beat>
 
-      {/* Pinch 2 */}
-      <Beat id="toc-versions" label="09 · Four versions" title="It took four versions to ask one question well."
-        sub="Booking the cheapest day in a range pushed people to spend their only change, so version 3 booked the last day. Version 4 keeps the days as a still list, because a real route runs up to 30 buses a day."
+      <Beat label="How I · 1" title="How I stopped booking the cheapest day."
+        sub="Version 2 booked the cheapest day in a range, which pushed people to spend their only change. Version 3 booked the last day. Version 4 kept the days still, because a real route runs up to 30 buses a day."
         caption="The real bus list for one day was 14 cards and 4,957 pixels long.">
         <PhoneRow phones={[
           { src: scr("lofi_v1"), lofi: true, label: "v1 · 3 Aug", caption: "Ask for the last day", alt: "Version 1, Last day screen." },
@@ -282,112 +550,87 @@ export default function RedbusCaseStudy() {
         ]} />
       </Beat>
 
-      {/* Plot turn 2 */}
-      <Beat id="toc-testing" label="10 · Testing" title="Three people tested it. By my own rules, it failed."
+      <Beat label="Checking it for real" title="So I booked a real ticket to check one rule."
+        sub="My design needed a date change to stay with the same operator, and nothing I'd read said so. I booked a FlexiTicket bus and opened Change travel date. It was right there.">
+        <PhoneShot src={scr("real_5199")} alt="The live RedBus Change travel date screen: 'You can select bus from same operator and same route as original ticket'."
+          notes={[
+            { title: "Same operator, same route", sub: "my biggest open risk, closed" },
+            { title: "Change once, then no cancelling", sub: "the rule the whole design leans on" },
+          ]} />
+      </Beat>
+
+      <Beat label="Pushing back" title="Then my mentor asked: isn't FlexiTicket better?"
+        sub="It moves you to any date, and mine capped you at a week. I kept the week, because it's how you book without a date. I just stopped it from limiting the ticket."
+        caption="Both paths now reach 29 days.">
+        <BeforeAfter
+          before="You can change within your week"
+          after="The week picks your day. The change can go to any date." />
+      </Beat>
+
+      <Beat id="toc-testing" label="Testing" title="Three people tested it. By my own rules, it failed."
         sub="Before the sessions I wrote down what would kill the design, so I couldn't move the goalposts later. Two of the three conditions I could check came true."
         caption="Three of five planned sessions, 6 Sep, on version 3.">
         <KillList />
       </Beat>
 
-      <Beat label="11 · What they did" title="One line, read three wrong ways."
+      <Beat label="What they did" title="One line, read three wrong ways."
         sub={<>The calendar said &quot;Not sure? Tap two days instead.&quot; Nobody used the window it was asking for.</>}
         caption="Not one of them read a subheading, in any session.">
         <Quotes />
       </Beat>
 
-      <Beat label="12 · Saying no" title="Sai asked me to hide the risky buses. I didn't."
-        sub="He took the cheapest day without seeing it couldn't change, and asked me to show only buses that can. That would hide the cheapest bus on the route, and price mattered to all three testers."
-        caption="Sai still said he'd use this over today's flow, and wouldn't tap Skip. He had struggled the most.">
-        <PhoneShot src={scr("hifi_06b")} alt="The day list with Mon 21 Sep picked: its bus cannot change date, and the button reads Book a fixed date."
-          notes={[
-            { title: "So I made the risk hard to miss", sub: "the day and its bus both say it can't change" },
-            { title: "The button changes", sub: "\"Book a fixed date\", not \"Review trip\"" },
-            { title: "It names your own answer back", sub: "\"You said you were not sure yet\"" },
-          ]} />
-      </Beat>
-
-      {/* Resolution */}
-      <Beat label="13 · The fix" title="So now the calendar asks first."
-        sub={<>Two answers, &quot;I know my date&quot; and &quot;I&apos;m not sure yet&quot;, with the calendar right under them. My mentor had spotted the problem three weeks earlier. It took three testers for me to see it.</>}
-        caption="Every rule on the screen is now a heading, because headings were the only thing anyone read.">
+      <Beat label="How I · 2" title="How I made the calendar ask first."
+        sub={<>Two answers sit above the calendar: &quot;I know my date&quot; and &quot;I&apos;m not sure yet&quot;. I borrowed the shape from Swiggy&apos;s &quot;When?&quot; toggle and kept one line under it, because two words alone is how Sai misread &quot;tap two days&quot;.</>}
+        caption="My mentor spotted this problem three weeks before testing. It took three testers for me to see it.">
         <PhoneRow phones={[
           { src: scr("lofi_v3"), lofi: true, label: "Before · v3", caption: "\"Tap two days\" read as two days in a row", alt: "Version 3 calendar with 'Tap two days instead'." },
           { src: scr("lofi_v4"), lofi: true, label: "After · v4", caption: "Ask first. The calendar stays right under it.", alt: "Version 4 asking 'I know my date' or 'I'm not sure yet'." },
         ]} />
       </Beat>
 
-      <Beat id="toc-design" label="14 · Say" title="First, say how sure you are."
-        sub={<>It opens on &quot;I&apos;m not sure yet&quot;, the answer 65.2% of my survey gave. People who know their date lose one tap.</>}>
-        <PhoneShot src={scr("hifi_05")} alt="Hi-fi return calendar with 'I'm not sure yet' selected and a fare under every day."
+      <Beat label="How I · 3" title="Sai asked me to hide the risky buses. I didn't."
+        sub="He took the cheapest day without seeing it couldn't change, and asked me to show only buses that can. That would hide the cheapest bus on the route, and price mattered to all three testers."
+        caption="Sai still said he'd use this over today's flow, and wouldn't tap Skip. He had struggled the most.">
+        <PhoneShot src={scr("hifi_06b")} alt="The day list with Mon 21 Sep picked: its bus cannot change date, and the button reads Book a fixed date."
           notes={[
-            { title: "Opens on \"I'm not sure yet\"", sub: "the answer 65.2% of my survey gave" },
-            { title: "Every day shows its cheapest fare", sub: "so price is visible before you commit" },
+            { title: "So I made the risk hard to miss", sub: "the day and its bus both say it can't change" },
+            { title: "The button changes", sub: "\"Book a fixed date\", not \"Review trip\"" },
+            { title: "It names her own answer back", sub: "\"You said you were not sure yet\"" },
           ]} />
       </Beat>
 
-      <Beat label="15 · Pick" title="Then pick one day from your window."
-        sub="The days stay a fixed list with the cheapest fare on each. Your bus opens under the day you pick, with any that beat it on price or rating.">
-        <PhoneShot src={scr("hifi_06a")} alt="Hi-fi day list with Thu 17 Sep picked and the recommended bus open under it."
-          notes={[
-            { title: "The days stay a fixed list", sub: "whether a day has 2 buses or 30" },
-            { title: "Your bus sits under your day", sub: "with the ones that beat it on price or rating" },
-          ]} />
+      <Beat id="toc-choices" label="What made the cut" title="Six weeks, one designer. Something had to go."
+        sub="Looking back, this is what made the cut, sorted must, should, could and won't. Most of the arguments were about the last column.">
+        <MoSCoW />
       </Beat>
 
-      <Beat label="16 · Check" title="See every rule before you pay."
-        sub="One change, to any date. The one line in warning colour is the one that costs you: no cancelling after a change.">
-        <PhoneShot src={scr("hifi_08")} alt="Hi-fi review screen with the Free date change card: one change, and 'You cannot cancel it after that' in red."
-          notes={[
-            { title: "One change, to any date", sub: "you pay only the difference" },
-            { title: "The only line in warning colour", sub: "you can't cancel after a change" },
-          ]} />
+      <Beat label="The look" title="Only the new part is mine."
+        sub="Everything else copies the real app, measured from 51 screenshots. That's how I found RedBus warns in amber, where I had used red."
+        caption="Its buttons are pills, too. My first ones had small rounded corners.">
+        <Palette />
       </Beat>
 
-      <Beat label="17 · Move" title="Move it once, when plans settle."
-        sub="The calendar shows what each move would cost. You can only move to a bus from the same operator, which I checked by booking a real ticket.">
-        <PhoneShot src={scr("hifi_13")} alt="Hi-fi Change day screen: the booking, the note that a changed ticket can't be cancelled, and a calendar with the cost of each day."
-          notes={[
-            { title: "The rule, before the choice", sub: "once you change, no cancelling" },
-            { title: "Every day says what the move costs", sub: "+₹170, None, Full" },
-          ]} />
+      {/* ── ACT 4 ── */}
+      <Act id="toc-next" n="Act 4 · What's next" title="What I'd do if this shipped"
+        sub="Nothing here is live, so there are no results yet. Here's how I'd know." />
+
+      <Beat label="What I'd watch" title="Three numbers, and when I'd pull it."
+        sub="If returns rose 8% but outbound bookings fell 6%, I'd roll it back. That's trading trips for returns.">
+        <Watch />
       </Beat>
 
-      <Beat label="18 · Done" title="It tells you what changed, and what you gave up."
-        sub="I kept celebration out of the payment step on purpose. The good news goes here, where the worry ends, next to the ₹30 you don't get back.">
-        <PhoneShot src={scr("hifi_16")} alt="Hi-fi Date changed screen: return moved to Tue 15 Sep, ₹30 cheaper and not refunded, and a note that this was the one change."
-          notes={[
-            { title: "What moved, and what it cost", sub: "even when the answer is \"nothing back\"" },
-            { title: "That was your one change", sub: "said plainly, on the screen where it happens" },
-          ]} />
-      </Beat>
-
-      <Beat label="19 · States" title="When it can't keep a promise, it says what still holds."
-        sub="There are 13 of these states, from a seat sold while you were booking to a day where no bus can change date. Each says what went wrong, then what still works.">
-        <PhoneShot src={scr("hifi_S3")} alt="Hi-fi error state: 'Your return seat is gone', then 'Your onward trip is fine', with Pick another return."
-          notes={[
-            { title: "What went wrong, and which seat", sub: "\"Seat U5 is gone\"" },
-            { title: "Then what's still true", sub: "\"Your onward trip is fine.\"" },
-          ]} />
-      </Beat>
-
-      <Beat id="toc-try" label="20 · Try it" title="Here's the real thing. Tap through it."
-        sub="This is the working prototype: 38 screens and 13 states, built from the Figma file. Tap From, then To, then Search buses."
-        caption={<>It loads from the live link, so give it a second, or <a className="inline-link" href={PROTO_FULL} target="_blank" rel="noopener noreferrer">open it full screen</a>.</>}>
-        <ProtoEmbed />
-      </Beat>
-
-      {/* New world */}
-      <Beat id="toc-next" label="21 · Still open" title="What I still don't know."
-        sub="Parts of this rest on guesses I haven't been able to check.">
+      <Beat label="Still guessing" title="What I still don't know."
+        sub="Some of this rests on guesses I couldn't check.">
         <Numbered items={[
+          "The 95% limit is my target. There's no real baseline.",
+          "I assume the fare difference uses the fare on the day you change. RedBus doesn't say.",
+          "Without fare data, I can't say how often moving a date costs more.",
           "Two of five planned sessions never ran: the sceptic and the traveller with fixed plans.",
           "The fixes from testing haven't been tested again.",
-          "Without RedBus's fare data, I can't say how often moving a date costs more.",
-          "Next, I'd design for the moment plans settle, the idea that lost only on scope.",
         ]} />
       </Beat>
 
-      <Beat label="22 · Keeping" title="What I'm taking to the next project."
+      <Beat label="Keeping" title="What I'm taking to the next project."
         sub="Most of it I learned in a demo or a test session.">
         <Numbered items={[
           "A fact I haven't written down is a fact I don't have in the room.",
@@ -395,6 +638,8 @@ export default function RedbusCaseStudy() {
           "Fix a wrong belief on the screen where people form it.",
         ]} />
       </Beat>
+
+      <Credits />
     </main>
   );
 }
