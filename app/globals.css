@@ -1082,6 +1082,66 @@
     color: #E3A47C;
   }
 
+  /* ── RedBus case study polish (scoped to main.cs-page) ── */
+  /* The site's muted grey is 3.2:1 on the page; captions here are small, so darken it to 4.9:1. */
+  .cs-page { --text-muted: #726e68; }
+  html.nerd-mode .cs-page { --text-muted: #a19c94; }
+
+  .cs-page h1,
+  .cs-page h2 { text-wrap: balance; }
+  .cs-page p { text-wrap: pretty; }
+
+  .cs-page ::selection { background: rgba(232, 30, 56, 0.18); color: inherit; }
+
+  .cs-page .cs-stats,
+  .cs-page .cs-swatches { font-variant-numeric: tabular-nums; }
+
+  /* The site hides the pointer for its own cursor, so keyboard focus has to be visible. */
+  .cs-page a:focus-visible,
+  .cs-page button:focus-visible {
+    outline: 2px solid #E81E38;
+    outline-offset: 3px;
+    border-radius: 8px;
+  }
+  .cs-page .ask-input:focus-within { border-color: var(--text-primary); }
+  .cs-page .ask-input input:focus-visible { outline: none; }
+
+  /* Something you give up: an amber panel, not a thick side stripe. */
+  .cs-callout-warn {
+    background: rgba(164, 87, 41, 0.07);
+    box-shadow: inset 0 0 0 1px rgba(164, 87, 41, 0.2);
+  }
+  html.nerd-mode .cs-callout-warn {
+    background: rgba(227, 164, 124, 0.08);
+    box-shadow: inset 0 0 0 1px rgba(227, 164, 124, 0.22);
+  }
+
+  .cs-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .cs-list li {
+    position: relative;
+    padding-left: 16px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+  .cs-list li::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 0.72em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--text-muted);
+  }
+
   .cs-proto iframe {
     border: 0;
     display: block;

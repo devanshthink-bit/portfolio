@@ -8,7 +8,7 @@ export const T = {
   h1:      { fontFamily: "var(--font-manrope)", fontSize: 40, fontWeight: 800, color: "var(--text-primary)", letterSpacing: "-0.04em", lineHeight: 1.12, margin: "0 0 16px 0" } as React.CSSProperties,
   lede:    { fontFamily: "var(--font-manrope)", fontSize: 20, fontWeight: 500, color: "var(--text-secondary)", letterSpacing: "-0.025em", lineHeight: 1.45, margin: "0 0 32px 0" } as React.CSSProperties,
   h2:      { fontFamily: "var(--font-manrope)", fontSize: 26, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.04em", lineHeight: 1.3, margin: "0 0 12px 0" } as React.CSSProperties,
-  sub:     { fontSize: 16, color: "var(--text-secondary)", lineHeight: 1.65, letterSpacing: "-0.015em", margin: 0, maxWidth: 680 } as React.CSSProperties,
+  sub:     { fontSize: 16, color: "var(--text-secondary)", lineHeight: 1.65, letterSpacing: "-0.015em", margin: 0, maxWidth: 640 } as React.CSSProperties,
   small:   { fontSize: 13, color: "var(--text-muted)", lineHeight: 1.55, letterSpacing: "-0.01em", margin: 0 } as React.CSSProperties,
   eyebrow: { fontFamily: "var(--font-geist-mono)", fontSize: 10, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" as const, color: "var(--text-muted)", margin: 0 } as React.CSSProperties,
   cardH:   { fontFamily: "var(--font-manrope)", fontSize: 16, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.02em", lineHeight: 1.4, margin: 0 } as React.CSSProperties,
@@ -53,9 +53,10 @@ export function Figure({ src, alt, w = 2400, h = 1500, priority }: { src: string
   );
 }
 
-export function Card({ children, accent, style }: { children: React.ReactNode; accent?: string; style?: React.CSSProperties }) {
+// `warn` marks something the traveller gives up: an amber panel (.cs-callout-warn).
+export function Card({ children, warn, style }: { children: React.ReactNode; warn?: boolean; style?: React.CSSProperties }) {
   return (
-    <div style={{ background: "var(--cs-callout-bg)", borderRadius: 10, padding: "18px 20px", borderLeft: accent ? `3px solid ${accent}` : undefined, ...style }}>
+    <div className={warn ? "cs-callout-warn" : undefined} style={{ background: warn ? undefined : "var(--cs-callout-bg)", borderRadius: 10, padding: "18px 20px", ...style }}>
       {children}
     </div>
   );

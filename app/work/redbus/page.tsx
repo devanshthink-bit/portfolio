@@ -105,11 +105,11 @@ function Knot() {
           <Card key={c.h}>
             <p style={T.cardH}>{c.h}</p>
             <p style={{ ...T.small, margin: "2px 0 12px" }}>{c.sub}</p>
-            {c.rules.map((r) => <p key={r} style={{ ...T.body, marginBottom: 6 }}>· {r}</p>)}
+            <ul className="cs-list">{c.rules.map((r) => <li key={r}>{r}</li>)}</ul>
           </Card>
         ))}
       </div>
-      <Card accent="#A45729" style={{ marginTop: 12 }}>
+      <Card warn style={{ marginTop: 12 }}>
         <p style={{ ...T.cardH, color: "#A45729" }}>Change the date, and the ticket can never be cancelled.</p>
         <p style={{ ...T.body, marginTop: 4 }}>The Free Cancellation you paid for is gone too. RedBus&apos;s own help page says so.</p>
       </Card>
@@ -145,15 +145,9 @@ function Rules() {
     "Change up to 8 hours before",
   ];
   return (
-    <Card accent="#A45729" style={{ padding: "20px 24px" }}>
+    <Card warn style={{ padding: "20px 24px" }}>
       <p style={{ ...T.eyebrow, marginBottom: 10 }}>FlexiTicket&apos;s rules, as they are</p>
-      <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
-        {rules.map((r) => (
-          <li key={r} style={{ ...T.body, display: "flex", gap: 10 }}>
-            <span style={{ fontFamily: "var(--font-geist-mono)", color: "var(--text-muted)" }}>·</span>{r}
-          </li>
-        ))}
-      </ul>
+      <ul className="cs-list">{rules.map((r) => <li key={r}>{r}</li>)}</ul>
     </Card>
   );
 }
@@ -203,7 +197,7 @@ function Merit() {
 function BeforeAfter({ before, after, beforeLabel = "Before", afterLabel = "After" }: { before: string; after: string; beforeLabel?: string; afterLabel?: string }) {
   return (
     <div className="cs-grid-2">
-      <Card accent="#A45729">
+      <Card warn>
         <p style={{ ...T.eyebrow, marginBottom: 8 }}>{beforeLabel}</p>
         <p style={{ ...T.cardH, textDecoration: "line-through", textDecorationColor: "var(--text-muted)" }}>{before}</p>
       </Card>
@@ -350,16 +344,16 @@ function Credits() {
 // ── Page ─────────────────────────────────────────────────────────────────────
 export default function RedbusCaseStudy() {
   return (
-    <main className={caveat.variable} style={{ padding: "40px 0 96px" }}>
+    <main className={`${caveat.variable} cs-page`} style={{ padding: "40px 0 96px" }}>
       <RedbusTOCClient />
       <RubberBackButton />
       <AskDevansh />
 
       <div id="toc-intro" style={{ marginBottom: 48 }}>
         <PhoneRow className="hero bare" phones={[
-          { src: scr("hifi_06a"), alt: "The day list with Thu 17 Sep picked and its bus open under it." },
+          { src: scr("hifi_06a"), alt: "The day list with Thu 17 Sep picked and its bus open under it.", priority: true },
           { src: scr("hifi_05"), alt: "The return calendar asking 'When can you travel back?', on 'I'm not sure yet'.", priority: true },
-          { src: scr("hifi_16"), alt: "The Date changed screen: return moved to Tue 15 Sep." },
+          { src: scr("hifi_16"), alt: "The Date changed screen: return moved to Tue 15 Sep.", priority: true },
         ]} />
       </div>
 
