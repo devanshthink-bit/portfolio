@@ -14,12 +14,16 @@ export default function PhoneShot({ notes = [], ...phone }: Omit<PhoneProps, "ma
   const root = useRef<HTMLDivElement>(null);
   const [lines, setLines] = useState<Line[]>([]);
 
+  // Numbered in the order the boxes appear on the screen, top to bottom, so each side reads in order.
   let alt = 0;
-  const placed = notes.map((x, i) => {
-    const c = x.box ? x.box[0] + x.box[2] / 2 : 50;
-    const side = c > 60 ? "right" : c < 40 ? "left" : alt++ % 2 === 0 ? "left" : "right";
-    return { ...x, n: i + 1, side };
-  });
+  const placed = notes
+    .map((x) => {
+      const c = x.box ? x.box[0] + x.box[2] / 2 : 50;
+      const side = c > 60 ? "right" : c < 40 ? "left" : alt++ % 2 === 0 ? "left" : "right";
+      return { ...x, side };
+    })
+    .sort((a, b) => (a.box?.[1] ?? 0) - (b.box?.[1] ?? 0))
+    .map((x, i) => ({ ...x, n: i + 1 }));
   const byTop = (a: { box?: Mark["box"] }, b: { box?: Mark["box"] }) => (a.box?.[1] ?? 0) - (b.box?.[1] ?? 0);
   const left = placed.filter((x) => x.side === "left").sort(byTop);
   const right = placed.filter((x) => x.side === "right").sort(byTop);
@@ -34,18 +38,25 @@ export default function PhoneShot({ notes = [], ...phone }: Omit<PhoneProps, "ma
       const out: Line[] = [];
       el.querySelectorAll<HTMLElement>("[data-note]").forEach((noteEl) => {
         const n = noteEl.dataset.note;
-        const title = noteEl.querySelector(".phone-note-title");
+        const badge = noteEl.querySelector(".phone-note-n");
         const mark = el.querySelector(`[data-mark="${n}"]`);
-        if (!title || !mark) return;
+        if (!badge || !mark) return;
         const isLeft = noteEl.closest(".is-left") !== null;
-        const t = title.getBoundingClientRect();
+        const t = badge.getBoundingClientRect();
         const m = mark.getBoundingClientRect();
-        const ax = (isLeft ? t.right + 12 : t.left - 12) - R.left;
-        const ay = t.top + 12 - R.top;
+        const ax = (isLeft ? t.right + 8 : t.left - 8) - R.left;
+        const ay = t.top + t.height / 2 - R.top;
         const bx = (isLeft ? m.left : m.right) - R.left;
         const by = m.top + m.height / 2 - R.top;
+        // Straight runs with rounded corners: across from the note, up or down, then across into the box.
         const mx = (ax + bx) / 2;
-        out.push({ d: `M${ax},${ay} C${mx},${ay} ${mx},${by} ${bx},${by}`, a: [ax, ay], b: [bx, by] });
+        const dx = Math.sign(bx - ax) || 1;
+        const dy = Math.sign(by - ay);
+        const r = Math.min(10, Math.abs(by - ay) / 2, Math.abs(mx - ax));
+        const d = dy === 0 || r < 1
+          ? `M${ax},${ay} H${mx} V${by} H${bx}`
+          : `M${ax},${ay} H${mx - dx * r} Q${mx},${ay} ${mx},${ay + dy * r} V${by - dy * r} Q${mx},${by} ${mx + dx * r},${by} H${bx}`;
+        out.push({ d, a: [ax, ay], b: [bx, by] });
       });
       setLines(out);
     };
@@ -60,11 +71,11 @@ export default function PhoneShot({ notes = [], ...phone }: Omit<PhoneProps, "ma
   return (
     <div className="phone-shot" ref={root}>
       <div className="phone-notes is-left">
-        {left.map((x) => <div key={x.n} data-note={x.n}><PhoneNote title={x.title} sub={x.sub} /></div>)}
+        {left.map((x) => <div key={x.n} data-note={x.n}><PhoneNote n={x.n} title={x.title} sub={x.sub} /></div>)}
       </div>
       <IPhone {...phone} marks={marks} />
       <div className="phone-notes is-right">
-        {right.map((x) => <div key={x.n} data-note={x.n}><PhoneNote title={x.title} sub={x.sub} /></div>)}
+        {right.map((x) => <div key={x.n} data-note={x.n}><PhoneNote n={x.n} title={x.title} sub={x.sub} /></div>)}
       </div>
       <svg className="phone-lines" aria-hidden="true">
         {lines.map((l, i) => (

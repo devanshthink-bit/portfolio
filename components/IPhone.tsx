@@ -49,12 +49,15 @@ export function IPhone({ src, alt = "", lofi, n, className, priority, marks, chi
   );
 }
 
-// A note beside a phone: a line, and a quieter line under it.
-export function PhoneNote({ title, sub }: { title: string; sub?: string }) {
+// A note beside a phone: a small red number, a line, and a quieter line under it.
+export function PhoneNote({ n, title, sub }: { n?: number; title: string; sub?: string }) {
   return (
     <div className="phone-note">
-      <p className="phone-note-title">{title}</p>
-      {sub && <p className="phone-note-sub">{sub}</p>}
+      {n != null && <span className="phone-note-n" aria-hidden="true">{n}</span>}
+      <div>
+        <p className="phone-note-title">{title}</p>
+        {sub && <p className="phone-note-sub">{sub}</p>}
+      </div>
     </div>
   );
 }
