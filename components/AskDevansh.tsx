@@ -49,9 +49,19 @@ export default function AskDevansh() {
   useEffect(() => {
     if (!open) return;
     setTimeout(() => inputRef.current?.focus(), 150);
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") close(); };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      e.stopPropagation();
+      setOpen(false); setMenu(false); setConfirmEnd(false);
+    };
+    document.addEventListener("keydown", onKey, true);
+    return () => document.removeEventListener("keydown", onKey, true);
+  }, [open]);
+
+  // On wide screens the panel pushes the page aside instead of covering it.
+  useEffect(() => {
+    document.documentElement.classList.toggle("ask-open", open);
+    return () => document.documentElement.classList.remove("ask-open");
   }, [open]);
 
   if (!available) return null;
@@ -104,9 +114,9 @@ export default function AskDevansh() {
         onMouseLeave={() => window.dispatchEvent(new Event("cursor:show"))}>
         {/* Header */}
         <div className="ask-head">
-          <span style={{ fontWeight: 800, fontSize: 24, letterSpacing: "-0.04em" }}>DS</span>
           <span style={{ fontWeight: 600, fontSize: 16, letterSpacing: "-0.02em", flex: 1 }}>Devansh Somvanshi</span>
           <button className="ask-icon" aria-label="Chat options" aria-expanded={menu} onClick={() => setMenu((m) => !m)}><Dots /></button>
+          <button className="ask-icon" aria-label="Close" onClick={close}><XIcon s={18} /></button>
           {menu && (
             <div className="ask-menu">
               <button onClick={newChat}><Pencil /> Start a new chat</button>
@@ -169,7 +179,7 @@ export default function AskDevansh() {
           font-family: ${FONT}; color: var(--text-primary);
           transform: translateX(100%); transition: transform .32s cubic-bezier(.4,0,.2,1), box-shadow .32s; }
         .ask-panel.open { transform: none; box-shadow: -12px 0 40px rgba(0,0,0,0.06); }
-        .ask-head { position: relative; display: flex; align-items: center; gap: 12px; padding: 22px 24px; }
+        .ask-head { position: relative; display: flex; align-items: center; gap: 6px; padding: 22px 20px 22px 24px; }
         .ask-icon { display: inline-flex; background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 4px; border-radius: 6px; }
         .ask-icon:hover { color: var(--text-primary); }
         .ask-menu { position: absolute; top: 58px; right: 20px; z-index: 2; display: flex; flex-direction: column; padding: 6px;
@@ -199,6 +209,9 @@ export default function AskDevansh() {
         @media (prefers-reduced-motion: reduce) { .ask-dot { animation: none; opacity: .6; } }
         /* Below 1360 the contents list becomes a pill at bottom centre, so sit above it. */
         @media (max-width: 1359px) { .ask-trigger { bottom: 84px; } }
+        html.ask-open body { padding-right: 420px; }
+        body { transition: padding-right .32s cubic-bezier(.4,0,.2,1); }
+        @media (max-width: 1099px) { html.ask-open body { padding-right: 0; } }
         @media (max-width: 640px) {
           .ask-trigger { right: 16px; bottom: 76px; padding: 13px 20px; font-size: 15px; }
           .ask-panel { width: 100vw; border-left: none; }
