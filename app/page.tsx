@@ -21,12 +21,13 @@ const recentWork = [
     slug: "sidedoor",
   },
   {
-    title: "Case Study 2",
-    desc: "Case Study 2",
-    tag: "Case Study",
-    gradient: "linear-gradient(135deg, #ffecd4 0%, #fbc27a 45%, #ffe0b0 100%)",
-    tooltipBg: "#c4691a",
-    slug: null,
+    title: "redBus · Booking the trip home",
+    desc: "Booking a return before you know the date",
+    tag: "Product Design · Concept",
+    gradient: "linear-gradient(135deg, #fdf4f5 0%, #f8e6e8 60%, #f4dde0 100%)",
+    tooltipBg: "#C8102E",
+    slug: "redbus",
+    image: "/images/redbus/cover.webp",
   },
   {
     title: "Case Study 3",
@@ -94,7 +95,7 @@ function StatCounter({ value, unit, label, active, countTo, suffix, startFrom }:
   );
 }
 
-function WorkCard({ item }: { item: typeof recentWork[0] }) {
+function WorkCard({ item }: { item: { title: string; desc: string; tag: string; gradient: string; tooltipBg: string; slug: string | null; image?: string } }) {
   const [hovered, setHovered] = useState(false);
   const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
   const [left, setLeft] = useState<number | null>(null);
@@ -119,7 +120,9 @@ function WorkCard({ item }: { item: typeof recentWork[0] }) {
       onMouseMove={handleMouseMove}
       style={{ textDecoration: "none" }}
     >
-      <div className="work-card-media" style={{ background: item.gradient }} />
+      <div className="work-card-media" style={{ background: item.gradient }}>
+        {item.image && <img src={item.image} alt="" />}
+      </div>
       <p className="work-card-title" style={{ margin: 0 }}>{item.title}</p>
       {hovered && pos && (
         <div ref={tooltipRef} style={{
