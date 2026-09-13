@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { playDockClick } from "@/lib/dockSound";
@@ -16,7 +17,35 @@ function ResumeIcon() { return <Solar body={"<g fill=\"none\" stroke=\"currentCo
 function SunIcon() { return <Solar body={"<g fill=\"none\" stroke=\"currentColor\"><circle cx=\"12\" cy=\"12\" r=\"5\"/><path stroke-linecap=\"round\" d=\"M12 2V4\"/><path stroke-linecap=\"round\" d=\"M12 20V22\"/><path stroke-linecap=\"round\" d=\"M4 12L2 12\"/><path stroke-linecap=\"round\" d=\"M22 12L20 12\"/><path stroke-linecap=\"round\" d=\"M19.7778 4.22266L17.5558 6.25424\"/><path stroke-linecap=\"round\" d=\"M4.22217 4.22266L6.44418 6.25424\"/><path stroke-linecap=\"round\" d=\"M6.44434 17.5557L4.22211 19.7779\"/><path stroke-linecap=\"round\" d=\"M19.7778 19.7773L17.5558 17.5551\"/></g>"} />; }
 function MoonIcon() { return <Solar body={"<path fill=\"none\" stroke=\"currentColor\" stroke-linejoin=\"round\" d=\"M12 22C17.5228 22 22 17.5228 22 12C22 11.5373 21.3065 11.4608 21.0672 11.8568C19.9289 13.7406 17.8615 15 15.5 15C11.9101 15 9 12.0899 9 8.5C9 6.13845 10.2594 4.07105 12.1432 2.93276C12.5392 2.69347 12.4627 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z\"/>"} />; }
 
-const RESUME_URL = "https://drive.google.com/file/d/1iIkDZW26ryQ-rZq2ZDsd5e6rqMfPyctX/view?usp=drive_link";
+// The résumé opens inside the site, in a sheet over the page. No external link.
+const RESUME_PDF = "/resume/Devansh_Somvanshi_CV.pdf";
+
+function ResumeSheet({ onClose }: { onClose: () => void }) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") { e.stopPropagation(); onClose(); } };
+    document.addEventListener("keydown", onKey, true);
+    return () => document.removeEventListener("keydown", onKey, true);
+  }, [onClose]);
+  // Rendered on <body>: a transformed page wrapper would otherwise pin "fixed" to the content column.
+  return createPortal(
+    <div className="resume-overlay" onClick={onClose} data-lenis-prevent
+      onMouseEnter={() => window.dispatchEvent(new Event("cursor:hide"))}
+      onMouseLeave={() => window.dispatchEvent(new Event("cursor:show"))}>
+      <div className="resume-sheet" role="dialog" aria-modal="true" aria-label="Resume" onClick={(e) => e.stopPropagation()}>
+        <div className="resume-head">
+          <span>Resume</span>
+          <button type="button" className="resume-close" aria-label="Close" onClick={onClose}>
+            <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M18 6 6 18" /><path d="m6 6 12 12" />
+            </svg>
+          </button>
+        </div>
+        <iframe src={`${RESUME_PDF}#view=FitH`} title="Devansh Somvanshi, resume" />
+      </div>
+    </div>,
+    document.body,
+  );
+}
 
 function DockItem({ label, hovered, pitch, onHover, children }: {
   label: string; hovered: boolean; pitch: number; onHover: (v: boolean) => void; children: React.ReactNode;
@@ -69,6 +98,7 @@ export default function BottomNav() {
   const pathname = usePathname();
   const [isDark, setIsDark] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
+  const [resumeOpen, setResumeOpen] = useState(false);
 
   const toggleTheme = () => {
     const next = !isDark;
@@ -88,6 +118,7 @@ export default function BottomNav() {
   };
 
   return (
+    <>
     <nav
       className="bottom-dock"
       onMouseEnter={() => window.dispatchEvent(new Event("cursor:hide"))}
@@ -107,14 +138,16 @@ export default function BottomNav() {
       <Link href="/about" aria-label="About" style={{ display: "inline-flex" }}>
         <DockItem label="About" pitch={1.12} hovered={hovered === "about"} onHover={v => setHovered(v ? "about" : null)}><AboutIcon /></DockItem>
       </Link>
-      <a href={RESUME_URL} target="_blank" rel="noopener noreferrer" aria-label="Resume" style={{ display: "inline-flex" }}>
+      <button type="button" aria-label="Resume" onClick={() => setResumeOpen(true)} style={{ display: "inline-flex", background: "none", border: 0, padding: 0 }}>
         <DockItem label="Resume" pitch={1.19} hovered={hovered === "resume"} onHover={v => setHovered(v ? "resume" : null)}><ResumeIcon /></DockItem>
-      </a>
+      </button>
       <span onClick={toggleTheme} style={{ display: "inline-flex" }}>
         <DockItem label="Theme" pitch={1.26} hovered={hovered === "theme"} onHover={v => setHovered(v ? "theme" : null)}>
           {isDark ? <MoonIcon /> : <SunIcon />}
         </DockItem>
       </span>
     </nav>
+    {resumeOpen && <ResumeSheet onClose={() => setResumeOpen(false)} />}
+    </>
   );
 }

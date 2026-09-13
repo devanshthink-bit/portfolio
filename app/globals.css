@@ -88,6 +88,16 @@
     cursor: text !important;
   }
 
+  /* Normal pointer inside the resume sheet (same layer reason as the Ask panel above). */
+  .resume-overlay,
+  .resume-overlay * {
+    cursor: auto !important;
+  }
+  .resume-close,
+  .resume-close * {
+    cursor: pointer !important;
+  }
+
   /* Restore grab cursor inside physics skill buckets */
   .physics-cursor-zone,
   .physics-cursor-zone * {
@@ -1523,3 +1533,15 @@
 .cs-idea-count { font: 600 13px/1.35 var(--font-inter), sans-serif; color: var(--text-muted); font-variant-numeric: tabular-nums; align-self: start; padding-top: 2px; }
 .cs-idea-names { grid-column: 1 / -1; font-size: 13.5px; line-height: 1.5; color: var(--text-muted); }
 @media (max-width: 640px) { .cs-idea-list { grid-template-columns: minmax(0, 1fr); } }
+
+/* Resume sheet: the PDF inside the site, over the page. */
+.resume-overlay { position: fixed; inset: 0; z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(15, 15, 15, 0.45); animation: resume-fade 0.2s ease-out; }
+.resume-sheet { width: min(900px, 100%); height: min(92vh, 1200px); display: flex; flex-direction: column; overflow: hidden; border-radius: 16px; background: var(--bg); box-shadow: 0 24px 64px -16px rgba(0, 0, 0, 0.35); animation: resume-rise 0.28s cubic-bezier(0.16, 1, 0.3, 1); }
+.resume-head { display: flex; align-items: center; justify-content: space-between; padding: 10px 10px 10px 20px; border-bottom: 1px solid var(--border); font: 600 15px/1 var(--font-manrope), sans-serif; color: var(--text-primary); }
+.resume-close { width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; border: 0; border-radius: 10px; background: none; color: var(--text-muted); }
+.resume-close:hover { background: var(--card-bg); color: var(--text-primary); }
+.resume-sheet iframe { flex: 1; width: 100%; border: 0; background: #fff; }
+@keyframes resume-fade { from { opacity: 0; } }
+@keyframes resume-rise { from { opacity: 0; transform: translateY(12px); } }
+@media (prefers-reduced-motion: reduce) { .resume-overlay, .resume-sheet { animation: none; } }
+@media (max-width: 640px) { .resume-overlay { padding: 0; } .resume-sheet { height: 100%; border-radius: 0; } }
