@@ -1524,5 +1524,3 @@
 .cs-idea-names { grid-column: 1 / -1; font-size: 13.5px; line-height: 1.5; color: var(--text-muted); }
 @media (max-width: 640px) { .cs-idea-list { grid-template-columns: minmax(0, 1fr); } }
 
-/* Resume page: the PDF, embedded in the site. */
-.resume-frame { display: block; width: 100%; height: 82vh; min-height: 640px; border: 1px solid var(--border); border-radius: 12px; background: #fff; }
