@@ -536,11 +536,11 @@
   @keyframes wip-ping { 75%, 100% { transform: scale(2.6); opacity: 0; } }
 
   .wip-phones {
-    height: 300px; margin-top: 18px; overflow: hidden;
+    height: 380px; overflow: hidden; /* same as the RedBus phone area */
     display: flex; justify-content: center; align-items: flex-start;
   }
   .wip-phone {
-    position: relative; width: 170px; height: 350px; flex: none;
+    position: relative; width: 196px; height: 420px; flex: none;
     border-radius: 30px; border: 1.5px dashed rgba(59, 74, 107, 0.35);
     background: rgba(255, 255, 255, 0.55);
     padding: 44px 18px 0; display: flex; flex-direction: column; gap: 12px;
@@ -550,9 +550,9 @@
     content: ""; position: absolute; top: 14px; left: 50%; width: 46px; height: 12px;
     transform: translateX(-50%); border-radius: 10px; background: rgba(59, 74, 107, 0.14);
   }
-  .wip-phone:nth-child(1) { transform: translate(26px, 50px) rotate(-8deg); }
-  .wip-phone:nth-child(2) { width: 200px; height: 400px; z-index: 2; background: rgba(255, 255, 255, 0.85); }
-  .wip-phone:nth-child(3) { transform: translate(-26px, 50px) rotate(8deg); }
+  .wip-phone:nth-child(1) { transform: translate(28px, 58px) rotate(-8deg); }
+  .wip-phone:nth-child(2) { width: 236px; height: 480px; z-index: 2; background: rgba(255, 255, 255, 0.85); }
+  .wip-phone:nth-child(3) { transform: translate(-28px, 58px) rotate(8deg); }
   .wip-card:hover .wip-phone:nth-child(1) { transform: translate(12px, 40px) rotate(-11deg); }
   .wip-card:hover .wip-phone:nth-child(3) { transform: translate(-12px, 40px) rotate(11deg); }
 
@@ -568,9 +568,9 @@
     .wip-dot::after, .wip-bar, .wip-block { animation: none; }
   }
   @media (max-width: 640px) {
-    .wip-phones { height: 230px; }
-    .wip-phone { width: 128px; height: 270px; padding-top: 36px; }
-    .wip-phone:nth-child(2) { width: 150px; height: 300px; }
+    .wip-phones { height: 300px; }
+    .wip-phone { width: 150px; height: 330px; padding-top: 36px; }
+    .wip-phone:nth-child(2) { width: 180px; height: 370px; }
   }
 
   /* Home hero + case-study overlay — breaks out of .page-wrapper to full viewport width */
