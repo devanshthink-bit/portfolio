@@ -25,7 +25,8 @@ const recentWork = [
     title: "Booking the trip home",
     desc: "View project",
     tag: "Product Design · Concept",
-    gradient: "linear-gradient(135deg, #fdf4f5 0%, #f8e6e8 60%, #f4dde0 100%)",
+    // Matches cover.webp's top row pixel for pixel, so the panel and the image read as one surface.
+    gradient: "linear-gradient(90deg, #fae9ed 0%, #fbf0f1 25%, #fdf4f5 50%, #fbf0f1 75%, #faeaeb 100%)",
     tooltipBg: "#1d1d1d",
     slug: "redbus",
     image: "/images/redbus/cover.webp",
