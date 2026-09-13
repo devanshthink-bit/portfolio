@@ -23,7 +23,8 @@ function playRubber() {
   } catch (_) {}
 }
 
-export default function RubberBackButton() {
+// `plain`: sentence case in the text face, for pages that dropped the mono labels (RedBus).
+export default function RubberBackButton({ plain }: { plain?: boolean } = {}) {
   const [pos, setPos] = useState<{ top?: number; bottom?: number; left: number } | null>(null);
 
   useEffect(() => {
@@ -54,12 +55,12 @@ export default function RubberBackButton() {
         alignItems: "center",
         gap: 6,
         padding: "6px 4px",
-        fontFamily: "var(--font-geist-mono), monospace",
-        fontSize: 14,
+        fontFamily: plain ? "var(--font-manrope), sans-serif" : "var(--font-geist-mono), monospace",
+        fontSize: plain ? 15 : 14,
         fontWeight: 600,
         color: "var(--text-primary)",
-        letterSpacing: "-0.01em",
-        textTransform: "uppercase",
+        letterSpacing: plain ? "-0.02em" : "-0.01em",
+        textTransform: plain ? "none" : "uppercase",
       }}
     >
       <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 6 }}>

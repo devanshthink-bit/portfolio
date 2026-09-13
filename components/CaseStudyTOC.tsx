@@ -290,11 +290,11 @@ export default function CaseStudyTOC({ sections = defaultSections, variant = "ri
           ))}
         </span>
         <span style={{
-          fontFamily: "var(--font-geist-mono)",
-          fontSize: 11,
+          fontFamily: variant === "left" ? "var(--font-manrope)" : "var(--font-geist-mono)",
+          fontSize: variant === "left" ? 13.5 : 11,
           fontWeight: 600,
-          letterSpacing: "0.06em",
-          textTransform: "uppercase",
+          letterSpacing: variant === "left" ? "-0.01em" : "0.06em",
+          textTransform: variant === "left" ? "none" : "uppercase",
           color: "var(--bg)",
           whiteSpace: "nowrap",
           maxWidth: 140,

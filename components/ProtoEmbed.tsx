@@ -13,7 +13,7 @@ export default function ProtoEmbed() {
       onMouseEnter={() => window.dispatchEvent(new Event("cursor:hide"))}
       onMouseLeave={() => window.dispatchEvent(new Event("cursor:show"))}
     >
-      <span className="cs-proto-badge"><i />Live prototype · tap anywhere</span>
+      <span className="cs-proto-badge"><i />Live prototype, tap anywhere</span>
       <IPhone>
         <iframe
           src={PROTO_URL}

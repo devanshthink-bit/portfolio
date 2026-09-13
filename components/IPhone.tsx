@@ -39,12 +39,15 @@ export function IPhone({ src, alt = "", lofi, n, className, priority, children }
   );
 }
 
-// Handwritten notes beside a phone, the way the case study's screens have always been annotated.
-export function PhoneNote({ title, sub }: { title: string; sub?: string }) {
+// Numbered notes beside a phone: a small red number, a line, and a quieter line under it.
+export function PhoneNote({ n, title, sub }: { n?: number; title: string; sub?: string }) {
   return (
     <div className="phone-note">
-      <p className="phone-note-title">{title}</p>
-      {sub && <p className="phone-note-sub">{sub}</p>}
+      {n != null && <span className="phone-note-n" aria-hidden="true">{n}</span>}
+      <div>
+        <p className="phone-note-title">{title}</p>
+        {sub && <p className="phone-note-sub">{sub}</p>}
+      </div>
     </div>
   );
 }
@@ -56,7 +59,7 @@ export function PhoneShot({ notes, ...phone }: PhoneProps & { notes?: { title: s
       <IPhone {...phone} />
       {notes && notes.length > 0 && (
         <div className="phone-notes">
-          {notes.map((x) => <PhoneNote key={x.title} {...x} />)}
+          {notes.map((x, i) => <PhoneNote key={x.title} n={i + 1} {...x} />)}
         </div>
       )}
     </div>

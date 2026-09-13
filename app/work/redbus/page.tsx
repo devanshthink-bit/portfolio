@@ -1,15 +1,13 @@
 // Written against the RedBus design as of RedBus repo commit 33258c3 (13 Sep 2026).
 // What changed since then, and which sections it touches: RedBus/CASESTUDY.md.
 import type { Metadata } from "next";
-import { Caveat } from "next/font/google";
 import RubberBackButton from "../../../components/RubberBackButton";
 import RedbusTOCClient from "../../../components/RedbusTOCClient";
 import AskDevansh from "../../../components/AskDevansh";
 import ProtoEmbed from "../../../components/ProtoEmbed";
-import { RED, T, SectionLabel, Beat, Figure, Card, Chip, Numbered, Pill, MetaStrip } from "../../../components/caseStudy";
+import { RED, T, SectionLabel, LabelText, Beat, Figure, Card, Chip, Numbered, Pill, MetaStrip } from "../../../components/caseStudy";
 import { PhoneShot, PhoneRow } from "../../../components/IPhone";
 
-const caveat = Caveat({ subsets: ["latin"], variable: "--font-caveat" });
 
 export const metadata: Metadata = {
   title: "RedBus · Booking the trip home · Devansh Somvanshi",
@@ -28,7 +26,7 @@ const scr = (f: string) => `/images/redbus/screens/${f}.webp`;
 function Act({ id, n, title, sub }: { id?: string; n: string; title: string; sub: string }) {
   return (
     <header id={id} className="cs-act">
-      <p className="cs-act-kicker">{n}</p>
+      <p className="cs-act-kicker"><LabelText text={n} /></p>
       <h2 className="cs-act-title">{title}</h2>
       <p className="cs-act-sub">{sub}</p>
     </header>
@@ -84,8 +82,8 @@ function Stats() {
     <div className="cs-stats">
       {stats.map((s) => (
         <div key={s.n + s.l} style={{ background: "var(--bg)", padding: "20px 22px" }}>
-          <div style={{ fontFamily: "var(--font-geist-mono)", fontSize: 28, fontWeight: 600, color: s.n === "0%" ? RED : "var(--text-primary)", letterSpacing: "-0.03em", marginBottom: 4 }}>{s.n}</div>
-          <div style={{ fontSize: 13, color: "var(--text-muted)", lineHeight: 1.5 }}>{s.l}</div>
+          <div style={{ ...T.figure, fontSize: 34, color: s.n === "0%" ? RED : "var(--text-primary)", marginBottom: 2 }}>{s.n}</div>
+          <div style={{ ...T.body, fontSize: 14, color: "var(--text-muted)" }}>{s.l}</div>
         </div>
       ))}
     </div>
@@ -127,7 +125,14 @@ function WhyRedBus() {
     <div className="cs-swatches">
       {cards.map((c) => (
         <Card key={c.h}>
-          <div style={{ fontFamily: "var(--font-geist-mono)", fontSize: 26, fontWeight: 600, color: "var(--text-primary)" }}>{c.n}</div>
+          <div style={{ ...T.figure, fontSize: 30, height: 36, display: "flex", alignItems: "center" }}>
+            {c.n === "↓" ? (
+              // A drawn "going down" line (Lucide trending-down), not a typed arrow.
+              <svg width={30} height={30} viewBox="0 0 24 24" fill="none" stroke="#A45729" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-label="Down">
+                <path d="m22 17-8.5-8.5-5 5L2 7" /><path d="M16 17h6v-6" />
+              </svg>
+            ) : c.n}
+          </div>
           <p style={{ ...T.cardH, fontSize: 15, margin: "4px 0 6px" }}>{c.h}</p>
           <p style={{ ...T.body, fontSize: 13 }}>{c.b}</p>
         </Card>
@@ -164,9 +169,9 @@ function Ideas() {
       {ideas.map((t, i) => {
         const win = i === 15, parked = i === 12;
         return (
-          <div key={t} style={{ borderRadius: 8, padding: "10px 12px", background: win ? "rgba(232,30,56,0.10)" : "var(--cs-callout-bg)", border: win ? `1.5px solid ${RED}` : "1.5px solid transparent" }}>
-            <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 10, color: win ? RED : "var(--text-muted)", margin: "0 0 2px" }}>{String(i + 1).padStart(2, "0")}{win ? " · PICKED" : parked ? " · PARKED" : ""}</p>
-            <p style={{ ...T.body, fontSize: 13, color: win ? "var(--text-primary)" : "var(--text-muted)", textDecoration: win || parked ? "none" : "line-through", fontWeight: win ? 600 : 400 }}>{t}</p>
+          <div key={t} style={{ borderRadius: 10, padding: "11px 13px", background: win ? "rgba(232,30,56,0.08)" : "var(--cs-callout-bg)", boxShadow: win ? `inset 0 0 0 1.5px ${RED}` : "none" }}>
+            <p style={{ ...T.eyebrow, fontSize: 12, color: win ? RED : "var(--text-muted)", fontWeight: win ? 600 : 500, margin: "0 0 3px", fontVariantNumeric: "tabular-nums" }}>{i + 1}{win ? " · Picked" : parked ? " · Parked" : ""}</p>
+            <p style={{ ...T.body, fontSize: 13.5, color: win ? "var(--text-primary)" : "var(--text-muted)", textDecoration: win || parked ? "none" : "line-through", textDecorationColor: "var(--cs-stat-gap)", fontWeight: win ? 600 : 400 }}>{t}</p>
           </div>
         );
       })}
@@ -183,10 +188,10 @@ function Merit() {
     <div className="cs-stats" style={{ gridTemplateColumns: "1fr" }}>
       {rows.map((r) => (
         <div key={r.id} className="cs-kill" style={{ background: "var(--bg)", padding: "16px 20px" }}>
-          <div style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, fontWeight: 600, color: "var(--text-muted)" }}>Idea {r.id}</div>
+          <div style={T.eyebrow}>Idea {r.id}</div>
           <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "baseline" }}>
             <p style={T.cardH}>{r.name} {r.mine && <Chip tone="red">Mine</Chip>}</p>
-            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 20, fontWeight: 600, color: "var(--text-primary)" }}>{r.score}<span style={{ fontSize: 12, color: "var(--text-muted)" }}> / 10</span></span>
+            <span style={{ ...T.figure, fontSize: 24 }}>{r.score}<span style={{ ...T.small, fontWeight: 500 }}> / 10</span></span>
           </div>
         </div>
       ))}
@@ -223,7 +228,10 @@ function MentorQA() {
       {qa.map((x) => (
         <Card key={x.q} style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr)", gap: 8 }}>
           <p style={T.quote}>&quot;{x.q}&quot;</p>
-          <p style={T.body}><span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "var(--text-muted)", marginRight: 8 }}>MY ANSWER NOW</span>{x.a}</p>
+          <div style={{ borderTop: "1px solid var(--border)", paddingTop: 10, marginTop: 4 }}>
+            <p style={{ ...T.eyebrow, marginBottom: 3 }}>My answer now</p>
+            <p style={T.body}>{x.a}</p>
+          </div>
         </Card>
       ))}
     </div>
@@ -299,7 +307,7 @@ function Palette() {
         <Card key={s.c} style={{ padding: 0, overflow: "hidden" }}>
           <div style={{ height: 72, background: s.c }} />
           <div style={{ padding: "14px 16px" }}>
-            <p style={{ ...T.cardH, fontSize: 15 }}>{s.h} <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "var(--text-muted)", fontWeight: 500 }}>{s.c}</span></p>
+            <p style={{ ...T.cardH, fontSize: 15 }}>{s.h} <span style={{ ...T.small, fontSize: 12.5, fontWeight: 500, fontVariantNumeric: "tabular-nums" }}>{s.c}</span></p>
             <p style={{ ...T.body, fontSize: 13 }}>{s.b}</p>
           </div>
         </Card>
@@ -335,7 +343,7 @@ function Credits() {
       <p className="cs-act-sub" style={{ margin: "0 auto 20px" }}>Got a question, or a better idea? I&apos;d love to hear it.</p>
       <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
         <Pill href="https://mail.google.com/mail/?view=cm&fs=1&to=devansh.think@gmail.com" primary external>Email me</Pill>
-        <Pill href="https://www.linkedin.com/in/devansh-somvanshi" external>LinkedIn ↗</Pill>
+        <Pill href="https://www.linkedin.com/in/devansh-somvanshi" external>LinkedIn</Pill>
       </div>
     </section>
   );
@@ -344,9 +352,9 @@ function Credits() {
 // ── Page ─────────────────────────────────────────────────────────────────────
 export default function RedbusCaseStudy() {
   return (
-    <main className={`${caveat.variable} cs-page`} style={{ padding: "40px 0 96px" }}>
+    <main className="cs-page" style={{ padding: "40px 0 96px" }}>
       <RedbusTOCClient />
-      <RubberBackButton />
+      <RubberBackButton plain />
       <AskDevansh />
 
       <div id="toc-intro" style={{ marginBottom: 48 }}>
@@ -357,7 +365,7 @@ export default function RedbusCaseStudy() {
         ]} />
       </div>
 
-      <SectionLabel>Case Study · Product Design · Concept</SectionLabel>
+      <SectionLabel>Case study · Product design, concept</SectionLabel>
       <h1 style={T.h1}>
         <span style={{ color: RED }}>RedBus</span> · Booking the trip home
       </h1>
@@ -371,10 +379,10 @@ export default function RedbusCaseStudy() {
         { label: "Tools", value: "Figma, Claude Code" },
       ]} />
       <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 24 }}>
-        <Pill href="#toc-try" primary>Try the prototype ↓</Pill>
-        <Pill href={PROTO_FULL} external>Open it full screen ↗</Pill>
-        <Pill href={BOARD_URL} external>See the research board ↗</Pill>
-        {VIDEO_URL && <Pill href={VIDEO_URL} external>Watch the walkthrough ▶</Pill>}
+        <Pill href="#toc-try" primary icon="down">Try the prototype</Pill>
+        <Pill href={PROTO_FULL} external>Open it full screen</Pill>
+        <Pill href={BOARD_URL} external>See the research board</Pill>
+        {VIDEO_URL && <Pill href={VIDEO_URL} external icon="play">Watch the walkthrough</Pill>}
       </div>
 
       {/* ── ACT 1 ── */}

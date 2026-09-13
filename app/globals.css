@@ -815,28 +815,47 @@
   .phone-notes {
     display: flex;
     flex-direction: column;
-    gap: 36px;
-    max-width: 320px;
+    gap: 28px;
+    max-width: 300px;
+  }
+
+  .phone-note {
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr);
+    gap: 12px;
+    align-items: start;
+  }
+
+  .phone-note-n {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #E81E38;
+    color: #fff;
+    font: 700 12px/22px var(--font-manrope), sans-serif;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    margin-top: 1px;
   }
 
   .phone-note-title {
-    font-family: var(--font-caveat), cursive;
-    font-size: 28px;
-    line-height: 1.15;
-    color: #8A1C2B;
+    font-family: var(--font-manrope), sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.35;
+    color: var(--text-primary);
     margin: 0;
   }
 
   .phone-note-sub {
-    font-family: var(--font-caveat), cursive;
-    font-size: 21px;
-    line-height: 1.25;
-    color: #A8424F;
-    margin: 4px 0 0;
+    font-family: var(--font-inter), sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    color: var(--text-muted);
+    margin: 3px 0 0;
   }
-
-  html.nerd-mode .phone-note-title { color: #F2A7B1; }
-  html.nerd-mode .phone-note-sub { color: #D98A95; }
 
   .phone-row {
     display: flex;
@@ -914,11 +933,10 @@
     border-radius: 100px;
     background: #1d1d1d;
     color: #fff;
-    font-family: var(--font-geist-mono), monospace;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    font-family: var(--font-inter), sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
   }
 
   .cs-proto-badge i {
@@ -950,33 +968,121 @@
   }
 
   .cs-act-kicker {
-    font-family: var(--font-geist-mono), monospace;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: #E81E38;
-    margin: 0 0 10px;
+    font-family: var(--font-inter), sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin: 0 0 12px;
   }
 
   .cs-act-title {
     font-family: var(--font-manrope), sans-serif;
-    font-size: 40px;
+    font-size: 44px;
     font-weight: 800;
     letter-spacing: -0.04em;
-    line-height: 1.1;
+    line-height: 1.06;
     color: var(--text-primary);
-    margin: 0 0 12px;
+    margin: 0 0 14px;
   }
 
   .cs-act-sub {
-    font-family: var(--font-caveat), cursive;
-    font-size: 26px;
-    line-height: 1.25;
-    color: var(--text-secondary);
+    font-family: var(--font-inter), sans-serif;
+    font-size: 19px;
+    line-height: 1.5;
+    letter-spacing: -0.02em;
+    color: var(--text-muted);
     margin: 0;
-    max-width: 640px;
+    max-width: 600px;
   }
+
+  /* Labels: "Scene 4 · A week later" → a red marker, then a quiet name. */
+  .cs-label {
+    font-family: var(--font-inter), sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--text-muted);
+    margin: 0 0 10px;
+  }
+  .cs-label-lead { color: #E81E38; font-weight: 600; }
+  .cs-label-lead + .cs-label-rest::before {
+    content: "";
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: currentColor;
+    vertical-align: middle;
+    margin: 0 8px 2px;
+    opacity: 0.7;
+  }
+  .cs-act-kicker .cs-label-rest { color: var(--text-muted); }
+
+  /* Status: a coloured dot and a plain word. */
+  .cs-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--font-inter), sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+  .cs-status::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  .cs-status-red { color: #C8102E; }
+  .cs-status-amber { color: #A45729; }
+  .cs-status-green { color: #2E7D32; }
+  .cs-status-grey { color: var(--text-muted); }
+  html.nerd-mode .cs-status-red { color: #FF6B7D; }
+  html.nerd-mode .cs-status-amber { color: #E3A47C; }
+  html.nerd-mode .cs-status-green { color: #7BC47F; }
+
+  .cs-numbered {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--border);
+  }
+  .cs-numbered li {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr);
+    gap: 12px;
+    align-items: baseline;
+    padding: 16px 2px;
+    border-bottom: 1px solid var(--border);
+  }
+  .cs-numbered-n {
+    font: 700 15px/1 var(--font-manrope), sans-serif;
+    color: #E81E38;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cs-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 18px;
+    border-radius: 100px;
+    font-family: var(--font-manrope), sans-serif;
+    font-size: 14.5px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    color: var(--text-primary);
+    box-shadow: inset 0 0 0 1px var(--cs-stat-gap);
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .cs-pill:hover { background: var(--cs-callout-bg); box-shadow: inset 0 0 0 1px var(--text-muted); }
+  .cs-pill.is-primary { background: var(--text-primary); color: var(--bg); box-shadow: none; }
+  .cs-pill.is-primary:hover { transform: translateY(-1px); }
+  .cs-pill svg { opacity: 0.75; }
 
   .cs-inshort {
     display: grid;
@@ -997,31 +1103,6 @@
     text-align: center;
     padding: 72px 24px 24px;
     border-top: 1px solid var(--border);
-  }
-
-  .cs-credits dl {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px 20px;
-    max-width: 520px;
-    margin: 32px auto;
-  }
-
-  .cs-credits dt {
-    text-align: right;
-    font-family: var(--font-geist-mono), monospace;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    padding-top: 3px;
-  }
-
-  .cs-credits dd {
-    text-align: left;
-    margin: 0;
-    font-size: 15px;
-    color: var(--text-primary);
   }
 
   .cs-moscow {
@@ -1050,15 +1131,12 @@
   }
 
   @media (max-width: 640px) {
-    .cs-act-title { font-size: 30px; }
-    .cs-act-sub { font-size: 22px; }
+    .cs-act-title { font-size: 32px; }
+    .cs-act-sub { font-size: 17px; }
     .cs-inshort,
     .cs-moscow,
     .cs-swatches { grid-template-columns: minmax(0, 1fr); }
     .cs-ideas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .cs-credits dl { grid-template-columns: 1fr; gap: 2px; }
-    .cs-credits dt { text-align: center; padding-top: 12px; }
-    .cs-credits dd { text-align: center; }
   }
 
   /* Home card: three phones in the panel, cut at the bottom like Jahanvi's cards. */
