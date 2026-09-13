@@ -139,7 +139,11 @@ function WorkCard({ item }: { item: Work }) {
         <>
           <div className="work-card-panel" style={{ background: item.gradient }}>
             <div className="work-card-panel-text">
-              <p className="work-card-brand" style={{ color: item.brandColor }}>{item.brand}</p>
+              <p className="work-card-brand" style={{ color: item.brandColor, display: "flex", alignItems: "center", gap: 10 }}>
+                {/* RedBus logo, the same unaltered path the prototype uses, in brand red */}
+                {item.slug === "redbus" && <img src="/images/redbus/logo.svg" alt="" aria-hidden width={45} height={30} style={{ height: "1.15em", width: "auto", display: "block" }} />}
+                {item.brand}
+              </p>
               <p className="work-card-did">{item.did}</p>
               {item.tags && <p className="work-card-tags">{item.tags.map((t) => <span key={t}>{t}</span>)}</p>}
             </div>
