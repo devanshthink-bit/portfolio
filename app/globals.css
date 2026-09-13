@@ -815,13 +815,13 @@
 
   /* Phone + handwritten notes */
   .phone-shot {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
-    gap: 56px;
-    padding: 40px 32px;
+    gap: 40px;
+    padding: 44px 32px;
     background: var(--cs-callout-bg);
     border-radius: 12px;
-    justify-content: center;
   }
 
   .phone-notes {
@@ -829,6 +829,37 @@
     flex-direction: column;
     gap: 28px;
     max-width: 300px;
+  }
+
+  /* Notes sit on both sides of the phone, number on the edge nearest the phone. */
+  .phone-notes.is-left { justify-self: end; }
+  .phone-notes.is-right { justify-self: start; }
+  .phone-notes.is-left .phone-note { grid-template-columns: minmax(0, 1fr) 22px; text-align: right; }
+  .phone-notes.is-left .phone-note-n { order: 2; }
+
+  /* A dashed box on the exact part of the screen a note talks about. Drawn in screen pixels
+     (402 x 874) and scaled with the phone, so it stays on its spot at every size. */
+  .iphone-mark {
+    position: absolute;
+    z-index: 4;
+    border: 3px dashed rgba(232, 30, 56, 0.9);
+    border-radius: 18px;
+    background: rgba(232, 30, 56, 0.05);
+    pointer-events: none;
+  }
+  .iphone-mark i {
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #E81E38;
+    color: #fff;
+    font: 700 16px/30px var(--font-inter), sans-serif;
+    font-style: normal;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(120, 10, 25, 0.25);
   }
 
   .phone-note {
@@ -989,7 +1020,7 @@
 
   .cs-act-title {
     font-family: var(--font-manrope), sans-serif;
-    font-size: 36px;
+    font-size: 30px;
     font-weight: 800;
     letter-spacing: -0.04em;
     line-height: 1.1;
@@ -1143,9 +1174,9 @@
   }
 
   @media (max-width: 640px) {
-    .cs-act-title { font-size: 28px; }
+    .cs-act-title { font-size: 26px; }
     /* The page title's size is inline (T.h1), so the phone size has to win over it. */
-    .cs-page h1 { font-size: 30px !important; }
+    .cs-page h1 { font-size: 26px !important; }
     .cs-act-sub { font-size: 17px; }
     .cs-inshort,
     .cs-moscow,
@@ -1160,10 +1191,17 @@
     display: flex;
     justify-content: center;
     gap: 28px;
-    padding-top: 12px;
+    padding-top: 18px;
   }
 
   .work-card-phones .iphone { --n: 220; }
+
+  /* Hover moves the phones, never the screens inside them. */
+  .work-card-panel .iphone img,
+  .work-card:hover .work-card-panel .iphone img { transform: none; transition: none; }
+  .work-card-phones .iphone { transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+  .work-card:hover .work-card-phones .iphone { transform: translateY(-8px); }
+  .work-card:hover .work-card-phones .iphone:nth-child(2) { transform: translateY(-12px); }
 
   /* Warning ink, redBus's amber. Lighter on the dark theme so it keeps its contrast. */
   .cs-warn {
@@ -1432,3 +1470,11 @@
   }
 
 } /* end @layer components */
+
+@media (max-width: 640px) {
+  .phone-shot { grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 24px; padding: 32px 18px; }
+  .phone-shot > .iphone { order: -1; }
+  .phone-notes.is-left, .phone-notes.is-right { justify-self: stretch; max-width: none; }
+  .phone-notes.is-left .phone-note { grid-template-columns: 22px minmax(0, 1fr); text-align: left; }
+  .phone-notes.is-left .phone-note-n { order: 0; }
+}

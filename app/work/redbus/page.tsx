@@ -405,9 +405,9 @@ export default function RedbusCaseStudy() {
         caption="The live RedBus app, August 2026.">
         <PhoneShot src={scr("real_4553")} alt="The live RedBus bus list: a FlexiTicket banner, a Free date change badge on one bus, and a 10% return deal."
           notes={[
-            { title: "FlexiTicket: free date change", sub: "a banner and a filter, on the bus list" },
-            { title: "The same promise, as a badge on one bus", sub: "a property of the bus, not a way to book" },
-            { title: "10% off the return, on some buses", sub: "and people still book it later" },
+            { box: [72.6, 25.5, 27.4, 12.4], title: "FlexiTicket: free date change", sub: "a banner and a filter, on the bus list" },
+            { box: [7, 81, 37.5, 4.2], title: "The same promise, as a badge on one bus", sub: "a property of the bus, not a way to book" },
+            { box: [7, 85.5, 86, 6], title: "10% off the return, on some buses", sub: "and people still book it later" },
           ]} />
       </Beat>
 
@@ -435,8 +435,8 @@ export default function RedbusCaseStudy() {
         sub={<>How do you book a day you don&apos;t know? You say so. It opens on &quot;I&apos;m not sure yet&quot;, the answer 65.2% of my survey gave.</>}>
         <PhoneShot src={scr("hifi_05")} alt="Hi-fi return calendar with 'I'm not sure yet' selected and a fare under every day."
           notes={[
-            { title: "Opens on \"I'm not sure yet\"", sub: "people who know their date lose one tap" },
-            { title: "Every day shows its cheapest fare", sub: "so price is visible before she commits" },
+            { box: [3.5, 28.3, 93, 6.6], title: "Opens on \"I'm not sure yet\"", sub: "people who know their date lose one tap" },
+            { box: [7.5, 59, 85, 27], title: "Every day shows its cheapest fare", sub: "so price is visible before she commits" },
           ]} />
       </Beat>
 
@@ -444,8 +444,8 @@ export default function RedbusCaseStudy() {
         sub="How does she choose without comparing thirty buses? The days stay a short list, and her bus opens right under the day she picks.">
         <PhoneShot src={scr("hifi_06a")} alt="Hi-fi day list with Thu 17 Sep picked and the recommended bus open under it."
           notes={[
-            { title: "The days stay a fixed list", sub: "whether a day has 2 buses or 30" },
-            { title: "Her bus sits under her day", sub: "with the ones that beat it on price or rating" },
+            { box: [3, 5.2, 94, 31.4], title: "The days stay a fixed list", sub: "whether a day has 2 buses or 30" },
+            { box: [3.5, 37.8, 93, 46.6], title: "Her bus sits under her day", sub: "with the ones that beat it on price or rating" },
           ]} />
       </Beat>
 
@@ -453,8 +453,8 @@ export default function RedbusCaseStudy() {
         sub="One change, to any date. The only line in warning colour is the one that costs her: no cancelling after a change.">
         <PhoneShot src={scr("hifi_08")} alt="Hi-fi review screen with the Free date change card: one change, and 'You cannot cancel it after that' in red."
           notes={[
-            { title: "One change, to any date", sub: "she pays only the difference" },
-            { title: "The only warning on the page", sub: "no cancelling after a change" },
+            { box: [7, 24.2, 86, 10.4], title: "One change, to any date", sub: "she pays only the difference" },
+            { box: [7, 41.4, 86, 9.4], title: "The only warning on the page", sub: "no cancelling after a change" },
           ]} />
       </Beat>
 
@@ -462,8 +462,8 @@ export default function RedbusCaseStudy() {
         sub="What will it cost? Every day on the calendar says. The new bus stays with the same operator, as RedBus requires.">
         <PhoneShot src={scr("hifi_13")} alt="Hi-fi Change day screen: the booking, the note that a changed ticket can't be cancelled, and a calendar with the cost of each day."
           notes={[
-            { title: "The rule, before the choice", sub: "once she changes, no cancelling" },
-            { title: "Every day says what the move costs", sub: "+₹170, None, Full" },
+            { box: [7, 29.6, 86, 11.6], title: "The rule, before the choice", sub: "once she changes, no cancelling" },
+            { box: [55, 93.6, 37, 6.2], title: "Every day says what the move costs", sub: "+₹170, None, Full" },
           ]} />
       </Beat>
 
@@ -471,8 +471,8 @@ export default function RedbusCaseStudy() {
         sub="The new day is ₹30 cheaper and she doesn't get that back. I kept celebration out of payment, so the good news waits for this screen.">
         <PhoneShot src={scr("hifi_16")} alt="Hi-fi Date changed screen: return moved to Tue 15 Sep, ₹30 cheaper and not refunded, and a note that this was the one change."
           notes={[
-            { title: "What moved, and what it cost", sub: "even when the answer is \"nothing back\"" },
-            { title: "That was her one change", sub: "said plainly, where it happens" },
+            { box: [3, 49.8, 94, 12.8], title: "What moved, and what it cost", sub: "even when the answer is \"nothing back\"" },
+            { box: [3, 63.3, 94, 9.3], title: "That was her one change", sub: "said plainly, where it happens" },
           ]} />
       </Beat>
 
@@ -544,8 +544,8 @@ export default function RedbusCaseStudy() {
         sub="My design needed a date change to stay with the same operator, and nothing I'd read said so. I booked a FlexiTicket bus and opened Change travel date. It was right there.">
         <PhoneShot src={scr("real_5199")} alt="The live RedBus Change travel date screen: 'You can select bus from same operator and same route as original ticket'."
           notes={[
-            { title: "Same operator, same route", sub: "my biggest open risk, closed" },
-            { title: "Change once, then no cancelling", sub: "the rule the whole design leans on" },
+            { box: [3, 70.1, 88, 8.6], title: "Same operator, same route", sub: "my biggest open risk, closed" },
+            { box: [3, 42.6, 94, 7], title: "Change once, then no cancelling", sub: "the rule the whole design leans on" },
           ]} />
       </Beat>
 
@@ -583,9 +583,9 @@ export default function RedbusCaseStudy() {
         caption="Sai still said he'd use this over today's flow, and wouldn't tap Skip. He had struggled the most.">
         <PhoneShot src={scr("hifi_06b")} alt="The day list with Mon 21 Sep picked: its bus cannot change date, and the button reads Book a fixed date."
           notes={[
-            { title: "So I made the risk hard to miss", sub: "the day and its bus both say it can't change" },
-            { title: "The button changes", sub: "\"Book a fixed date\", not \"Review trip\"" },
-            { title: "It names her own answer back", sub: "\"You said you were not sure yet\"" },
+            { box: [3, 25, 94, 13.6], title: "So I made the risk hard to miss", sub: "the day and its bus both say it can't change" },
+            { box: [47.5, 90, 49.5, 7], title: "The button changes", sub: "\"Book a fixed date\", not \"Review trip\"" },
+            { box: [3, 86.6, 90, 3.4], title: "It names her own answer back", sub: "\"You said you were not sure yet\"" },
           ]} />
       </Beat>
 
