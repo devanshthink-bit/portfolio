@@ -28,8 +28,9 @@ export default function RubberBackButton({ plain }: { plain?: boolean } = {}) {
   const [pos, setPos] = useState<{ top?: number; bottom?: number; left: number } | null>(null);
 
   useEffect(() => {
+    // Plain pages already have two buttons at the bottom on phones (contents, Ask), so Back goes top-left.
     const calc = () => window.innerWidth <= 640
-      ? { bottom: 24, left: 16 }
+      ? (plain ? { top: 14, left: 14 } : { bottom: 24, left: 16 })
       : { top: 30,   left: 20 };
     const t = setTimeout(() => {
       setPos(calc());
@@ -40,6 +41,8 @@ export default function RubberBackButton({ plain }: { plain?: boolean } = {}) {
   }, []);
 
   if (!pos) return null;
+  // On a phone the plain Back floats over the page, so it gets a solid pill to stay readable.
+  const pill = plain && pos.top === 14;
 
   return (
     <Link
@@ -54,7 +57,8 @@ export default function RubberBackButton({ plain }: { plain?: boolean } = {}) {
         display: "flex",
         alignItems: "center",
         gap: 6,
-        padding: "6px 4px",
+        padding: pill ? "8px 14px 8px 11px" : "6px 4px",
+        ...(pill ? { background: "var(--bg)", borderRadius: 100, boxShadow: "0 1px 2px rgba(0,0,0,0.06), 0 6px 18px -6px rgba(0,0,0,0.16)" } : {}),
         fontFamily: plain ? "var(--font-manrope), sans-serif" : "var(--font-geist-mono), monospace",
         fontSize: plain ? 15 : 14,
         fontWeight: 600,
