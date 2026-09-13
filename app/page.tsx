@@ -35,7 +35,7 @@ const recentWork = [
     brandColor: "#E81E38",
     did: "Redesigned RedBus checkout to capture the return trip, even without a date",
     tags: ["Travel", "B2C", "iOS app", "Concept"],
-    blurb: "Most people booking a one-way bus ticket don't know when they'll come back, so they skip the return and often book it somewhere else later. I redesigned RedBus checkout so they can book the return right there, even without a date, and pick the day later.",
+    blurb: "73.9% of travellers leave the return for later, and a quarter book it elsewhere. A self-initiated RedBus concept that turns one booking into two, in the same checkout.",
   },
   // Hidden for now at Devansh's request (13 Sep 2026). Kept, not deleted: uncomment to bring back.
   // {
