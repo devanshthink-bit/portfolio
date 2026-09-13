@@ -334,26 +334,10 @@ function Watch() {
 }
 
 function Credits() {
-  const rows = [
-    ["Starring", "Soumya, Vivek and Sai"],
-    ["Research", "8 interviews, 61 survey responses"],
-    ["Reviews", "My mentor, twice"],
-    ["Built with", "Figma, Claude Code"],
-    ["Screens", "38, plus 13 states"],
-    ["Directed by", "Devansh Somvanshi"],
-  ];
   return (
     <section id="toc-credits" className="cs-credits">
       <p className="cs-act-kicker">The end</p>
       <h2 className="cs-act-title">Thanks for reading.</h2>
-      <dl>
-        {rows.map(([k, v]) => (
-          <div key={k} style={{ display: "contents" }}>
-            <dt>{k}</dt>
-            <dd>{v}</dd>
-          </div>
-        ))}
-      </dl>
       <p className="cs-act-sub" style={{ margin: "0 auto 20px" }}>Got a question, or a better idea? I&apos;d love to hear it.</p>
       <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
         <Pill href="https://mail.google.com/mail/?view=cm&fs=1&to=devansh.think@gmail.com" primary external>Email me</Pill>
