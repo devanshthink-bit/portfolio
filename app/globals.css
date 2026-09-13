@@ -520,6 +520,59 @@
     color: #E3A47C;
   }
 
+  /* Second case study, in progress: soft blue panel, phone outlines still being drawn. */
+  .wip-panel { background: linear-gradient(180deg, #eff2f9 0%, #dfe6f3 100%); }
+  .wip-status {
+    display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
+    margin: 0 0 8px; padding: 5px 11px 5px 9px; border-radius: 100px;
+    background: rgba(59, 74, 107, 0.08); color: #3b4a6b;
+    font-family: var(--font-manrope), sans-serif; font-size: 13px; font-weight: 700; letter-spacing: -0.01em;
+  }
+  .wip-dot { position: relative; width: 7px; height: 7px; border-radius: 50%; background: #4f6bd8; }
+  .wip-dot::after {
+    content: ""; position: absolute; inset: 0; border-radius: 50%; background: #4f6bd8;
+    animation: wip-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+  @keyframes wip-ping { 75%, 100% { transform: scale(2.6); opacity: 0; } }
+
+  .wip-phones {
+    height: 300px; margin-top: 18px; overflow: hidden;
+    display: flex; justify-content: center; align-items: flex-start;
+  }
+  .wip-phone {
+    position: relative; width: 170px; height: 350px; flex: none;
+    border-radius: 30px; border: 1.5px dashed rgba(59, 74, 107, 0.35);
+    background: rgba(255, 255, 255, 0.55);
+    padding: 44px 18px 0; display: flex; flex-direction: column; gap: 12px;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .wip-phone::before { /* notch */
+    content: ""; position: absolute; top: 14px; left: 50%; width: 46px; height: 12px;
+    transform: translateX(-50%); border-radius: 10px; background: rgba(59, 74, 107, 0.14);
+  }
+  .wip-phone:nth-child(1) { transform: translate(26px, 50px) rotate(-8deg); }
+  .wip-phone:nth-child(2) { width: 200px; height: 400px; z-index: 2; background: rgba(255, 255, 255, 0.85); }
+  .wip-phone:nth-child(3) { transform: translate(-26px, 50px) rotate(8deg); }
+  .wip-card:hover .wip-phone:nth-child(1) { transform: translate(12px, 40px) rotate(-11deg); }
+  .wip-card:hover .wip-phone:nth-child(3) { transform: translate(-12px, 40px) rotate(11deg); }
+
+  .wip-bar, .wip-block {
+    display: block; height: 10px; border-radius: 6px; flex: none;
+    background: linear-gradient(90deg, rgba(59,74,107,0.10) 0%, rgba(59,74,107,0.22) 50%, rgba(59,74,107,0.10) 100%);
+    background-size: 200% 100%; animation: wip-shimmer 2.2s ease-in-out infinite;
+  }
+  .wip-block { height: 96px; border-radius: 12px; }
+  @keyframes wip-shimmer { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wip-dot::after, .wip-bar, .wip-block { animation: none; }
+  }
+  @media (max-width: 640px) {
+    .wip-phones { height: 230px; }
+    .wip-phone { width: 128px; height: 270px; padding-top: 36px; }
+    .wip-phone:nth-child(2) { width: 150px; height: 300px; }
+  }
+
   /* Home hero + case-study overlay — breaks out of .page-wrapper to full viewport width */
   .home-stack {
     position: relative;

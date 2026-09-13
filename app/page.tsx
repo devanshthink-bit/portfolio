@@ -198,6 +198,52 @@ function WorkCard({ item }: { item: Work }) {
     : inner;
 }
 
+// Second case study, still being written. Not a link. Phone outlines with placeholder bars,
+// as if the screens are still being drawn. Names no project on purpose.
+function InProgressCard() {
+  const [hovered, setHovered] = useState(false);
+  const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
+  const bars = (rows: number[]) => rows.map((w, i) => <span key={i} className="wip-bar" style={{ width: `${w}%` }} />);
+  return (
+    <div
+      className="work-card wip-card"
+      aria-label="Next case study, in progress"
+      onMouseEnter={() => { setHovered(true); window.dispatchEvent(new Event("cursor:hide")); }}
+      onMouseLeave={() => { setHovered(false); setPos(null); window.dispatchEvent(new Event("cursor:show")); }}
+      onMouseMove={(e) => setPos({ x: e.clientX, y: e.clientY })}
+    >
+      <div className="work-card-panel wip-panel">
+        <div className="work-card-panel-text">
+          <p className="wip-status"><span className="wip-dot" aria-hidden />In progress</p>
+          <p className="work-card-did">The next case study is on the drawing board</p>
+          <p className="work-card-tags"><span>Research</span><span>Sketching</span><span>Writing it up</span></p>
+        </div>
+        <div className="wip-phones" aria-hidden>
+          <div className="wip-phone">{bars([60, 90, 75, 40, 85, 55])}</div>
+          <div className="wip-phone">
+            <span className="wip-block" />
+            {bars([70, 45, 90, 60, 80])}
+          </div>
+          <div className="wip-phone">{bars([50, 85, 65, 90, 40, 70])}</div>
+        </div>
+      </div>
+      <div className="work-card-meta">
+        <p className="work-card-title work-card-title-lg">Coming soon<span className="work-card-year">2026</span></p>
+        <p className="work-card-blurb">I&apos;m working on this one now. Check back soon.</p>
+      </div>
+      {hovered && pos && (
+        <div style={{
+          position: "fixed", left: pos.x + 18, top: pos.y + 18, background: "#3b4a6b", borderRadius: 6,
+          padding: "7px 12px", fontSize: 12, fontFamily: "var(--font-manrope)", fontWeight: 700,
+          letterSpacing: "-0.01em", color: "#ffffff", pointerEvents: "none", zIndex: 9999, whiteSpace: "nowrap",
+        }}>
+          In progress
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Home() {
   const statsRef = useRef<HTMLDivElement>(null);
   const [statsVisible, setStatsVisible] = useState(false);
@@ -241,6 +287,7 @@ export default function Home() {
               <h3 className="section-title">Recent work</h3>
               <div className="work-list">
                 {recentWork.map(item => <WorkCard key={item.title} item={item} />)}
+                <InProgressCard />
               </div>
             </section>
           </div>
