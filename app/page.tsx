@@ -80,7 +80,7 @@ function StatCounter({ value, unit, label, active, countTo, suffix, startFrom }:
     }}>
       <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
         <span className="stat-value" style={{
-          fontFamily: "var(--font-serif)", fontSize: 30, fontWeight: 600,
+          fontFamily: "var(--font-manrope)", fontSize: 28, fontWeight: 700,
           color: "var(--text-primary)", letterSpacing: "-0.03em",
           opacity: active ? 1 : 0, transform: active ? "none" : "translateY(8px)",
           transition: "opacity 0.5s ease, transform 0.5s ease",
@@ -89,7 +89,7 @@ function StatCounter({ value, unit, label, active, countTo, suffix, startFrom }:
         </span>
         {unit && (
           <span style={{
-            fontFamily: "var(--font-inter)", fontSize: 14, fontWeight: 500,
+            fontFamily: "var(--font-manrope)", fontSize: 15, fontWeight: 600,
             color: "var(--text-muted)", letterSpacing: "-0.01em",
           }}>
             {unit}
@@ -176,8 +176,8 @@ function WorkCard({ item }: { item: Work }) {
           borderRadius: 6,
           padding: "7px 12px",
           fontSize: 12,
-          fontFamily: "var(--font-inter)",
-          fontWeight: 600,
+          fontFamily: "var(--font-manrope)",
+          fontWeight: 700,
           letterSpacing: "-0.01em",
           color: "#ffffff",
           pointerEvents: "none",

@@ -262,10 +262,10 @@
   }
 
   .intro h1 {
-    font-family: var(--font-serif), sans-serif;
+    font-family: var(--font-manrope), sans-serif;
     font-size: 26px;
-    font-weight: 600;
-    letter-spacing: -0.015em;
+    font-weight: 700;
+    letter-spacing: -0.03em;
     line-height: 1.4;
     color: var(--text-primary);
     margin: 0;
@@ -318,7 +318,7 @@
 
   /* Section names are quiet sentence-case words in the heading face, not mono capitals. */
   .section-title {
-    font-family: var(--font-inter), sans-serif;
+    font-family: var(--font-manrope), sans-serif;
     font-size: 15px;
     font-weight: 600;
     color: var(--text-muted);
@@ -403,19 +403,19 @@
   }
 
   .work-card-brand {
-    font-family: var(--font-serif), sans-serif;
+    font-family: var(--font-manrope), sans-serif;
     font-size: 26px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font-weight: 800;
+    letter-spacing: -0.04em;
     line-height: 1.1;
     margin: 0 0 6px 0;
   }
 
   .work-card-did {
-    font-family: var(--font-inter), sans-serif;
+    font-family: var(--font-manrope), sans-serif;
     font-size: 16px;
-    font-weight: 500;
-    letter-spacing: -0.015em;
+    font-weight: 600;
+    letter-spacing: -0.02em;
     line-height: 1.4;
     color: #1d1d1d;
     margin: 0;
@@ -464,10 +464,10 @@
   }
 
   .work-card-title-lg {
-    font-family: var(--font-serif), sans-serif;
-    font-size: 21px;
+    font-family: var(--font-manrope), sans-serif;
+    font-size: 20px;
     font-weight: 600;
-    letter-spacing: -0.015em;
+    letter-spacing: -0.03em;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -602,10 +602,10 @@
   }
 
   .footer-heading {
-    font-family: var(--font-serif), sans-serif;
+    font-family: var(--font-manrope), sans-serif;
     font-size: 26px;
-    font-weight: 600;
-    letter-spacing: -0.015em;
+    font-weight: 700;
+    letter-spacing: -0.03em;
     line-height: 1.4;
     color: var(--text-primary);
     margin: 0;
@@ -844,17 +844,17 @@
     border-radius: 50%;
     background: #E81E38;
     color: #fff;
-    font: 600 12px/22px var(--font-inter), sans-serif;
+    font: 700 12px/22px var(--font-manrope), sans-serif;
     text-align: center;
     font-variant-numeric: tabular-nums;
     margin-top: 1px;
   }
 
   .phone-note-title {
-    font-family: var(--font-serif), sans-serif;
-    font-size: 17px;
-    font-weight: 600;
-    letter-spacing: -0.01em;
+    font-family: var(--font-manrope), sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
     line-height: 1.35;
     color: var(--text-primary);
     margin: 0;
@@ -902,11 +902,11 @@
   }
 
   .phone-fig-label {
-    font-family: var(--font-serif), sans-serif;
-    font-weight: 600;
+    font-family: var(--font-manrope), sans-serif;
+    font-weight: 700;
     font-size: 17px;
     color: var(--text-primary);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
   }
 
   .phone-fig-cap {
@@ -988,11 +988,11 @@
   }
 
   .cs-act-title {
-    font-family: var(--font-serif), sans-serif;
+    font-family: var(--font-manrope), sans-serif;
     font-size: 36px;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    line-height: 1.12;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
     color: var(--text-primary);
     margin: 0 0 14px;
   }
@@ -1072,7 +1072,7 @@
     border-bottom: 1px solid var(--border);
   }
   .cs-numbered-n {
-    font: 600 15px/1 var(--font-inter), sans-serif;
+    font: 700 15px/1 var(--font-manrope), sans-serif;
     color: #E81E38;
     font-variant-numeric: tabular-nums;
   }
@@ -1083,9 +1083,9 @@
     gap: 8px;
     padding: 11px 18px;
     border-radius: 100px;
-    font-family: var(--font-inter), sans-serif;
+    font-family: var(--font-manrope), sans-serif;
     font-size: 14.5px;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: -0.015em;
     color: var(--text-primary);
     box-shadow: inset 0 0 0 1px var(--cs-stat-gap);

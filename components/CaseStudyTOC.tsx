@@ -87,7 +87,7 @@ export default function CaseStudyTOC({ sections = defaultSections, variant = "ri
             <button key={id} onClick={() => scrollTo(id)} style={{
               position: "relative", background: "none", border: "none", cursor: "pointer",
               padding: "7px 0 7px 18px", textAlign: "left", whiteSpace: "nowrap",
-              fontFamily: "var(--font-inter)", fontSize: 15, letterSpacing: "-0.01em",
+              fontFamily: "var(--font-manrope)", fontSize: 15, letterSpacing: "-0.01em",
               fontWeight: isActive ? 500 : 400,
               color: isActive ? "var(--text-primary)" : "var(--text-muted)",
               transition: "color 0.2s ease",
@@ -199,7 +199,7 @@ export default function CaseStudyTOC({ sections = defaultSections, variant = "ri
 
         {/* Title */}
         <p style={{
-          fontFamily: "var(--font-inter)",
+          fontFamily: "var(--font-manrope)",
           fontSize: 14,
           fontWeight: 600,
           letterSpacing: "-0.01em",
@@ -230,7 +230,7 @@ export default function CaseStudyTOC({ sections = defaultSections, variant = "ri
               }}
             >
               <span style={{
-                fontFamily: "var(--font-inter)",
+                fontFamily: "var(--font-manrope)",
                 fontSize: 16,
                 fontWeight: isActive ? 700 : 400,
                 color: isActive ? "var(--text-primary)" : "var(--text-secondary)",
@@ -287,7 +287,7 @@ export default function CaseStudyTOC({ sections = defaultSections, variant = "ri
           ))}
         </span>
         <span style={{
-          fontFamily: "var(--font-inter)",
+          fontFamily: "var(--font-manrope)",
           fontSize: 13.5,
           fontWeight: 600,
           letterSpacing: "-0.01em",
