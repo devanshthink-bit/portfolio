@@ -35,7 +35,15 @@ export default function PhoneShot({ notes = [], ...phone }: Omit<PhoneProps, "ma
     const draw = () => {
       if (window.innerWidth <= 640) { setLines([]); return; }
       const R = el.getBoundingClientRect();
+      const phoneEl = el.querySelector(".iphone");
+      if (!phoneEl) return;
+      const P = phoneEl.getBoundingClientRect();
       const out: Line[] = [];
+      const seen = { left: 0, right: 0 };
+      const count = {
+        left: el.querySelectorAll(".is-left [data-note]").length,
+        right: el.querySelectorAll(".is-right [data-note]").length,
+      };
       el.querySelectorAll<HTMLElement>("[data-note]").forEach((noteEl) => {
         const n = noteEl.dataset.note;
         const badge = noteEl.querySelector(".phone-note-n");
@@ -49,7 +57,12 @@ export default function PhoneShot({ notes = [], ...phone }: Omit<PhoneProps, "ma
         const bx = (isLeft ? m.left : m.right) - R.left;
         const by = m.top + m.height / 2 - R.top;
         // Straight runs with rounded corners: across from the note, up or down, then across into the box.
-        const mx = (ax + bx) / 2;
+        // The up-or-down run sits in the gap between the notes and the phone, clear of the frame, and
+        // lines on the same side are staggered 8px so their runs never sit on top of each other.
+        const side = isLeft ? "left" : "right";
+        const k = seen[side]++ - (count[side] - 1) / 2;
+        const gapMid = isLeft ? (ax + (P.left - R.left)) / 2 : (ax + (P.right - R.left)) / 2;
+        const mx = gapMid + k * 8 * (isLeft ? 1 : -1);
         const dx = Math.sign(bx - ax) || 1;
         const dy = Math.sign(by - ay);
         const r = Math.min(10, Math.abs(by - ay) / 2, Math.abs(mx - ax));

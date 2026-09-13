@@ -818,7 +818,7 @@
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
-    gap: 40px;
+    gap: 64px;
     padding: 44px 32px;
     background: var(--cs-callout-bg);
     border-radius: 12px;
