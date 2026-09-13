@@ -1144,6 +1144,8 @@
 
   @media (max-width: 640px) {
     .cs-act-title { font-size: 28px; }
+    /* The page title's size is inline (T.h1), so the phone size has to win over it. */
+    .cs-page h1 { font-size: 30px !important; }
     .cs-act-sub { font-size: 17px; }
     .cs-inshort,
     .cs-moscow,
