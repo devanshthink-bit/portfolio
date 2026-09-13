@@ -12,14 +12,15 @@ const STATS = [
 ];
 
 const recentWork = [
-  {
-    title: "Sidedoor — Job referral platform",
-    desc: "0→1 referral platform — research & concept design.",
-    tag: "Product Design · 0→1",
-    gradient: "linear-gradient(135deg, #d4e2ff 0%, #7aa5fb 45%, #b0caff 100%)",
-    tooltipBg: "#3d6bc4",
-    slug: "sidedoor",
-  },
+  // Hidden for now at Devansh's request (13 Sep 2026). Kept, not deleted: uncomment to bring back.
+  // {
+  //   title: "Sidedoor — Job referral platform",
+  //   desc: "0→1 referral platform — research & concept design.",
+  //   tag: "Product Design · 0→1",
+  //   gradient: "linear-gradient(135deg, #d4e2ff 0%, #7aa5fb 45%, #b0caff 100%)",
+  //   tooltipBg: "#3d6bc4",
+  //   slug: "sidedoor",
+  // },
   {
     title: "Booking the trip home",
     desc: "View project",
@@ -37,14 +38,15 @@ const recentWork = [
     blurb: "A self-initiated concept for redBus. Hold a return seat and fare without naming a day, then move it once when plans settle.",
     impact: "Tested with 3 travellers. The two ways it failed shaped the final design.",
   },
-  {
-    title: "Case Study 3",
-    desc: "Case Study 3",
-    tag: "Case Study",
-    gradient: "linear-gradient(135deg, #d9f7e6 0%, #7ad9a8 45%, #bdeed2 100%)",
-    tooltipBg: "#1a7a45",
-    slug: null,
-  },
+  // Hidden for now at Devansh's request (13 Sep 2026). Kept, not deleted: uncomment to bring back.
+  // {
+  //   title: "Case Study 3",
+  //   desc: "Case Study 3",
+  //   tag: "Case Study",
+  //   gradient: "linear-gradient(135deg, #d9f7e6 0%, #7ad9a8 45%, #bdeed2 100%)",
+  //   tooltipBg: "#1a7a45",
+  //   slug: null,
+  // },
 ];
 
 function StatCounter({ value, unit, label, active, countTo, suffix, startFrom }: {
