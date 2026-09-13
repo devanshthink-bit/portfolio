@@ -23,7 +23,7 @@ const recentWork = [
   //   slug: "sidedoor",
   // },
   {
-    title: "Booking the trip home",
+    title: "Winning the return ticket at checkout",
     desc: "View project",
     tag: "Product Design · Concept",
     gradient: "linear-gradient(180deg, #fdf2f4 0%, #f7e2e6 100%)",
@@ -33,11 +33,10 @@ const recentWork = [
     // Jahanvi's card anatomy: brand, what I did, tags, image, title + year, one line, impact.
     brand: "RedBus",
     brandColor: "#E81E38",
-    did: "Designed a way to book the bus home before you know the date",
+    did: "Redesigned RedBus checkout to capture the return trip, even without a date",
     tags: ["Travel", "B2C", "iOS app", "Concept"],
     year: "2026",
-    blurb: "A self-initiated concept for RedBus. Hold a return seat and fare without naming a day, then move it once when plans settle.",
-    impact: "Tested with 3 travellers. The two ways it failed shaped the final design.",
+    blurb: "73.9% of travellers leave the return for later, and a quarter book it elsewhere. A self-initiated RedBus concept that turns one booking into two, in the same checkout.",
   },
   // Hidden for now at Devansh's request (13 Sep 2026). Kept, not deleted: uncomment to bring back.
   // {

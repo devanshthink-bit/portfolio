@@ -6,13 +6,12 @@ const CaseStudyTOC = dynamic(() => import("./CaseStudyTOC"), { ssr: false });
 const redbusSections = [
   { id: "toc-intro",   label: "Introduction" },
   { id: "toc-problem", label: "The Problem" },
-  { id: "toc-design",  label: "The Trip" },
+  { id: "toc-design",  label: "The Design" },
   { id: "toc-try",     label: "Try It" },
   { id: "toc-behind",  label: "Behind the Scenes" },
   { id: "toc-testing", label: "Testing" },
   { id: "toc-choices", label: "Choices" },
   { id: "toc-next",    label: "What's Next" },
-  { id: "toc-credits", label: "Credits" },
 ];
 
 export default function RedbusTOCClient() {

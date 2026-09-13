@@ -1025,7 +1025,7 @@
     .cs-proto-badge i { animation: none; }
   }
 
-  .cs-proto-stage .iphone { --n: 430; }
+  .cs-proto-stage .iphone { --n: 360; }
 
   /* ── Story furniture: acts, the "in short" box, credits ── */
   .cs-act {
@@ -1167,23 +1167,12 @@
     padding: 20px 22px;
   }
 
-  .cs-credits {
-    text-align: center;
-    padding: 72px 24px 24px;
-    border-top: 1px solid var(--border);
-  }
-
   .cs-moscow {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 12px;
   }
 
-  .cs-ideas {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 8px;
-  }
 
   .cs-swatches {
     display: grid;
@@ -1206,7 +1195,6 @@
     .cs-inshort,
     .cs-moscow,
     .cs-swatches { grid-template-columns: minmax(0, 1fr); }
-    .cs-ideas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 
   /* Home card: three phones in the panel, cut at the bottom like Jahanvi's cards. */
@@ -1519,3 +1507,13 @@
   .phone-row.hero { padding-bottom: 0; }
   .phone-row.hero .phone-fig:nth-child(2) .iphone { --n: 272; }
 }
+
+/* Ideas: the pick, then the rest grouped by why they died. */
+.cs-idea-list { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 24px; align-items: start; }
+.cs-idea-pick { border-radius: 14px; padding: 20px 22px; background: rgba(232, 30, 56, 0.06); box-shadow: inset 0 0 0 1.5px #E81E38; }
+.cs-idea-rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
+.cs-idea-rows li { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 16px; row-gap: 2px; padding: 12px 2px; border-bottom: 1px solid var(--border); }
+.cs-idea-why { font: 600 15px/1.35 var(--font-manrope), sans-serif; letter-spacing: -0.01em; color: var(--text-primary); }
+.cs-idea-count { font: 600 13px/1.35 var(--font-inter), sans-serif; color: var(--text-muted); font-variant-numeric: tabular-nums; align-self: start; padding-top: 2px; }
+.cs-idea-names { grid-column: 1 / -1; font-size: 13.5px; line-height: 1.5; color: var(--text-muted); }
+@media (max-width: 640px) { .cs-idea-list { grid-template-columns: minmax(0, 1fr); } }

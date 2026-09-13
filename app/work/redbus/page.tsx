@@ -11,8 +11,8 @@ import PhoneShot from "../../../components/PhoneShot";
 
 
 export const metadata: Metadata = {
-  title: "RedBus · Booking the trip home · Devansh Somvanshi",
-  description: "A concept for RedBus: booking the bus home before you know the date.",
+  title: "RedBus · Winning the return ticket at checkout · Devansh Somvanshi",
+  description: "A concept for RedBus: book the return in the same checkout, before you know the date.",
 };
 
 // The full viewer, with its screen list. The embed (ProtoEmbed) uses the same URL with ?test.
@@ -36,9 +36,9 @@ function Act({ id, n, title, sub }: { id?: string; n: string; title: string; sub
 
 function InShort() {
   const rows = [
-    { k: "The problem", v: "73.9% of travellers I surveyed booked the way home later, most often because they didn't know the date yet." },
+    { k: "The problem", v: "The only way to keep a return on RedBus is to buy it, and buying it needs a date. 73.9% of travellers I surveyed left it for later." },
     { k: "What I designed", v: "A return you can book without a date. Say how sure you are, pick a day from your window, and move it once if plans change." },
-    { k: "How it went", v: "Three travellers tried it and it failed my own test. The fixes from that round are what you'll see here." },
+    { k: "Why it matters", v: "Every return booked later is a second commission RedBus can lose. 26.1% of the travellers who waited booked it on another app." },
   ];
   return (
     <div className="cs-inshort">
@@ -159,23 +159,32 @@ function Rules() {
 }
 
 function Ideas() {
-  const ideas = [
-    "Add-your-return card", "How-sure slider", "Book both, save ₹X", "Badge flexible buses",
-    "Remind in two days", "Save the return, unbooked", "Ask the group", "Show what waiting costs",
-    "Let the app decide", "Ask when to remind", "Book a duration", "Operator now, date later",
-    "Catch the moment plans settle", "Teach it your rule", "Guaranteed seat at today's fare", "Book the last day you can travel",
+  // The fifteen that didn't make it, grouped by why they died (BRIEF.md, "Thrown away, and why").
+  const groups = [
+    { why: "RedBus already does it", ideas: ["Add-your-return card", "Book both, save ₹X", "Badge flexible buses"] },
+    { why: "Fixes forgetting, and nobody forgets", ideas: ["Remind in two days", "Ask when to remind"] },
+    { why: "Holds neither the seat nor the fare", ideas: ["Save the return, unbooked", "Book a duration", "Operator now, date later"] },
+    { why: "Still ends at a date picker", ideas: ["How-sure slider", "Teach it your rule"] },
+    { why: "Out of my hands", ideas: ["Ask the group", "Guaranteed seat at today's fare"] },
+    { why: "Folded into the pick", ideas: ["Show what waiting costs", "Let the app decide"] },
+    { why: "Parked for next", ideas: ["Catch the moment plans settle"] },
   ];
   return (
-    <div className="cs-ideas">
-      {ideas.map((t, i) => {
-        const win = i === 15, parked = i === 12;
-        return (
-          <div key={t} style={{ borderRadius: 10, padding: "11px 13px", background: win ? "rgba(232,30,56,0.08)" : "var(--cs-callout-bg)", boxShadow: win ? `inset 0 0 0 1.5px ${RED}` : "none" }}>
-            <p style={{ ...T.eyebrow, fontSize: 12, color: win ? RED : "var(--text-muted)", fontWeight: win ? 600 : 500, margin: "0 0 3px", fontVariantNumeric: "tabular-nums" }}>{i + 1}{win ? " · Picked" : parked ? " · Parked" : ""}</p>
-            <p style={{ ...T.body, fontSize: 13.5, color: win ? "var(--text-primary)" : "var(--text-muted)", textDecoration: win || parked ? "none" : "line-through", textDecorationColor: "var(--cs-stat-gap)", fontWeight: win ? 600 : 400 }}>{t}</p>
-          </div>
-        );
-      })}
+    <div className="cs-idea-list">
+      <div className="cs-idea-pick">
+        <p style={{ ...T.eyebrow, color: RED, fontWeight: 600 }}>The one I picked</p>
+        <p style={{ ...T.cardH, fontSize: 19, margin: "8px 0 6px" }}>Book the last day you can travel</p>
+        <p style={T.body}>It keeps the seat and the fare without a date, and moves once when plans settle.</p>
+      </div>
+      <ul className="cs-idea-rows">
+        {groups.map((g) => (
+          <li key={g.why}>
+            <span className="cs-idea-why">{g.why}</span>
+            <span className="cs-idea-count">{g.ideas.length}</span>
+            <span className="cs-idea-names">{g.ideas.join(" · ")}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
@@ -244,7 +253,6 @@ function KillList() {
     { s: "Fired",   tone: "red",   rule: "Unsure people tap a single day" },
     { s: "Fired",   tone: "red",   rule: "They take the cheapest day and can't move it" },
     { s: "Almost",  tone: "amber", rule: "Nobody reads the rules" },
-    { s: "Not run", tone: "grey",  rule: "The traveller with fixed plans is slower" },
   ];
   return (
     <div className="cs-stats" style={{ gridTemplateColumns: "1fr" }}>
@@ -296,27 +304,6 @@ function MoSCoW() {
   );
 }
 
-function Palette() {
-  const sw = [
-    { c: "#E81E38", h: "Action", b: "The thing to tap" },
-    { c: "#A45729", h: "Warning", b: "Something you give up" },
-    { c: "#458442", h: "Rating", b: "Ratings, nothing else" },
-  ];
-  return (
-    <div className="cs-swatches">
-      {sw.map((s) => (
-        <Card key={s.c} style={{ padding: 0, overflow: "hidden" }}>
-          <div style={{ height: 72, background: s.c }} />
-          <div style={{ padding: "14px 16px" }}>
-            <p style={{ ...T.cardH, fontSize: 15 }}>{s.h} <span style={{ ...T.small, fontSize: 12.5, fontWeight: 500, fontVariantNumeric: "tabular-nums" }}>{s.c}</span></p>
-            <p style={{ ...T.body, fontSize: 13 }}>{s.b}</p>
-          </div>
-        </Card>
-      ))}
-    </div>
-  );
-}
-
 function Watch() {
   const rows = [
     { h: "Returns added before paying", b: "The number this should move", tone: "green" as const, t: "Goal" },
@@ -333,20 +320,6 @@ function Watch() {
         </Card>
       ))}
     </div>
-  );
-}
-
-function Credits() {
-  return (
-    <section id="toc-credits" className="cs-credits">
-      <p className="cs-act-kicker">The end</p>
-      <h2 className="cs-act-title">Thanks for reading.</h2>
-      <p className="cs-act-sub" style={{ margin: "0 auto 20px" }}>Got a question, or a better idea? I&apos;d love to hear it.</p>
-      <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
-        <Pill href="https://mail.google.com/mail/?view=cm&fs=1&to=devansh.think@gmail.com" primary external>Email me</Pill>
-        <Pill href="https://www.linkedin.com/in/devansh-somvanshi" external>LinkedIn</Pill>
-      </div>
-    </section>
   );
 }
 
@@ -368,9 +341,9 @@ export default function RedbusCaseStudy() {
 
       <SectionLabel>Case study · Product design, concept</SectionLabel>
       <h1 style={T.h1}>
-        <span style={{ color: RED }}>RedBus</span> · Booking the trip home
+        <span style={{ color: RED }}>RedBus</span> · Winning the return ticket at checkout
       </h1>
-      <p style={T.lede}>Ever put off booking your bus home because you didn&apos;t know which day you&apos;d leave?</p>
+      <p style={T.lede}>Most travellers book the bus out and leave the way back for later. A quarter of them then book it on another app. I redesigned the moment RedBus asks about the return, so it can be booked in the same checkout, without a date.</p>
 
       <InShort />
       <MetaStrip items={[
@@ -387,10 +360,10 @@ export default function RedbusCaseStudy() {
       </div>
 
       {/* ── ACT 1 ── */}
-      <Act id="toc-problem" n="Act 1 · The problem" title="A trip home with no date"
+      <Act id="toc-problem" n="Act 1 · The problem" title="The return that never gets booked"
         sub="It starts with one traveller and a ticket she couldn't move." />
 
-      <Beat label="Soumya" title="Soumya booked her bus home early once. Never again."
+      <Beat label="Soumya" title="Soumya booked her return early once. Never again."
         sub={<>Her plans moved and the ticket couldn&apos;t. &quot;We regretted it,&quot; she told me. Now she books a day or two before and ends up at the back of the bus, where she gets motion sick.</>}>
         <TripStrip />
       </Beat>
@@ -429,10 +402,10 @@ export default function RedbusCaseStudy() {
       </Beat>
 
       {/* ── ACT 2 ── */}
-      <Act id="toc-design" n="Act 2 · The trip" title="Soumya's next trip home"
-        sub="Imagine her next trip with this. Every scene is a screen from the working prototype." />
+      <Act id="toc-design" n="Act 2 · The design" title="The return, inside the checkout"
+        sub="Here's Soumya's next booking with the new flow. Every scene is a screen from the working prototype." />
 
-      <Beat label="Scene 1 · Booking the way out" title="She books her bus to Nainital. Then the app asks about the way back."
+      <Beat label="Scene 1 · Booking the way out" title="She books her bus out. Before she pays, the app asks about the return."
         sub={<>How do you book a day you don&apos;t know? You say so. It opens on &quot;I&apos;m not sure yet&quot;, the answer 65.2% of my survey gave.</>}>
         <PhoneShot src={scr("hifi_05")} alt="Hi-fi return calendar with 'I'm not sure yet' selected and a fare under every day."
           notes={[
@@ -506,7 +479,7 @@ export default function RedbusCaseStudy() {
       </Beat>
 
       <Beat label="Sixteen ideas" title="The obvious ideas died first."
-        sub="Reminders died because nobody forgot. Four more died because RedBus already ships them. The one left standing: stop asking for the date, book the last day they could travel, and let them move it once."
+        sub="Some already existed on RedBus. Some fixed a problem nobody had. Most still ended at a date picker. One kept the seat and the fare without asking for a date."
         caption="Idea 13 lost only on scope. It's what I'd build next.">
         <Ideas />
       </Beat>
@@ -534,10 +507,10 @@ export default function RedbusCaseStudy() {
         sub="Version 2 booked the cheapest day in a range, which pushed people to spend their only change. Version 3 booked the last day. Version 4 kept the days still, because a real route runs up to 30 buses a day."
         caption="The real bus list for one day was 14 cards and 4,957 pixels long.">
         <PhoneRow phones={[
-          { src: scr("lofi_v1"), lofi: true, label: "v1 · 3 Aug", caption: "Ask for the last day", alt: "Version 1, Last day screen." },
-          { src: scr("lofi_v2"), lofi: true, label: "v2 · 11 Aug", caption: "Ask for a range, book the cheapest", alt: "Version 2, Return window screen." },
-          { src: scr("lofi_v3"), lofi: true, label: "v3 · 11 Aug", caption: "One calendar, one tap or two", alt: "Version 3, one calendar." },
-          { src: scr("lofi_v4"), lofi: true, label: "v4 · 4 Sep", caption: "Ask first, then the calendar", alt: "Version 4, the question above the calendar." },
+          { src: scr("lofi_v1"), lofi: true, label: "Version 1", caption: "Ask for the last day", alt: "Version 1, Last day screen." },
+          { src: scr("lofi_v2"), lofi: true, label: "Version 2", caption: "Ask for a range, book the cheapest", alt: "Version 2, Return window screen." },
+          { src: scr("lofi_v3"), lofi: true, label: "Version 3", caption: "One calendar, one tap or two", alt: "Version 3, one calendar." },
+          { src: scr("lofi_v4"), lofi: true, label: "Version 4", caption: "Ask first, then the calendar", alt: "Version 4, the question above the calendar." },
         ]} />
       </Beat>
 
@@ -558,9 +531,8 @@ export default function RedbusCaseStudy() {
           after="The week picks your day. The change can go to any date." />
       </Beat>
 
-      <Beat id="toc-testing" label="Testing" title="Three people tested it. By my own rules, it failed."
-        sub="Before the sessions I wrote down what would kill the design, so I couldn't move the goalposts later. Two of the three conditions I could check came true."
-        caption="Three of five planned sessions, 6 Sep, on version 3.">
+      <Beat id="toc-testing" label="Testing" title="I tested it against my own rules. It failed."
+        sub="Before testing I wrote down what would kill the design, so I couldn't move the goalposts later. Two of those conditions came true.">
         <KillList />
       </Beat>
 
@@ -595,12 +567,6 @@ export default function RedbusCaseStudy() {
         <MoSCoW />
       </Beat>
 
-      <Beat label="The look" title="Only the new part is mine."
-        sub="Everything else copies the real app, measured from 51 screenshots. That's how I found RedBus warns in amber, where I had used red."
-        caption="Its buttons are pills, too. My first ones had small rounded corners.">
-        <Palette />
-      </Beat>
-
       {/* ── ACT 4 ── */}
       <Act id="toc-next" n="Act 4 · What's next" title="What I'd do if this shipped"
         sub="Nothing here is live, so there are no results yet. Here's how I'd know." />
@@ -608,17 +574,6 @@ export default function RedbusCaseStudy() {
       <Beat label="What I'd watch" title="Three numbers, and when I'd pull it."
         sub="If returns rose 8% but outbound bookings fell 6%, I'd roll it back. That's trading trips for returns.">
         <Watch />
-      </Beat>
-
-      <Beat label="Still guessing" title="What I still don't know."
-        sub="Some of this rests on guesses I couldn't check.">
-        <Numbered items={[
-          "The 95% limit is my target. There's no real baseline.",
-          "I assume the fare difference uses the fare on the day you change. RedBus doesn't say.",
-          "Without fare data, I can't say how often moving a date costs more.",
-          "Two of five planned sessions never ran: the sceptic and the traveller with fixed plans.",
-          "The fixes from testing haven't been tested again.",
-        ]} />
       </Beat>
 
       <Beat label="Keeping" title="What I'm taking to the next project."
@@ -630,7 +585,6 @@ export default function RedbusCaseStudy() {
         ]} />
       </Beat>
 
-      <Credits />
     </main>
   );
 }
