@@ -914,9 +914,12 @@
     padding: 0;
   }
 
-  /* Case-study hero: a large phone in the middle, two smaller ones beside it, upright, centred, apart. */
-  .phone-row.hero { gap: 22px; flex-wrap: nowrap; align-items: center; padding: 8px 0 0; }
+  /* Case-study hero: a large phone in the middle, two smaller upright ones tucked 18px behind it, centred. */
+  .phone-row.hero { gap: 0; flex-wrap: nowrap; align-items: center; padding: 8px 0 0; }
   .phone-row.hero .phone-fig { position: relative; }
+  .phone-row.hero .phone-fig:nth-child(1) { margin-right: -18px; z-index: 1; }
+  .phone-row.hero .phone-fig:nth-child(2) { z-index: 2; }
+  .phone-row.hero .phone-fig:nth-child(3) { margin-left: -18px; z-index: 1; }
   .phone-row.hero .phone-fig:nth-child(2) .iphone { --n: 296; }
   .phone-row.hero .phone-fig:not(:nth-child(2)) .iphone { --n: 262; }
 
