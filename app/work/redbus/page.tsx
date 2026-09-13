@@ -178,7 +178,7 @@ function FixedDateBar() {
   return (
     <Card style={{ padding: "22px 24px", display: "flex", flexDirection: "column", gap: 14, maxWidth: 420 }}>
       <div><Chip tone="amber">Cannot change this date</Chip></div>
-      <p style={{ ...T.body, color: "#A45729" }}>This bus cannot change its date. You said you were not sure yet.</p>
+      <p className="cs-warn" style={{ ...T.body, color: undefined }}>This bus cannot change its date. You said you were not sure yet.</p>
       <div style={{ background: RED, color: "#fff", borderRadius: 100, padding: "12px 20px", textAlign: "center", fontFamily: "var(--font-manrope)", fontWeight: 700, fontSize: 15 }}>
         Book a fixed date
       </div>

@@ -569,6 +569,15 @@
     background: #f6e2e4;
   }
 
+  /* Warning ink, redBus's amber. Lighter on the dark theme so it keeps its contrast. */
+  .cs-warn {
+    color: #A45729;
+  }
+
+  html.nerd-mode .cs-warn {
+    color: #E3A47C;
+  }
+
   .cs-proto iframe {
     border: 0;
     display: block;
