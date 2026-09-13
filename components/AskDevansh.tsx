@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { Sparkle as PhSparkle, DotsThree, PencilSimple, X, SidebarSimple, ArrowUp as PhArrowUp } from "@phosphor-icons/react";
 
 // "Ask Devansh": an AI twin that answers questions about the case study, after Jahanvi's "Ask Jahanvi".
 // Hidden until GEMINI_API_KEY is set on Vercel. Add ?ask to the URL to see it anyway.
@@ -15,14 +16,13 @@ const SUGGESTIONS = [
 
 const FONT = "var(--font-manrope), system-ui, sans-serif";
 
-/* Lucide icons (MIT), inline like BottomNav's, so every icon shares one stroke. */
-const ic = (size: number) => ({ width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.75, strokeLinecap: "round" as const, strokeLinejoin: "round" as const, "aria-hidden": true });
-const Sparkle = () => <svg {...ic(16)}><path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3z" /></svg>;
-const Dots = () => <svg {...ic(18)}><circle cx="5" cy="12" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /></svg>;
-const Pencil = () => <svg {...ic(16)}><path d="M12 20h9" /><path d="M16.4 3.6a2 2 0 0 1 3 3L7 19l-4 1 1-4z" /></svg>;
-const XIcon = ({ s = 16 }: { s?: number }) => <svg {...ic(s)}><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>;
-const PanelClose = () => <svg {...ic(16)}><rect width="18" height="18" x="3" y="3" rx="2" /><path d="M15 3v18" /><path d="m8 9 3 3-3 3" /></svg>;
-const ArrowUp = () => <svg {...ic(16)}><path d="m5 12 7-7 7 7" /><path d="M12 19V5" /></svg>;
+/* Icons: Phosphor, Fill weight (MIT), the site's one icon set. */
+const Sparkle = () => <PhSparkle size={17} weight="fill" aria-hidden />;
+const Dots = () => <DotsThree size={20} weight="fill" aria-hidden />;
+const Pencil = () => <PencilSimple size={17} weight="fill" aria-hidden />;
+const XIcon = ({ s = 16 }: { s?: number }) => <X size={s} weight="fill" aria-hidden />;
+const PanelClose = () => <SidebarSimple size={17} weight="fill" aria-hidden />;
+const ArrowUp = () => <PhArrowUp size={17} weight="fill" aria-hidden />;
 
 export default function AskDevansh() {
   const [available, setAvailable] = useState(false);

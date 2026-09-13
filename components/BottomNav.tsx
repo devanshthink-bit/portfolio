@@ -3,49 +3,16 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { playDockClick } from "@/lib/dockSound";
+import { House, Briefcase, User, FileText, Sun, Moon } from "@phosphor-icons/react";
 
-/* Lucide icon set (MIT) — reproduced inline to avoid adding a dependency */
-const ICON = { width: 20, height: 20, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.75, strokeLinecap: "round", strokeLinejoin: "round" } as const;
-
-function HomeIcon() {
-  return <svg {...ICON}>
-    <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
-    <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-  </svg>;
-}
-function WorkIcon() {
-  return <svg {...ICON}>
-    <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-    <rect width="20" height="14" x="2" y="6" rx="2" />
-  </svg>;
-}
-function AboutIcon() {
-  return <svg {...ICON}>
-    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-    <circle cx="12" cy="7" r="4" />
-  </svg>;
-}
-function ResumeIcon() {
-  return <svg {...ICON}>
-    <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
-    <path d="M14 2v4a2 2 0 0 0 2 2h4" />
-    <path d="M10 9H8" />
-    <path d="M16 13H8" />
-    <path d="M16 17H8" />
-  </svg>;
-}
-function SunIcon() {
-  return <svg {...ICON}>
-    <circle cx="12" cy="12" r="4" />
-    <path d="M12 2v2" /><path d="M12 20v2" />
-    <path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" />
-    <path d="M2 12h2" /><path d="M20 12h2" />
-    <path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" />
-  </svg>;
-}
-function MoonIcon() {
-  return <svg {...ICON}><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" /></svg>;
-}
+/* Icons: Phosphor, Fill weight (MIT), the one icon set used across the site. */
+const IC = { size: 22, weight: "fill" as const };
+function HomeIcon() { return <House {...IC} />; }
+function WorkIcon() { return <Briefcase {...IC} />; }
+function AboutIcon() { return <User {...IC} />; }
+function ResumeIcon() { return <FileText {...IC} />; }
+function SunIcon() { return <Sun {...IC} />; }
+function MoonIcon() { return <Moon {...IC} />; }
 
 const RESUME_URL = "https://drive.google.com/file/d/1iIkDZW26ryQ-rZq2ZDsd5e6rqMfPyctX/view?usp=drive_link";
 

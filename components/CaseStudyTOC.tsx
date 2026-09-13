@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { List, X } from "@phosphor-icons/react";
 
 const defaultSections = [
   { id: "toc-problem",    label: "The Problem" },
@@ -273,20 +274,7 @@ function CaseStudyTOCInner({ sections = defaultSections, variant = "right" }: { 
           e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,0,0,0.18)";
         }}
       >
-        {/* Hamburger / close icon */}
-        <span style={{ display: "flex", flexDirection: "column", gap: 3.5 }}>
-          {[0, 1, 2].map((i) => (
-            <span key={i} style={{
-              display: "block",
-              width: menuOpen && i === 1 ? 0 : menuOpen ? 12 : [12, 8, 12][i],
-              height: 1.5,
-              borderRadius: 2,
-              background: "var(--bg)",
-              transition: "width 0.2s ease",
-              transform: menuOpen ? (i === 0 ? "rotate(45deg) translate(3px, 3px)" : i === 2 ? "rotate(-45deg) translate(3px, -3px)" : "none") : "none",
-            }} />
-          ))}
-        </span>
+        {menuOpen ? <X size={15} weight="fill" color="var(--bg)" aria-hidden /> : <List size={15} weight="fill" color="var(--bg)" aria-hidden />}
         <span style={{
           fontFamily: "var(--font-manrope)",
           fontSize: 13.5,

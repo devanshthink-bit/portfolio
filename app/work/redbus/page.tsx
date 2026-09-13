@@ -8,6 +8,7 @@ import ProtoEmbed from "../../../components/ProtoEmbed";
 import { RED, T, SectionLabel, LabelText, Beat, Figure, Card, Chip, Numbered, Pill, MetaStrip } from "../../../components/caseStudy";
 import { PhoneRow } from "../../../components/IPhone";
 import PhoneShot from "../../../components/PhoneShot";
+import { TrendDown } from "@phosphor-icons/react/ssr";
 
 
 export const metadata: Metadata = {
@@ -128,10 +129,8 @@ function WhyRedBus() {
         <Card key={c.h}>
           <div style={{ ...T.figure, fontSize: 26, height: 32, display: "flex", alignItems: "center" }}>
             {c.n === "↓" ? (
-              // A drawn "going down" line (Lucide trending-down), not a typed arrow.
-              <svg width={26} height={26} viewBox="0 0 24 24" fill="none" stroke="#A45729" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-label="Down">
-                <path d="m22 17-8.5-8.5-5 5L2 7" /><path d="M16 17h6v-6" />
-              </svg>
+              // Phosphor TrendDown, Fill weight: the site's one icon set.
+              <TrendDown size={26} weight="fill" color="#A45729" aria-label="Down" />
             ) : c.n}
           </div>
           <p style={{ ...T.cardH, fontSize: 15, margin: "4px 0 6px" }}>{c.h}</p>
