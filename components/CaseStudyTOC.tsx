@@ -137,10 +137,9 @@ export default function CaseStudyTOC({ sections = defaultSections, variant = "ri
               }}
             >
               <span style={{
-                fontFamily: "var(--font-geist-mono)",
-                fontSize: 10,
-                letterSpacing: "0.06em",
-                textTransform: "uppercase",
+                fontFamily: "var(--font-inter)",
+                fontSize: 13,
+                letterSpacing: "-0.01em",
                 color: isActive ? "var(--text-primary)" : "var(--text-muted)",
                 fontWeight: isActive ? 600 : 400,
                 opacity: 1,
@@ -200,13 +199,12 @@ export default function CaseStudyTOC({ sections = defaultSections, variant = "ri
 
         {/* Title */}
         <p style={{
-          fontFamily: "var(--font-geist-mono)",
-          fontSize: 10,
+          fontFamily: "var(--font-manrope)",
+          fontSize: 14,
           fontWeight: 600,
-          letterSpacing: "0.1em",
-          textTransform: "uppercase",
+          letterSpacing: "-0.01em",
           color: "var(--text-muted)",
-          margin: "0 0 12px 0",
+          margin: "0 0 8px 0",
           padding: "0 24px",
         }}>
           Contents
@@ -229,7 +227,6 @@ export default function CaseStudyTOC({ sections = defaultSections, variant = "ri
                 cursor: "pointer",
                 padding: "13px 24px",
                 textAlign: "left",
-                borderLeft: `3px solid ${isActive ? "var(--text-primary)" : "transparent"}`,
               }}
             >
               <span style={{
@@ -290,11 +287,10 @@ export default function CaseStudyTOC({ sections = defaultSections, variant = "ri
           ))}
         </span>
         <span style={{
-          fontFamily: variant === "left" ? "var(--font-manrope)" : "var(--font-geist-mono)",
-          fontSize: variant === "left" ? 13.5 : 11,
+          fontFamily: "var(--font-manrope)",
+          fontSize: 13.5,
           fontWeight: 600,
-          letterSpacing: variant === "left" ? "-0.01em" : "0.06em",
-          textTransform: variant === "left" ? "none" : "uppercase",
+          letterSpacing: "-0.01em",
           color: "var(--bg)",
           whiteSpace: "nowrap",
           maxWidth: 140,

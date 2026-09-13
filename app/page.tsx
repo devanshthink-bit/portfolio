@@ -6,7 +6,7 @@ import { IPhone } from "../components/IPhone";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 const STATS = [
-  { value: "3+",    unit: "yrs", label: "Engg. experience", countTo: 3, suffix: "+",  startFrom: 1 },
+  { value: "3+",    unit: "yrs", label: "Engineering experience", countTo: 3, suffix: "+",  startFrom: 1 },
   { value: "3",     unit: "",    label: "Products shipped",  countTo: 3, suffix: "" },
   { value: "2M+",   unit: "",    label: "Users reached",     countTo: 2, suffix: "M+", startFrom: 1 },
   { value: "0 → 1", unit: "",    label: "& at scale",        countTo: null },
@@ -34,7 +34,7 @@ const recentWork = [
     brand: "RedBus",
     brandColor: "#E81E38",
     did: "Designed a way to book the bus home before you know the date",
-    tags: ["Travel", "B2C", "iOS App", "Concept"],
+    tags: ["Travel", "B2C", "iOS app", "Concept"],
     year: "2026",
     blurb: "A self-initiated concept for RedBus. Hold a return seat and fare without naming a day, then move it once when plans settle.",
     impact: "Tested with 3 travellers. The two ways it failed shaped the final design.",
@@ -89,16 +89,16 @@ function StatCounter({ value, unit, label, active, countTo, suffix, startFrom }:
         </span>
         {unit && (
           <span style={{
-            fontFamily: "var(--font-geist-mono)", fontSize: 12,
-            color: "var(--text-muted)", letterSpacing: "0",
+            fontFamily: "var(--font-manrope)", fontSize: 15, fontWeight: 600,
+            color: "var(--text-muted)", letterSpacing: "-0.01em",
           }}>
             {unit}
           </span>
         )}
       </div>
       <span className="stat-label" style={{
-        fontFamily: "var(--font-geist-mono)", fontSize: 10, fontWeight: 500,
-        letterSpacing: "0.07em", textTransform: "uppercase", color: "var(--text-muted)",
+        fontFamily: "var(--font-inter)", fontSize: 14, fontWeight: 400,
+        letterSpacing: "-0.01em", color: "var(--text-muted)",
       }}>
         {label}
       </span>
@@ -142,7 +142,7 @@ function WorkCard({ item }: { item: Work }) {
             <div className="work-card-panel-text">
               <p className="work-card-brand" style={{ color: item.brandColor }}>{item.brand}</p>
               <p className="work-card-did">{item.did}</p>
-              {item.tags && <p className="work-card-tags">{item.tags.join("  •  ")}</p>}
+              {item.tags && <p className="work-card-tags">{item.tags.map((t) => <span key={t}>{t}</span>)}</p>}
             </div>
             {item.phones && (
               <div className="work-card-phones">
@@ -235,7 +235,7 @@ export default function Home() {
         <div className="stack-overlay">
           <div className="stack-overlay-inner">
             <section id="recent-work" className="section">
-              <h3 className="section-title">Recent Work</h3>
+              <h3 className="section-title">Recent work</h3>
               <div className="work-list">
                 {recentWork.map(item => <WorkCard key={item.title} item={item} />)}
               </div>

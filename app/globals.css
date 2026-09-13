@@ -316,13 +316,13 @@
     scroll-margin-top: 48px;
   }
 
+  /* Section names are quiet sentence-case words in the heading face, not mono capitals. */
   .section-title {
-    font-family: var(--font-geist-mono), monospace;
-    font-size: 14px;
+    font-family: var(--font-manrope), sans-serif;
+    font-size: 15px;
     font-weight: 600;
     color: var(--text-muted);
-    letter-spacing: -0.01em;
-    text-transform: uppercase;
+    letter-spacing: -0.015em;
     margin: 0 0 12px 0;
   }
 
@@ -421,12 +421,26 @@
     margin: 0;
   }
 
+  /* Tags: plain words split by a hairline, not bullet characters. */
   .work-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     font-size: 14px;
     color: #4a4948;
     letter-spacing: -0.01em;
     margin: 0;
-    white-space: pre;
+  }
+
+  .work-card-tags span + span::before {
+    content: "";
+    display: inline-block;
+    width: 1px;
+    height: 11px;
+    background: currentColor;
+    opacity: 0.28;
+    margin: 0 10px;
+    vertical-align: -1px;
   }
 
   .work-card-panel img {
@@ -462,13 +476,11 @@
 
   .work-card-year {
     font-family: var(--font-inter), sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-secondary);
-    background: var(--card-bg);
-    border-radius: 6px;
-    padding: 3px 8px;
-    letter-spacing: 0;
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--text-muted);
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
   }
 
   .work-card-blurb {

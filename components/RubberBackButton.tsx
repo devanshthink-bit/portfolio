@@ -23,8 +23,8 @@ function playRubber() {
   } catch (_) {}
 }
 
-// `plain`: sentence case in the text face, for pages that dropped the mono labels (RedBus).
-export default function RubberBackButton({ plain }: { plain?: boolean } = {}) {
+// `plain` (the default): sentence case in the heading face. `plain={false}` brings back the old mono BACK.
+export default function RubberBackButton({ plain = true }: { plain?: boolean } = {}) {
   const [pos, setPos] = useState<{ top?: number; bottom?: number; left: number } | null>(null);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function RubberBackButton({ plain }: { plain?: boolean } = {}) {
       window.addEventListener("resize", onResize);
     }, 350);
     return () => clearTimeout(t);
-  }, []);
+  }, [plain]);
 
   if (!pos) return null;
   // On a phone the plain Back floats over the page, so it gets a solid pill to stay readable.

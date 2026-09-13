@@ -69,7 +69,7 @@ function DockItem({ label, hovered, pitch, onHover, children }: {
         background: "#0f1108", color: "#fff", fontSize: 12, fontWeight: 500,
         lineHeight: 1, padding: "6px 9px", borderRadius: 8, whiteSpace: "nowrap",
         pointerEvents: "none", opacity: hovered ? 1 : 0,
-        transition: "opacity 0.15s ease, transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1)",
+        transition: "opacity 0.15s ease, transform 0.26s cubic-bezier(0.16, 1, 0.3, 1)",
         userSelect: "none",
       }}>
         {label}

@@ -94,8 +94,8 @@ function LabelPill({ text }: { text: string; cat: Cat }) {
       width: 72, padding: "5px 0", borderRadius: 24,
       background: "var(--text-secondary)",
       color: "var(--bg)",
-      fontSize: 10, fontWeight: 700, letterSpacing: "0.09em",
-      textTransform: "uppercase", whiteSpace: "nowrap",
+      fontSize: 12, fontWeight: 600, letterSpacing: "-0.01em",
+      whiteSpace: "nowrap",
       flexShrink: 0, userSelect: "none",
       boxShadow: "0 2px 6px rgba(0,0,0,0.22)",
     }}>
@@ -201,36 +201,29 @@ const testimonials = [
 
 const CARD_GAP = 16;
 
-const ModernQuote = () => (
-  <svg width="18" height="14" viewBox="0 0 28 22" fill="none" style={{ display: "block", marginBottom: 12, userSelect: "none" }}>
-    <path d="M0 14C0 6.268 4.925 1.343 11.5 0L12.5 2.4C8.925 3.543 7 6.268 7 9H11.5V22H0V14Z" fill="var(--text-muted)" opacity="0.5" />
-    <path d="M15.5 14C15.5 6.268 20.425 1.343 27 0L28 2.4C24.425 3.543 22.5 6.268 22.5 9H27V22H15.5V14Z" fill="var(--text-muted)" opacity="0.5" />
-  </svg>
-);
-
 export default function About() {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 56, marginTop: 24 }}>
 
       {/* About Me */}
       <div className="section">
-        <h3 className="section-title">About Me</h3>
+        <h3 className="section-title">About me</h3>
         <div style={{ position: "relative", width: "100%", aspectRatio: "16/9", borderRadius: 6, overflow: "hidden" }}>
           <Image src="/images/about.jpg" alt="Devansh at the beach" fill sizes="(max-width: 980px) 100vw, 868px" style={{ objectFit: "cover", objectPosition: "center top" }} priority />
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 24, marginTop: 32 }}>
           <h2 style={{ fontFamily: "var(--font-manrope), sans-serif", fontSize: "26px", fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 1.4, color: "var(--text-primary)", margin: 0 }}>Designing with craft, building with code.</h2>
           <p className="section-body" style={{ margin: 0 }}>I didn&apos;t grow up calling it design, but I was always curious about how things worked.</p>
-          <p className="section-body" style={{ margin: 0 }}>My first exposure to it was on my mom&apos;s Samsung Galaxy R — I&apos;d spend hours exploring apps, downloading random ones, almost in awe of how they worked. I didn&apos;t have the word for it back then, but I was already falling in love with <strong>product design</strong>.</p>
-          <p className="section-body" style={{ margin: 0 }}>Before screens took over, I was obsessed with cars. That instinct for how things feel and function stayed — it just shifted from physical objects to digital products.</p>
-          <p className="section-body" style={{ margin: 0 }}>Today, I see myself as a <strong>design–engineer </strong>hybrid working at the intersection of design, engineering, and product. I don&apos;t just design — I build and ship product features, integrating agentic AI into my workflows.</p>
+          <p className="section-body" style={{ margin: 0 }}>My first exposure to it was on my mom&apos;s Samsung Galaxy R. I&apos;d spend hours exploring apps, downloading random ones, almost in awe of how they worked. I didn&apos;t have the word for it back then, but I was already falling in love with <strong>product design</strong>.</p>
+          <p className="section-body" style={{ margin: 0 }}>Before screens took over, I was obsessed with cars. That instinct for how things feel and function stayed. It just shifted from physical objects to digital products.</p>
+          <p className="section-body" style={{ margin: 0 }}>Today, I see myself as a <strong>design-engineer </strong>hybrid working at the intersection of design, engineering, and product. I don&apos;t just design. I build and ship product features, integrating agentic AI into my workflows.</p>
           <p className="section-body" style={{ margin: 0 }}>Previously, as a Software Development Engineer (SDE), I&apos;ve worked on shipping flagship products across workforce enablement, hospitality, and greentech at <strong>GoodWorker</strong>, <strong>Stanza Living</strong>, and <strong>Devic Earth</strong>, with products serving over a million users.</p>
         </div>
       </div>
 
       {/* Skills & Tools */}
       <div className="section">
-        <h3 className="section-title">Skills & Tools</h3>
+        <h3 className="section-title">Skills and tools</h3>
         <div style={{ marginTop: 16 }}>
           <PhysicsSkills />
         </div>
@@ -238,7 +231,7 @@ export default function About() {
 
       {/* Testimonials */}
       <div className="section">
-        <h3 className="section-title">In Their Words</h3>
+        <h3 className="section-title">In their words</h3>
 
         <div style={{ overflow: "hidden", width: "100%" }}>
           <div
@@ -257,7 +250,6 @@ export default function About() {
             {[...testimonials, ...testimonials].map((tc, i) => (
               <div key={i} style={{ flex: `0 0 320px`, background: "var(--card-bg)", borderRadius: 10, padding: 20, display: "flex", flexDirection: "column", gap: 40 }}>
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                  <ModernQuote />
                   <p style={{ fontFamily: "var(--font-manrope)", fontStyle: "normal", fontSize: 14, fontWeight: 500, lineHeight: 1.65, letterSpacing: "-0.01em", color: "var(--text-secondary)", margin: 0 }}>{tc.quote}</p>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
