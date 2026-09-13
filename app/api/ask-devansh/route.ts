@@ -49,6 +49,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ content: text || "Sorry, I lost my train of thought. Could you ask again?" });
   } catch (e) {
     console.error("Ask Devansh error:", e);
-    return NextResponse.json({ content: "Something went wrong on my side. Please try again." }, { status: 500 });
+    // `detail` carries Google's error message (never the key) so a failed call can be diagnosed.
+    return NextResponse.json({ content: "Something went wrong on my side. Please try again.", detail: String(e).slice(0, 400) }, { status: 500 });
   }
 }
