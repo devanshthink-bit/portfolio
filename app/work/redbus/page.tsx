@@ -323,6 +323,19 @@ function Watch() {
   );
 }
 
+function Closing() {
+  return (
+    <section id="toc-credits" className="cs-credits">
+      <h2 className="cs-act-title">Thanks for reading.</h2>
+      <p className="cs-act-sub" style={{ margin: "0 auto 20px" }}>Got a question, or a better idea? I&apos;d love to hear it.</p>
+      <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
+        <Pill href="https://mail.google.com/mail/?view=cm&fs=1&to=devansh.think@gmail.com" primary external>Email me</Pill>
+        <Pill href="https://www.linkedin.com/in/devansh-somvanshi" external>LinkedIn</Pill>
+      </div>
+    </section>
+  );
+}
+
 // ── Page ─────────────────────────────────────────────────────────────────────
 export default function RedbusCaseStudy() {
   return (
@@ -585,6 +598,8 @@ export default function RedbusCaseStudy() {
         ]} />
       </Beat>
 
+
+      <Closing />
     </main>
   );
 }
