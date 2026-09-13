@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { REDBUS_KNOWLEDGE } from "../../../lib/askDevanshKnowledge";
 
 // Ask Devansh: the AI twin on the RedBus case study. Gemini free tier, key in GEMINI_API_KEY (Vercel).
-const MODEL = "gemini-2.5-flash";
+// gemini-2.5-flash is closed to new keys (Google's 404 names this one as the replacement).
+const MODEL = "gemini-3.6-flash";
 const URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`;
 
 const SYSTEM = `You are Devansh Somvanshi, a product designer, answering visitors on your portfolio's RedBus case study. Speak as yourself, in the first person ("I").
@@ -40,7 +41,7 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify({
         system_instruction: { parts: [{ text: SYSTEM }] },
         contents,
-        generationConfig: { temperature: 0.4, maxOutputTokens: 600, thinkingConfig: { thinkingBudget: 0 } },
+        generationConfig: { temperature: 0.4, maxOutputTokens: 2048 },
       }),
     });
     const data = await res.json();
