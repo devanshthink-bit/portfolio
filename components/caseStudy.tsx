@@ -1,26 +1,27 @@
 // Shared building blocks for case study pages. Server-safe: no "use client", no hooks.
-// Two faces only: Manrope for headings and figures, Inter for everything else. Sentence case,
-// no mono labels, no handwriting (Devansh, 14 Sep 2026: "I dont want anything which looks ai generated").
+// Type roles, the same on every page: headings, figures and quotes in Source Serif 4; subheadings,
+// body and interface in Inter. Sentence case, no mono labels, no handwriting
+// (Devansh, 14 Sep 2026: "I dont want anything which looks ai generated").
 import Image from "next/image";
 
 export const RED = "#E81E38";
 
-const MANROPE = "var(--font-manrope)";
+const SERIF = "var(--font-serif)";
 const INTER = "var(--font-inter)";
 
 // Type scale for case studies, in the site's own fonts and tokens.
 export const T = {
-  h1:      { fontFamily: MANROPE, fontSize: 44, fontWeight: 800, color: "var(--text-primary)", letterSpacing: "-0.04em", lineHeight: 1.08, margin: "0 0 16px 0" } as React.CSSProperties,
-  lede:    { fontFamily: INTER, fontSize: 20, fontWeight: 400, color: "var(--text-secondary)", letterSpacing: "-0.02em", lineHeight: 1.5, margin: "0 0 36px 0", maxWidth: 620 } as React.CSSProperties,
-  h2:      { fontFamily: MANROPE, fontSize: 28, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.035em", lineHeight: 1.22, margin: "0 0 12px 0" } as React.CSSProperties,
+  h1:      { fontFamily: SERIF, fontSize: 38, fontWeight: 600, color: "var(--text-primary)", letterSpacing: "-0.02em", lineHeight: 1.12, margin: "0 0 14px 0" } as React.CSSProperties,
+  lede:    { fontFamily: INTER, fontSize: 19, fontWeight: 400, color: "var(--text-secondary)", letterSpacing: "-0.015em", lineHeight: 1.5, margin: "0 0 36px 0", maxWidth: 620 } as React.CSSProperties,
+  h2:      { fontFamily: SERIF, fontSize: 25, fontWeight: 600, color: "var(--text-primary)", letterSpacing: "-0.015em", lineHeight: 1.25, margin: "0 0 10px 0" } as React.CSSProperties,
   sub:     { fontFamily: INTER, fontSize: 16.5, color: "var(--text-secondary)", lineHeight: 1.65, letterSpacing: "-0.012em", margin: 0, maxWidth: 640 } as React.CSSProperties,
   small:   { fontFamily: INTER, fontSize: 13.5, color: "var(--text-muted)", lineHeight: 1.55, letterSpacing: "-0.005em", margin: 0 } as React.CSSProperties,
   // A quiet label: small, sentence case, in the text face.
   eyebrow: { fontFamily: INTER, fontSize: 13, fontWeight: 500, letterSpacing: "-0.005em", color: "var(--text-muted)", margin: 0 } as React.CSSProperties,
-  cardH:   { fontFamily: MANROPE, fontSize: 16, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.02em", lineHeight: 1.4, margin: 0 } as React.CSSProperties,
+  cardH:   { fontFamily: SERIF, fontSize: 17, fontWeight: 600, color: "var(--text-primary)", letterSpacing: "-0.01em", lineHeight: 1.35, margin: 0 } as React.CSSProperties,
   body:    { fontFamily: INTER, fontSize: 14.5, color: "var(--text-secondary)", lineHeight: 1.6, letterSpacing: "-0.01em", margin: 0 } as React.CSSProperties,
-  quote:   { fontFamily: MANROPE, fontSize: 19, fontWeight: 600, color: "var(--text-primary)", letterSpacing: "-0.02em", lineHeight: 1.4, margin: 0 } as React.CSSProperties,
-  figure:  { fontFamily: MANROPE, fontWeight: 800, letterSpacing: "-0.04em", color: "var(--text-primary)", fontVariantNumeric: "tabular-nums" } as React.CSSProperties,
+  quote:   { fontFamily: SERIF, fontSize: 20, fontWeight: 400, fontStyle: "italic", color: "var(--text-primary)", letterSpacing: "-0.01em", lineHeight: 1.4, margin: 0 } as React.CSSProperties,
+  figure:  { fontFamily: SERIF, fontWeight: 600, letterSpacing: "-0.02em", color: "var(--text-primary)", fontVariantNumeric: "tabular-nums" } as React.CSSProperties,
 };
 
 // "Scene 4 · A week later" reads as a red marker and a quiet name, not one shouted line.

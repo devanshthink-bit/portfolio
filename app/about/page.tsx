@@ -212,7 +212,7 @@ export default function About() {
           <Image src="/images/about.jpg" alt="Devansh at the beach" fill sizes="(max-width: 980px) 100vw, 868px" style={{ objectFit: "cover", objectPosition: "center top" }} priority />
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 24, marginTop: 32 }}>
-          <h2 style={{ fontFamily: "var(--font-manrope), sans-serif", fontSize: "26px", fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 1.4, color: "var(--text-primary)", margin: 0 }}>Designing with craft, building with code.</h2>
+          <h2 style={{ fontFamily: "var(--font-serif), Georgia, serif", fontSize: "26px", fontWeight: 600, letterSpacing: "-0.015em", lineHeight: 1.3, color: "var(--text-primary)", margin: 0 }}>Designing with craft, building with code.</h2>
           <p className="section-body" style={{ margin: 0 }}>I didn&apos;t grow up calling it design, but I was always curious about how things worked.</p>
           <p className="section-body" style={{ margin: 0 }}>My first exposure to it was on my mom&apos;s Samsung Galaxy R. I&apos;d spend hours exploring apps, downloading random ones, almost in awe of how they worked. I didn&apos;t have the word for it back then, but I was already falling in love with <strong>product design</strong>.</p>
           <p className="section-body" style={{ margin: 0 }}>Before screens took over, I was obsessed with cars. That instinct for how things feel and function stayed. It just shifted from physical objects to digital products.</p>
@@ -250,7 +250,7 @@ export default function About() {
             {[...testimonials, ...testimonials].map((tc, i) => (
               <div key={i} style={{ flex: `0 0 320px`, background: "var(--card-bg)", borderRadius: 10, padding: 20, display: "flex", flexDirection: "column", gap: 40 }}>
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                  <p style={{ fontFamily: "var(--font-manrope)", fontStyle: "normal", fontSize: 14, fontWeight: 500, lineHeight: 1.65, letterSpacing: "-0.01em", color: "var(--text-secondary)", margin: 0 }}>{tc.quote}</p>
+                  <p style={{ fontFamily: "var(--font-serif)", fontStyle: "normal", fontSize: 15.5, fontWeight: 400, lineHeight: 1.65, letterSpacing: "-0.01em", color: "var(--text-secondary)", margin: 0 }}>{tc.quote}</p>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
                   <img src={tc.avatar} alt={tc.name} style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />

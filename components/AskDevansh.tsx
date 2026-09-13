@@ -12,7 +12,7 @@ const SUGGESTIONS = [
   "What surprised you during this project?",
 ];
 
-const FONT = "var(--font-manrope), system-ui, sans-serif";
+const FONT = "var(--font-inter), system-ui, sans-serif";
 
 /* Lucide icons (MIT), inline like BottomNav's, so every icon shares one stroke. */
 const ic = (size: number) => ({ width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.75, strokeLinecap: "round" as const, strokeLinejoin: "round" as const, "aria-hidden": true });

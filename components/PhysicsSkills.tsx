@@ -462,10 +462,10 @@ function Bucket({ cat }: { cat: Cat }) {
             </svg>
           )}
           <span style={{
-            fontFamily: "var(--font-manrope)",
+            fontFamily: "var(--font-serif)",
             fontSize: 30,
-            fontWeight: 800,
-            letterSpacing: "-0.035em",
+            fontWeight: 600,
+            letterSpacing: "-0.015em",
           }}>
             {CAT_LABEL[cat]}
           </span>
