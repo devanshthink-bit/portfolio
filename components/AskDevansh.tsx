@@ -209,8 +209,16 @@ export default function AskDevansh() {
         @media (prefers-reduced-motion: reduce) { .ask-dot { animation: none; opacity: .6; } }
         /* Below 1360 the contents list becomes a pill at bottom centre, so sit above it. */
         @media (max-width: 1359px) { .ask-trigger { bottom: 84px; } }
+        /* The site hides the pointer everywhere for its own cursor, and hides that cursor over the
+           panel, so bring the normal pointer back here. */
+        .ask-trigger, .ask-panel, .ask-panel * { cursor: auto !important; }
+        .ask-trigger, .ask-panel button { cursor: pointer !important; }
+        .ask-panel input { cursor: text !important; }
+        /* Push the page aside; where the contents list is fixed on the left, leave room for it too,
+           so the page sits centred between the list and the panel. */
         html.ask-open body { padding-right: 420px; }
-        body { transition: padding-right .32s cubic-bezier(.4,0,.2,1); }
+        @media (min-width: 1360px) { html.ask-open body { padding-left: 200px; } }
+        body { transition: padding .32s cubic-bezier(.4,0,.2,1); }
         @media (max-width: 1099px) { html.ask-open body { padding-right: 0; } }
         @media (max-width: 640px) {
           .ask-trigger { right: 16px; bottom: 76px; padding: 13px 20px; font-size: 15px; }
