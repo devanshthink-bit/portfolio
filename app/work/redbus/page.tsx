@@ -237,8 +237,8 @@ export default function RedbusCaseStudy() {
       </Beat>
 
       <Beat label="04 · The limits" title="I couldn't hold a seat, set a fare or change a rule."
-        sub="redBus sells other companies' buses, so the only thing I could change was what the app asks and when. The rules came as they are, and one of them makes a promise hard to keep."
-        caption="My own limit on top: adding a step must keep at least 95% of people finishing the booking they came for. That number is my target, not redBus's.">
+        sub="Someone who doesn't know their return date has no way to hold a return on redBus. Since redBus sells other companies' buses, I could only change what the app asks and when."
+        caption="What I'd measure: how many bookings add a return before paying. What must not drop: at least 95% of people still finish the booking they came for. Both are my targets, not redBus's.">
         <Rules />
       </Beat>
 
