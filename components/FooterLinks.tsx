@@ -1,12 +1,12 @@
 "use client";
 import { useState } from "react";
-import { Copy, Check } from "@phosphor-icons/react";
+import { IconCopy, IconCheck } from "@tabler/icons-react";
 
 const EMAIL = "devansh.think@gmail.com";
 
-/* Icons: Phosphor, Fill weight (MIT), the site's one icon set. */
-function CopyIcon({ size = 14 }: { size?: number }) { return <Copy size={size} weight="fill" aria-hidden />; }
-function CheckIcon({ size = 14 }: { size?: number }) { return <Check size={size} weight="fill" aria-hidden />; }
+/* Icons: Tabler (MIT), outline at stroke 2, the site's one icon set. */
+function CopyIcon({ size = 14 }: { size?: number }) { return <IconCopy size={size} stroke={2} aria-hidden />; }
+function CheckIcon({ size = 14 }: { size?: number }) { return <IconCheck size={size} stroke={2} aria-hidden />; }
 
 export default function FooterLinks() {
   const [copied, setCopied] = useState(false);

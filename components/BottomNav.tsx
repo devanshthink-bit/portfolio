@@ -3,16 +3,16 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { playDockClick } from "@/lib/dockSound";
-import { House, Briefcase, User, FileText, Sun, Moon } from "@phosphor-icons/react";
+import { IconHome, IconBriefcase, IconUser, IconFileText, IconSun, IconMoon } from "@tabler/icons-react";
 
-/* Icons: Phosphor, Fill weight (MIT), the one icon set used across the site. */
-const IC = { size: 22, weight: "fill" as const };
-function HomeIcon() { return <House {...IC} />; }
-function WorkIcon() { return <Briefcase {...IC} />; }
-function AboutIcon() { return <User {...IC} />; }
-function ResumeIcon() { return <FileText {...IC} />; }
-function SunIcon() { return <Sun {...IC} />; }
-function MoonIcon() { return <Moon {...IC} />; }
+/* Icons: Tabler (MIT), outline at stroke 2, the one icon set used across the site. */
+const IC = { size: 22, stroke: 2 };
+function HomeIcon() { return <IconHome {...IC} />; }
+function WorkIcon() { return <IconBriefcase {...IC} />; }
+function AboutIcon() { return <IconUser {...IC} />; }
+function ResumeIcon() { return <IconFileText {...IC} />; }
+function SunIcon() { return <IconSun {...IC} />; }
+function MoonIcon() { return <IconMoon {...IC} />; }
 
 const RESUME_URL = "https://drive.google.com/file/d/1iIkDZW26ryQ-rZq2ZDsd5e6rqMfPyctX/view?usp=drive_link";
 

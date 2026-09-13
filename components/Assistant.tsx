@@ -1,6 +1,6 @@
 "use client";
 import { useState, useRef, useEffect, KeyboardEvent } from "react";
-import { X, ArrowUp, ChatCircle } from "@phosphor-icons/react";
+import { IconX, IconArrowUp, IconMessageCircle } from "@tabler/icons-react";
 
 type Message = { role: "user" | "assistant"; content: string };
 
@@ -92,7 +92,7 @@ export default function Assistant() {
             onClick={() => setOpen(false)}
             style={{ background: "none", border: "none", cursor: "pointer", padding: 4, color: "var(--text-muted)", lineHeight: 1 }}
           >
-            <X size={14} weight="fill" aria-hidden />
+            <IconX size={14} stroke={2} aria-hidden />
           </button>
         </div>
 
@@ -180,7 +180,7 @@ export default function Assistant() {
               flexShrink: 0, transition: "background 0.15s",
             }}
           >
-            <ArrowUp size={13} weight="fill" color={input.trim() && !loading ? "var(--bg)" : "var(--text-muted)"} aria-hidden />
+            <IconArrowUp size={13} stroke={2} color={input.trim() && !loading ? "var(--bg)" : "var(--text-muted)"} aria-hidden />
           </button>
         </div>
       </div>
@@ -207,9 +207,9 @@ export default function Assistant() {
         }}
       >
         {open ? (
-          <X size={16} weight="fill" color="var(--bg)" aria-hidden />
+          <IconX size={16} stroke={2} color="var(--bg)" aria-hidden />
         ) : (
-          <ChatCircle size={18} weight="fill" color="var(--bg)" aria-hidden />
+          <IconMessageCircle size={18} stroke={2} color="var(--bg)" aria-hidden />
         )}
       </button>
 

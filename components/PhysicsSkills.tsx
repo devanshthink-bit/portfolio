@@ -1,5 +1,5 @@
 "use client";
-import { Palette, Code } from "@phosphor-icons/react";
+import { IconPalette, IconCode } from "@tabler/icons-react";
 import { useEffect, useRef, useState } from "react";
 
 type Cat = "design" | "engineering";
@@ -449,9 +449,9 @@ function Bucket({ cat }: { cat: Cat }) {
           opacity: 0.25,
         }}>
           {cat === "design" ? (
-            <Palette size={28} weight="fill" aria-hidden />
+            <IconPalette size={28} stroke={2} aria-hidden />
           ) : (
-            <Code size={28} weight="fill" aria-hidden />
+            <IconCode size={28} stroke={2} aria-hidden />
           )}
           <span style={{
             fontFamily: "var(--font-manrope)",

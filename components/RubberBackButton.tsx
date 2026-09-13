@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ArrowLeft } from "@phosphor-icons/react";
+import { IconArrowLeft } from "@tabler/icons-react";
 
 
 function playRubber() {
@@ -68,7 +68,7 @@ export default function RubberBackButton({ plain = true }: { plain?: boolean } =
         textTransform: plain ? "none" : "uppercase",
       }}
     >
-      <ArrowLeft size={15} weight="fill" aria-hidden style={{ marginRight: 6 }} />
+      <IconArrowLeft size={16} stroke={2} aria-hidden style={{ marginRight: 6 }} />
       Back
     </Link>
   );

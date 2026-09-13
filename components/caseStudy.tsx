@@ -2,7 +2,7 @@
 // Two faces only: Manrope for headings and figures, Inter for everything else. Sentence case,
 // no mono labels, no handwriting (Devansh, 14 Sep 2026: "I dont want anything which looks ai generated").
 import Image from "next/image";
-import { ArrowUpRight, ArrowDown, Play } from "@phosphor-icons/react/ssr";
+import { IconArrowUpRight, IconArrowDown, IconPlayerPlay } from "@tabler/icons-react";
 
 export const RED = "#E81E38";
 
@@ -91,11 +91,11 @@ export function Numbered({ items }: { items: React.ReactNode[] }) {
   );
 }
 
-/* Icons: Phosphor, Fill weight (MIT), the site's one icon set. */
+/* Icons: Tabler (MIT), outline at stroke 2, the site's one icon set. */
 const ICONS = {
-  external: <ArrowUpRight size={15} weight="fill" aria-hidden />,
-  down: <ArrowDown size={15} weight="fill" aria-hidden />,
-  play: <Play size={15} weight="fill" aria-hidden />,
+  external: <IconArrowUpRight size={16} stroke={2} aria-hidden />,
+  down: <IconArrowDown size={16} stroke={2} aria-hidden />,
+  play: <IconPlayerPlay size={16} stroke={2} aria-hidden />,
 };
 
 export function Pill({ href, children, primary, external, icon }: {

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { Sparkle as PhSparkle, DotsThree, PencilSimple, X, SidebarSimple, ArrowUp as PhArrowUp } from "@phosphor-icons/react";
+import { IconSparkles, IconDots, IconPencil, IconX, IconLayoutSidebarRightCollapse, IconArrowUp } from "@tabler/icons-react";
 
 // "Ask Devansh": an AI twin that answers questions about the case study, after Jahanvi's "Ask Jahanvi".
 // Hidden until GEMINI_API_KEY is set on Vercel. Add ?ask to the URL to see it anyway.
@@ -16,13 +16,13 @@ const SUGGESTIONS = [
 
 const FONT = "var(--font-manrope), system-ui, sans-serif";
 
-/* Icons: Phosphor, Fill weight (MIT), the site's one icon set. */
-const Sparkle = () => <PhSparkle size={17} weight="fill" aria-hidden />;
-const Dots = () => <DotsThree size={20} weight="fill" aria-hidden />;
-const Pencil = () => <PencilSimple size={17} weight="fill" aria-hidden />;
-const XIcon = ({ s = 16 }: { s?: number }) => <X size={s} weight="fill" aria-hidden />;
-const PanelClose = () => <SidebarSimple size={17} weight="fill" aria-hidden />;
-const ArrowUp = () => <PhArrowUp size={17} weight="fill" aria-hidden />;
+/* Icons: Tabler (MIT), outline at stroke 2, the site's one icon set. */
+const Sparkle = () => <IconSparkles size={18} stroke={2} aria-hidden />;
+const Dots = () => <IconDots size={20} stroke={2} aria-hidden />;
+const Pencil = () => <IconPencil size={17} stroke={2} aria-hidden />;
+const XIcon = ({ s = 16 }: { s?: number }) => <IconX size={s} stroke={2} aria-hidden />;
+const PanelClose = () => <IconLayoutSidebarRightCollapse size={17} stroke={2} aria-hidden />;
+const ArrowUp = () => <IconArrowUp size={17} stroke={2} aria-hidden />;
 
 export default function AskDevansh() {
   const [available, setAvailable] = useState(false);

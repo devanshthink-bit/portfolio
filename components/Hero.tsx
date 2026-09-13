@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ArrowUpRight } from "@phosphor-icons/react/ssr";
+import { IconArrowUpRight } from "@tabler/icons-react";
 
 
 export default function Hero() {
@@ -37,7 +37,7 @@ export default function Hero() {
             rel="noopener noreferrer"
           >
             Let&apos;s make it one
-            <ArrowUpRight size={14} weight="fill" aria-hidden style={{ display: "inline-block", marginLeft: 4, verticalAlign: "-2px" }} />
+            <IconArrowUpRight size={15} stroke={2} aria-hidden style={{ display: "inline-block", marginLeft: 4, verticalAlign: "-2px" }} />
           </a>
         </p>
       </div>

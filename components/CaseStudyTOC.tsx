@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { List, X } from "@phosphor-icons/react";
+import { IconMenu2, IconX } from "@tabler/icons-react";
 
 const defaultSections = [
   { id: "toc-problem",    label: "The Problem" },
@@ -274,7 +274,7 @@ function CaseStudyTOCInner({ sections = defaultSections, variant = "right" }: { 
           e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,0,0,0.18)";
         }}
       >
-        {menuOpen ? <X size={15} weight="fill" color="var(--bg)" aria-hidden /> : <List size={15} weight="fill" color="var(--bg)" aria-hidden />}
+        {menuOpen ? <IconX size={16} stroke={2} color="var(--bg)" aria-hidden /> : <IconMenu2 size={16} stroke={2} color="var(--bg)" aria-hidden />}
         <span style={{
           fontFamily: "var(--font-manrope)",
           fontSize: 13.5,

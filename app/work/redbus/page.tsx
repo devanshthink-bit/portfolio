@@ -8,7 +8,7 @@ import ProtoEmbed from "../../../components/ProtoEmbed";
 import { RED, T, SectionLabel, LabelText, Beat, Figure, Card, Chip, Numbered, Pill, MetaStrip } from "../../../components/caseStudy";
 import { PhoneRow } from "../../../components/IPhone";
 import PhoneShot from "../../../components/PhoneShot";
-import { TrendDown } from "@phosphor-icons/react/ssr";
+import { IconTrendingDown } from "@tabler/icons-react";
 
 
 export const metadata: Metadata = {
@@ -129,8 +129,8 @@ function WhyRedBus() {
         <Card key={c.h}>
           <div style={{ ...T.figure, fontSize: 26, height: 32, display: "flex", alignItems: "center" }}>
             {c.n === "↓" ? (
-              // Phosphor TrendDown, Fill weight: the site's one icon set.
-              <TrendDown size={26} weight="fill" color="#A45729" aria-label="Down" />
+              // Tabler trending-down, the site's one icon set.
+              <IconTrendingDown size={28} stroke={2} color="#A45729" aria-label="Down" />
             ) : c.n}
           </div>
           <p style={{ ...T.cardH, fontSize: 15, margin: "4px 0 6px" }}>{c.h}</p>
