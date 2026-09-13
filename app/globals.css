@@ -915,10 +915,10 @@
   }
 
   /* Case-study hero: a large phone in the middle, two smaller ones beside it, upright, centred, apart. */
-  .phone-row.hero { gap: 24px; flex-wrap: nowrap; align-items: center; padding: 8px 0 0; }
+  .phone-row.hero { gap: 22px; flex-wrap: nowrap; align-items: center; padding: 8px 0 0; }
   .phone-row.hero .phone-fig { position: relative; }
-  .phone-row.hero .phone-fig:nth-child(2) .iphone { --n: 340; }
-  .phone-row.hero .phone-fig:not(:nth-child(2)) .iphone { --n: 236; }
+  .phone-row.hero .phone-fig:nth-child(2) .iphone { --n: 296; }
+  .phone-row.hero .phone-fig:not(:nth-child(2)) .iphone { --n: 262; }
 
   .phone-fig {
     margin: 0;
