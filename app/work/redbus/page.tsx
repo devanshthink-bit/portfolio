@@ -83,7 +83,7 @@ function Stats() {
     <div className="cs-stats">
       {stats.map((s) => (
         <div key={s.n + s.l} style={{ background: "var(--bg)", padding: "20px 22px" }}>
-          <div style={{ ...T.figure, fontSize: 34, color: s.n === "0%" ? RED : "var(--text-primary)", marginBottom: 2 }}>{s.n}</div>
+          <div style={{ ...T.figure, fontSize: 26, color: s.n === "0%" ? RED : "var(--text-primary)", marginBottom: 2 }}>{s.n}</div>
           <div style={{ ...T.body, fontSize: 14, color: "var(--text-muted)" }}>{s.l}</div>
         </div>
       ))}
@@ -126,10 +126,10 @@ function WhyRedBus() {
     <div className="cs-swatches">
       {cards.map((c) => (
         <Card key={c.h}>
-          <div style={{ ...T.figure, fontSize: 30, height: 36, display: "flex", alignItems: "center" }}>
+          <div style={{ ...T.figure, fontSize: 26, height: 32, display: "flex", alignItems: "center" }}>
             {c.n === "↓" ? (
               // A drawn "going down" line (Lucide trending-down), not a typed arrow.
-              <svg width={30} height={30} viewBox="0 0 24 24" fill="none" stroke="#A45729" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-label="Down">
+              <svg width={26} height={26} viewBox="0 0 24 24" fill="none" stroke="#A45729" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-label="Down">
                 <path d="m22 17-8.5-8.5-5 5L2 7" /><path d="M16 17h6v-6" />
               </svg>
             ) : c.n}
@@ -192,7 +192,7 @@ function Merit() {
           <div style={T.eyebrow}>Idea {r.id}</div>
           <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "baseline" }}>
             <p style={T.cardH}>{r.name} {r.mine && <Chip tone="red">Mine</Chip>}</p>
-            <span style={{ ...T.figure, fontSize: 24 }}>{r.score}<span style={{ ...T.small, fontWeight: 500 }}> / 10</span></span>
+            <span style={{ ...T.figure, fontSize: 26 }}>{r.score}<span style={{ ...T.small, fontWeight: 500 }}> / 10</span></span>
           </div>
         </div>
       ))}

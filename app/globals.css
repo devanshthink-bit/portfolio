@@ -914,14 +914,14 @@
     padding: 0;
   }
 
-  /* Case-study hero: the home card's trio, larger. */
-  .phone-row.hero { gap: 0; flex-wrap: nowrap; align-items: flex-start; padding: 8px 0 64px; }
+  /* Case-study hero: a large phone in the middle, two smaller straight ones tucked behind it. */
+  .phone-row.hero { gap: 0; flex-wrap: nowrap; align-items: flex-start; padding: 8px 0 0; }
   .phone-row.hero .phone-fig { position: relative; }
-  .phone-row.hero .phone-fig:nth-child(1) { z-index: 1; transform: translate(40px, 60px) rotate(-8deg); }
+  .phone-row.hero .phone-fig:nth-child(1) { z-index: 1; transform: translate(36px, 48px); }
   .phone-row.hero .phone-fig:nth-child(2) { z-index: 2; }
-  .phone-row.hero .phone-fig:nth-child(3) { z-index: 1; transform: translate(-40px, 60px) rotate(8deg); }
-  .phone-row.hero .phone-fig:nth-child(2) .iphone { --n: 300; }
-  .phone-row.hero .phone-fig:not(:nth-child(2)) .iphone { --n: 246; }
+  .phone-row.hero .phone-fig:nth-child(3) { z-index: 1; transform: translate(-36px, 48px); }
+  .phone-row.hero .phone-fig:nth-child(2) .iphone { --n: 340; }
+  .phone-row.hero .phone-fig:not(:nth-child(2)) .iphone { --n: 236; }
 
   .phone-fig {
     margin: 0;
@@ -1028,7 +1028,7 @@
 
   .cs-act-title {
     font-family: var(--font-manrope), sans-serif;
-    font-size: 30px;
+    font-size: 26px;
     font-weight: 800;
     letter-spacing: -0.04em;
     line-height: 1.1;
