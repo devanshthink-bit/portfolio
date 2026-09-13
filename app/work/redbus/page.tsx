@@ -19,6 +19,7 @@ export const metadata: Metadata = {
 const PROTO_FULL = "https://devanshthink-bit.github.io/redbus-return-capture/?fidelity=hifi";
 // A walkthrough video. Empty until Devansh records one; the link only shows when it is set.
 const VIDEO_URL = "";
+const BOARD_URL = "https://devanshthink-bit.github.io/redbus-return-capture/artefacts.html";
 // Full-screen renders of the real builds and the live app, one phone screen each.
 const scr = (f: string) => `/images/redbus/screens/${f}.webp`;
 
@@ -392,6 +393,7 @@ export default function RedbusCaseStudy() {
       <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 24 }}>
         <Pill href="#toc-try" primary>Try the prototype ↓</Pill>
         <Pill href={PROTO_FULL} external>Open it full screen ↗</Pill>
+        <Pill href={BOARD_URL} external>See the research board ↗</Pill>
         {VIDEO_URL && <Pill href={VIDEO_URL} external>Watch the walkthrough ▶</Pill>}
       </div>
 
@@ -508,7 +510,7 @@ export default function RedbusCaseStudy() {
 
       <Beat label="The mess" title="It started as 102 sticky notes."
         sub="Eight interviews and a survey, one observation per note, nothing deleted. Sorting them gave me six clusters and one problem to solve."
-        caption="Part of the research board. Surnames hidden.">
+        caption={<>Part of the research board. <a className="inline-link" href={BOARD_URL} target="_blank" rel="noopener noreferrer">See the whole board</a>, with the jobs to be done and the brief.</>}>
         <div className="cs-artefact">
           <Figure src="/images/redbus/artefacts/board_notes.webp" w={1200} h={1060} alt="The research board: sticky notes from each interview, grouped by traveller." />
         </div>
