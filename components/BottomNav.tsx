@@ -107,6 +107,9 @@ export default function BottomNav() {
     document.documentElement.classList.toggle("nerd-mode", next);
   };
 
+  // Hidden on the RedBus case study at Devansh's request: the contents list and Ask Devansh sit there.
+  if (pathname === "/work/redbus") return null;
+
   const scrollToWork = (e: React.MouseEvent) => {
     if (pathname === "/") {
       e.preventDefault();

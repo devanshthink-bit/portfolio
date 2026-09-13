@@ -14,7 +14,7 @@ const defaultSections = [
   { id: "toc-reflection", label: "Reflection" },
 ];
 
-export default function CaseStudyTOC({ sections = defaultSections }: { sections?: typeof defaultSections }) {
+export default function CaseStudyTOC({ sections = defaultSections, variant = "right" }: { sections?: typeof defaultSections; variant?: "right" | "left" }) {
   const [active, setActive]     = useState("");
   const [isWide, setIsWide]     = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -73,6 +73,36 @@ export default function CaseStudyTOC({ sections = defaultSections }: { sections?
   const activeLabel = sections.find((s) => s.id === active)?.label ?? "Contents";
 
   if (!ready) return null;
+
+  // ── Desktop sidebar, left (Jahanvi's): under Back, plain words, a dot on the current one ──
+  if (isWide && variant === "left") {
+    return (
+      <nav aria-label="Table of contents" style={{
+        position: "fixed", left: 24, top: 150, zIndex: 50,
+        display: "flex", flexDirection: "column", gap: 2,
+      }}>
+        {sections.map(({ id, label }) => {
+          const isActive = active === id;
+          return (
+            <button key={id} onClick={() => scrollTo(id)} style={{
+              position: "relative", background: "none", border: "none", cursor: "pointer",
+              padding: "7px 0 7px 18px", textAlign: "left", whiteSpace: "nowrap",
+              fontFamily: "var(--font-manrope)", fontSize: 15, letterSpacing: "-0.01em",
+              fontWeight: isActive ? 500 : 400,
+              color: isActive ? "var(--text-primary)" : "var(--text-muted)",
+              transition: "color 0.2s ease",
+            }}>
+              {isActive && <span aria-hidden style={{
+                position: "absolute", left: 3, top: "50%", width: 5, height: 5, marginTop: -2.5,
+                borderRadius: "50%", background: "var(--text-primary)",
+              }} />}
+              {label}
+            </button>
+          );
+        })}
+      </nav>
+    );
+  }
 
   // ── Desktop sidebar ──────────────────────────────────────────────
   if (isWide) {

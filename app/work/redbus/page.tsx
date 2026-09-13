@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Caveat } from "next/font/google";
 import RubberBackButton from "../../../components/RubberBackButton";
 import RedbusTOCClient from "../../../components/RedbusTOCClient";
+import AskDevansh from "../../../components/AskDevansh";
 import ProtoEmbed from "../../../components/ProtoEmbed";
 import { RED, T, SectionLabel, Beat, Figure, Card, Chip, Numbered, Pill, MetaStrip } from "../../../components/caseStudy";
 import { PhoneShot, PhoneRow } from "../../../components/IPhone";
@@ -368,8 +369,9 @@ export default function RedbusCaseStudy() {
     <main className={caveat.variable} style={{ padding: "40px 0 96px" }}>
       <RedbusTOCClient />
       <RubberBackButton />
+      <AskDevansh />
 
-      <div style={{ marginBottom: 48 }}>
+      <div id="toc-intro" style={{ marginBottom: 48 }}>
         <PhoneRow className="hero bare" phones={[
           { src: scr("hifi_06a"), alt: "The day list with Thu 17 Sep picked and its bus open under it." },
           { src: scr("hifi_05"), alt: "The return calendar asking 'When can you travel back?', on 'I'm not sure yet'.", priority: true },

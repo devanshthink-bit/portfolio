@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 const CaseStudyTOC = dynamic(() => import("./CaseStudyTOC"), { ssr: false });
 
 const redbusSections = [
+  { id: "toc-intro",   label: "Introduction" },
   { id: "toc-problem", label: "The Problem" },
   { id: "toc-design",  label: "The Trip" },
   { id: "toc-try",     label: "Try It" },
@@ -15,5 +16,5 @@ const redbusSections = [
 ];
 
 export default function RedbusTOCClient() {
-  return <CaseStudyTOC sections={redbusSections} />;
+  return <CaseStudyTOC sections={redbusSections} variant="left" />;
 }
