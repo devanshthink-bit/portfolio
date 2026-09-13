@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 
 // The live redBus hi-fi prototype. `?test` hides the viewer's rails, so only the phone shows.
-export const PROTO_URL = "https://devanshthink-bit.github.io/redbus-return-capture/?test&fidelity=hifi";
+const PROTO_URL = "https://devanshthink-bit.github.io/redbus-return-capture/?test&fidelity=hifi";
 
 // The prototype's own screen is 402 × 874. On a narrow page the viewer drops its phone mock
 // and becomes the screen, so there we render it at that size and scale it to the column.

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Caveat } from "next/font/google";
 import RubberBackButton from "../../../components/RubberBackButton";
 import RedbusTOCClient from "../../../components/RedbusTOCClient";
-import ProtoEmbed, { PROTO_URL } from "../../../components/ProtoEmbed";
+import ProtoEmbed from "../../../components/ProtoEmbed";
 
 const caveat = Caveat({ subsets: ["latin"], variable: "--font-caveat" });
 
@@ -16,6 +16,8 @@ export const metadata: Metadata = {
 
 const RED = "#E81E38";
 const REPO_URL = "https://github.com/devanshthink-bit/redbus-return-capture";
+// The full viewer, with its screen list. The embed (ProtoEmbed) uses the same URL with ?test.
+const PROTO_FULL = "https://devanshthink-bit.github.io/redbus-return-capture/?fidelity=hifi";
 
 // ── Type scale, shared with the other case studies ───────────────────────────
 const T = {
@@ -359,7 +361,7 @@ export default function RedbusCaseStudy() {
       </p>
       <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 88 }}>
         <Pill href="#toc-try" primary>Try the prototype ↓</Pill>
-        <Pill href={PROTO_URL.replace("?test&", "?")} external>Open it full screen ↗</Pill>
+        <Pill href={PROTO_FULL} external>Open it full screen ↗</Pill>
       </div>
 
       {/* ── The problem ───────────────────────────────────────────────── */}
@@ -540,7 +542,7 @@ export default function RedbusCaseStudy() {
         label="20 · Try it"
         title="Here's the real thing. Tap through it."
         sub="This is the working hi-fi prototype: 38 screens and 13 states, built from the Figma file. Tap From, then To, then Search buses."
-        caption={<>It loads from the live link, so give it a second. Easier on a laptop, or <a className="inline-link" href={PROTO_URL.replace("?test&", "?")} target="_blank" rel="noopener noreferrer">open it full screen</a>.</>}
+        caption={<>It loads from the live link, so give it a second. Easier on a laptop, or <a className="inline-link" href={PROTO_FULL} target="_blank" rel="noopener noreferrer">open it full screen</a>.</>}
       >
         <ProtoEmbed />
       </Beat>
