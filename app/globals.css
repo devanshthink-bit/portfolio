@@ -898,6 +898,15 @@
     padding: 0;
   }
 
+  /* Case-study hero: the home card's trio, larger. */
+  .phone-row.hero { gap: 0; flex-wrap: nowrap; align-items: flex-start; padding: 8px 0 64px; }
+  .phone-row.hero .phone-fig { position: relative; }
+  .phone-row.hero .phone-fig:nth-child(1) { z-index: 1; transform: translate(40px, 60px) rotate(-8deg); }
+  .phone-row.hero .phone-fig:nth-child(2) { z-index: 2; }
+  .phone-row.hero .phone-fig:nth-child(3) { z-index: 1; transform: translate(-40px, 60px) rotate(8deg); }
+  .phone-row.hero .phone-fig:nth-child(2) .iphone { --n: 300; }
+  .phone-row.hero .phone-fig:not(:nth-child(2)) .iphone { --n: 246; }
+
   .phone-fig {
     margin: 0;
     display: flex;
@@ -1183,8 +1192,16 @@
   .work-card-panel .iphone img,
   .work-card:hover .work-card-panel .iphone img { transform: none; transition: none; }
   .work-card-phones .iphone { transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-  .work-card:hover .work-card-phones .iphone { transform: translateY(-8px); }
-  .work-card:hover .work-card-phones .iphone:nth-child(2) { transform: translateY(-12px); }
+  /* A trio: the calendar large and upright, the other two smaller, tilted and tucked behind it.
+     Hover lifts the middle phone and fans the side ones a little further. */
+  .work-card-phones { gap: 0; align-items: flex-start; }
+  .work-card-phones .iphone { position: relative; }
+  .work-card-phones .iphone:nth-child(1) { --n: 196; z-index: 1; transform: translate(28px, 58px) rotate(-8deg); }
+  .work-card-phones .iphone:nth-child(2) { --n: 236; z-index: 2; }
+  .work-card-phones .iphone:nth-child(3) { --n: 196; z-index: 1; transform: translate(-28px, 58px) rotate(8deg); }
+  .work-card:hover .work-card-phones .iphone:nth-child(1) { transform: translate(14px, 46px) rotate(-11deg); }
+  .work-card:hover .work-card-phones .iphone:nth-child(2) { transform: translateY(-10px); }
+  .work-card:hover .work-card-phones .iphone:nth-child(3) { transform: translate(-14px, 46px) rotate(11deg); }
 
   /* Warning ink, redBus's amber. Lighter on the dark theme so it keeps its contrast. */
   .cs-warn {
@@ -1460,4 +1477,11 @@
   .phone-notes.is-left, .phone-notes.is-right { justify-self: stretch; max-width: none; }
   .phone-notes.is-left .phone-note { text-align: left; }
   .phone-lines { display: none; }
+}
+
+/* Phones show only the middle screen of each trio, at a size that fits. */
+@media (max-width: 640px) {
+  .work-card-phones .iphone:nth-child(2) { --n: 190; }
+  .phone-row.hero { padding-bottom: 0; }
+  .phone-row.hero .phone-fig:nth-child(2) .iphone { --n: 272; }
 }
