@@ -78,7 +78,7 @@ function StatCounter({ value, unit, label, active, countTo, suffix, startFrom }:
     <div className="stat-item" style={{
       display: "flex", flexDirection: "column", gap: 6,
     }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 3 }}>
+      <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
         <span className="stat-value" style={{
           fontFamily: "var(--font-manrope)", fontSize: 28, fontWeight: 700,
           color: "var(--text-primary)", letterSpacing: "-0.03em",
