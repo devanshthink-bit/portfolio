@@ -214,7 +214,7 @@ export default function AskDevansh() {
         /* Push the page aside; where the contents list is fixed on the left, leave room for it too,
            so the page sits centred between the list and the panel. */
         html.ask-open body { padding-right: 420px; }
-        @media (min-width: 1360px) { html.ask-open body { padding-left: 200px; } }
+        @media (min-width: 1360px) { html.ask-open body { padding-left: 170px; } }
         body { transition: padding .32s cubic-bezier(.4,0,.2,1); }
         @media (max-width: 1099px) { html.ask-open body { padding-right: 0; } }
         @media (max-width: 640px) {
