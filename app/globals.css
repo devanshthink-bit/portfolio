@@ -71,6 +71,23 @@
     cursor: pointer !important;
   }
 
+  /* Normal pointer inside the Ask Devansh panel. It has to live in this layer: "cursor: none
+     !important" above is a layered important rule, and those beat any unlayered important override. */
+  .ask-trigger,
+  .ask-panel,
+  .ask-panel * {
+    cursor: auto !important;
+  }
+  .ask-trigger,
+  .ask-trigger *,
+  .ask-panel button,
+  .ask-panel button * {
+    cursor: pointer !important;
+  }
+  .ask-panel input {
+    cursor: text !important;
+  }
+
   /* Restore grab cursor inside physics skill buckets */
   .physics-cursor-zone,
   .physics-cursor-zone * {

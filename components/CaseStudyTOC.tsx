@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 const defaultSections = [
   { id: "toc-problem",    label: "The Problem" },
@@ -14,7 +15,7 @@ const defaultSections = [
   { id: "toc-reflection", label: "Reflection" },
 ];
 
-export default function CaseStudyTOC({ sections = defaultSections, variant = "right" }: { sections?: typeof defaultSections; variant?: "right" | "left" }) {
+function CaseStudyTOCInner({ sections = defaultSections, variant = "right" }: { sections?: typeof defaultSections; variant?: "right" | "left" }) {
   const [active, setActive]     = useState("");
   const [isWide, setIsWide]     = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -302,4 +303,12 @@ export default function CaseStudyTOC({ sections = defaultSections, variant = "ri
       </button>
     </>
   );
+}
+
+// Rendered on <body>: the page wrapper's enter animation leaves a transform, and a transformed
+// ancestor makes "position: fixed" follow the content column instead of the screen.
+export default function CaseStudyTOC(props: Parameters<typeof CaseStudyTOCInner>[0]) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  return mounted ? createPortal(<CaseStudyTOCInner {...props} />, document.body) : null;
 }

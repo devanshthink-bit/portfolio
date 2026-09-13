@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 // "Ask Devansh": an AI twin that answers questions about the case study, after Jahanvi's "Ask Jahanvi".
 // Hidden until GEMINI_API_KEY is set on Vercel. Add ?ask to the URL to see it anyway.
@@ -99,7 +100,8 @@ export default function AskDevansh() {
     alignSelf: mine ? "flex-end" : "flex-start",
   });
 
-  return (
+  // Rendered on <body>, so "fixed" is fixed to the screen, not to an animated page wrapper.
+  return createPortal(
     <>
       {!open && (
         <button className="ask-trigger" onClick={() => setOpen(true)}
@@ -209,11 +211,6 @@ export default function AskDevansh() {
         @media (prefers-reduced-motion: reduce) { .ask-dot { animation: none; opacity: .6; } }
         /* Below 1360 the contents list becomes a pill at bottom centre, so sit above it. */
         @media (max-width: 1359px) { .ask-trigger { bottom: 84px; } }
-        /* The site hides the pointer everywhere for its own cursor, and hides that cursor over the
-           panel, so bring the normal pointer back here. */
-        .ask-trigger, .ask-panel, .ask-panel * { cursor: auto !important; }
-        .ask-trigger, .ask-panel button { cursor: pointer !important; }
-        .ask-panel input { cursor: text !important; }
         /* Push the page aside; where the contents list is fixed on the left, leave room for it too,
            so the page sits centred between the list and the panel. */
         html.ask-open body { padding-right: 420px; }
@@ -226,6 +223,7 @@ export default function AskDevansh() {
           .ask-esc { display: none; }
         }
       `}</style>
-    </>
+    </>,
+    document.body,
   );
 }
