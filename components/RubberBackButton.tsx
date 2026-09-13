@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { IconArrowLeft } from "@tabler/icons-react";
 
 
 function playRubber() {
@@ -68,7 +67,10 @@ export default function RubberBackButton({ plain = true }: { plain?: boolean } =
         textTransform: plain ? "none" : "uppercase",
       }}
     >
-      <IconArrowLeft size={16} stroke={2} aria-hidden style={{ marginRight: 6 }} />
+      <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 6 }}>
+        <line x1="19" y1="12" x2="5" y2="12" />
+        <polyline points="12 19 5 12 12 5" />
+      </svg>
       Back
     </Link>
   );

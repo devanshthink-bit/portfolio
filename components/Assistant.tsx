@@ -1,6 +1,5 @@
 "use client";
 import { useState, useRef, useEffect, KeyboardEvent } from "react";
-import { IconX, IconArrowUp, IconMessageCircle } from "@tabler/icons-react";
 
 type Message = { role: "user" | "assistant"; content: string };
 
@@ -92,7 +91,9 @@ export default function Assistant() {
             onClick={() => setOpen(false)}
             style={{ background: "none", border: "none", cursor: "pointer", padding: 4, color: "var(--text-muted)", lineHeight: 1 }}
           >
-            <IconX size={14} stroke={2} aria-hidden />
+            <svg width={14} height={14} viewBox="0 0 14 14" fill="none">
+              <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round"/>
+            </svg>
           </button>
         </div>
 
@@ -180,7 +181,9 @@ export default function Assistant() {
               flexShrink: 0, transition: "background 0.15s",
             }}
           >
-            <IconArrowUp size={13} stroke={2} color={input.trim() && !loading ? "var(--bg)" : "var(--text-muted)"} aria-hidden />
+            <svg width={12} height={12} viewBox="0 0 12 12" fill="none">
+              <path d="M6 10V2M2 6l4-4 4 4" stroke={input.trim() && !loading ? "var(--bg)" : "var(--text-muted)"} strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </button>
         </div>
       </div>
@@ -207,9 +210,14 @@ export default function Assistant() {
         }}
       >
         {open ? (
-          <IconX size={16} stroke={2} color="var(--bg)" aria-hidden />
+          <svg width={16} height={16} viewBox="0 0 16 16" fill="none">
+            <path d="M2 2l12 12M14 2L2 14" stroke="var(--bg)" strokeWidth={1.8} strokeLinecap="round"/>
+          </svg>
         ) : (
-          <IconMessageCircle size={18} stroke={2} color="var(--bg)" aria-hidden />
+          <svg width={18} height={18} viewBox="0 0 18 18" fill="none">
+            <path d="M9 2a7 7 0 0 1 7 7c0 2.5-1.3 4.7-3.3 6L14 16.5l-3.5-1.1A7 7 0 1 1 9 2z" fill="var(--bg)" opacity="0.9"/>
+            <path d="M5.5 7.5h7M5.5 10.5h4.5" stroke="var(--text-primary)" strokeWidth={1.3} strokeLinecap="round"/>
+          </svg>
         )}
       </button>
 

@@ -2,7 +2,6 @@
 // Two faces only: Manrope for headings and figures, Inter for everything else. Sentence case,
 // no mono labels, no handwriting (Devansh, 14 Sep 2026: "I dont want anything which looks ai generated").
 import Image from "next/image";
-import { IconArrowUpRight, IconArrowDown, IconPlayerPlay } from "@tabler/icons-react";
 
 export const RED = "#E81E38";
 
@@ -91,11 +90,11 @@ export function Numbered({ items }: { items: React.ReactNode[] }) {
   );
 }
 
-/* Icons: Tabler (MIT), outline at stroke 2, the site's one icon set. */
+/* Lucide icons (MIT), drawn inline so every arrow has the same stroke. */
 const ICONS = {
-  external: <IconArrowUpRight size={16} stroke={2} aria-hidden />,
-  down: <IconArrowDown size={16} stroke={2} aria-hidden />,
-  play: <IconPlayerPlay size={16} stroke={2} aria-hidden />,
+  external: <path d="M7 17 17 7M8 7h9v9" />,
+  down: <><path d="M12 5v14" /><path d="m19 12-7 7-7-7" /></>,
+  play: <path d="M7 4.5v15l12-7.5z" />,
 };
 
 export function Pill({ href, children, primary, external, icon }: {
@@ -105,7 +104,11 @@ export function Pill({ href, children, primary, external, icon }: {
   return (
     <a href={href} className={`cs-pill${primary ? " is-primary" : ""}`} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
       {children}
-      {ic && ICONS[ic]}
+      {ic && (
+        <svg width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          {ICONS[ic]}
+        </svg>
+      )}
     </a>
   );
 }
