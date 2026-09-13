@@ -22,7 +22,7 @@ const recentWork = [
   },
   {
     title: "redBus · Booking the trip home",
-    desc: "Booking a return before you know the date",
+    desc: "Book the return before you know the date. Tested with 3 travellers.",
     tag: "Product Design · Concept",
     gradient: "linear-gradient(135deg, #fdf4f5 0%, #f8e6e8 60%, #f4dde0 100%)",
     tooltipBg: "#C8102E",
