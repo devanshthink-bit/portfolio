@@ -389,7 +389,7 @@ export default function RedbusCaseStudy() {
 
       <Beat label="What RedBus has" title="The fix already exists. It's a badge on a bus."
         sub="FlexiTicket lets you change your date for free. You meet it on a bus card, never when you decide about the return, and 39.1% of my survey had never heard of it or the add-on."
-        caption="The live RedBus app, August 2026.">
+        caption="The live RedBus app.">
         <PhoneShot src={scr("real_4553")} alt="The live RedBus bus list: a FlexiTicket banner, a Free date change badge on one bus, and a 10% return deal."
           notes={[
             { box: [72.6, 25.5, 27.4, 12.4], title: "FlexiTicket: free date change", sub: "a banner and a filter, on the bus list" },
