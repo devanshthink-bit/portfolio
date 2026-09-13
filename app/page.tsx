@@ -21,13 +21,21 @@ const recentWork = [
     slug: "sidedoor",
   },
   {
-    title: "redBus · Booking the trip home",
-    desc: "Book the return before you know the date. Tested with 3 travellers.",
+    title: "Booking the trip home",
+    desc: "View project",
     tag: "Product Design · Concept",
     gradient: "linear-gradient(135deg, #fdf4f5 0%, #f8e6e8 60%, #f4dde0 100%)",
-    tooltipBg: "#C8102E",
+    tooltipBg: "#1d1d1d",
     slug: "redbus",
     image: "/images/redbus/cover.webp",
+    // Jahanvi's card anatomy: brand, what I did, tags, image, title + year, one line, impact.
+    brand: "redBus",
+    brandColor: "#E81E38",
+    did: "Designed a way to book the bus home before you know the date",
+    tags: ["Travel", "B2C", "iOS App", "Concept"],
+    year: "2026",
+    blurb: "A self-initiated concept for redBus. Hold a return seat and fare without naming a day, then move it once when plans settle.",
+    impact: "Tested with 3 travellers. The two ways it failed shaped the final design.",
   },
   {
     title: "Case Study 3",
@@ -95,7 +103,12 @@ function StatCounter({ value, unit, label, active, countTo, suffix, startFrom }:
   );
 }
 
-function WorkCard({ item }: { item: { title: string; desc: string; tag: string; gradient: string; tooltipBg: string; slug: string | null; image?: string } }) {
+type Work = {
+  title: string; desc: string; tag: string; gradient: string; tooltipBg: string; slug: string | null; image?: string;
+  brand?: string; brandColor?: string; did?: string; tags?: string[]; year?: string; blurb?: string; impact?: string;
+};
+
+function WorkCard({ item }: { item: Work }) {
   const [hovered, setHovered] = useState(false);
   const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
   const [left, setLeft] = useState<number | null>(null);
@@ -120,10 +133,33 @@ function WorkCard({ item }: { item: { title: string; desc: string; tag: string; 
       onMouseMove={handleMouseMove}
       style={{ textDecoration: "none" }}
     >
-      <div className="work-card-media" style={{ background: item.gradient }}>
-        {item.image && <img src={item.image} alt="" />}
-      </div>
-      <p className="work-card-title" style={{ margin: 0 }}>{item.title}</p>
+      {item.did ? (
+        <>
+          <div className="work-card-panel" style={{ background: item.gradient }}>
+            <div className="work-card-panel-text">
+              <p className="work-card-brand" style={{ color: item.brandColor }}>{item.brand}</p>
+              <p className="work-card-did">{item.did}</p>
+              {item.tags && <p className="work-card-tags">{item.tags.join("  •  ")}</p>}
+            </div>
+            {item.image && <img src={item.image} alt="" />}
+          </div>
+          <div className="work-card-meta">
+            <p className="work-card-title work-card-title-lg">
+              {item.title}
+              {item.year && <span className="work-card-year">{item.year}</span>}
+            </p>
+            {item.blurb && <p className="work-card-blurb">{item.blurb}</p>}
+            {item.impact && <p className="work-card-impact">{item.impact}</p>}
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="work-card-media" style={{ background: item.gradient }}>
+            {item.image && <img src={item.image} alt="" />}
+          </div>
+          <p className="work-card-title" style={{ margin: 0 }}>{item.title}</p>
+        </>
+      )}
       {hovered && pos && (
         <div ref={tooltipRef} style={{
           position: "fixed",

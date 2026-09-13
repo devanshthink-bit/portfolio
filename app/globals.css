@@ -385,6 +385,112 @@
     margin: 0;
   }
 
+  /* Full work card (Jahanvi's anatomy): a tinted panel with brand, what I did and tags over
+     the screens, then title + year, one line, and an impact line. */
+  .work-card-panel {
+    width: 100%;
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .work-card-panel-text {
+    padding: 32px 40px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .work-card-brand {
+    font-family: var(--font-manrope), sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    margin: 0 0 6px 0;
+  }
+
+  .work-card-did {
+    font-family: var(--font-manrope), sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.4;
+    color: #1d1d1d;
+    margin: 0;
+  }
+
+  .work-card-tags {
+    font-size: 14px;
+    color: #4a4948;
+    letter-spacing: -0.01em;
+    margin: 0;
+    white-space: pre;
+  }
+
+  .work-card-panel img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transform: scale(1.02);
+    transform-origin: 50% 100%;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .work-card:hover .work-card-panel img {
+    transform: scale(1);
+  }
+
+  .work-card-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .work-card-title-lg {
+    font-family: var(--font-manrope), sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .work-card-year {
+    font-family: var(--font-inter), sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: var(--card-bg);
+    border-radius: 6px;
+    padding: 3px 8px;
+    letter-spacing: 0;
+  }
+
+  .work-card-blurb {
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text-muted);
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  .work-card-impact {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #B7791F;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  html.nerd-mode .work-card-impact {
+    color: #E3A47C;
+  }
+
   /* Home hero + case-study overlay — breaks out of .page-wrapper to full viewport width */
   .home-stack {
     position: relative;
@@ -645,6 +751,31 @@
 
   .work-card:hover {
     background: none;
+  }
+
+  .work-card-panel-text {
+    padding: 20px 20px 4px;
+  }
+
+  .work-card-brand {
+    font-size: 22px;
+  }
+
+  .work-card-did {
+    font-size: 15px;
+  }
+
+  .work-card-tags {
+    font-size: 13px;
+  }
+
+  .work-card-title-lg {
+    font-size: 18px;
+  }
+
+  .work-card-blurb,
+  .work-card-impact {
+    font-size: 15px;
   }
 
   .cs-meta-strip {
