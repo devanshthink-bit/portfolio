@@ -7,7 +7,7 @@ const API = "https://generativelanguage.googleapis.com/v1beta";
 // Best first, free-tier models only (Google's pricing page, 13 Sep 2026). Each failure falls to the next.
 // gemini-2.5-flash was closed to new keys that day, which is why this list exists.
 // If every one of these is retired, the route asks Google which Flash models are live and tries those.
-const MODELS = ["gemini-2.5-flash", "gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.6-flash", "gemini-3.5-flash", "gemini-3.5-flash-lite"];
+const MODELS = ["gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.6-flash", "gemini-3.5-flash", "gemini-3.5-flash-lite"];
 
 // Newest version first; at the same version, full Flash before Flash-Lite.
 const rank = (m: string) => parseFloat(m.match(/(\d+(?:\.\d+)?)/)?.[1] ?? "0") * 10 - (/lite/.test(m) ? 1 : 0);
