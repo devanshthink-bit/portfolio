@@ -6,7 +6,8 @@ import RedbusTOCClient from "../../../components/RedbusTOCClient";
 import AskDevansh from "../../../components/AskDevansh";
 import ProtoEmbed from "../../../components/ProtoEmbed";
 import { RED, T, SectionLabel, LabelText, Beat, Figure, Card, Chip, Numbered, Pill, MetaStrip } from "../../../components/caseStudy";
-import { PhoneShot, PhoneRow } from "../../../components/IPhone";
+import { PhoneRow } from "../../../components/IPhone";
+import PhoneShot from "../../../components/PhoneShot";
 
 
 export const metadata: Metadata = {
