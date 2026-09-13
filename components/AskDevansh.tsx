@@ -186,8 +186,10 @@ export default function AskDevansh() {
           background: var(--bg); font-family: ${FONT}; font-size: 16px; font-weight: 600; color: var(--text-primary); cursor: pointer; }
         .ask-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text-muted); animation: ask-bounce 1.2s ease-in-out infinite; }
         @keyframes ask-bounce { 0%, 80%, 100% { transform: translateY(0); opacity: .4; } 40% { transform: translateY(-4px); opacity: 1; } }
+        /* Below 1360 the contents list becomes a pill at bottom centre, so sit above it. */
+        @media (max-width: 1359px) { .ask-trigger { bottom: 84px; } }
         @media (max-width: 640px) {
-          .ask-trigger { right: 16px; bottom: 20px; padding: 13px 20px; font-size: 15px; }
+          .ask-trigger { right: 16px; bottom: 76px; padding: 13px 20px; font-size: 15px; }
           .ask-panel { width: 100vw; border-left: none; }
           .ask-esc { display: none; }
         }
