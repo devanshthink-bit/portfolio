@@ -6,6 +6,7 @@
   .pg-card, .pg-card * { cursor: none !important; }
 }
 
+.pg { margin-top: 96px; }
 .pg-head { display: flex; flex-direction: column; gap: 12px; margin: 4px 0 28px; }
 .pg-head h2 {
   font-family: var(--font-manrope), sans-serif; font-size: 26px; font-weight: 700;
