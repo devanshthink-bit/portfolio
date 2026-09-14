@@ -7,9 +7,9 @@ import Playground from "../components/Playground";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 const STATS = [
-  { value: "3+",    unit: "yrs", label: "Engineering experience", countTo: 3, suffix: "+",  startFrom: 1 },
-  { value: "3",     unit: "",    label: "Products shipped",  countTo: 3, suffix: "" },
-  { value: "2M+",   unit: "",    label: "Users reached",     countTo: 2, suffix: "M+", startFrom: 1 },
+  { value: "3+",    unit: "yrs", label: "engineering experience", countTo: 3, suffix: "+",  startFrom: 1 },
+  { value: "3",     unit: "",    label: "products shipped",  countTo: 3, suffix: "" },
+  { value: "2M+",   unit: "",    label: "users reached",     countTo: 2, suffix: "M+", startFrom: 1 },
   { value: "0 → 1", unit: "",    label: "& at scale",        countTo: null },
 ];
 
