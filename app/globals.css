@@ -535,7 +535,7 @@
   }
 
   /* Second case study, in progress: soft blue panel, phone outlines still being drawn. */
-  .wip-panel { background: linear-gradient(180deg, #eff2f9 0%, #dfe6f3 100%); }
+  .wip-panel { background: linear-gradient(180deg, #f7f8fb 0%, #edf0f5 100%); }
   .wip-status {
     display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
     margin: 0 0 8px; padding: 5px 11px 5px 9px; border-radius: 100px;
