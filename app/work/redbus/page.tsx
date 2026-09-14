@@ -36,9 +36,9 @@ function Act({ id, n, title, sub }: { id?: string; n: string; title: string; sub
 
 function InShort() {
   const rows = [
-    { k: "The problem", v: "The only way to keep a return on RedBus is to buy it, and buying it needs a date. 73.9% of travellers I surveyed left it for later." },
+    { k: "The problem", v: "The only way to keep a return on RedBus is to buy it, and buying it needs a date. ~74% of travellers I surveyed left it for later." },
     { k: "What I designed", v: "A return you can book without a date. Say how sure you are, pick a day from your window, and move it once if plans change." },
-    { k: "Why it matters", v: "Every return booked later is a second commission RedBus can lose. 26.1% of the travellers who waited booked it on another app." },
+    { k: "Why it matters", v: "Every return booked later is a second commission RedBus can lose. ~26% of the travellers who waited booked it on another app." },
   ];
   return (
     <div className="cs-inshort">
@@ -74,10 +74,10 @@ function TripStrip() {
 
 function Stats() {
   const stats = [
-    { n: "73.9%", l: "booked the way back later" },
+    { n: "~74%", l: "booked the way back later" },
     { n: "0%",    l: "forgot" },
-    { n: "65.2%", l: "weren't sure of the date" },
-    { n: "26.1%", l: "ended up booking on another app" },
+    { n: "~65%", l: "weren't sure of the date" },
+    { n: "~26%", l: "ended up booking on another app" },
   ];
   return (
     <div className="cs-stats">
@@ -118,7 +118,7 @@ function Knot() {
 
 function WhyRedBus() {
   const cards = [
-    { n: "26.1%", h: "booked it on another app", b: "For RedBus, waiting often means losing the return." },
+    { n: "~26%", h: "booked it on another app", b: "For RedBus, waiting often means losing the return." },
     { n: "2×", h: "commissions, one booking", b: "A return added now costs nothing extra to win." },
     { n: "↓", h: "Free Cancellation sales", b: "The risk: a movable return might replace the add-on." },
   ];
@@ -388,7 +388,7 @@ export default function RedbusCaseStudy() {
       </Beat>
 
       <Beat label="What RedBus has" title="The fix already exists. It's a badge on a bus."
-        sub="FlexiTicket lets you change your date for free. You meet it on a bus card, never when you decide about the return, and 39.1% of my survey had never heard of it or the add-on."
+        sub="FlexiTicket lets you change your date for free. You meet it on a bus card, never when you decide about the return, and ~39% of my survey had never heard of it or the add-on."
         caption="The live RedBus app.">
         <PhoneShot src={scr("real_4553")} alt="The live RedBus bus list: a FlexiTicket banner, a Free date change badge on one bus, and a 10% return deal."
           notes={[
@@ -419,7 +419,7 @@ export default function RedbusCaseStudy() {
         sub="Here's Soumya's next booking with the new flow. Every scene is a screen from the working prototype." />
 
       <Beat label="Scene 1 · Booking the way out" title="She books her bus out. Before she pays, the app asks about the return."
-        sub={<>How do you book a day you don&apos;t know? You say so. It opens on &quot;I&apos;m not sure yet&quot;, the answer 65.2% of my survey gave.</>}>
+        sub={<>How do you book a day you don&apos;t know? You say so. It opens on &quot;I&apos;m not sure yet&quot;, the answer ~65% of my survey gave.</>}>
         <PhoneShot src={scr("hifi_05")} alt="Hi-fi return calendar with 'I'm not sure yet' selected and a fare under every day."
           notes={[
             { box: [3.5, 28.3, 93, 6.6], title: "Opens on \"I'm not sure yet\"", sub: "people who know their date lose one tap" },

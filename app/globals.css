@@ -71,6 +71,15 @@
     cursor: pointer !important;
   }
 
+  /* Hand cursor on everything you can tap, site-wide. CustomCursor hides its circle over these. */
+  a, a *,
+  button, button *,
+  [role="button"], [role="button"] *,
+  summary, label[for], select,
+  input[type="checkbox"], input[type="radio"], input[type="submit"], input[type="button"] {
+    cursor: pointer !important;
+  }
+
   /* Normal pointer inside the Ask Devansh panel. It has to live in this layer: "cursor: none
      !important" above is a layered important rule, and those beat any unlayered important override. */
   .ask-trigger,

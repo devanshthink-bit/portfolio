@@ -25,11 +25,15 @@ export default function CustomCursor() {
     const onEnter  = () => { if (ref.current) ref.current.style.opacity = "1"; };
     const onHide   = () => { if (ref.current) ref.current.style.opacity = "0"; };
     const onShow   = () => { if (ref.current) ref.current.style.opacity = "1"; };
+    // Over anything tappable the native hand cursor shows (globals.css), so the circle hides.
+    const TAPPABLE = 'a, button, [role="button"], summary, label[for], select, input[type="checkbox"], input[type="radio"], input[type="submit"], input[type="button"]';
+    const tappable = (el: EventTarget | null) => el instanceof Element && !!el.closest(TAPPABLE);
     const onOverImg = (e: MouseEvent) => {
-      if ((e.target as HTMLElement).closest("img")) onHide();
+      if ((e.target as HTMLElement).closest("img") || tappable(e.target)) onHide();
     };
     const onOutImg = (e: MouseEvent) => {
-      if ((e.target as HTMLElement).closest("img")) onShow();
+      if (tappable(e.target) && !tappable(e.relatedTarget)) { onShow(); return; }
+      if ((e.target as HTMLElement).closest("img") && !tappable(e.relatedTarget)) onShow();
     };
 
     window.addEventListener("mousemove", onMove);
