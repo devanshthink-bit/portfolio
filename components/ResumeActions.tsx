@@ -1,12 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
-import { RESUME_ICON } from "./BottomNav";
-
 const PDF = "/resume/Devansh_Somvanshi_CV.pdf";
 
-// Solar Linear, same set and stroke as the dock. Download uses the dock's résumé icon.
+// Solar Linear, same set and stroke as the dock.
 const ICONS = {
-  download: RESUME_ICON,
+  download: "<path d=\"M12 3V16M12 16L16 11.625M12 16L8 11.625\"/><path d=\"M3 15C3 17.8284 3 19.2426 3.87868 20.1213C4.75736 21 6.17157 21 9 21H15C17.8284 21 19.2426 21 20.1213 20.1213C21 19.2426 21 17.8284 21 15\"/>",
   open: "<path d=\"M13 11L22 2M22 7.34375V2H16.6562\"/><path d=\"M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2\"/>",
   print: "<path d=\"M6 17.9827C4.44655 17.9359 3.51998 17.7626 2.87868 17.1213C2 16.2426 2 14.8284 2 12C2 9.17157 2 7.75736 2.87868 6.87868C3.75736 6 5.17157 6 8 6H16C18.8284 6 20.2426 6 21.1213 6.87868C22 7.75736 22 9.17157 22 12C22 14.8284 22 16.2426 21.1213 17.1213C20.48 17.7626 19.5535 17.9359 18 17.9827\"/><path d=\"M17.9827 6C17.9359 4.44655 17.7626 3.51998 17.1213 2.87868C16.2426 2 14.8284 2 12 2C9.17157 2 7.75736 2 6.87868 2.87868C6.23738 3.51998 6.06413 4.44655 6.01732 6M18 12V16C18 18.8284 18 20.2426 17.1213 21.1213C16.2426 22 14.8284 22 12 22C9.17157 22 7.75736 22 6.87868 21.1213C6 20.2426 6 18.8284 6 16V12\"/><path d=\"M19.5 12.4434C17.8729 11.7128 15.4115 11.0003 12 11.0003C8.58854 11.0003 6.12712 11.7128 4.5 12.4434\"/>",
   link: "<path d=\"M14.1625 18.4876L13.4417 19.2084C11.053 21.5971 7.18019 21.5971 4.79151 19.2084C2.40283 16.8198 2.40283 12.9469 4.79151 10.5583L5.51236 9.8374\"/><path d=\"M9.8374 14.1625L14.1625 9.8374\"/><path d=\"M9.8374 5.51236L10.5583 4.79151C12.9469 2.40283 16.8198 2.40283 19.2084 4.79151C21.5971 7.18019 21.5971 11.053 19.2084 13.4417L18.4876 14.1625\"/>",
@@ -44,13 +42,15 @@ export default function ResumeActions() {
 
   const share = () => navigator.share({ title: "Devansh Somvanshi, resume", url: pageUrl() }).catch(() => {});
 
+  // Icons only at rest; the label slides out on hover or keyboard focus.
+  const label = (t: string) => <span className="resume-btn-label">{t}</span>;
   return (
     <div className="resume-actions">
-      <a className="resume-btn is-primary" href={PDF} download="Devansh_Somvanshi_CV.pdf"><Icon name="download" />Download</a>
-      <a className="resume-btn" href={PDF} target="_blank" rel="noopener noreferrer"><Icon name="open" />Open PDF</a>
-      <button className="resume-btn" type="button" onClick={print}><Icon name="print" />Print</button>
-      <button className="resume-btn" type="button" onClick={copy}><Icon name="link" />{copied ? "Link copied" : "Copy link"}</button>
-      {canShare && <button className="resume-btn" type="button" onClick={share}><Icon name="share" />Share</button>}
+      <a className="resume-btn is-primary" href={PDF} download="Devansh_Somvanshi_CV.pdf" aria-label="Download"><Icon name="download" />{label("Download")}</a>
+      <a className="resume-btn" href={PDF} target="_blank" rel="noopener noreferrer" aria-label="Open PDF"><Icon name="open" />{label("Open PDF")}</a>
+      <button className="resume-btn" type="button" onClick={print} aria-label="Print"><Icon name="print" />{label("Print")}</button>
+      <button className="resume-btn" type="button" onClick={copy} aria-label="Copy link"><Icon name="link" />{label(copied ? "Link copied" : "Copy link")}</button>
+      {canShare && <button className="resume-btn" type="button" onClick={share} aria-label="Share"><Icon name="share" />{label("Share")}</button>}
     </div>
   );
 }
