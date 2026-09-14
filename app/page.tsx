@@ -3,6 +3,7 @@ import Hero from "../components/Hero";
 import FooterLinks from "../components/FooterLinks";
 import Link from "next/link";
 import { IPhone } from "../components/IPhone";
+import Playground from "../components/Playground";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 const STATS = [
@@ -289,6 +290,7 @@ export default function Home() {
                 <InProgressCard />
               </div>
             </section>
+            <Playground />
           </div>
         </div>
       </div>
