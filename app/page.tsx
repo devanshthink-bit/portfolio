@@ -26,7 +26,7 @@ const recentWork = [
     title: "Winning the return ticket at checkout",
     desc: "View project",
     tag: "Product Design · Concept",
-    gradient: "linear-gradient(180deg, #fdf2f4 0%, #f7e2e6 100%)",
+    gradient: "linear-gradient(180deg, #fbf7f7 0%, #f4ebec 100%)",
     tooltipBg: "#1d1d1d",
     slug: "redbus",
     phones: ["hifi_06a", "hifi_05", "hifi_16"],
