@@ -80,6 +80,11 @@
     cursor: pointer !important;
   }
 
+  /* Work cards carry their own cursor, the "View project" label, so no hand and no circle there. */
+  .work-card, .work-card * {
+    cursor: none !important;
+  }
+
   /* Normal pointer inside the Ask Devansh panel. It has to live in this layer: "cursor: none
      !important" above is a layered important rule, and those beat any unlayered important override. */
   .ask-trigger,

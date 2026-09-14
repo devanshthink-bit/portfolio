@@ -27,13 +27,15 @@ export default function CustomCursor() {
     const onShow   = () => { if (ref.current) ref.current.style.opacity = "1"; };
     // Over anything tappable the native hand cursor shows (globals.css), so the circle hides.
     const TAPPABLE = 'a, button, [role="button"], summary, label[for], select, input[type="checkbox"], input[type="radio"], input[type="submit"], input[type="button"]';
-    const tappable = (el: EventTarget | null) => el instanceof Element && !!el.closest(TAPPABLE);
+    // Work cards show their own label instead of any cursor, so the circle stays hidden anywhere inside.
+    const HIDDEN = `${TAPPABLE}, img, .work-card`;
+    const hidden = (el: EventTarget | null) => el instanceof Element && !!el.closest(HIDDEN);
     const onOverImg = (e: MouseEvent) => {
-      if ((e.target as HTMLElement).closest("img") || tappable(e.target)) onHide();
+      if (hidden(e.target)) onHide();
     };
+    // Only come back when the pointer really leaves every hidden zone, not when it moves within one.
     const onOutImg = (e: MouseEvent) => {
-      if (tappable(e.target) && !tappable(e.relatedTarget)) { onShow(); return; }
-      if ((e.target as HTMLElement).closest("img") && !tappable(e.relatedTarget)) onShow();
+      if (hidden(e.target) && !hidden(e.relatedTarget)) onShow();
     };
 
     window.addEventListener("mousemove", onMove);
