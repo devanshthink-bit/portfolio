@@ -34,7 +34,7 @@ export default function FooterLinks() {
   return (
     <div className="footer-links">
       <div className="footer-cta">
-        <h3 className="footer-heading">Let&apos;s get in touch?</h3>
+        <h3 className="footer-heading">The inbox is open.</h3>
         <span
           className="footer-email-row"
           onMouseEnter={() => window.dispatchEvent(new Event("cursor:hide"))}
