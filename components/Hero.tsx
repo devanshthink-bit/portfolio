@@ -17,7 +17,7 @@ export default function Hero() {
           priority
         />
       </div>
-      <span className="intro-role">Devansh · Designer &amp; Developer</span>
+      <span className="intro-role">Designer &amp; Developer</span>
       </div>
 
       <div className="intro-headings">

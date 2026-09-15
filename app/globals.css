@@ -1790,10 +1790,10 @@
    the photo small beside a role line, no "Designer & Developer." heading line, no craft paragraph,
    the hello as one outlined pill, three numbers on one-line labels under a thin rule. */
 .intro-top { display: contents; }
-.intro-role, .lbl-short { display: none; }
+.intro-role { display: none; }
 @media (max-width: 640px) {
   .intro-top { display: flex; align-items: center; gap: 12px; }
-  .intro-top .avatar { width: 48px; height: 48px; }
+  .intro-top .avatar { width: 64px; height: 64px; }
   .intro-role { display: block; font: 600 var(--fs-14)/1.3 var(--font-manrope), sans-serif; letter-spacing: -0.011em; color: var(--text-muted); }
   .intro-h-label, .intro-craft, .intro-hello-lead { display: none; }
   .intro { gap: 20px; }
@@ -1802,6 +1802,4 @@
   .stats-strip { border-top: 1px solid var(--border); padding-top: 20px; }
   .stat-item:nth-child(4) { display: none !important; }
   .stat-label { white-space: nowrap; }
-  .lbl-long { display: none; }
-  .lbl-short { display: inline; }
 }

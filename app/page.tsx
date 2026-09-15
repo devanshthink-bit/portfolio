@@ -7,7 +7,7 @@ import Playground from "../components/Playground";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 const STATS = [
-  { value: "3+",    unit: "yrs", label: "engineering experience", short: "in engineering", countTo: 3, suffix: "+",  startFrom: 1 },
+  { value: "3+",    unit: "yrs", label: "in engineering", countTo: 3, suffix: "+",  startFrom: 1 },
   { value: "3",     unit: "",    label: "products shipped",  countTo: 3, suffix: "" },
   { value: "2M+",   unit: "",    label: "users reached",     countTo: 2, suffix: "M+", startFrom: 1 },
   { value: "0 → 1", unit: "",    label: "& at scale",        countTo: null },
@@ -49,8 +49,8 @@ const recentWork = [
   // },
 ];
 
-function StatCounter({ value, unit, label, short, active, countTo, suffix, startFrom }: {
-  value: string; unit: string; label: string; short?: string; active: boolean;
+function StatCounter({ value, unit, label, active, countTo, suffix, startFrom }: {
+  value: string; unit: string; label: string; active: boolean;
   countTo?: number | null; suffix?: string; startFrom?: number;
 }) {
   const from = startFrom ?? 0;
@@ -99,7 +99,7 @@ function StatCounter({ value, unit, label, short, active, countTo, suffix, start
         fontFamily: "var(--font-inter)", fontSize: "var(--fs-14)", fontWeight: 400,
         letterSpacing: "-0.011em", color: "var(--text-muted)",
       }}>
-        {short ? <><span className="lbl-long">{label}</span><span className="lbl-short">{short}</span></> : label}
+        {label}
       </span>
     </div>
   );
