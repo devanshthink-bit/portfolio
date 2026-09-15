@@ -115,7 +115,7 @@ function TickerPill({ name, cat, slug, src }: { name: string; cat: Cat; slug?: s
         fontSize: 13, fontWeight: 500, letterSpacing: "-0.01em",
         color: "var(--text-secondary)", whiteSpace: "nowrap",
         userSelect: "none", cursor: "default", flexShrink: 0,
-        transition: "background 0.2s, box-shadow 0.2s",
+        transition: "background 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out)",
       }}
       onMouseEnter={e => {
         const el = e.currentTarget;

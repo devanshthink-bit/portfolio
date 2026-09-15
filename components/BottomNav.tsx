@@ -3,6 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { playDockClick } from "@/lib/dockSound";
+import { smoothScrollTo } from "@/lib/smoothScroll";
 
 /* Dock icons: Solar Linear by 480 Design (CC BY 4.0), exact shapes from @iconify-json/solar.
    Drawn at a stroke of 2 with round caps and joins, as Devansh picked on 14 Sep 2026. Dock only. */
@@ -12,7 +13,7 @@ function Solar({ body }: { body: string }) {
 // The home mark: a lowercase "ds" in Instrument Serif Italic, sized to sit with the 22px icons.
 function HomeIcon() {
   return (
-    <span aria-hidden style={{ fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic", fontSize: 26, lineHeight: 1, letterSpacing: "-0.02em", display: "block", marginTop: -2 }}>
+    <span aria-hidden style={{ fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic", fontSize: 26, lineHeight: 1, letterSpacing: "0.01em", display: "block", marginTop: -2 }}>
       ds
     </span>
   );
@@ -90,7 +91,7 @@ function DockItem({ label, hovered, pitch, onHover, children }: {
         background: "#0f1108", color: "#fff", fontSize: 13.5, fontWeight: 500,
         lineHeight: 1, padding: "8px 11px", borderRadius: 9, whiteSpace: "nowrap",
         pointerEvents: "none", opacity: hovered ? 1 : 0,
-        transition: "opacity 0.15s ease, transform 0.26s cubic-bezier(0.16, 1, 0.3, 1)",
+        transition: "opacity 0.25s var(--ease-out), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
         userSelect: "none",
       }}>
         {label}
@@ -107,7 +108,7 @@ function DockItem({ label, hovered, pitch, onHover, children }: {
           background: "rgb(23, 23, 23)",
           boxShadow: "0px 0px 0px 1px rgba(0, 0, 0, 0.04), 0px 4px 12px 0px rgba(0, 0, 0, 0.03)",
           opacity: hovered ? 1 : 0,
-          transition: "opacity 0.15s ease",
+          transition: "opacity 0.3s var(--ease-out)",
         }} />
         <span style={{ position: "relative", display: "inline-flex" }}>
           {children}
@@ -135,7 +136,7 @@ export default function BottomNav() {
     if (pathname === "/") {
       e.preventDefault();
       const el = document.getElementById("recent-work");
-      if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 40, behavior: "smooth" });
+      if (el) smoothScrollTo(el.getBoundingClientRect().top + window.scrollY - 40);
     }
   };
 

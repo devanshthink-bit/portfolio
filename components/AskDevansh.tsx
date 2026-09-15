@@ -174,12 +174,12 @@ export default function AskDevansh() {
         .ask-trigger { position: fixed; right: 28px; bottom: 28px; z-index: 1001; display: flex; align-items: center; gap: 10px;
           padding: 15px 24px; border: none; border-radius: 100px; background: #262626; color: #fff; cursor: pointer;
           font-family: ${FONT}; font-size: 16px; font-weight: 600; letter-spacing: -0.01em;
-          box-shadow: 0 8px 28px rgba(0,0,0,0.18); transition: transform .2s ease; }
+          box-shadow: 0 8px 28px rgba(0,0,0,0.18); transition: transform .35s var(--ease-out); }
         .ask-trigger:hover { transform: translateY(-2px); }
         .ask-panel { position: fixed; top: 0; right: 0; bottom: 0; z-index: 1002; width: 420px; max-width: 100vw;
           display: flex; flex-direction: column; background: var(--bg); border-left: 1px solid var(--border);
           font-family: ${FONT}; color: var(--text-primary);
-          transform: translateX(100%); transition: transform .32s cubic-bezier(.4,0,.2,1), box-shadow .32s; }
+          transform: translateX(100%); transition: transform .6s var(--ease-sheet), box-shadow .6s var(--ease-sheet); }
         .ask-panel.open { transform: none; box-shadow: -12px 0 40px rgba(0,0,0,0.06); }
         .ask-head { position: relative; display: flex; align-items: center; gap: 6px; padding: 22px 20px 22px 24px; }
         .ask-icon { display: inline-flex; background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 4px; border-radius: 6px; }
@@ -191,7 +191,7 @@ export default function AskDevansh() {
         .ask-menu button:hover { background: var(--card-bg); }
         .ask-list { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; display: flex; flex-direction: column; gap: 10px; padding: 8px 24px 16px; }
         .ask-chip { border: 1px solid var(--border); background: var(--bg); color: var(--text-primary); border-radius: 100px;
-          padding: 11px 18px; font-family: ${FONT}; font-size: 15px; font-weight: 500; cursor: pointer; transition: background .15s; }
+          padding: 11px 18px; font-family: ${FONT}; font-size: 15px; font-weight: 500; cursor: pointer; transition: background .3s var(--ease-out); }
         .ask-chip:hover { background: var(--card-bg); }
         .ask-foot { padding: 0 20px 14px; display: flex; flex-direction: column; gap: 12px; }
         .ask-note { display: flex; gap: 10px; align-items: flex-start; background: var(--card-bg); border-radius: 12px; padding: 14px 16px;
@@ -215,7 +215,7 @@ export default function AskDevansh() {
            so the page sits centred between the list and the panel. */
         html.ask-open body { padding-right: 420px; }
         @media (min-width: 1360px) { html.ask-open body { padding-left: 170px; } }
-        body { transition: padding .32s cubic-bezier(.4,0,.2,1); }
+        body { transition: padding .6s var(--ease-sheet); }
         @media (max-width: 1099px) { html.ask-open body { padding-right: 0; } }
         @media (max-width: 640px) {
           .ask-trigger { right: 16px; bottom: 76px; padding: 13px 20px; font-size: 15px; }

@@ -52,7 +52,7 @@ export default function FooterLinks() {
             onClick={copyEmail}
             aria-label="Copy email"
             title={copied ? "Copied!" : "Copy email"}
-            style={{ background: "none", border: "none", padding: 0, cursor: "pointer", color: "var(--text-muted)", display: "flex", alignItems: "center", transition: "color 0.2s" }}
+            style={{ background: "none", border: "none", padding: 0, cursor: "pointer", color: "var(--text-muted)", display: "flex", alignItems: "center", transition: "color 0.3s var(--ease-out)" }}
           >
             {copied ? <CheckIcon /> : <CopyIcon />}
           </button>

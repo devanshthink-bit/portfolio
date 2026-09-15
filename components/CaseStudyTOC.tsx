@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { smoothScrollTo } from "@/lib/smoothScroll";
 
 const defaultSections = [
   { id: "toc-problem",    label: "The Problem" },
@@ -67,7 +68,7 @@ function CaseStudyTOCInner({ sections = defaultSections, variant = "right" }: { 
       const el = document.getElementById(id);
       if (!el) return;
       const top = el.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+      smoothScrollTo(Math.max(0, top));
     }, 80);
   };
 
@@ -91,7 +92,7 @@ function CaseStudyTOCInner({ sections = defaultSections, variant = "right" }: { 
               fontFamily: "var(--font-manrope)", fontSize: 15, letterSpacing: "-0.01em",
               fontWeight: isActive ? 500 : 400,
               color: isActive ? "var(--text-primary)" : "var(--text-muted)",
-              transition: "color 0.2s ease",
+              transition: "color 0.3s var(--ease-out)",
             }}>
               {isActive && <span aria-hidden style={{
                 position: "absolute", left: 3, top: "50%", width: 5, height: 5, marginTop: -2.5,
@@ -144,7 +145,7 @@ function CaseStudyTOCInner({ sections = defaultSections, variant = "right" }: { 
                 color: isActive ? "var(--text-primary)" : "var(--text-muted)",
                 fontWeight: isActive ? 600 : 400,
                 opacity: 1,
-                transition: "color 0.2s ease, opacity 0.2s ease",
+                transition: "color 0.3s var(--ease-out), opacity 0.3s var(--ease-out)",
                 whiteSpace: "nowrap",
                 display: "block",
               }}>
@@ -161,19 +162,21 @@ function CaseStudyTOCInner({ sections = defaultSections, variant = "right" }: { 
   return (
     <>
       {/* Backdrop */}
-      {menuOpen && (
-        <div
-          onClick={() => setMenuOpen(false)}
-          style={{
-            position: "fixed",
-            inset: 0,
-            zIndex: 48,
-            background: "rgba(0,0,0,0.3)",
-            backdropFilter: "blur(2px)",
-            WebkitBackdropFilter: "blur(2px)",
-          }}
-        />
-      )}
+      {/* Always rendered so it can fade, instead of popping in */}
+      <div
+        onClick={() => setMenuOpen(false)}
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 48,
+          background: "rgba(0,0,0,0.3)",
+          backdropFilter: "blur(2px)",
+          WebkitBackdropFilter: "blur(2px)",
+          opacity: menuOpen ? 1 : 0,
+          pointerEvents: menuOpen ? "auto" : "none",
+          transition: "opacity 0.5s var(--ease-out)",
+        }}
+      />
 
       {/* Bottom sheet */}
       <div
@@ -188,7 +191,7 @@ function CaseStudyTOCInner({ sections = defaultSections, variant = "right" }: { 
           borderRadius: "16px 16px 0 0",
           padding: "12px 0 40px 0",
           transform: menuOpen ? "translateY(0)" : "translateY(110%)",
-          transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+          transition: "transform 0.6s var(--ease-sheet)",
           maxHeight: "75vh",
           overflowY: "auto",
         }}
@@ -262,7 +265,7 @@ function CaseStudyTOCInner({ sections = defaultSections, variant = "right" }: { 
           borderRadius: 100,
           cursor: "pointer",
           boxShadow: "0 4px 20px rgba(0,0,0,0.18)",
-          transition: "transform 0.15s ease, box-shadow 0.15s ease",
+          transition: "transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out)",
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = "translateX(-50%) scale(1.04)";
@@ -282,7 +285,7 @@ function CaseStudyTOCInner({ sections = defaultSections, variant = "right" }: { 
               height: 1.5,
               borderRadius: 2,
               background: "var(--bg)",
-              transition: "width 0.2s ease",
+              transition: "width 0.5s var(--ease-out)",
               transform: menuOpen ? (i === 0 ? "rotate(45deg) translate(3px, 3px)" : i === 2 ? "rotate(-45deg) translate(3px, -3px)" : "none") : "none",
             }} />
           ))}

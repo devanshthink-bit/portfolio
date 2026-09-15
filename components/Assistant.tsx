@@ -77,7 +77,7 @@ export default function Assistant() {
           maxHeight: open ? 480 : 0,
           opacity: open ? 1 : 0,
           pointerEvents: open ? "auto" : "none",
-          transition: "max-height 0.28s cubic-bezier(0.4,0,0.2,1), opacity 0.2s ease",
+          transition: "max-height 0.55s var(--ease-sheet), opacity 0.4s var(--ease-out)",
         }}
       >
         {/* Header */}
@@ -111,7 +111,7 @@ export default function Assistant() {
                     background: "var(--card-bg)", border: "none", cursor: "pointer",
                     fontSize: 12, color: "var(--text-primary)", fontWeight: 500,
                     letterSpacing: "-0.01em", lineHeight: 1.4,
-                    transition: "background 0.15s",
+                    transition: "background 0.3s var(--ease-out)",
                   }}
                   onMouseEnter={e => (e.currentTarget.style.background = "rgba(128,128,128,0.15)")}
                   onMouseLeave={e => (e.currentTarget.style.background = "var(--card-bg)")}
@@ -178,7 +178,7 @@ export default function Assistant() {
               background: input.trim() && !loading ? "var(--text-primary)" : "var(--card-bg)",
               cursor: input.trim() && !loading ? "pointer" : "default",
               display: "flex", alignItems: "center", justifyContent: "center",
-              flexShrink: 0, transition: "background 0.15s",
+              flexShrink: 0, transition: "background 0.3s var(--ease-out)",
             }}
           >
             <svg width={12} height={12} viewBox="0 0 12 12" fill="none">
@@ -198,7 +198,7 @@ export default function Assistant() {
           border: "none", cursor: "pointer",
           display: "flex", alignItems: "center", justifyContent: "center",
           boxShadow: "0 4px 20px rgba(0,0,0,0.18)",
-          transition: "transform 0.2s ease, box-shadow 0.2s ease",
+          transition: "transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out)",
         }}
         onMouseEnter={e => {
           e.currentTarget.style.transform = "scale(1.06)";

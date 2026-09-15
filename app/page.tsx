@@ -82,7 +82,7 @@ function StatCounter({ value, unit, label, active, countTo, suffix, startFrom }:
           fontFamily: "var(--font-manrope)", fontSize: 28, fontWeight: 700,
           color: "var(--text-primary)", letterSpacing: "-0.03em",
           opacity: active ? 1 : 0, transform: active ? "none" : "translateY(8px)",
-          transition: "opacity 0.5s ease, transform 0.5s ease",
+          transition: "opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out)",
         }}>
           {displayValue}
         </span>
