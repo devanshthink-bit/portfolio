@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { playDockClick } from "@/lib/dockSound";
@@ -17,6 +17,42 @@ export const RESUME_ICON = "<g fill=\"none\" stroke=\"currentColor\"><path d=\"M
 function ResumeIcon() { return <Solar body={RESUME_ICON} />; }
 function SunIcon() { return <Solar body={"<g fill=\"none\" stroke=\"currentColor\"><circle cx=\"12\" cy=\"12\" r=\"5\"/><path stroke-linecap=\"round\" d=\"M12 2V4\"/><path stroke-linecap=\"round\" d=\"M12 20V22\"/><path stroke-linecap=\"round\" d=\"M4 12L2 12\"/><path stroke-linecap=\"round\" d=\"M22 12L20 12\"/><path stroke-linecap=\"round\" d=\"M19.7778 4.22266L17.5558 6.25424\"/><path stroke-linecap=\"round\" d=\"M4.22217 4.22266L6.44418 6.25424\"/><path stroke-linecap=\"round\" d=\"M6.44434 17.5557L4.22211 19.7779\"/><path stroke-linecap=\"round\" d=\"M19.7778 19.7773L17.5558 17.5551\"/></g>"} />; }
 function MoonIcon() { return <Solar body={"<path fill=\"none\" stroke=\"currentColor\" stroke-linejoin=\"round\" d=\"M12 22C17.5228 22 22 17.5228 22 12C22 11.5373 21.3065 11.4608 21.0672 11.8568C19.9289 13.7406 17.8615 15 15.5 15C11.9101 15 9 12.0899 9 8.5C9 6.13845 10.2594 4.07105 12.1432 2.93276C12.5392 2.69347 12.4627 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z\"/>"} />; }
+
+/* The dock's outline: a 24px radius at Figma's 100% corner smoothing, straight edges.
+   Same maths as figma-squircle (MIT), drawn to the dock's measured size. */
+function squirclePath(w: number, h: number, radius = 24, smoothing = 1) {
+  const budget = Math.min(w, h) / 2;
+  const R = Math.min(radius, budget);
+  const rad = (deg: number) => (deg * Math.PI) / 180;
+  let p = (1 + smoothing) * R;
+  const arcMeasure = 90 * (1 - smoothing);
+  const arc = Math.sin(rad(arcMeasure / 2)) * R * Math.SQRT2;
+  const alpha = (90 - arcMeasure) / 2;
+  const p3ToP4 = R * Math.tan(rad(alpha / 2));
+  const beta = 45 * smoothing;
+  const c = p3ToP4 * Math.cos(rad(beta));
+  const d = c * Math.tan(rad(beta));
+  let b = (p - arc - c - d) / 3;
+  let a = 2 * b;
+  if (p > budget) {
+    const room = budget - d - arc - c;
+    b = Math.min(b, room - room / 6);
+    a = room - b;
+    p = budget;
+  }
+  const ab = a + b, abc = a + b + c, bc = b + c;
+  return [
+    `M${w - p},0`,
+    `c${a},0 ${ab},0 ${abc},${d}`, `a${R},${R} 0 0 1 ${arc},${arc}`, `c${d},${c} ${d},${bc} ${d},${abc}`,
+    `L${w},${h - p}`,
+    `c0,${a} 0,${ab} ${-d},${abc}`, `a${R},${R} 0 0 1 ${-arc},${arc}`, `c${-c},${d} ${-bc},${d} ${-abc},${d}`,
+    `L${p},${h}`,
+    `c${-a},0 ${-ab},0 ${-abc},${-d}`, `a${R},${R} 0 0 1 ${-arc},${-arc}`, `c${-d},${-c} ${-d},${-bc} ${-d},${-abc}`,
+    `L0,${p}`,
+    `c0,${-a} 0,${-ab} ${d},${-abc}`, `a${R},${R} 0 0 1 ${arc},${-arc}`, `c${c},${-d} ${bc},${-d} ${abc},${-d}`,
+    "Z",
+  ].join(" ");
+}
 
 function DockItem({ label, hovered, pitch, onHover, children }: {
   label: string; hovered: boolean; pitch: number; onHover: (v: boolean) => void; children: React.ReactNode;
@@ -69,6 +105,16 @@ export default function BottomNav() {
   const pathname = usePathname();
   const [isDark, setIsDark] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
+  const navRef = useRef<HTMLElement>(null);
+  const [size, setSize] = useState({ w: 0, h: 0 });
+
+  useLayoutEffect(() => {
+    const el = navRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => setSize({ w: el.offsetWidth, h: el.offsetHeight }));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [pathname]);
 
   const toggleTheme = () => {
     const next = !isDark;
@@ -89,15 +135,23 @@ export default function BottomNav() {
 
   return (
     <nav
+      ref={navRef}
       className="bottom-dock"
       onMouseEnter={() => window.dispatchEvent(new Event("cursor:hide"))}
       onMouseLeave={() => { window.dispatchEvent(new Event("cursor:show")); setHovered(null); }}
       style={{
         position: "fixed", bottom: 24, left: "50%", transform: "translateX(-50%)",
         zIndex: 1000, display: "flex", gap: 16, alignItems: "center",
-        background: "#2e2e2e", padding: "18px 24px", borderRadius: 100,
+        // Until the outline is measured, a plain rounded background stands in.
+        background: size.w ? "transparent" : "#2e2e2e", padding: "18px 24px", borderRadius: 24,
       }}
     >
+      {size.w > 0 && (
+        <svg aria-hidden width={size.w} height={size.h} viewBox={`0 0 ${size.w} ${size.h}`}
+          style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: -1 }}>
+          <path d={squirclePath(size.w, size.h)} fill="#2e2e2e" />
+        </svg>
+      )}
       <Link href="/" aria-label="Home" style={{ display: "inline-flex" }}>
         <DockItem label="Home" pitch={1} hovered={hovered === "home"} onHover={v => setHovered(v ? "home" : null)}><HomeIcon /></DockItem>
       </Link>
