@@ -147,13 +147,20 @@ export default function BottomNav() {
   useEffect(() => {
     let last = window.scrollY;
     let settle: ReturnType<typeof setTimeout> | undefined;
+    let prevY = window.scrollY;
     const onScroll = () => {
       const y = window.scrollY;
-      // Web: the dock shrinks while the page moves and settles back once it has stopped.
+      // Web: the dock folds while the page moves and unfolds once it has stopped. The smooth scroll
+      // eases out over a long tail of tiny steps; those don't count, so nobody waits on the tail
+      // (Devansh, 15 Sep: "I don't want users to wait for it").
       if (window.innerWidth > 640) {
-        setScrolling(true);
-        clearTimeout(settle);
-        settle = setTimeout(() => setScrolling(false), 200);
+        const dy = Math.abs(y - prevY);
+        prevY = y;
+        if (dy > 2) {
+          setScrolling(true);
+          clearTimeout(settle);
+          settle = setTimeout(() => setScrolling(false), 120);
+        }
       }
       if (window.innerWidth > 640 || y < 80) { setHidden(false); last = y; return; }
       if (Math.abs(y - last) < 8) return;
