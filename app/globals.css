@@ -1803,7 +1803,8 @@
     border-top: 1px solid var(--border); padding-top: 16px;
     font-size: var(--fs-14); letter-spacing: -0.011em; color: var(--text-muted); }
   .stats-line b { font: 700 var(--fs-16)/1 var(--font-manrope), sans-serif; letter-spacing: -0.02em; color: var(--text-primary); margin-right: 4px; }
-  .stats-line i { font-style: normal; opacity: 0.45; }
+  /* Thin rules between the three, the case study kicker's separator (Devansh, 15 Sep: not a dot). */
+  .stats-line i { align-self: center; width: 1px; height: 0.95em; background: currentColor; opacity: 0.45; }
 }
 
 /* Phones have no lines from note to box, so each dashed box carries its note's number
