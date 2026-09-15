@@ -1793,15 +1793,14 @@
     box-shadow: 0 0 0 2px #fff; }
 }
 
-/* Hero numbers on phones: one line, split by thin rules like the case study kicker (Devansh, 15 Sep:
-   "not a dot"). The web keeps its four counting numbers ("in the web, revert these changes"). */
+/* Hero numbers on phones: one line, spread edge to edge, no separators (Devansh, 15 Sep).
+   The web keeps its four counting numbers ("in the web, revert these changes"). */
 .stats-line { display: none; }
 @media (max-width: 640px) {
 .stats-line { display: flex; justify-content: space-between; align-items: baseline; white-space: nowrap; margin: 0;
   border-top: 1px solid var(--border); padding-top: 16px;
   font-size: var(--fs-14); letter-spacing: -0.011em; color: var(--text-muted); }
-.stats-line b { font: 700 20px/1 var(--font-manrope), sans-serif; letter-spacing: -0.02em; color: var(--text-primary); margin-right: 5px; }   /* 20px on phones too (Devansh, 15 Sep) */
-.stats-line i { align-self: center; width: 1px; height: 0.95em; background: currentColor; opacity: 0.45; }
+.stats-line b { font: 700 18px/1 var(--font-manrope), sans-serif; letter-spacing: -0.02em; color: var(--text-primary); margin-right: 5px; }
 }
 
 /* Web: while the page scrolls the dock folds into a short thick bar near the bottom edge, like the
