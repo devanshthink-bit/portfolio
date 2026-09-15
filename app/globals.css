@@ -347,13 +347,15 @@
     scroll-margin-top: 48px;
   }
 
-  /* Section names are quiet sentence-case words in the heading face, not mono capitals. */
+  /* Section names are quiet capitals in the heading face, not mono (Devansh, 15 Sep: "make these
+     headings in portfolio in capital"). */
   .section-title {
     font-family: var(--font-manrope), sans-serif;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 600;
     color: var(--text-muted);
-    letter-spacing: -0.015em;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
     margin: 0 0 12px 0;
   }
 
@@ -1049,10 +1051,28 @@
     align-items: center;
     gap: 28px;
     overflow: hidden;
-    background:
-      radial-gradient(circle 520px at 50% 58%, rgba(214, 22, 48, 0.92) 0%, rgba(232, 30, 56, 0.78) 22%, rgba(236, 76, 96, 0.5) 45%, rgba(243, 132, 146, 0.18) 70%, rgba(251, 190, 198, 0) 100%),
-      #fdf1f3;
+    isolation: isolate;
+    /* Matched to the RedBus presentation (Devansh, 15 Sep: "exactly like in presentation"): its
+       ground, its twelve stops, its 60% strength, and its radius for the phone's size. There the
+       radius is 0.80 of the window and the phone 0.85 of it, so 0.94 of the phone's height.
+       --gy is the phone's centre, measured up from the bottom: padding + half the phone. */
+    --gr: 710px;
+    --gy: calc(100% - 449px);
+    background: linear-gradient(180deg, #ffffff 0%, #fbf6f6 40%, #f8efef 100%);
   }
+  .cs-proto-stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.6;
+    background: radial-gradient(in oklab circle var(--gr) at 50% var(--gy),
+      rgba(214,22,48,.96) 0%, rgba(224,26,53,.94) 12%, rgba(232,30,56,.90) 24%, rgba(233,40,64,.80) 34%,
+      rgba(234,56,78,.66) 44%, rgba(236,76,96,.50) 54%, rgba(238,96,114,.35) 63%, rgba(240,114,130,.23) 71%,
+      rgba(243,132,146,.13) 79%, rgba(246,150,162,.07) 86%, rgba(249,170,180,.025) 93%, rgba(251,190,198,0) 100%);
+  }
+  html.nerd-mode .cs-proto-stage::before { display: none; }
 
   html.nerd-mode .cs-proto-stage {
     background:
@@ -1470,6 +1490,8 @@
 
   .cs-proto-stage {
     padding: 48px 8px 56px;
+    --gr: 592px;
+    --gy: calc(100% - 371px);
   }
 
   .cs-proto-stage .iphone { --n: 300; }
