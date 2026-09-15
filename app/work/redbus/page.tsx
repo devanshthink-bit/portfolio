@@ -5,7 +5,7 @@ import RubberBackButton from "../../../components/RubberBackButton";
 import RedbusTOCClient from "../../../components/RedbusTOCClient";
 import AskDevansh from "../../../components/AskDevansh";
 import ProtoEmbed from "../../../components/ProtoEmbed";
-import { RED, T, SectionLabel, LabelText, Beat, Figure, Chip, Numbered, Pill, MetaStrip } from "../../../components/caseStudy";
+import { RED, T, SectionLabel, LabelText, Beat, Figure, Card, Chip, Numbered, Pill, MetaStrip } from "../../../components/caseStudy";
 import { PhoneRow } from "../../../components/IPhone";
 import PhoneShot from "../../../components/PhoneShot";
 
@@ -53,61 +53,38 @@ function InShort() {
 }
 
 // ── Visuals built in code ────────────────────────────────────────────────────
-// Each kind of evidence gets its own form, taken from the thing it describes: tickets for trips,
-// one dot per surveyed traveller, fine print for rules, stamps for verdicts, tracked changes for
-// rewrites. Styles live in globals.css under "Evidence".
-
-// A drawn route line between two places, instead of a typed arrow.
-function Route({ from, to }: { from: string; to: string }) {
-  return (
-    <p className="cs-ticket-route">
-      <span>{from}</span>
-      <svg className="cs-route-line" viewBox="0 0 40 12" aria-hidden><path d="M1 6h34" /><path d="m31 2 4 4-4 4" /></svg>
-      <span>{to}</span>
-    </p>
-  );
-}
-
 function TripStrip() {
   return (
-    <div className="cs-tickets">
-      <div className="cs-ticket">
-        <div className="cs-ticket-body">
-          <p className="cs-ticket-k">The way out</p>
-          <Route from="Delhi" to="Nainital" />
-          <p className="cs-ticket-meta">Thu, 10 Sep · 23:55 · Seat U4</p>
-        </div>
-        <div className="cs-ticket-stub"><span className="cs-stamp cs-stamp-green">Booked</span></div>
-      </div>
-      <div className="cs-ticket is-ghost">
-        <div className="cs-ticket-body">
-          <p className="cs-ticket-k">The way home</p>
-          <Route from="Nainital" to="Delhi" />
-          <p className="cs-ticket-meta">Some day next week. Maybe.</p>
-        </div>
-        <div className="cs-ticket-stub"><span className="cs-stamp cs-stamp-grey">Not booked</span></div>
+    <div className="cs-grid-2">
+      <Card>
+        <p style={T.eyebrow}>The way out</p>
+        <p style={{ ...T.cardH, fontSize: 20, margin: "8px 0 2px" }}>Delhi → Nainital</p>
+        <p style={{ ...T.body, marginBottom: 14 }}>Thu, 10 Sep · 23:55 · Seat U4</p>
+        <Chip tone="green">Booked</Chip>
+      </Card>
+      <div style={{ borderRadius: 10, padding: "18px 20px", border: "1.5px dashed var(--cs-stat-gap)" }}>
+        <p style={T.eyebrow}>The way home</p>
+        <p style={{ ...T.cardH, fontSize: 20, margin: "8px 0 2px" }}>Nainital → Delhi</p>
+        <p style={{ ...T.body, marginBottom: 14 }}>Some day next week. Maybe.</p>
+        <Chip tone="grey">Not booked</Chip>
       </div>
     </div>
   );
 }
 
 function Stats() {
-  // k is how many of the 23 round-trip travellers each figure is: one dot per person.
   const stats = [
-    { n: "~74%", l: "booked the way back later", k: 17 },
-    { n: "0%",    l: "forgot", k: 0 },
-    { n: "~65%", l: "weren't sure of the date", k: 15 },
-    { n: "~26%", l: "ended up booking on another app", k: 6 },
+    { n: "~74%", l: "booked the way back later" },
+    { n: "0%",    l: "forgot" },
+    { n: "~65%", l: "weren't sure of the date" },
+    { n: "~26%", l: "ended up booking on another app" },
   ];
   return (
-    <div className="cs-dots">
+    <div className="cs-stats">
       {stats.map((s) => (
-        <div key={s.n + s.l} className={s.k === 0 ? "cs-dots-item is-zero" : "cs-dots-item"}>
-          <div className="cs-dots-n">{s.n}</div>
-          <div className="cs-dots-l">{s.l}</div>
-          <div className="cs-dots-row" aria-hidden>
-            {Array.from({ length: 23 }, (_, i) => <i key={i} className={i < s.k ? "on" : undefined} />)}
-          </div>
+        <div key={s.n + s.l} style={{ background: "var(--bg)", padding: "20px 22px" }}>
+          <div style={{ ...T.figure, fontSize: 26, color: s.n === "0%" ? RED : "var(--text-primary)", marginBottom: 2 }}>{s.n}</div>
+          <div style={{ ...T.body, fontSize: 14, color: "var(--text-muted)" }}>{s.l}</div>
         </div>
       ))}
     </div>
@@ -121,25 +98,20 @@ function Knot() {
     { h: "Free Cancellation", sub: "₹60 per passenger", rules: ["Cancel for a full refund", "Up to 6 hours before"] },
   ];
   return (
-    <div className="cs-knot">
-      <div className="cs-knot-cols">
+    <div>
+      <div className="cs-grid-2">
         {cols.map((c) => (
-          <div key={c.h}>
-            <p className="cs-knot-h">{c.h}</p>
-            <p className="cs-knot-sub">{c.sub}</p>
-            <ul className="cs-knot-rules">{c.rules.map((r) => <li key={r}>{r}</li>)}</ul>
-          </div>
+          <Card key={c.h}>
+            <p style={T.cardH}>{c.h}</p>
+            <p style={{ ...T.small, margin: "2px 0 12px" }}>{c.sub}</p>
+            <ul className="cs-list">{c.rules.map((r) => <li key={r}>{r}</li>)}</ul>
+          </Card>
         ))}
       </div>
-      <div className="cs-knot-tie">
-        {/* the two products' threads, pulled into one knot */}
-        <svg viewBox="0 0 100 44" preserveAspectRatio="none" aria-hidden>
-          <path d="M25 0C25 30 50 14 50 44" vectorEffect="non-scaling-stroke" />
-          <path d="M75 0C75 30 50 14 50 44" vectorEffect="non-scaling-stroke" />
-        </svg>
-        <p className="cs-knot-warn"><mark>Change the date, and the ticket can never be cancelled.</mark></p>
-        <p className="cs-knot-note">The Free Cancellation you paid for is gone too. RedBus&apos;s own help page says so.</p>
-      </div>
+      <Card warn style={{ marginTop: 12 }}>
+        <p style={{ ...T.cardH, color: "#A45729" }}>Change the date, and the ticket can never be cancelled.</p>
+        <p style={{ ...T.body, marginTop: 4 }}>The Free Cancellation you paid for is gone too. RedBus&apos;s own help page says so.</p>
+      </Card>
     </div>
   );
 }
@@ -151,22 +123,20 @@ function WhyRedBus() {
     { n: "↓", h: "Free Cancellation sales", b: "The risk: a movable return might replace the add-on." },
   ];
   return (
-    <div className="cs-ledger">
+    <div className="cs-swatches">
       {cards.map((c) => (
-        <div key={c.h} className="cs-ledger-row">
-          <div className="cs-ledger-n">
+        <Card key={c.h}>
+          <div style={{ ...T.figure, fontSize: 26, height: 32, display: "flex", alignItems: "center" }}>
             {c.n === "↓" ? (
               // A drawn "going down" line (Lucide trending-down), not a typed arrow.
-              <svg viewBox="0 0 24 24" fill="none" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-label="Down">
+              <svg width={26} height={26} viewBox="0 0 24 24" fill="none" stroke="#A45729" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-label="Down">
                 <path d="m22 17-8.5-8.5-5 5L2 7" /><path d="M16 17h6v-6" />
               </svg>
             ) : c.n}
           </div>
-          <div>
-            <p className="cs-ledger-h">{c.h}</p>
-            <p className="cs-ledger-b">{c.b}</p>
-          </div>
-        </div>
+          <p style={{ ...T.cardH, fontSize: 15, margin: "4px 0 6px" }}>{c.h}</p>
+          <p style={{ ...T.body, fontSize: 13 }}>{c.b}</p>
+        </Card>
       ))}
     </div>
   );
@@ -181,10 +151,10 @@ function Rules() {
     "Change up to 8 hours before",
   ];
   return (
-    <div className="cs-fineprint">
-      <p className="cs-fineprint-h">FlexiTicket&apos;s rules, as they are</p>
-      <ol>{rules.map((r) => <li key={r}>{r}</li>)}</ol>
-    </div>
+    <Card warn style={{ padding: "20px 24px" }}>
+      <p style={{ ...T.eyebrow, marginBottom: 10 }}>FlexiTicket&apos;s rules, as they are</p>
+      <ul className="cs-list">{rules.map((r) => <li key={r}>{r}</li>)}</ul>
+    </Card>
   );
 }
 
@@ -199,24 +169,19 @@ function Ideas() {
     { why: "Folded into the pick", ideas: ["Show what waiting costs", "Let the app decide"] },
     { why: "Parked for next", ideas: ["Catch the moment plans settle"] },
   ];
-  // Folded and parked ideas are still alive, so only the others are struck through.
-  const alive = ["Folded into the pick", "Parked for next"];
   return (
-    <div className="cs-ideas">
-      <div className="cs-ideas-pick">
-        <p className="cs-ideas-pick-k">The one I picked</p>
-        <p className="cs-ideas-pick-h">Book the last day you can travel</p>
+    <div className="cs-idea-list">
+      <div className="cs-idea-pick">
+        <p style={{ ...T.eyebrow, color: RED, fontWeight: 600 }}>The one I picked</p>
+        <p style={{ ...T.cardH, fontSize: 19, margin: "8px 0 6px" }}>Book the last day you can travel</p>
         <p style={T.body}>It keeps the seat and the fare without a date, and moves once when plans settle.</p>
       </div>
-      <ul className="cs-ideas-rows">
+      <ul className="cs-idea-rows">
         {groups.map((g) => (
-          <li key={g.why} className={alive.includes(g.why) ? undefined : "is-dead"}>
-            <span className="cs-ideas-why">{g.why}</span>
-            <span className="cs-ideas-tally">
-              {g.ideas.map((n) => <i key={n} aria-hidden />)}
-              <b>{g.ideas.length}</b>
-            </span>
-            <span className="cs-ideas-names">{g.ideas.map((n) => <span key={n}>{n}</span>)}</span>
+          <li key={g.why}>
+            <span className="cs-idea-why">{g.why}</span>
+            <span className="cs-idea-count">{g.ideas.length}</span>
+            <span className="cs-idea-names">{g.ideas.join(" · ")}</span>
           </li>
         ))}
       </ul>
@@ -230,33 +195,31 @@ function Merit() {
     { id: "16", name: "Book the last day",             score: 7, mine: true },
   ];
   return (
-    <div className="cs-merit">
+    <div className="cs-stats" style={{ gridTemplateColumns: "1fr" }}>
       {rows.map((r) => (
-        <div key={r.id} className={r.mine ? "cs-merit-row is-mine" : "cs-merit-row"}>
-          <span className="cs-merit-id">Idea {r.id}</span>
-          <p className="cs-merit-name">{r.name} {r.mine && <Chip tone="red">Mine</Chip>}</p>
-          <span className="cs-merit-bar" aria-hidden>
-            {Array.from({ length: 10 }, (_, i) => <i key={i} className={i < r.score ? "on" : undefined} />)}
-          </span>
-          <span className="cs-merit-score">{r.score}<span> / 10</span></span>
+        <div key={r.id} className="cs-kill" style={{ background: "var(--bg)", padding: "16px 20px" }}>
+          <div style={T.eyebrow}>Idea {r.id}</div>
+          <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "baseline" }}>
+            <p style={T.cardH}>{r.name} {r.mine && <Chip tone="red">Mine</Chip>}</p>
+            <span style={{ ...T.figure, fontSize: 26 }}>{r.score}<span style={{ ...T.small, fontWeight: 500 }}> / 10</span></span>
+          </div>
         </div>
       ))}
     </div>
   );
 }
 
-// A tracked change: the old line struck out, the new one marked in.
 function BeforeAfter({ before, after, beforeLabel = "Before", afterLabel = "After" }: { before: string; after: string; beforeLabel?: string; afterLabel?: string }) {
   return (
-    <div className="cs-rev">
-      <div className="cs-rev-line">
-        <span className="cs-rev-k">{beforeLabel}</span>
-        <p><del>{before}</del></p>
-      </div>
-      <div className="cs-rev-line">
-        <span className="cs-rev-k">{afterLabel}</span>
-        <p><ins>{after}</ins></p>
-      </div>
+    <div className="cs-grid-2">
+      <Card warn>
+        <p style={{ ...T.eyebrow, marginBottom: 8 }}>{beforeLabel}</p>
+        <p style={{ ...T.cardH, textDecoration: "line-through", textDecorationColor: "var(--text-muted)" }}>{before}</p>
+      </Card>
+      <Card>
+        <p style={{ ...T.eyebrow, marginBottom: 8 }}>{afterLabel}</p>
+        <p style={T.cardH}>{after}</p>
+      </Card>
     </div>
   );
 }
@@ -271,19 +234,17 @@ function MentorQA() {
       a: "It is FlexiTicket. What changes is that you don't need a date to use it." },
   ];
   return (
-    <ol className="cs-qa">
+    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
       {qa.map((x) => (
-        <li key={x.q}>
-          <p className="cs-qa-q">&quot;{x.q}&quot;</p>
-          <div className="cs-qa-a">
-            {/* Lucide corner-down-right: the reply */}
-            <svg viewBox="0 0 24 24" aria-hidden><path d="m15 10 5 5-5 5" /><path d="M4 4v7a4 4 0 0 0 4 4h12" /></svg>
-            <p className="cs-qa-k">My answer now</p>
+        <Card key={x.q} style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr)", gap: 8 }}>
+          <p style={T.quote}>&quot;{x.q}&quot;</p>
+          <div style={{ borderTop: "1px solid var(--border)", paddingTop: 10, marginTop: 4 }}>
+            <p style={{ ...T.eyebrow, marginBottom: 3 }}>My answer now</p>
             <p style={T.body}>{x.a}</p>
           </div>
-        </li>
+        </Card>
       ))}
-    </ol>
+    </div>
   );
 }
 
@@ -294,14 +255,14 @@ function KillList() {
     { s: "Almost",  tone: "amber", rule: "Nobody reads the rules" },
   ];
   return (
-    <ul className="cs-verdicts">
+    <div className="cs-stats" style={{ gridTemplateColumns: "1fr" }}>
       {rows.map((r) => (
-        <li key={r.rule}>
-          <p className="cs-verdicts-rule">{r.rule}</p>
-          <span className={`cs-stamp cs-stamp-${r.tone}`}>{r.s}</span>
-        </li>
+        <div key={r.rule} className="cs-kill" style={{ background: "var(--bg)", padding: "16px 20px" }}>
+          <div><Chip tone={r.tone}>{r.s}</Chip></div>
+          <p style={{ ...T.cardH, fontSize: 15 }}>{r.rule}</p>
+        </div>
       ))}
-    </ul>
+    </div>
   );
 }
 
@@ -313,12 +274,12 @@ function Quotes() {
     { q: "\"in this my seat is getting confirmed right?\"", who: "Vivek again. He thought every marked day held a seat." },
   ];
   return (
-    <div className="cs-voices">
+    <div className="cs-grid-2">
       {quotes.map((x) => (
-        <figure key={x.q} className="cs-voice">
-          <blockquote>{x.q}</blockquote>
-          <figcaption>{x.who}</figcaption>
-        </figure>
+        <Card key={x.q}>
+          <p style={T.quote}>{x.q}</p>
+          <p style={{ ...T.small, marginTop: 8 }}>{x.who}</p>
+        </Card>
       ))}
     </div>
   );
@@ -332,39 +293,31 @@ function MoSCoW() {
     { h: "Won't", tone: "grey" as const, items: ["Reminders (0% forgot)", "Hide buses that can't move", "Charge for flexibility", "Return seat and stop screens"] },
   ];
   return (
-    <div className="cs-mscw">
+    <div className="cs-moscow">
       {cols.map((c) => (
-        <div key={c.h} className={`cs-mscw-col is-${c.tone}`}>
-          <p className="cs-mscw-h">{c.h}</p>
-          <ul>{c.items.map((t) => <li key={t}>{t}</li>)}</ul>
-        </div>
+        <Card key={c.h}>
+          <div style={{ marginBottom: 10 }}><Chip tone={c.tone}>{c.h}</Chip></div>
+          {c.items.map((t) => <p key={t} style={{ ...T.body, fontSize: 13, marginBottom: 8 }}>{t}</p>)}
+        </Card>
       ))}
     </div>
   );
 }
 
-// Lucide trending-up, arrow-up-from-line and trending-down: which way each number should go.
-const WATCH_ICON = {
-  Goal: <><path d="M22 7 13.5 15.5 8.5 10.5 2 17" /><path d="M16 7h6v6" /></>,
-  Limit: <><path d="m18 9-6-6-6 6" /><path d="M12 3v14" /><path d="M5 21h14" /></>,
-  Risk: <><path d="m22 17-8.5-8.5-5 5L2 7" /><path d="M16 17h6v-6" /></>,
-};
-
 function Watch() {
   const rows = [
-    { h: "Returns added before paying", b: "The number this should move", tone: "green" as const, t: "Goal" as const },
-    { h: "Outbound bookings, at least 95%", b: "Must not drop", tone: "red" as const, t: "Limit" as const },
-    { h: "Free Cancellation sales", b: "Might dip, so watch it", tone: "amber" as const, t: "Risk" as const },
+    { h: "Returns added before paying", b: "The number this should move", tone: "green" as const, t: "Goal" },
+    { h: "Outbound bookings, at least 95%", b: "Must not drop", tone: "red" as const, t: "Limit" },
+    { h: "Free Cancellation sales", b: "Might dip, so watch it", tone: "amber" as const, t: "Risk" },
   ];
   return (
-    <div className="cs-watch">
+    <div className="cs-swatches">
       {rows.map((r) => (
-        <div key={r.h} className={`cs-watch-item is-${r.tone}`}>
-          <svg viewBox="0 0 24 24" aria-hidden>{WATCH_ICON[r.t]}</svg>
-          <p className="cs-watch-t">{r.t}</p>
-          <p className="cs-watch-h">{r.h}</p>
-          <p className="cs-watch-b">{r.b}</p>
-        </div>
+        <Card key={r.h}>
+          <div style={{ marginBottom: 10 }}><Chip tone={r.tone}>{r.t}</Chip></div>
+          <p style={{ ...T.cardH, fontSize: 15 }}>{r.h}</p>
+          <p style={{ ...T.body, fontSize: 13, marginTop: 4 }}>{r.b}</p>
+        </Card>
       ))}
     </div>
   );
