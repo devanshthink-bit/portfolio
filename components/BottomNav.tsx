@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { flushSync } from "react-dom";
 import { playDockClick } from "@/lib/dockSound";
 import { smoothScrollTo } from "@/lib/smoothScroll";
 
@@ -172,10 +173,26 @@ export default function BottomNav() {
   }, []);
   useEffect(() => { setHidden(false); setMenu(false); }, [pathname]);
 
-  const toggleTheme = () => {
+  // With an origin (the phone menu's theme icon), the new theme spreads out of it as a circle until it
+  // fills the screen (Devansh, 15 Sep). Browsers without view transitions, and reduced motion, switch at once.
+  const toggleTheme = (origin?: HTMLElement) => {
     const next = !isDark;
-    setIsDark(next);
-    document.documentElement.classList.toggle("nerd-mode", next);
+    const apply = () => {
+      setIsDark(next);
+      document.documentElement.classList.toggle("nerd-mode", next);
+    };
+    const doc = document as Document & { startViewTransition?: (cb: () => void) => { ready: Promise<void> } };
+    if (!origin || !doc.startViewTransition || window.matchMedia("(prefers-reduced-motion: reduce)").matches) { apply(); return; }
+    const r = origin.getBoundingClientRect();
+    const x = r.left + r.width / 2, y = r.top + r.height / 2;
+    const end = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+    const t = doc.startViewTransition(() => flushSync(apply));
+    t.ready.then(() => {
+      document.documentElement.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
+        { duration: 700, easing: "cubic-bezier(0.22, 1, 0.36, 1)", pseudoElement: "::view-transition-new(root)" },
+      );
+    });
   };
 
   // Hidden on the RedBus case study at Devansh's request: the contents list and Ask Devansh sit there.
@@ -219,7 +236,7 @@ export default function BottomNav() {
       <Link href="/resume" aria-label="Resume" className="dock-link" style={{ display: "inline-flex" }}>
         <DockItem label="Resume" pitch={1.19} hovered={hovered === "resume"} onHover={v => setHovered(v ? "resume" : null)}><ResumeIcon /></DockItem>
       </Link>
-      <span role="button" tabIndex={0} aria-label="Theme" onClick={toggleTheme} className="dock-link"
+      <span role="button" tabIndex={0} aria-label="Theme" onClick={() => toggleTheme()} className="dock-link"
         onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleTheme(); } }}
         style={{ display: "inline-flex" }}>
         <DockItem label="Theme" pitch={1.26} hovered={hovered === "theme"} onHover={v => setHovered(v ? "theme" : null)}>
@@ -241,7 +258,7 @@ export default function BottomNav() {
         }}>Work</Link>
         <Link href="/about" tabIndex={menu ? 0 : -1} onPointerDown={() => playDockClick(1.12)} onClick={() => setMenu(false)}>About</Link>
         <Link href="/resume" tabIndex={menu ? 0 : -1} onPointerDown={() => playDockClick(1.19)} onClick={() => setMenu(false)}>Resume</Link>
-        <button tabIndex={menu ? 0 : -1} aria-label={isDark ? "Light mode" : "Dark mode"} onPointerDown={() => playDockClick(1.26)} onClick={() => { toggleTheme(); setMenu(false); }}>
+        <button tabIndex={menu ? 0 : -1} aria-label={isDark ? "Light mode" : "Dark mode"} onPointerDown={() => playDockClick(1.26)} onClick={(e) => toggleTheme(e.currentTarget)}>
           {isDark ? <SunIcon /> : <MoonIcon />}
         </button>
       </div>

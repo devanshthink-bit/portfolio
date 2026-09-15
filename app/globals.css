@@ -1842,3 +1842,7 @@
   .intro { gap: 20px; }
   .avatar { width: 80px; height: 80px; }
 }
+
+/* The theme's circular reveal (BottomNav): the browser's own cross-fade is switched off so only the
+   circle grows. */
+::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
