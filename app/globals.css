@@ -4,7 +4,7 @@
   :root {
     --bg: #fafafa;
     --text-primary: #1d1d1d;
-    --text-secondary: #4a4948;
+    --text-secondary: #403f3e;   /* a touch darker and more neutral than #4a4948, so body text reads grey, not brown, on the stone ground */
     --text-muted: #918e89;
     --border: #f1ede5;
     --card-bg: #f2f2f0;
