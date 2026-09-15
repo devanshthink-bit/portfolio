@@ -130,7 +130,7 @@ function WorkCard({ item }: { item: Work }) {
   const inner = (
     <div
       className="work-card"
-      onMouseEnter={() => { setHovered(true); window.dispatchEvent(new Event("cursor:hide")); }}
+      onMouseEnter={() => { if (!window.matchMedia("(hover: hover)").matches) return; setHovered(true); window.dispatchEvent(new Event("cursor:hide")); }}
       onMouseLeave={() => { setHovered(false); setPos(null); window.dispatchEvent(new Event("cursor:show")); }}
       onMouseMove={handleMouseMove}
       style={{ textDecoration: "none" }}
@@ -208,7 +208,7 @@ function InProgressCard() {
     <div
       className="work-card wip-card"
       aria-label="Next case study, in progress"
-      onMouseEnter={() => { setHovered(true); window.dispatchEvent(new Event("cursor:hide")); }}
+      onMouseEnter={() => { if (!window.matchMedia("(hover: hover)").matches) return; setHovered(true); window.dispatchEvent(new Event("cursor:hide")); }}
       onMouseLeave={() => { setHovered(false); setPos(null); window.dispatchEvent(new Event("cursor:show")); }}
       onMouseMove={(e) => setPos({ x: e.clientX, y: e.clientY })}
     >

@@ -72,3 +72,6 @@ html.nerd-mode .pg-bar em { background: rgba(255, 255, 255, 0.06); }
   .pg-grid { grid-template-columns: 1fr; gap: 28px; }
   .pg-head h2 { font-size: 24px; }
 }
+
+/* A tap is not a hover: no "Try it" label on touch screens. */
+@media (hover: none) { .pg-tip { display: none; } }

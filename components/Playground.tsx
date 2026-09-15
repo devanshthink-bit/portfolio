@@ -33,7 +33,7 @@ function BuildCard({ b }: { b: Build }) {
       href={b.href}
       target="_blank"
       rel="noopener noreferrer"
-      onMouseMove={(e) => setPos({ x: e.clientX, y: e.clientY })}
+      onMouseMove={(e) => { if (window.matchMedia("(hover: hover)").matches) setPos({ x: e.clientX, y: e.clientY }); }}
       onMouseLeave={() => setPos(null)}
     >
       <div className="pg-frame">
