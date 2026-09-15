@@ -19,9 +19,11 @@ export default function ResumePage() {
   return (
     <>
       <style>{`
-        .page-wrapper:has(.resume-page) { height: 100dvh; padding-bottom: 0; overflow: hidden; }
+        .page-wrapper:has(.resume-page) { height: 100dvh; padding-top: 0; padding-bottom: 0; overflow: hidden; }
         /* The résumé stays centred; the actions hang off its right edge in a column. */
-        .resume-page { display: flex; justify-content: center; }
+        /* The résumé is centred in the space above the dock (24px off the edge + 76px tall = 100px),
+           so the gap above it always equals the gap between it and the dock. */
+        .resume-page { display: flex; justify-content: center; align-items: center; height: calc(100dvh - 100px); }
         .resume-sheet { position: relative; max-width: 100%; }
         .resume-actions { position: absolute; top: 0; left: calc(100% + 16px);
           display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
@@ -38,9 +40,9 @@ export default function ResumePage() {
         .resume-btn.is-primary { background: var(--text-primary); color: var(--bg); box-shadow: none; }
         .resume-btn.is-primary:hover { opacity: 0.88; }
         .resume-btn:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 2px; }
-        /* 132px at the bottom: the dock (24px off the edge + 76px tall) and a 32px gap, so the page never touches it. */
+        /* The dock's 100px, then 32px above and 32px below the page. */
         .resume-page img { display: block; height: auto; width: auto; max-width: 100%;
-          max-height: calc(100dvh - var(--nav-h) - 24px - 132px); }
+          max-height: calc(100dvh - 100px - 64px); }
         /* An image has no links, so the PDF's link areas are laid back over it. Positions are the
            PDF's own link rects on its 794 x 1123 page, widened to take in each icon. */
         .resume-img { position: relative; }   /* the links' box is the image alone, never the action row */
@@ -60,7 +62,7 @@ export default function ResumePage() {
           .resume-sheet { display: flex; flex-direction: column; }
           .resume-actions { order: -1; position: static; flex-direction: row; justify-content: center; margin-bottom: 12px; }
           .resume-btn-label { display: none; }
-          .resume-page img { max-height: calc(100dvh - var(--nav-h) - 16px - 52px - 132px); }
+          .resume-page img { max-height: calc(100dvh - 100px - 48px - 52px); }   /* 24px above and below, 52px for the icon row */
         }
       `}</style>
       <div className="resume-page">
