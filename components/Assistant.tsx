@@ -69,7 +69,7 @@ export default function Assistant() {
           position: "fixed", bottom: 72, right: 20, zIndex: 999,
           width: 320,
           background: "var(--raised)",
-          border: "1px solid var(--border)",
+          
           borderRadius: "var(--r-lg)",
           boxShadow: "var(--shadow-float)",
           display: "flex", flexDirection: "column",

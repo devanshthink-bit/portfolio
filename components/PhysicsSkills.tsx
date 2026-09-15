@@ -134,6 +134,7 @@ function Bucket({ cat }: { cat: Cat }) {
           gap: 6px;
           padding: 0 ${padX}px;
           background: var(--tag-bg);
+          border: 1.5px solid ${color}40;
           border-radius: var(--r-sm);
           box-shadow: var(--tag-shadow);
           font-size: ${fontSize};

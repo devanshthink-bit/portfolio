@@ -18,19 +18,21 @@
        looks lifted or 3D (Devansh, 16 Sep 2026: "elegant... 3D effect is not required").
        lg: large objects on the page (résumé, photos, screens, skill buckets).
        md: cards and tiles. float: things that hover above the page (dock, pills, menus). */
-    --shadow-lg: 0 0 0 1px rgba(40,30,20,0.05), 0 1px 2px rgba(40,30,20,0.04), 0 4px 12px rgba(40,30,20,0.05), 0 12px 32px rgba(40,30,20,0.06);
-    --shadow-md: 0 0 0 1px rgba(40,30,20,0.05), 0 1px 2px rgba(40,30,20,0.04), 0 4px 12px rgba(40,30,20,0.05);
+    /* Surfaces on the page stay nearly flat: a hairline edge and a whisper of shadow, no lift
+       (Devansh: "I don't want... a different surface kept on top of a lower surface"). */
+    --shadow-lg: 0 0 0 1px rgba(40,30,20,0.05), 0 1px 2px rgba(40,30,20,0.04), 0 2px 8px rgba(40,30,20,0.03);
+    --shadow-md: 0 0 0 1px rgba(40,30,20,0.05), 0 1px 2px rgba(40,30,20,0.04);
     --shadow-float: 0 0 0 1px rgba(40,30,20,0.06), 0 2px 6px rgba(40,30,20,0.06), 0 10px 28px rgba(40,30,20,0.10);
-    --tag-shadow: var(--shadow-md);
+    --tag-shadow: 0 1px 2px rgba(0,0,0,0.07), 0 3px 7px rgba(0,0,0,0.09), 0 8px 18px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.70), inset 0 -1px 0 rgba(0,0,0,0.05);
     --icon-filter: drop-shadow(0 2px 4px rgba(0,0,0,0.22));
     /* Dark buttons and your own chat bubbles: near-black in light mode, lifted in dark mode. */
     --ink-surface: #262626;
-    /* One corner scale by size (16 Sep 2026), built around the case study cards' 12px.
-       lg: large objects (photos, résumé, panels, stages, the Work sheet). md: cards, tiles,
-       callouts, inputs. sm: chips, tags, small buttons, tooltips. Pills and circles stay round. */
-    --r-lg: 16px;
-    --r-md: 12px;
-    --r-sm: 8px;
+    /* One corner scale by size. Minimal on big surfaces (Devansh, 16 Sep 2026: "for such big
+       elements, decrease the corner radius"). lg: photos, résumé, panels, stages, the Work sheet.
+       md: cards, tiles, callouts, inputs. sm: chips, tags, small buttons, tooltips. Pills and circles stay round. */
+    --r-lg: 8px;
+    --r-md: 8px;
+    --r-sm: 6px;
     /* Raised surfaces (panels, sheets, floating pills). Same as the page in light mode, so
        light mode is unchanged; the home Work sheet keeps its own white. */
     --raised: #fafafa;
@@ -56,11 +58,11 @@
     --brand-red: #E81E38;
     --cs-callout-bg: #22211f;
     --cs-stat-gap: rgba(255, 255, 255, 0.09);
-    --tag-bg: rgba(255, 255, 255, 0.10);
-    --shadow-lg: 0 0 0 1px rgba(255,255,255,0.06), 0 1px 2px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
-    --shadow-md: 0 0 0 1px rgba(255,255,255,0.06), 0 1px 2px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.3);
+    --tag-bg: #3d3b39;   /* solid, so the bucket's watermark never shows through a tag */
+    --shadow-lg: 0 0 0 1px rgba(255,255,255,0.06), 0 1px 2px rgba(0,0,0,0.3), 0 2px 8px rgba(0,0,0,0.2);
+    --shadow-md: 0 0 0 1px rgba(255,255,255,0.06), 0 1px 2px rgba(0,0,0,0.3);
     --shadow-float: 0 0 0 1px rgba(255,255,255,0.08), 0 2px 6px rgba(0,0,0,0.35), 0 10px 28px rgba(0,0,0,0.45);
-    --tag-shadow: var(--shadow-md);
+    --tag-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 4px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(0,0,0,0.4);
     --icon-filter: drop-shadow(0 0 3px rgba(255,255,255,0.25)) brightness(1.15);
   }
 
@@ -111,6 +113,11 @@
   .footer-socials * {
     cursor: pointer !important;
   }
+
+  /* Ask Devansh panel: native cursors only; the circle never shows there. */
+  .ask-panel, .ask-panel * { cursor: default !important; }
+  .ask-panel button, .ask-panel button *, .ask-panel a, .ask-panel [role="button"] { cursor: pointer !important; }
+  .ask-panel input, .ask-panel textarea { cursor: text !important; }
 
   /* Hand cursor on everything you can tap, site-wide. CustomCursor hides its circle over these. */
   a, a *,
@@ -432,7 +439,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    border-radius: 28px;   /* the 16px panel plus this 12px padding, so the hover corners run parallel */
+    border-radius: 20px;   /* the 8px panel plus this 12px padding, so the hover corners run parallel */
     padding: 12px;
     margin-inline: -12px;
     transition: background-color 0.3s var(--ease-out);
@@ -975,6 +982,7 @@
     padding: 44px 32px;
     background: var(--cs-callout-bg);
     border-radius: var(--r-lg);
+    box-shadow: var(--shadow-lg);
   }
 
   .phone-notes {
@@ -1060,6 +1068,7 @@
     padding: 40px 24px;
     background: var(--cs-callout-bg);
     border-radius: var(--r-lg);
+    box-shadow: var(--shadow-lg);
   }
 
   .phone-row.bare {
@@ -1112,6 +1121,7 @@
   .cs-proto-stage {
     position: relative;
     border-radius: var(--r-lg);
+    box-shadow: var(--shadow-lg);
     padding: 64px 24px 72px;
     display: flex;
     flex-direction: column;

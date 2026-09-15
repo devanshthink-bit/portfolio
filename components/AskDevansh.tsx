@@ -116,7 +116,7 @@ export default function AskDevansh() {
         onMouseLeave={() => window.dispatchEvent(new Event("cursor:show"))}>
         {/* Header */}
         <div className="ask-head">
-          <span style={{ fontWeight: 600, fontSize: 16, letterSpacing: "-0.02em", flex: 1 }}>Devansh Somvanshi</span>
+          <span aria-label="Devansh Somvanshi" style={{ fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic", fontSize: 24, lineHeight: 1, letterSpacing: "0.01em", flex: 1 }}>ds.</span>
           <button className="ask-icon" aria-label="Chat options" aria-expanded={menu} onClick={() => setMenu((m) => !m)}><Dots /></button>
           <button className="ask-icon" aria-label="Close" onClick={close}><XIcon s={18} /></button>
           {menu && (
