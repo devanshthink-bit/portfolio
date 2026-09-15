@@ -1804,7 +1804,7 @@
 @media (min-width: 641px) {
   .stats-line { font-size: 15px; padding-top: 20px; }
   .stats-line i { display: none; }   /* no separators on the web (Devansh, 15 Sep); phones keep theirs */
-  .stats-line b { font-size: clamp(20px, 3vw, 28px); margin-right: 6px; }   /* back to the web's 28px; eases down on tablets so the line holds */
+  .stats-line b { font-size: clamp(20px, 2.6vw, 24px); margin-right: 6px; }   /* 24px on the web (Devansh, 15 Sep); eases down on tablets */
 }
 
 /* Web: while the page scrolls the dock folds into a short thick bar near the bottom edge, like the
