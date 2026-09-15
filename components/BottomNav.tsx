@@ -227,7 +227,7 @@ export default function BottomNav() {
         <Link href="/about" tabIndex={menu ? 0 : -1} onClick={() => setMenu(false)}><AboutIcon /> About</Link>
         <Link href="/resume" tabIndex={menu ? 0 : -1} onClick={() => setMenu(false)}><ResumeIcon /> Resume</Link>
         <button tabIndex={menu ? 0 : -1} onClick={() => { toggleTheme(); setMenu(false); }}>
-          {isDark ? <SunIcon /> : <MoonIcon />} {isDark ? "Light mode" : "Dark mode"}
+          <SunIcon /> Theme
         </button>
       </div>
     </nav>
