@@ -47,6 +47,13 @@ export default function AskDevansh({ available: onServer = false }: { available?
     if (new URLSearchParams(window.location.search).has("ask")) setAvailable(true);
   }, []);
 
+  // The contents pill carries an Ask icon below 1360px and opens the panel through this event.
+  useEffect(() => {
+    const onOpen = () => setOpen(true);
+    window.addEventListener("ask:open", onOpen);
+    return () => window.removeEventListener("ask:open", onOpen);
+  }, []);
+
   useEffect(() => {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, loading]);
@@ -217,6 +224,8 @@ export default function AskDevansh({ available: onServer = false }: { available?
         @media (prefers-reduced-motion: reduce) { .ask-dot { animation: none; opacity: .6; } }
         /* Below 1360 the contents list becomes a pill at bottom centre, so sit above it. */
         @media (max-width: 1359px) { .ask-trigger { bottom: 84px; } }
+        /* Where the contents pill carries the Ask icon, this button is not needed. */
+        html.ask-attached .ask-trigger { display: none; }
         /* Push the page aside; where the contents list is fixed on the left, leave room for it too,
            so the page sits centred between the list and the panel. */
         html.ask-open body { padding-right: 420px; }

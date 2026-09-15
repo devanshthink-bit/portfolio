@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { playDockClick } from "@/lib/dockSound";
@@ -126,6 +126,23 @@ export default function BottomNav() {
   const pathname = usePathname();
   const [isDark, setIsDark] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
+  const [hidden, setHidden] = useState(false);
+
+  // Phones: the dock sits at the top (globals.css) and slides away while you scroll down, back
+  // when you scroll up, so it never covers what you are reading.
+  useEffect(() => {
+    let last = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (window.innerWidth > 640 || y < 80) { setHidden(false); last = y; return; }
+      if (Math.abs(y - last) < 8) return;
+      setHidden(y > last);
+      last = y;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  useEffect(() => setHidden(false), [pathname]);
 
   const toggleTheme = () => {
     const next = !isDark;
@@ -146,7 +163,7 @@ export default function BottomNav() {
 
   return (
     <nav
-      className="bottom-dock"
+      className={`bottom-dock${hidden ? " is-hidden" : ""}`}
       onMouseEnter={() => window.dispatchEvent(new Event("cursor:hide"))}
       onMouseLeave={() => { window.dispatchEvent(new Event("cursor:show")); setHovered(null); }}
       style={{

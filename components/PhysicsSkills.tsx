@@ -108,7 +108,7 @@ function Bucket({ cat }: { cat: Cat }) {
       const tagH  = isMobileW ? 30 : TAG_H;
       const padX  = isMobileW ? 11 : PAD_X;
       const iconW = isMobileW ? 13 : ICON_W;
-      const fontSize = isMobileW ? "11px" : "14px";
+      const fontSize = isMobileW ? "12px" : "14px";
 
       // enableSleeping stops jitter once bodies come to rest
       engine = Engine.create({

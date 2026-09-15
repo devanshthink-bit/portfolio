@@ -12,6 +12,6 @@ const redbusSections = [
   { id: "toc-next",    label: "What's Next" },
 ];
 
-export default function RedbusTOCClient() {
-  return <CaseStudyTOC sections={redbusSections} variant="left" />;
+export default function RedbusTOCClient({ ask = false }: { ask?: boolean }) {
+  return <CaseStudyTOC sections={redbusSections} variant="left" ask={ask} />;
 }

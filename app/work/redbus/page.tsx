@@ -364,7 +364,7 @@ function Closing() {
 export default function RedbusCaseStudy() {
   return (
     <main className="cs-page" style={{ padding: "40px 0 96px" }}>
-      <RedbusTOCClient />
+      <RedbusTOCClient ask={!!process.env.GEMINI_API_KEY?.trim()} />
       <RubberBackButton plain />
       <AskDevansh available={!!process.env.GEMINI_API_KEY?.trim()} />
 

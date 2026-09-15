@@ -16,11 +16,20 @@ const defaultSections = [
   { id: "toc-reflection", label: "Reflection" },
 ];
 
-function CaseStudyTOCInner({ sections = defaultSections, variant = "right" }: { sections?: typeof defaultSections; variant?: "right" | "left" }) {
+function CaseStudyTOCInner({ sections = defaultSections, variant = "right", ask = false }: { sections?: typeof defaultSections; variant?: "right" | "left"; ask?: boolean }) {
   const [active, setActive]     = useState("");
   const [isWide, setIsWide]     = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [ready, setReady]       = useState(false);
+  const [askOn, setAskOn]       = useState(false);
+
+  // Ask Devansh rides on the pill as an icon; ?ask shows it without the key, as in AskDevansh.
+  useEffect(() => {
+    const on = ask || new URLSearchParams(window.location.search).has("ask");
+    setAskOn(on);
+    document.documentElement.classList.toggle("ask-attached", on && !isWide);
+    return () => document.documentElement.classList.remove("ask-attached");
+  }, [ask, isWide]);
 
   // Track screen width. No delay: the list is rendered on <body>, so it no longer needs to wait
   // out the page's entrance, and it fades in with the page (.fixed-enter).
@@ -245,33 +254,31 @@ function CaseStudyTOCInner({ sections = defaultSections, variant = "right" }: { 
         })}
       </div>
 
-      {/* Floating pill button */}
+      {/* Floating pill: the contents list, with Ask Devansh joined on as an icon (Devansh, 15 Sep) */}
+      <div style={{
+        position: "fixed",
+        bottom: 24,
+        left: "50%",
+        transform: "translateX(-50%)",
+        zIndex: 50,
+        display: "flex",
+        alignItems: "center",
+        height: 44,
+        background: "var(--text-primary)",
+        borderRadius: 100,
+        boxShadow: "var(--shadow-float)",
+      }}>
       <button
         onClick={() => setMenuOpen((o) => !o)}
         style={{
-          position: "fixed",
-          bottom: 24,
-          left: "50%",
-          transform: "translateX(-50%)",
-          zIndex: 50,
           display: "flex",
           alignItems: "center",
           gap: 8,
-          padding: "11px 18px",
-          background: "var(--text-primary)",
+          height: "100%",
+          padding: askOn ? "0 14px 0 18px" : "0 18px",
+          background: "none",
           border: "none",
-          borderRadius: 100,
           cursor: "pointer",
-          boxShadow: "var(--shadow-float)",
-          transition: "transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out)",
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = "translateX(-50%) scale(1.04)";
-          e.currentTarget.style.boxShadow = "var(--shadow-lg)";
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = "translateX(-50%) scale(1)";
-          e.currentTarget.style.boxShadow = "var(--shadow-float)";
         }}
       >
         {/* Hamburger / close icon */}
@@ -302,6 +309,25 @@ function CaseStudyTOCInner({ sections = defaultSections, variant = "right" }: { 
           {menuOpen ? "Close" : activeLabel}
         </span>
       </button>
+      {askOn && (
+        <>
+          <span aria-hidden style={{ width: 1, height: 20, background: "var(--bg)", opacity: 0.2 }} />
+          <button
+            aria-label="Ask Devansh"
+            onClick={() => { setMenuOpen(false); window.dispatchEvent(new Event("ask:open")); }}
+            style={{
+              display: "flex", alignItems: "center", justifyContent: "center",
+              width: 50, height: "100%", paddingRight: 4,
+              background: "none", border: "none", cursor: "pointer", color: "var(--bg)",
+            }}
+          >
+            <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3z" />
+            </svg>
+          </button>
+        </>
+      )}
+      </div>
     </>
   );
 }

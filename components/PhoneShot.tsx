@@ -84,11 +84,11 @@ export default function PhoneShot({ notes = [], ...phone }: Omit<PhoneProps, "ma
   return (
     <div className="phone-shot" ref={root}>
       <div className="phone-notes is-left">
-        {left.map((x) => <div key={x.n} data-note={x.n}><PhoneNote n={x.n} title={x.title} sub={x.sub} /></div>)}
+        {left.map((x) => <div key={x.n} data-note={x.n} style={{ order: x.n }}><PhoneNote n={x.n} title={x.title} sub={x.sub} /></div>)}
       </div>
       <IPhone {...phone} marks={marks} />
       <div className="phone-notes is-right">
-        {right.map((x) => <div key={x.n} data-note={x.n}><PhoneNote n={x.n} title={x.title} sub={x.sub} /></div>)}
+        {right.map((x) => <div key={x.n} data-note={x.n} style={{ order: x.n }}><PhoneNote n={x.n} title={x.title} sub={x.sub} /></div>)}
       </div>
       <svg className="phone-lines" aria-hidden="true">
         {lines.map((l, i) => (
