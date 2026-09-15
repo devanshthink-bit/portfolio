@@ -366,7 +366,7 @@ export default function RedbusCaseStudy() {
     <main className="cs-page" style={{ padding: "40px 0 96px" }}>
       <RedbusTOCClient />
       <RubberBackButton plain />
-      <AskDevansh />
+      <AskDevansh available={!!process.env.GEMINI_API_KEY?.trim()} />
 
       <div id="toc-intro" style={{ marginBottom: 88 }}>
         <PhoneRow className="hero bare" phones={[

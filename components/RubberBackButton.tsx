@@ -33,12 +33,10 @@ export default function RubberBackButton({ plain = true }: { plain?: boolean } =
     const calc = () => window.innerWidth <= 640
       ? (plain ? { top: 14, left: 14 } : { bottom: 24, left: 16 })
       : { top: 30,   left: 20 };
-    const t = setTimeout(() => {
-      setPos(calc());
-      const onResize = () => setPos(calc());
-      window.addEventListener("resize", onResize);
-    }, 350);
-    return () => clearTimeout(t);
+    setPos(calc());
+    const onResize = () => setPos(calc());
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, [plain]);
 
   if (!pos) return null;
@@ -50,6 +48,7 @@ export default function RubberBackButton({ plain = true }: { plain?: boolean } =
   return createPortal(
     <Link
       href="/"
+      className="fixed-enter"
       onClick={playRubber}
       style={{
         position: "fixed",

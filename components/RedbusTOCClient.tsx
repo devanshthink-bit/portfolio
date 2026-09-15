@@ -1,7 +1,5 @@
 "use client";
-import dynamic from "next/dynamic";
-
-const CaseStudyTOC = dynamic(() => import("./CaseStudyTOC"), { ssr: false });
+import CaseStudyTOC from "./CaseStudyTOC";
 
 const redbusSections = [
   { id: "toc-intro",   label: "Introduction" },

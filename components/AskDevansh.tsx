@@ -26,8 +26,11 @@ const XIcon = ({ s = 16 }: { s?: number }) => <svg {...ic(s)}><path d="M18 6 6 1
 const PanelClose = () => <svg {...ic(16)}><rect width="18" height="18" x="3" y="3" rx="2" /><path d="M15 3v18" /><path d="m8 9 3 3-3 3" /></svg>;
 const ArrowUp = () => <svg {...ic(16)}><path d="m5 12 7-7 7 7" /><path d="M12 19V5" /></svg>;
 
-export default function AskDevansh() {
-  const [available, setAvailable] = useState(false);
+// `available` comes from the page, which knows on the server whether chat is set up, so the
+// button needs no network check and shows as soon as the page starts.
+export default function AskDevansh({ available: onServer = false }: { available?: boolean } = {}) {
+  const [available, setAvailable] = useState(onServer);
+  const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
   const [menu, setMenu] = useState(false);
   const [confirmEnd, setConfirmEnd] = useState(false);
@@ -39,10 +42,9 @@ export default function AskDevansh() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const forced = new URLSearchParams(window.location.search).has("ask");
-    fetch("/api/ask-devansh").then((r) => r.json())
-      .then((d) => setAvailable(d.available || forced))
-      .catch(() => setAvailable(forced));
+    setMounted(true);
+    // ?ask still forces the button on, for testing without the key.
+    if (new URLSearchParams(window.location.search).has("ask")) setAvailable(true);
   }, []);
 
   useEffect(() => {
@@ -67,7 +69,8 @@ export default function AskDevansh() {
     return () => document.documentElement.classList.remove("ask-open");
   }, [open]);
 
-  if (!available) return null;
+  // Waits for the browser only because it renders into <body>, which does not exist on the server.
+  if (!available || !mounted) return null;
 
   function close() { setOpen(false); setMenu(false); setConfirmEnd(false); }
   function newChat() { setMessages([]); setInput(""); setMenu(false); setConfirmEnd(false); }
@@ -106,7 +109,7 @@ export default function AskDevansh() {
   return createPortal(
     <>
       {!open && (
-        <button className="ask-trigger" onClick={() => setOpen(true)}
+        <button className="ask-trigger fixed-enter" onClick={() => setOpen(true)}
           onMouseEnter={() => window.dispatchEvent(new Event("cursor:hide"))}
           onMouseLeave={() => window.dispatchEvent(new Event("cursor:show"))}>
           <Sparkle /> Ask Devansh

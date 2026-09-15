@@ -22,18 +22,14 @@ function CaseStudyTOCInner({ sections = defaultSections, variant = "right" }: { 
   const [menuOpen, setMenuOpen] = useState(false);
   const [ready, setReady]       = useState(false);
 
-  // Track screen width — delay render to avoid flash
+  // Track screen width. No delay: the list is rendered on <body>, so it no longer needs to wait
+  // out the page's entrance, and it fades in with the page (.fixed-enter).
   useEffect(() => {
     const check = () => setIsWide(window.innerWidth >= 1360);
-    const t = setTimeout(() => {
-      check();
-      setReady(true);
-      window.addEventListener("resize", check);
-    }, 350);
-    return () => {
-      clearTimeout(t);
-      window.removeEventListener("resize", check);
-    };
+    check();
+    setReady(true);
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
   }, []);
 
   // Track active section via scroll position
@@ -315,5 +311,5 @@ function CaseStudyTOCInner({ sections = defaultSections, variant = "right" }: { 
 export default function CaseStudyTOC(props: Parameters<typeof CaseStudyTOCInner>[0]) {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
-  return mounted ? createPortal(<CaseStudyTOCInner {...props} />, document.body) : null;
+  return mounted ? createPortal(<div className="fixed-enter"><CaseStudyTOCInner {...props} /></div>, document.body) : null;
 }
