@@ -4,6 +4,9 @@ import Image from "next/image";
 export default function Hero() {
   return (
     <section className="intro">
+      {/* Phones: the photo, small, in one row with the role line (hidden on the web, where
+          "Designer & Developer." is the first heading line). */}
+      <div className="intro-top">
       <div className="avatar">
         <Image
           src="/images/avatar.jpg"
@@ -14,9 +17,11 @@ export default function Hero() {
           priority
         />
       </div>
+      <span className="intro-role">Devansh · Designer &amp; Developer</span>
+      </div>
 
       <div className="intro-headings">
-        <h1>Designer &amp; Developer.</h1>
+        <h1 className="intro-h-label">Designer &amp; Developer.</h1>
         <h1>Curious about how things work and building them right.</h1>
       </div>
 
@@ -24,11 +29,11 @@ export default function Hero() {
         <p>
           Hey, I&apos;m Devansh. A product designer, with a background in engineering where I spent three years shipping flagship products used by millions across greentech, workforce enablement, and hospitality, at both startups and scale.
         </p>
-        <p>
+        <p className="intro-craft">
           I care deeply about craft and detail, and about building products that are both functional and delightful.
         </p>
         <p>
-          Most good conversations start with a simple hello.{" "}
+          <span className="intro-hello-lead">Most good conversations start with a simple hello.{" "}</span>
           <a
             className="inline-link"
             href="https://wa.me/916396483499?text=Hi%20Devansh%2C%20I%20came%20across%20your%20portfolio%20and%20would%20like%20to%20connect."
