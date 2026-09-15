@@ -1035,7 +1035,7 @@
   .phone-fig-label {
     font-family: var(--font-manrope), sans-serif;
     font-weight: 700;
-    font-size: 17px;
+    font-size: 16px;
     color: var(--text-primary);
     letter-spacing: -0.02em;
   }
@@ -1095,7 +1095,7 @@
     background: #1d1d1d;
     color: #fff;
     font-family: var(--font-manrope), sans-serif;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
     letter-spacing: -0.01em;
   }
@@ -1122,8 +1122,8 @@
 
   /* ── Story furniture: acts, the "in short" box, credits ── */
   .cs-act {
-    margin: 40px 0 72px;
-    padding: 48px 0 0;
+    margin: 112px 0 64px;
+    padding: 56px 0 0;
     border-top: 1px solid var(--border);
     scroll-margin-top: 48px;
   }
@@ -1140,20 +1140,20 @@
 
   .cs-act-title {
     font-family: var(--font-manrope), sans-serif;
-    font-size: 26px;
+    font-size: 28px;
     font-weight: 800;
-    letter-spacing: -0.04em;
-    line-height: 1.1;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
     color: var(--text-primary);
     margin: 0 0 14px;
   }
 
   .cs-act-sub {
     font-family: var(--font-inter), sans-serif;
-    font-size: 19px;
-    line-height: 1.5;
-    letter-spacing: -0.02em;
-    color: var(--text-muted);
+    font-size: 18px;
+    line-height: 1.6;
+    letter-spacing: -0.011em;
+    color: var(--text-secondary);
     margin: 0;
     max-width: 600px;
   }
@@ -1186,10 +1186,10 @@
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    font-family: var(--font-manrope), sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: -0.01em;
+    font-family: var(--font-inter), sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.011em;
     white-space: nowrap;
     vertical-align: middle;
   }
@@ -1223,7 +1223,7 @@
     border-bottom: 1px solid var(--border);
   }
   .cs-numbered-n {
-    font: 700 15px/1 var(--font-manrope), sans-serif;
+    font: 700 16px/1 var(--font-manrope), sans-serif;
     color: #E81E38;
     font-variant-numeric: tabular-nums;
   }
@@ -1235,9 +1235,9 @@
     padding: 11px 18px;
     border-radius: 100px;
     font-family: var(--font-manrope), sans-serif;
-    font-size: 14.5px;
+    font-size: 14px;
     font-weight: 700;
-    letter-spacing: -0.015em;
+    letter-spacing: -0.011em;
     color: var(--text-primary);
     box-shadow: inset 0 0 0 1px var(--cs-stat-gap);
     transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
@@ -1286,9 +1286,9 @@
   }
 
   @media (max-width: 640px) {
-    .cs-act-title { font-size: 26px; }
+    .cs-act-title { font-size: 24px; }
     /* The page title's size is inline (T.h1), so the phone size has to win over it. */
-    .cs-page h1 { font-size: 26px !important; }
+    .cs-page h1 { font-size: 24px !important; }
     .cs-act-sub { font-size: 17px; }
     .cs-inshort,
     .cs-moscow,
@@ -1380,8 +1380,8 @@
   .cs-list li {
     position: relative;
     padding-left: 16px;
-    font-size: 14px;
-    line-height: 1.6;
+    font-size: 16px;
+    line-height: 1.65;
     color: var(--text-secondary);
   }
   .cs-list li::before {
@@ -1617,8 +1617,8 @@
 .cs-idea-pick { border-radius: 14px; padding: 20px 22px; background: rgba(232, 30, 56, 0.06); box-shadow: inset 0 0 0 1.5px #E81E38; }
 .cs-idea-rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
 .cs-idea-rows li { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 16px; row-gap: 2px; padding: 12px 2px; border-bottom: 1px solid var(--border); }
-.cs-idea-why { font: 600 15px/1.35 var(--font-manrope), sans-serif; letter-spacing: -0.01em; color: var(--text-primary); }
-.cs-idea-count { font: 600 13px/1.35 var(--font-inter), sans-serif; color: var(--text-muted); font-variant-numeric: tabular-nums; align-self: start; padding-top: 2px; }
-.cs-idea-names { grid-column: 1 / -1; font-size: 13.5px; line-height: 1.5; color: var(--text-muted); }
+.cs-idea-why { font: 700 16px/1.4 var(--font-manrope), sans-serif; letter-spacing: -0.02em; color: var(--text-primary); }
+.cs-idea-count { font: 500 14px/1.4 var(--font-inter), sans-serif; color: var(--text-muted); font-variant-numeric: tabular-nums; align-self: start; padding-top: 2px; }
+.cs-idea-names { grid-column: 1 / -1; font-size: 14px; line-height: 1.5; color: var(--text-muted); }
 @media (max-width: 640px) { .cs-idea-list { grid-template-columns: minmax(0, 1fr); } }
 

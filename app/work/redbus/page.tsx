@@ -45,7 +45,7 @@ function InShort() {
       {rows.map((r) => (
         <div key={r.k}>
           <p style={{ ...T.eyebrow, marginBottom: 8 }}>{r.k}</p>
-          <p style={{ ...T.body, fontSize: 15 }}>{r.v}</p>
+          <p style={T.body}>{r.v}</p>
         </div>
       ))}
     </div>
@@ -58,13 +58,13 @@ function TripStrip() {
     <div className="cs-grid-2">
       <Card>
         <p style={T.eyebrow}>The way out</p>
-        <p style={{ ...T.cardH, fontSize: 20, margin: "8px 0 2px" }}>Delhi → Nainital</p>
+        <p style={{ ...T.cardH, margin: "8px 0 2px" }}>Delhi → Nainital</p>
         <p style={{ ...T.body, marginBottom: 14 }}>Thu, 10 Sep, 23:55, Seat U4</p>
         <Chip tone="green">Booked</Chip>
       </Card>
       <div style={{ borderRadius: 10, padding: "18px 20px", border: "1.5px dashed var(--cs-stat-gap)" }}>
         <p style={T.eyebrow}>The way home</p>
-        <p style={{ ...T.cardH, fontSize: 20, margin: "8px 0 2px" }}>Nainital → Delhi</p>
+        <p style={{ ...T.cardH, margin: "8px 0 2px" }}>Nainital → Delhi</p>
         <p style={{ ...T.body, marginBottom: 14 }}>Some day next week. Maybe.</p>
         <Chip tone="grey">Not booked</Chip>
       </div>
@@ -83,8 +83,8 @@ function Stats() {
     <div className="cs-stats">
       {stats.map((s) => (
         <div key={s.n + s.l} style={{ background: "var(--bg)", padding: "20px 22px" }}>
-          <div style={{ ...T.figure, fontSize: 26, color: s.n === "0%" ? RED : "var(--text-primary)", marginBottom: 2 }}>{s.n}</div>
-          <div style={{ ...T.body, fontSize: 14, color: "var(--text-muted)" }}>{s.l}</div>
+          <div style={{ ...T.figure, color: s.n === "0%" ? RED : "var(--text-primary)", marginBottom: 2 }}>{s.n}</div>
+          <div style={T.small}>{s.l}</div>
         </div>
       ))}
     </div>
@@ -126,7 +126,7 @@ function WhyRedBus() {
     <div className="cs-swatches">
       {cards.map((c) => (
         <Card key={c.h}>
-          <div style={{ ...T.figure, fontSize: 26, height: 32, display: "flex", alignItems: "center" }}>
+          <div style={{ ...T.figure, height: 34, display: "flex", alignItems: "center" }}>
             {c.n === "↓" ? (
               // A drawn "going down" line (Lucide trending-down), not a typed arrow.
               <svg width={26} height={26} viewBox="0 0 24 24" fill="none" stroke="#A45729" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-label="Down">
@@ -134,8 +134,8 @@ function WhyRedBus() {
               </svg>
             ) : c.n}
           </div>
-          <p style={{ ...T.cardH, fontSize: 15, margin: "4px 0 6px" }}>{c.h}</p>
-          <p style={{ ...T.body, fontSize: 13 }}>{c.b}</p>
+          <p style={{ ...T.cardH, margin: "6px 0 4px" }}>{c.h}</p>
+          <p style={T.body}>{c.b}</p>
         </Card>
       ))}
     </div>
@@ -172,8 +172,8 @@ function Ideas() {
   return (
     <div className="cs-idea-list">
       <div className="cs-idea-pick">
-        <p style={{ ...T.eyebrow, color: RED, fontWeight: 600 }}>The one I picked</p>
-        <p style={{ ...T.cardH, fontSize: 19, margin: "8px 0 6px" }}>Book the last day you can travel</p>
+        <p style={{ ...T.eyebrow, color: RED }}>The one I picked</p>
+        <p style={{ ...T.cardH, margin: "8px 0 6px" }}>Book the last day you can travel</p>
         <p style={T.body}>It keeps the seat and the fare without a date, and moves once when plans settle.</p>
       </div>
       <ul className="cs-idea-rows">
@@ -201,7 +201,7 @@ function Merit() {
           <div style={T.eyebrow}>Idea {r.id}</div>
           <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "baseline" }}>
             <p style={T.cardH}>{r.name} {r.mine && <Chip tone="red">Mine</Chip>}</p>
-            <span style={{ ...T.figure, fontSize: 26 }}>{r.score}<span style={{ ...T.small, fontWeight: 500 }}> / 10</span></span>
+            <span style={T.figure}>{r.score}<span style={T.small}> / 10</span></span>
           </div>
         </div>
       ))}
@@ -259,7 +259,7 @@ function KillList() {
       {rows.map((r) => (
         <div key={r.rule} className="cs-kill" style={{ background: "var(--bg)", padding: "16px 20px" }}>
           <div><Chip tone={r.tone}>{r.s}</Chip></div>
-          <p style={{ ...T.cardH, fontSize: 15 }}>{r.rule}</p>
+          <p style={T.cardH}>{r.rule}</p>
         </div>
       ))}
     </div>
@@ -297,7 +297,7 @@ function MoSCoW() {
       {cols.map((c) => (
         <Card key={c.h}>
           <div style={{ marginBottom: 10 }}><Chip tone={c.tone}>{c.h}</Chip></div>
-          {c.items.map((t) => <p key={t} style={{ ...T.body, fontSize: 13, marginBottom: 8 }}>{t}</p>)}
+          {c.items.map((t) => <p key={t} style={{ ...T.body, marginBottom: 8 }}>{t}</p>)}
         </Card>
       ))}
     </div>
@@ -315,8 +315,8 @@ function Watch() {
       {rows.map((r) => (
         <Card key={r.h}>
           <div style={{ marginBottom: 10 }}><Chip tone={r.tone}>{r.t}</Chip></div>
-          <p style={{ ...T.cardH, fontSize: 15 }}>{r.h}</p>
-          <p style={{ ...T.body, fontSize: 13, marginTop: 4 }}>{r.b}</p>
+          <p style={T.cardH}>{r.h}</p>
+          <p style={{ ...T.body, marginTop: 4 }}>{r.b}</p>
         </Card>
       ))}
     </div>

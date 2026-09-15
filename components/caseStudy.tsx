@@ -8,19 +8,20 @@ export const RED = "#E81E38";
 const MANROPE = "var(--font-manrope)";
 const INTER = "var(--font-inter)";
 
-// Type scale for case studies, in the site's own fonts and tokens.
+// One small type scale for the whole case study (Devansh, 15 Sep: "Keep the number of variations
+// minimal"). Sizes 12 / 14 / 16 / 18 / 20 / 28, weights 400 / 500 / 700 / 800, four letter-spacings.
 export const T = {
-  h1:      { fontFamily: MANROPE, fontSize: 26, fontWeight: 800, color: "var(--text-primary)", letterSpacing: "-0.04em", lineHeight: 1.08, margin: "0 0 16px 0" } as React.CSSProperties,
-  lede:    { fontFamily: INTER, fontSize: 18, fontWeight: 400, color: "var(--text-secondary)", letterSpacing: "-0.015em", lineHeight: 1.6, margin: "0 0 44px 0", maxWidth: 640 } as React.CSSProperties,
-  h2:      { fontFamily: MANROPE, fontSize: 22, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.035em", lineHeight: 1.22, margin: "0 0 12px 0" } as React.CSSProperties,
-  sub:     { fontFamily: INTER, fontSize: 16.5, color: "var(--text-secondary)", lineHeight: 1.65, letterSpacing: "-0.012em", margin: 0, maxWidth: 640 } as React.CSSProperties,
-  small:   { fontFamily: INTER, fontSize: 13.5, color: "var(--text-muted)", lineHeight: 1.55, letterSpacing: "-0.005em", margin: 0 } as React.CSSProperties,
-  // A quiet label: small, sentence case, in the text face.
-  eyebrow: { fontFamily: MANROPE, fontSize: 13, fontWeight: 500, letterSpacing: "-0.005em", color: "var(--text-muted)", margin: 0 } as React.CSSProperties,
+  h1:      { fontFamily: MANROPE, fontSize: 28, fontWeight: 800, color: "var(--text-primary)", letterSpacing: "-0.03em", lineHeight: 1.15, margin: "0 0 16px 0" } as React.CSSProperties,
+  lede:    { fontFamily: INTER, fontSize: 18, fontWeight: 400, color: "var(--text-secondary)", letterSpacing: "-0.011em", lineHeight: 1.6, margin: "0 0 44px 0", maxWidth: 640 } as React.CSSProperties,
+  h2:      { fontFamily: MANROPE, fontSize: 20, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.02em", lineHeight: 1.3, margin: "0 0 10px 0" } as React.CSSProperties,
+  sub:     { fontFamily: INTER, fontSize: 16, fontWeight: 400, color: "var(--text-secondary)", letterSpacing: "-0.011em", lineHeight: 1.65, margin: 0, maxWidth: 640 } as React.CSSProperties,
+  small:   { fontFamily: INTER, fontSize: 14, fontWeight: 400, color: "var(--text-muted)", letterSpacing: "-0.011em", lineHeight: 1.5, margin: 0 } as React.CSSProperties,
+  // A quiet label inside a card: the same as small.
+  eyebrow: { fontFamily: INTER, fontSize: 14, fontWeight: 400, color: "var(--text-muted)", letterSpacing: "-0.011em", lineHeight: 1.5, margin: 0 } as React.CSSProperties,
   cardH:   { fontFamily: MANROPE, fontSize: 16, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.02em", lineHeight: 1.4, margin: 0 } as React.CSSProperties,
-  body:    { fontFamily: INTER, fontSize: 14.5, color: "var(--text-secondary)", lineHeight: 1.6, letterSpacing: "-0.01em", margin: 0 } as React.CSSProperties,
-  quote:   { fontFamily: MANROPE, fontSize: 19, fontWeight: 600, color: "var(--text-primary)", letterSpacing: "-0.02em", lineHeight: 1.4, margin: 0 } as React.CSSProperties,
-  figure:  { fontFamily: MANROPE, fontWeight: 800, letterSpacing: "-0.04em", color: "var(--text-primary)", fontVariantNumeric: "tabular-nums" } as React.CSSProperties,
+  body:    { fontFamily: INTER, fontSize: 16, fontWeight: 400, color: "var(--text-secondary)", letterSpacing: "-0.011em", lineHeight: 1.65, margin: 0 } as React.CSSProperties,
+  quote:   { fontFamily: MANROPE, fontSize: 16, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.02em", lineHeight: 1.4, margin: 0 } as React.CSSProperties,
+  figure:  { fontFamily: MANROPE, fontSize: 28, fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 1.15, color: "var(--text-primary)", fontVariantNumeric: "tabular-nums" } as React.CSSProperties,
 };
 
 // "Scene 4 · A week later" in the source shows as "SCENE 4 | A WEEK LATER": a thin rule, not a dot.
@@ -119,7 +120,7 @@ export function MetaStrip({ items }: { items: { label: string; value: string }[]
       {items.map((item) => (
         <div key={item.label}>
           <p style={{ ...T.eyebrow, margin: "0 0 4px 0" }}>{item.label}</p>
-          <p style={{ fontFamily: INTER, fontSize: 14.5, fontWeight: 500, color: "var(--text-primary)", letterSpacing: "-0.015em", margin: 0 }}>{item.value}</p>
+          <p style={{ ...T.body, color: "var(--text-primary)" }}>{item.value}</p>
         </div>
       ))}
     </div>
