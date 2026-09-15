@@ -159,7 +159,7 @@ export default function BottomNav() {
         if (dy > 2) {
           setScrolling(true);
           clearTimeout(settle);
-          settle = setTimeout(() => setScrolling(false), 120);
+          settle = setTimeout(() => setScrolling(false), 180);
         }
       }
       if (window.innerWidth > 640 || y < 80) { setHidden(false); last = y; return; }
