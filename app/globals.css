@@ -1129,6 +1129,7 @@
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.1em;
+    color: var(--text-muted);
     margin: 0 0 12px;
   }
 
@@ -1162,7 +1163,7 @@
     color: var(--text-muted);
     margin: 0 0 10px;
   }
-  .cs-label-lead { color: #E81E38; font-weight: 800; }
+  .cs-label-lead { color: var(--text-muted); font-weight: 800; }   /* grey like the home titles, not red (Devansh, 15 Sep) */
   .cs-label-lead + .cs-label-rest::before {
     content: "";
     display: inline-block;
