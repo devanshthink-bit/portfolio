@@ -129,7 +129,6 @@
     color: var(--text-secondary);
     font-family: var(--font-inter), "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Helvetica Neue", Arial, sans-serif;
     font-size: 16px;
-    font-weight: 500;   /* medium, not regular, everywhere (Devansh, 15 Sep) */
     line-height: 1.48;
     letter-spacing: -0.02em;
     -webkit-font-smoothing: antialiased;
@@ -316,7 +315,7 @@
 
   .intro-body p {
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 1.48;
     letter-spacing: -0.02em;
     color: var(--text-secondary);
@@ -364,7 +363,7 @@
   /* Section body text */
   .section-body {
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 1.48;
     letter-spacing: -0.02em;
     color: var(--text-secondary);
@@ -412,7 +411,7 @@
 
   .work-card-title {
     font-size: 15px;
-    font-weight: 500;
+    font-weight: 400;
     letter-spacing: -0.02em;
     line-height: 1.6;
     color: var(--text-primary);
@@ -511,7 +510,7 @@
   .work-card-year {
     font-family: var(--font-inter), sans-serif;
     font-size: 15px;
-    font-weight: 500;
+    font-weight: 400;
     color: var(--text-muted);
     letter-spacing: -0.01em;
     font-variant-numeric: tabular-nums;
@@ -712,7 +711,7 @@
   .footer-link {
     font-family: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 400;
     letter-spacing: -0.02em;
     color: var(--text-muted);
     text-decoration: none;

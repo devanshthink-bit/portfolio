@@ -96,7 +96,7 @@ function StatCounter({ value, unit, label, active, countTo, suffix, startFrom }:
         )}
       </div>
       <span className="stat-label" style={{
-        fontFamily: "var(--font-inter)", fontSize: 14, fontWeight: 500,
+        fontFamily: "var(--font-inter)", fontSize: 14, fontWeight: 400,
         letterSpacing: "-0.01em", color: "var(--text-muted)",
       }}>
         {label}
