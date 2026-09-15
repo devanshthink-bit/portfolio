@@ -186,7 +186,7 @@ export default function AskDevansh() {
         .ask-icon { display: inline-flex; background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 4px; border-radius: var(--r-sm); }
         .ask-icon:hover { color: var(--text-primary); }
         .ask-menu { position: absolute; top: 58px; right: 20px; z-index: 2; display: flex; flex-direction: column; padding: 6px;
-          background: var(--raised); border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow-float); }
+          background: var(--raised); border-radius: var(--r-md); box-shadow: var(--shadow-float); }
         .ask-menu button { display: flex; align-items: center; gap: 10px; background: none; border: none; text-align: left; padding: 10px 14px; border-radius: 8px; cursor: pointer;
           font-family: ${FONT}; font-size: 15px; color: var(--text-primary); white-space: nowrap; }
         .ask-menu button:hover { background: var(--card-bg); }
