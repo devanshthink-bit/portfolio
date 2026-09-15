@@ -368,7 +368,7 @@ export default function RedbusCaseStudy() {
       <RubberBackButton plain />
       <AskDevansh />
 
-      <div id="toc-intro" style={{ marginBottom: 48 }}>
+      <div id="toc-intro" style={{ marginBottom: 88 }}>
         <PhoneRow className="hero bare" phones={[
           { src: scr("hifi_06a"), alt: "The day list with Thu 17 Sep picked and its bus open under it.", priority: true },
           { src: scr("hifi_05"), alt: "The return calendar asking 'When can you travel back?', on 'I'm not sure yet'.", priority: true },
