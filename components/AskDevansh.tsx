@@ -95,7 +95,7 @@ export default function AskDevansh() {
 
   const bubble = (mine: boolean): React.CSSProperties => ({
     maxWidth: "86%", padding: "11px 16px", borderRadius: "var(--r-md)", fontSize: 16, lineHeight: 1.6,
-    letterSpacing: "-0.01em", whiteSpace: "pre-wrap",
+    letterSpacing: "-0.011em", whiteSpace: "pre-wrap",
     background: mine ? "var(--ink-surface)" : "var(--card-bg)", color: mine ? "#fff" : "var(--text-primary)",
     alignSelf: mine ? "flex-end" : "flex-start",
   });
@@ -173,7 +173,7 @@ export default function AskDevansh() {
       <style>{`
         .ask-trigger { position: fixed; right: 28px; bottom: 28px; z-index: 1001; display: flex; align-items: center; gap: 10px;
           padding: 15px 24px; border: none; border-radius: 100px; background: var(--ink-surface); color: #fff; cursor: pointer;
-          font-family: ${FONT}; font-size: 14px; font-weight: 600; letter-spacing: -0.01em;
+          font-family: ${FONT}; font-size: 14px; font-weight: 600; letter-spacing: -0.011em;
           box-shadow: var(--shadow-float); transition: transform .35s var(--ease-out); }
         .ask-trigger:hover { transform: translateY(-2px); }
         .ask-panel { position: fixed; top: 0; right: 0; bottom: 0; z-index: 1002; width: 420px; max-width: 100vw;

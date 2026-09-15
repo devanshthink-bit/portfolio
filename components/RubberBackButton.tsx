@@ -66,11 +66,11 @@ export default function RubberBackButton({ plain = true }: { plain?: boolean } =
         fontSize: plain ? 15 : 14,
         fontWeight: 600,
         color: "var(--text-primary)",
-        letterSpacing: plain ? "-0.02em" : "-0.01em",
+        letterSpacing: plain ? "-0.02em" : "-0.011em",
         textTransform: plain ? "none" : "uppercase",
       }}
     >
-      <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 6 }}>
+      <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 6 }}>
         <line x1="19" y1="12" x2="5" y2="12" />
         <polyline points="12 19 5 12 12 5" />
       </svg>

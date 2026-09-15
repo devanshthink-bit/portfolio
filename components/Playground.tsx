@@ -53,7 +53,7 @@ function BuildCard({ b }: { b: Build }) {
         <span className="pg-tip" style={{ left: pos.x + 18, top: pos.y + 18 }}>
           Try it
           {/* Lucide arrow-up-right, the same drawn arrow as the hero link */}
-          <svg width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden style={{ display: "inline-block", marginLeft: 4, verticalAlign: "-1px" }}>
+          <svg width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden style={{ display: "inline-block", marginLeft: 4, verticalAlign: "-1px" }}>
             <path d="M7 17 17 7M8 7h9v9" />
           </svg>
         </span>

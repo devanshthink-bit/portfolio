@@ -89,7 +89,7 @@ function StatCounter({ value, unit, label, active, countTo, suffix, startFrom }:
         {unit && (
           <span style={{
             fontFamily: "var(--font-manrope)", fontSize: 16, fontWeight: 600,
-            color: "var(--text-muted)", letterSpacing: "-0.01em",
+            color: "var(--text-muted)", letterSpacing: "-0.011em",
           }}>
             {unit}
           </span>
@@ -97,7 +97,7 @@ function StatCounter({ value, unit, label, active, countTo, suffix, startFrom }:
       </div>
       <span className="stat-label" style={{
         fontFamily: "var(--font-inter)", fontSize: 14, fontWeight: 400,
-        letterSpacing: "-0.01em", color: "var(--text-muted)",
+        letterSpacing: "-0.011em", color: "var(--text-muted)",
       }}>
         {label}
       </span>
@@ -181,7 +181,7 @@ function WorkCard({ item }: { item: Work }) {
           fontSize: 12,
           fontFamily: "var(--font-manrope)",
           fontWeight: 700,
-          letterSpacing: "-0.01em",
+          letterSpacing: "-0.011em",
           color: "#ffffff",
           pointerEvents: "none",
           zIndex: 9999,
@@ -235,7 +235,7 @@ function InProgressCard() {
         <div style={{
           position: "fixed", left: pos.x + 18, top: pos.y + 18, background: "#3b4a6b", borderRadius: "var(--r-sm)",
           padding: "7px 12px", fontSize: 12, fontFamily: "var(--font-manrope)", fontWeight: 700,
-          letterSpacing: "-0.01em", color: "#ffffff", pointerEvents: "none", zIndex: 9999, whiteSpace: "nowrap",
+          letterSpacing: "-0.011em", color: "#ffffff", pointerEvents: "none", zIndex: 9999, whiteSpace: "nowrap",
         }}>
           In progress
         </div>

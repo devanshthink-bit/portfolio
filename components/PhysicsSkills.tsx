@@ -139,7 +139,7 @@ function Bucket({ cat }: { cat: Cat }) {
           box-shadow: var(--tag-shadow);
           font-size: ${fontSize};
           font-family: inherit;
-          letter-spacing: -0.01em;
+          letter-spacing: -0.011em;
           color: var(--text-secondary);
           white-space: nowrap;
           visibility: hidden;
@@ -448,14 +448,14 @@ function Bucket({ cat }: { cat: Cat }) {
           opacity: 0.25,
         }}>
           {cat === "design" ? (
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 2a10 10 0 1 0 0 20c1.1 0 2-.9 2-2 0-.5-.2-1-.5-1.4-.3-.4-.5-.9-.5-1.4a2 2 0 0 1 2-2h2.3A4.2 4.2 0 0 0 22 11c0-5-4.5-9-10-9Z" />
               <circle cx="7.5" cy="11.5" r="1.4" fill="currentColor" stroke="none" />
               <circle cx="12" cy="7.5" r="1.4" fill="currentColor" stroke="none" />
               <circle cx="16.5" cy="11.5" r="1.4" fill="currentColor" stroke="none" />
             </svg>
           ) : (
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.6} strokeLinecap="round" strokeLinejoin="round">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
               <path d="M7 6 2 12 7 18" />
               <path d="M17 6 22 12 17 18" />
               <path d="M13 4 11 20" />

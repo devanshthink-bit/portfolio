@@ -86,7 +86,7 @@ export default function Assistant() {
           borderBottom: "1px solid var(--border)",
           display: "flex", alignItems: "center", justifyContent: "space-between",
         }}>
-          <p style={{ margin: 0, fontSize: 14, fontWeight: 600, color: "var(--text-primary)", letterSpacing: "-0.01em" }}>Ask about Devansh</p>
+          <p style={{ margin: 0, fontSize: 14, fontWeight: 600, color: "var(--text-primary)", letterSpacing: "-0.011em" }}>Ask about Devansh</p>
           <button
             onClick={() => setOpen(false)}
             style={{ background: "none", border: "none", cursor: "pointer", padding: 4, color: "var(--text-muted)", lineHeight: 1 }}
@@ -101,7 +101,7 @@ export default function Assistant() {
         <div data-lenis-prevent style={{ flex: 1, overflowY: "auto", overscrollBehavior: "contain", padding: "12px 14px", display: "flex", flexDirection: "column", gap: 10, minHeight: 0 }}>
           {isEmpty && (
             <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 4 }}>
-              <p style={{ fontSize: 12, color: "var(--text-muted)", margin: 0, letterSpacing: "-0.01em" }}>Suggestions</p>
+              <p style={{ fontSize: 12, color: "var(--text-muted)", margin: 0, letterSpacing: "-0.011em" }}>Suggestions</p>
               {SUGGESTIONS.map(s => (
                 <button
                   key={s}
@@ -110,7 +110,7 @@ export default function Assistant() {
                     textAlign: "left", padding: "8px 12px", borderRadius: "var(--r-sm)",
                     background: "var(--card-bg)", border: "none", cursor: "pointer",
                     fontSize: 12, color: "var(--text-primary)", fontWeight: 500,
-                    letterSpacing: "-0.01em", lineHeight: 1.4,
+                    letterSpacing: "-0.011em", lineHeight: 1.4,
                     transition: "background 0.3s var(--ease-out)",
                   }}
                   onMouseEnter={e => (e.currentTarget.style.background = "rgba(128,128,128,0.15)")}
@@ -128,7 +128,7 @@ export default function Assistant() {
                 maxWidth: "82%", padding: "8px 12px", borderRadius: m.role === "user" ? "12px 12px 3px 12px" : "12px 12px 12px 3px",
                 background: m.role === "user" ? "var(--text-primary)" : "var(--card-bg)",
                 color: m.role === "user" ? "var(--bg)" : "var(--text-primary)",
-                fontSize: 14, lineHeight: 1.5, letterSpacing: "-0.01em",
+                fontSize: 14, lineHeight: 1.5, letterSpacing: "-0.011em",
               }}>
                 {m.content}
               </div>
@@ -166,7 +166,7 @@ export default function Assistant() {
             placeholder="Ask anything..."
             style={{
               flex: 1, background: "none", border: "none", outline: "none",
-              fontSize: 14, color: "var(--text-primary)", letterSpacing: "-0.01em",
+              fontSize: 14, color: "var(--text-primary)", letterSpacing: "-0.011em",
               fontFamily: "inherit",
             }}
           />
@@ -211,7 +211,7 @@ export default function Assistant() {
       >
         {open ? (
           <svg width={16} height={16} viewBox="0 0 16 16" fill="none">
-            <path d="M2 2l12 12M14 2L2 14" stroke="var(--bg)" strokeWidth={1.8} strokeLinecap="round"/>
+            <path d="M2 2l12 12M14 2L2 14" stroke="var(--bg)" strokeWidth={2} strokeLinecap="round"/>
           </svg>
         ) : (
           <svg width={18} height={18} viewBox="0 0 18 18" fill="none">
