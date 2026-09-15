@@ -213,20 +213,20 @@ export default function BottomNav() {
       </span>
 
       {/* Phones: one hamburger at the right; its panel holds the four options (Devansh, 15 Sep). */}
-      <button className="dock-burger" aria-label={menu ? "Close menu" : "Menu"} aria-expanded={menu} onClick={() => setMenu((m) => !m)}>
+      <button className="dock-burger" aria-label={menu ? "Close menu" : "Menu"} aria-expanded={menu} onPointerDown={() => playDockClick(1)} onClick={() => setMenu((m) => !m)}>
         <Solar body={menu ? CROSS : BURGER} />
       </button>
       <div className={`dock-menu${menu ? " open" : ""}`} aria-hidden={!menu}>
-        <Link href="/#recent-work" tabIndex={menu ? 0 : -1} onClick={(e) => {
+        <Link href="/#recent-work" tabIndex={menu ? 0 : -1} onPointerDown={() => playDockClick(1.06)} onClick={(e) => {
           setMenu(false);
           if (pathname !== "/") return;
           e.preventDefault();
           // After the page is free to scroll again.
           setTimeout(() => { const el = document.getElementById("recent-work"); if (el) smoothScrollTo(el.getBoundingClientRect().top + window.scrollY - 72); }, 80);
         }}>Work</Link>
-        <Link href="/about" tabIndex={menu ? 0 : -1} onClick={() => setMenu(false)}>About</Link>
-        <Link href="/resume" tabIndex={menu ? 0 : -1} onClick={() => setMenu(false)}>Resume</Link>
-        <button tabIndex={menu ? 0 : -1} onClick={() => { toggleTheme(); setMenu(false); }}>
+        <Link href="/about" tabIndex={menu ? 0 : -1} onPointerDown={() => playDockClick(1.12)} onClick={() => setMenu(false)}>About</Link>
+        <Link href="/resume" tabIndex={menu ? 0 : -1} onPointerDown={() => playDockClick(1.19)} onClick={() => setMenu(false)}>Resume</Link>
+        <button tabIndex={menu ? 0 : -1} onPointerDown={() => playDockClick(1.26)} onClick={() => { toggleTheme(); setMenu(false); }}>
           Theme
         </button>
       </div>
