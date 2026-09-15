@@ -94,7 +94,7 @@ function LabelPill({ text }: { text: string; cat: Cat }) {
       width: 72, padding: "5px 0", borderRadius: 24,
       background: "var(--text-secondary)",
       color: "var(--bg)",
-      fontSize: 12, fontWeight: 600, letterSpacing: "-0.011em",
+      fontSize: "var(--fs-12)", fontWeight: 600, letterSpacing: "-0.011em",
       whiteSpace: "nowrap",
       flexShrink: 0, userSelect: "none",
       boxShadow: "var(--shadow-float)",
@@ -112,7 +112,7 @@ function TickerPill({ name, cat, slug, src }: { name: string; cat: Cat; slug?: s
         display: "inline-flex", alignItems: "center", gap: 8,
         padding: "7px 14px", borderRadius: 24,
         background: "var(--card-bg)",
-        fontSize: 14, fontWeight: 500, letterSpacing: "-0.011em",
+        fontSize: "var(--fs-14)", fontWeight: 500, letterSpacing: "-0.011em",
         color: "var(--text-secondary)", whiteSpace: "nowrap",
         userSelect: "none", cursor: "default", flexShrink: 0,
         transition: "background 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out)",
@@ -212,7 +212,7 @@ export default function About() {
           <Image src="/images/about.jpg" alt="Devansh at the beach" fill sizes="(max-width: 980px) 100vw, 868px" style={{ objectFit: "cover", objectPosition: "center top" }} priority />
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 24, marginTop: 32 }}>
-          <h2 style={{ fontFamily: "var(--font-manrope), sans-serif", fontSize: "28px", fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 1.4, color: "var(--text-primary)", margin: 0 }}>Designing with craft, building with code.</h2>
+          <h2 style={{ fontFamily: "var(--font-manrope), sans-serif", fontSize: "var(--fs-28)", fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 1.4, color: "var(--text-primary)", margin: 0 }}>Designing with craft, building with code.</h2>
           <p className="section-body" style={{ margin: 0 }}>I didn&apos;t grow up calling it design, but I was always curious about how things worked.</p>
           <p className="section-body" style={{ margin: 0 }}>My first exposure to it was on my mom&apos;s Samsung Galaxy R. I&apos;d spend hours exploring apps, downloading random ones, almost in awe of how they worked. I didn&apos;t have the word for it back then, but I was already falling in love with <strong>product design</strong>.</p>
           <p className="section-body" style={{ margin: 0 }}>Before screens took over, I was obsessed with cars. That instinct for how things feel and function stayed. It just shifted from physical objects to digital products.</p>
@@ -250,13 +250,13 @@ export default function About() {
             {[...testimonials, ...testimonials].map((tc, i) => (
               <div key={i} style={{ flex: `0 0 320px`, background: "var(--card-bg)", boxShadow: "var(--shadow-md)", borderRadius: "var(--r-md)", padding: 20, display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 40 }}>
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                  <p style={{ fontFamily: "var(--font-inter)", fontStyle: "normal", fontSize: 14, fontWeight: 400, lineHeight: 1.6, letterSpacing: "-0.011em", color: "var(--text-secondary)", margin: 0 }}>{tc.quote}</p>
+                  <p style={{ fontFamily: "var(--font-inter)", fontStyle: "normal", fontSize: "var(--fs-14)", fontWeight: 400, lineHeight: 1.6, letterSpacing: "-0.011em", color: "var(--text-secondary)", margin: 0 }}>{tc.quote}</p>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
                   <img src={tc.avatar} alt={tc.name} style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
                   <div style={{ minWidth: 0 }}>
-                    <p style={{ fontSize: 12, fontWeight: 500, letterSpacing: "-0.011em", color: "var(--text-primary)", margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{tc.name}</p>
-                    <p style={{ fontSize: 12, color: "var(--text-muted)", letterSpacing: "-0.011em", margin: "2px 0 0", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{tc.role}</p>
+                    <p style={{ fontSize: "var(--fs-12)", fontWeight: 500, letterSpacing: "-0.011em", color: "var(--text-primary)", margin: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{tc.name}</p>
+                    <p style={{ fontSize: "var(--fs-12)", color: "var(--text-muted)", letterSpacing: "-0.011em", margin: "2px 0 0", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{tc.role}</p>
                   </div>
                 </div>
               </div>

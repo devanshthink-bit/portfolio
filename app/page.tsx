@@ -79,7 +79,7 @@ function StatCounter({ value, unit, label, active, countTo, suffix, startFrom }:
     }}>
       <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
         <span className="stat-value" style={{
-          fontFamily: "var(--font-manrope)", fontSize: 28, fontWeight: 700,
+          fontFamily: "var(--font-manrope)", fontSize: "var(--fs-28)", fontWeight: 700,
           color: "var(--text-primary)", letterSpacing: "-0.03em",
           opacity: active ? 1 : 0, transform: active ? "none" : "translateY(8px)",
           transition: "opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out)",
@@ -88,7 +88,7 @@ function StatCounter({ value, unit, label, active, countTo, suffix, startFrom }:
         </span>
         {unit && (
           <span style={{
-            fontFamily: "var(--font-manrope)", fontSize: 16, fontWeight: 600,
+            fontFamily: "var(--font-manrope)", fontSize: "var(--fs-16)", fontWeight: 600,
             color: "var(--text-muted)", letterSpacing: "-0.011em",
           }}>
             {unit}
@@ -96,7 +96,7 @@ function StatCounter({ value, unit, label, active, countTo, suffix, startFrom }:
         )}
       </div>
       <span className="stat-label" style={{
-        fontFamily: "var(--font-inter)", fontSize: 14, fontWeight: 400,
+        fontFamily: "var(--font-inter)", fontSize: "var(--fs-14)", fontWeight: 400,
         letterSpacing: "-0.011em", color: "var(--text-muted)",
       }}>
         {label}
@@ -178,7 +178,7 @@ function WorkCard({ item }: { item: Work }) {
           background: item.tooltipBg,
           borderRadius: "var(--r-sm)",
           padding: "7px 12px",
-          fontSize: 12,
+          fontSize: "var(--fs-12)",
           fontFamily: "var(--font-manrope)",
           fontWeight: 700,
           letterSpacing: "-0.011em",
@@ -234,7 +234,7 @@ function InProgressCard() {
       {hovered && pos && (
         <div style={{
           position: "fixed", left: pos.x + 18, top: pos.y + 18, background: "#3b4a6b", borderRadius: "var(--r-sm)",
-          padding: "7px 12px", fontSize: 12, fontFamily: "var(--font-manrope)", fontWeight: 700,
+          padding: "7px 12px", fontSize: "var(--fs-12)", fontFamily: "var(--font-manrope)", fontWeight: 700,
           letterSpacing: "-0.011em", color: "#ffffff", pointerEvents: "none", zIndex: 9999, whiteSpace: "nowrap",
         }}>
           In progress

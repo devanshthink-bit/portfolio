@@ -175,7 +175,7 @@
     background-color: var(--bg);
     color: var(--text-secondary);
     font-family: var(--font-inter), "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Helvetica Neue", Arial, sans-serif;
-    font-size: 16px;
+    font-size: var(--fs-16);
     line-height: 1.6;
     letter-spacing: -0.02em;
     -webkit-font-smoothing: antialiased;
@@ -304,7 +304,7 @@
   .header-left,
   .header-left:hover {
     font-family: var(--font-geist-mono), monospace;
-    font-size: 14px;
+    font-size: var(--fs-14);
     font-weight: 600;
     letter-spacing: -0.011em;
     color: var(--text-muted);
@@ -357,7 +357,7 @@
 
   .intro h1 {
     font-family: var(--font-manrope), sans-serif;
-    font-size: 28px;
+    font-size: var(--fs-28);
     font-weight: 700;
     letter-spacing: -0.03em;
     line-height: 1.3;
@@ -377,7 +377,7 @@
   }
 
   .intro-body p {
-    font-size: 16px;
+    font-size: var(--fs-16);
     font-weight: 400;
     line-height: 1.6;
     letter-spacing: -0.02em;
@@ -414,7 +414,7 @@
      headings in portfolio in capital"). */
   .section-title {
     font-family: var(--font-manrope), sans-serif;
-    font-size: 12px;
+    font-size: var(--fs-12);
     font-weight: 800;
     color: var(--text-muted);
     text-transform: uppercase;
@@ -425,7 +425,7 @@
 
   /* Section body text */
   .section-body {
-    font-size: 16px;
+    font-size: var(--fs-16);
     font-weight: 400;
     line-height: 1.6;
     letter-spacing: -0.02em;
@@ -479,7 +479,7 @@
   }
 
   .work-card-title {
-    font-size: 14px;
+    font-size: var(--fs-14);
     font-weight: 400;
     letter-spacing: -0.02em;
     line-height: 1.6;
@@ -507,7 +507,7 @@
 
   .work-card-brand {
     font-family: var(--font-manrope), sans-serif;
-    font-size: 28px;
+    font-size: var(--fs-28);
     font-weight: 800;
     letter-spacing: -0.03em;
     line-height: 1.15;
@@ -516,7 +516,7 @@
 
   .work-card-did {
     font-family: var(--font-manrope), sans-serif;
-    font-size: 16px;
+    font-size: var(--fs-16);
     font-weight: 600;
     letter-spacing: -0.02em;
     line-height: 1.4;
@@ -529,7 +529,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    font-size: 14px;
+    font-size: var(--fs-14);
     color: var(--text-secondary);
     letter-spacing: -0.011em;
     margin: 0;
@@ -568,7 +568,7 @@
 
   .work-card-title-lg {
     font-family: var(--font-manrope), sans-serif;
-    font-size: 20px;
+    font-size: var(--fs-20);
     font-weight: 600;
     letter-spacing: -0.03em;
     display: flex;
@@ -579,7 +579,7 @@
 
   .work-card-year {
     font-family: var(--font-inter), sans-serif;
-    font-size: 14px;
+    font-size: var(--fs-14);
     font-weight: 400;
     color: var(--text-muted);
     letter-spacing: -0.011em;
@@ -587,7 +587,7 @@
   }
 
   .work-card-blurb {
-    font-size: 16px;
+    font-size: var(--fs-16);
     line-height: 1.5;
     color: var(--text-muted);
     letter-spacing: -0.02em;
@@ -595,7 +595,7 @@
   }
 
   .work-card-impact {
-    font-size: 16px;
+    font-size: var(--fs-16);
     line-height: 1.5;
     color: #B7791F;
     letter-spacing: -0.02em;
@@ -612,7 +612,7 @@
     display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
     margin: 0 0 8px; padding: 5px 11px 5px 9px; border-radius: 100px;
     background: rgba(59, 74, 107, 0.08); color: #3b4a6b;
-    font-family: var(--font-inter), sans-serif; font-size: 14px; font-weight: 500; letter-spacing: -0.011em;
+    font-family: var(--font-inter), sans-serif; font-size: var(--fs-14); font-weight: 500; letter-spacing: -0.011em;
   }
   .wip-dot { position: relative; width: 7px; height: 7px; border-radius: 50%; background: #4f6bd8; }
   .wip-dot::after {
@@ -751,7 +751,7 @@
     width: 100%;
     padding-top: 16px;
     padding-bottom: 30px;
-    font-size: 14px;
+    font-size: var(--fs-14);
     color: var(--text-muted);
     letter-spacing: -0.011em;
   }
@@ -772,7 +772,7 @@
 
   .footer-heading {
     font-family: var(--font-manrope), sans-serif;
-    font-size: 28px;
+    font-size: var(--fs-28);
     font-weight: 700;
     letter-spacing: -0.03em;
     line-height: 1.3;
@@ -793,7 +793,7 @@
 
   .footer-link {
     font-family: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
-    font-size: 14px;
+    font-size: var(--fs-14);
     font-weight: 400;
     letter-spacing: -0.02em;
     color: var(--text-muted);
@@ -976,7 +976,7 @@
   }
 
   .iphone-sbar b {
-    font: 600 17px/21px var(--font-inter), -apple-system, system-ui, sans-serif;
+    font: 600 var(--fs-17)/21px var(--font-inter), -apple-system, system-ui, sans-serif;
     letter-spacing: -0.4px;
     color: #1d1d1d;
   }
@@ -1049,7 +1049,7 @@
     border-radius: 50%;
     background: #E81E38;
     color: #fff;
-    font: 700 12px/22px var(--font-manrope), sans-serif;
+    font: 700 var(--fs-12)/22px var(--font-manrope), sans-serif;
     text-align: center;
     font-variant-numeric: tabular-nums;
     margin-top: 1px;
@@ -1057,7 +1057,7 @@
 
   .phone-note-title {
     font-family: var(--font-manrope), sans-serif;
-    font-size: 16px;
+    font-size: var(--fs-16);
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.4;
@@ -1067,7 +1067,7 @@
 
   .phone-note-sub {
     font-family: var(--font-inter), sans-serif;
-    font-size: 14px;
+    font-size: var(--fs-14);
     line-height: 1.5;
     letter-spacing: -0.011em;
     color: var(--text-muted);
@@ -1127,13 +1127,13 @@
   .phone-fig-label {
     font-family: var(--font-manrope), sans-serif;
     font-weight: 700;
-    font-size: 16px;
+    font-size: var(--fs-16);
     color: var(--text-primary);
     letter-spacing: -0.02em;
   }
 
   .phone-fig-cap {
-    font-size: 14px;
+    font-size: var(--fs-14);
     color: var(--text-muted);
     letter-spacing: -0.011em;
   }
@@ -1188,7 +1188,7 @@
     background: #1d1d1d;
     color: #fff;
     font-family: var(--font-manrope), sans-serif;
-    font-size: 14px;
+    font-size: var(--fs-14);
     font-weight: 500;
     letter-spacing: -0.011em;
   }
@@ -1223,7 +1223,7 @@
 
   .cs-act-kicker {
     font-family: var(--font-manrope), sans-serif;
-    font-size: 12px;
+    font-size: var(--fs-12);
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -1233,7 +1233,7 @@
 
   .cs-act-title {
     font-family: var(--font-manrope), sans-serif;
-    font-size: 28px;
+    font-size: var(--fs-28);
     font-weight: 800;
     letter-spacing: -0.03em;
     line-height: 1.15;
@@ -1243,7 +1243,7 @@
 
   .cs-act-sub {
     font-family: var(--font-inter), sans-serif;
-    font-size: 18px;
+    font-size: var(--fs-18);
     line-height: 1.6;
     letter-spacing: -0.011em;
     color: var(--text-secondary);
@@ -1254,7 +1254,7 @@
   /* Labels: "Scene 4 · A week later" → a red marker, then a quiet name. */
   .cs-label {
     font-family: var(--font-manrope), sans-serif;
-    font-size: 12px;
+    font-size: var(--fs-12);
     font-weight: 800;   /* same size and weight as the home section titles (Devansh, 15 Sep) */
     text-transform: uppercase;   /* capitals, like the home section titles (Devansh, 15 Sep) */
     letter-spacing: 0.1em;
@@ -1280,7 +1280,7 @@
     align-items: center;
     gap: 5px;
     font-family: var(--font-inter), sans-serif;
-    font-size: 14px;
+    font-size: var(--fs-14);
     font-weight: 500;
     letter-spacing: -0.011em;
     white-space: nowrap;
@@ -1316,7 +1316,7 @@
     border-bottom: 1px solid var(--border);
   }
   .cs-numbered-n {
-    font: 700 16px/1 var(--font-manrope), sans-serif;
+    font: 700 var(--fs-16)/1 var(--font-manrope), sans-serif;
     color: #E81E38;
     font-variant-numeric: tabular-nums;
   }
@@ -1328,7 +1328,7 @@
     padding: 11px 18px;
     border-radius: 100px;
     font-family: var(--font-manrope), sans-serif;
-    font-size: 14px;
+    font-size: var(--fs-14);
     font-weight: 600;
     letter-spacing: -0.011em;
     color: var(--text-primary);
@@ -1397,10 +1397,10 @@
   }
 
   @media (max-width: 640px) {
-    .cs-act-title { font-size: 24px; }
+    .cs-act-title { font-size: var(--fs-24); }
     /* The page title's size is inline (T.h1), so the phone size has to win over it. */
-    .cs-page h1 { font-size: 24px !important; }
-    .cs-act-sub { font-size: 16px; }
+    .cs-page h1 { font-size: var(--fs-24) !important; }
+    .cs-act-sub { font-size: var(--fs-16); }
     .cs-inshort,
     .cs-moscow,
     .cs-swatches { grid-template-columns: minmax(0, 1fr); }
@@ -1486,7 +1486,7 @@
   .cs-list li {
     position: relative;
     padding-left: 16px;
-    font-size: 16px;
+    font-size: var(--fs-16);
     line-height: 1.6;
     color: var(--text-secondary);
   }
@@ -1552,12 +1552,12 @@
 
   .intro h1,
   .footer-heading {
-    font-size: 24px;
+    font-size: var(--fs-24);
   }
 
   .intro-body p,
   .section-body {
-    font-size: 16px;
+    font-size: var(--fs-16);
   }
 
   /* Work cards — no hover bg on touch */
@@ -1612,24 +1612,24 @@
   .cs-proto-stage .iphone { --n: 300; }
 
   .work-card-brand {
-    font-size: 24px;
+    font-size: var(--fs-24);
   }
 
   .work-card-did {
-    font-size: 16px;
+    font-size: var(--fs-16);
   }
 
   .work-card-tags {
-    font-size: 14px;
+    font-size: var(--fs-14);
   }
 
   .work-card-title-lg {
-    font-size: 18px;
+    font-size: var(--fs-18);
   }
 
   .work-card-blurb,
   .work-card-impact {
-    font-size: 16px;
+    font-size: var(--fs-16);
   }
 
   .cs-meta-strip {
@@ -1667,11 +1667,11 @@
   }
 
   .stat-value {
-    font-size: 24px !important;
+    font-size: var(--fs-24) !important;
   }
 
   .stat-label {
-    font-size: 12px !important;
+    font-size: var(--fs-12) !important;
     letter-spacing: -0.011em !important;
   }
 
@@ -1750,8 +1750,16 @@
 .cs-idea-pick { border-radius: var(--r-md); padding: 20px 22px; background: rgba(232, 30, 56, 0.06); box-shadow: inset 0 0 0 1.5px #E81E38, var(--shadow-md); }
 .cs-idea-rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
 .cs-idea-rows li { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 16px; row-gap: 2px; padding: 12px 2px; border-bottom: 1px solid var(--border); }
-.cs-idea-why { font: 700 16px/1.4 var(--font-manrope), sans-serif; letter-spacing: -0.02em; color: var(--text-primary); }
-.cs-idea-count { font: 500 14px/1.4 var(--font-inter), sans-serif; color: var(--text-muted); font-variant-numeric: tabular-nums; align-self: start; padding-top: 2px; }
-.cs-idea-names { grid-column: 1 / -1; font-size: 14px; line-height: 1.5; color: var(--text-muted); }
+.cs-idea-why { font: 700 var(--fs-16)/1.4 var(--font-manrope), sans-serif; letter-spacing: -0.02em; color: var(--text-primary); }
+.cs-idea-count { font: 500 var(--fs-14)/1.4 var(--font-inter), sans-serif; color: var(--text-muted); font-variant-numeric: tabular-nums; align-self: start; padding-top: 2px; }
+.cs-idea-names { grid-column: 1 / -1; font-size: var(--fs-14); line-height: 1.5; color: var(--text-muted); }
 @media (max-width: 640px) { .cs-idea-list { grid-template-columns: minmax(0, 1fr); } }
 
+
+/* Text sizes as tokens: the same px on the web, one step smaller on phones (Devansh, 15 Sep:
+   "for the phone, smaller font size everywhere inside the case study, on the home page and on the
+   About page. But strictly don't touch them on the web"). 12px is the floor and stays. */
+:root { --fs-12: 12px; --fs-14: 14px; --fs-16: 16px; --fs-17: 17px; --fs-18: 18px; --fs-20: 20px; --fs-24: 24px; --fs-28: 28px; }
+@media (max-width: 640px) {
+  :root { --fs-14: 13px; --fs-16: 15px; --fs-17: 16px; --fs-18: 16px; --fs-20: 18px; --fs-24: 22px; --fs-28: 24px; }
+}
