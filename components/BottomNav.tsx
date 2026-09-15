@@ -192,7 +192,7 @@ export default function BottomNav() {
         { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
         { duration: 700, easing: "cubic-bezier(0.22, 1, 0.36, 1)", pseudoElement: "::view-transition-new(root)" },
       );
-    });
+    }).catch(() => {});   // a skipped transition (a hidden tab, say) still switches the theme; nothing to report
   };
 
   // Hidden on the RedBus case study at Devansh's request: the contents list and Ask Devansh sit there.
