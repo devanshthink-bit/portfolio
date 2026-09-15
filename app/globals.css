@@ -8,7 +8,7 @@
     --text-muted: #918e89;
     --border: #f1ede5;
     --card-bg: #f2f2f0;
-    --hero-bg: #f4f5f7;
+    --hero-bg: #efede9;   /* warm stone, not cool grey (Devansh, 15 Sep) */
     --cs-callout-bg: rgba(0, 0, 0, 0.028);
     --cs-stat-gap: #e8e4df;
     --tag-bg: var(--bg);
@@ -611,8 +611,12 @@
        24px bottom offset + 66px pill height), not the full viewport */
     box-sizing: border-box;
     padding-bottom: 90px;
-    background: var(--hero-bg);
+    /* A soft light from the top, deepening a touch toward the white sheet that slides over it. */
+    background:
+      radial-gradient(120% 70% at 50% 0%, #f7f6f3 0%, rgba(247, 246, 243, 0) 65%),
+      linear-gradient(180deg, #f1efeb 0%, #e9e6e1 100%);
   }
+  html.nerd-mode .stack-hero { background: var(--hero-bg); }
 
   .stack-hero-inner {
     max-width: 980px;
