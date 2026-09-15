@@ -94,8 +94,8 @@ export default function BottomNav() {
       onMouseLeave={() => { window.dispatchEvent(new Event("cursor:show")); setHovered(null); }}
       style={{
         position: "fixed", bottom: 24, left: "50%", transform: "translateX(-50%)",
-        zIndex: 1000, display: "flex", gap: 20, alignItems: "center",
-        background: "#2e2e2e", padding: "14px 20px", borderRadius: 100,
+        zIndex: 1000, display: "flex", gap: 16, alignItems: "center",
+        background: "#2e2e2e", padding: "18px 24px", borderRadius: 100,
       }}
     >
       <Link href="/" aria-label="Home" style={{ display: "inline-flex" }}>
