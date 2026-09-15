@@ -1798,7 +1798,6 @@
 .stats-line { display: none; }
 @media (max-width: 640px) {
 .stats-line { display: flex; justify-content: space-between; align-items: baseline; white-space: nowrap; margin: 0;
-  border-top: 1px solid var(--border); padding-top: 16px;
   font-size: var(--fs-14); letter-spacing: -0.011em; color: var(--text-muted); }
 .stats-line b { font: 700 18px/1 var(--font-manrope), sans-serif; letter-spacing: -0.02em; color: var(--text-primary); margin-right: 5px; }
 /* Very subtle separators that fade out at the top and bottom (Devansh, 15 Sep). */
