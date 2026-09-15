@@ -205,8 +205,9 @@ export default function Home() {
               <span className="stats-web">
                 <b>0
                   {/* Lucide arrow-right, drawn rather than typed */}
-                  <svg width="0.75em" height="0.75em" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-label="to" style={{ display: "inline-block", margin: "0 2px", verticalAlign: "0.02em" }}>
-                    <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+                  {/* Drawn to match the old typed "→" in Manrope: long and thin, a space each side (Devansh, 15 Sep) */}
+                  <svg width="1em" height="0.58em" viewBox="0 0 24 14" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-label="to" style={{ display: "inline-block", margin: "0 0.26em", verticalAlign: "0.06em" }}>
+                    <path d="M1.5 7h21" /><path d="M16.5 1l6 6-6 6" />
                   </svg>
                 1</b>&amp; at scale
               </span>
