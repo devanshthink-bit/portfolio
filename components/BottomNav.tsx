@@ -13,7 +13,7 @@ function Solar({ body }: { body: string }) {
 // The home mark: a lowercase "ds." in Instrument Serif Italic, sized to sit with the 22px icons.
 function HomeIcon() {
   return (
-    <span aria-hidden style={{ fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic", fontSize: 26, lineHeight: 1, letterSpacing: "0.01em", display: "block", marginTop: -0.5 /* measured: ink sits centred, ~10px above and below */ }}>
+    <span aria-hidden style={{ fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic", fontSize: 26, lineHeight: 1, letterSpacing: "0.01em", display: "block", transform: "translateY(0.55px)" /* measured: centres the ink, 10.2px above and below */ }}>
       ds.
     </span>
   );
