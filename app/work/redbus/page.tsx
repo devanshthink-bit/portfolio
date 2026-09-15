@@ -11,7 +11,7 @@ import PhoneShot from "../../../components/PhoneShot";
 
 
 export const metadata: Metadata = {
-  title: "RedBus · Winning the return ticket at checkout · Devansh Somvanshi",
+  title: "RedBus | Winning the return ticket at checkout | Devansh Somvanshi",
   description: "A concept for RedBus: book the return in the same checkout, before you know the date.",
 };
 
@@ -45,7 +45,7 @@ function InShort() {
       {rows.map((r) => (
         <div key={r.k}>
           <p style={{ ...T.eyebrow, marginBottom: 8 }}>{r.k}</p>
-          <p style={{ ...T.body, fontSize: 15, color: "var(--text-primary)" }}>{r.v}</p>
+          <p style={{ ...T.body, fontSize: 15 }}>{r.v}</p>
         </div>
       ))}
     </div>
@@ -59,7 +59,7 @@ function TripStrip() {
       <Card>
         <p style={T.eyebrow}>The way out</p>
         <p style={{ ...T.cardH, fontSize: 20, margin: "8px 0 2px" }}>Delhi → Nainital</p>
-        <p style={{ ...T.body, marginBottom: 14 }}>Thu, 10 Sep · 23:55 · Seat U4</p>
+        <p style={{ ...T.body, marginBottom: 14 }}>Thu, 10 Sep, 23:55, Seat U4</p>
         <Chip tone="green">Booked</Chip>
       </Card>
       <div style={{ borderRadius: 10, padding: "18px 20px", border: "1.5px dashed var(--cs-stat-gap)" }}>
@@ -181,7 +181,7 @@ function Ideas() {
           <li key={g.why}>
             <span className="cs-idea-why">{g.why}</span>
             <span className="cs-idea-count">{g.ideas.length}</span>
-            <span className="cs-idea-names">{g.ideas.join(" · ")}</span>
+            <span className="cs-idea-names">{g.ideas.join(", ")}</span>
           </li>
         ))}
       </ul>
@@ -354,7 +354,7 @@ export default function RedbusCaseStudy() {
 
       <SectionLabel>Case study · Product design, concept</SectionLabel>
       <h1 style={T.h1}>
-        <span style={{ color: RED }}>RedBus</span> · Winning the return ticket at checkout
+        <span style={{ display: "block", color: "var(--brand-red)" }}>RedBus</span>Winning the return ticket at checkout
       </h1>
       <p style={T.lede}>Most travellers book the bus out and leave the way back for later. A quarter of them then book it on another app. I redesigned the moment RedBus asks about the return, so it can be booked in the same checkout, without a date.</p>
 
@@ -559,8 +559,8 @@ export default function RedbusCaseStudy() {
         sub={<>Two answers sit above the calendar: &quot;I know my date&quot; and &quot;I&apos;m not sure yet&quot;. I borrowed the shape from Swiggy&apos;s &quot;When?&quot; toggle and kept one line under it, because two words alone is how Sai misread &quot;tap two days&quot;.</>}
         caption="My mentor spotted this problem three weeks before testing. It took three testers for me to see it.">
         <PhoneRow phones={[
-          { src: scr("lofi_v3"), lofi: true, label: "Before · v3", caption: "\"Tap two days\" read as two days in a row", alt: "Version 3 calendar with 'Tap two days instead'." },
-          { src: scr("lofi_v4"), lofi: true, label: "After · v4", caption: "Ask first. The calendar stays right under it.", alt: "Version 4 asking 'I know my date' or 'I'm not sure yet'." },
+          { src: scr("lofi_v3"), lofi: true, label: "Before: v3", caption: "\"Tap two days\" read as two days in a row", alt: "Version 3 calendar with 'Tap two days instead'." },
+          { src: scr("lofi_v4"), lofi: true, label: "After: v4", caption: "Ask first. The calendar stays right under it.", alt: "Version 4 asking 'I know my date' or 'I'm not sure yet'." },
         ]} />
       </Beat>
 

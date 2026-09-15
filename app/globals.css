@@ -8,7 +8,8 @@
     --text-muted: #918e89;
     --border: #f1ede5;
     --card-bg: #f2f2f0;
-    --hero-bg: #f6f5f3;   /* warm stone, not cool grey (Devansh, 15 Sep) */
+    --hero-bg: #f6f5f3;
+    --brand-red: #B42335;   /* the RedBus name: a deep red that sits with black (Devansh, 15 Sep) */   /* warm stone, not cool grey (Devansh, 15 Sep) */
     --cs-callout-bg: rgba(0, 0, 0, 0.028);
     --cs-stat-gap: #e8e4df;
     --tag-bg: var(--bg);
@@ -27,6 +28,7 @@
     --border: rgba(255, 255, 255, 0.08);
     --card-bg: rgba(255, 255, 255, 0.06);
     --hero-bg: var(--bg);
+    --brand-red: #E8566A;
     --cs-callout-bg: rgba(255, 255, 255, 0.06);
     --cs-stat-gap: rgba(255, 255, 255, 0.08);
     --tag-bg: rgba(255, 255, 255, 0.10);
@@ -1170,13 +1172,12 @@
   .cs-label-lead + .cs-label-rest::before {
     content: "";
     display: inline-block;
-    width: 3px;
-    height: 3px;
-    border-radius: 50%;
+    width: 1px;
+    height: 0.95em;
     background: currentColor;
-    vertical-align: middle;
-    margin: 0 8px 2px;
-    opacity: 0.7;
+    vertical-align: -0.12em;
+    margin: 0 10px;
+    opacity: 0.45;   /* a thin rule, like the home card's tags, not a dot (Devansh, 15 Sep) */
   }
   .cs-act-kicker .cs-label-rest { color: var(--text-muted); }
 
@@ -1246,19 +1247,16 @@
   .cs-pill.is-primary:hover { transform: translateY(-1px); }
   .cs-pill svg { opacity: 0.75; }
 
+  /* Three short answers in plain columns: no grid of boxes, just space. */
   .cs-inshort {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1px;
-    background: var(--cs-stat-gap);
-    border-radius: 12px;
-    overflow: hidden;
-    margin: 0 0 24px;
+    gap: 40px;
+    margin: 0 0 40px;
   }
 
   .cs-inshort > div {
-    background: var(--bg);
-    padding: 20px 22px;
+    padding: 0;
   }
 
   .cs-credits {

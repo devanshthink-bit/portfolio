@@ -11,7 +11,7 @@ const INTER = "var(--font-inter)";
 // Type scale for case studies, in the site's own fonts and tokens.
 export const T = {
   h1:      { fontFamily: MANROPE, fontSize: 26, fontWeight: 800, color: "var(--text-primary)", letterSpacing: "-0.04em", lineHeight: 1.08, margin: "0 0 16px 0" } as React.CSSProperties,
-  lede:    { fontFamily: INTER, fontSize: 20, fontWeight: 400, color: "var(--text-secondary)", letterSpacing: "-0.02em", lineHeight: 1.5, margin: "0 0 36px 0", maxWidth: 620 } as React.CSSProperties,
+  lede:    { fontFamily: INTER, fontSize: 18, fontWeight: 400, color: "var(--text-secondary)", letterSpacing: "-0.015em", lineHeight: 1.6, margin: "0 0 44px 0", maxWidth: 640 } as React.CSSProperties,
   h2:      { fontFamily: MANROPE, fontSize: 22, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.035em", lineHeight: 1.22, margin: "0 0 12px 0" } as React.CSSProperties,
   sub:     { fontFamily: INTER, fontSize: 16.5, color: "var(--text-secondary)", lineHeight: 1.65, letterSpacing: "-0.012em", margin: 0, maxWidth: 640 } as React.CSSProperties,
   small:   { fontFamily: INTER, fontSize: 13.5, color: "var(--text-muted)", lineHeight: 1.55, letterSpacing: "-0.005em", margin: 0 } as React.CSSProperties,
@@ -23,7 +23,7 @@ export const T = {
   figure:  { fontFamily: MANROPE, fontWeight: 800, letterSpacing: "-0.04em", color: "var(--text-primary)", fontVariantNumeric: "tabular-nums" } as React.CSSProperties,
 };
 
-// "Scene 4 · A week later" reads as a red marker and a quiet name, not one shouted line.
+// "Scene 4 · A week later" in the source shows as "SCENE 4 | A WEEK LATER": a thin rule, not a dot.
 export function LabelText({ text }: { text: string }) {
   const i = text.indexOf(" · ");
   if (i < 0) return <>{text}</>;
