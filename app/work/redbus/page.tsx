@@ -387,7 +387,6 @@ export default function RedbusCaseStudy() {
       </h1>
       <p style={T.lede}>Most travellers book the bus out and leave the way back for later. A quarter of them then book it on another app. I redesigned the moment RedBus asks about the return, so it can be booked in the same checkout, without a date.</p>
 
-      <InShort />
       <MetaStrip items={[
         { label: "Role", value: "Product designer, solo, self-initiated" },
         { label: "Timeline", value: "6 weeks" },
@@ -653,6 +652,12 @@ export default function RedbusCaseStudy() {
         ]} />
       </Beat>
 
+
+      {/* The three-line summary, as a recap at the end: the intro was too text heavy with it (Devansh, 15 Sep). */}
+      <section className="cs-beat">
+        <SectionLabel>In short</SectionLabel>
+        <InShort />
+      </section>
 
       <Closing />
     </main>
