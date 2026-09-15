@@ -1787,15 +1787,11 @@
 @media (max-width: 640px), (hover: none) { .custom-cursor { display: none !important; } }
 
 /* Home hero on phones, less cluttered (Devansh, 15 Sep: "make all these changes in mobile only"):
-   the photo small beside a role line, no "Designer & Developer." heading line, no craft paragraph,
-   the hello as one outlined pill, three numbers on one-line labels under a thin rule. */
-.intro-top { display: contents; }
-.intro-role { display: none; }
+   no craft paragraph, the hello as one outlined pill, three numbers on one-line labels under a thin
+   rule. "Designer & Developer." stays the first heading line, as on the web. */
 @media (max-width: 640px) {
-  .intro-top { display: flex; align-items: center; gap: 12px; }
-  .intro-top .avatar { width: 64px; height: 64px; }
-  .intro-role { display: block; font: 600 var(--fs-14)/1.3 var(--font-manrope), sans-serif; letter-spacing: -0.011em; color: var(--text-muted); }
-  .intro-h-label, .intro-craft, .intro-hello-lead { display: none; }
+  .avatar { width: 96px; height: 96px; }
+  .intro-craft, .intro-hello-lead { display: none; }
   .intro { gap: 20px; }
   .intro-body .inline-link { display: inline-flex; align-items: center; padding: 9px 16px; border: 1px solid var(--border);
     border-radius: 100px; font: 600 var(--fs-14)/1 var(--font-manrope), sans-serif; letter-spacing: -0.011em; color: var(--text-primary); }

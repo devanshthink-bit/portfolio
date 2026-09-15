@@ -4,9 +4,6 @@ import Image from "next/image";
 export default function Hero() {
   return (
     <section className="intro">
-      {/* Phones: the photo, small, in one row with the role line (hidden on the web, where
-          "Designer & Developer." is the first heading line). */}
-      <div className="intro-top">
       <div className="avatar">
         <Image
           src="/images/avatar.jpg"
@@ -16,8 +13,6 @@ export default function Hero() {
           className="avatar-img"
           priority
         />
-      </div>
-      <span className="intro-role">Designer &amp; Developer</span>
       </div>
 
       <div className="intro-headings">
