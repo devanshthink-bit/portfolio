@@ -1799,11 +1799,11 @@
 .stats-line { display: flex; justify-content: space-between; align-items: baseline; white-space: nowrap; margin: 0;
   border-top: 1px solid var(--border); padding-top: 16px;
   font-size: var(--fs-14); letter-spacing: -0.011em; color: var(--text-muted); }
-.stats-line b { font: 700 var(--fs-16)/1 var(--font-manrope), sans-serif; letter-spacing: -0.02em; color: var(--text-primary); margin-right: 5px; }
+.stats-line b { font: 700 20px/1 var(--font-manrope), sans-serif; letter-spacing: -0.02em; color: var(--text-primary); margin-right: 5px; }   /* 20px on phones too (Devansh, 15 Sep) */
 .stats-line i { align-self: center; width: 1px; height: 0.95em; background: currentColor; opacity: 0.45; }
 @media (min-width: 641px) {
   .stats-line { font-size: 15px; padding-top: 20px; }
-  .stats-line b { font-size: 20px; margin-right: 6px; }
+  .stats-line b { margin-right: 6px; }
 }
 
 /* Web: while the page scrolls the dock folds into a short thick bar near the bottom edge, like the
