@@ -541,11 +541,11 @@
     content: "";
     display: inline-block;
     width: 1px;
-    height: 11px;
-    background: currentColor;
-    opacity: 0.28;
+    height: var(--sep-h);
+    background: var(--sep-bg);
+    opacity: var(--sep-o);
     margin: 0 10px;
-    vertical-align: -1px;
+    vertical-align: middle;
   }
 
   .work-card-panel img {
@@ -1268,11 +1268,11 @@
     content: "";
     display: inline-block;
     width: 1px;
-    height: 0.95em;
-    background: currentColor;
-    vertical-align: -0.12em;
+    height: var(--sep-h);
+    background: var(--sep-bg);
+    vertical-align: middle;
     margin: 0 10px;
-    opacity: 0.45;   /* a thin rule, like the home card's tags, not a dot (Devansh, 15 Sep) */
+    opacity: var(--sep-o);   /* the one separator style (see --sep-h), not a dot (Devansh, 15 Sep) */
   }
   .cs-act-kicker .cs-label-rest { color: var(--text-muted); }
 
@@ -1800,8 +1800,7 @@
 .stats-line { display: flex; justify-content: space-between; align-items: baseline; white-space: nowrap; margin: 0;
   font-size: var(--fs-14); letter-spacing: -0.011em; color: var(--text-muted); }
 .stats-line b { font: 700 18px/1 var(--font-manrope), sans-serif; letter-spacing: -0.02em; color: var(--text-primary); margin-right: 5px; }
-/* Very subtle separators that fade out at the top and bottom (Devansh, 15 Sep). */
-.stats-line i { align-self: center; width: 1px; height: 1.6em; background: linear-gradient(180deg, transparent, currentColor 50%, transparent); opacity: 0.35; }
+.stats-line i { align-self: center; width: 1px; height: var(--sep-h); background: var(--sep-bg); opacity: var(--sep-o); }
 }
 
 /* Web: while the page scrolls the dock folds into a short thick bar near the bottom edge, like the
@@ -1847,3 +1846,10 @@
 /* The theme's circular reveal (BottomNav): the browser's own cross-fade is switched off so only the
    circle grows. */
 ::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+
+/* One separator style for the whole site: a 1px line that fades out at the top and bottom, very faint
+   (Devansh, 15 Sep: "make all separators in web and mobile subtle like this... look exactly the same").
+   Used by the home card tags, the case study labels and the phone hero numbers. 18px tall on the web,
+   20px on phones. */
+:root { --sep-h: 18px; --sep-o: 0.35; --sep-bg: linear-gradient(180deg, transparent, currentColor 50%, transparent); }
+@media (max-width: 640px) { :root { --sep-h: 20px; } }
