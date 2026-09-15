@@ -5,7 +5,7 @@
     --bg: #fafafa;
     --text-primary: #1d1d1d;
     --text-secondary: #403f3e;   /* a touch darker and more neutral than #4a4948, so body text reads grey, not brown, on the stone ground */
-    --text-muted: #918e89;
+    --text-muted: #726e68;   /* labels, captions, meta. 4.9:1 on the page; #918e89 was 3.2:1, too faint for small text */
     --border: #f1ede5;
     --card-bg: #f2f2f0;
     --hero-bg: #f6f5f3;
@@ -34,7 +34,7 @@
     --raised: #1f1e1c;
     --text-primary: #f5f3ef;
     --text-secondary: #c9c5bf;
-    --text-muted: #8f8a82;
+    --text-muted: #a19c94;
     --border: rgba(255, 255, 255, 0.09);
     --card-bg: #2a2927;
     --hero-bg: #171614;
@@ -482,7 +482,7 @@
     font-weight: 600;
     letter-spacing: -0.02em;
     line-height: 1.4;
-    color: #1d1d1d;
+    color: var(--text-primary);
     margin: 0;
   }
 
@@ -492,7 +492,7 @@
     flex-wrap: wrap;
     align-items: center;
     font-size: 14px;
-    color: #4a4948;
+    color: var(--text-secondary);
     letter-spacing: -0.01em;
     margin: 0;
   }
@@ -1387,13 +1387,8 @@
   }
 
   /* ── RedBus case study polish (scoped to main.cs-page) ── */
-  /* The site's muted grey is 3.2:1 on the page; captions here are small, so darken it to 4.9:1. */
-  /* Paragraphs in a softer grey so the black headings stand apart (Devansh, 15 Sep). */
-  .cs-page { --text-muted: #726e68; --text-secondary: #67645f; }
-  html.nerd-mode .cs-page { --text-muted: #a19c94; --text-secondary: #b3aea6; }
-  /* Headings keep the home page's grey, not the darker body grey above (Devansh, 15 Sep: "make it like home"). */
-  .cs-page .cs-label, .cs-page .cs-label-lead, .cs-page .cs-act-kicker, .cs-page .cs-act-kicker .cs-label-rest { color: #918e89; }
-  html.nerd-mode .cs-page .cs-label, html.nerd-mode .cs-page .cs-label-lead, html.nerd-mode .cs-page .cs-act-kicker, html.nerd-mode .cs-page .cs-act-kicker .cs-label-rest { color: #8f8a82; }
+  /* Text colour is the same on every page (16 Sep 2026): headings --text-primary, paragraphs
+     --text-secondary, labels and captions --text-muted. The case study no longer overrides them. */
 
   .cs-page h1,
   .cs-page h2 { text-wrap: balance; }
