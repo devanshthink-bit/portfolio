@@ -63,8 +63,12 @@
     corner-shape: superellipse(2);
   }
   /* The dock is 312px wide; tighten it on the narrowest phones. */
+  .dock-bg { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+  .dock-bg-narrow { display: none; }
   @media (max-width: 380px) {
     .bottom-dock { gap: 14px !important; padding: 12px 16px !important; }
+    .dock-bg-wide { display: none; }
+    .dock-bg-narrow { display: block; }
   }
 
   /* Native hand cursor over the bottom dock and footer links (custom circle is hidden there) */

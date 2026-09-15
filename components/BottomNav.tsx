@@ -1,5 +1,5 @@
 "use client";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { playDockClick } from "@/lib/dockSound";
@@ -54,6 +54,15 @@ function squirclePath(w: number, h: number, radius = 24, smoothing = 1) {
   ].join(" ");
 }
 
+/* The dock has a fixed size, so both outlines ship in the HTML and CSS picks one:
+   no measuring, so no flash of plain corners on load. Keep in step with the padding,
+   gap and 40px items here and the narrow-phone rule in globals.css. */
+const dockSize = (padX: number, padY: number, gap: number) => ({ w: 5 * 40 + 4 * gap + 2 * padX, h: 40 + 2 * padY });
+const DOCK_SHAPES = [
+  { cls: "dock-bg-wide", ...dockSize(24, 18, 16) },
+  { cls: "dock-bg-narrow", ...dockSize(16, 12, 14) },
+];
+
 function DockItem({ label, hovered, pitch, onHover, children }: {
   label: string; hovered: boolean; pitch: number; onHover: (v: boolean) => void; children: React.ReactNode;
 }) {
@@ -105,16 +114,6 @@ export default function BottomNav() {
   const pathname = usePathname();
   const [isDark, setIsDark] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
-  const navRef = useRef<HTMLElement>(null);
-  const [size, setSize] = useState({ w: 0, h: 0 });
-
-  useLayoutEffect(() => {
-    const el = navRef.current;
-    if (!el) return;
-    const ro = new ResizeObserver(() => setSize({ w: el.offsetWidth, h: el.offsetHeight }));
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, [pathname]);
 
   const toggleTheme = () => {
     const next = !isDark;
@@ -135,23 +134,20 @@ export default function BottomNav() {
 
   return (
     <nav
-      ref={navRef}
       className="bottom-dock"
       onMouseEnter={() => window.dispatchEvent(new Event("cursor:hide"))}
       onMouseLeave={() => { window.dispatchEvent(new Event("cursor:show")); setHovered(null); }}
       style={{
         position: "fixed", bottom: 24, left: "50%", transform: "translateX(-50%)",
         zIndex: 1000, display: "flex", gap: 16, alignItems: "center",
-        // Until the outline is measured, a plain rounded background stands in.
-        background: size.w ? "transparent" : "#2e2e2e", padding: "18px 24px", borderRadius: 24,
+        padding: "18px 24px", borderRadius: 24,
       }}
     >
-      {size.w > 0 && (
-        <svg aria-hidden width={size.w} height={size.h} viewBox={`0 0 ${size.w} ${size.h}`}
-          style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: -1 }}>
-          <path d={squirclePath(size.w, size.h)} fill="#2e2e2e" />
+      {DOCK_SHAPES.map(({ cls, w, h }) => (
+        <svg key={cls} className={`dock-bg ${cls}`} aria-hidden width={w} height={h} viewBox={`0 0 ${w} ${h}`}>
+          <path d={squirclePath(w, h)} fill="#2e2e2e" />
         </svg>
-      )}
+      ))}
       <Link href="/" aria-label="Home" style={{ display: "inline-flex" }}>
         <DockItem label="Home" pitch={1} hovered={hovered === "home"} onHover={v => setHovered(v ? "home" : null)}><HomeIcon /></DockItem>
       </Link>
