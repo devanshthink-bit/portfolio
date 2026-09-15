@@ -1255,6 +1255,11 @@
     margin: 0 0 40px;
   }
 
+  /* The summary under the buttons: the same 72px above it and below it, before Act 1's rule. */
+  .cs-inshort-wrap { margin: 72px 0 0; }
+  .cs-inshort-wrap .cs-inshort { margin: 0; }
+  .cs-inshort-wrap + .cs-act { margin-top: 72px; }
+
   .cs-inshort > div {
     padding: 0;
   }

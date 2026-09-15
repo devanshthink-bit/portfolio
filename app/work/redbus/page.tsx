@@ -401,8 +401,7 @@ export default function RedbusCaseStudy() {
       </div>
 
       {/* The quick summary, as its own block under the buttons, so the title area stays light (Devansh, 15 Sep). */}
-      <section className="cs-beat" style={{ marginTop: 56 }}>
-        <SectionLabel>In short</SectionLabel>
+      <section className="cs-inshort-wrap">
         <InShort />
       </section>
 
