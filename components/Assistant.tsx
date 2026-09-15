@@ -71,7 +71,7 @@ export default function Assistant() {
           background: "var(--raised)",
           border: "1px solid var(--border)",
           borderRadius: 16,
-          boxShadow: "0 8px 40px rgba(0,0,0,0.12)",
+          boxShadow: "var(--shadow-float)",
           display: "flex", flexDirection: "column",
           overflow: "hidden",
           maxHeight: open ? 480 : 0,
@@ -197,16 +197,16 @@ export default function Assistant() {
           background: "var(--text-primary)",
           border: "none", cursor: "pointer",
           display: "flex", alignItems: "center", justifyContent: "center",
-          boxShadow: "0 4px 20px rgba(0,0,0,0.18)",
+          boxShadow: "var(--shadow-float)",
           transition: "transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out)",
         }}
         onMouseEnter={e => {
           e.currentTarget.style.transform = "scale(1.06)";
-          e.currentTarget.style.boxShadow = "0 6px 24px rgba(0,0,0,0.22)";
+          e.currentTarget.style.boxShadow = "var(--shadow-lg)";
         }}
         onMouseLeave={e => {
           e.currentTarget.style.transform = "scale(1)";
-          e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,0,0,0.18)";
+          e.currentTarget.style.boxShadow = "var(--shadow-float)";
         }}
       >
         {open ? (

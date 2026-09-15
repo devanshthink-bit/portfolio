@@ -266,16 +266,16 @@ function CaseStudyTOCInner({ sections = defaultSections, variant = "right" }: { 
           border: "none",
           borderRadius: 100,
           cursor: "pointer",
-          boxShadow: "0 4px 20px rgba(0,0,0,0.18)",
+          boxShadow: "var(--shadow-float)",
           transition: "transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out)",
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = "translateX(-50%) scale(1.04)";
-          e.currentTarget.style.boxShadow = "0 6px 24px rgba(0,0,0,0.22)";
+          e.currentTarget.style.boxShadow = "var(--shadow-lg)";
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.transform = "translateX(-50%) scale(1)";
-          e.currentTarget.style.boxShadow = "0 4px 20px rgba(0,0,0,0.18)";
+          e.currentTarget.style.boxShadow = "var(--shadow-float)";
         }}
       >
         {/* Hamburger / close icon */}

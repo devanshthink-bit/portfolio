@@ -174,7 +174,7 @@ export default function AskDevansh() {
         .ask-trigger { position: fixed; right: 28px; bottom: 28px; z-index: 1001; display: flex; align-items: center; gap: 10px;
           padding: 15px 24px; border: none; border-radius: 100px; background: var(--ink-surface); color: #fff; cursor: pointer;
           font-family: ${FONT}; font-size: 16px; font-weight: 600; letter-spacing: -0.01em;
-          box-shadow: 0 8px 28px rgba(0,0,0,0.18); transition: transform .35s var(--ease-out); }
+          box-shadow: var(--shadow-float); transition: transform .35s var(--ease-out); }
         .ask-trigger:hover { transform: translateY(-2px); }
         .ask-panel { position: fixed; top: 0; right: 0; bottom: 0; z-index: 1002; width: 420px; max-width: 100vw;
           display: flex; flex-direction: column; background: var(--raised); border-left: 1px solid var(--border);
@@ -186,7 +186,7 @@ export default function AskDevansh() {
         .ask-icon { display: inline-flex; background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 4px; border-radius: 6px; }
         .ask-icon:hover { color: var(--text-primary); }
         .ask-menu { position: absolute; top: 58px; right: 20px; z-index: 2; display: flex; flex-direction: column; padding: 6px;
-          background: var(--raised); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+          background: var(--raised); border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow-float); }
         .ask-menu button { display: flex; align-items: center; gap: 10px; background: none; border: none; text-align: left; padding: 10px 14px; border-radius: 8px; cursor: pointer;
           font-family: ${FONT}; font-size: 15px; color: var(--text-primary); white-space: nowrap; }
         .ask-menu button:hover { background: var(--card-bg); }

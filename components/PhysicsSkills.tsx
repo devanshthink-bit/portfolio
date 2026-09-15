@@ -432,6 +432,7 @@ function Bucket({ cat }: { cat: Cat }) {
           borderRadius: 12,
           overflow: "hidden",
           border: `1px solid ${color}22`,
+          boxShadow: "var(--shadow-lg)",
         }}
       >
         {/* Label as a faint watermark across the whole bucket, behind tags */}

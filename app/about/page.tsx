@@ -97,7 +97,7 @@ function LabelPill({ text }: { text: string; cat: Cat }) {
       fontSize: 12, fontWeight: 600, letterSpacing: "-0.01em",
       whiteSpace: "nowrap",
       flexShrink: 0, userSelect: "none",
-      boxShadow: "0 2px 6px rgba(0,0,0,0.22)",
+      boxShadow: "var(--shadow-float)",
     }}>
       {text}
     </span>
@@ -120,7 +120,7 @@ function TickerPill({ name, cat, slug, src }: { name: string; cat: Cat; slug?: s
       onMouseEnter={e => {
         const el = e.currentTarget;
         el.style.background = "rgba(128,128,128,0.2)";
-        el.style.boxShadow = "0 2px 12px rgba(0,0,0,0.1)";
+        el.style.boxShadow = "var(--shadow-md)";
       }}
       onMouseLeave={e => {
         const el = e.currentTarget;
@@ -208,7 +208,7 @@ export default function About() {
       {/* About Me */}
       <div className="section">
         <h3 className="section-title">About me</h3>
-        <div style={{ position: "relative", width: "100%", aspectRatio: "16/9", borderRadius: 6, overflow: "hidden" }}>
+        <div style={{ position: "relative", width: "100%", aspectRatio: "16/9", borderRadius: 14, overflow: "hidden", boxShadow: "var(--shadow-lg)" }}>
           <Image src="/images/about.jpg" alt="Devansh at the beach" fill sizes="(max-width: 980px) 100vw, 868px" style={{ objectFit: "cover", objectPosition: "center top" }} priority />
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 24, marginTop: 32 }}>
@@ -248,7 +248,7 @@ export default function About() {
             onMouseLeave={e => { e.currentTarget.style.animationPlayState = "running"; }}
           >
             {[...testimonials, ...testimonials].map((tc, i) => (
-              <div key={i} style={{ flex: `0 0 320px`, background: "var(--card-bg)", borderRadius: 10, padding: 20, display: "flex", flexDirection: "column", gap: 40 }}>
+              <div key={i} style={{ flex: `0 0 320px`, background: "var(--card-bg)", boxShadow: "var(--shadow-md)", borderRadius: 10, padding: 20, display: "flex", flexDirection: "column", gap: 40 }}>
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <p style={{ fontFamily: "var(--font-manrope)", fontStyle: "normal", fontSize: 14, fontWeight: 500, lineHeight: 1.65, letterSpacing: "-0.01em", color: "var(--text-secondary)", margin: 0 }}>{tc.quote}</p>
                 </div>
