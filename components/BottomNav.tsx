@@ -226,8 +226,8 @@ export default function BottomNav() {
         }}>Work</Link>
         <Link href="/about" tabIndex={menu ? 0 : -1} onPointerDown={() => playDockClick(1.12)} onClick={() => setMenu(false)}>About</Link>
         <Link href="/resume" tabIndex={menu ? 0 : -1} onPointerDown={() => playDockClick(1.19)} onClick={() => setMenu(false)}>Resume</Link>
-        <button tabIndex={menu ? 0 : -1} onPointerDown={() => playDockClick(1.26)} onClick={() => { toggleTheme(); setMenu(false); }}>
-          {isDark ? "Light" : "Dark"}
+        <button tabIndex={menu ? 0 : -1} aria-label={isDark ? "Light mode" : "Dark mode"} onPointerDown={() => playDockClick(1.26)} onClick={() => { toggleTheme(); setMenu(false); }}>
+          {isDark ? <SunIcon /> : <MoonIcon />}
         </button>
       </div>
     </nav>
