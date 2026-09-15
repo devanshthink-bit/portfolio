@@ -354,7 +354,7 @@ export default function RedbusCaseStudy() {
 
       <SectionLabel>Case study · Product design, concept</SectionLabel>
       <h1 style={T.h1}>
-        <span style={{ display: "flex", alignItems: "center", gap: 10, color: "var(--brand-red)" }}>
+        <span style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10, color: "var(--brand-red)" }}>
           {/* The same unaltered logo the home card uses */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/images/redbus/logo.svg" alt="" aria-hidden width={45} height={30} style={{ height: "1.05em", width: "auto", display: "block" }} />
