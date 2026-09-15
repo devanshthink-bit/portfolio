@@ -45,9 +45,12 @@ export default function SmoothScroll() {
   useEffect(() => {
     if (window.location.hash) return;
     const toTop = () => {
-      window.scrollTo(0, 0);
       const lenis = lenisRef.current;
-      if (lenis) { lenis.resize(); lenis.scrollTo(0, { immediate: true, force: true }); }
+      // stop() cancels a glide still running from the last page (a click mid-scroll used to
+      // carry it over and land the new page at the old position); then back to the top.
+      if (lenis) lenis.stop();
+      window.scrollTo(0, 0);
+      if (lenis) { lenis.start(); lenis.resize(); lenis.scrollTo(0, { immediate: true, force: true }); }
     };
     toTop();
     // Once more after the new page has laid out, so nothing restores an old position over it.
