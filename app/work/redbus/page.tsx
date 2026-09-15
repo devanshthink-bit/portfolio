@@ -428,8 +428,8 @@ export default function RedbusCaseStudy() {
       </Beat>
 
       <Beat label="Why not FlexiTicket" title="So why not just use FlexiTicket?"
-        sub="It is FlexiTicket. I didn't add a capability. FlexiTicket is a safety net for a booking you've already decided to make, and to reach it you first enter a date. The people I was designing for didn't have one."
-        caption={<>Same mechanism underneath. What changed is the question: not &quot;Date of journey&quot;, but &quot;When can you travel back?&quot;</>}>
+        sub="It is FlexiTicket underneath. I didn't add anything it can't already do. But FlexiTicket only helps once you've decided to book, and to reach it you first have to enter a date. The people I was designing for didn't have one."
+        caption={<>The app used to ask for a &quot;Date of journey&quot;. Now it asks &quot;When can you travel back?&quot;</>}>
         <WhyNotFlexi />
       </Beat>
 
@@ -533,8 +533,8 @@ export default function RedbusCaseStudy() {
       </Beat>
 
       <Beat label="Where it goes" title="I gave the return its own step, knowing it was the riskiest place."
-        sub="I had three places to put it. A sheet on the review screen would have picked the return's boarding and drop points for you, and people choose buses by those stops. Samarth nearly missed a bus over 800m. Changing screens that already exist would have landed after payment."
-        caption="The cost: it was the only option that could break my 95% limit. So Skip had to be as easy to see as Continue, and nothing on the step could block you, not even a confirmation dialog.">
+        sub="I had three places to put it. A sheet on the review screen would have picked the return's boarding and drop points for you, and people choose buses by those stops. Samarth nearly missed a bus over a stop 800m away. Tweaking RedBus's existing screens would only reach people after they had paid."
+        caption="It was also the only option that could break my 95% limit. So Skip is as easy to see as Continue, and nothing on the step can block you, not even a confirmation dialog.">
         <Rows rows={[
           { s: "Rejected", tone: "grey", rule: "A sheet on review" },
           { s: "Rejected", tone: "grey", rule: "Changes to existing screens" },
@@ -557,7 +557,7 @@ export default function RedbusCaseStudy() {
       </Beat>
 
       <Beat label="The demo" title="Rajat asked three questions I couldn't answer."
-        sub="Rajat reviewed my work. In the demo I argued how it differed from FlexiTicket before admitting it was the same, and lost the room. Two of his questions rested on facts I had in screenshots and never wrote down. Now I start by agreeing: it is FlexiTicket underneath, and what changes is what the app asks for.">
+        sub="Rajat reviewed my work. In the demo I argued how it differed from FlexiTicket before admitting it was the same, and lost the argument. Two of his questions rested on facts I had in screenshots and never wrote down. Now I start by agreeing: it is FlexiTicket underneath, and what changes is what the app asks for.">
         <MentorQA />
       </Beat>
 
@@ -573,8 +573,8 @@ export default function RedbusCaseStudy() {
       </Beat>
 
       <Beat label="Pricing a day" title="I got the price on each day wrong twice."
-        sub="First each day showed its default bus's fare, and the calendar and the day list disagreed by up to ₹230, one tap apart. Then each day showed its cheapest fare, but on 3 of 5 days that bus couldn't change its date. The number that caught your eye broke the one promise the flow makes."
-        caption="It cost me a rule I liked. A night bus out no longer means a night bus back by default. It's a tag now, one tap away.">
+        sub="First each day showed its default bus's fare, and the calendar and the day list disagreed by up to ₹230, one tap apart. Then each day showed its cheapest fare, but on 3 of 5 days that bus couldn't change its date. So the price that stood out belonged to a ticket that couldn't move, which is the one thing this flow is for."
+        caption="The fix cost me a rule I liked: a night bus out used to mean a night bus back by default. Now that's a tag, one tap away.">
         <Rows rows={[
           { s: "Failed", tone: "red", rule: "Priced at the default bus" },
           { s: "Failed", tone: "red", rule: "Priced at the cheapest bus" },
