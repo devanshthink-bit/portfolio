@@ -1786,12 +1786,17 @@
 /* Belt and braces: no circle cursor at phone width or on touch screens. */
 @media (max-width: 640px), (hover: none) { .custom-cursor { display: none !important; } }
 
+.hello-phone { display: none; }
+
 /* Home hero on phones, less cluttered (Devansh, 15 Sep: "make all these changes in mobile only"):
    no craft paragraph, the hello as one outlined pill, three numbers on one-line labels under a thin
    rule. "Designer & Developer." stays the first heading line, as on the web. */
 @media (max-width: 640px) {
   .avatar { width: 96px; height: 96px; }
-  .intro-craft, .intro-hello-lead { display: none; }
+  .intro-craft, .intro-hello-lead, .hello-web { display: none; }
+  .hello-phone { display: inline; }
+  /* Three numbers spread edge to edge: the first touches the left, the last the right. */
+  .stat-item { flex: 0 0 auto !important; }
   .intro { gap: 20px; }
   .intro-body .inline-link { display: inline-flex; align-items: center; padding: 9px 16px; border: 1px solid var(--border);
     border-radius: 100px; font: 600 var(--fs-14)/1 var(--font-manrope), sans-serif; letter-spacing: -0.011em; color: var(--text-primary); }
