@@ -1793,7 +1793,7 @@
    rule. "Designer & Developer." stays the first heading line, as on the web. */
 @media (max-width: 640px) {
   .avatar { width: 96px; height: 96px; }
-  .intro-craft, .intro-hello-lead, .hello-web { display: none; }
+  .intro-hello-lead, .hello-web { display: none; }
   .hello-phone { display: inline; }
   /* Three numbers spread edge to edge: the first touches the left, the last the right. */
   .stat-item { flex: 0 0 auto !important; }
