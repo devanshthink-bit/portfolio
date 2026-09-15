@@ -38,9 +38,9 @@ export default function ResumePage() {
         .resume-btn.is-primary { background: var(--text-primary); color: var(--bg); box-shadow: none; }
         .resume-btn.is-primary:hover { opacity: 0.88; }
         .resume-btn:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 2px; }
-        /* 100px at the bottom clears the dock. */
+        /* 132px at the bottom: the dock (24px off the edge + 76px tall) and a 32px gap, so the page never touches it. */
         .resume-page img { display: block; height: auto; width: auto; max-width: 100%;
-          max-height: calc(100dvh - var(--nav-h) - 24px - 100px); }
+          max-height: calc(100dvh - var(--nav-h) - 24px - 132px); }
         /* An image has no links, so the PDF's link areas are laid back over it. Positions are the
            PDF's own link rects on its 794 x 1123 page, widened to take in each icon. */
         .resume-img { position: relative; }   /* the links' box is the image alone, never the action row */
@@ -60,7 +60,7 @@ export default function ResumePage() {
           .resume-sheet { display: flex; flex-direction: column; }
           .resume-actions { order: -1; position: static; flex-direction: row; justify-content: center; margin-bottom: 12px; }
           .resume-btn-label { display: none; }
-          .resume-page img { max-height: calc(100dvh - var(--nav-h) - 16px - 52px - 100px); }
+          .resume-page img { max-height: calc(100dvh - var(--nav-h) - 16px - 52px - 132px); }
         }
       `}</style>
       <div className="resume-page">
