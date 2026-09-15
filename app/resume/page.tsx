@@ -9,6 +9,14 @@ export const metadata: Metadata = {
 // of actions above it (download, open, print, copy link, share on phones).
 // The image is his CV PDF rendered at 3x (2382 x 3369, lossless WebP) and served as is,
 // not through the Next image optimiser, which shrank it and made it soft.
+// Percent of the sheet: x and width over 794, y over 1123.
+const RESUME_LINKS = [
+  { label: "Portfolio", href: "/", x: 66.88, y: 15.32, w: 8.06 },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/devansh-somvanshi", x: 75.82, y: 15.32, w: 7.81 },
+  { label: "GitHub", href: "https://github.com/devanshthink-bit", x: 84.38, y: 15.32, w: 6.93 },
+  { label: "Email devansh.think@gmail.com", href: "mailto:devansh.think@gmail.com", x: 66.88, y: 17.45, w: 19.02 },
+];
+
 export default function ResumePage() {
   return (
     <>
@@ -35,6 +43,11 @@ export default function ResumePage() {
         /* 100px at the bottom clears the dock. */
         .resume-page img { display: block; height: auto; width: auto; max-width: 100%;
           max-height: calc(100dvh - var(--nav-h) - 24px - 100px); }
+        /* An image has no links, so the PDF's link areas are laid back over it. Positions are the
+           PDF's own link rects on its 794 x 1123 page, widened to take in each icon. */
+        .resume-img { position: relative; }   /* the links' box is the image alone, never the action row */
+        .resume-link { position: absolute; border-radius: 4px; }
+        .resume-link:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 2px; }
         @media (prefers-reduced-motion: reduce) { .resume-btn-label { transition: none; } }
         /* Phones have no room at the side: a row of icons above the résumé, no labels. */
         @media (max-width: 640px) {
@@ -47,7 +60,14 @@ export default function ResumePage() {
       <div className="resume-page">
         <div className="resume-sheet">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/resume/Devansh_Somvanshi_CV.webp" alt="Devansh Somvanshi, resume" width={2382} height={3369} fetchPriority="high" />
+          <div className="resume-img">
+            <img src="/resume/Devansh_Somvanshi_CV.webp" alt="Devansh Somvanshi, resume" width={2382} height={3369} fetchPriority="high" />
+            {RESUME_LINKS.map((l) => (
+              <a key={l.label} className="resume-link" href={l.href} aria-label={l.label}
+                {...(l.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                style={{ left: `${l.x}%`, top: `${l.y}%`, width: `${l.w}%`, height: "1.78%" }} />
+            ))}
+          </div>
           <ResumeActions />
         </div>
       </div>
