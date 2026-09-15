@@ -25,6 +25,9 @@ function AboutIcon() { return <Solar body={"<g fill=\"none\" stroke=\"currentCol
 // Shared with the download button on /resume.
 export const RESUME_ICON = "<g fill=\"none\" stroke=\"currentColor\"><path d=\"M3 10C3 6.22876 3 4.34315 4.17157 3.17157C5.34315 2 7.22876 2 11 2H13C16.7712 2 18.6569 2 19.8284 3.17157C21 4.34315 21 6.22876 21 10V14C21 17.7712 21 19.6569 19.8284 20.8284C18.6569 22 16.7712 22 13 22H11C7.22876 22 5.34315 22 4.17157 20.8284C3 19.6569 3 17.7712 3 14V10Z\"/><path stroke-linecap=\"round\" d=\"M8 12H16\"/><path stroke-linecap=\"round\" d=\"M8 8H16\"/><path stroke-linecap=\"round\" d=\"M8 16H13\"/></g>";
 function ResumeIcon() { return <Solar body={RESUME_ICON} />; }
+// Phones: Solar hamburger-menu-linear, and a plain close cross in the same stroke.
+const BURGER = "<path d=\"M4 7L20 7\"/><path d=\"M4 12L20 12\"/><path d=\"M4 17L20 17\"/>";
+const CROSS = "<path d=\"M6 6L18 18\"/><path d=\"M18 6L6 18\"/>";
 // Solar sun-linear (Devansh picked it, 15 Sep 2026).
 function SunIcon() { return <Solar body={"<g fill=\"none\" stroke=\"currentColor\"><circle cx=\"12\" cy=\"12\" r=\"6\"/><path stroke-linecap=\"round\" d=\"M12 2V3\"/><path stroke-linecap=\"round\" d=\"M12 21V22\"/><path stroke-linecap=\"round\" d=\"M22 12L21 12\"/><path stroke-linecap=\"round\" d=\"M3 12L2 12\"/><path stroke-linecap=\"round\" d=\"M19.0708 4.92969L18.678 5.32252\"/><path stroke-linecap=\"round\" d=\"M5.32178 18.6777L4.92894 19.0706\"/><path stroke-linecap=\"round\" d=\"M19.0708 19.0703L18.678 18.6775\"/><path stroke-linecap=\"round\" d=\"M5.32178 5.32227L4.92894 4.92943\"/></g>"} />; }
 // Solar moon-fog-linear, without its two sparkles (as Devansh picked it, 15 Sep 2026).
@@ -126,6 +129,17 @@ export default function BottomNav() {
   const [isDark, setIsDark] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
   const [hidden, setHidden] = useState(false);
+  const [menu, setMenu] = useState(false);
+
+  // Phones: while the menu is open the page holds still.
+  useEffect(() => {
+    if (!menu) return;
+    const lenis = (window as unknown as { __lenis?: { stop(): void; start(): void } }).__lenis;
+    lenis?.stop(); document.documentElement.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setMenu(false); };
+    document.addEventListener("keydown", onKey);
+    return () => { lenis?.start(); document.documentElement.style.overflow = ""; document.removeEventListener("keydown", onKey); };
+  }, [menu]);
 
   // Phones: the dock sits at the top (globals.css) and slides away while you scroll down, back
   // when you scroll up, so it never covers what you are reading.
@@ -141,7 +155,7 @@ export default function BottomNav() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-  useEffect(() => setHidden(false), [pathname]);
+  useEffect(() => { setHidden(false); setMenu(false); }, [pathname]);
 
   const toggleTheme = () => {
     const next = !isDark;
@@ -161,6 +175,8 @@ export default function BottomNav() {
   };
 
   return (
+    <>
+    <div className={`dock-scrim${menu ? " open" : ""}`} onClick={() => setMenu(false)} aria-hidden />
     <nav
       className={`bottom-dock${hidden ? " is-hidden" : ""}`}
       onMouseEnter={() => window.dispatchEvent(new Event("cursor:hide"))}
@@ -179,22 +195,42 @@ export default function BottomNav() {
       <Link href="/" aria-label="Home" style={{ display: "inline-flex" }}>
         <DockItem label="Home" pitch={1} hovered={hovered === "home"} onHover={v => setHovered(v ? "home" : null)}><HomeIcon /></DockItem>
       </Link>
-      <Link href="/#recent-work" aria-label="Work" onClick={scrollToWork} style={{ display: "inline-flex" }}>
+      <Link href="/#recent-work" aria-label="Work" onClick={scrollToWork} className="dock-link" style={{ display: "inline-flex" }}>
         <DockItem label="Work" pitch={1.06} hovered={hovered === "work"} onHover={v => setHovered(v ? "work" : null)}><WorkIcon /></DockItem>
       </Link>
-      <Link href="/about" aria-label="About" style={{ display: "inline-flex" }}>
+      <Link href="/about" aria-label="About" className="dock-link" style={{ display: "inline-flex" }}>
         <DockItem label="About" pitch={1.12} hovered={hovered === "about"} onHover={v => setHovered(v ? "about" : null)}><AboutIcon /></DockItem>
       </Link>
-      <Link href="/resume" aria-label="Resume" style={{ display: "inline-flex" }}>
+      <Link href="/resume" aria-label="Resume" className="dock-link" style={{ display: "inline-flex" }}>
         <DockItem label="Resume" pitch={1.19} hovered={hovered === "resume"} onHover={v => setHovered(v ? "resume" : null)}><ResumeIcon /></DockItem>
       </Link>
-      <span role="button" tabIndex={0} aria-label="Theme" onClick={toggleTheme}
+      <span role="button" tabIndex={0} aria-label="Theme" onClick={toggleTheme} className="dock-link"
         onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleTheme(); } }}
         style={{ display: "inline-flex" }}>
         <DockItem label="Theme" pitch={1.26} hovered={hovered === "theme"} onHover={v => setHovered(v ? "theme" : null)}>
           {isDark ? <MoonIcon /> : <SunIcon />}
         </DockItem>
       </span>
+
+      {/* Phones: one hamburger at the right; its panel holds the four options (Devansh, 15 Sep). */}
+      <button className="dock-burger" aria-label={menu ? "Close menu" : "Menu"} aria-expanded={menu} onClick={() => setMenu((m) => !m)}>
+        <Solar body={menu ? CROSS : BURGER} />
+      </button>
+      <div className={`dock-menu${menu ? " open" : ""}`} aria-hidden={!menu}>
+        <Link href="/#recent-work" tabIndex={menu ? 0 : -1} onClick={(e) => {
+          setMenu(false);
+          if (pathname !== "/") return;
+          e.preventDefault();
+          // After the page is free to scroll again.
+          setTimeout(() => { const el = document.getElementById("recent-work"); if (el) smoothScrollTo(el.getBoundingClientRect().top + window.scrollY - 72); }, 80);
+        }}><WorkIcon /> Work</Link>
+        <Link href="/about" tabIndex={menu ? 0 : -1} onClick={() => setMenu(false)}><AboutIcon /> About</Link>
+        <Link href="/resume" tabIndex={menu ? 0 : -1} onClick={() => setMenu(false)}><ResumeIcon /> Resume</Link>
+        <button tabIndex={menu ? 0 : -1} onClick={() => { toggleTheme(); setMenu(false); }}>
+          {isDark ? <SunIcon /> : <MoonIcon />} {isDark ? "Light mode" : "Dark mode"}
+        </button>
+      </div>
     </nav>
+    </>
   );
 }
