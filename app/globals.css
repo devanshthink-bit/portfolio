@@ -1798,8 +1798,6 @@
   /* Three numbers spread edge to edge: the first touches the left, the last the right. */
   .stat-item { flex: 0 0 auto !important; }
   .intro { gap: 20px; }
-  .intro-body .inline-link { display: inline-flex; align-items: center; padding: 9px 16px; border: 1px solid var(--border);
-    border-radius: 100px; font: 600 var(--fs-14)/1 var(--font-manrope), sans-serif; letter-spacing: -0.011em; color: var(--text-primary); }
   .stats-strip { border-top: 1px solid var(--border); padding-top: 20px; }
   .stat-item:nth-child(4) { display: none !important; }
   .stat-label { white-space: nowrap; }
