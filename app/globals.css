@@ -1074,16 +1074,24 @@
   .phone-row.bare {
     background: none;
     padding: 0;
+    box-shadow: none;
+    border-radius: 0;
   }
 
-  /* Case-study hero: a large phone in the middle, two smaller upright ones tucked 18px behind it, centred. */
-  .phone-row.hero { gap: 0; flex-wrap: nowrap; align-items: center; padding: 8px 0 0; }
+  /* Case-study hero, "brand glow" (Devansh, 16 Sep 2026): three phones standing apart, the middle
+     one a touch larger, over a faint RedBus-red light that fades into the page. No card behind them. */
+  .phone-row.hero { gap: 28px; flex-wrap: nowrap; align-items: center; padding: 24px 0 8px; position: relative; isolation: isolate; }
+  .phone-row.hero::before {
+    content: ""; position: absolute; z-index: -1; pointer-events: none;
+    left: -8%; right: -8%; top: -12%; bottom: -12%;
+    background: radial-gradient(closest-side, rgba(232, 30, 56, 0.12) 0%, rgba(232, 30, 56, 0.05) 55%, rgba(232, 30, 56, 0) 100%);
+  }
+  html.nerd-mode .phone-row.hero::before {
+    background: radial-gradient(closest-side, rgba(232, 30, 56, 0.16) 0%, rgba(232, 30, 56, 0.06) 55%, rgba(232, 30, 56, 0) 100%);
+  }
   .phone-row.hero .phone-fig { position: relative; }
-  .phone-row.hero .phone-fig:nth-child(1) { margin-right: -18px; z-index: 1; }
-  .phone-row.hero .phone-fig:nth-child(2) { z-index: 2; }
-  .phone-row.hero .phone-fig:nth-child(3) { margin-left: -18px; z-index: 1; }
-  .phone-row.hero .phone-fig:nth-child(2) .iphone { --n: 296; }
-  .phone-row.hero .phone-fig:not(:nth-child(2)) .iphone { --n: 262; }
+  .phone-row.hero .phone-fig:nth-child(2) .iphone { --n: 260; }
+  .phone-row.hero .phone-fig:not(:nth-child(2)) .iphone { --n: 236; }
 
   .phone-fig {
     margin: 0;
