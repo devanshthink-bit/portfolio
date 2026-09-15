@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 
 function playRubber() {
@@ -44,7 +45,9 @@ export default function RubberBackButton({ plain = true }: { plain?: boolean } =
   // On a phone the plain Back floats over the page, so it gets a solid pill to stay readable.
   const pill = plain && pos.top === 14;
 
-  return (
+  // Rendered on <body>: the page wrapper's enter animation leaves a transform for 0.7s, and a
+  // transformed ancestor makes "position: fixed" follow the page, so Back flashed over the hero.
+  return createPortal(
     <Link
       href="/"
       onClick={playRubber}
@@ -72,6 +75,7 @@ export default function RubberBackButton({ plain = true }: { plain?: boolean } =
         <polyline points="12 19 5 12 12 5" />
       </svg>
       Back
-    </Link>
+    </Link>,
+    document.body,
   );
 }

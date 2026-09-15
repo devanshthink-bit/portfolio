@@ -371,7 +371,7 @@ export default function RedbusCaseStudy() {
       <div id="toc-intro" style={{ marginBottom: 88 }}>
         <PhoneRow className="hero bare" phones={[
           { src: scr("hifi_06a"), alt: "The day list with Thu 17 Sep picked and its bus open under it.", priority: true },
-          { src: scr("hifi_05"), alt: "The return calendar asking 'When can you travel back?', on 'I'm not sure yet'.", priority: true },
+          { src: scr("hifi_05a"), alt: "The return calendar on 'I'm not sure yet', with a week marked: Fri 11 to Thu 17 Sep.", priority: true },
           { src: scr("hifi_16"), alt: "The Date changed screen: return moved to Tue 15 Sep.", priority: true },
         ]} />
       </div>

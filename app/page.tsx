@@ -30,7 +30,7 @@ const recentWork = [
     gradient: "linear-gradient(180deg, #fbf7f7 0%, #f4ebec 100%)",
     tooltipBg: "#1d1d1d",
     slug: "redbus",
-    phones: ["hifi_06a", "hifi_05", "hifi_16"],
+    phones: ["hifi_06a", "hifi_05a", "hifi_16"],
     // Jahanvi's card anatomy: brand, what I did, tags, image, title + year, one line, impact.
     brand: "RedBus",
     brandColor: "var(--brand-red)",
