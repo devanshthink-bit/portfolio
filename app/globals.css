@@ -1762,8 +1762,6 @@
   .avatar { width: 72px; height: 72px; }
   .intro { gap: 24px; }
   .intro-body { gap: 16px; }
-  .stats-strip { flex-wrap: nowrap !important; column-gap: 12px; margin-top: 0 !important; }
-  .stat-item { flex: 1 1 0; min-width: 0; }
 }
 
 /* Ideas: the pick, then the rest grouped by why they died. */
@@ -1788,7 +1786,7 @@
 /* Belt and braces: no circle cursor at phone width or on touch screens. */
 @media (max-width: 640px), (hover: none) { .custom-cursor { display: none !important; } }
 
-.hello-phone { display: none; }
+.hello-phone, .stats-line { display: none; }
 
 /* Home hero on phones, less cluttered (Devansh, 15 Sep: "make all these changes in mobile only"):
    no craft paragraph, the hello as one outlined pill, three numbers on one-line labels under a thin
@@ -1797,12 +1795,15 @@
   .avatar { width: 84px; height: 84px; }
   .intro-hello-lead, .hello-web { display: none; }
   .hello-phone { display: inline; }
-  /* Three numbers spread edge to edge: the first touches the left, the last the right. */
-  .stat-item { flex: 0 0 auto !important; }
+
   .intro { gap: 20px; }
-  .stats-strip { border-top: 1px solid var(--border); padding-top: 20px; }
-  .stat-item:nth-child(4) { display: none !important; }
-  .stat-label { white-space: nowrap; }
+  /* The numbers as one line: "3+ yrs engineering · 3 products · 2M+ users", edge to edge. */
+  .stats-strip { display: none !important; }
+  .stats-line { display: flex; justify-content: space-between; align-items: baseline; white-space: nowrap; margin: 0;
+    border-top: 1px solid var(--border); padding-top: 16px;
+    font-size: var(--fs-14); letter-spacing: -0.011em; color: var(--text-muted); }
+  .stats-line b { font: 700 var(--fs-16)/1 var(--font-manrope), sans-serif; letter-spacing: -0.02em; color: var(--text-primary); margin-right: 4px; }
+  .stats-line i { font-style: normal; opacity: 0.45; }
 }
 
 /* Phones have no lines from note to box, so each dashed box carries its note's number
