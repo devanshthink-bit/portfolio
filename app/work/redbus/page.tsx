@@ -11,7 +11,7 @@ import PhoneShot from "../../../components/PhoneShot";
 
 
 export const metadata: Metadata = {
-  title: "RedBus | Winning the return ticket at checkout | Devansh Somvanshi",
+  title: "RedBus - Winning the return ticket at checkout | Devansh Somvanshi",
   description: "A concept for RedBus: book the return in the same checkout, before you know the date.",
 };
 
@@ -175,6 +175,7 @@ function Ideas() {
         <p style={{ ...T.eyebrow, color: RED }}>The one I picked</p>
         <p style={{ ...T.cardH, margin: "8px 0 6px" }}>Book the last day you can travel</p>
         <p style={T.body}>It keeps the seat and the fare without a date, and moves once when plans settle.</p>
+        <p style={{ ...T.small, marginTop: 10 }}>Later I moved past it. The final design is the window: you mark the days you could come back, then pick one.</p>
       </div>
       <ul className="cs-idea-rows">
         {groups.map((g) => (
@@ -248,12 +249,10 @@ function MentorQA() {
   );
 }
 
-function KillList() {
-  const rows: { s: string; tone: "red" | "amber" | "grey"; rule: string }[] = [
-    { s: "Fired",   tone: "red",   rule: "Unsure people tap a single day" },
-    { s: "Fired",   tone: "red",   rule: "They take the cheapest day and can't move it" },
-    { s: "Almost",  tone: "amber", rule: "Nobody reads the rules" },
-  ];
+type Row = { s: string; tone: "red" | "amber" | "grey" | "green"; rule: string };
+
+// A status and a line, one per row: the kill list, and the options behind two decisions.
+function Rows({ rows }: { rows: Row[] }) {
   return (
     <div className="cs-stats" style={{ gridTemplateColumns: "1fr" }}>
       {rows.map((r) => (
@@ -262,6 +261,31 @@ function KillList() {
           <p style={T.cardH}>{r.rule}</p>
         </div>
       ))}
+    </div>
+  );
+}
+
+function KillList() {
+  const rows: Row[] = [
+    { s: "Fired",   tone: "red",   rule: "Unsure people tap a single day" },
+    { s: "Fired",   tone: "red",   rule: "They take the cheapest day and can't move it" },
+    { s: "Almost",  tone: "amber", rule: "Nobody reads the rules" },
+  ];
+  return <Rows rows={rows} />;
+}
+
+// Why not just use FlexiTicket: the number and the voice behind the answer (DEFENCE.md, n73, n07).
+function WhyNotFlexi() {
+  return (
+    <div className="cs-grid-2">
+      <Card>
+        <div style={T.figure}>39.1%</div>
+        <p style={{ ...T.body, marginTop: 6 }}>of travellers who knew their return date still booked it separately</p>
+      </Card>
+      <Card>
+        <p style={T.quote}>&quot;I know there is an option but I just prefer okay this option doesn&apos;t exist&quot;</p>
+        <p style={{ ...T.small, marginTop: 8 }}>Anand, who knew FlexiTicket existed</p>
+      </Card>
     </div>
   );
 }
@@ -354,12 +378,12 @@ export default function RedbusCaseStudy() {
 
       <SectionLabel>Case study · Product design, concept</SectionLabel>
       <h1 style={T.h1}>
-        <span style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10, color: "var(--brand-red)" }}>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 10, color: "var(--brand-red)" }}>
           {/* The same unaltered logo the home card uses */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/images/redbus/logo.svg" alt="" aria-hidden width={45} height={30} style={{ height: "1.05em", width: "auto", display: "block" }} />
           RedBus
-        </span>Winning the return ticket at checkout
+        </span> - Winning the return ticket at checkout
       </h1>
       <p style={T.lede}>Most travellers book the bus out and leave the way back for later. A quarter of them then book it on another app. I redesigned the moment RedBus asks about the return, so it can be booked in the same checkout, without a date.</p>
 
@@ -401,6 +425,12 @@ export default function RedbusCaseStudy() {
             { box: [7, 81, 37.5, 4.2], title: "The same promise, as a badge on one bus", sub: "a property of the bus, not a way to book" },
             { box: [7, 85.5, 86, 6], title: "10% off the return, on some buses", sub: "and people still book it later" },
           ]} />
+      </Beat>
+
+      <Beat label="Why not FlexiTicket" title="So why not just use FlexiTicket?"
+        sub="It is FlexiTicket. I didn't add a capability. FlexiTicket is a safety net for a booking you've already decided to make, and to reach it you first enter a date. The people I was designing for didn't have one."
+        caption={<>Same mechanism underneath. What changed is the question: not &quot;Date of journey&quot;, but &quot;When can you travel back?&quot;</>}>
+        <WhyNotFlexi />
       </Beat>
 
       <Beat label="The knot" title="The rules made waiting the safe choice."
@@ -502,6 +532,16 @@ export default function RedbusCaseStudy() {
         <Ideas />
       </Beat>
 
+      <Beat label="Where it goes" title="I gave the return its own step, knowing it was the riskiest place."
+        sub="I had three places to put it. A sheet on the review screen would have picked the return's boarding and drop points for you, and people choose buses by those stops. Samarth nearly missed a bus over 800m. Changing screens that already exist would have landed after payment."
+        caption="The cost: it was the only option that could break my 95% limit. So Skip had to be as easy to see as Continue, and nothing on the step could block you, not even a confirmation dialog.">
+        <Rows rows={[
+          { s: "Rejected", tone: "grey", rule: "A sheet on review" },
+          { s: "Rejected", tone: "grey", rule: "Changes to existing screens" },
+          { s: "Picked", tone: "green", rule: "Its own step in checkout" },
+        ]} />
+      </Beat>
+
       <Beat label="Attacking it" title="Then I attacked my own idea, and it came second."
         sub="I wrote eight attacks on it. The worst: after a change you can't cancel, so the people least sure of their plans could end up with the least refundable ticket."
         caption="When I scored every idea on merit, the window idea beat mine. So I built that next.">
@@ -516,8 +556,8 @@ export default function RedbusCaseStudy() {
           after={"\"Earlier days, in one tap. For a later day, use Change date in My Bookings.\""} />
       </Beat>
 
-      <Beat label="The demo" title="My mentor asked three questions I couldn't answer."
-        sub="Two of them rested on facts I had in screenshots and never wrote down. Now I start by agreeing: it is FlexiTicket underneath, and what changes is what the app asks for.">
+      <Beat label="The demo" title="Rajat asked three questions I couldn't answer."
+        sub="Rajat reviewed my work. In the demo I argued how it differed from FlexiTicket before admitting it was the same, and lost the room. Two of his questions rested on facts I had in screenshots and never wrote down. Now I start by agreeing: it is FlexiTicket underneath, and what changes is what the app asks for.">
         <MentorQA />
       </Beat>
 
@@ -532,6 +572,16 @@ export default function RedbusCaseStudy() {
         ]} />
       </Beat>
 
+      <Beat label="Pricing a day" title="I got the price on each day wrong twice."
+        sub="First each day showed its default bus's fare, and the calendar and the day list disagreed by up to ₹230, one tap apart. Then each day showed its cheapest fare, but on 3 of 5 days that bus couldn't change its date. The number that caught your eye broke the one promise the flow makes."
+        caption="It cost me a rule I liked. A night bus out no longer means a night bus back by default. It's a tag now, one tap away.">
+        <Rows rows={[
+          { s: "Failed", tone: "red", rule: "Priced at the default bus" },
+          { s: "Failed", tone: "red", rule: "Priced at the cheapest bus" },
+          { s: "Now", tone: "green", rule: "Priced at the cheapest bus that keeps the date change" },
+        ]} />
+      </Beat>
+
       <Beat label="Checking it for real" title="So I booked a real ticket to check one rule."
         sub="My design needed a date change to stay with the same operator, and nothing I'd read said so. I booked a FlexiTicket bus and opened Change travel date. It was right there.">
         <PhoneShot src={scr("real_5199")} alt="The live RedBus Change travel date screen: 'You can select bus from same operator and same route as original ticket'."
@@ -541,7 +591,7 @@ export default function RedbusCaseStudy() {
           ]} />
       </Beat>
 
-      <Beat label="Pushing back" title="Then my mentor asked: isn't FlexiTicket better?"
+      <Beat label="Pushing back" title="Then Rajat asked: isn't FlexiTicket better?"
         sub="It moves you to any date, and mine capped you at a week. I kept the week, because it's how you book without a date. I just stopped it from limiting the ticket."
         caption="Both paths now reach 29 days.">
         <BeforeAfter
@@ -562,7 +612,7 @@ export default function RedbusCaseStudy() {
 
       <Beat label="How I · 2" title="How I made the calendar ask first."
         sub={<>Two answers sit above the calendar: &quot;I know my date&quot; and &quot;I&apos;m not sure yet&quot;. I borrowed the shape from Swiggy&apos;s &quot;When?&quot; toggle and kept one line under it, because two words alone is how Sai misread &quot;tap two days&quot;.</>}
-        caption="My mentor spotted this problem three weeks before testing. It took three testers for me to see it.">
+        caption="Rajat spotted this problem three weeks before testing. It took three testers for me to see it.">
         <PhoneRow phones={[
           { src: scr("lofi_v3"), lofi: true, label: "Before: v3", caption: "\"Tap two days\" read as two days in a row", alt: "Version 3 calendar with 'Tap two days instead'." },
           { src: scr("lofi_v4"), lofi: true, label: "After: v4", caption: "Ask first. The calendar stays right under it.", alt: "Version 4 asking 'I know my date' or 'I'm not sure yet'." },
