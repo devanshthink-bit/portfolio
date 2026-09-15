@@ -96,7 +96,7 @@ export default function AskDevansh() {
   const bubble = (mine: boolean): React.CSSProperties => ({
     maxWidth: "86%", padding: "11px 16px", borderRadius: 18, fontSize: 15, lineHeight: 1.55,
     letterSpacing: "-0.01em", whiteSpace: "pre-wrap",
-    background: mine ? "#262626" : "var(--card-bg)", color: mine ? "#fff" : "var(--text-primary)",
+    background: mine ? "var(--ink-surface)" : "var(--card-bg)", color: mine ? "#fff" : "var(--text-primary)",
     alignSelf: mine ? "flex-end" : "flex-start",
   });
 
@@ -172,7 +172,7 @@ export default function AskDevansh() {
 
       <style>{`
         .ask-trigger { position: fixed; right: 28px; bottom: 28px; z-index: 1001; display: flex; align-items: center; gap: 10px;
-          padding: 15px 24px; border: none; border-radius: 100px; background: #262626; color: #fff; cursor: pointer;
+          padding: 15px 24px; border: none; border-radius: 100px; background: var(--ink-surface); color: #fff; cursor: pointer;
           font-family: ${FONT}; font-size: 16px; font-weight: 600; letter-spacing: -0.01em;
           box-shadow: 0 8px 28px rgba(0,0,0,0.18); transition: transform .35s var(--ease-out); }
         .ask-trigger:hover { transform: translateY(-2px); }
@@ -181,6 +181,8 @@ export default function AskDevansh() {
           font-family: ${FONT}; color: var(--text-primary);
           transform: translateX(100%); transition: transform .6s var(--ease-sheet), box-shadow .6s var(--ease-sheet); }
         .ask-panel.open { transform: none; box-shadow: -12px 0 40px rgba(0,0,0,0.06); }
+        html.nerd-mode .ask-panel { background: #232220; }
+        html.nerd-mode .ask-panel.open { box-shadow: -16px 0 48px rgba(0,0,0,0.5); }
         .ask-head { position: relative; display: flex; align-items: center; gap: 6px; padding: 22px 20px 22px 24px; }
         .ask-icon { display: inline-flex; background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 4px; border-radius: 6px; }
         .ask-icon:hover { color: var(--text-primary); }
@@ -199,7 +201,7 @@ export default function AskDevansh() {
         .ask-note b { color: var(--text-primary); }
         .ask-input { display: flex; align-items: center; gap: 8px; border: 1px solid var(--border); border-radius: 18px; padding: 6px 6px 6px 18px; }
         .ask-input input { flex: 1; border: none; outline: none; background: none; font-family: ${FONT}; font-size: 16px; color: var(--text-primary); padding: 10px 0; }
-        .ask-input button { width: 36px; height: 36px; flex: 0 0 36px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; border: none; background: #262626; color: #fff; cursor: pointer; }
+        .ask-input button { width: 36px; height: 36px; flex: 0 0 36px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; border: none; background: var(--ink-surface); color: #fff; cursor: pointer; }
         .ask-input button:disabled { background: var(--card-bg); color: var(--text-muted); cursor: default; }
         .ask-esc { margin: 0; text-align: center; font-size: 13px; color: var(--text-muted); }
         .ask-esc kbd { border: 1px solid var(--border); border-radius: 5px; padding: 1px 6px; font-family: inherit; font-size: 12px; }
