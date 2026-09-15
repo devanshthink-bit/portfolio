@@ -62,7 +62,7 @@ function TripStrip() {
         <p style={{ ...T.body, marginBottom: 14 }}>Thu, 10 Sep, 23:55, Seat U4</p>
         <Chip tone="green">Booked</Chip>
       </Card>
-      <div style={{ borderRadius: 10, padding: "18px 20px", border: "1.5px dashed var(--cs-stat-gap)" }}>
+      <div style={{ borderRadius: "var(--r-md)", padding: "18px 20px", border: "1.5px dashed var(--cs-stat-gap)" }}>
         <p style={T.eyebrow}>The way home</p>
         <p style={{ ...T.cardH, margin: "8px 0 2px" }}>Nainital → Delhi</p>
         <p style={{ ...T.body, marginBottom: 14 }}>Some day next week. Maybe.</p>

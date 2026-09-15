@@ -48,7 +48,7 @@ export default function ResumePage() {
         .resume-img { position: relative; }   /* the links' box is the image alone, never the action row */
         /* The page sits on the site like a sheet of paper: soft corners and a layered shadow
            that fades into the ground, so the space around it feels intended. */
-        .resume-img { border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-lg); }
+        .resume-img { border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-lg); }
         .resume-img img { display: block; }
         .resume-link { position: absolute; border-radius: 4px; }
         .resume-link:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 2px; }

@@ -94,7 +94,7 @@ export default function AskDevansh() {
   }
 
   const bubble = (mine: boolean): React.CSSProperties => ({
-    maxWidth: "86%", padding: "11px 16px", borderRadius: 18, fontSize: 15, lineHeight: 1.55,
+    maxWidth: "86%", padding: "11px 16px", borderRadius: "var(--r-md)", fontSize: 15, lineHeight: 1.55,
     letterSpacing: "-0.01em", whiteSpace: "pre-wrap",
     background: mine ? "var(--ink-surface)" : "var(--card-bg)", color: mine ? "#fff" : "var(--text-primary)",
     alignSelf: mine ? "flex-end" : "flex-start",
@@ -183,7 +183,7 @@ export default function AskDevansh() {
         .ask-panel.open { transform: none; box-shadow: -12px 0 40px rgba(0,0,0,0.06); }
         html.nerd-mode .ask-panel.open { box-shadow: -16px 0 48px rgba(0,0,0,0.5); }
         .ask-head { position: relative; display: flex; align-items: center; gap: 6px; padding: 22px 20px 22px 24px; }
-        .ask-icon { display: inline-flex; background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 4px; border-radius: 6px; }
+        .ask-icon { display: inline-flex; background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 4px; border-radius: var(--r-sm); }
         .ask-icon:hover { color: var(--text-primary); }
         .ask-menu { position: absolute; top: 58px; right: 20px; z-index: 2; display: flex; flex-direction: column; padding: 6px;
           background: var(--raised); border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow-float); }
@@ -198,14 +198,14 @@ export default function AskDevansh() {
         .ask-note { display: flex; gap: 10px; align-items: flex-start; background: var(--card-bg); border-radius: 12px; padding: 14px 16px;
           font-size: 14px; line-height: 1.5; color: var(--text-secondary); }
         .ask-note b { color: var(--text-primary); }
-        .ask-input { display: flex; align-items: center; gap: 8px; border: 1px solid var(--border); border-radius: 18px; padding: 6px 6px 6px 18px; }
+        .ask-input { display: flex; align-items: center; gap: 8px; border: 1px solid var(--border); border-radius: var(--r-md); padding: 6px 6px 6px 18px; }
         .ask-input input { flex: 1; border: none; outline: none; background: none; font-family: ${FONT}; font-size: 16px; color: var(--text-primary); padding: 10px 0; }
         .ask-input button { width: 36px; height: 36px; flex: 0 0 36px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; border: none; background: var(--ink-surface); color: #fff; cursor: pointer; }
         .ask-input button:disabled { background: var(--card-bg); color: var(--text-muted); cursor: default; }
         .ask-esc { margin: 0; text-align: center; font-size: 13px; color: var(--text-muted); }
         .ask-esc kbd { border: 1px solid var(--border); border-radius: 5px; padding: 1px 6px; font-family: inherit; font-size: 12px; }
         .ask-confirm { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 32px 80px; text-align: center; }
-        .ask-confirm button { width: 100%; max-width: 340px; margin-top: 10px; padding: 13px; border: 1px solid var(--border); border-radius: 10px;
+        .ask-confirm button { width: 100%; max-width: 340px; margin-top: 10px; padding: 13px; border: 1px solid var(--border); border-radius: var(--r-sm);
           background: var(--raised); font-family: ${FONT}; font-size: 16px; font-weight: 600; color: var(--text-primary); cursor: pointer; }
         .ask-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text-muted); opacity: .35; animation: ask-pulse 1.2s cubic-bezier(.16,1,.3,1) infinite; }
         @keyframes ask-pulse { 0%, 100% { opacity: .35; } 40% { opacity: 1; } }

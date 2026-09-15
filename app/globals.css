@@ -25,6 +25,12 @@
     --icon-filter: drop-shadow(0 2px 4px rgba(0,0,0,0.22));
     /* Dark buttons and your own chat bubbles: near-black in light mode, lifted in dark mode. */
     --ink-surface: #262626;
+    /* One corner scale by size (16 Sep 2026), built around the case study cards' 12px.
+       lg: large objects (photos, résumé, panels, stages, the Work sheet). md: cards, tiles,
+       callouts, inputs. sm: chips, tags, small buttons, tooltips. Pills and circles stay round. */
+    --r-lg: 16px;
+    --r-md: 12px;
+    --r-sm: 8px;
     /* Raised surfaces (panels, sheets, floating pills). Same as the page in light mode, so
        light mode is unchanged; the home Work sheet keeps its own white. */
     --raised: #fafafa;
@@ -60,7 +66,7 @@
 
   .process-step {
     background: var(--card-bg);
-    border-radius: 8px;
+    border-radius: var(--r-sm);
     padding: 10px 14px;
     display: flex;
     align-items: center;
@@ -426,7 +432,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    border-radius: 4px;
+    border-radius: 28px;   /* the 16px panel plus this 12px padding, so the hover corners run parallel */
     padding: 12px;
     margin-inline: -12px;
     transition: background-color 0.3s var(--ease-out);
@@ -435,7 +441,7 @@
   .work-card-media {
     width: 100%;
     aspect-ratio: 1.75 / 1;
-    border-radius: 6px;
+    border-radius: var(--r-lg);
     overflow: hidden;
     background: rgb(182, 176, 167);
     box-shadow: var(--shadow-md);
@@ -467,7 +473,7 @@
      the screens, then title + year, one line, and an impact line. */
   .work-card-panel {
     width: 100%;
-    border-radius: 6px;
+    border-radius: var(--r-lg);
     overflow: hidden;
     box-shadow: var(--shadow-md);
     display: flex;
@@ -688,7 +694,7 @@
     min-height: calc(100vh - var(--nav-h));
     margin: 0 8px;
     background: #ffffff;
-    border-radius: 12px;
+    border-radius: var(--r-lg);
     border: 2px solid var(--border);
     box-sizing: border-box;
   }
@@ -710,7 +716,7 @@
   /* Testimonial card */
   .testimonial-card {
     background: rgba(0, 0, 0, 0.035);
-    border-radius: 10px;
+    border-radius: var(--r-md);
     padding: 24px;
     display: flex;
     flex-direction: column;
@@ -812,7 +818,7 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1px;
     background: var(--cs-stat-gap);
-    border-radius: 10px;
+    border-radius: var(--r-md);
     overflow: hidden;
   
     box-shadow: var(--shadow-md);
@@ -829,7 +835,7 @@
   .cs-proto {
     position: relative;
     width: 100%;
-    border-radius: 10px;
+    border-radius: var(--r-lg);
     overflow: hidden;
     background: #f6e2e4;
   }
@@ -970,7 +976,7 @@
     gap: 64px;
     padding: 44px 32px;
     background: var(--cs-callout-bg);
-    border-radius: 12px;
+    border-radius: var(--r-lg);
   }
 
   .phone-notes {
@@ -1055,7 +1061,7 @@
     gap: 26px;
     padding: 40px 24px;
     background: var(--cs-callout-bg);
-    border-radius: 12px;
+    border-radius: var(--r-lg);
   }
 
   .phone-row.bare {
@@ -1107,7 +1113,7 @@
      thing you can use. The glow is the viewer's own. */
   .cs-proto-stage {
     position: relative;
-    border-radius: 16px;
+    border-radius: var(--r-lg);
     padding: 64px 24px 72px;
     display: flex;
     flex-direction: column;
@@ -1354,7 +1360,7 @@
   }
 
   .cs-artefact {
-    border-radius: 12px;
+    border-radius: var(--r-lg);
     overflow: hidden;
     box-shadow: var(--shadow-lg);
     transform: rotate(-0.6deg);
@@ -1684,7 +1690,7 @@
 
 /* Ideas: the pick, then the rest grouped by why they died. */
 .cs-idea-list { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 24px; align-items: start; }
-.cs-idea-pick { border-radius: 14px; padding: 20px 22px; background: rgba(232, 30, 56, 0.06); box-shadow: inset 0 0 0 1.5px #E81E38, var(--shadow-md); }
+.cs-idea-pick { border-radius: var(--r-md); padding: 20px 22px; background: rgba(232, 30, 56, 0.06); box-shadow: inset 0 0 0 1.5px #E81E38, var(--shadow-md); }
 .cs-idea-rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
 .cs-idea-rows li { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 16px; row-gap: 2px; padding: 12px 2px; border-bottom: 1px solid var(--border); }
 .cs-idea-why { font: 700 16px/1.4 var(--font-manrope), sans-serif; letter-spacing: -0.02em; color: var(--text-primary); }

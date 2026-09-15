@@ -208,7 +208,7 @@ export default function About() {
       {/* About Me */}
       <div className="section">
         <h3 className="section-title">About me</h3>
-        <div style={{ position: "relative", width: "100%", aspectRatio: "16/9", borderRadius: 14, overflow: "hidden", boxShadow: "var(--shadow-lg)" }}>
+        <div style={{ position: "relative", width: "100%", aspectRatio: "16/9", borderRadius: "var(--r-lg)", overflow: "hidden", boxShadow: "var(--shadow-lg)" }}>
           <Image src="/images/about.jpg" alt="Devansh at the beach" fill sizes="(max-width: 980px) 100vw, 868px" style={{ objectFit: "cover", objectPosition: "center top" }} priority />
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 24, marginTop: 32 }}>
@@ -248,7 +248,7 @@ export default function About() {
             onMouseLeave={e => { e.currentTarget.style.animationPlayState = "running"; }}
           >
             {[...testimonials, ...testimonials].map((tc, i) => (
-              <div key={i} style={{ flex: `0 0 320px`, background: "var(--card-bg)", boxShadow: "var(--shadow-md)", borderRadius: 10, padding: 20, display: "flex", flexDirection: "column", gap: 40 }}>
+              <div key={i} style={{ flex: `0 0 320px`, background: "var(--card-bg)", boxShadow: "var(--shadow-md)", borderRadius: "var(--r-md)", padding: 20, display: "flex", flexDirection: "column", gap: 40 }}>
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <p style={{ fontFamily: "var(--font-manrope)", fontStyle: "normal", fontSize: 14, fontWeight: 500, lineHeight: 1.65, letterSpacing: "-0.01em", color: "var(--text-secondary)", margin: 0 }}>{tc.quote}</p>
                 </div>

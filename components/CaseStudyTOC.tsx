@@ -189,7 +189,7 @@ function CaseStudyTOCInner({ sections = defaultSections, variant = "right" }: { 
           zIndex: 49,
           background: "var(--raised)",
           borderTop: "1px solid var(--border)",
-          borderRadius: "16px 16px 0 0",
+          borderRadius: "var(--r-lg) var(--r-lg) 0 0",
           padding: "12px 0 40px 0",
           transform: menuOpen ? "translateY(0)" : "translateY(110%)",
           transition: "transform 0.6s var(--ease-sheet)",

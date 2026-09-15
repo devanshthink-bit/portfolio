@@ -176,7 +176,7 @@ function WorkCard({ item }: { item: Work }) {
           left: left ?? pos.x + 18,
           top: pos.y + 18,
           background: item.tooltipBg,
-          borderRadius: 6,
+          borderRadius: "var(--r-sm)",
           padding: "7px 12px",
           fontSize: 12,
           fontFamily: "var(--font-manrope)",
@@ -233,7 +233,7 @@ function InProgressCard() {
       </div>
       {hovered && pos && (
         <div style={{
-          position: "fixed", left: pos.x + 18, top: pos.y + 18, background: "#3b4a6b", borderRadius: 6,
+          position: "fixed", left: pos.x + 18, top: pos.y + 18, background: "#3b4a6b", borderRadius: "var(--r-sm)",
           padding: "7px 12px", fontSize: 12, fontFamily: "var(--font-manrope)", fontWeight: 700,
           letterSpacing: "-0.01em", color: "#ffffff", pointerEvents: "none", zIndex: 9999, whiteSpace: "nowrap",
         }}>

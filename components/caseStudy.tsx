@@ -59,7 +59,7 @@ export function Figure({ src, alt, w = 2400, h = 1500, priority }: { src: string
       height={h}
       priority={priority}
       sizes="(max-width: 980px) 100vw, 868px"
-      style={{ width: "100%", height: "auto", borderRadius: 10, display: "block" }}
+      style={{ width: "100%", height: "auto", borderRadius: "var(--r-lg)", display: "block" }}
     />
   );
 }
@@ -67,7 +67,7 @@ export function Figure({ src, alt, w = 2400, h = 1500, priority }: { src: string
 // `warn` marks something the traveller gives up: an amber panel (.cs-callout-warn).
 export function Card({ children, warn, style }: { children: React.ReactNode; warn?: boolean; style?: React.CSSProperties }) {
   return (
-    <div className={warn ? "cs-callout-warn" : undefined} style={{ background: warn ? undefined : "var(--cs-callout-bg)", boxShadow: warn ? undefined : "var(--shadow-md)", borderRadius: 12, padding: "20px 22px", ...style }}>
+    <div className={warn ? "cs-callout-warn" : undefined} style={{ background: warn ? undefined : "var(--cs-callout-bg)", boxShadow: warn ? undefined : "var(--shadow-md)", borderRadius: "var(--r-md)", padding: "20px 22px", ...style }}>
       {children}
     </div>
   );

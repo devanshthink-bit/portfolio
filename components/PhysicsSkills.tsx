@@ -135,7 +135,7 @@ function Bucket({ cat }: { cat: Cat }) {
           padding: 0 ${padX}px;
           background: var(--tag-bg);
           border: 1.5px solid ${color}40;
-          border-radius: 10px;
+          border-radius: var(--r-sm);
           box-shadow: var(--tag-shadow);
           font-size: ${fontSize};
           font-family: inherit;
@@ -429,7 +429,7 @@ function Bucket({ cat }: { cat: Cat }) {
           width: "100%",
           height: bucketH,
           background: "var(--card-bg)",
-          borderRadius: 12,
+          borderRadius: "var(--r-lg)",
           overflow: "hidden",
           border: `1px solid ${color}22`,
           boxShadow: "var(--shadow-lg)",

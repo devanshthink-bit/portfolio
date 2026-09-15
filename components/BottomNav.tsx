@@ -93,7 +93,7 @@ function DockItem({ label, hovered, pitch, onHover, children }: {
           ? "translateX(-50%) translateY(0) scale(1)"
           : "translateX(-50%) translateY(6px) scale(0.92)",
         background: "#0f1108", color: "#fff", fontSize: 13.5, fontWeight: 500,
-        lineHeight: 1, padding: "8px 11px", borderRadius: 9, whiteSpace: "nowrap",
+        lineHeight: 1, padding: "8px 11px", borderRadius: "var(--r-sm)", whiteSpace: "nowrap",
         pointerEvents: "none", opacity: hovered ? 1 : 0,
         transition: "opacity 0.25s var(--ease-out), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
         userSelect: "none",

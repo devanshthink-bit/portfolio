@@ -70,7 +70,7 @@ export default function Assistant() {
           width: 320,
           background: "var(--raised)",
           border: "1px solid var(--border)",
-          borderRadius: 16,
+          borderRadius: "var(--r-lg)",
           boxShadow: "var(--shadow-float)",
           display: "flex", flexDirection: "column",
           overflow: "hidden",
@@ -107,7 +107,7 @@ export default function Assistant() {
                   key={s}
                   onClick={() => send(s)}
                   style={{
-                    textAlign: "left", padding: "8px 12px", borderRadius: 10,
+                    textAlign: "left", padding: "8px 12px", borderRadius: "var(--r-sm)",
                     background: "var(--card-bg)", border: "none", cursor: "pointer",
                     fontSize: 12, color: "var(--text-primary)", fontWeight: 500,
                     letterSpacing: "-0.01em", lineHeight: 1.4,
