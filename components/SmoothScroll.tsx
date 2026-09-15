@@ -11,6 +11,11 @@ export default function SmoothScroll() {
   const pathname = usePathname();
 
   useEffect(() => {
+    // Every page opens at its top, even on a refresh: the browser's own scroll restoring would
+    // otherwise put the reader back wherever they last were (a case study opened mid-way).
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    if (!window.location.hash) window.scrollTo(0, 0);
+
     // Anyone who asked for less motion keeps the browser's plain scrolling.
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
@@ -38,10 +43,16 @@ export default function SmoothScroll() {
   // A new page starts at the top, with no leftover glide from the last one.
   // A link to a section (/#recent-work) is left to land where it points.
   useEffect(() => {
-    const lenis = lenisRef.current;
-    if (!lenis) return;
-    lenis.resize();
-    if (!window.location.hash) lenis.scrollTo(0, { immediate: true, force: true });
+    if (window.location.hash) return;
+    const toTop = () => {
+      window.scrollTo(0, 0);
+      const lenis = lenisRef.current;
+      if (lenis) { lenis.resize(); lenis.scrollTo(0, { immediate: true, force: true }); }
+    };
+    toTop();
+    // Once more after the new page has laid out, so nothing restores an old position over it.
+    const raf = requestAnimationFrame(() => requestAnimationFrame(toTop));
+    return () => cancelAnimationFrame(raf);
   }, [pathname]);
 
   return null;
