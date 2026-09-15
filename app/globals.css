@@ -1828,3 +1828,18 @@
   .bottom-dock.is-scrolling:not(:hover) .dock-bg,
   .bottom-dock.is-scrolling:not(:hover) > :not(.dock-bg) { opacity: 1; transform: none; }
 }
+
+/* Short laptop screens (Windows scaling, the taskbar and browser toolbars can leave ~600-800px): the
+   hero is tightened so all of it, numbers included, sits above the dock. Nothing changes at 861px+.
+   (Devansh, 15 Sep: a friend's Windows laptop showed the numbers under the dock.) */
+@media (min-width: 641px) and (max-height: 860px) {
+  .stack-hero-inner { padding-top: 24px; padding-bottom: 24px; gap: 32px; }
+  .intro { gap: 24px; }
+  .avatar { width: 104px; height: 104px; }
+  .intro-body { gap: 16px; }
+}
+@media (min-width: 641px) and (max-height: 700px) {
+  .stack-hero-inner { gap: 24px; }
+  .intro { gap: 20px; }
+  .avatar { width: 80px; height: 80px; }
+}
