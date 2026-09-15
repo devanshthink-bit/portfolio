@@ -227,7 +227,7 @@ export default function BottomNav() {
         <Link href="/about" tabIndex={menu ? 0 : -1} onPointerDown={() => playDockClick(1.12)} onClick={() => setMenu(false)}>About</Link>
         <Link href="/resume" tabIndex={menu ? 0 : -1} onPointerDown={() => playDockClick(1.19)} onClick={() => setMenu(false)}>Resume</Link>
         <button tabIndex={menu ? 0 : -1} onPointerDown={() => playDockClick(1.26)} onClick={() => { toggleTheme(); setMenu(false); }}>
-          Theme
+          {isDark ? "Light" : "Dark"}
         </button>
       </div>
     </nav>
