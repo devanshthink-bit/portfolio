@@ -400,6 +400,12 @@ export default function RedbusCaseStudy() {
         {VIDEO_URL && <Pill href={VIDEO_URL} external icon="play">Watch the walkthrough</Pill>}
       </div>
 
+      {/* The quick summary, as its own block under the buttons, so the title area stays light (Devansh, 15 Sep). */}
+      <section className="cs-beat" style={{ marginTop: 56 }}>
+        <SectionLabel>In short</SectionLabel>
+        <InShort />
+      </section>
+
       {/* ── ACT 1 ── */}
       <Act id="toc-problem" n="Act 1 · The problem" title="The return that never gets booked"
         sub="It starts with one traveller and a ticket she couldn't move." />
@@ -652,12 +658,6 @@ export default function RedbusCaseStudy() {
         ]} />
       </Beat>
 
-
-      {/* The three-line summary, as a recap at the end: the intro was too text heavy with it (Devansh, 15 Sep). */}
-      <section className="cs-beat">
-        <SectionLabel>In short</SectionLabel>
-        <InShort />
-      </section>
 
       <Closing />
     </main>
