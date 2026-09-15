@@ -11,9 +11,9 @@ const INTER = "var(--font-inter)";
 // One small type scale for the whole case study (Devansh, 15 Sep: "Keep the number of variations
 // minimal"). Sizes 12 / 14 / 16 / 18 / 20 / 28, weights 400 / 500 / 700 / 800, four letter-spacings.
 export const T = {
-  h1:      { fontFamily: MANROPE, fontSize: 28, fontWeight: 800, color: "var(--text-primary)", letterSpacing: "-0.03em", lineHeight: 1.15, margin: "0 0 16px 0" } as React.CSSProperties,
-  lede:    { fontFamily: INTER, fontSize: 18, fontWeight: 400, color: "var(--text-secondary)", letterSpacing: "-0.011em", lineHeight: 1.6, margin: "0 0 44px 0", maxWidth: 640 } as React.CSSProperties,
-  h2:      { fontFamily: MANROPE, fontSize: 20, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.02em", lineHeight: 1.3, margin: "0 0 10px 0" } as React.CSSProperties,
+  h1:      { fontFamily: MANROPE, fontSize: 28, fontWeight: 800, color: "var(--text-primary)", letterSpacing: "-0.03em", lineHeight: 1.15, margin: "0 0 12px 0" } as React.CSSProperties,
+  lede:    { fontFamily: INTER, fontSize: 18, fontWeight: 400, color: "var(--text-secondary)", letterSpacing: "-0.011em", lineHeight: 1.6, margin: "0 0 28px 0", maxWidth: 640 } as React.CSSProperties,
+  h2:      { fontFamily: MANROPE, fontSize: 20, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.02em", lineHeight: 1.3, margin: "0 0 12px 0" } as React.CSSProperties,
   sub:     { fontFamily: INTER, fontSize: 16, fontWeight: 400, color: "var(--text-secondary)", letterSpacing: "-0.011em", lineHeight: 1.65, margin: 0, maxWidth: 640 } as React.CSSProperties,
   small:   { fontFamily: INTER, fontSize: 14, fontWeight: 400, color: "var(--text-muted)", letterSpacing: "-0.011em", lineHeight: 1.5, margin: 0 } as React.CSSProperties,
   // A quiet label inside a card: the same as small.
@@ -116,7 +116,7 @@ export function Pill({ href, children, primary, external, icon }: {
 
 export function MetaStrip({ items }: { items: { label: string; value: string }[] }) {
   return (
-    <div className="cs-meta-strip" style={{ padding: "22px 0", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", marginBottom: 24 }}>
+    <div className="cs-meta-strip" style={{ padding: "28px 0", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", marginBottom: 28 }}>
       {items.map((item) => (
         <div key={item.label}>
           <p style={{ ...T.eyebrow, margin: "0 0 4px 0" }}>{item.label}</p>

@@ -1135,7 +1135,7 @@
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--text-muted);
-    margin: 0 0 12px;
+    margin: 0 0 10px;
   }
 
   .cs-act-title {
@@ -1145,7 +1145,7 @@
     letter-spacing: -0.03em;
     line-height: 1.15;
     color: var(--text-primary);
-    margin: 0 0 14px;
+    margin: 0 0 12px;
   }
 
   .cs-act-sub {
