@@ -354,7 +354,12 @@ export default function RedbusCaseStudy() {
 
       <SectionLabel>Case study · Product design, concept</SectionLabel>
       <h1 style={T.h1}>
-        <span style={{ display: "block", color: "var(--brand-red)" }}>RedBus</span>Winning the return ticket at checkout
+        <span style={{ display: "flex", alignItems: "center", gap: 10, color: "var(--brand-red)" }}>
+          {/* The same unaltered logo the home card uses */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/redbus/logo.svg" alt="" aria-hidden width={45} height={30} style={{ height: "1.05em", width: "auto", display: "block" }} />
+          RedBus
+        </span>Winning the return ticket at checkout
       </h1>
       <p style={T.lede}>Most travellers book the bus out and leave the way back for later. A quarter of them then book it on another app. I redesigned the moment RedBus asks about the return, so it can be booked in the same checkout, without a date.</p>
 
