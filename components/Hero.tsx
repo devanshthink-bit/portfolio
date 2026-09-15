@@ -22,7 +22,7 @@ export default function Hero() {
 
       <div className="intro-body">
         <p>
-          Hey, I&apos;m Devansh. A product designer, with a background in engineering where I spent three years shipping 0→1 flagship products used by millions across greentech, workforce enablement, and hospitality, at both startups and scale.
+          Hey, I&apos;m Devansh. A product designer, with a background in engineering where I spent three years shipping flagship products used by millions across greentech, workforce enablement, and hospitality, at both startups and scale.
         </p>
         <p>
           I care deeply about craft and detail, and about building products that are both functional and delightful.

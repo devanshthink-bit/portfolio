@@ -238,7 +238,7 @@ export default function About() {
             className="testimonial-track"
             style={{
               display: "flex",
-              alignItems: "flex-start",
+              alignItems: "stretch",   // every card as tall as the tallest, names on one line
               gap: CARD_GAP,
               width: "max-content",
               animation: "ticker-left 36s linear infinite",
@@ -248,9 +248,9 @@ export default function About() {
             onMouseLeave={e => { e.currentTarget.style.animationPlayState = "running"; }}
           >
             {[...testimonials, ...testimonials].map((tc, i) => (
-              <div key={i} style={{ flex: `0 0 320px`, background: "var(--card-bg)", boxShadow: "var(--shadow-md)", borderRadius: "var(--r-md)", padding: 20, display: "flex", flexDirection: "column", gap: 40 }}>
+              <div key={i} style={{ flex: `0 0 320px`, background: "var(--card-bg)", boxShadow: "var(--shadow-md)", borderRadius: "var(--r-md)", padding: 20, display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 40 }}>
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                  <p style={{ fontFamily: "var(--font-inter)", fontStyle: "normal", fontSize: 14, fontWeight: 400, lineHeight: 1.5, letterSpacing: "-0.011em", color: "var(--text-secondary)", margin: 0 }}>{tc.quote}</p>
+                  <p style={{ fontFamily: "var(--font-inter)", fontStyle: "normal", fontSize: 14, fontWeight: 400, lineHeight: 1.6, letterSpacing: "-0.011em", color: "var(--text-secondary)", margin: 0 }}>{tc.quote}</p>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
                   <img src={tc.avatar} alt={tc.name} style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
