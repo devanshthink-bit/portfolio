@@ -1803,6 +1803,7 @@
 .stats-line i { align-self: center; width: 1px; height: 0.95em; background: currentColor; opacity: 0.45; }
 @media (min-width: 641px) {
   .stats-line { font-size: 15px; padding-top: 20px; }
+  .stats-line i { display: none; }   /* no separators on the web (Devansh, 15 Sep); phones keep theirs */
   .stats-line b { font-size: clamp(20px, 3vw, 28px); margin-right: 6px; }   /* back to the web's 28px; eases down on tablets so the line holds */
 }
 
