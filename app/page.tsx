@@ -282,7 +282,7 @@ export default function Home() {
             <p className="stats-line">
               <span><b>3+ yrs</b>in engineering</span>
               <span><b>3</b>products</span>
-              <span><b>2M+</b>users</span>
+              <span><b>2M+</b>reach</span>
             </p>
           </div>
         </section>
