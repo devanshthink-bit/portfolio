@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Manrope, Geist_Mono } from "next/font/google";
+import { Inter, Manrope, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import BottomNav from "../components/BottomNav";
 import PageTransition from "../components/PageTransition";
@@ -10,6 +10,8 @@ import SmoothScroll from "../components/SmoothScroll";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope" });
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
+// Only for the "ds" mark that stands in for Home in the dock.
+const instrument = Instrument_Serif({ subsets: ["latin"], weight: "400", style: "italic", variable: "--font-instrument" });
 
 export const metadata: Metadata = {
   title: "Devansh Somvanshi",
@@ -24,7 +26,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${manrope.variable} ${geistMono.variable}`}
+      className={`${inter.variable} ${manrope.variable} ${geistMono.variable} ${instrument.variable}`}
     >
       <body suppressHydrationWarning>
         <SmoothScroll />
