@@ -1723,8 +1723,7 @@ html.nerd-mode .cs-page {
 
 @media (max-width: 640px) {
   .cs-tickets, .cs-dots, .cs-knot-cols, .cs-ideas, .cs-voices, .cs-watch { grid-template-columns: minmax(0, 1fr); }
-  .cs-ticket { grid-template-columns: minmax(0, 1fr) 104px; }
-  .cs-ticket .cs-stamp { font-size: 10.5px; letter-spacing: 0.08em; padding: 6px 8px 5px; }
+  .cs-ticket { grid-template-columns: minmax(0, 1fr) 92px; }
   .cs-mscw { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 20px; }
   .cs-knot-cols { gap: 28px; }
   .cs-knot-tie svg { display: none; }
