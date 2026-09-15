@@ -36,9 +36,9 @@ export default function Hero() {
             rel="noopener noreferrer"
           >
             Let&apos;s make it one
-            {/* Lucide arrow-up-right, drawn rather than typed */}
+            {/* Lucide arrow-right, drawn rather than typed */}
             <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden style={{ display: "inline-block", marginLeft: 4, verticalAlign: "-2px" }}>
-              <path d="M7 17 17 7M8 7h9v9" />
+              <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
             </svg>
           </a>
         </p>
