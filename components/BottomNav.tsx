@@ -130,6 +130,7 @@ export default function BottomNav() {
   const [hovered, setHovered] = useState<string | null>(null);
   const [hidden, setHidden] = useState(false);
   const [menu, setMenu] = useState(false);
+  const [scrolling, setScrolling] = useState(false);
 
   // Phones: while the menu is open the page holds still.
   useEffect(() => {
@@ -145,15 +146,22 @@ export default function BottomNav() {
   // when you scroll up, so it never covers what you are reading.
   useEffect(() => {
     let last = window.scrollY;
+    let settle: ReturnType<typeof setTimeout> | undefined;
     const onScroll = () => {
       const y = window.scrollY;
+      // Web: the dock shrinks while the page moves and settles back once it has stopped.
+      if (window.innerWidth > 640) {
+        setScrolling(true);
+        clearTimeout(settle);
+        settle = setTimeout(() => setScrolling(false), 200);
+      }
       if (window.innerWidth > 640 || y < 80) { setHidden(false); last = y; return; }
       if (Math.abs(y - last) < 8) return;
       setHidden(y > last);
       last = y;
     };
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => { clearTimeout(settle); window.removeEventListener("scroll", onScroll); };
   }, []);
   useEffect(() => { setHidden(false); setMenu(false); }, [pathname]);
 
@@ -178,7 +186,7 @@ export default function BottomNav() {
     <>
     <div className={`dock-scrim${menu ? " open" : ""}`} onClick={() => setMenu(false)} aria-hidden />
     <nav
-      className={`bottom-dock${hidden ? " is-hidden" : ""}`}
+      className={`bottom-dock${hidden ? " is-hidden" : ""}${scrolling ? " is-scrolling" : ""}`}
       onMouseEnter={() => window.dispatchEvent(new Event("cursor:hide"))}
       onMouseLeave={() => { window.dispatchEvent(new Event("cursor:show")); setHovered(null); }}
       style={{
