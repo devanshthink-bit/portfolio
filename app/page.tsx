@@ -205,7 +205,7 @@ export default function Home() {
               <span className="stats-web">
                 <b>0
                   {/* Lucide arrow-right, drawn rather than typed */}
-                  <svg width="0.75em" height="0.75em" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-label="to" style={{ margin: "0 2px", verticalAlign: "0.02em" }}>
+                  <svg width="0.75em" height="0.75em" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-label="to" style={{ display: "inline-block", margin: "0 2px", verticalAlign: "0.02em" }}>
                     <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
                   </svg>
                 1</b>&amp; at scale
