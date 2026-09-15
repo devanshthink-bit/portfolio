@@ -29,7 +29,7 @@ export default function ResumePage() {
           display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
         .resume-btn { display: inline-flex; align-items: center; height: 40px; padding: 0 11px;
           border-radius: 100px; border: 0; background: var(--bg); cursor: pointer;
-          font-family: var(--font-inter), sans-serif; font-size: 13.5px; font-weight: 500; letter-spacing: -0.01em;
+          font-family: var(--font-inter), sans-serif; font-size: 14px; font-weight: 600; letter-spacing: -0.011em;
           color: var(--text-primary); text-decoration: none; white-space: nowrap; box-shadow: inset 0 0 0 1px var(--border);
           transition: box-shadow 0.3s var(--ease-out), opacity 0.3s var(--ease-out); }
         .resume-btn svg { width: 18px; height: 18px; flex: none; }

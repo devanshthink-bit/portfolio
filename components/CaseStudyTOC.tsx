@@ -89,7 +89,7 @@ function CaseStudyTOCInner({ sections = defaultSections, variant = "right" }: { 
             <button key={id} onClick={() => scrollTo(id)} style={{
               position: "relative", background: "none", border: "none", cursor: "pointer",
               padding: "7px 0 7px 18px", textAlign: "left", whiteSpace: "nowrap",
-              fontFamily: "var(--font-manrope)", fontSize: 15, letterSpacing: "-0.01em",
+              fontFamily: "var(--font-manrope)", fontSize: 14, letterSpacing: "-0.01em",
               fontWeight: isActive ? 500 : 400,
               color: isActive ? "var(--text-primary)" : "var(--text-muted)",
               transition: "color 0.3s var(--ease-out)",
@@ -140,7 +140,7 @@ function CaseStudyTOCInner({ sections = defaultSections, variant = "right" }: { 
             >
               <span style={{
                 fontFamily: "var(--font-inter)",
-                fontSize: 13,
+                fontSize: 14,
                 letterSpacing: "-0.01em",
                 color: isActive ? "var(--text-primary)" : "var(--text-muted)",
                 fontWeight: isActive ? 600 : 400,
@@ -294,7 +294,7 @@ function CaseStudyTOCInner({ sections = defaultSections, variant = "right" }: { 
         </span>
         <span style={{
           fontFamily: "var(--font-manrope)",
-          fontSize: 13.5,
+          fontSize: 14,
           fontWeight: 600,
           letterSpacing: "-0.01em",
           color: "var(--bg)",

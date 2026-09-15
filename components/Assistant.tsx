@@ -86,7 +86,7 @@ export default function Assistant() {
           borderBottom: "1px solid var(--border)",
           display: "flex", alignItems: "center", justifyContent: "space-between",
         }}>
-          <p style={{ margin: 0, fontSize: 13, fontWeight: 600, color: "var(--text-primary)", letterSpacing: "-0.01em" }}>Ask about Devansh</p>
+          <p style={{ margin: 0, fontSize: 14, fontWeight: 600, color: "var(--text-primary)", letterSpacing: "-0.01em" }}>Ask about Devansh</p>
           <button
             onClick={() => setOpen(false)}
             style={{ background: "none", border: "none", cursor: "pointer", padding: 4, color: "var(--text-muted)", lineHeight: 1 }}
@@ -128,7 +128,7 @@ export default function Assistant() {
                 maxWidth: "82%", padding: "8px 12px", borderRadius: m.role === "user" ? "12px 12px 3px 12px" : "12px 12px 12px 3px",
                 background: m.role === "user" ? "var(--text-primary)" : "var(--card-bg)",
                 color: m.role === "user" ? "var(--bg)" : "var(--text-primary)",
-                fontSize: 12.5, lineHeight: 1.5, letterSpacing: "-0.01em",
+                fontSize: 14, lineHeight: 1.5, letterSpacing: "-0.01em",
               }}>
                 {m.content}
               </div>
@@ -166,7 +166,7 @@ export default function Assistant() {
             placeholder="Ask anything..."
             style={{
               flex: 1, background: "none", border: "none", outline: "none",
-              fontSize: 12.5, color: "var(--text-primary)", letterSpacing: "-0.01em",
+              fontSize: 14, color: "var(--text-primary)", letterSpacing: "-0.01em",
               fontFamily: "inherit",
             }}
           />

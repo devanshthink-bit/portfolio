@@ -88,7 +88,7 @@ function StatCounter({ value, unit, label, active, countTo, suffix, startFrom }:
         </span>
         {unit && (
           <span style={{
-            fontFamily: "var(--font-manrope)", fontSize: 15, fontWeight: 600,
+            fontFamily: "var(--font-manrope)", fontSize: 16, fontWeight: 600,
             color: "var(--text-muted)", letterSpacing: "-0.01em",
           }}>
             {unit}

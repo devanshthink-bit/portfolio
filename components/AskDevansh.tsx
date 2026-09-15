@@ -94,7 +94,7 @@ export default function AskDevansh() {
   }
 
   const bubble = (mine: boolean): React.CSSProperties => ({
-    maxWidth: "86%", padding: "11px 16px", borderRadius: "var(--r-md)", fontSize: 15, lineHeight: 1.55,
+    maxWidth: "86%", padding: "11px 16px", borderRadius: "var(--r-md)", fontSize: 16, lineHeight: 1.6,
     letterSpacing: "-0.01em", whiteSpace: "pre-wrap",
     background: mine ? "var(--ink-surface)" : "var(--card-bg)", color: mine ? "#fff" : "var(--text-primary)",
     alignSelf: mine ? "flex-end" : "flex-start",
@@ -130,7 +130,7 @@ export default function AskDevansh() {
 
         {confirmEnd ? (
           <div className="ask-confirm">
-            <p style={{ fontSize: 24, fontWeight: 700, margin: 0, color: "var(--text-muted)" }}>End chat</p>
+            <p style={{ fontSize: 20, fontWeight: 700, margin: 0, color: "var(--text-muted)" }}>End chat</p>
             <p style={{ margin: "6px 0 22px", color: "var(--text-secondary)" }}>Do you want to end this chat?</p>
             <button onClick={endChat}>Yes, end chat</button>
             <button onClick={() => setConfirmEnd(false)}>Cancel</button>
@@ -173,7 +173,7 @@ export default function AskDevansh() {
       <style>{`
         .ask-trigger { position: fixed; right: 28px; bottom: 28px; z-index: 1001; display: flex; align-items: center; gap: 10px;
           padding: 15px 24px; border: none; border-radius: 100px; background: var(--ink-surface); color: #fff; cursor: pointer;
-          font-family: ${FONT}; font-size: 16px; font-weight: 600; letter-spacing: -0.01em;
+          font-family: ${FONT}; font-size: 14px; font-weight: 600; letter-spacing: -0.01em;
           box-shadow: var(--shadow-float); transition: transform .35s var(--ease-out); }
         .ask-trigger:hover { transform: translateY(-2px); }
         .ask-panel { position: fixed; top: 0; right: 0; bottom: 0; z-index: 1002; width: 420px; max-width: 100vw;
@@ -188,11 +188,11 @@ export default function AskDevansh() {
         .ask-menu { position: absolute; top: 58px; right: 20px; z-index: 2; display: flex; flex-direction: column; padding: 6px;
           background: var(--raised); border-radius: var(--r-md); box-shadow: var(--shadow-float); }
         .ask-menu button { display: flex; align-items: center; gap: 10px; background: none; border: none; text-align: left; padding: 10px 14px; border-radius: 8px; cursor: pointer;
-          font-family: ${FONT}; font-size: 15px; color: var(--text-primary); white-space: nowrap; }
+          font-family: ${FONT}; font-size: 14px; color: var(--text-primary); white-space: nowrap; }
         .ask-menu button:hover { background: var(--card-bg); }
         .ask-list { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; display: flex; flex-direction: column; gap: 10px; padding: 8px 24px 16px; }
         .ask-chip { border: 1px solid var(--border); background: var(--raised); color: var(--text-primary); border-radius: 100px;
-          padding: 11px 18px; font-family: ${FONT}; font-size: 15px; font-weight: 500; cursor: pointer; transition: background .3s var(--ease-out); }
+          padding: 11px 18px; font-family: ${FONT}; font-size: 14px; font-weight: 500; cursor: pointer; transition: background .3s var(--ease-out); }
         .ask-chip:hover { background: var(--card-bg); }
         .ask-foot { padding: 0 20px 14px; display: flex; flex-direction: column; gap: 12px; }
         .ask-note { display: flex; gap: 10px; align-items: flex-start; background: var(--card-bg); border-radius: 12px; padding: 14px 16px;
@@ -202,7 +202,7 @@ export default function AskDevansh() {
         .ask-input input { flex: 1; border: none; outline: none; background: none; font-family: ${FONT}; font-size: 16px; color: var(--text-primary); padding: 10px 0; }
         .ask-input button { width: 36px; height: 36px; flex: 0 0 36px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; border: none; background: var(--ink-surface); color: #fff; cursor: pointer; }
         .ask-input button:disabled { background: var(--card-bg); color: var(--text-muted); cursor: default; }
-        .ask-esc { margin: 0; text-align: center; font-size: 13px; color: var(--text-muted); }
+        .ask-esc { margin: 0; text-align: center; font-size: 12px; color: var(--text-muted); }
         .ask-esc kbd { border: 1px solid var(--border); border-radius: 5px; padding: 1px 6px; font-family: inherit; font-size: 12px; }
         .ask-confirm { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 32px 80px; text-align: center; }
         .ask-confirm button { width: 100%; max-width: 340px; margin-top: 10px; padding: 13px; border: 1px solid var(--border); border-radius: var(--r-sm);
@@ -219,7 +219,7 @@ export default function AskDevansh() {
         body { transition: padding .6s var(--ease-sheet); }
         @media (max-width: 1099px) { html.ask-open body { padding-right: 0; } }
         @media (max-width: 640px) {
-          .ask-trigger { right: 16px; bottom: 76px; padding: 13px 20px; font-size: 15px; }
+          .ask-trigger { right: 16px; bottom: 76px; padding: 13px 20px; font-size: 14px; }
           .ask-panel { width: 100vw; border-left: none; }
           .ask-esc { display: none; }
         }
