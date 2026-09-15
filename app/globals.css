@@ -1775,7 +1775,7 @@
    no craft paragraph, the hello as one outlined pill, three numbers on one-line labels under a thin
    rule. "Designer & Developer." stays the first heading line, as on the web. */
 @media (max-width: 640px) {
-  .avatar { width: 84px; height: 84px; }
+  .avatar { width: 92px; height: 92px; }
   .intro-hello-lead, .hello-web { display: none; }
   .hello-phone { display: inline; }
 
