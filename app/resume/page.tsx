@@ -56,7 +56,8 @@ export default function ResumePage() {
         /* Phones have no room at the side: a row of icons above the résumé, no labels. */
         @media (max-width: 640px) {
           .resume-sheet { display: flex; flex-direction: column; }
-          .resume-actions { order: -1; position: static; flex-direction: row; justify-content: center; margin-bottom: 12px; }
+          /* Controls under the résumé on phones (Devansh, 15 Sep). */
+          .resume-actions { order: 1; position: static; flex-direction: row; justify-content: center; margin-top: 12px; }
           .resume-btn-label { display: none; }
           /* The bar is at the top on phones: 72px above (bar and gap), 40px below. */
           .resume-page { height: calc(100dvh - 112px); }
