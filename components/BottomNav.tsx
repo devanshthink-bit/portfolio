@@ -10,11 +10,11 @@ import { smoothScrollTo } from "@/lib/smoothScroll";
 function Solar({ body }: { body: string }) {
   return <svg width={22} height={22} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden dangerouslySetInnerHTML={{ __html: body }} />;
 }
-// The home mark: a lowercase "ds" in Instrument Serif Italic, sized to sit with the 22px icons.
+// The home mark: a lowercase "ds." in Instrument Serif Italic, sized to sit with the 22px icons.
 function HomeIcon() {
   return (
     <span aria-hidden style={{ fontFamily: "var(--font-instrument), Georgia, serif", fontStyle: "italic", fontSize: 26, lineHeight: 1, letterSpacing: "0.01em", display: "block", marginTop: -2 }}>
-      ds
+      ds.
     </span>
   );
 }
