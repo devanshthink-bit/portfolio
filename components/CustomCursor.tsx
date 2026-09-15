@@ -30,7 +30,9 @@ export default function CustomCursor() {
     // Work cards show their own label instead of any cursor, so the circle stays hidden anywhere inside.
     // Text fields show the typing cursor, so the circle hides there too.
     const HIDDEN = `${TAPPABLE}, img, .work-card, .pg-card, input, textarea, [contenteditable="true"]`;
-    const hidden = (el: EventTarget | null) => el instanceof Element && !!el.closest(HIDDEN);
+    // Anything globals.css gives the hand cursor (the dock, footer links) counts as tappable too.
+    const hidden = (el: EventTarget | null) =>
+      el instanceof Element && (!!el.closest(HIDDEN) || getComputedStyle(el).cursor === "pointer");
     const onOverImg = (e: MouseEvent) => {
       if (hidden(e.target)) onHide();
     };

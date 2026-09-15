@@ -164,7 +164,9 @@ export default function BottomNav() {
       <Link href="/resume" aria-label="Resume" style={{ display: "inline-flex" }}>
         <DockItem label="Resume" pitch={1.19} hovered={hovered === "resume"} onHover={v => setHovered(v ? "resume" : null)}><ResumeIcon /></DockItem>
       </Link>
-      <span onClick={toggleTheme} style={{ display: "inline-flex" }}>
+      <span role="button" tabIndex={0} aria-label="Theme" onClick={toggleTheme}
+        onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleTheme(); } }}
+        style={{ display: "inline-flex" }}>
         <DockItem label="Theme" pitch={1.26} hovered={hovered === "theme"} onHover={v => setHovered(v ? "theme" : null)}>
           {isDark ? <MoonIcon /> : <SunIcon />}
         </DockItem>
