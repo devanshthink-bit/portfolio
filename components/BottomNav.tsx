@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { flushSync } from "react-dom";
 import { playDockClick } from "@/lib/dockSound";
 import { smoothScrollTo } from "@/lib/smoothScroll";
@@ -127,6 +127,7 @@ function DockItem({ label, hovered, pitch, onHover, children }: {
 
 export default function BottomNav() {
   const pathname = usePathname();
+  const router = useRouter();
   const [isDark, setIsDark] = useState(false);
   const [hovered, setHovered] = useState<string | null>(null);
   const [hidden, setHidden] = useState(false);
@@ -175,24 +176,29 @@ export default function BottomNav() {
 
   // With an origin (the phone menu's theme icon), the new theme spreads out of it as a circle until it
   // fills the screen (Devansh, 15 Sep). Browsers without view transitions, and reduced motion, switch at once.
-  const toggleTheme = (origin?: HTMLElement) => {
+  const toggleTheme = (origin?: HTMLElement, done?: () => void) => {
     const next = !isDark;
     const apply = () => {
       setIsDark(next);
       document.documentElement.classList.toggle("nerd-mode", next);
     };
     const doc = document as Document & { startViewTransition?: (cb: () => void) => { ready: Promise<void> } };
-    if (!origin || !doc.startViewTransition || window.matchMedia("(prefers-reduced-motion: reduce)").matches) { apply(); return; }
+    if (!origin || !doc.startViewTransition || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      apply();
+      if (done) setTimeout(done, 150);
+      return;
+    }
     const r = origin.getBoundingClientRect();
     const x = r.left + r.width / 2, y = r.top + r.height / 2;
     const end = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
     const t = doc.startViewTransition(() => flushSync(apply));
     t.ready.then(() => {
-      document.documentElement.animate(
+      const reveal = document.documentElement.animate(
         { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
         { duration: 700, easing: "cubic-bezier(0.22, 1, 0.36, 1)", pseudoElement: "::view-transition-new(root)" },
       );
-    }).catch(() => {});   // a skipped transition (a hidden tab, say) still switches the theme; nothing to report
+      reveal.finished.then(() => done?.(), () => done?.());
+    }).catch(() => done?.());   // a skipped transition (a hidden tab, say) still switches the theme
   };
 
   // Hidden on the RedBus case study at Devansh's request: the contents list and Ask Devansh sit there.
@@ -258,7 +264,12 @@ export default function BottomNav() {
         }}>Work</Link>
         <Link href="/about" tabIndex={menu ? 0 : -1} onPointerDown={() => playDockClick(1.12)} onClick={() => setMenu(false)}>About</Link>
         <Link href="/resume" tabIndex={menu ? 0 : -1} onPointerDown={() => playDockClick(1.19)} onClick={() => setMenu(false)}>Resume</Link>
-        <button tabIndex={menu ? 0 : -1} aria-label={isDark ? "Light mode" : "Dark mode"} onPointerDown={() => playDockClick(1.26)} onClick={(e) => toggleTheme(e.currentTarget)}>
+        <button tabIndex={menu ? 0 : -1} aria-label={isDark ? "Light mode" : "Dark mode"} onPointerDown={() => playDockClick(1.26)} onClick={(e) => toggleTheme(e.currentTarget, () => {
+          // Once the circle has filled the screen, the menu fades shut on the landing page (Devansh, 15 Sep).
+          setMenu(false);
+          if (pathname !== "/") router.push("/");
+          else setTimeout(() => smoothScrollTo(0), 80);
+        })}>
           {isDark ? <SunIcon /> : <MoonIcon />}
         </button>
       </div>
