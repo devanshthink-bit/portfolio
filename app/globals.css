@@ -9,7 +9,7 @@
     --border: #f1ede5;
     --card-bg: #f2f2f0;
     --hero-bg: #f6f5f3;
-    --brand-red: #B42335;   /* the RedBus name: a deep red that sits with black (Devansh, 15 Sep) */   /* warm stone, not cool grey (Devansh, 15 Sep) */
+    --brand-red: #E81E38;   /* the RedBus name: the brand red (a deeper #B42335 was tried and dropped, 15 Sep) */   /* warm stone, not cool grey (Devansh, 15 Sep) */
     --cs-callout-bg: rgba(0, 0, 0, 0.028);
     --cs-stat-gap: #e8e4df;
     --tag-bg: var(--bg);
@@ -28,7 +28,7 @@
     --border: rgba(255, 255, 255, 0.08);
     --card-bg: rgba(255, 255, 255, 0.06);
     --hero-bg: var(--bg);
-    --brand-red: #E8566A;
+    --brand-red: #E81E38;
     --cs-callout-bg: rgba(255, 255, 255, 0.06);
     --cs-stat-gap: rgba(255, 255, 255, 0.08);
     --tag-bg: rgba(255, 255, 255, 0.10);
