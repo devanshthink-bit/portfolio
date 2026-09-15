@@ -223,11 +223,11 @@ export default function BottomNav() {
           e.preventDefault();
           // After the page is free to scroll again.
           setTimeout(() => { const el = document.getElementById("recent-work"); if (el) smoothScrollTo(el.getBoundingClientRect().top + window.scrollY - 72); }, 80);
-        }}><WorkIcon /> Work</Link>
-        <Link href="/about" tabIndex={menu ? 0 : -1} onClick={() => setMenu(false)}><AboutIcon /> About</Link>
-        <Link href="/resume" tabIndex={menu ? 0 : -1} onClick={() => setMenu(false)}><ResumeIcon /> Resume</Link>
+        }}>Work</Link>
+        <Link href="/about" tabIndex={menu ? 0 : -1} onClick={() => setMenu(false)}>About</Link>
+        <Link href="/resume" tabIndex={menu ? 0 : -1} onClick={() => setMenu(false)}>Resume</Link>
         <button tabIndex={menu ? 0 : -1} onClick={() => { toggleTheme(); setMenu(false); }}>
-          <SunIcon /> Theme
+          Theme
         </button>
       </div>
     </nav>
