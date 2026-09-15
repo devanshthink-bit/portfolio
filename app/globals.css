@@ -616,8 +616,8 @@
     display: flex; justify-content: center; align-items: flex-start;
   }
   .wip-phone {
-    position: relative; width: 170px; height: 350px; flex: none;
-    border-radius: 30px; border: 1.5px dashed rgba(59, 74, 107, 0.35);
+    position: relative; width: 196px; height: 411px; flex: none;   /* the RedBus card's side phones: 196 wide, 430:902 */
+    border-radius: 28px; border: 1.5px dashed rgba(59, 74, 107, 0.35);
     background: rgba(255, 255, 255, 0.55);
     padding: 44px 18px 0; display: flex; flex-direction: column; gap: 12px;
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -626,11 +626,12 @@
     content: ""; position: absolute; top: 14px; left: 50%; width: 46px; height: 12px;
     transform: translateX(-50%); border-radius: 10px; background: rgba(59, 74, 107, 0.14);
   }
-  .wip-phone:nth-child(1) { transform: translate(26px, 50px) rotate(-8deg); }
-  .wip-phone:nth-child(2) { width: 200px; height: 400px; z-index: 2; background: rgba(255, 255, 255, 0.85); }
-  .wip-phone:nth-child(3) { transform: translate(-26px, 50px) rotate(8deg); }
-  .wip-card:hover .wip-phone:nth-child(1) { transform: translate(12px, 40px) rotate(-11deg); }
-  .wip-card:hover .wip-phone:nth-child(3) { transform: translate(-12px, 40px) rotate(11deg); }
+  .wip-phone:nth-child(1) { transform: translate(28px, 58px) rotate(-8deg); }
+  .wip-phone:nth-child(2) { width: 236px; height: 495px; border-radius: 34px; z-index: 2; background: rgba(255, 255, 255, 0.85); }
+  .wip-phone:nth-child(3) { transform: translate(-28px, 58px) rotate(8deg); }
+  .wip-card:hover .wip-phone:nth-child(1) { transform: translate(14px, 46px) rotate(-11deg); }
+  .wip-card:hover .wip-phone:nth-child(2) { transform: translateY(-10px); }
+  .wip-card:hover .wip-phone:nth-child(3) { transform: translate(-14px, 46px) rotate(11deg); }
 
   .wip-bar, .wip-block {
     display: block; height: 10px; border-radius: 6px; flex: none;
@@ -645,8 +646,9 @@
   }
   @media (max-width: 640px) {
     .wip-phones { height: 282px; }   /* 282 + 18 = the RedBus card's 300px on phones */
-    .wip-phone { width: 128px; height: 270px; padding-top: 36px; }
-    .wip-phone:nth-child(2) { width: 150px; height: 300px; }
+    /* Like the RedBus card on phones: only the middle phone, 190 wide. */
+    .wip-phone:not(:nth-child(2)) { display: none; }
+    .wip-phone:nth-child(2) { width: 190px; height: 399px; border-radius: 27px; }
   }
 
   /* Home hero + case-study overlay — breaks out of .page-wrapper to full viewport width */
