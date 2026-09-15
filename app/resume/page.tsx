@@ -44,6 +44,14 @@ export default function ResumePage() {
         /* An image has no links, so the PDF's link areas are laid back over it. Positions are the
            PDF's own link rects on its 794 x 1123 page, widened to take in each icon. */
         .resume-img { position: relative; }   /* the links' box is the image alone, never the action row */
+        /* The page sits on the site like a sheet of paper: soft corners and a layered shadow
+           that fades into the ground, so the space around it feels intended. */
+        .resume-img { border-radius: 14px; overflow: hidden;
+          box-shadow: 0 0 0 1px rgba(40,30,20,0.05), 0 1px 2px rgba(40,30,20,0.04),
+            0 8px 24px -8px rgba(40,30,20,0.10), 0 36px 72px -24px rgba(40,30,20,0.16); }
+        .resume-img img { display: block; }
+        html.nerd-mode .resume-img { box-shadow: 0 0 0 1px rgba(255,255,255,0.06),
+            0 8px 24px -8px rgba(0,0,0,0.5), 0 36px 72px -24px rgba(0,0,0,0.6); }
         .resume-link { position: absolute; border-radius: 4px; }
         .resume-link:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 2px; }
         @media (prefers-reduced-motion: reduce) { .resume-btn-label { transition: none; } }
