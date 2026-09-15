@@ -1801,6 +1801,8 @@
   border-top: 1px solid var(--border); padding-top: 16px;
   font-size: var(--fs-14); letter-spacing: -0.011em; color: var(--text-muted); }
 .stats-line b { font: 700 18px/1 var(--font-manrope), sans-serif; letter-spacing: -0.02em; color: var(--text-primary); margin-right: 5px; }
+/* Very subtle separators that fade out at the top and bottom (Devansh, 15 Sep). */
+.stats-line i { align-self: center; width: 1px; height: 1.6em; background: linear-gradient(180deg, transparent, currentColor 50%, transparent); opacity: 0.35; }
 }
 
 /* Web: while the page scrolls the dock folds into a short thick bar near the bottom edge, like the

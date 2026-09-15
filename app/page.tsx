@@ -277,11 +277,11 @@ export default function Home() {
                 <StatCounter key={s.label} {...s} active={statsVisible} />
               ))}
             </div>
-            {/* Phones: the numbers as one line, no separators (Devansh picked mock C2, 15 Sep).
+            {/* Phones: the numbers as one line, with faint fading separators (Devansh picked mock C2, 15 Sep).
                 The web keeps the four counting numbers above (Devansh: "in the web, revert"). */}
             <p className="stats-line">
-              <span><b>3+ yrs</b>in engineering</span>
-              <span><b>3</b>products</span>
+              <span><b>3+ yrs</b>in engineering</span><i aria-hidden="true" />
+              <span><b>3</b>products</span><i aria-hidden="true" />
               <span><b>2M+</b>reach</span>
             </p>
           </div>
