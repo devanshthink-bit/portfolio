@@ -1780,3 +1780,6 @@
 @media (max-width: 640px) {
   :root { --fs-14: 13px; --fs-16: 15px; --fs-17: 16px; --fs-18: 16px; --fs-20: 18px; --fs-24: 22px; --fs-28: 24px; }
 }
+
+/* Belt and braces: no circle cursor at phone width or on touch screens. */
+@media (max-width: 640px), (hover: none) { .custom-cursor { display: none !important; } }

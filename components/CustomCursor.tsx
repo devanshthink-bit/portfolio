@@ -12,8 +12,14 @@ export default function CustomCursor() {
   const raf = useRef<number>(0);
   const [enabled, setEnabled] = useState(false);
 
+  // Only with a real mouse on a screen wider than a phone. Phones never get the circle, even ones
+  // that report a fine pointer (Devansh, 15 Sep: "In mobile, all throughout, remove the circular cursor").
   useEffect(() => {
-    setEnabled(window.matchMedia("(pointer: fine)").matches);
+    const mq = window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 641px)");
+    const set = () => setEnabled(mq.matches);
+    set();
+    mq.addEventListener("change", set);
+    return () => mq.removeEventListener("change", set);
   }, []);
 
   useEffect(() => {
@@ -76,6 +82,7 @@ export default function CustomCursor() {
   return (
     <div
       ref={ref}
+      className="custom-cursor"
       style={{
         position: "fixed",
         top: 0,
