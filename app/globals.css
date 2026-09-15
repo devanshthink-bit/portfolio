@@ -13,12 +13,14 @@
     --cs-callout-bg: rgba(0, 0, 0, 0.028);
     --cs-stat-gap: #e8e4df;
     --tag-bg: var(--bg);
-    /* One shadow language for the whole site (16 Sep 2026), warm-tinted like the stone ground.
-       lg: large objects that rest on the page (résumé, photos, screens, skill buckets).
-       md: cards and tiles. float: anything that hovers above the page (dock, pills, menus). */
-    --shadow-lg: 0 0 0 1px rgba(40,30,20,0.05), 0 1px 2px rgba(40,30,20,0.04), 0 8px 24px -8px rgba(40,30,20,0.10), 0 36px 72px -24px rgba(40,30,20,0.16);
-    --shadow-md: 0 0 0 1px rgba(40,30,20,0.05), 0 1px 2px rgba(40,30,20,0.05), 0 6px 16px -6px rgba(40,30,20,0.12), 0 18px 36px -18px rgba(40,30,20,0.14);
-    --shadow-float: 0 0 0 1px rgba(40,30,20,0.06), 0 2px 4px rgba(40,30,20,0.06), 0 12px 32px -8px rgba(40,30,20,0.24);
+    /* One shadow language for the whole site, warm-tinted like the stone ground.
+       Even ambient shadows that hug every edge: small offsets, no negative spread, so nothing
+       looks lifted or 3D (Devansh, 16 Sep 2026: "elegant... 3D effect is not required").
+       lg: large objects on the page (résumé, photos, screens, skill buckets).
+       md: cards and tiles. float: things that hover above the page (dock, pills, menus). */
+    --shadow-lg: 0 0 0 1px rgba(40,30,20,0.05), 0 1px 2px rgba(40,30,20,0.04), 0 4px 12px rgba(40,30,20,0.05), 0 12px 32px rgba(40,30,20,0.06);
+    --shadow-md: 0 0 0 1px rgba(40,30,20,0.05), 0 1px 2px rgba(40,30,20,0.04), 0 4px 12px rgba(40,30,20,0.05);
+    --shadow-float: 0 0 0 1px rgba(40,30,20,0.06), 0 2px 6px rgba(40,30,20,0.06), 0 10px 28px rgba(40,30,20,0.10);
     --tag-shadow: var(--shadow-md);
     --icon-filter: drop-shadow(0 2px 4px rgba(0,0,0,0.22));
     /* Dark buttons and your own chat bubbles: near-black in light mode, lifted in dark mode. */
@@ -49,9 +51,9 @@
     --cs-callout-bg: #22211f;
     --cs-stat-gap: rgba(255, 255, 255, 0.09);
     --tag-bg: rgba(255, 255, 255, 0.10);
-    --shadow-lg: 0 0 0 1px rgba(255,255,255,0.06), 0 1px 2px rgba(0,0,0,0.4), 0 8px 24px -8px rgba(0,0,0,0.5), 0 36px 72px -24px rgba(0,0,0,0.6);
-    --shadow-md: 0 0 0 1px rgba(255,255,255,0.06), 0 1px 2px rgba(0,0,0,0.35), 0 6px 16px -6px rgba(0,0,0,0.45), 0 18px 36px -18px rgba(0,0,0,0.5);
-    --shadow-float: 0 0 0 1px rgba(255,255,255,0.08), 0 2px 4px rgba(0,0,0,0.4), 0 12px 32px -8px rgba(0,0,0,0.6);
+    --shadow-lg: 0 0 0 1px rgba(255,255,255,0.06), 0 1px 2px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35);
+    --shadow-md: 0 0 0 1px rgba(255,255,255,0.06), 0 1px 2px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.3);
+    --shadow-float: 0 0 0 1px rgba(255,255,255,0.08), 0 2px 6px rgba(0,0,0,0.35), 0 10px 28px rgba(0,0,0,0.45);
     --tag-shadow: var(--shadow-md);
     --icon-filter: drop-shadow(0 0 3px rgba(255,255,255,0.25)) brightness(1.15);
   }
