@@ -68,7 +68,7 @@ export default function Assistant() {
         style={{
           position: "fixed", bottom: 72, right: 20, zIndex: 999,
           width: 320,
-          background: "var(--bg)",
+          background: "var(--raised)",
           border: "1px solid var(--border)",
           borderRadius: 16,
           boxShadow: "0 8px 40px rgba(0,0,0,0.12)",

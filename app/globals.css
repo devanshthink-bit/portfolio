@@ -17,24 +17,30 @@
     --icon-filter: drop-shadow(0 2px 4px rgba(0,0,0,0.22));
     /* Dark buttons and your own chat bubbles: near-black in light mode, lifted in dark mode. */
     --ink-surface: #262626;
+    /* Raised surfaces (panels, sheets, floating pills). Same as the page in light mode, so
+       light mode is unchanged; the home Work sheet keeps its own white. */
+    --raised: #fafafa;
     /* No top navbar — nav lives in the bottom dock. Kept as a token so the
        hero/overlay sticky offsets (calc(var(--nav-h) + …)) resolve to a no-nav layout. */
     --nav-h: 0px;
   }
 
-  /* Dark mode is layered, darkest at the back: the home hero (#141312), the page and the
-     sheet over the hero (#1d1c1a), then cards (#292826). Warm, like the light theme. */
+  /* Dark mode has one set of layers, used the same way on every page:
+     the ground (#171614) behind every page, the home hero included; raised surfaces
+     (#1f1e1c) for anything that sits on top, like the Work sheet, panels and floating pills;
+     then cards (#2a2927). Warm, like the light theme. */
   html.nerd-mode {
-    --bg: #1d1c1a;
+    --bg: #171614;
+    --raised: #1f1e1c;
     --text-primary: #f5f3ef;
     --text-secondary: #c9c5bf;
     --text-muted: #8f8a82;
     --border: rgba(255, 255, 255, 0.09);
-    --card-bg: #292826;
-    --hero-bg: #141312;
+    --card-bg: #2a2927;
+    --hero-bg: #171614;
     --ink-surface: #3a3836;
     --brand-red: #E81E38;
-    --cs-callout-bg: #242321;
+    --cs-callout-bg: #22211f;
     --cs-stat-gap: rgba(255, 255, 255, 0.09);
     --tag-bg: rgba(255, 255, 255, 0.10);
     --tag-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 4px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(0,0,0,0.4);
@@ -645,7 +651,7 @@
   html.nerd-mode .stack-hero {
     background:
       radial-gradient(120% 70% at 50% 0%, rgba(255, 245, 230, 0.045) 0%, rgba(255, 245, 230, 0) 65%),
-      linear-gradient(180deg, #171614 0%, #121110 100%);
+      linear-gradient(180deg, #191816 0%, #151412 100%);
   }
 
   .stack-hero-inner {
@@ -674,7 +680,7 @@
 
   /* The sheet sits a step above the hero: lighter, a faint lit top edge, a shadow onto the hero. */
   html.nerd-mode .stack-overlay {
-    background: var(--bg);
+    background: var(--raised);
     border-color: rgba(255, 255, 255, 0.07);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 -24px 60px -12px rgba(0, 0, 0, 0.6);
   }

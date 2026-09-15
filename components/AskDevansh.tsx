@@ -177,22 +177,21 @@ export default function AskDevansh() {
           box-shadow: 0 8px 28px rgba(0,0,0,0.18); transition: transform .35s var(--ease-out); }
         .ask-trigger:hover { transform: translateY(-2px); }
         .ask-panel { position: fixed; top: 0; right: 0; bottom: 0; z-index: 1002; width: 420px; max-width: 100vw;
-          display: flex; flex-direction: column; background: var(--bg); border-left: 1px solid var(--border);
+          display: flex; flex-direction: column; background: var(--raised); border-left: 1px solid var(--border);
           font-family: ${FONT}; color: var(--text-primary);
           transform: translateX(100%); transition: transform .6s var(--ease-sheet), box-shadow .6s var(--ease-sheet); }
         .ask-panel.open { transform: none; box-shadow: -12px 0 40px rgba(0,0,0,0.06); }
-        html.nerd-mode .ask-panel { background: #232220; }
         html.nerd-mode .ask-panel.open { box-shadow: -16px 0 48px rgba(0,0,0,0.5); }
         .ask-head { position: relative; display: flex; align-items: center; gap: 6px; padding: 22px 20px 22px 24px; }
         .ask-icon { display: inline-flex; background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 4px; border-radius: 6px; }
         .ask-icon:hover { color: var(--text-primary); }
         .ask-menu { position: absolute; top: 58px; right: 20px; z-index: 2; display: flex; flex-direction: column; padding: 6px;
-          background: var(--bg); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+          background: var(--raised); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .ask-menu button { display: flex; align-items: center; gap: 10px; background: none; border: none; text-align: left; padding: 10px 14px; border-radius: 8px; cursor: pointer;
           font-family: ${FONT}; font-size: 15px; color: var(--text-primary); white-space: nowrap; }
         .ask-menu button:hover { background: var(--card-bg); }
         .ask-list { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; display: flex; flex-direction: column; gap: 10px; padding: 8px 24px 16px; }
-        .ask-chip { border: 1px solid var(--border); background: var(--bg); color: var(--text-primary); border-radius: 100px;
+        .ask-chip { border: 1px solid var(--border); background: var(--raised); color: var(--text-primary); border-radius: 100px;
           padding: 11px 18px; font-family: ${FONT}; font-size: 15px; font-weight: 500; cursor: pointer; transition: background .3s var(--ease-out); }
         .ask-chip:hover { background: var(--card-bg); }
         .ask-foot { padding: 0 20px 14px; display: flex; flex-direction: column; gap: 12px; }
@@ -207,7 +206,7 @@ export default function AskDevansh() {
         .ask-esc kbd { border: 1px solid var(--border); border-radius: 5px; padding: 1px 6px; font-family: inherit; font-size: 12px; }
         .ask-confirm { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 32px 80px; text-align: center; }
         .ask-confirm button { width: 100%; max-width: 340px; margin-top: 10px; padding: 13px; border: 1px solid var(--border); border-radius: 10px;
-          background: var(--bg); font-family: ${FONT}; font-size: 16px; font-weight: 600; color: var(--text-primary); cursor: pointer; }
+          background: var(--raised); font-family: ${FONT}; font-size: 16px; font-weight: 600; color: var(--text-primary); cursor: pointer; }
         .ask-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text-muted); opacity: .35; animation: ask-pulse 1.2s cubic-bezier(.16,1,.3,1) infinite; }
         @keyframes ask-pulse { 0%, 100% { opacity: .35; } 40% { opacity: 1; } }
         @media (prefers-reduced-motion: reduce) { .ask-dot { animation: none; opacity: .6; } }

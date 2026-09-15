@@ -187,7 +187,7 @@ function CaseStudyTOCInner({ sections = defaultSections, variant = "right" }: { 
           left: 0,
           right: 0,
           zIndex: 49,
-          background: "var(--bg)",
+          background: "var(--raised)",
           borderTop: "1px solid var(--border)",
           borderRadius: "16px 16px 0 0",
           padding: "12px 0 40px 0",
@@ -286,7 +286,7 @@ function CaseStudyTOCInner({ sections = defaultSections, variant = "right" }: { 
               width: menuOpen && i === 1 ? 0 : menuOpen ? 12 : [12, 8, 12][i],
               height: 1.5,
               borderRadius: 2,
-              background: "var(--bg)",
+              background: "var(--raised)",
               transition: "width 0.5s var(--ease-out)",
               transform: menuOpen ? (i === 0 ? "rotate(45deg) translate(3px, 3px)" : i === 2 ? "rotate(-45deg) translate(3px, -3px)" : "none") : "none",
             }} />
