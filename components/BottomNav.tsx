@@ -153,7 +153,7 @@ export default function BottomNav() {
     >
       {DOCK_SHAPES.map(({ cls, w, h }) => (
         <svg key={cls} className={`dock-bg ${cls}`} aria-hidden width={w} height={h} viewBox={`0 0 ${w} ${h}`}>
-          <path d={squirclePath(w, h)} fill="#2e2e2e" />
+          <path d={squirclePath(w, h)} style={{ fill: "var(--dock-bg)" }} />
         </svg>
       ))}
       <Link href="/" aria-label="Home" style={{ display: "inline-flex" }}>

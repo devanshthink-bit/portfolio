@@ -20,17 +20,19 @@
     --nav-h: 0px;
   }
 
+  /* Dark mode is layered, darkest at the back: the home hero (#141312), the page and the
+     sheet over the hero (#1d1c1a), then cards (#292826). Warm, like the light theme. */
   html.nerd-mode {
-    --bg: #242424;
+    --bg: #1d1c1a;
     --text-primary: #f5f3ef;
     --text-secondary: #c9c5bf;
     --text-muted: #8f8a82;
-    --border: rgba(255, 255, 255, 0.08);
-    --card-bg: rgba(255, 255, 255, 0.06);
-    --hero-bg: var(--bg);
+    --border: rgba(255, 255, 255, 0.09);
+    --card-bg: #292826;
+    --hero-bg: #141312;
     --brand-red: #E81E38;
-    --cs-callout-bg: rgba(255, 255, 255, 0.06);
-    --cs-stat-gap: rgba(255, 255, 255, 0.08);
+    --cs-callout-bg: #242321;
+    --cs-stat-gap: rgba(255, 255, 255, 0.09);
     --tag-bg: rgba(255, 255, 255, 0.10);
     --tag-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 4px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(0,0,0,0.4);
     --icon-filter: drop-shadow(0 0 3px rgba(255,255,255,0.25)) brightness(1.15);
@@ -59,10 +61,12 @@
   }
 
   .bottom-dock {
+    --dock-bg: #2e2e2e;
     border-radius: 100px;
     corner-shape: superellipse(2);
   }
   /* The dock is 312px wide; tighten it on the narrowest phones. */
+  html.nerd-mode .bottom-dock { --dock-bg: #3a3836; box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.6); }
   .dock-bg { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
   .dock-bg-narrow { display: none; }
   @media (max-width: 380px) {
@@ -635,7 +639,11 @@
       radial-gradient(120% 70% at 50% 0%, #fbfaf9 0%, rgba(251, 250, 249, 0) 65%),
       linear-gradient(180deg, #f8f7f5 0%, #f3f2ef 100%);
   }
-  html.nerd-mode .stack-hero { background: var(--hero-bg); }
+  html.nerd-mode .stack-hero {
+    background:
+      radial-gradient(120% 70% at 50% 0%, rgba(255, 245, 230, 0.045) 0%, rgba(255, 245, 230, 0) 65%),
+      linear-gradient(180deg, #171614 0%, #121110 100%);
+  }
 
   .stack-hero-inner {
     max-width: 980px;
@@ -661,8 +669,11 @@
     box-sizing: border-box;
   }
 
+  /* The sheet sits a step above the hero: lighter, a faint lit top edge, a shadow onto the hero. */
   html.nerd-mode .stack-overlay {
     background: var(--bg);
+    border-color: rgba(255, 255, 255, 0.07);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 -24px 60px -12px rgba(0, 0, 0, 0.6);
   }
 
   .stack-overlay-inner {
@@ -683,7 +694,7 @@
   }
 
   html.nerd-mode .testimonial-card {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--card-bg);
   }
 
   /* Footer */
