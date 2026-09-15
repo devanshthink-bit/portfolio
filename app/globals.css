@@ -1092,23 +1092,6 @@
   .phone-row.hero .phone-fig { position: relative; }
   .phone-row.hero .phone-fig:nth-child(2) .iphone { --n: 260; }
   .phone-row.hero .phone-fig:not(:nth-child(2)) .iphone { --n: 236; }
-  /* The side phones rest a little behind the middle one; hovering one brings it fully forward.
-     z-index waits for the glide back to finish, so a phone never drops behind mid-move. */
-  .phone-row.hero .phone-fig:nth-child(2) { z-index: 2; }
-  .phone-row.hero .phone-fig:not(:nth-child(2)) {
-    z-index: 1;
-    transition: transform 0.7s var(--ease-out), z-index 0s linear 0.7s;
-  }
-  .phone-row.hero .phone-fig:nth-child(1) { transform: translateX(44px) scale(0.9); }
-  .phone-row.hero .phone-fig:nth-child(3) { transform: translateX(-44px) scale(0.9); }
-  .phone-row.hero .phone-fig:not(:nth-child(2)):hover {
-    transform: none;
-    z-index: 3;
-    transition: transform 0.7s var(--ease-out), z-index 0s;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .phone-row.hero .phone-fig:not(:nth-child(2)) { transition: none; }
-  }
 
   .phone-fig {
     margin: 0;
