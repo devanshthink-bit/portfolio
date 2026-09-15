@@ -68,11 +68,10 @@ function squirclePath(w: number, h: number, radius = 24, smoothing = 1) {
 
 /* The dock has a fixed size, so both outlines ship in the HTML and CSS picks one:
    no measuring, so no flash of plain corners on load. Keep in step with the padding,
-   gap and 40px items here and the narrow-phone rule in globals.css. */
+   gap and 40px items here. Phones get a plain top bar instead (globals.css). */
 const dockSize = (padX: number, padY: number, gap: number) => ({ w: 5 * 40 + 4 * gap + 2 * padX, h: 40 + 2 * padY });
 const DOCK_SHAPES = [
   { cls: "dock-bg-wide", ...dockSize(24, 18, 16) },
-  { cls: "dock-bg-narrow", ...dockSize(16, 12, 14) },
 ];
 
 function DockItem({ label, hovered, pitch, onHover, children }: {
@@ -86,7 +85,7 @@ function DockItem({ label, hovered, pitch, onHover, children }: {
       onMouseLeave={() => onHover(false)}
     >
       {/* Tooltip — fade + slide-up with a subtle spring pop, like the reference */}
-      <span style={{
+      <span className="dock-tip" style={{
         position: "absolute", bottom: "calc(100% + 18px)", left: "50%",
         transformOrigin: "bottom center",
         transform: hovered
@@ -100,13 +99,13 @@ function DockItem({ label, hovered, pitch, onHover, children }: {
       }}>
         {label}
       </span>
-      <span style={{
+      <span className="dock-icon" style={{
         position: "relative",
         width: 40, height: 40,
         display: "inline-flex", alignItems: "center", justifyContent: "center",
         color: "#fff",
       }}>
-        <span style={{
+        <span className="dock-hover" style={{
           position: "absolute", inset: 0,
           borderRadius: 8,
           background: "rgb(23, 23, 23)",

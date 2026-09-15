@@ -94,15 +94,8 @@
     border-radius: 100px;
     corner-shape: superellipse(2);
   }
-  /* The dock is 312px wide; tighten it on the narrowest phones. */
   html.nerd-mode .bottom-dock { --dock-bg: #3a3836; }
   .dock-bg { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
-  .dock-bg-narrow { display: none; }
-  @media (max-width: 380px) {
-    .bottom-dock { gap: 14px !important; padding: 12px 16px !important; }
-    .dock-bg-wide { display: none; }
-    .dock-bg-narrow { display: block; }
-  }
 
   /* Native hand cursor over the bottom dock and footer links (custom circle is hidden there) */
   .bottom-dock,
@@ -1727,19 +1720,24 @@
   .phone-row.hero .phone-fig:nth-child(2) .iphone { --n: 272; }
 }
 
-/* Phones: the dock sits at the top, clear of what you read, and slides away while you scroll down
-   (Devansh, 15 Sep: "the dock is hiding the content beneath it"). The home hero is tightened so
-   the numbers fit on the first screen. */
+/* Phones: not a dock but a plain bar across the top, edge to edge, that slides away while you
+   scroll down (Devansh, 15 Sep: "the dock is hiding the content beneath it", then "don't make it
+   look like a dock. It should run from left to right, end to end, minimally"). No tooltips.
+   The home hero is tightened so the numbers fit on the first screen. */
 @media (max-width: 640px) {
-  .bottom-dock { top: 12px !important; bottom: auto !important; gap: 14px !important; padding: 12px 16px !important;
-    transition: transform 0.45s var(--ease-out), opacity 0.45s var(--ease-out); }
-  .bottom-dock.is-hidden { transform: translate(-50%, -88px) !important; opacity: 0; pointer-events: none; }
-  .dock-bg-wide { display: none; }
-  .dock-bg-narrow { display: block; }
-  body:has(.bottom-dock) .page-wrapper { padding-top: 88px; padding-bottom: 40px; }
-  .home-stack { margin-top: -88px; }
+  .bottom-dock { top: 0 !important; bottom: auto !important; left: 0 !important; right: 0 !important; transform: none !important;
+    justify-content: space-between; gap: 0 !important; padding: calc(6px + env(safe-area-inset-top)) 10px 6px !important;
+    border-radius: 0 !important; box-shadow: none !important; border-bottom: 1px solid var(--border);
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+    transition: transform 0.45s var(--ease-out); }
+  .bottom-dock.is-hidden { transform: translateY(-100%) !important; pointer-events: none; }
+  .bottom-dock .dock-bg, .bottom-dock .dock-tip, .bottom-dock .dock-hover { display: none; }
+  .bottom-dock .dock-icon { color: var(--text-primary) !important; }
+  body:has(.bottom-dock) .page-wrapper { padding-top: 72px; padding-bottom: 40px; }
+  .home-stack { margin-top: -72px; }
   .stack-hero { padding-bottom: 0; align-items: flex-start; }
-  .stack-hero-inner { padding: 88px 16px 32px; gap: 32px; }
+  .stack-hero-inner { padding: 76px 16px 32px; gap: 32px; }
   .avatar { width: 72px; height: 72px; }
   .intro { gap: 24px; }
   .intro-body { gap: 16px; }

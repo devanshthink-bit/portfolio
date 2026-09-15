@@ -58,9 +58,9 @@ export default function ResumePage() {
           .resume-sheet { display: flex; flex-direction: column; }
           .resume-actions { order: -1; position: static; flex-direction: row; justify-content: center; margin-bottom: 12px; }
           .resume-btn-label { display: none; }
-          /* The dock is at the top on phones: 88px above (dock and gap), 40px below. */
-          .resume-page { height: calc(100dvh - 128px); }
-          .resume-page img { max-height: calc(100dvh - 128px - 52px); }   /* 52px for the icon row */
+          /* The bar is at the top on phones: 72px above (bar and gap), 40px below. */
+          .resume-page { height: calc(100dvh - 112px); }
+          .resume-page img { max-height: calc(100dvh - 112px - 52px); }   /* 52px for the icon row */
         }
       `}</style>
       <div className="resume-page">

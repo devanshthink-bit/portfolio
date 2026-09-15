@@ -59,6 +59,14 @@ function CaseStudyTOCInner({ sections = defaultSections, variant = "right", ask 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // While the list is open the page holds still, so a swipe on the list can't scroll the page
+  // (which closed the list before you could pick anything).
+  useEffect(() => {
+    const lenis = (window as unknown as { __lenis?: { stop(): void; start(): void } }).__lenis;
+    if (menuOpen) { lenis?.stop(); document.documentElement.style.overflow = "hidden"; }
+    else { lenis?.start(); document.documentElement.style.overflow = ""; }
+  }, [menuOpen]);
+
   // Close menu on scroll (mobile)
   useEffect(() => {
     if (!menuOpen) return;
@@ -195,10 +203,10 @@ function CaseStudyTOCInner({ sections = defaultSections, variant = "right", ask 
           background: "var(--raised)",
           borderTop: "1px solid var(--border)",
           borderRadius: "var(--r-lg) var(--r-lg) 0 0",
-          padding: "12px 0 40px 0",
+          padding: "12px 0 calc(96px + env(safe-area-inset-bottom)) 0",   // last rows clear the pill and Safari's toolbar
           transform: menuOpen ? "translateY(0)" : "translateY(110%)",
           transition: "transform 0.6s var(--ease-sheet)",
-          maxHeight: "75vh",
+          maxHeight: "80dvh",
           overflowY: "auto",
           overscrollBehavior: "contain",
         }}
