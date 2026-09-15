@@ -279,7 +279,7 @@ export default function Home() {
             </div>
             {/* Phones: the numbers as one quiet line (Devansh picked mock C2, 15 Sep). */}
             <p className="stats-line">
-              <span><b>3+ yrs</b>engineering</span><i aria-hidden="true">·</i>
+              <span><b>3+ yrs</b>in engineering</span><i aria-hidden="true">·</i>
               <span><b>3</b>products</span><i aria-hidden="true">·</i>
               <span><b>2M+</b>users</span>
             </p>
