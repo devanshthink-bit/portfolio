@@ -90,12 +90,14 @@
 
   .bottom-dock {
     --dock-bg: #2e2e2e;
-    box-shadow: var(--shadow-float);
+    /* The shadow comes from the drawn outline (.dock-bg), not this box: the box is a plain rounded
+       rectangle, and its shadow left light slivers at the smoother corners of the outline. */
     border-radius: 100px;
     corner-shape: superellipse(2);
   }
   html.nerd-mode .bottom-dock { --dock-bg: #3a3836; }
-  .dock-bg { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+  .dock-bg { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: visible;
+    filter: drop-shadow(0 0 0.5px rgba(40, 30, 20, 0.18)) drop-shadow(0 2px 6px rgba(40, 30, 20, 0.06)) drop-shadow(0 10px 28px rgba(40, 30, 20, 0.10)); }
 
   /* Native hand cursor over the bottom dock and footer links (custom circle is hidden there) */
   .bottom-dock,
