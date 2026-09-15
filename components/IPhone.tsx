@@ -41,7 +41,9 @@ export function IPhone({ src, alt = "", lofi, n, className, priority, marks, chi
           ))}
           {marks?.map((m) => (
             <span key={m.n} data-mark={m.n} className="iphone-mark" aria-hidden="true"
-              style={{ left: `${m.box[0]}%`, top: `${m.box[1]}%`, width: `${m.box[2]}%`, height: `${m.box[3]}%` }} />
+              style={{ left: `${m.box[0]}%`, top: `${m.box[1]}%`, width: `${m.box[2]}%`, height: `${m.box[3]}%` }}>
+              <span className="iphone-mark-n">{m.n}</span>
+            </span>
           ))}
         </div>
       </div>

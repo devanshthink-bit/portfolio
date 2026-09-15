@@ -1804,3 +1804,13 @@
   .stat-item:nth-child(4) { display: none !important; }
   .stat-label { white-space: nowrap; }
 }
+
+/* Phones have no lines from note to box, so each dashed box carries its note's number
+   (Devansh, 15 Sep: the notes say 1, 2, 3 but the screen didn't). The web keeps its lines. */
+.iphone-mark-n { display: none; }
+@media (max-width: 640px) {
+  .iphone-mark-n { display: block; position: absolute; top: 0; left: 0; transform: translate(-40%, -40%);
+    width: 20px; height: 20px; border-radius: 50%; background: #E81E38; color: #fff;
+    font: 700 12px/20px var(--font-manrope), sans-serif; text-align: center; font-variant-numeric: tabular-nums;
+    box-shadow: 0 0 0 2px #fff; }
+}
