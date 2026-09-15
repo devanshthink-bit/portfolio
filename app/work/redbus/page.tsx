@@ -321,7 +321,7 @@ function MoSCoW() {
       {cols.map((c) => (
         <Card key={c.h}>
           <div style={{ marginBottom: 10 }}><Chip tone={c.tone}>{c.h}</Chip></div>
-          {c.items.map((t) => <p key={t} style={{ ...T.body, marginBottom: 8 }}>{t}</p>)}
+          {c.items.map((t) => <p key={t} className="cs-moscow-item" style={{ ...T.body, marginBottom: 8 }}>{t}</p>)}
         </Card>
       ))}
     </div>

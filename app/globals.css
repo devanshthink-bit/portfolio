@@ -1185,7 +1185,7 @@
   .cs-status {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
+    gap: 5px;
     font-family: var(--font-inter), sans-serif;
     font-size: 14px;
     font-weight: 500;
@@ -1274,6 +1274,19 @@
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 12px;
+  }
+  /* A small chevron marks each point. Drawn with borders so it follows the text colour. */
+  .cs-moscow-item { position: relative; padding-left: 16px; }
+  .cs-moscow-item::before {
+    content: "";
+    position: absolute;
+    left: 1px;
+    top: 0.62em;
+    width: 5px;
+    height: 5px;
+    border-top: 1.5px solid var(--text-muted);
+    border-right: 1.5px solid var(--text-muted);
+    transform: rotate(45deg);
   }
 
 
