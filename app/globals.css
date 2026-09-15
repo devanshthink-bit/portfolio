@@ -1333,6 +1333,9 @@
   /* The site's muted grey is 3.2:1 on the page; captions here are small, so darken it to 4.9:1. */
   .cs-page { --text-muted: #726e68; }
   html.nerd-mode .cs-page { --text-muted: #a19c94; }
+  /* Headings keep the home page's grey, not the darker body grey above (Devansh, 15 Sep: "make it like home"). */
+  .cs-page .cs-label, .cs-page .cs-label-lead, .cs-page .cs-act-kicker, .cs-page .cs-act-kicker .cs-label-rest { color: #918e89; }
+  html.nerd-mode .cs-page .cs-label, html.nerd-mode .cs-page .cs-label-lead, html.nerd-mode .cs-page .cs-act-kicker, html.nerd-mode .cs-page .cs-act-kicker .cs-label-rest { color: #8f8a82; }
 
   .cs-page h1,
   .cs-page h2 { text-wrap: balance; }
