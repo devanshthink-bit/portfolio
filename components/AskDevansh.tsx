@@ -13,7 +13,9 @@ const SUGGESTIONS = [
   "What surprised you during this project?",
 ];
 
+// The site's two faces: Manrope for buttons and headings, Inter for everything you read.
 const FONT = "var(--font-manrope), system-ui, sans-serif";
+const BODY = "var(--font-inter), system-ui, sans-serif";
 
 /* Lucide icons (MIT), inline like BottomNav's, so every icon shares one stroke. */
 const ic = (size: number) => ({ width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round" as const, strokeLinejoin: "round" as const, "aria-hidden": true });
@@ -178,7 +180,7 @@ export default function AskDevansh() {
         .ask-trigger:hover { transform: translateY(-2px); }
         .ask-panel { position: fixed; top: 0; right: 0; bottom: 0; z-index: 1002; width: 420px; max-width: 100vw;
           display: flex; flex-direction: column; background: var(--raised); border-left: 1px solid var(--border);
-          font-family: ${FONT}; color: var(--text-primary);
+          font-family: ${BODY}; color: var(--text-primary);
           transform: translateX(100%); transition: transform .6s var(--ease-sheet), box-shadow .6s var(--ease-sheet); }
         .ask-panel.open { transform: none; box-shadow: -12px 0 40px rgba(0,0,0,0.06); }
         html.nerd-mode .ask-panel.open { box-shadow: -16px 0 48px rgba(0,0,0,0.5); }
@@ -188,7 +190,7 @@ export default function AskDevansh() {
         .ask-menu { position: absolute; top: 58px; right: 20px; z-index: 2; display: flex; flex-direction: column; padding: 6px;
           background: var(--raised); border-radius: var(--r-md); box-shadow: var(--shadow-float); }
         .ask-menu button { display: flex; align-items: center; gap: 10px; background: none; border: none; text-align: left; padding: 10px 14px; border-radius: 8px; cursor: pointer;
-          font-family: ${FONT}; font-size: 14px; color: var(--text-primary); white-space: nowrap; }
+          font-family: ${BODY}; font-size: 14px; color: var(--text-primary); white-space: nowrap; }
         .ask-menu button:hover { background: var(--card-bg); }
         .ask-list { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; display: flex; flex-direction: column; gap: 10px; padding: 8px 24px 16px; }
         .ask-chip { border: 1px solid var(--border); background: var(--raised); color: var(--text-primary); border-radius: 100px;
@@ -199,7 +201,7 @@ export default function AskDevansh() {
           font-size: 14px; line-height: 1.5; color: var(--text-secondary); }
         .ask-note b { color: var(--text-primary); }
         .ask-input { display: flex; align-items: center; gap: 8px; border: 1px solid var(--border); border-radius: var(--r-md); padding: 6px 6px 6px 18px; }
-        .ask-input input { flex: 1; border: none; outline: none; background: none; font-family: ${FONT}; font-size: 16px; color: var(--text-primary); padding: 10px 0; }
+        .ask-input input { flex: 1; border: none; outline: none; background: none; font-family: ${BODY}; font-size: 16px; color: var(--text-primary); padding: 10px 0; }
         .ask-input button { width: 36px; height: 36px; flex: 0 0 36px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; border: none; background: var(--ink-surface); color: #fff; cursor: pointer; }
         .ask-input button:disabled { background: var(--card-bg); color: var(--text-muted); cursor: default; }
         .ask-esc { margin: 0; text-align: center; font-size: 12px; color: var(--text-muted); }
