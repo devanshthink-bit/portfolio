@@ -13,9 +13,7 @@ export const metadata: Metadata = {
 const RESUME_LINKS = [
   { label: "Portfolio", href: "/", x: 66.88, y: 15.32, w: 8.06 },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/devansh-somvanshi", x: 75.82, y: 15.32, w: 7.81 },
-  { label: "GitHub", href: "https://github.com/devanshthink-bit", x: 84.38, y: 15.32, w: 6.93 },
-  { label: "Email devansh.think@gmail.com", href: "mailto:devansh.think@gmail.com", x: 66.88, y: 17.45, w: 19.02 },
-];
+  { label: "GitHub", href: "https://github.com/devanshthink-bit", x: 84.38, y: 15.32, w: 6.93 },];
 
 export default function ResumePage() {
   return (
