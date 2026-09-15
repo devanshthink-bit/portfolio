@@ -6,13 +6,6 @@ import { IPhone } from "../components/IPhone";
 import Playground from "../components/Playground";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
-const STATS = [
-  { value: "3+",    unit: "yrs", label: "in engineering", countTo: 3, suffix: "+",  startFrom: 1 },
-  { value: "3",     unit: "",    label: "products shipped",  countTo: 3, suffix: "" },
-  { value: "2M+",   unit: "",    label: "users reached",     countTo: 2, suffix: "M+", startFrom: 1 },
-  { value: "0 → 1", unit: "",    label: "& at scale",        countTo: null },
-];
-
 const recentWork = [
   // Hidden for now at Devansh's request (13 Sep 2026). Kept, not deleted: uncomment to bring back.
   // {
@@ -48,62 +41,6 @@ const recentWork = [
   //   slug: null,
   // },
 ];
-
-function StatCounter({ value, unit, label, active, countTo, suffix, startFrom }: {
-  value: string; unit: string; label: string; active: boolean;
-  countTo?: number | null; suffix?: string; startFrom?: number;
-}) {
-  const from = startFrom ?? 0;
-  const [counted, setCounted] = useState(from);
-
-  useEffect(() => {
-    if (!active || countTo == null) return;
-    setCounted(from);
-    const duration = 700;
-    const steps = 20;
-    const range = countTo - from;
-    let step = 0;
-    const id = setInterval(() => {
-      step++;
-      setCounted(Math.min(Math.round(from + (range / steps) * step), countTo));
-      if (step >= steps) clearInterval(id);
-    }, duration / steps);
-    return () => clearInterval(id);
-  }, [active, countTo, from]);
-
-  const displayValue = countTo != null ? `${counted}${suffix ?? ""}` : value;
-
-  return (
-    <div className="stat-item" style={{
-      display: "flex", flexDirection: "column", gap: 6,
-    }}>
-      <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
-        <span className="stat-value" style={{
-          fontFamily: "var(--font-manrope)", fontSize: "var(--fs-28)", fontWeight: 700,
-          color: "var(--text-primary)", letterSpacing: "-0.03em",
-          opacity: active ? 1 : 0, transform: active ? "none" : "translateY(8px)",
-          transition: "opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out)",
-        }}>
-          {displayValue}
-        </span>
-        {unit && (
-          <span style={{
-            fontFamily: "var(--font-manrope)", fontSize: "var(--fs-16)", fontWeight: 600,
-            color: "var(--text-muted)", letterSpacing: "-0.011em",
-          }}>
-            {unit}
-          </span>
-        )}
-      </div>
-      <span className="stat-label" style={{
-        fontFamily: "var(--font-inter)", fontSize: "var(--fs-14)", fontWeight: 400,
-        letterSpacing: "-0.011em", color: "var(--text-muted)",
-      }}>
-        {label}
-      </span>
-    </div>
-  );
-}
 
 type Work = {
   title: string; desc: string; tag: string; gradient: string; tooltipBg: string; slug: string | null; image?: string;
@@ -245,17 +182,6 @@ function InProgressCard() {
 }
 
 export default function Home() {
-  const statsRef = useRef<HTMLDivElement>(null);
-  const [statsVisible, setStatsVisible] = useState(false);
-
-  useEffect(() => {
-    const el = statsRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setStatsVisible(true); }, { threshold: 0.4 });
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
   // Home page base background is gray (like the hero) so only the overlay panel is white
   useEffect(() => {
     document.body.classList.add("home-page");
@@ -269,19 +195,21 @@ export default function Home() {
         <section className="stack-hero">
           <div className="stack-hero-inner">
             <Hero />
-            <div ref={statsRef} className="stats-strip" style={{
-              display: "flex", justifyContent: "space-between", flexWrap: "wrap", rowGap: 24,
-              marginTop: -8,
-            }}>
-              {STATS.map((s) => (
-                <StatCounter key={s.label} {...s} active={statsVisible} />
-              ))}
-            </div>
-            {/* Phones: the numbers as one quiet line (Devansh picked mock C2, 15 Sep). */}
+            {/* The numbers as one line split by thin rules, on the web and on phones (Devansh, 15 Sep).
+                Phones drop "reached" and the fourth, so the line still fits a 375pt screen. */}
             <p className="stats-line">
               <span><b>3+ yrs</b>in engineering</span><i aria-hidden="true" />
               <span><b>3</b>products</span><i aria-hidden="true" />
-              <span><b>2M+</b>users</span>
+              <span><b>2M+</b>users<span className="stats-web">&nbsp;reached</span></span>
+              <i aria-hidden="true" className="stats-web" />
+              <span className="stats-web">
+                <b>0
+                  {/* Lucide arrow-right, drawn rather than typed */}
+                  <svg width="0.75em" height="0.75em" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-label="to" style={{ margin: "0 2px", verticalAlign: "0.02em" }}>
+                    <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+                  </svg>
+                1</b>&amp; at scale
+              </span>
             </p>
           </div>
         </section>

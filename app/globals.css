@@ -1658,25 +1658,6 @@
     gap: 8px;
   }
 
-  /* Stats strip — 2-column grid, smaller type so labels don't collide */
-  .stats-strip {
-    row-gap: 20px !important;
-    column-gap: 16px;
-  }
-
-  .stat-item {
-    flex: 0 0 calc(50% - 8px);
-  }
-
-  .stat-value {
-    font-size: var(--fs-24) !important;
-  }
-
-  .stat-label {
-    font-size: var(--fs-12) !important;
-    letter-spacing: -0.011em !important;
-  }
-
   /* Testimonial marquee — slow down so perceived speed matches desktop */
   .testimonial-track {
     animation-duration: 70s !important;
@@ -1788,7 +1769,7 @@
 /* Belt and braces: no circle cursor at phone width or on touch screens. */
 @media (max-width: 640px), (hover: none) { .custom-cursor { display: none !important; } }
 
-.hello-phone, .stats-line { display: none; }
+.hello-phone { display: none; }
 
 /* Home hero on phones, less cluttered (Devansh, 15 Sep: "make all these changes in mobile only"):
    no craft paragraph, the hello as one outlined pill, three numbers on one-line labels under a thin
@@ -1799,14 +1780,8 @@
   .hello-phone { display: inline; }
 
   .intro { gap: 20px; }
-  /* The numbers as one line: "3+ yrs engineering · 3 products · 2M+ users", edge to edge. */
-  .stats-strip { display: none !important; }
-  .stats-line { display: flex; justify-content: space-between; align-items: baseline; white-space: nowrap; margin: 0;
-    border-top: 1px solid var(--border); padding-top: 16px;
-    font-size: var(--fs-14); letter-spacing: -0.011em; color: var(--text-muted); }
-  .stats-line b { font: 700 var(--fs-16)/1 var(--font-manrope), sans-serif; letter-spacing: -0.02em; color: var(--text-primary); margin-right: 4px; }
-  /* Thin rules between the three, the case study kicker's separator (Devansh, 15 Sep: not a dot). */
-  .stats-line i { align-self: center; width: 1px; height: 0.95em; background: currentColor; opacity: 0.45; }
+  /* Phones: three of the four, and "users" without "reached", so the line fits a 375pt screen. */
+  .stats-web { display: none !important; }
 }
 
 /* Phones have no lines from note to box, so each dashed box carries its note's number
@@ -1819,15 +1794,39 @@
     box-shadow: 0 0 0 2px #fff; }
 }
 
-/* Web: while the page scrolls the dock draws in, a little smaller and quieter, and settles back
-   when scrolling stops (Devansh, 15 Sep: "minimize while scrolling... elegant, modern, smooth").
-   It shrinks toward its bottom edge, so it stays put above the page; never while the pointer is on it. */
+/* Hero numbers: one line, split by thin rules like the case study kicker (Devansh, 15 Sep: "not a
+   dot"; then "in web, also make it similar to mobile... all in one line"). Edge to edge. */
+.stats-line { display: flex; justify-content: space-between; align-items: baseline; white-space: nowrap; margin: 0;
+  border-top: 1px solid var(--border); padding-top: 16px;
+  font-size: var(--fs-14); letter-spacing: -0.011em; color: var(--text-muted); }
+.stats-line b { font: 700 var(--fs-16)/1 var(--font-manrope), sans-serif; letter-spacing: -0.02em; color: var(--text-primary); margin-right: 5px; }
+.stats-line i { align-self: center; width: 1px; height: 0.95em; background: currentColor; opacity: 0.45; }
 @media (min-width: 641px) {
-  .bottom-dock { transform-origin: 50% 100%; transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
-  .bottom-dock .dock-icon { transition: opacity 0.5s var(--ease-out); }
-  .bottom-dock.is-scrolling:not(:hover) { transform: translateX(-50%) scale(0.82) !important; }
-  .bottom-dock.is-scrolling:not(:hover) .dock-icon { opacity: 0.72; }
+  .stats-line { font-size: 15px; padding-top: 20px; }
+  .stats-line b { font-size: 20px; margin-right: 6px; }
+}
+
+/* Web: while the page scrolls the dock folds into a short thick bar near the bottom edge, like the
+   iPhone's home indicator, and unfolds into the full dock once scrolling stops (Devansh, 15 Sep).
+   A layer in the dock's colour does the folding; the drawn outline and the icons hand over to it
+   at the start and take back over at the end. Never while the pointer is on the dock. */
+@media (min-width: 641px) {
+  .bottom-dock::before { content: ""; position: absolute; left: 50%; bottom: 0; z-index: -1; width: 100%; height: 100%;
+    transform: translateX(-50%); border-radius: 24px; background: var(--dock-bg); opacity: 0; pointer-events: none;
+    transition: width 0.55s var(--ease-out), height 0.55s var(--ease-out), border-radius 0.55s var(--ease-out),
+      transform 0.55s var(--ease-out), opacity 0s linear 0.55s; }
+  .bottom-dock .dock-bg { transition: opacity 0s linear 0.55s; }
+  .bottom-dock > :not(.dock-bg) { transition: opacity 0.3s var(--ease-out) 0.3s, transform 0.4s var(--ease-out) 0.25s; }
+  .bottom-dock.is-scrolling:not(:hover)::before { width: 120px; height: 6px; border-radius: 3px; opacity: 1;
+    transform: translate(-50%, 14px);
+    transition: width 0.5s var(--ease-out), height 0.5s var(--ease-out), border-radius 0.5s var(--ease-out),
+      transform 0.5s var(--ease-out), opacity 0s; }
+  .bottom-dock.is-scrolling:not(:hover) .dock-bg { opacity: 0; transition: opacity 0s; }
+  .bottom-dock.is-scrolling:not(:hover) > :not(.dock-bg) { opacity: 0; transform: scale(0.85); pointer-events: none;
+    transition: opacity 0.15s var(--ease-out), transform 0.3s var(--ease-out); }
 }
 @media (min-width: 641px) and (prefers-reduced-motion: reduce) {
-  .bottom-dock.is-scrolling:not(:hover) { transform: translateX(-50%) !important; }
+  .bottom-dock.is-scrolling:not(:hover)::before { opacity: 0; }
+  .bottom-dock.is-scrolling:not(:hover) .dock-bg,
+  .bottom-dock.is-scrolling:not(:hover) > :not(.dock-bg) { opacity: 1; transform: none; }
 }
