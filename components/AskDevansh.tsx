@@ -174,8 +174,8 @@ export default function AskDevansh() {
 
       <style>{`
         .ask-trigger { position: fixed; right: 28px; bottom: 28px; z-index: 1001; display: flex; align-items: center; gap: 10px;
-          padding: 11px 20px; border: none; border-radius: 100px; background: var(--ink-surface); color: #fff; cursor: pointer;
-          font-family: ${FONT}; font-size: 14px; font-weight: 600; letter-spacing: -0.011em;
+          padding: 14px 22px; border: none; border-radius: 100px; background: var(--ink-surface); color: #fff; cursor: pointer;
+          font-family: ${FONT}; font-size: 16px; font-weight: 600; letter-spacing: -0.011em;
           box-shadow: var(--shadow-float); transition: transform .35s var(--ease-out); }
         .ask-trigger:hover { transform: translateY(-2px); }
         .ask-panel { position: fixed; top: 0; right: 0; bottom: 0; z-index: 1002; width: 420px; max-width: 100vw;
@@ -221,7 +221,7 @@ export default function AskDevansh() {
         body { transition: padding .6s var(--ease-sheet); }
         @media (max-width: 1099px) { html.ask-open body { padding-right: 0; } }
         @media (max-width: 640px) {
-          .ask-trigger { right: 16px; bottom: 76px; padding: 11px 20px; font-size: 14px; }
+          .ask-trigger { right: 16px; bottom: 76px; padding: 12px 20px; font-size: 16px; }
           .ask-panel { width: 100vw; border-left: none; }
           .ask-esc { display: none; }
         }
