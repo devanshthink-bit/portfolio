@@ -63,7 +63,7 @@ export default function RubberBackButton({ plain = true }: { plain?: boolean } =
         padding: pill ? "8px 14px 8px 11px" : "6px 4px",
         ...(pill ? { background: "var(--raised)", borderRadius: 100, boxShadow: "var(--shadow-float)" } : {}),
         fontFamily: plain ? "var(--font-manrope), sans-serif" : "var(--font-geist-mono), monospace",
-        fontSize: plain ? 15 : 14,
+        fontSize: 14,
         fontWeight: 600,
         color: "var(--text-primary)",
         letterSpacing: plain ? "-0.02em" : "-0.011em",

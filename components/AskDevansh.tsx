@@ -16,7 +16,7 @@ const SUGGESTIONS = [
 const FONT = "var(--font-manrope), system-ui, sans-serif";
 
 /* Lucide icons (MIT), inline like BottomNav's, so every icon shares one stroke. */
-const ic = (size: number) => ({ width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.75, strokeLinecap: "round" as const, strokeLinejoin: "round" as const, "aria-hidden": true });
+const ic = (size: number) => ({ width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round" as const, strokeLinejoin: "round" as const, "aria-hidden": true });
 const Sparkle = () => <svg {...ic(16)}><path d="M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3z" /></svg>;
 const Dots = () => <svg {...ic(18)}><circle cx="5" cy="12" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /></svg>;
 const Pencil = () => <svg {...ic(16)}><path d="M12 20h9" /><path d="M16.4 3.6a2 2 0 0 1 3 3L7 19l-4 1 1-4z" /></svg>;
