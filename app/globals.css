@@ -1802,7 +1802,7 @@
 .stats-line b { font: 700 20px/1 var(--font-manrope), sans-serif; letter-spacing: -0.02em; color: var(--text-primary); margin-right: 5px; }   /* 20px on phones too (Devansh, 15 Sep) */
 .stats-line i { align-self: center; width: 1px; height: 0.95em; background: currentColor; opacity: 0.45; }
 @media (min-width: 641px) {
-  .stats-line { font-size: 15px; padding-top: 20px; }
+  .stats-line { font-size: 14px; padding-top: 20px; }
   .stats-line i { display: none; }   /* no separators on the web (Devansh, 15 Sep); phones keep theirs */
   .stats-line b { font-size: clamp(20px, 2.6vw, 24px); margin-right: 6px; }   /* 24px on the web (Devansh, 15 Sep); eases down on tablets */
 }
