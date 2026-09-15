@@ -438,7 +438,12 @@
     display: flex;
     flex-direction: column;
     gap: 40px;
-    margin-top: -6px;
+    /* The cards carry 12px of hover padding; pulling the list up by it puts the image itself
+       12px under the section title, the same gap as every other section. */
+    margin-top: -12px;
+  }
+  @media (max-width: 640px) {
+    .work-list { margin-top: 0; }   /* no hover padding on phones */
   }
 
   .work-card {
