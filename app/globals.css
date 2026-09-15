@@ -1617,3 +1617,214 @@
 .cs-idea-names { grid-column: 1 / -1; font-size: 13.5px; line-height: 1.5; color: var(--text-muted); }
 @media (max-width: 640px) { .cs-idea-list { grid-template-columns: minmax(0, 1fr); } }
 
+
+/* ── Evidence: each kind in its own form (Devansh, 15 Sep: "not such AI slop and boxes everywhere") ──
+   Tickets for trips, one dot per surveyed traveller, a ledger for money, fine print for rules,
+   stamps for verdicts, tracked changes for rewrites. Tokens only, so the dark theme follows. */
+.cs-page {
+  --cs-red: #C8102E; --cs-amber: #A45729; --cs-green: #2E7D32;
+  --cs-paper: #f4ede3; --cs-paper-ink: #5f4f3b; --cs-ticket: #ffffff;
+}
+html.nerd-mode .cs-page {
+  --cs-red: #FF6B7D; --cs-amber: #E3A47C; --cs-green: #7BC47F;
+  --cs-paper: #2f2a23; --cs-paper-ink: #d3c2a8; --cs-ticket: rgba(255, 255, 255, 0.06);
+}
+
+/* Tickets, with a stub that tears off */
+.cs-tickets { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.cs-ticket {
+  position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 112px;
+  background: var(--cs-ticket); border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 12px 28px -16px rgba(0, 0, 0, 0.24);
+}
+.cs-ticket-body { padding: 22px 20px 20px 24px; min-width: 0; }
+.cs-ticket-stub {
+  position: relative; display: flex; align-items: center; justify-content: center;
+  background: radial-gradient(circle, var(--cs-stat-gap) 1.4px, transparent 1.9px) 0 0 / 3px 8px repeat-y;
+}
+.cs-ticket-stub::before, .cs-ticket-stub::after {
+  content: ""; position: absolute; left: -9px; width: 18px; height: 18px; border-radius: 50%; background: var(--bg);
+}
+.cs-ticket-stub::before { top: -9px; }
+.cs-ticket-stub::after { bottom: -9px; }
+.cs-ticket.is-ghost { background: transparent; box-shadow: none; outline: 1.5px dashed var(--cs-stat-gap); outline-offset: -1.5px; }
+.cs-ticket.is-ghost .cs-ticket-stub::before, .cs-ticket.is-ghost .cs-ticket-stub::after { display: none; }
+.cs-ticket.is-ghost .cs-ticket-route { color: var(--text-muted); }
+.cs-ticket-k {
+  font: 800 11px/1 var(--font-manrope), sans-serif; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-muted); margin: 0 0 14px;
+}
+.cs-ticket-route {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 4px 10px; margin: 0 0 8px;
+  font: 800 22px/1.1 var(--font-manrope), sans-serif; letter-spacing: -0.035em; color: var(--text-primary);
+}
+.cs-route-line { width: 32px; height: 12px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; opacity: 0.5; }
+.cs-ticket-meta { font-size: 14px; color: var(--text-secondary); margin: 0; font-variant-numeric: tabular-nums; }
+
+/* Stamps: a verdict pressed onto the page */
+.cs-stamp {
+  display: inline-block; white-space: nowrap; transform: rotate(-8deg);
+  font: 800 12px/1 var(--font-manrope), sans-serif; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 7px 10px 6px; border: 2px solid currentColor; border-radius: 6px; opacity: 0.9;
+}
+.cs-stamp-green { color: var(--cs-green); }
+.cs-stamp-red { color: var(--cs-red); }
+.cs-stamp-amber { color: var(--cs-amber); border-style: dashed; }
+.cs-stamp-grey { color: var(--text-muted); border-style: dashed; }
+
+/* Survey: one dot for each of the 23 round-trip travellers */
+.cs-dots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px 48px; }
+.cs-dots-item { padding-top: 18px; border-top: 1px solid var(--border); }
+.cs-dots-n { font: 800 44px/1 var(--font-manrope), sans-serif; letter-spacing: -0.04em; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.cs-dots-item.is-zero .cs-dots-n { color: #E81E38; }
+.cs-dots-l { font-size: 15px; color: var(--text-secondary); margin: 8px 0 14px; }
+.cs-dots-row { display: grid; grid-template-columns: repeat(23, minmax(0, 1fr)); gap: 4px; max-width: 300px; }
+.cs-dots-row i { aspect-ratio: 1; border-radius: 50%; box-shadow: inset 0 0 0 1.25px var(--cs-stat-gap); }
+.cs-dots-row i.on { background: var(--text-primary); box-shadow: none; }
+
+/* The knot: two lists of rules, pulled into the one that cancels the other */
+.cs-knot-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; }
+.cs-knot-h { font: 800 19px/1.2 var(--font-manrope), sans-serif; letter-spacing: -0.03em; color: var(--text-primary); margin: 0; }
+.cs-knot-sub { font-size: 13.5px; color: var(--text-muted); margin: 3px 0 12px; }
+.cs-knot-rules { list-style: none; margin: 0; padding: 0; }
+.cs-knot-rules li { font-size: 14.5px; color: var(--text-secondary); padding: 9px 0; border-top: 1px solid var(--border); }
+.cs-knot-tie { text-align: center; }
+.cs-knot-tie svg { display: block; width: 100%; height: 44px; margin: 6px 0 10px; fill: none; stroke: var(--cs-amber); stroke-width: 1.5; stroke-dasharray: 3 4; }
+.cs-knot-warn { font: 800 20px/1.4 var(--font-manrope), sans-serif; letter-spacing: -0.03em; color: var(--text-primary); margin: 0 auto 6px; max-width: 560px; text-wrap: balance; }
+.cs-knot-warn mark {
+  color: inherit; padding: 0 2px; -webkit-box-decoration-break: clone; box-decoration-break: clone;
+  background: linear-gradient(transparent 58%, color-mix(in srgb, var(--cs-amber) 24%, transparent) 58%);
+}
+.cs-knot-note { font-size: 14.5px; color: var(--text-secondary); margin: 0 auto; max-width: 520px; }
+
+/* Ledger: what RedBus wins and risks */
+.cs-ledger { border-top: 1.5px solid var(--text-primary); }
+.cs-ledger-row { display: grid; grid-template-columns: 132px minmax(0, 1fr); gap: 24px; align-items: start; padding: 22px 0; border-bottom: 1px solid var(--border); }
+.cs-ledger-n { font: 800 40px/1 var(--font-manrope), sans-serif; letter-spacing: -0.04em; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.cs-ledger-n svg { width: 38px; height: 38px; stroke: var(--cs-amber); }
+.cs-ledger-h { font: 800 17px/1.3 var(--font-manrope), sans-serif; letter-spacing: -0.02em; color: var(--text-primary); margin: 2px 0 4px; }
+.cs-ledger-b { font-size: 14.5px; color: var(--text-secondary); margin: 0; }
+
+/* Fine print on a torn receipt */
+.cs-fineprint {
+  max-width: 440px; margin: 0 auto; padding: 30px 30px 32px; background: var(--cs-paper); color: var(--cs-paper-ink);
+  transform: rotate(-0.8deg); counter-reset: fp;
+  -webkit-mask: radial-gradient(6px at 50% 0, #0000 98%, #000) 50% 0 / 14px 51% repeat-x, radial-gradient(6px at 50% 100%, #0000 98%, #000) 50% 100% / 14px 51% repeat-x;
+  mask: radial-gradient(6px at 50% 0, #0000 98%, #000) 50% 0 / 14px 51% repeat-x, radial-gradient(6px at 50% 100%, #0000 98%, #000) 50% 100% / 14px 51% repeat-x;
+}
+.cs-fineprint-h { font: 800 12px/1.3 var(--font-manrope), sans-serif; letter-spacing: 0.1em; text-transform: uppercase; text-align: center; margin: 0 0 16px; }
+.cs-fineprint ol { list-style: none; margin: 0; padding: 0; }
+.cs-fineprint li { display: flex; gap: 12px; font-size: 14px; line-height: 1.45; padding: 9px 0; border-top: 1px dashed color-mix(in srgb, currentColor 30%, transparent); }
+.cs-fineprint li::before { counter-increment: fp; content: counter(fp); min-width: 12px; font: 800 12px/1.7 var(--font-manrope), sans-serif; opacity: 0.65; font-variant-numeric: tabular-nums; }
+
+/* Sixteen ideas: the pick, and the rest struck off with a tally */
+.cs-ideas { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 48px; align-items: start; }
+.cs-ideas-pick { position: sticky; top: 24px; padding-top: 16px; border-top: 3px solid #E81E38; }
+.cs-ideas-pick-k { font: 800 12px/1 var(--font-manrope), sans-serif; letter-spacing: 0.1em; text-transform: uppercase; color: #E81E38; margin: 0 0 12px; }
+.cs-ideas-pick-h { font: 800 28px/1.12 var(--font-manrope), sans-serif; letter-spacing: -0.04em; color: var(--text-primary); margin: 0 0 10px; text-wrap: balance; }
+.cs-ideas-rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
+.cs-ideas-rows li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+.cs-ideas-why { font: 700 15.5px/1.35 var(--font-manrope), sans-serif; letter-spacing: -0.02em; color: var(--text-primary); }
+.cs-ideas-tally { display: inline-flex; align-items: center; gap: 4px; }
+.cs-ideas-tally i { width: 7px; height: 7px; border-radius: 50%; background: var(--text-muted); }
+.cs-ideas-tally b { margin-left: 6px; font: 700 13px/1 var(--font-manrope), sans-serif; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.cs-ideas-names { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 2px 14px; font-size: 14px; color: var(--text-muted); }
+.cs-ideas-rows li.is-dead .cs-ideas-names span { text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--text-muted) 70%, transparent); }
+
+/* Scores out of ten, as bars */
+.cs-merit { border-top: 1px solid var(--border); }
+.cs-merit-row { display: grid; grid-template-columns: 72px minmax(0, 1fr) 150px 64px; gap: 20px; align-items: center; padding: 18px 0; border-bottom: 1px solid var(--border); }
+.cs-merit-id { font-size: 13.5px; color: var(--text-muted); }
+.cs-merit-name { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0; font: 700 16px/1.35 var(--font-manrope), sans-serif; letter-spacing: -0.02em; color: var(--text-primary); }
+.cs-merit-bar { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 3px; }
+.cs-merit-bar i { height: 8px; border-radius: 2px; background: var(--cs-stat-gap); }
+.cs-merit-bar i.on { background: var(--text-primary); }
+.cs-merit-row.is-mine .cs-merit-bar i.on { background: #E81E38; }
+.cs-merit-score { text-align: right; font: 800 24px/1 var(--font-manrope), sans-serif; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.cs-merit-score span { font: 500 13px var(--font-inter), sans-serif; color: var(--text-muted); }
+
+/* Before and after, as a tracked change */
+.cs-rev-line { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 20px; align-items: baseline; padding: 18px 0; }
+.cs-rev-line + .cs-rev-line { border-top: 1px solid var(--border); }
+.cs-rev-k { font-size: 13.5px; color: var(--text-muted); }
+.cs-rev p { margin: 0; font: 700 20px/1.45 var(--font-manrope), sans-serif; letter-spacing: -0.025em; text-wrap: pretty; }
+.cs-rev del { color: var(--text-muted); text-decoration: line-through 2px var(--cs-red); }
+.cs-rev ins {
+  text-decoration: none; color: var(--text-primary); -webkit-box-decoration-break: clone; box-decoration-break: clone;
+  background: linear-gradient(transparent 60%, color-mix(in srgb, var(--cs-green) 22%, transparent) 60%);
+}
+
+/* The mentor's questions, as a transcript */
+.cs-qa { list-style: none; margin: 0; padding: 0; }
+.cs-qa li { padding: 26px 0; border-top: 1px solid var(--border); }
+.cs-qa li:last-child { border-bottom: 1px solid var(--border); }
+.cs-qa-q { font: 700 21px/1.35 var(--font-manrope), sans-serif; letter-spacing: -0.03em; color: var(--text-primary); margin: 0 0 14px; max-width: 700px; text-wrap: balance; }
+.cs-qa-a { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 2px 12px; padding-left: 4px; }
+.cs-qa-a svg { grid-row: 1 / span 2; width: 18px; height: 18px; margin-top: 1px; fill: none; stroke: #E81E38; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.cs-qa-k { font-size: 13px; color: var(--text-muted); margin: 0; }
+
+/* The kill list: each condition, with its verdict stamped on */
+.cs-verdicts { list-style: none; margin: 0; padding: 0; }
+.cs-verdicts li { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 22px 4px; border-top: 1px solid var(--border); }
+.cs-verdicts li:last-child { border-bottom: 1px solid var(--border); }
+.cs-verdicts-rule { font: 700 19px/1.35 var(--font-manrope), sans-serif; letter-spacing: -0.025em; color: var(--text-primary); margin: 0; }
+.cs-verdicts .cs-stamp { font-size: 13px; padding: 8px 12px 7px; }
+.cs-verdicts li:nth-child(2) .cs-stamp { transform: rotate(5deg); }
+
+/* What testers said, as pull quotes */
+.cs-voices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px 56px; }
+.cs-voice { margin: 0; }
+.cs-voice:nth-child(even) { margin-top: 48px; }
+.cs-voice blockquote { margin: 0; font: 700 26px/1.25 var(--font-manrope), sans-serif; letter-spacing: -0.035em; color: var(--text-primary); text-wrap: balance; }
+.cs-voice:first-child blockquote { font-size: 32px; }
+.cs-voice figcaption { display: flex; align-items: baseline; gap: 10px; margin-top: 12px; font-size: 14px; color: var(--text-muted); }
+.cs-voice figcaption::before { content: ""; flex: none; width: 18px; height: 1.5px; background: #E81E38; transform: translateY(-4px); }
+
+/* Must, should, could, won't: the rule thins as the priority drops */
+.cs-mscw { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; }
+.cs-mscw-col { padding-top: 14px; border-top: 4px solid var(--tone); }
+.cs-mscw-col.is-red { --tone: var(--cs-red); }
+.cs-mscw-col.is-green { --tone: var(--cs-green); border-top-width: 3px; }
+.cs-mscw-col.is-amber { --tone: var(--cs-amber); border-top-width: 2px; }
+.cs-mscw-col.is-grey { --tone: var(--text-muted); border-top: 1px dashed var(--text-muted); }
+.cs-mscw-h { font: 800 12px/1 var(--font-manrope), sans-serif; letter-spacing: 0.1em; text-transform: uppercase; color: var(--tone); margin: 0 0 14px; }
+.cs-mscw ul { list-style: none; margin: 0; padding: 0; }
+.cs-mscw li { font: 600 15px/1.35 var(--font-manrope), sans-serif; letter-spacing: -0.015em; color: var(--text-primary); padding: 0 0 12px; }
+.cs-mscw-col.is-amber li { color: var(--text-secondary); }
+.cs-mscw-col.is-grey li { color: var(--text-muted); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--text-muted) 60%, transparent); }
+
+/* What I'd watch: which way each number should go */
+.cs-watch { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+.cs-watch-item { color: var(--tone); padding-top: 18px; border-top: 1px solid var(--border); }
+.cs-watch-item.is-green { --tone: var(--cs-green); }
+.cs-watch-item.is-red { --tone: var(--cs-red); }
+.cs-watch-item.is-amber { --tone: var(--cs-amber); }
+.cs-watch-item svg { width: 30px; height: 30px; margin-bottom: 14px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.cs-watch-t { font: 800 12px/1 var(--font-manrope), sans-serif; letter-spacing: 0.1em; text-transform: uppercase; margin: 0 0 8px; }
+.cs-watch-h { font: 800 18px/1.3 var(--font-manrope), sans-serif; letter-spacing: -0.025em; color: var(--text-primary); margin: 0 0 4px; }
+.cs-watch-b { font-size: 14.5px; color: var(--text-secondary); margin: 0; }
+
+@media (max-width: 640px) {
+  .cs-tickets, .cs-dots, .cs-knot-cols, .cs-ideas, .cs-voices, .cs-watch { grid-template-columns: minmax(0, 1fr); }
+  .cs-ticket { grid-template-columns: minmax(0, 1fr) 92px; }
+  .cs-mscw { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 20px; }
+  .cs-knot-cols { gap: 28px; }
+  .cs-knot-tie svg { display: none; }
+  .cs-knot-tie { margin-top: 24px; }
+  .cs-ideas { gap: 28px; }
+  .cs-ideas-pick { position: static; }
+  .cs-ledger-row { grid-template-columns: 84px minmax(0, 1fr); gap: 16px; }
+  .cs-ledger-n { font-size: 30px; }
+  .cs-ledger-n svg { width: 30px; height: 30px; }
+  .cs-merit-row { grid-template-columns: minmax(0, 1fr) 56px; gap: 10px 16px; }
+  .cs-merit-id { grid-column: 1 / -1; }
+  .cs-merit-name { order: 1; }
+  .cs-merit-score { order: 2; }
+  .cs-merit-bar { order: 3; grid-column: 1 / -1; }
+  .cs-rev-line { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .cs-rev p { font-size: 18px; }
+  .cs-voice:nth-child(even) { margin-top: 0; }
+  .cs-voice blockquote, .cs-voice:first-child blockquote { font-size: 22px; }
+  .cs-verdicts li { align-items: flex-start; }
+  .cs-verdicts-rule, .cs-qa-q { font-size: 17px; }
+}
