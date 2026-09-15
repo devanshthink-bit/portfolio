@@ -553,11 +553,11 @@
   @keyframes wip-ping { 75%, 100% { transform: scale(2.6); opacity: 0; } }
 
   .wip-phones {
-    height: 300px; margin-top: 18px; overflow: hidden;
+    height: 380px; overflow: hidden; /* same as the RedBus phone area */
     display: flex; justify-content: center; align-items: flex-start;
   }
   .wip-phone {
-    position: relative; width: 170px; height: 350px; flex: none;
+    position: relative; width: 196px; height: 420px; flex: none;
     border-radius: 30px; border: 1.5px dashed rgba(59, 74, 107, 0.35);
     background: rgba(255, 255, 255, 0.55);
     padding: 44px 18px 0; display: flex; flex-direction: column; gap: 12px;
