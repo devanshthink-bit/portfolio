@@ -16,7 +16,7 @@ export const T = {
   sub:     { fontFamily: INTER, fontSize: 16.5, color: "var(--text-secondary)", lineHeight: 1.65, letterSpacing: "-0.012em", margin: 0, maxWidth: 640 } as React.CSSProperties,
   small:   { fontFamily: INTER, fontSize: 13.5, color: "var(--text-muted)", lineHeight: 1.55, letterSpacing: "-0.005em", margin: 0 } as React.CSSProperties,
   // A quiet label: small, sentence case, in the text face.
-  eyebrow: { fontFamily: INTER, fontSize: 13, fontWeight: 500, letterSpacing: "-0.005em", color: "var(--text-muted)", margin: 0 } as React.CSSProperties,
+  eyebrow: { fontFamily: MANROPE, fontSize: 13, fontWeight: 500, letterSpacing: "-0.005em", color: "var(--text-muted)", margin: 0 } as React.CSSProperties,
   cardH:   { fontFamily: MANROPE, fontSize: 16, fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.02em", lineHeight: 1.4, margin: 0 } as React.CSSProperties,
   body:    { fontFamily: INTER, fontSize: 14.5, color: "var(--text-secondary)", lineHeight: 1.6, letterSpacing: "-0.01em", margin: 0 } as React.CSSProperties,
   quote:   { fontFamily: MANROPE, fontSize: 19, fontWeight: 600, color: "var(--text-primary)", letterSpacing: "-0.02em", lineHeight: 1.4, margin: 0 } as React.CSSProperties,
