@@ -98,7 +98,7 @@ export default function Assistant() {
         </div>
 
         {/* Messages */}
-        <div style={{ flex: 1, overflowY: "auto", padding: "12px 14px", display: "flex", flexDirection: "column", gap: 10, minHeight: 0 }}>
+        <div data-lenis-prevent style={{ flex: 1, overflowY: "auto", overscrollBehavior: "contain", padding: "12px 14px", display: "flex", flexDirection: "column", gap: 10, minHeight: 0 }}>
           {isEmpty && (
             <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 4 }}>
               <p style={{ fontSize: 12, color: "var(--text-muted)", margin: 0, letterSpacing: "-0.01em" }}>Suggestions</p>

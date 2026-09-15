@@ -1,14 +1,23 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import Lenis from "lenis";
+// Lenis's own rules: no CSS smooth-scroll fighting it, and iframes ignore the pointer while
+// the page glides, so the wheel never catches on the live prototype.
+import "lenis/dist/lenis.css";
 
 export default function SmoothScroll() {
+  const lenisRef = useRef<Lenis | null>(null);
+  const pathname = usePathname();
+
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-    });
+    // Anyone who asked for less motion keeps the browser's plain scrolling.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    // lerp: each frame covers 8.5% of the way left, so the wheel eases out softly.
+    // Touch stays native: phones already glide, and syncing it feels heavy.
+    const lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 1, smoothWheel: true });
+    lenisRef.current = lenis;
     (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
 
     let raf: number;
@@ -21,9 +30,19 @@ export default function SmoothScroll() {
     return () => {
       cancelAnimationFrame(raf);
       lenis.destroy();
+      lenisRef.current = null;
       delete (window as unknown as { __lenis?: Lenis }).__lenis;
     };
   }, []);
+
+  // A new page starts at the top, with no leftover glide from the last one.
+  // A link to a section (/#recent-work) is left to land where it points.
+  useEffect(() => {
+    const lenis = lenisRef.current;
+    if (!lenis) return;
+    lenis.resize();
+    if (!window.location.hash) lenis.scrollTo(0, { immediate: true, force: true });
+  }, [pathname]);
 
   return null;
 }

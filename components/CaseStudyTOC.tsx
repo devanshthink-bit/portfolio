@@ -180,6 +180,7 @@ function CaseStudyTOCInner({ sections = defaultSections, variant = "right" }: { 
 
       {/* Bottom sheet */}
       <div
+        data-lenis-prevent
         style={{
           position: "fixed",
           bottom: 0,
@@ -194,6 +195,7 @@ function CaseStudyTOCInner({ sections = defaultSections, variant = "right" }: { 
           transition: "transform 0.6s var(--ease-sheet)",
           maxHeight: "75vh",
           overflowY: "auto",
+          overscrollBehavior: "contain",
         }}
       >
         {/* Handle */}
