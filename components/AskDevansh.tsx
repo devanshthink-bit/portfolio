@@ -172,7 +172,7 @@ export default function AskDevansh() {
 
       <style>{`
         .ask-trigger { position: fixed; right: 28px; bottom: 28px; z-index: 1001; display: flex; align-items: center; gap: 10px;
-          padding: 15px 24px; border: none; border-radius: 100px; background: var(--ink-surface); color: #fff; cursor: pointer;
+          padding: 11px 20px; border: none; border-radius: 100px; background: var(--ink-surface); color: #fff; cursor: pointer;
           font-family: ${FONT}; font-size: 14px; font-weight: 600; letter-spacing: -0.011em;
           box-shadow: var(--shadow-float); transition: transform .35s var(--ease-out); }
         .ask-trigger:hover { transform: translateY(-2px); }
@@ -192,7 +192,7 @@ export default function AskDevansh() {
         .ask-menu button:hover { background: var(--card-bg); }
         .ask-list { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; display: flex; flex-direction: column; gap: 10px; padding: 8px 24px 16px; }
         .ask-chip { border: 1px solid var(--border); background: var(--raised); color: var(--text-primary); border-radius: 100px;
-          padding: 11px 18px; font-family: ${FONT}; font-size: 14px; font-weight: 500; cursor: pointer; transition: background .3s var(--ease-out); }
+          padding: 10px 17px; font-family: ${FONT}; font-size: 14px; font-weight: 600; cursor: pointer; transition: background .3s var(--ease-out); }
         .ask-chip:hover { background: var(--card-bg); }
         .ask-foot { padding: 0 20px 14px; display: flex; flex-direction: column; gap: 12px; }
         .ask-note { display: flex; gap: 10px; align-items: flex-start; background: var(--card-bg); border-radius: 12px; padding: 14px 16px;
@@ -219,7 +219,7 @@ export default function AskDevansh() {
         body { transition: padding .6s var(--ease-sheet); }
         @media (max-width: 1099px) { html.ask-open body { padding-right: 0; } }
         @media (max-width: 640px) {
-          .ask-trigger { right: 16px; bottom: 76px; padding: 13px 20px; font-size: 14px; }
+          .ask-trigger { right: 16px; bottom: 76px; padding: 11px 20px; font-size: 14px; }
           .ask-panel { width: 100vw; border-left: none; }
           .ask-esc { display: none; }
         }

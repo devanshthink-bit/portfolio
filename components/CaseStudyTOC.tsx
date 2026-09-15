@@ -261,7 +261,7 @@ function CaseStudyTOCInner({ sections = defaultSections, variant = "right" }: { 
           display: "flex",
           alignItems: "center",
           gap: 8,
-          padding: "10px 18px",
+          padding: "11px 18px",
           background: "var(--text-primary)",
           border: "none",
           borderRadius: 100,

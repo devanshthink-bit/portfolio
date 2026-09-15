@@ -203,7 +203,7 @@ const CARD_GAP = 16;
 
 export default function About() {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 56, marginTop: 24 }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 96, marginTop: 24 }}>
 
       {/* About Me */}
       <div className="section">
@@ -224,7 +224,7 @@ export default function About() {
       {/* Skills & Tools */}
       <div className="section">
         <h3 className="section-title">Skills and tools</h3>
-        <div style={{ marginTop: 16 }}>
+        <div>
           <PhysicsSkills />
         </div>
       </div>
