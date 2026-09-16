@@ -540,6 +540,9 @@
     margin: 0;
   }
 
+  /* Under a card the tags sit 16px below the text (8px meta gap + 8px), apart from the prose. */
+  .work-card-meta .work-card-tags { margin-top: 8px; }
+
   .work-card-tags span + span::before {
     content: "";
     display: inline-block;
