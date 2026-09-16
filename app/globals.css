@@ -516,8 +516,7 @@
     margin: 0 0 6px 0;
   }
 
-  /* RedBus card: the logo alone, centred and a little larger, over the phones. */
-  .work-card-panel-text.is-brand-only { align-items: center; }
+  /* RedBus card: the logo alone, a little larger, over the phones. */
   .work-card-panel-text.is-brand-only .work-card-brand { font-size: 34px; margin: 0; }
 
   .work-card-did {

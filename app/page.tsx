@@ -214,8 +214,6 @@ function InProgressCard() {
       <div className="work-card-panel wip-panel">
         <div className="work-card-panel-text">
           <p className="wip-status"><span className="wip-dot" aria-hidden />In progress</p>
-          <p className="work-card-did">The next case study is on the drawing board</p>
-          <p className="work-card-tags"><span>Research</span><span>Sketching</span><span>Writing it up</span></p>
         </div>
         <div className="wip-phones" aria-hidden>
           <div className="wip-phone">{bars([60, 90, 75, 40, 85, 55])}</div>
@@ -227,8 +225,9 @@ function InProgressCard() {
         </div>
       </div>
       <div className="work-card-meta">
-        <p className="work-card-title work-card-title-lg">Coming soon</p>
+        <p className="work-card-title work-card-title-lg">The next case study is on the drawing board</p>
         <p className="work-card-blurb">I&apos;m working on this one now. Check back soon.</p>
+        <p className="work-card-tags"><span>Research</span><span>Sketching</span><span>Writing it up</span></p>
       </div>
       {hovered && pos && (
         <div style={{
