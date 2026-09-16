@@ -138,14 +138,12 @@ function WorkCard({ item }: { item: Work }) {
       {item.did ? (
         <>
           <div className="work-card-panel" style={{ background: item.gradient }}>
-            <div className="work-card-panel-text">
+            <div className="work-card-panel-text is-brand-only">
               <p className="work-card-brand" style={{ color: item.brandColor, display: "flex", alignItems: "center", gap: 10 }}>
                 {/* RedBus logo, the same unaltered path the prototype uses, in brand red */}
                 {item.slug === "redbus" && <img src="/images/redbus/logo.svg" alt="" aria-hidden width={45} height={30} style={{ height: "1.15em", width: "auto", display: "block" }} />}
                 {item.brand}
               </p>
-              <p className="work-card-did">{item.did}</p>
-              {item.tags && <p className="work-card-tags">{item.tags.map((t) => <span key={t}>{t}</span>)}</p>}
             </div>
             {item.phones && (
               <div className="work-card-phones">
@@ -155,11 +153,12 @@ function WorkCard({ item }: { item: Work }) {
           </div>
           <div className="work-card-meta">
             <p className="work-card-title work-card-title-lg">
-              {item.title}
+              {item.did}
               {item.year && <span className="work-card-year">{item.year}</span>}
             </p>
             {item.blurb && <p className="work-card-blurb">{item.blurb}</p>}
             {item.impact && <p className="work-card-impact">{item.impact}</p>}
+            {item.tags && <p className="work-card-tags">{item.tags.map((t) => <span key={t}>{t}</span>)}</p>}
           </div>
         </>
       ) : (
