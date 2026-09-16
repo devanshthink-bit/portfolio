@@ -11,8 +11,8 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope" });
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
 // Only for the "ds" mark that stands in for Home in the dock.
-// A playful, upright hand for one word ("tinkering") in the side projects heading, as bold as the heading.
-const script = Playpen_Sans({ subsets: ["latin"], weight: "700", variable: "--font-script" });
+// A playful, upright hand for one word ("tinkering") in the side projects heading, a touch lighter so it sits with Manrope 700.
+const script = Playpen_Sans({ subsets: ["latin"], weight: "500", variable: "--font-script" });
 const instrument = Instrument_Serif({ subsets: ["latin"], weight: "400", style: "italic", variable: "--font-instrument" });
 
 export const metadata: Metadata = {
