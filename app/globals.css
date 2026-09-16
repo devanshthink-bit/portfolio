@@ -517,7 +517,7 @@
   }
 
   /* RedBus card: the logo alone, a little larger, over the phones. */
-  .work-card-panel-text.is-brand-only .work-card-brand { font-size: 34px; margin: 0; }
+  .work-card-panel-text.is-brand-only .work-card-brand { font-size: 28px; margin: 0; }
 
   .work-card-did {
     font-family: var(--font-manrope), sans-serif;
@@ -1701,7 +1701,7 @@
 
 /* Phones show only the middle screen of each trio, at a size that fits. */
 @media (max-width: 640px) {
-  .work-card-panel-text.is-brand-only .work-card-brand { font-size: 28px; }
+  .work-card-panel-text.is-brand-only .work-card-brand { font-size: 24px; }
   .work-card-phones .iphone:nth-child(2) { --n: 190; }
   .phone-row.hero { padding-bottom: 0; }
   .phone-row.hero .phone-fig:nth-child(2) .iphone { --n: 272; }
