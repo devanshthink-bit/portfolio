@@ -27,7 +27,8 @@ const recentWork = [
     title: "Winning the return ticket at checkout",
     desc: "View project",
     tag: "Product Design · Concept",
-    gradient: "linear-gradient(180deg, #fbf7f7 0%, #f4ebec 100%)",
+    // A soft RedBus-red glow rising behind the phones, over a blush wash.
+    gradient: "radial-gradient(90% 75% at 50% 100%, rgba(232, 30, 56, 0.20) 0%, rgba(232, 30, 56, 0.07) 45%, rgba(232, 30, 56, 0) 75%), linear-gradient(180deg, #fdf8f8 0%, #fbeced 100%)",
     tooltipBg: "#1d1d1d",
     slug: "redbus",
     phones: ["hifi_06a", "hifi_05a", "hifi_16"],
