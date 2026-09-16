@@ -231,7 +231,7 @@ function InProgressCard() {
       </div>
       {hovered && pos && (
         <div style={{
-          position: "fixed", left: pos.x + 18, top: pos.y + 18, background: "#3b4a6b", borderRadius: "var(--r-sm)",
+          position: "fixed", left: pos.x + 18, top: pos.y + 18, background: "#4a4743", borderRadius: "var(--r-sm)",
           padding: "7px 12px", fontSize: "var(--fs-12)", fontFamily: "var(--font-manrope)", fontWeight: 700,
           letterSpacing: "-0.011em", color: "#ffffff", pointerEvents: "none", zIndex: 9999, whiteSpace: "nowrap",
         }}>
