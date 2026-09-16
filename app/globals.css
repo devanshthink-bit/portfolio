@@ -614,17 +614,17 @@
     color: #E3A47C;
   }
 
-  /* Second case study, in progress: soft blue panel, phone outlines still being drawn. */
-  .wip-panel { background: linear-gradient(180deg, #f7f8fb 0%, #edf0f5 100%); }
+  /* Second case study, in progress: warm stone panel, phone outlines still being drawn. */
+  .wip-panel { background: linear-gradient(180deg, #f9f7f3 0%, #f0ebe3 100%); }
   .wip-status {
     display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
     margin: 0 0 8px; padding: 5px 11px 5px 9px; border-radius: 100px;
-    background: rgba(59, 74, 107, 0.08); color: #3b4a6b;
+    background: rgba(120, 104, 86, 0.09); color: #5e5244;
     font-family: var(--font-inter), sans-serif; font-size: var(--fs-14); font-weight: 500; letter-spacing: -0.011em;
   }
-  .wip-dot { position: relative; width: 7px; height: 7px; border-radius: 50%; background: #4f6bd8; }
+  .wip-dot { position: relative; width: 7px; height: 7px; border-radius: 50%; background: #c07a55; }
   .wip-dot::after {
-    content: ""; position: absolute; inset: 0; border-radius: 50%; background: #4f6bd8;
+    content: ""; position: absolute; inset: 0; border-radius: 50%; background: #c07a55;
     animation: wip-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
   }
   @keyframes wip-ping { 75%, 100% { transform: scale(2.6); opacity: 0; } }
@@ -637,14 +637,14 @@
   }
   .wip-phone {
     position: relative; width: 196px; height: 411px; flex: none;   /* the RedBus card's side phones: 196 wide, 430:902 */
-    border-radius: 28px; border: 1.5px dashed rgba(59, 74, 107, 0.35);
+    border-radius: 28px; border: 1.5px dashed rgba(120, 104, 86, 0.38);
     background: rgba(255, 255, 255, 0.55);
     padding: 44px 18px 0; display: flex; flex-direction: column; gap: 12px;
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .wip-phone::before { /* notch */
     content: ""; position: absolute; top: 14px; left: 50%; width: 46px; height: 12px;
-    transform: translateX(-50%); border-radius: 10px; background: rgba(59, 74, 107, 0.14);
+    transform: translateX(-50%); border-radius: 10px; background: rgba(120, 104, 86, 0.14);
   }
   .wip-phone:nth-child(1) { transform: translate(28px, 58px) rotate(-8deg); }
   .wip-phone:nth-child(2) { width: 236px; height: 495px; border-radius: 34px; z-index: 2; background: rgba(255, 255, 255, 0.85); }
@@ -655,7 +655,7 @@
 
   .wip-bar, .wip-block {
     display: block; height: 10px; border-radius: 6px; flex: none;
-    background: linear-gradient(90deg, rgba(59,74,107,0.10) 0%, rgba(59,74,107,0.22) 50%, rgba(59,74,107,0.10) 100%);
+    background: linear-gradient(90deg, rgba(120,104,86,0.10) 0%, rgba(120,104,86,0.20) 50%, rgba(120,104,86,0.10) 100%);
     background-size: 200% 100%; animation: wip-shimmer 2.2s ease-in-out infinite;
   }
   .wip-block { height: 96px; border-radius: 12px; }
