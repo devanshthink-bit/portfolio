@@ -619,12 +619,12 @@
   .wip-status {
     display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
     margin: 0 0 8px; padding: 5px 11px 5px 9px; border-radius: 100px;
-    background: rgba(100, 97, 92, 0.08); color: #55524d;
+    background: rgba(59, 74, 107, 0.08); color: #3b4a6b;
     font-family: var(--font-inter), sans-serif; font-size: var(--fs-14); font-weight: 500; letter-spacing: -0.011em;
   }
-  .wip-dot { position: relative; width: 7px; height: 7px; border-radius: 50%; background: #8f8a83; }
+  .wip-dot { position: relative; width: 7px; height: 7px; border-radius: 50%; background: #4f6bd8; }
   .wip-dot::after {
-    content: ""; position: absolute; inset: 0; border-radius: 50%; background: #8f8a83;
+    content: ""; position: absolute; inset: 0; border-radius: 50%; background: #4f6bd8;
     animation: wip-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
   }
   @keyframes wip-ping { 75%, 100% { transform: scale(2.6); opacity: 0; } }
