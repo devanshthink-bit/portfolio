@@ -36,8 +36,7 @@ const recentWork = [
     brandColor: "var(--brand-red)",
     did: "Redesigned RedBus checkout to capture the return trip, even without a date",
     tags: ["Travel", "B2C", "iOS app", "Concept"],
-    blurb: "~74% of travellers leave the return for later, and a quarter book it elsewhere. A self-initiated RedBus concept that turns one booking into two, in the same checkout.",
-    impact: "Aimed at winning back the return-trip revenue RedBus loses to other apps.",
+    blurb: "~74% of travellers leave the return for later, and a quarter book it elsewhere. A self-initiated RedBus concept that wins that revenue back by turning one booking into two, in the same checkout.",
   },
   // Hidden for now at Devansh's request (13 Sep 2026). Kept, not deleted: uncomment to bring back.
   // {
