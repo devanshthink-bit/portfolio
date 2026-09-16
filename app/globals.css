@@ -416,7 +416,7 @@
      headings in portfolio in capital"). */
   .section-title {
     font-family: var(--font-manrope), sans-serif;
-    font-size: var(--fs-12);
+    font-size: var(--fs-14);
     font-weight: 800;
     color: var(--text-muted);
     text-transform: uppercase;
@@ -1231,7 +1231,7 @@
 
   .cs-act-kicker {
     font-family: var(--font-manrope), sans-serif;
-    font-size: var(--fs-12);
+    font-size: var(--fs-14);
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -1262,7 +1262,7 @@
   /* Labels: "Scene 4 · A week later" → a red marker, then a quiet name. */
   .cs-label {
     font-family: var(--font-manrope), sans-serif;
-    font-size: var(--fs-12);
+    font-size: var(--fs-14);
     font-weight: 800;   /* same size and weight as the home section titles (Devansh, 15 Sep) */
     text-transform: uppercase;   /* capitals, like the home section titles (Devansh, 15 Sep) */
     letter-spacing: 0.1em;
