@@ -67,7 +67,7 @@ export default function Playground() {
     <section id="playground" className="section pg">
       <h3 className="section-title">Side projects</h3>
       <div className="pg-head">
-        <h2>When I&apos;m not working,<br /><span>I love <em className="pg-script">tinkering</em> with AI.</span></h2>
+        <h2>When not working, <span>I love <em className="pg-script">tinkering</em> with AI.</span></h2>
         <p>Tools I wanted and couldn&apos;t find, so I made them. All of them are live. Go and poke at them.</p>
       </div>
       <div className="pg-grid">
