@@ -13,6 +13,7 @@
   letter-spacing: -0.03em; line-height: 1.3; color: var(--text-primary); margin: 0;
 }
 .pg-head h2 span { color: var(--text-muted); }
+.pg-head h2 .pg-script { font-family: var(--font-script), cursive; font-style: normal; font-weight: 400; font-size: 0.82em; letter-spacing: 0; margin: 0 0.08em; }
 .pg-head p { font-size: 16px; line-height: 1.5; color: var(--text-muted); letter-spacing: -0.02em; margin: 0; max-width: 560px; }
 
 .pg-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 24px; align-items: start; }
