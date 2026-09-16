@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Manrope, Geist_Mono, Instrument_Serif, Playwrite_US_Trad } from "next/font/google";
+import { Inter, Manrope, Geist_Mono, Instrument_Serif, Playpen_Sans } from "next/font/google";
 import "./globals.css";
 import BottomNav from "../components/BottomNav";
 import PageTransition from "../components/PageTransition";
@@ -11,8 +11,8 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope" });
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
 // Only for the "ds" mark that stands in for Home in the dock.
-// A school-cursive hand for one playful word ("tinkering") in the side projects heading.
-const script = Playwrite_US_Trad({ weight: "400", variable: "--font-script" });
+// A playful, upright hand for one word ("tinkering") in the side projects heading, as bold as the heading.
+const script = Playpen_Sans({ subsets: ["latin"], weight: "700", variable: "--font-script" });
 const instrument = Instrument_Serif({ subsets: ["latin"], weight: "400", style: "italic", variable: "--font-instrument" });
 
 export const metadata: Metadata = {
