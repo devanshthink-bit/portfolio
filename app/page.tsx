@@ -226,7 +226,7 @@ function InProgressCard() {
       </div>
       <div className="work-card-meta">
         <p className="work-card-title work-card-title-lg">The next case study is on the drawing board</p>
-        <p className="work-card-blurb">Research is underway. The full story will be here soon.</p>
+        <p className="work-card-blurb">I&apos;m still working on this one. Please check back soon.</p>
         <p className="work-card-tags"><span>Research</span><span>Sketching</span><span>Writing it up</span></p>
       </div>
       {hovered && pos && (
