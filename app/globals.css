@@ -1879,3 +1879,12 @@
    20px on phones. */
 :root { --sep-h: 18px; --sep-o: 0.35; --sep-bg: linear-gradient(180deg, transparent, currentColor 50%, transparent); }
 @media (max-width: 640px) { :root { --sep-h: 20px; } }
+
+/* Every case study card on the home page has the same panel height, on every screen (Devansh, 17 Sep 2026).
+   The panel is a fixed height; the phones fill whatever is left under the brand or status line. */
+:root { --work-card-h: 460px; }
+@media (max-width: 640px) { :root { --work-card-h: 364px; } }
+.work-card-panel,
+.work-card-media { height: var(--work-card-h); aspect-ratio: auto; }
+.work-card-panel .work-card-phones,
+.work-card-panel .wip-phones { flex: 1 1 0; min-height: 0; height: auto; }

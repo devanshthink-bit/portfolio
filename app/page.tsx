@@ -169,7 +169,9 @@ function WorkCard({ item }: { item: Work }) {
           <div className="work-card-media" style={{ background: item.gradient }}>
             {item.image && <img src={item.image} alt="" />}
           </div>
-          <p className="work-card-title" style={{ margin: 0 }}>{item.title}</p>
+          <div className="work-card-meta">
+            <p className="work-card-title work-card-title-lg">{item.title}</p>
+          </div>
         </>
       )}
       {hovered && pos && (
