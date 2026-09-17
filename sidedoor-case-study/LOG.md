@@ -7,11 +7,11 @@
 
 Bet:        employees drop strangers' referral requests because the request makes them do the candidate's work, not because they won't help (SCOPE v2, draft)
 Evidence:   thin. 4 real interviews with 2 people (each as candidate and as referrer), 1 remembered follow-up, desk research without source links
-Files:      SCOPE.md [x] v2 draft, v1 kept · BUSINESS.md [x] draft · RESEARCH.md [x] notes, sort, five clusters, jobs, insights, three candidate problem statements · BRIEF.md [ ] · DESIGN_LANGUAGE.md [ ] · build [ ] Figma V2 exists, not a coded build · live [ ]
+Files:      SCOPE.md [x] v2 draft, v1 kept, landscape · BUSINESS.md [x] draft · BRIEF.md [x] AX Spec draft · RESEARCH.md [x] notes, sort, five clusters, jobs, insights, three candidate problem statements · BRIEF.md [ ] · DESIGN_LANGUAGE.md [ ] · build [ ] Figma V2 exists, not a coded build · live [ ]
 Rounds:     1. Mentor's critique (the product and referrer incentive). No change has come from it yet
 Open:       business lens with sources, source links for desk research,
             live case study still shows AI-sourced quotes and screens that aren't in Figma
-Next:       molades-ai (the ideas involve a model), then molades-brief
+Next:       molades-brief (shape, screens, states), after Devansh reacts to the AX Spec
 
 ## Entries
 
@@ -248,3 +248,17 @@ The part that was wrong: "candidates find relevant referrers"
 This made worthless: the old case study's Screen 01 as a differentiator; Idea 4 as a reason to exist.
 So now I believe:    Sidedoor's reason to exist is what nobody does: a request that arrives complete, status the referrer
                      passes on, and fit shown to the referrer.
+
+DECISION · 17 Sep 2026 · molades-ai
+Decided:             AX Spec draft 1 in BRIEF.md. The model does two jobs: resume and job description into fields (both
+                     sides), and ordering a referrer's requests by fit with the reasons shown. Level: the model does it,
+                     the person checks, for both. Surface: Idea 6 (list ordered by fit, "Lower match" collapsed but
+                     referable) with Idea 5 (fit breakdown on each card) and Idea 7 (portal-ready panel), plus Idea 9
+                     (the referrer's own rule). Controls: where did this come from, why did it do that, override. No
+                     single fit score; counts instead.
+Rejected:            The model just does it (hiding or auto-declining low fits: silence for candidates, a decision under
+                     the referrer's name, and Samarth refers borderline matches on purpose, n53). Arrival order with
+                     suggestions only. Idea 10, one-at-a-time swipe (volume). Idea 12 as the main surface (slow). A chat
+                     box. Generating the candidate's message (n76 n77; the landscape's do-not-inherit). Predicting hire chance.
+Because:             Draft by AI following the skill; Devansh's n92 idea kept as ordering, not hiding.
+How sure:            worked it out · every material fact guessing
