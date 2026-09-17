@@ -499,3 +499,14 @@ CHANGE · 2026-09-17 · molades-build
 Changed:    V3 Link Page grid column gap 0 → 101, same as the other flows.
 Caused by:  Devansh, 17 Sep: "Why are these screens stuck with each other?" The flow was copied from Messaging, whose grid had one column and no column gap.
 Result:     Screens spaced like every other flow (checked with a screenshot).
+
+DECISION · 2026-09-17 · molades-build
+Decided:   Slice 9, referrer states in V3 Explore's referrer row. (1) Referral requests (0): "No referral requests yet. Share your link when someone messages you about this job.", the link, "Copy your link", "Paste it in the LinkedIn or WhatsApp chat". (2) Not moving forward sheet: optional reason chips (Experience doesn't match, Skills don't match, Role is closed, Can't refer for this team), "Abhinav sees it straight away", Not moving forward / Cancel. (3) Not enough to judge: no count, "Not enough in their resume to judge fit for this job. Read it before you decide.", resume, both buttons (sample: Amit Patel). (4) Marked as submitted: "Abhinav has been told. Once a week we'll ask if you've seen it move." Back to referral requests.
+Rejected:  A required reason for saying no; showing a guessed score when the resume is thin.
+Because:   Saying no should cost almost nothing, or referrers go silent (C2, C3). AX Spec: "Not sure" shows no number rather than a made-up one.
+How sure:  worked it out. Strings from BRIEF.md "When it's not perfect" and AX Spec Step 5.
+
+CHANGE · 2026-09-17 · molades-build
+Changed:    V3 Explore grid 6 → 7 columns; flow frame and banner widened to 4536 so the grid sits inside. Checked: no stacked cells, no overlap with other flows.
+Caused by:  Four new state screens in the referrer row.
+Result:     Explore: candidate row 3 screens, referrer row 7.
