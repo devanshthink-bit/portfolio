@@ -13,7 +13,7 @@ Updated 17 Sep 2026.
 - [—] **molades-ideate** · not run, on purpose. molades-ai says run it *instead of* ideate when the idea has a model in it, and "never run both"
 - [x] **molades-brief** · BRIEF.md, the plan + one-page Design Brief
 - [x] **molades-language** · DESIGN_LANGUAGE.md + language/test-screen.html
-- [ ] **molades-build** · in progress. Figma V3 copies made; 23 screens done; V0 photos restored
+- [x] **molades-build** · first pass done. Figma V3 copies made; 24 screens done; V0 photos restored
 - [ ] **molades-attack** · break the V3 screens on purpose, then craft and accessibility checks
 - [ ] **molades-build (again)** · fix attack findings one at a time
 - [ ] **molades-test** · no real tests planned. Write the test script anyway and say plainly it wasn't run
@@ -34,7 +34,7 @@ Updated 17 Sep 2026.
 - [x] Premium cut (Devansh: drop for now); Premium rows removed from V3 profiles
 - [x] Link page (web, no install) · 3 screens: before upload, details filled, sent
 - [x] Referrer: where they copy their link (empty state "Copy your link" on Referral requests)
-- [ ] Edit profile · new fields
+- [x] Edit profile · new fields (one screen)
 - [x] Remove cut screens from V3: swipe cards, manual 4-step forms, "Referral Accepted" + share sheet (Matching flow), Premium flow
 
 ## Other work

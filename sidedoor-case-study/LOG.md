@@ -510,3 +510,14 @@ CHANGE · 2026-09-17 · molades-build
 Changed:    V3 Explore grid 6 → 7 columns; flow frame and banner widened to 4536 so the grid sits inside. Checked: no stacked cells, no overlap with other flows.
 Caused by:  Four new state screens in the referrer row.
 Result:     Explore: candidate row 3 screens, referrer row 7.
+
+DECISION · 2026-09-17 · molades-build
+Decided:   Slice 10, V3 Edit Profile. Candidate edit is one screen, "Edit your details": the same fields as onboarding's "Check your details", all filled ("Details portals ask for: date of birth 12 Mar 1999, career gaps None, preferred interview locations Bengaluru, Remote, notice period 30 days"), resume, Save changes. Referrer edit profile kept from V2.
+Rejected:  V2's 4-step candidate edit (tagline, projects, preferred roles, links).
+Because:   BRIEF.md: edit profile matches the new profile fields. Values agree with Check your referral request and V2's notice period (30).
+How sure:  worked it out
+
+CHANGE · 2026-09-17 · molades-build
+Changed:    Deleted V3 copies of Candidate/Edit Profile Screen/1–4. V2 originals untouched.
+Caused by:  Slice 10.
+Result:     First build pass complete. Next: molades-attack.
