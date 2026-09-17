@@ -5,13 +5,13 @@
 
 ## Where things stand
 
-Bet:        not set. The original was never written as a falsifiable guess; the FigJam scope lists five problems at once
+Bet:        employees drop strangers' referral requests because the request makes them do the candidate's work, not because they won't help (SCOPE v2, draft)
 Evidence:   thin. 4 real interviews (2 candidates, 2 referrers) and desk research without source links
-Files:      SCOPE.md [x] v1 reconstructed · RESEARCH.md [x] notes, sort, five clusters, jobs, insights, three candidate problem statements · BRIEF.md [ ] · DESIGN_LANGUAGE.md [ ] · build [ ] Figma V2 exists, not a coded build · live [ ]
+Files:      SCOPE.md [x] v2 draft, v1 kept · RESEARCH.md [x] notes, sort, five clusters, jobs, insights, three candidate problem statements · BRIEF.md [ ] · DESIGN_LANGUAGE.md [ ] · build [ ] Figma V2 exists, not a coded build · live [ ]
 Rounds:     1. Mentor's critique (the product and referrer incentive). No change has come from it yet
-Open:       problem statement, scope card, first names for the four participants, source links for desk research,
+Open:       business lens with sources, first names for the four participants, source links for desk research,
             live case study still shows AI-sourced quotes and screens that aren't in Figma
-Next:       molades-synthesise, Devansh picks one of the three problem statements and says why the other two lose
+Next:       molades-landscape, what LinkedIn and others already do for referrals, from the FigJam screenshots
 
 ## Entries
 
@@ -22,7 +22,7 @@ Finding:             Mentor: this would make more sense as a feature inside Link
                      join a brand-new app, so the product can't get its supply side.
 Severity:            blocker
 Layer:               the bet
-Action:              open. Goes into scope card v2 after the notes are sorted
+Action:              answered in SCOPE.md v2 (17 Sep 2026): the product becomes a feature inside LinkedIn
 
 LEARNED · 17 Sep 2026 · molades-research
 Believed:            The research base was 10 interviews: 2 recruiters, 4 referrers, 4 candidates.
@@ -113,3 +113,35 @@ Rejected:            Keeping five separate jobs (two pairs are one job seen twic
 Because:             Draft by AI, following the RedBus artefacts page (combine, then one insight per final job).
                      The choice between A, B and C is Devansh's.
 How sure:            worked it out
+
+DECISION · 17 Sep 2026 · molades-synthesise
+Decided:             Problem statement: an employee asked for a referral by someone they don't know has to do the
+                     candidate's work before they can say yes, so most don't, and the candidate never finds out.
+                     Primary: the request makes the referrer do the candidate's work. Secondary: the answer never travels back.
+Rejected:            A (referrer side only): ignores the candidate who never learns what happened. B (candidate side
+                     only): describes symptoms, and rebuilds old Sidedoor.
+Because:             Devansh: "A, B, C all are true". C holds A and B as its two sides. Devansh asked AI to choose; AI
+                     gave its view and reason, Devansh agreed.
+How sure:            saw it (what happens) · worked it out (why) · guessing (that a complete request gets referred more)
+Traces to:           n70 n76 n77 n57 n59 n60 n71 n73 n75 n87 n62 n69 n01 n25 n34 n35 n36 n58 n83 n47 n64
+
+LEARNED · 17 Sep 2026 · molades-scope
+Believed:            Referrals break because of a trust gap: referrers can't judge strangers and fear for their reputation,
+                     so they need match scores, graded recommendations and spam limits (old Sidedoor, FigJam problem statement).
+Found:               The two real referrers already have simple rules and don't fear for their reputation (n50, n55, n76).
+                     What stops them is the work a request hands them (n57, n59, n60, n70, n71, n76), for a low reward (n87).
+The part that was wrong: "referrers cannot confidently evaluate unknown candidates"
+This made worthless: the four-level recommendation screen, request limits, the ranked inbox, the "trust layer" as
+                     the core bet, and swipe matching (no note supports it). The live case study's screens 03 and 05.
+So now I believe:    Employees drop strangers' requests because the request makes them do the candidate's work.
+
+DECISION · 17 Sep 2026 · molades-scope
+Decided:             SCOPE.md v2 (draft): a feature inside LinkedIn. Moment: a candidate asking an employee they don't know
+                     for a referral to one job, until they hear what happened. Number: % of those requests the employee
+                     submits. Guardrail: employees turning off referral requests must not rise.
+Rejected:            A new standalone app (both sides must join; referrers have little reason; Fishbowl's referral
+                     communities are quiet, n28). A referrer-shared link as the home of the product (only helps after a
+                     referrer agrees; kept as an idea).
+Because:             All four already ask and get asked on LinkedIn (n04 n07 n09 n29 n49 n68 n69). Answers the mentor's
+                     critique with the notes.
+How sure:            saw it (where they ask) · guessing (the number and guardrail, no baseline)

@@ -428,3 +428,93 @@ effort as large as possible: no job ID, missing details, no fit shown, and no wa
 Covers C1, C2, C3, C4, and C5 in part. Leaves out n89 and n90 (people who take a referral and don't join).
 Against it: broad. "Make the effort small" could be three different projects. And it still doesn't give the referrer
 a reason to start (C4); it only takes away a reason to stop.
+
+---
+
+# Problem statement
+
+Chosen 17 Sep 2026: candidate **C**, narrowed.
+
+> **An employee asked for a referral by someone they don't know has to do the candidate's work before they can say
+> yes. So most don't, and the candidate never finds out.**
+>
+> The request arrives as a LinkedIn message and a resume. The company's portal needs the job ID, the city, the date of
+> birth, career gaps and preferred interview locations, none of which are in the resume. So the referrer either chases
+> the candidate for them or drops the request. The only reward is a bonus that is low and paid only if the person is
+> hired.
+>
+> Meanwhile the status of a submitted referral already exists, in the referrer's portal and emails. It never reaches the
+> candidate, who reads silence as a no.
+>
+> The barrier is not that referrers won't help strangers. Referrer 1 would refer a complete stranger who fits, and
+> Referrer 2 feels "a little obligated" once a candidate has done the work of sharing the job ID. It is that the request
+> hands the referrer the work, and nothing hands the answer back.
+
+**Short form:** the request asks the referrer to do the candidate's work, and the answer never travels back.
+
+**What this means for design:** the request has to arrive with everything the referrer's portal needs and the
+candidate's fit already shown, and the status the referrer can already see has to reach the candidate without the
+referrer doing more work.
+
+**The job underneath it:** *a referral depends on one busy employee's effort, and nothing makes that effort small or
+lets its result travel back.*
+
+**Traces to:** n70 n76 n77 n57 n59 n60 n71 n73 n75 n87 n62 n69 (referrer) · n01 n25 n34 n35 n36 (candidate) ·
+n58 n83 n47 (status already exists on the referrer's side) · n64 (would refer a stranger)
+
+**How sure:**
+- What happens today: **saw it**. All four real interviews
+- That the work in the request is why strangers get dropped: **worked it out**. Two referrers, and Referrer 2's own rule (n76, n77)
+- That a complete request would get referred more often: **guessing**. Nobody was shown one
+
+**Leaves out:**
+- People who take a referral and then don't join (n89, n90). About who gets referred, not the request
+- The company's bonus scheme (n87, n62). Outside any product's control
+- HR not telling rejected candidates anything (n86). Out of scope, company hiring workflow
+- Recruiters. No real data
+- C5, knowing your fit before asking, stays inside the design implication ("fit already shown"), not as a problem of its own. It is `THIN`
+
+## Rejected candidates
+
+**A · "Referring a stranger costs the referrer admin work nobody pays them for, so they don't do it."**
+Lost because it ignores the candidate who never learns what happened (C3), and C3 is in both candidates' interviews.
+
+**B · "A candidate with nobody at the company has no way to reach a referrer who will read the request, and no way to
+learn what happened after."**
+Lost because it describes what the candidate suffers, not why. Designing for it alone rebuilds old Sidedoor, which gave
+the referrer no reason to take part.
+
+**Devansh's reason, in their words:** "A, B, C all are true". C is the one statement that holds A and B as its two sides.
+
+## Collapsing the sub-problems
+
+If only one thing were fixed, would the others shrink?
+- Fix the **request** (C2) and the referrer's effort shrinks (C4, partly), and more requests get answered (C1).
+- **Fit** (C5) is part of a complete request, so it is how the request gets fixed, not a separate problem.
+- **Status** (C3) does not shrink when the request is fixed. It survives as the one secondary, and it is cheap because
+  the referrer already has it.
+
+Primary: the request makes the referrer do the candidate's work. Secondary: the answer never travels back.
+
+## Walking the chain back
+
+Problem statement → C2, the referrer drops incomplete requests → group a, no job ID → **n76**, Referrer 2: "they don't
+share the job ID, which irritates me a lot... I will not take the pain and go and check for it". The chain holds.
+
+Problem statement → C3, the candidate can't tell what happened → **n35**, Candidate 2: "whoever did not reply, they did
+not refer me". The chain holds.
+
+## What the research killed
+
+These were the old Sidedoor's reasons. The four real interviews don't support them.
+
+- **Referrers fear for their reputation.** Referrer 1: "that responsibility should not fall on the referrer" (n55)
+- **Referrers need help deciding**, so graded recommendations. Both already have simple rules (n50, n76, n81)
+- **Referrers are flooded with spam**, so request limits and a ranked inbox. Referrer 1 doesn't get many (n61)
+- **Trust between strangers is the core gap.** The notes show work and silence, not distrust. Nobody mentioned trust as
+  the reason they didn't refer
+
+## Contradiction with the scope card
+
+v1 listed five problems and no single guess. The research picks one, and it isn't the one old Sidedoor was built on
+(trust and decision confidence). SCOPE.md rewritten as v2.
