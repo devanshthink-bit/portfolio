@@ -10,6 +10,8 @@
     --card-bg: #f2f2f0;
     --hero-bg: #f6f5f3;
     --brand-red: #E81E38;   /* the RedBus name: the brand red (a deeper #B42335 was tried and dropped, 15 Sep) */   /* warm stone, not cool grey (Devansh, 15 Sep) */
+    --sd-blue: #2563EB;    /* Sidedoor's brand blue and green (the case study title, charts) */
+    --sd-green: #0E9F6E;
     --cs-callout-bg: rgba(0, 0, 0, 0.028);
     --cs-stat-gap: #e8e4df;
     --tag-bg: var(--bg);
@@ -56,6 +58,8 @@
     --hero-bg: #171614;
     --ink-surface: #3a3836;
     --brand-red: #E81E38;
+    --sd-blue: #7EA6F7;    /* lighter, so they keep their contrast on the dark ground */
+    --sd-green: #5FD3A5;
     --cs-callout-bg: #22211f;
     --cs-stat-gap: rgba(255, 255, 255, 0.09);
     --tag-bg: #3d3b39;   /* solid, so the bucket's watermark never shows through a tag */
