@@ -293,7 +293,7 @@ Information, in priority order
 3. **Portal-ready details**, each with copy, in the order a portal usually asks · component · appears after Refer
 4. **Resume** · component
 5. **Their note**, if any · static
-6. **"I've submitted it on my portal"** · component · appears after Refer
+6. **"Mark as submitted"** · component · the last tap of the Refer task, right after copying; clears the request from their waiting list
 
 Not here
 - Messaging → opens only after Refer
@@ -316,6 +316,7 @@ Not here
 
 Information, in priority order
 1. **Where it is now, in words**: "Submitted on Infosys's portal on 12 Sep" · component · has states for every stage and for not moving forward
+1a. **"Heard from the company?"** after Referred, if the referrer hasn't marked it: "Got an email saying your application was submitted? Mark it." · component · the candidate's own confirmation
 2. **What happens next, and a typical wait**: "Interviews usually start within 2–3 weeks" · component · guessing until there is data; Riya's 2–3 weeks (raw, Q22)
 3. **The timeline**: Sent · Referred · Submitted · In interviews · Selected / Not selected · component
 4. **The referrer**: name, role, company · static
@@ -354,7 +355,7 @@ Not here
 
 ## The main path
 
-**A candidate asks a referrer they don't know, and learns it was submitted · 8 steps, 2 people**
+**A candidate asks a referrer they don't know, and learns it was submitted · 7 steps, 2 people**
 
 Before it: the candidate's profile is built once from their resume.
 
@@ -363,15 +364,22 @@ Before it: the candidate's profile is built once from their resume.
 3. Adds anything still missing, taps Send → **Your referral requests**, status Sent
 4. **Referrer** · notification → **Referral requests for this job**, the request near the top if it matches
 5. Opens it → **Referral request (referrer)**, how they match
-6. Taps Refer → portal-ready details appear; copies them into their company portal (**leaves Sidedoor**)
-7. Comes back, taps "I've submitted it on my portal" → **Your referrals**
-8. **Candidate** · notification → **Referral request**: "Submitted on [company]'s portal" · **job finished**
+6. Taps Refer → portal-ready details appear; copies them into their company portal (**leaves Sidedoor**) and, as the
+   last tap of the same task, "Mark as submitted" → the request leaves their waiting list
+7. **Candidate** · notification → **Referral request**: "Submitted on [company]'s portal" · **job finished**
+
+**If the referrer never marks it:** the candidate can. "Got an email from [company] saying your application was
+submitted? Mark it." (Riya: "I and the applicant both receive an automated email", n72.)
+
+**Changed 17 Sep 2026, after Devansh:** the old step 7 ("comes back and taps I've submitted it") is gone as its own
+step. Devansh: "i think most referrers wont do this. why wud they care to update this for candidate"
 
 **Cut from this path:** writing a message (optional one line), messaging before a decision, a "match" celebration
 screen, choosing among six stages.
 
-**For Devansh:** eight steps across two people. Which one could somebody skip the second time, and which is only there
-because we weren't sure what goes in between? (Step 6 can't go: the portal is outside Sidedoor.)
+**Asked of Devansh:** which step could somebody skip the second time? Answered: the referrer's separate "I've submitted
+it" step, because referrers have no reason to come back for it. Step 3 also mostly disappears on a repeat request,
+since missing details are saved the first time.
 
 ## Other routes
 
@@ -410,7 +418,7 @@ because we weren't sure what goes in between? (Step 6 can't go: the portal is ou
 - **Empty:** not applicable
 - **Loading:** not applicable; the match is stored
 - **Error:** the copy button fails → the field stays selectable to copy by hand
-- **Done:** after "I've submitted it on my portal": "Submitted. [Name] has been told."
+- **Done:** after "Mark as submitted": "Marked as submitted. [Name] has been told."
 - **Too much:** a resume with twenty skills → the match shows the job's skills only, not the resume's full list
 - **Not allowed:** already referred by another referrer at the same company → **open**, the research doesn't say how portals handle a duplicate referral (Riya's six-month rule, n74, suggests the portal refuses it)
 

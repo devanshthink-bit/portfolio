@@ -11,7 +11,7 @@ Files:      SCOPE.md [x] v2 draft, v1 kept, landscape · BUSINESS.md [x] draft �
 Rounds:     1. Mentor's critique (the product and referrer incentive). No change has come from it yet
 Open:       business lens with sources, source links for desk research,
             live case study still shows AI-sourced quotes and screens that aren't in Figma
-Next:       Devansh reacts to the brief (main path question), then molades-language
+Next:       molades-language
 
 ## Entries
 
@@ -281,3 +281,13 @@ Rejected:            The link page alone (can't hold status over weeks, n44 n45)
                      browsing candidates who didn't ask (consent the research never touched), a long message box (n76).
 Because:             Tied to C2 (complete request), C3 (status back), C4 (referrer effort), and the landscape's gaps.
 How sure:            worked it out
+
+CRITIQUE · 17 Sep 2026 · molades-brief · Source: user
+Finding:             Main path step 7, the referrer coming back to tap "I've submitted it on my portal". Devansh: "i think
+                     most referrers wont do this. why wud they care to update this for candidate". The status loop
+                     depended on the scarce side doing unpaid work (C4).
+Severity:            major
+Layer:               steps
+Action:              fixed. "Mark as submitted" is now the last tap of the Refer task, and clears the referrer's own list.
+                     The candidate can confirm it from the company's automated email (n72 n47). Main path 8 → 7 steps.
+                     NSM now counts a referral confirmed by either side (BUSINESS.md).

@@ -147,7 +147,9 @@ do it.
 
 **Referrals submitted per active referrer per month.**
 
-A referral counts when the referrer marks the request as submitted to their company's portal. An active referrer is one
+A referral counts when **either side** confirms it was submitted to the company's portal: the referrer marks it, or the
+candidate marks the company's confirmation email. Changed 17 Sep 2026: counting only the referrer's mark would undercount,
+because referrers have little reason to come back and mark it (Devansh's critique; BRIEF.md main path). An active referrer is one
 who opened at least one request that month.
 
 ### The North Star checklist (L02, p12)
