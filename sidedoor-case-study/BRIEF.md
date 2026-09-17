@@ -7,6 +7,18 @@ Sidedoor has a model inside it (Idea 1, the AI matching Devansh and Samarth disc
 
 **Idea labels continue from SCOPE.md.** Idea 1–4 are there. Ideas in this file start at Idea 5.
 
+## Design Brief · the one-page version, for the HTML
+
+The same four parts as RedBus's artefacts page (section 10). Everything below this section is the working detail
+behind it, like RedBus's own 42KB BRIEF.md.
+
+| | |
+|---|---|
+| **Domain + user segment** | Job referrals in Indian tech hiring · a candidate asking an employee they don't know for a referral to one job, and the employee being asked. Two people interviewed, each from both sides |
+| **JTBD** | When someone I don't know asks me for a referral, I want everything my company's portal needs already there, so referring takes minutes and they find out what happened without me doing more |
+| **Problem statement** | How might we let a candidate send a referral request a stranger can act on in minutes, and let the answer reach the candidate without asking the referrer for more work? |
+| **Success metric** | Referral rate on requests to strangers: % the referrer submits. Guardrail: referrers turning off referral requests must not rise. Concept targets; no live baseline. North Star: referrals submitted per active referrer per month (BUSINESS.md) |
+
 ---
 
 # AX SPEC · draft 1
