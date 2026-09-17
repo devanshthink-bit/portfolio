@@ -1723,8 +1723,10 @@
 
 /* Phones show only the middle screen of each trio, at a size that fits. */
 @media (max-width: 640px) {
-  /* Phones: no logo and name in the RedBus card, just the screens. */
-  .work-card-panel-text.is-brand-only { display: none; }
+  /* Phones: no logo and name in the RedBus card, but their row keeps its space so the card
+     stays the same height. */
+  .work-card-panel-text.is-brand-only { visibility: hidden; }
+  .work-card-panel-text.is-brand-only .work-card-brand { font-size: 24px; }
   .work-card-phones .iphone:nth-child(2) { --n: 190; }
   .phone-row.hero { padding-bottom: 0; }
   .phone-row.hero .phone-fig:nth-child(2) .iphone { --n: 272; }
