@@ -361,3 +361,23 @@ CHANGE · 2026-09-17 · molades-build
 Changed:    Deleted the V3 copy of the 2nd referrer swipe screen (Referrer/Candidate Screen/2, long version); the after-Refer view sits in its place. The V2 original is untouched.
 Caused by:  BRIEF.md, cut list: swipe cards.
 Result:     One swipe screen fewer in V3.
+
+DECISION · 2026-09-17 · molades-build
+Decided:   Slice 3, V3 Update flow. (1) "Your referrals": record strip "What your referrals reached: 1 selected · 1 in interviews · 1 on hold"; "Waiting on an update" first (submitted over a week ago, oldest first, with Update); then "All referrals · Product Designer". Stages in the five portal words. Update button only where a stage can still change. (2) "Seen it move?" sheet: one tap on In interviews / On hold / Selected / Not selected, "Aviral sees it straight away", "No change yet".
+Rejected:  V2's tabs (All / Awaiting Action / Interviews / Closed) and the six-stage timeline with Submit Update.
+Because:   Referrers are the scarce side and have little reason to update (Devansh's critique, 17 Sep). Two taps (Update, stage) instead of picking on a timeline and confirming. The record strip is the referrer's own reason to keep it current (Engagement loop, BUSINESS.md).
+How sure:  worked it out. Who is at which stage and the day counts are sample data.
+
+CHANGE · 2026-09-17 · molades-build
+Changed:    Deleted V3 copies of Update Bottom Sheet/2–6 and Referrer/Update Preview Screen/2–4 (tab views). V2 originals untouched.
+Caused by:  BRIEF.md, Update: "one tap for the current stage"; tabs replaced by the waiting / all grouping.
+Result:     V3 Update flow is 2 frames: list and sheet.
+
+LEARNED · 2026-09-17 · molades-build
+Tried:              Removing the Submit Update button, then finding the Cancel button in the same saved list of buttons.
+Expected:           Cancel found by its label.
+Actually happened:  The script read the removed button's label, failed, and Figma rolled the whole change back.
+Cost:               one retry
+Now know:           Pick every node by ID before removing any of them.
+
+Also noted for molades-attack: V2's Tag component uses the light success/error/amber text colours flagged in DESIGN_LANGUAGE.md. Not changed, because the component is shared with the V2 originals.
