@@ -1,0 +1,34 @@
+# Keeps the sidedoor branch up to date with the live site.
+# Every push to main is merged into sidedoor. If both branches changed the same lines,
+# the job fails (GitHub emails you) and nothing is pushed, so a person resolves it.
+name: Sync main into sidedoor
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-sidedoor
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: sidedoor
+          fetch-depth: 0
+      - name: Merge main into sidedoor
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          if git merge-base --is-ancestor origin/main HEAD; then
+            echo "sidedoor already has everything from main"; exit 0
+          fi
+          git merge --no-edit origin/main -m "Sync main into sidedoor"
+          git push origin HEAD:sidedoor
