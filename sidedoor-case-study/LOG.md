@@ -557,3 +557,9 @@ Expected:           White background.
 Actually happened:  Two screens rendered the section black, and the screens behind were V2's grey, not white like V2's list screens.
 Cost:               two small passes
 Now know:           Copy fills from a V2 screen that already looks right instead of rebuilding them.
+
+CRITIQUE · 2026-09-17 · product review · Source: self (Devansh asked for a senior PM + designer pass)
+Said:     Review V3 for onboarding, activation, retention, referral and revenue; find drop-offs; add analytics; improve. Changes go in a new version copied from V3.
+Found:    PRODUCT_REVIEW.md. Biggest: candidates see value only at screen 7; referrers land on an empty list after posting; the verified shield verifies nothing; the referrer's link disappears once requests arrive; login still sells swiping; sensitive fields asked at sign-up and again per request.
+Action:   P1 list (11 changes) to build in V4, pending Devansh's go-ahead. Event plan and 6 dashboards written.
+How sure: worked it out. No user has seen V3.
