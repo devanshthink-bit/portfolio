@@ -18,8 +18,9 @@ const recentWork = [
     title: "Winning the return ticket at checkout",
     desc: "View project",
     tag: "Product Design · Concept",
-    // The Sidedoor card's 135deg three-stop pattern, in RedBus red.
-    gradient: "linear-gradient(135deg, #ffd9de 0%, #f0677a 45%, #ffb3bd 100%)",
+    // The Sidedoor card's gradient (#d4e2ff 0%, #7aa5fb 45%, #b0caff 100%) with each stop moved onto the
+    // RedBus brand hue (#E81E38), keeping its saturation and lightness.
+    gradient: "linear-gradient(135deg, #ffd4da 0%, #fb7a8b 45%, #ffb0ba 100%)",
     tooltipBg: "#1d1d1d",
     slug: "redbus",
     phones: ["hifi_06a", "hifi_05a", "hifi_16"],
