@@ -838,3 +838,22 @@ Changed (Referral request, After Refer, Not enough to judge, Marked as submitted
   - The "Resume and links" section below is now "Resume": the links moved into the header, so they aren't shown twice.
 Tried first:  the status tag beside the name, as before. The name got cut off ("Abhinav Saxe"). Moved the tag to the link row.
 Checked: text styles on every new text; screens inside the Explore flow; no overlaps.
+
+CRITIQUE · 2026-09-17 · V6 candidate view vs V2 candidate card · Source: Devansh
+Said:     The Job screen stayed close to V2 but the candidate screen changed a lot; check nothing good from V2's candidate card is still missing. "We should have only what is correct."
+Method:   Every V2 card element checked against V6 Referral request (referrer).
+Result:   Kept or replaced on purpose: green card, name/role/photo, location · years · notice, experience, projects, Skip/Refer (now Not moving forward/Refer), skills (now How they match), 9.4 Strong Fit (now "4 of 7 skills · 3 yrs" with reasons). Kept out: quote and About (L1), verified tick (candidates aren't verified; LinkedIn sign-in "does not verify user identities"), bookmark (L3), email in the card (contact opens after Refer, L5), header count (L11). Missing: the work chips "Remote • Hybrid", "Full Time".
+
+DECISION · 2026-09-17 · V6 (in place, Devansh: "yes") · Work chips back on the candidate view
+Decided:  Neutral chips for how the candidate wants to work ("Full time", "Remote or hybrid") under the quick facts, on Referral request and Not enough to judge (the two states that show facts). Hidden when the candidate left "How you want to work" empty.
+Because:
+  - The Job screen shows these chips for the job; the candidate view now shows them for the person, so the referrer can see if they line up. Same pattern both sides. (saw it in V2 and V6)
+  - Riya drops people who ask without checking the city or job details (n73, n82). Work mode and type are the same kind of mismatch. (worked it out)
+  - The data already exists: "How you want to work" in Edit your details (R10). (saw it)
+
+CHANGE · 2026-09-17 · V6 (in place) · Work chips built (see DECISION "Work chips back on the candidate view")
+Changed:
+  - Referral request (Abhinav): neutral Tag chips "Full time", "Remote or hybrid" under location · years · notice. Same text as his Edit your details.
+  - Not enough to judge (Amit): "Full time", "Remote".
+  - Not enough to judge was a fixed 844 screen; the green header plus chips pushed Refer under the bottom nav, so the screen now grows with its content (888).
+Checked: fits the Explore flow; no overlaps; chips reuse the Tag component.

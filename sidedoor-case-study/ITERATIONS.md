@@ -153,6 +153,10 @@ company's colour (Flipkart blue), so referrers now see a person as a card in Sid
 and status. The quote and "9.4 Strong Fit" stayed out (self-description and an unverifiable score); text stays dark
 because white on that green fails contrast.
 
+**Checked against V2's candidate card.** Everything V2 showed is either in V6, replaced by something checkable, or left
+out with a logged reason. One thing was missing and came back: the "Full time" and "Remote or hybrid" chips, so the
+referrer can see the person's way of working lines up with the job, like the Job screen shows for the job.
+
 ---
 
 ## Say it in an interview
