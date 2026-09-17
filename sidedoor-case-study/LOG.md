@@ -424,3 +424,26 @@ Cost:               two small passes
 Now know:           When adding content to a V2 screen, set the inner frames to hug first, then check the bottom of the screen.
 
 For molades-attack: "Mark it" uses V2's small Tag as a button, likely under 44pt to tap.
+
+CHANGE · 2026-09-17 · molades-build
+Changed:    New V3 screens now match V2's own data. Nithin's Flipkart job is "Interaction Designer, 3+ yrs" (V2 JD and Explore card), not "Product Designer, 2–5". The 6 skills come from V2's JD (UX Research, Prototyping, A/B Testing, User Flows, Figma) plus Interaction Design. Abhinav's matched skills are sourced from his V2 projects; missing: User flows, A/B testing. Arpita shown at 3 yrs.
+Caused by:  Self-check while reading V2 onboarding: my match screen said "Usability testing: not in their resume", but Abhinav's V2 MakeMyTrip project lists Usability Testing.
+Result:     List, request, after-Refer, check, your referrals and job post screens tell one story that V2's data backs.
+
+LEARNED · 2026-09-17 · molades-build
+Tried:              Writing sample data for new screens from memory of the brief.
+Expected:           Sample data is harmless.
+Actually happened:  It contradicted the data already in V2 (job title, experience, a skill). An interviewer comparing screens would see it.
+Cost:               one consistency pass
+Now know:           Read the existing screens' data before inventing any. Sample data has to agree with itself.
+
+DECISION · 2026-09-17 · molades-build
+Decided:   Slice 6, V3 Onboarding. Candidate: "Check your details" replaces Manual Profile steps 1–4: filled from your resume (8 of 12, each editable), "Still needed · 4: date of birth, career gaps, preferred interview locations, notice period. These aren't usually on a resume, but referrers' portals ask for them", resume file, Save details. Referrer: "Check your job post" replaces Manual Job steps 1–4: "Still needed · 1: Job ID" first, filled from the description, "Experience must match" rule (Idea 9, on), JD file, Post job off until the job ID is in. Choice screens reworded ("Start with your resume. We'll fill in what we can.", "Fill in myself"; "Post your first job" instead of "Create your first referral").
+Rejected:  Four manual steps each side; projects and tagline in onboarding; calling a job post a "referral".
+Because:   AX Spec: the model fills, the person checks. The fields that matter are the ones portals ask for (C2), and the job ID is the thing referrers chase most (Riya n70 n76).
+How sure:  worked it out. "8 of 12" and field values are sample data.
+
+CHANGE · 2026-09-17 · molades-build
+Changed:    Deleted V3 copies of Candidate/Manual Profile Creation Screen/2–4 and Referrer/Manual Job Creation Screen/2–4. V2 originals untouched. Checked the flow with a screenshot: no stacking.
+Caused by:  BRIEF.md: "Four-step manual profile and job creation → one review screen each".
+Result:     V3 Onboarding: 5 referrer screens, 4 candidate screens.
