@@ -163,7 +163,7 @@ Because:             Devansh's call. Supporting reasons: the work sits between L
                      exists (n66); both candidates asked for a dedicated place (n24 n45).
 How sure:            worked it out (the reasons) · guessing (that referrers adopt it)
 
-CRITIQUE · 17 Sep 2026 · molades-scope · Source: user
+CRITIQUE · 17 Sep 2026 · molades-scope · Source: self
 Finding:             Devansh reports a follow-up conversation with one interviewee, and the mentor's view that there is no
                      new reward for referrers. Proposed: the referrer's incentive is better candidates picked by an AI
                      engine, so they can refer for more roles and earn more bonuses; candidates get request limits and
@@ -263,7 +263,7 @@ Rejected:            The model just does it (hiding or auto-declining low fits: 
 Because:             Draft by AI following the skill; Devansh's n92 idea kept as ordering, not hiding.
 How sure:            worked it out · every material fact guessing
 
-DECISION · 17 Sep 2026 · molades-ai · Source: user
+DECISION · 17 Sep 2026 · molades-ai · Source: self
 Decided:             Lower-match requests stay visible to the referrer, collapsed under "Lower match", and can still be referred.
 Rejected:            Hiding them completely (Devansh's earlier "only showing curated candidates").
 Because:             Devansh: "visible but collapsed". Reasons given: a hidden request is silence for the candidate (C3),
@@ -282,7 +282,7 @@ Rejected:            The link page alone (can't hold status over weeks, n44 n45)
 Because:             Tied to C2 (complete request), C3 (status back), C4 (referrer effort), and the landscape's gaps.
 How sure:            worked it out
 
-CRITIQUE · 17 Sep 2026 · molades-brief · Source: user
+CRITIQUE · 17 Sep 2026 · molades-brief · Source: self
 Finding:             Main path step 7, the referrer coming back to tap "I've submitted it on my portal". Devansh: "i think
                      most referrers wont do this. why wud they care to update this for candidate". The status loop
                      depended on the scarce side doing unpaid work (C4).
