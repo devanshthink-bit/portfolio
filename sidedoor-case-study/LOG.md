@@ -7,11 +7,11 @@
 
 Bet:        not set. The original was never written as a falsifiable guess; the FigJam scope lists five problems at once
 Evidence:   thin. 4 real interviews (2 candidates, 2 referrers) and desk research without source links
-Files:      SCOPE.md [ ] · RESEARCH.md [x] notes only · BRIEF.md [ ] · DESIGN_LANGUAGE.md [ ] · build [ ] Figma V2 exists, not a coded build · live [ ]
+Files:      SCOPE.md [x] v1 reconstructed · RESEARCH.md [x] notes, sort, draft clusters · BRIEF.md [ ] · DESIGN_LANGUAGE.md [ ] · build [ ] Figma V2 exists, not a coded build · live [ ]
 Rounds:     1. Mentor's critique (the product and referrer incentive). No change has come from it yet
 Open:       problem statement, scope card, first names for the four participants, source links for desk research,
             live case study still shows AI-sourced quotes and screens that aren't in Figma
-Next:       molades-synthesise, from step 2 (sort the 91 notes)
+Next:       molades-synthesise, Devansh reacts to the draft clusters, then the three candidate problem statements
 
 ## Entries
 
@@ -73,3 +73,23 @@ Decided:             91 numbered notes, one observation each, in the person's ow
 Rejected:            Reusing the FigJam affinity stickies (no link to a person, and mixed with generated transcripts).
 Because:             A numbered note in someone's own words is the only thing a problem statement can be walked back to.
 How sure:            saw it
+
+DECISION · 17 Sep 2026 · molades-scope
+Decided:             SCOPE.md v1 written by copying Devansh's FigJam scope, hypotheses and North Star, labelled as
+                     reconstructed. Notes sorted against its span: from asking an employee for a referral to knowing
+                     what happened, up to the interview stage.
+Rejected:            Writing a fresh v1 now (it would be a scope card made after the research, pretending to be before it).
+Because:             Sorting needs a moment, and v2 has to be written against what the original bet actually said.
+How sure:            saw it (copied from FigJam)
+
+DECISION · 17 Sep 2026 · molades-synthesise
+Decided:             Sort: 75 in scope, 3 out of scope (n39 n86 n88), 13 not a problem. Draft clusters: C1 strangers
+                     don't see the request; C2 referrer drops or chases incomplete requests; C3 candidate can't tell
+                     what happened; C4 referrer has little reason to refer a stranger. n91 parked. Each cluster has a
+                     tension, what they did, a So what?, groups, two plain lines and a job to be done, as on the RedBus
+                     artefacts page.
+Rejected:            Six clusters, with "silence instead of a no" and "proving fit" on their own; both merged (see
+                     RESEARCH.md, What was merged). Labels starting with "User", replaced by "Candidate" or "Referrer"
+                     because Sidedoor has two kinds of user.
+Because:             Draft by AI, not yet reviewed by Devansh.
+How sure:            worked it out

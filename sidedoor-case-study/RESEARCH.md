@@ -27,7 +27,7 @@ a referral. The interviews ask for real stories ("the last time you tried"), whi
 Nothing real exists about:
 - **Recruiters.** Anything about what recruiters want or do is a guess.
 - **Referrers who ignore requests.** Both real referrers are people who already refer. Neither is flooded (Referrer 1
-  says he doesn't get too many). Anything about referrer overload is a guess.
+  says they don't get too many). Anything about referrer overload is a guess.
 - **Numbers at scale.** Four people give counts, never percentages.
 
 ## Sample and its bias
@@ -41,7 +41,7 @@ employees who ignore referral requests, from recruiters, or from candidates who 
 1. *"One PM I interviewed got 40–50 DMs a day whenever their company posted a public listing."*
    Traces to Referrer-4, an AI-generated transcript. **Not real. Must come off the page.**
 2. *"Referrers aren't unwilling: they're uncertain."* (Screen 03 of the live page)
-   The two real referrers contradict it: Referrer 1 has fixed rules (n50) and says the risk is not his (n55);
+   The two real referrers contradict it: Referrer 1 has fixed rules (n50) and says the risk is not theirs (n55);
    Referrer 2's rule is whether the job ID was sent (n76, n77). **Not supported. Change or cut.**
 
 ---
@@ -182,3 +182,146 @@ The figures used on the live case study, and whether a source link exists yet:
 | ~20% cold DM reply rate | Not as written (desk says 15–25%) | Missing |
 | 191 applicants per tech hire | Yes | Missing |
 | 92% application drop-off (India) | Yes | Missing |
+
+---
+
+# Making sense of it · draft 1, 17 Sep 2026
+
+**This is a first draft and parts of it are wrong.** Grouping is a judgement call. Every note Devansh moves, renames
+or rejects gets its reason written in LOG.md.
+
+Sorted against the span in `SCOPE.md` v1: from a candidate deciding to ask an employee for a referral, to knowing what
+happened to it, up to the interview stage.
+
+## Sort
+
+**91 notes: 75 in scope · 3 out of scope · 13 not a problem.** Nothing is deleted.
+
+### Out of scope · real problems, different moment (3)
+
+- n39 Candidate 2: asks for referrals because HRs won't read a resume "for even more than 10 seconds". This is why
+  referrals exist, about job portals, not about the referral itself
+- n86 Referrer 2: HR tells rejected candidates nothing, even after an interview. Company hiring workflow
+- n88 Referrer 2: a referral cancelled because of what the candidate said on the HR call. Interview stage
+
+### Not a problem · this worked (13)
+
+- n02 Candidate 1: the Adobe referral through a friend worked, with a confirmation mail
+- n03 Candidate 1: asking your own circle first "works out very well"
+- n05 Candidate 1: WhatsApp with known contacts "feels a bit more connected"
+- n06 Candidate 1: people they knew needed no pitch, only the resume and details
+- n47 Candidate 2: at their company, a referrer gets Workday emails at every stage
+- n54 Referrer 1: tells candidates openly when they don't match
+- n55 Referrer 1: doesn't worry about their reputation
+- n58 Referrer 1: can check status himself on the referral portal
+- n61 Referrer 1: doesn't get too many requests
+- n64 Referrer 1: would refer a complete stranger who meets the criteria
+- n72 Referrer 2: automated emails after submitting; everyone they referred got a call back
+- n80 Referrer 2: almost every job on the portal is open for referral
+- n83 Referrer 2: tracks status through links in those emails
+
+## Clusters
+
+Four, not six. Labels are from the person's side and name a pain. Because Sidedoor has two kinds of user, each label
+starts with the side it belongs to, **Candidate** or **Referrer**, where RedBus used **User**.
+
+### C1 · Candidate's message to a stranger isn't even seen, so the only route that works is people they already know
+
+**Tension:** the route that works, friends and mutuals, runs out; the route left over, strangers, almost never answers.
+**What they did:** looked in their own circle first, then cold-messaged two or three strangers per company on LinkedIn
+and mostly heard nothing; followed up with no change; guessed who might help from LinkedIn activity. Candidate 1,
+Candidate 2. On the other side, Referrer 2 leaves strangers' LinkedIn messages unanswered.
+**So what?** A candidate with nobody at the company has no dependable way in. Their request is ignored before anyone
+can judge whether it's any good, so being a strong candidate doesn't help them.
+
+- **a · strangers don't answer** n09 n13 n14 n15 n17 n30
+- **b · friends first, strangers only when that runs out** n04 n08 n20 n49 n68
+- **c · guessing who might actually help** n21 n24 n28 n37 n43
+- **d · being ignored, and what it does to them** n10 n16 n19 n27 n40
+
+What they're trying to get done: reach someone at the company who will actually look at their request.
+What gets in the way: nothing tells them who is open to it, so they message strangers who never read it.
+
+**Job to be done:** When I don't know anyone at the company, I want my request to reach someone who is willing to look
+at it, so I'm not sending messages nobody reads.
+
+### C2 · Referrer drops or chases a request that doesn't carry what they need to decide and submit
+
+**Tension:** a referrer helps when the ask costs them little, and most asks arrive missing the job ID, the portal's
+fields, or any sign of fit.
+**What they did:** ignored asks without a job ID; got candidates on a call to fill in city, date of birth, gaps,
+country code and preferred locations; typed skills from the resume into the portal by hand; read resumes against their
+own rules. Referrer 1, Referrer 2. Candidates, for their part, sent the job link and tried to show fit in the message.
+Candidate 1, Candidate 2.
+**So what?** The referrer's real cost is admin, not judgement. Every missing field means another round of chasing, so
+incomplete requests get dropped, including from candidates who would have fit.
+
+- **a · no job ID, no referral** n07 n38 n70 n76 n77 n78 n79 n81
+- **b · the portal asks for things a resume doesn't have** n57 n59 n60 n66 n67 n71 n73 n74 n75
+- **c · fit, checked by hand** n11 n22 n23 n29 n50 n51 n53 n56 n63 n65 n82
+
+What they're trying to get done: refer someone without spending an evening on it.
+What gets in the way: the request arrives incomplete, so every referral turns into chasing details and retyping them.
+
+**Job to be done:** When someone asks me for a referral, I want everything I need to decide and submit in one go, so
+referring takes minutes, not days of back-and-forth.
+
+### C3 · Candidate can't tell whether their request was ignored, declined, submitted or rejected
+
+**Tension:** the status already exists inside the company's portal, but only the referrer can see it, and nobody says no.
+**What they did:** waited two or three weeks; read silence as "not referred"; checked each chat one by one; kept
+a promised Citibank referral in mind that never happened. Candidate 1, Candidate 2.
+**So what?** The candidate is waiting on information that already sits one person away. They can't move on from a
+"no" nobody tells them, so they stay stuck on dead requests instead of trying someone else.
+
+- **a · not knowing if it was even submitted** n01 n25 n34 n35 n36 n41
+- **b · silence instead of a no** n18
+- **c · waiting with no timeline** n33 n84 n85
+- **d · many asks, no one place, and doubts an outside app can see the status** n26 n44 n45 n46
+
+What they're trying to get done: know where each request stands so they can move on or follow up.
+What gets in the way: status lives in the company's portal and the referrer's inbox, never with the candidate.
+
+**Job to be done:** When I've asked someone to refer me, I want to know whether it went in and where it stands, so I
+can move on or follow up instead of guessing from silence.
+
+### C4 · Referrer has little reason to refer someone they don't know
+
+**Tension:** the effort is certain; the reward is small, late, and only if the person is hired and stays.
+**What they did:** referred mostly people they knew (about 8 of 10); helped friends out of a sense of obligation and
+left strangers unanswered; counted the bonus as too low or not the main reason. Referrer 1, Referrer 2, and Candidate
+2 speaking as a referrer.
+**So what?** For a stranger, the referrer does real work for a reward that rarely arrives, so strangers lose by
+default. Nothing on the referrer's side makes a good stranger worth the effort.
+
+- **a · the bonus doesn't pay for the effort** n32 n42 n62 n87
+- **b · friends feel owed, strangers don't** n31 n48 n52 n69
+- **c · effort wasted on people who don't join** n89 n90
+- **d · belief that others refer blindly for bonuses** n12 `THIN`: one candidate's belief, nobody saw it happen
+
+What they're trying to get done: help without doing unpaid work for people who never turn up.
+What gets in the way: the only reward is a bonus that is low and depends on a hire they don't control.
+
+**Job to be done:** When a stranger asks me for a referral, I want helping to cost me little enough that it's worth it
+even if they're never hired, so it doesn't feel like working for nothing.
+
+## Parked · fits nowhere yet
+
+- n91 Referrer 2 wants to refer, track, see messages and check submissions from the first page. It's a wish for a
+  whole product, not a problem in one moment. Comes back at the brief
+
+## What was merged, and what got lost
+
+- **Silence instead of a no** (n18) was going to be its own cluster. Merged into C3, because not getting a "no" and not
+  knowing the status are the same gap seen from two sides. Lost: the emotional cost of silence (n16) now sits in C1.
+- **Proving fit** (n11 n22 n23 n29) was a candidate-side cluster. Merged into C2 as group c, because the only person who
+  acts on fit is the referrer. Lost: the candidate's wish to feel confident before asking (n23) is now secondary.
+- **No cluster was dropped for having no friction.**
+
+## What this draft already contradicts in the old Sidedoor
+
+- **Reputation fear** as the referrer's blocker: Referrer 1 says the risk isn't theirs (n55, not a problem). Nothing real supports it
+- **Referrers overwhelmed by volume:** Referrer 1 doesn't get many (n61). Only a generated transcript said otherwise
+- **Referrers need help deciding:** both have simple rules already (n50, n76, n81). Their pain is the admin (C2)
+- **Candidates spam everyone:** Candidate 1 messages two or three at a time (n19). Candidate 2 cold-messages "everyone
+  whoever I think will be suitable" (n40). Mixed, two people. Not a pattern
