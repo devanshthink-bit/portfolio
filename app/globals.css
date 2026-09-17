@@ -620,7 +620,7 @@
 
   /* Second case study, in progress: the Sidedoor card's 135deg three-stop gradient in a soft slate grey,
      phone outlines still being drawn. */
-  .wip-panel { background: linear-gradient(135deg, #eeeff2 0%, #bcc0c8 45%, #dadde3 100%); }
+  .wip-panel { background: linear-gradient(135deg, #f1f2f4 0%, #d3d6dc 45%, #e4e6ea 100%); }
   .wip-status {
     display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
     margin: 0 0 8px; padding: 5px 11px 5px 9px; border-radius: 100px;
