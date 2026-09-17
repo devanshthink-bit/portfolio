@@ -6,10 +6,10 @@
 ## Where things stand
 
 Bet:        employees drop strangers' referral requests because the request makes them do the candidate's work, not because they won't help (SCOPE v2, draft)
-Evidence:   thin. 4 real interviews (2 candidates, 2 referrers) and desk research without source links
+Evidence:   thin. 4 real interviews with 2 people (each as candidate and as referrer), 1 remembered follow-up, desk research without source links
 Files:      SCOPE.md [x] v2 draft, v1 kept · BUSINESS.md [x] draft · RESEARCH.md [x] notes, sort, five clusters, jobs, insights, three candidate problem statements · BRIEF.md [ ] · DESIGN_LANGUAGE.md [ ] · build [ ] Figma V2 exists, not a coded build · live [ ]
 Rounds:     1. Mentor's critique (the product and referrer incentive). No change has come from it yet
-Open:       business lens with sources, first names for the four participants, source links for desk research,
+Open:       business lens with sources, first names for the two participants, source links for desk research,
             live case study still shows AI-sourced quotes and screens that aren't in Figma
 Next:       molades-landscape, what GetMeReferred, EasyRefer, Jumbl, Instahyre, LinkedIn and others already do, from the FigJam screenshots
 
@@ -198,3 +198,14 @@ Finding:             Checked Figma V2 against the strategy (L04 "advance, neutra
 Severity:            major
 Layer:               the bet
 Action:              deferred to molades-brief, flow by flow
+
+LEARNED · 17 Sep 2026 · molades-research
+Believed:            The 4 real transcripts were 4 different people: Candidate 1, Candidate 2, Referrer 1, Referrer 2.
+Found:               They are 2 people. The Infosys employee is Candidate 1 and Referrer 1; the Accenture employee is
+                     Candidate 2 and Referrer 2. Each was interviewed once as a candidate and once as a referrer.
+                     (Devansh, 17 Sep 2026)
+Changed:             Every file now names them by company and role ("Infosys (as candidate)"). The data check, bias line
+                     and every "four people", "both candidates", "both referrers" corrected to two people. The
+                     follow-up conversation (with the Infosys employee) added as n92, marked remembered.
+What this made worthless: any claim that a pattern came from four people. The strongest patterns are now "both people".
+                     Worth keeping: both have been on both sides of a referral.

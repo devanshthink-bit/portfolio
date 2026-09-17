@@ -1,8 +1,9 @@
 # Candidate 1 — interview transcript
 
-**Who:** UI engineer, job seeker (Citibank, Adobe, Razorpay attempts)
+**Who:** Infosys employee, speaking as a job seeker (UI engineer roles: Citibank, Adobe, Razorpay)
 **Source:** FigJam `CPoRM8dMgCywFz0ZbAfA6A`, section Interview Transcripts, node 488:5531. Copied verbatim; only split into one line per question.
 **Real interview:** yes (confirmed by Devansh, 17 Sep 2026)
+**Same person as:** `referrer-1-infosys.md`. The same employee was interviewed once as a candidate and once as a referrer (Devansh, 17 Sep 2026)
 
 ---
 

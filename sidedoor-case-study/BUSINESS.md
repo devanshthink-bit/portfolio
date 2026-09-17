@@ -191,7 +191,7 @@ next referrer through Sidedoor.
 - **Where design has the most leverage:** the screen the candidate sees when they open the link. Like PhonePe's payment
   link (slide p5), it's seen by someone who has never used the product. If it asks too much, the loop breaks
 - **Loop metric:** link-to-completed-request rate
-- **Backed by:** n66 (Referrer 1 asked for this link). **guessing** that referrers will send it
+- **Backed by:** n66 (Infosys (as referrer) asked for this link). **guessing** that referrers will send it
 
 ### Loop 2 · Acquisition, referrers arrive through candidates
 

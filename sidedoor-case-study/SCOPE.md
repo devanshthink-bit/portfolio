@@ -28,18 +28,18 @@ to be wrong.
   portal (Workday and others). The retyping, the chasing for the city and date of birth, and the status that never
   comes back all happen in the gap between them (n57, n59, n60, n71, n47, n58). LinkedIn can't see inside that portal
   any more than a new product can (n46). Being inside LinkedIn doesn't close the gap. **worked it out**
-- **The referrer gets value before anyone else joins.** The referrer's biggest pain is data entry, and Referrer 1 asked
+- **The referrer gets value before anyone else joins.** The referrer's biggest pain is data entry, and Infosys (as referrer) asked
   for exactly this: "a link is sent to the candidate to fill out their own personal details, which would cut the
   referrer's effort by 50%" (n66). A referrer can use that with candidates who have never heard of Sidedoor. So the
   supply side has a reason to come that doesn't depend on the network already existing. **worked it out**
-- **Both candidates asked for a dedicated place.** Candidate 1: a place "where you know the other person is open to
-  doing it" (n24). Candidate 2: one place where "I can just see in this company, I asked this person referral for" (n45).
+- **Both people, as candidates, asked for a dedicated place.** Infosys (as candidate): a place "where you know the other person is open to
+  doing it" (n24). Accenture (as candidate): one place where "I can just see in this company, I asked this person referral for" (n45).
   **saw it**, as wishes, which are the weakest kind of evidence
 
 **The risk, stated before anyone asks:**
-- All four people ask and get asked on LinkedIn today (n04, n07, n09, n29, n49, n68, n69). Sidedoor has to pull that
+- Both people ask and get asked on LinkedIn today (n04, n07, n09, n29, n49, n68, n69). Sidedoor has to pull that
   moment out of LinkedIn, or start from a link shared inside it
-- Candidate 2 says the referral communities on Fishbowl are so quiet a message might be seen "next week" (n28). A
+- Accenture (as candidate) says the referral communities on Fishbowl are so quiet a message might be seen "next week" (n28). A
   separate place for referrals can die empty. Sidedoor has to answer why it won't
 - This is the mentor's critique. It is answered with reasoning, not tested. **guessing** that referrers will adopt it
 
@@ -58,7 +58,7 @@ to be wrong.
 
 **Not verified. Nothing here goes on the page without a sourced figure.** RedBus's case study starts with how the
 business makes money. Sidedoor needs the same, with real data. To research and source:
-- **Who pays, and for what.** V2 designs a Premium that candidates pay for. Candidate 2's own framing is that referrers
+- **Who pays, and for what.** V2 designs a Premium that candidates pay for. Accenture (as candidate)'s own framing is that referrers
   are the ones with no reward (n32, n42). Who should pay is open
 - **How big the moment is.** How many referrals go through company portals; how much companies pay per referral hire.
   The desk research has referral figures but no source links yet
@@ -99,20 +99,21 @@ Not decided. They involve a model, so they go to **molades-ai** (instead of mola
 happens when the AI is wrong.
 
 - **Idea 1 · AI-curated candidates for referrers.** An engine behind the scenes shows each referrer only candidates
-  whose skills match their open roles, not everyone. Supported as a wish: Referrer 1 asked for "an automated matching
+  whose skills match their open roles, not everyone. Supported as a wish: Infosys (as referrer) asked for "an automated matching
   score" (n65). **worked it out**
 - **Idea 2 · Referrer incentive is quality, not a new reward.** Better-matched candidates let referrers refer for more
-  roles and earn more company bonuses. Tension with the notes: Referrer 2 says the bonus is "very low. It doesn't
+  roles and earn more company bonuses. Tension with the notes: Accenture (as referrer) says the bonus is "very low. It doesn't
   encourage me to refer" (n87). Less effort per referral (C2) may be the stronger pitch. **guessing**
 - **Idea 3 · Request limits for candidates.** A cap on how many referrals a candidate can ask for. Neither real
   candidate or referrer described spam (n19, n61), so the reason can't be spam. It can be the guardrail: protecting
   referrers from being flooded. **worked it out**
 - **Idea 4 · Skill-matched referral search for candidates.** Searching a company shows the referral openings whose job
-  descriptions best match the candidate's skills. Supported as a wish: Candidate 1 asked for a match percentage (n23).
+  descriptions best match the candidate's skills. Supported as a wish: Infosys (as candidate) asked for a match percentage (n23).
   **worked it out**
 
-**Waiting on Devansh:** who the follow-up conversation was with, and what that person actually said, in their words.
-Until then these are Devansh's ideas, not research.
+**Answered 17 Sep 2026:** the follow-up was with the Infosys employee (the same person as the Infosys candidate and
+referrer interviews). Recorded as n92, marked remembered: Devansh's summary, not a quote. Ideas 1 and 2 now rest on one
+person's remembered view plus n65, and Idea 2 sits in tension with that person's own n62.
 
 ---
 

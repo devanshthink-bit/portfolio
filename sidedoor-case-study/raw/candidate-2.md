@@ -1,8 +1,9 @@
 # Candidate 2 — interview transcript
 
-**Who:** Job seeker (PMO roles); also refers at her own company
+**Who:** Accenture employee, speaking as a job seeker (PMO roles)
 **Source:** FigJam `CPoRM8dMgCywFz0ZbAfA6A`, section Interview Transcripts, node 488:5532. Copied verbatim; only split into one line per question.
 **Real interview:** yes (confirmed by Devansh, 17 Sep 2026)
+**Same person as:** `referrer-2-accenture.md`. The same employee was interviewed once as a candidate and once as a referrer (Devansh, 17 Sep 2026)
 
 ---
 
