@@ -291,3 +291,16 @@ Layer:               steps
 Action:              fixed. "Mark as submitted" is now the last tap of the Refer task, and clears the referrer's own list.
                      The candidate can confirm it from the company's automated email (n72 n47). Main path 8 → 7 steps.
                      NSM now counts a referral confirmed by either side (BUSINESS.md).
+
+---
+
+DECISION · 2026-09-17 · molades-language
+Decided:   Keep V2's language (Inter, 4 sizes, 12/8/4 radius, soft shadows, blue #2563EB action, green #10B981 brand). Density "between": lists dense (3 requests + actions in one screen), forms spacious. Blue only means "tap". Status colour by meaning: Sent neutral, progress green, On hold amber, Not selected neutral.
+Rejected:  V2 success/error/amber text colours (low contrast), second blue #007AFF, decimal fit score, swipe, gold Premium button, all-caps SIGN UP, blue "Under Review" tag.
+Because:   The referrer decides on a work break, so the list has to show enough requests at once. "Not selected" is an outcome, not an error, so it is not red. Two colours for one meaning, or one colour for two meanings, makes status unreadable.
+How sure:  worked it out
+
+LEARNED · 2026-09-17 · molades-language
+Rounds run:      4
+Biggest gap between round 1 and final:  density. The fit line "(you need 2–5)" wrapped and made each card about 25% taller than V2's. Second: blue was doing two jobs (button and status).
+Did not close:   nothing on the 6 dimensions. The tone adjectives are a draft until Devansh confirms them.

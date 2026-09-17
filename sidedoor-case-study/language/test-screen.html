@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=390">
+<title>Sidedoor test screen</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Sidedoor design language, round 4. Values from Figma V2 variables. */
+:root{
+  --surface:#FFFFFF; --surface-raised:#F0F1F2; --ink:#3B3F46; --ink-muted:#6B7280;
+  --accent:#2563EB; --accent-subtle:#E9EFFD; --signal:#B91C1C; --signal-bg:#FEF2F2;
+  --border:#D1D3D8; --success:#047857; --success-bg:#ECFDF5; --input-bg:#FAFAFA;
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px;
+  --r-tag:4px; --r-btn:8px; --r-card:12px;
+  --elev-1:0 1px 4px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06);
+}
+*{box-sizing:border-box;margin:0}
+body{background:#888;font-family:Inter,system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+.phone{width:390px;min-height:844px;background:var(--surface);margin:0 auto}
+.t-display{font-size:20px;line-height:28px;font-weight:600}
+.t-heading{font-size:16px;line-height:24px;font-weight:600}
+.t-body{font-size:14px;line-height:20px;font-weight:400}
+.t-label{font-size:14px;line-height:20px;font-weight:500}
+.t-caption{font-size:12px;line-height:16px;font-weight:500}
+.muted{color:var(--ink-muted)}
+/* 1 header */
+.status{height:62px}
+.header{height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 var(--s4);border-bottom:1px solid #EEF0F2}
+.icon{width:24px;height:24px;display:grid;place-items:center;color:var(--ink)}
+.content{padding:var(--s4)}
+/* 2 cards */
+.card{background:var(--surface);border-radius:var(--r-card);box-shadow:var(--elev-1);padding:var(--s4);display:flex;gap:var(--s3);align-items:flex-start}
+.card + .card{margin-top:var(--s4)}
+.avatar{width:40px;height:40px;border-radius:9999px;background:var(--surface-raised);flex:none}
+.card .main{flex:1;min-width:0}
+.facts{margin-top:2px}
+.tag{display:inline-block;margin-top:var(--s2);padding:2px var(--s2);border-radius:var(--r-tag)}
+.tag.accent{background:var(--accent-subtle);color:var(--accent)}
+.tag.neutral{background:var(--surface-raised);color:var(--ink)}
+.tag.success{background:var(--success-bg);color:var(--success)}
+.time{white-space:nowrap}
+.section{margin-top:var(--s6)}
+/* 3 field */
+.label{display:block;margin-bottom:var(--s2)}
+.input{height:48px;border-radius:var(--r-btn);background:var(--input-bg);box-shadow:var(--elev-1);display:flex;align-items:center;padding:0 var(--s4)}
+.helper{margin-top:var(--s2)}
+/* 4 buttons */
+.buttons{display:flex;gap:var(--s3);margin-top:var(--s5)}
+.btn{flex:1;height:48px;border-radius:var(--r-btn);font:500 16px/24px Inter,system-ui,sans-serif;border:0}
+.btn.primary{background:var(--accent);color:#fff}
+.btn.secondary{background:var(--surface);color:var(--ink);box-shadow:inset 0 0 0 1px var(--border)}
+/* 5 empty */
+.empty{background:var(--surface-raised);border-radius:var(--r-card);padding:var(--s5) var(--s4);text-align:center}
+.link{color:var(--accent);font-weight:500;margin-top:var(--s2);display:inline-block}
+/* 6 error */
+.error{display:flex;gap:var(--s2);align-items:flex-start;background:var(--signal-bg);color:var(--signal);border-radius:var(--r-btn);padding:var(--s3)}
+</style></head>
+<body><div class="phone">
+  <div class="status"></div>
+  <div class="header">
+    <span class="icon" aria-label="Back">&#8592;</span>
+    <span class="t-label" style="font-size:16px;line-height:24px">Referral requests</span>
+    <span class="icon" aria-label="Notifications"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></span>
+  </div>
+  <div class="content">
+    <div class="t-caption muted">Product Designer · Infosys · Job ID 184223</div>
+
+    <div class="card" style="margin-top:12px">
+      <div class="avatar"></div>
+      <div class="main">
+        <div class="t-heading">Neha Kapoor</div>
+        <div class="t-body muted facts">4 of 6 skills match · 3 yrs</div>
+        <span class="tag neutral t-label">Sent</span>
+      </div>
+      <span class="t-caption muted time">Today</span>
+    </div>
+    <div class="card">
+      <div class="avatar"></div>
+      <div class="main">
+        <div class="t-heading">Arjun Mehta</div>
+        <div class="t-body muted facts">3 of 6 skills match · 4 yrs</div>
+        <span class="tag neutral t-label">Sent</span>
+      </div>
+      <span class="t-caption muted time">Yesterday</span>
+    </div>
+    <div class="card">
+      <div class="avatar"></div>
+      <div class="main">
+        <div class="t-heading">Kabir Rao</div>
+        <div class="t-body muted facts">3 of 6 skills match · 2 yrs</div>
+        <span class="tag success t-label">Submitted</span>
+      </div>
+      <span class="t-caption muted time">Tuesday</span>
+    </div>
+
+    <div class="section">
+      <label class="label t-label">Job ID</label>
+      <div class="input t-body">184223</div>
+      <div class="helper t-caption muted">The first thing a referrer needs. It's on the job's page on your portal.</div>
+    </div>
+
+    <div class="buttons">
+      <button class="btn secondary">Not moving forward</button>
+      <button class="btn primary">Refer</button>
+    </div>
+
+    <div class="section empty">
+      <div class="t-body">No referral requests yet. Share your link when someone messages you about this job.</div>
+      <a class="link t-label">Copy your link</a>
+    </div>
+
+    <div class="section error">
+      <span aria-hidden="true">!</span>
+      <span class="t-body">Add the job ID first. It's the first thing a referrer needs.</span>
+    </div>
+  </div>
+</div></body></html>
