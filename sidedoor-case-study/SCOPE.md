@@ -90,7 +90,6 @@ a real test would check.
   the request, wins
 - The number and guardrail need a baseline nobody has. Concept targets, labelled so
 - Business lens with sources
-- Landscape: what GetMeReferred, EasyRefer, Jumbl, Instahyre, LinkedIn and others already do, from the FigJam screenshots
 
 ## Ideas raised before ideation · for molades-ai
 
@@ -114,6 +113,158 @@ happens when the AI is wrong.
 **Answered 17 Sep 2026:** the follow-up was with Samarth (the same person as the Infosys candidate and
 referrer interviews). Recorded as n92, marked remembered: Devansh's summary, not a quote. Ideas 1 and 2 now rest on one
 person's remembered view plus n65, and Idea 2 sits in tension with that person's own n62.
+
+## Landscape
+
+**Run 17 Sep 2026 with molades-landscape.** Screens are Devansh's own screenshots in FigJam (Competitive Analysis),
+read at full size; they were taken before this date, and the products may have changed since. Pricing from
+GetMeReferred's public page, fetched 17 Sep 2026. No store reviews were collected.
+
+**The job:** a candidate gets an employee at a company to refer them for one job, and finds out what happened.
+
+**Picked, and why:** LinkedIn (where both Samarth and Riya actually ask and get asked), GetMeReferred (the closest
+product: candidates reach employees who say they are willing to refer), EasyRefer (the other model: employees post jobs
+and candidates apply to them, the same model as Sidedoor V2), Instahyre (shows candidates a fit score, and puts a cost
+on backing out). Plus what people do without any product.
+
+**Left out:** Jumbl. FigJam's note calls it "AI matching → request → referral", but the screenshots show an internship
+listing with Apply, a resume picker and an application tracker. No referral step is visible, so it isn't compared.
+Cutshort, Wellfound, TalentPool, Naukri, ReferMe, Reddit/Discord: not read at full size this round.
+
+### What each does
+
+**LinkedIn** · saw it, from screenshots
+- On a job: Easy Apply; "People you can reach out to" (a 2nd-degree school alum, with Connect); "Meet the hiring team"
+  with Message
+- "Use AI to assess how you fit" with "Show match details", "Tailor my resume", "Help me stand out", behind Premium
+  ("Reactivate Premium: 50% Off")
+- From a company page: People tab → your connections who work there → New message, a blank text box
+- Easy Apply collects contact info, resume and screening questions (experience, current CTC, expected CTC, notice period)
+- Job tracker: stages Saved, In progress, Applied, Interview, Archived. It asks the candidate "Did you hear back?" and
+  "We will check back in 1 week". The candidate reports the status, not the company
+- A job shows "Company review time is typically 1 week"
+- No referral request anywhere in the screens
+
+**GetMeReferred** · saw it, from screenshots; pricing worked it out, from their page
+- "Connect with Employees who are willing to Refer & Guide you!" Cards of verified referrers: company, designation, role,
+  years of experience, "114 employees are online now"
+- Each referrer costs credits to request ("Requires 1 credit", "Requires 3 credits", else "Not enough credits")
+- The request: job post link, a free-text "Referral Message" ("Write your well crafted personalized message in a
+  detailed way to increase your response"), attach resume, Send
+- Chat with tabs for Referrers and Recruiters; "Your connection request is pending approval from the receiver"
+- Job pages have Apply and Get Referral: "Getting a referral is 5x more effective than applying directly" (no source shown)
+- Upsells resume services
+- **Pricing page:** ₹299 for 25 verified employees, ₹599 for 95, ₹899 for 220 senior professionals. "Earn credits by
+  helping the community — accept referral requests, share insights, and stay active on the platform."
+
+**EasyRefer** · saw it, from screenshots
+- "Jobs are directly referred by professionals actively working at Top MNC's". Any user can post a job (Job Post button;
+  listings "by" a username)
+- Apply: name, email, phone, a message, resume. Some jobs add a long form: LinkedIn profile plus required answers,
+  "Write down your answer in min 50 words"
+- Candidate dashboard: Applied Jobs, Review, Views, Shortlisted counts, profile views chart
+- Homepage stats (84%, 67%, 5x, 51%) with no source shown
+
+**Instahyre** · saw it, from screenshots
+- Recommended jobs with View and "Not interested"; filter by Undecided, Interested, Not interested
+- On a job: "Your Instamatch score: HIGH. Your chances of being shortlisted for this job are high", and employee reviews
+- "Avoid applying if you don't want to interview, as any interview backouts will be shown to other companies!"
+- Activity: Viewed, Contacted, Not Shortlisted; "Go Premium"
+- Companies and their sourcers reach the candidate. No employee referral visible
+
+**No product · what Samarth and Riya do** · saw it, from the interviews
+- Ask friends and mutuals first, on WhatsApp; strangers on LinkedIn (n03 n04 n05 n49)
+- Send the job link or job ID and a resume (n06 n07 n38)
+- Referrer types it into Workday or the company portal and sees the status there (n57 n58 n71 n83)
+
+### The convention · what all of them do
+
+- **The ask is a free-text message plus a resume.** LinkedIn's blank message, GetMeReferred's "Referral Message",
+  EasyRefer's message box, a WhatsApp text. **None of them collects what the referrer's company portal needs** (city,
+  date of birth, gaps, preferred locations; n59 n67 n73 n75). saw it
+- **Fit is shown to the candidate, not the referrer.** LinkedIn's match details, Instahyre's Instamatch score.
+  saw it
+- **Fit tools are what candidates pay for.** LinkedIn puts match details behind Premium; Instahyre sells Premium.
+  saw it
+- **Nobody shows what happened to a referral.** The best any of them does is status for an *application* (EasyRefer's
+  counts, Instahyre's Viewed) or a status the candidate reports themselves (LinkedIn's "Did you hear back?"). saw it
+
+→ Breaking these costs something. Sidedoor breaks the first and the last on purpose (the problem statement), and inherits
+the third (Premium, BUSINESS.md).
+
+### Where they disagree · each is a decision Sidedoor has to make
+
+| Decision | Who does what |
+|---|---|
+| **Who starts** | The candidate picks the person (LinkedIn, GetMeReferred) · the employee posts a job and candidates apply (EasyRefer, Sidedoor V2) |
+| **What limits asking** | Credits bought with money (GetMeReferred) · a connection first (LinkedIn's Connect) · a visible penalty for backing out (Instahyre) · nothing seen (EasyRefer) |
+| **What a referrer gets** | Credits for accepting requests (GetMeReferred) · nothing on screen (LinkedIn, EasyRefer) |
+| **Who reports status** | The candidate (LinkedIn's tracker) · the platform, for its own applications only (EasyRefer, Instahyre, Jumbl) · nobody, for referrals |
+
+### What nobody does, and why not
+
+1. **Nobody collects the referrer's portal fields before the ask.**
+   *Why not:* every company's portal asks something different, so there is no one form. **A reason, and it partly
+   applies.** Samarth's and Riya's portals overlap a lot (location or city, experience, gaps, contact details) but not
+   fully (date of birth, interview locations, alternate email). A request can carry the common fields and leave a short
+   company-specific part. worked it out. **First thing to test:** how much of a real portal form the common fields cover.
+2. **Nobody shows the candidate what happened to a referral.**
+   *Why not:* the status lives inside the company's system, which no outside product can read (Riya doubts companies
+   would share it, n46). **A binding reason.** LinkedIn's workaround is to ask the candidate. **Sidedoor's version:** the
+   referrer can already see it (n58 n83), so the referrer passes it on. That only works if passing it on costs a tap
+   (V2's five-stage manual update does not). worked it out
+3. **Nobody shows fit to the referrer.** Fit scores are sold to candidates.
+   *Why not:* no reason found. Possibly because showing it to candidates earns money and showing it to referrers doesn't.
+   guessing. **A real opening, and the first to test:** Samarth checks fit by hand (n50) and asked for exactly this (n65)
+4. **Nobody makes reaching a willing referrer free and still controls volume.**
+   *Why not:* open and free fills referrers' inboxes; GetMeReferred controls it with price. **A binding reason.**
+   Sidedoor's answer is limits and complete-request rules instead of price (Idea 3, BUSINESS.md). worked it out
+
+### Do not inherit
+
+- **GetMeReferred's free-text request** asking for a message "in a detailed way". It makes the candidate write more
+  without carrying the job ID's missing details, which is what Riya actually needs (n70 n73 n76)
+- **GetMeReferred's pay per referrer** ("Requires 3 credits", "Not enough credits", ₹899 for 220 senior professionals).
+  It sells access to the scarce side, and "aggressive job search" is the volume the strategy is against
+- **EasyRefer's required 50-word answers per question.** Friction that doesn't carry the portal's fields either
+- **Unsourced stats on the page** (GetMeReferred's "5x", EasyRefer's 84% / 67% / 5x / 51%). The same mistake the old
+  Sidedoor case study made
+- **Instahyre's Interested / Not interested and V2's swipe.** Judging a job or a person in one gesture pushes volume
+
+### Worth taking
+
+- **LinkedIn's "People you can reach out to"** on the job: shows the warm path first, the way Samarth looks for mutuals
+  first (n03 n04)
+- **LinkedIn's "Did you hear back?" with "We will check back in 1 week"**: status without the company's data, at the
+  cost of one tap
+- **LinkedIn's "Company review time is typically 1 week"**: sets the wait before it becomes silence (C3, n33 n85)
+- **Instahyre's backout warning**: a visible cost for people who take a referral and don't show up, which is Riya's
+  complaint (n89 n90)
+- **GetMeReferred's credits for accepting requests**: a referrer reward that isn't the company bonus (C4). Needs care;
+  paying referrers in credits only matters if credits are worth something to them
+
+### What this changes on the scope card
+
+- **Discovery and fit-for-the-candidate already exist on LinkedIn** ("People you can reach out to", match details).
+  Sidedoor cannot win there, and Idea 4 (skill-matched search for candidates) competes with an incumbent. **The bet
+  narrows to what nobody does: the complete request (gap 1), status passed on by the referrer (gap 2) and fit shown to
+  the referrer (gap 3, Idea 1).** worked it out
+- **The guess stays.** Nothing seen contradicts it
+- **Premium as a candidate fit tool is the convention** (LinkedIn), which supports the decision in BUSINESS.md, and it
+  also means Sidedoor's Premium competes with LinkedIn Premium on that one feature
+
+### Questions a real test would answer
+
+No more research is planned; these go into the case study as open questions.
+1. How much of a real referral portal form do the common fields cover? (gap 1)
+2. Will a referrer pass on status if it's one tap? (gap 2)
+3. Does showing fit to the referrer raise how many requests they submit, or just how fast they decline? (gap 3)
+4. Do credits for accepting requests change whether referrers take strangers' requests? (GetMeReferred's bet, C4)
+
+### Reference screens for the design language
+
+In FigJam `CPoRM8dMgCywFz0ZbAfA6A`, Competitive Analysis: LinkedIn 353:431, GetMeReferred 353:417, EasyRefer 353:418,
+Instahyre 353:435.
 
 ---
 

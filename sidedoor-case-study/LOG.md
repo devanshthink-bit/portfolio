@@ -11,7 +11,7 @@ Files:      SCOPE.md [x] v2 draft, v1 kept · BUSINESS.md [x] draft · RESEARCH.
 Rounds:     1. Mentor's critique (the product and referrer incentive). No change has come from it yet
 Open:       business lens with sources, source links for desk research,
             live case study still shows AI-sourced quotes and screens that aren't in Figma
-Next:       molades-landscape, what GetMeReferred, EasyRefer, Jumbl, Instahyre, LinkedIn and others already do, from the FigJam screenshots
+Next:       molades-ai (the ideas involve a model), then molades-brief
 
 ## Entries
 
@@ -227,3 +227,24 @@ Because:             Devansh: "Whatever is correct and has proper reasoning behi
                      breaks the quality promise; paying doesn't change a referrer's rule (n50, n76, n77); candidate tools
                      raise request quality, which moves the North Star (n23, C5); companies already pay for referrals (n62, n87).
 How sure:            worked it out · guessing (that candidates or companies will pay)
+
+DECISION · 17 Sep 2026 · molades-landscape
+Decided:             Landscape of LinkedIn, GetMeReferred, EasyRefer, Instahyre and no-product, from Devansh's screenshots
+                     at full size plus GetMeReferred's pricing page. Convention: the ask is free text plus a resume; fit is
+                     shown to candidates, and sold to them; nobody shows what happened to a referral. Sidedoor pursues
+                     three gaps: the complete request, status passed on by the referrer, fit shown to the referrer.
+Rejected:            Competing on discovery and candidate-side fit (LinkedIn already has "People you can reach out to" and
+                     match details). "Nobody reads the company's status" as an opening (binding: no outside access, n46).
+                     Free, unlimited reach as an opening (binding: open systems fill inboxes; GetMeReferred uses price).
+                     Jumbl, left out (screens show an internship marketplace, not referrals).
+Because:             The skill's question, "what do they know that we don't?", asked of every gap.
+How sure:            saw it (screens) · worked it out (reasons, pricing page)
+
+LEARNED · 17 Sep 2026 · molades-landscape
+Believed:            Sidedoor could win on discovery (ranked referrers) and on showing candidates their fit.
+Found:               LinkedIn already puts "People you can reach out to" and "Show match details" on every job, and
+                     GetMeReferred already lists willing, verified referrers.
+The part that was wrong: "candidates find relevant referrers"
+This made worthless: the old case study's Screen 01 as a differentiator; Idea 4 as a reason to exist.
+So now I believe:    Sidedoor's reason to exist is what nobody does: a request that arrives complete, status the referrer
+                     passes on, and fit shown to the referrer.
