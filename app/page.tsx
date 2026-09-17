@@ -26,7 +26,7 @@ const recentWork = [
     phones: ["hifi_06a", "hifi_05a", "hifi_16"],
     // Jahanvi's card anatomy: brand, what I did, tags, image, title + year, one line, impact.
     brand: "RedBus",
-    brandColor: "#ffffff",
+    brandColor: "var(--brand-red)",
     did: "Redesigned RedBus checkout to capture the return trip, even without a date",
     tags: ["Travel", "B2C", "iOS app", "Concept"],
     blurb: "Travellers book one way and leave the return for later, where it often goes to another app. A self-initiated RedBus concept that wins that revenue back by turning one booking into two, in the same checkout.",
@@ -142,7 +142,7 @@ function WorkCard({ item }: { item: Work }) {
             <div className="work-card-panel-text is-brand-only">
               <p className="work-card-brand" style={{ color: item.brandColor, display: "flex", alignItems: "center", gap: 10 }}>
                 {/* RedBus logo, the same unaltered path the prototype uses, in brand red */}
-                {item.slug === "redbus" && <img src="/images/redbus/logo.svg" alt="" aria-hidden width={45} height={30} style={{ height: "1.15em", width: "auto", display: "block", filter: "brightness(0) invert(1)" }} />}
+                {item.slug === "redbus" && <img src="/images/redbus/logo.svg" alt="" aria-hidden width={45} height={30} style={{ height: "1.15em", width: "auto", display: "block" }} />}
                 {item.brand}
               </p>
             </div>
