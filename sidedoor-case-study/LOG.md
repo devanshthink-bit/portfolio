@@ -764,3 +764,24 @@ L9  Premium: dropped for now (17 Sep).
 L10 "Right swipe to your next job", SIGN UP: V4 Fix 1.
 L11 Header counts "Explore top referrals (82)" / "top profiles (147)": a count of everything isn't a decision aid; the referrer's list shows its own job and Lower match count.
 How sure: R1 R2 R3 R4 R7 R8 R9 worked out from research or from a gap in V5; R5 R6 R10 worked out without research. Nothing here is "saw it" in use.
+
+CHANGE · 2026-09-17 · V6 · Carry-over built (see DECISION "Carry-over from V2, screen by screen")
+Changed:
+  R1  Add the job: "Fill in myself" link under Next.
+  R2  Confirm where you work: Your name (from sign-in), Your role, Where you work from; subtitle "Candidates see your name, role and company. The verified tick shows after we check your work email."
+  R3  Check your job post: "Tips for candidates (optional)" field; "Save as draft" next to Post job. Edit your job post: same tips field; "Pause post" next to Save changes (a live post can't go back to draft; pausing mirrors the Live/Paused toggle in Manage posts).
+  R4  Check your details and Edit your details: Experience and Projects sections (V2 blocks, each with one edit icon), optional LinkedIn profile and Portfolio fields. "Current role" row removed from the resume box because Experience now shows it.
+  R5  Jobs and Jobs (skipped): company · city, then salary · referrer ("Flipkart · Bengaluru", "₹28–40 LPA · Nithin refers"), from V2's job data.
+  R6  Candidate profiles: "Saved jobs" row.
+  R7  After Refer and Marked as submitted: "Message Abhinav". Referrer profile: "Messages" row.
+  R8  Your referral requests: tabs All · Waiting · In progress · Closed (V2 TabBar).
+  R9  Selected: "Congratulations, you're selected at Swiggy!", "Thank Joy" primary.
+  R10 Edit your details: optional "Roles you want" and "How you want to work".
+Checked:   41 V6 screens by script: fonts, text styles, colour tokens, no collapsed or clipped text (V2 skill-chip rows excepted), no stacked screens, no overlaps. Five flow frames (V5 and V6) were grown so taller screens sit inside them.
+
+LEARNED · 2026-09-17 · V6
+Tried:              Judging V2's designs mostly by what to cut (volume patterns, scores, Premium).
+Expected:           Cutting the wrong patterns keeps the good parts.
+Actually happened:  Cuts took good parts with them: the referrer's own details, drafts, tips, experience and projects for the candidate to check, salary on job cards, saved jobs under a weekly cap, messaging after Refer, status tabs, the Selected celebration. Devansh saw it on one screen and asked for the whole app.
+Cost:               a full carry-over pass
+Now know:           When replacing a design, list everything the old one did and decide each item on evidence, both what to cut and what to keep. A cut needs a reason as much as an addition does.

@@ -17,6 +17,7 @@ Updated 17 Sep 2026.
 - [x] **Product and growth review** · PRODUCT_REVIEW.md (AARRR, drop-offs, events, dashboards)
 - [x] **V4 build** · 11 P1 fixes built, 43 screens; ITERATIONS.md (V2 → V3 → V4)
 - [x] **V5** · shared background (borrowed, research-backed) + full design audit, 41 screens clean; 4 borrowed ideas logged as not built
+- [x] **V6** · carry-over from V2: 10 good earlier designs restored, 11 kept out with reasons; 41 screens checked
 - [ ] **molades-attack** · break the V3 screens on purpose, then craft and accessibility checks
 - [ ] **molades-build (again)** · fix attack findings one at a time
 - [ ] **molades-test** · no real tests planned. Write the test script anyway and say plainly it wasn't run

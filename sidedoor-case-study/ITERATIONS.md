@@ -1,7 +1,7 @@
 # Sidedoor · iterations
 
 For the case study. Each version keeps the one before it untouched in Figma (V2 file, "UI Screens": V2 on top, then
-V3, V4 and V5 below). Full reasoning for every change is in LOG.md, dated.
+V3, V4, V5 and V6 below). Full reasoning for every change is in LOG.md, dated.
 
 ---
 
@@ -104,6 +104,33 @@ not a reason to cut the content inside it.*
 icons on info notes, a share icon that read as "open website", one screen laying out details differently from the rest,
 capitalisation, a squeezed "Still needed" note, and editing a job post still using V2's 3 steps while posting was one
 screen. Re-check: 41 screens clean.
+
+---
+
+## V6 · bringing back good earlier designs
+
+**Question:** in fixing V2's wrong ideas, did the redo also throw away right ones? Every V2 element (V0 is the same) was
+checked against the job of the person on that screen and the research. Restored, moved or kept out, each with a reason.
+
+| Restored | From V2 | Why it's right |
+|---|---|---|
+| Referrer "Fill in myself" | Create manually | Some referrers only have a job ID, no JD file or link (n70) |
+| Referrer's name, role, location | Manual job step 1, Edit profile | Candidates see "Design Manager, Flipkart" on every screen, and pick who to ask by role (n29); V4 had removed the only place to give it |
+| Tips for candidates, Save as draft | Job steps 3–4 | Tips show on the Job screen and get referrers better requests; drafts cover the missing job ID (n70), and "Draft" already existed in Manage posts |
+| Experience, projects, links on the candidate's own review | Profile steps 2–4 | Referrers read these (n50 n56), so candidates must be able to check them (AX Spec) |
+| Salary and city on job cards | Explore cards | With 5 asks a week, candidates need to choose which jobs are worth one |
+| Saved jobs | Bookmark on job card | The weekly cap makes "save now, ask Monday" legitimate |
+| Message after Refer | Referrer Match screen | Messaging had no entry point once its tab went |
+| Status tabs (All · Waiting · In progress · Closed) | Track tabs | Candidates' requests pile up; n45 asks for one place to see them |
+| Congratulations + Thank as the main button | Selected screen | Best moment in the product; the thank-you is what brings referrers back |
+| Job preferences (Edit only) | Profile step 4 | Useful for ordering jobs later, not needed to send a request |
+
+**Kept out, with reasons:** tagline, About and full skills list on the referrer's view (pitch, not evidence); 9.4 score
+and swipe (unverifiable, volume); referrer's Saved candidates (the request list is already their queue); "Referral
+Accepted" screens (the finish line is Submitted); messaging before Refer (chasing is the referrer's pain); six-stage
+update; referrer list tabs (waiting-first is action-first); 4-step onboarding; Premium; swipe login copy; header counts.
+
+*Learned: a cut needs a reason as much as an addition does.*
 
 ---
 
