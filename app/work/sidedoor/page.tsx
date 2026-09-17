@@ -8,7 +8,8 @@ import { T, SectionLabel, Card, MetaStrip } from "../../../components/caseStudy"
 const poppins = Poppins({ weight: "700", subsets: ["latin"] });
 // The handwritten face for the story lines between screens.
 const caveat = Caveat({ subsets: ["latin"] });
-const handQuote = { fontSize: 22, fontWeight: 500, color: "var(--text-primary)", lineHeight: 1.55, margin: 0 } as React.CSSProperties;
+// Caveat draws small for its size: 20px (18px on phones) matches the 18px lede by eye.
+const handQuote = { fontSize: "var(--fs-20)", fontWeight: 500, color: "var(--text-primary)", lineHeight: 1.5, margin: 0 } as React.CSSProperties;
 
 // Sidedoor's brand colours, as tokens in globals.css: referrers blue, candidates green.
 const BLUE = "var(--sd-blue)";
@@ -55,7 +56,7 @@ function Interlude({ text, img }: { text: string; img: string }) {
   return (
     <div style={{ margin: "0 0 96px", display: "flex", flexDirection: "column", alignItems: "center", gap: 14 }}>
       <span style={{ fontSize: "var(--fs-20)" }}>🍿</span>
-      <p className={caveat.className} style={{ fontSize: 22, fontWeight: 500, color: "var(--text-primary)", lineHeight: 1.55, textAlign: "center", maxWidth: 520, margin: 0 }}>{text}</p>
+      <p className={caveat.className} style={{ fontSize: "var(--fs-20)", fontWeight: 500, color: "var(--text-primary)", lineHeight: 1.5, textAlign: "center", maxWidth: 520, margin: 0 }}>{text}</p>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={img} alt="" style={{ width: 180, objectFit: "contain", marginTop: 8 }} />
     </div>
