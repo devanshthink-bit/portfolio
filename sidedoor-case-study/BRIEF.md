@@ -158,3 +158,319 @@ enough to judge", the ordering helps no one.
 **Cheapest way to find out:** give Samarth five real resumes for one of his open roles, once with the breakdown and
 once without, and see whether his decisions match it and whether he decides faster. About an hour. **Not planned**
 (no more research); it goes into the case study as the first test.
+
+---
+
+# THE PLAN · molades-brief, draft 1, 17 Sep 2026
+
+**Draft by AI, parts of it wrong.** Figma V2 is treated as wireframes already drawn: its screens are read and mapped,
+not redrawn. Where V2 already does the job, it's kept.
+
+## The shape
+
+The idea being shaped: **a request that arrives complete, status the referrer passes back, and match shown to the
+referrer** (SCOPE.md v2, Landscape gaps 1–3; AX Spec above).
+
+| Shape | What it is | Steps it adds | What has to be dropped | Who might never see it |
+|---|---|---|---|---|
+| **Its own screens** | A mobile app for both sides (Figma V2) | Candidates: sign up, build a profile once, then 3 taps per request. Referrers: sign up, post a job | Nothing; it holds everything | Every stranger who messages a referrer on LinkedIn and never installs anything |
+| **A sheet over what's already there** | A web page the referrer's link opens, over the LinkedIn or WhatsApp chat the candidate is already in | Candidates: open link, fill once, send. No install | Tracking many requests, the job list, messaging: a one-off page can't hold them | Candidates who want to ask several people over weeks; nobody comes back to a link |
+| **A change to a screen that already exists** | A referral step inside LinkedIn | Fewest | Sidedoor as a product | Nobody; but it isn't Sidedoor's to build, and Devansh rejected it (SCOPE.md v2) |
+
+**Chosen: its own screens, with the sheet as the way in.** The app holds the full journey on both sides; the link page
+is how a candidate who isn't on Sidedoor yet sends their first complete request (Acquisition loop 1, BUSINESS.md).
+
+**Why the other two lost:**
+- **The sheet alone** can't hold what C3 needs: somewhere the candidate comes back to see every request's status (n44
+  n45). It's kept as the entry point, not the product
+- **A change to LinkedIn** was decided against on 17 Sep (SCOPE.md v2)
+
+**What it costs:** two surfaces to design and keep consistent, and the app's install is a real drop-off the link page
+has to survive.
+
+## Words we're using
+
+| We call it | Not | Because |
+|---|---|---|
+| **referral request** | request referral, ask, match | Samarth says "referral requests" (n60 n61). "Match" is V2's word for an accepted request and it sounds like a dating app |
+| **job ID** | job code, requisition | Riya's word, every time (n70 n76), and Riya (as candidate) sends "the job ID" (n38) |
+| **portal** | ATS, system, Workday | Both say "portal" (n56 n71 n83). Nobody in the interviews said ATS |
+| **match** | fit score, strong fit, 9.4 | Samarth: "skill match" (n50), "matching score" (n65). Shown as "4 of 6 skills match", never a decimal |
+| **Submitted · In interviews · On hold · Selected · Not selected** | Referral submitted, Under review, Interview scheduled, Interview in progress, Final decision | The words on their portals: Riya's "Application submitted", "round one, round two", "selected or not selected"; Samarth's "on hold" (n58 n84; raw transcripts). Five stages instead of V2's six, and none a referrer can't see on their portal ("Under review" isn't shown to them, n84) |
+| **Not moving forward** | Rejected, Declined | For a referrer's decision before the portal. Samarth tells candidates "we are not moving forward" (n54); it names the decision without blame |
+
+**One thing, one word, everywhere.** A stage is "In interviews" on the candidate's timeline, the referrer's update sheet,
+and every notification.
+
+## Screens
+
+**Both sides**
+- **Welcome** · the place where someone signs in
+- **Choose your side** · the place where someone says whether they're asking or referring
+- **Messages** · the place where a candidate and referrer talk after a referral request is accepted
+
+**Candidate**
+- **Your profile from your resume** · the place where a resume becomes the details a referrer's portal needs
+- **Jobs** · the place where you find jobs someone at the company will refer for
+- **Job** · the place where you decide whether to ask for this one
+- **Check your referral request** · the place where you see exactly what the referrer will get, before it's sent
+- **Your referral requests** · the place where every request's status lives
+- **Referral request** · the place where one request's timeline lives
+- **Match check** (Premium) · the place where you see how well you match a job before asking
+
+**Referrer**
+- **Post a job from its description** · the place where a job ID and role become a job post
+- **Your job posts** · the place where you pause, edit or close posts
+- **Referral requests for this job** · the place where requests wait, ordered by match
+- **Referral request (referrer)** · the place where you decide: refer, or not moving forward
+- **Your referrals** · the place where you pass on each referral's stage
+
+**Link page (web, no install)**
+- **Ask [referrer] for a referral** · the place where someone who messaged a referrer sends a complete referral request
+
+**Cut from V2, with reasons**
+- **Swipe cards, both sides (Explore)** → the candidate's cards become the **Jobs** list; the referrer's candidate cards
+  become **Referral requests for this job**. Swiping is built for volume (BUSINESS.md, Landscape do-not-inherit). The
+  card designs are reused, not thrown away
+- **"Referral Accepted" full-screen match (Match)** → folded into the request's timeline. A referral isn't a match; the
+  job isn't done until it's submitted
+- **Premium "Referrers want to connect with you"** → becomes **Match check** (BUSINESS.md, Premium)
+- **Referrer browsing candidates who didn't ask** → not in this project. It needs candidate consent the research never
+  touched, and it's the open-inbox problem the other way round
+- **Four-step manual profile and job creation** → one review screen each, filled from the document (AX Spec)
+
+## Where they hang off the existing product
+
+Not applicable: Sidedoor is its own product. What it touches outside itself:
+- **LinkedIn and WhatsApp chats:** the referrer pastes their link page there when a stranger messages them
+- **The referrer's company portal:** the referrer leaves Sidedoor to submit there, with the portal-ready fields copied
+
+**Not adding:** anything that reads or writes the company's portal (no access, n46).
+
+## What's on each screen
+
+The screens that carry the problem statement get the full breakdown. Screens kept from V2 unchanged are listed at the
+end with one line.
+
+### Check your referral request · candidate
+**This screen is for:** seeing exactly what the referrer will get, before it's sent.
+
+Information, in priority order
+1. **What's still missing**, and why the referrer needs it ("Preferred interview locations. Their portal asks for it.") · component · has states: nothing missing, some missing
+2. **The job and its job ID**, taken from the post · static
+3. **The details going to the referrer**: name, contact, current city, total and relevant experience, notice period, career gaps, date of birth, preferred locations, resume · component · repeats · each editable
+4. **How you match**: "4 of 6 skills match · 3 yrs (they need 2–5)" · component · has states: not enough to judge
+5. **A short note, optional**, one line · component
+6. **Requests left this week**: "2 of 5 left" · component · has states: none left
+7. **Send** · component · off until nothing required is missing
+
+Not here
+- A long message box → the landscape's do-not-inherit (n76)
+- Other jobs → on Jobs
+- The referrer's profile → on Job
+
+### Referral requests for this job · referrer
+**This screen is for:** seeing which requests to open first.
+
+Information, in priority order
+1. **Requests that match**, ordered by match · component · repeats
+2. On each: **name, current role, "4 of 6 skills match", experience against the range, sent when** · component
+3. **"Lower match"**, collapsed, with its count · component · has states: none
+4. **The job and its job ID** · static
+5. **Your rule**, if set ("Experience must match") · component
+
+Not here
+- The candidate's full details → on Referral request (referrer)
+- Other jobs' requests → one job at a time, from Your job posts
+- A match score out of 10 → never (AX Spec)
+
+### Referral request (referrer) · referrer
+**This screen is for:** deciding whether to refer this person for this job.
+
+Information, in priority order
+1. **How they match**, item by item, each linked to where it came from · component · has states: not enough to judge, out of date
+2. **Refer** and **Not moving forward** · component
+3. **Portal-ready details**, each with copy, in the order a portal usually asks · component · appears after Refer
+4. **Resume** · component
+5. **Their note**, if any · static
+6. **"I've submitted it on my portal"** · component · appears after Refer
+
+Not here
+- Messaging → opens only after Refer
+- A reason field that's required → reasons are optional chips, so saying no costs one tap
+
+### Your referrals · referrer
+**This screen is for:** passing on each referral's stage.
+
+Information, in priority order
+1. **Referrals waiting on an update**, oldest first ("Submitted 9 days ago. Seen it move?") · component · repeats
+2. **Update**, one tap to the current stage · component · a sheet with the five stages, current one marked
+3. **What your referrals reached**: "3 in interviews, 1 selected" · component · the referrer's record (Engagement loop)
+4. **All referrals**, by job · component · repeats
+
+Not here
+- Six manual stages → five, and only the one they see now needs a tap (V2's Update Bottom Sheet, simplified)
+
+### Referral request · candidate
+**This screen is for:** knowing where one request stands.
+
+Information, in priority order
+1. **Where it is now, in words**: "Submitted on Infosys's portal on 12 Sep" · component · has states for every stage and for not moving forward
+2. **What happens next, and a typical wait**: "Interviews usually start within 2–3 weeks" · component · guessing until there is data; Riya's 2–3 weeks (raw, Q22)
+3. **The timeline**: Sent · Referred · Submitted · In interviews · Selected / Not selected · component
+4. **The referrer**: name, role, company · static
+5. **Message** · component · only after Refer
+
+Not here
+- "Thank Referrer" as the main button → a small action after Selected (V2 kept, demoted)
+
+### Your profile from your resume · candidate
+**This screen is for:** turning a resume into the details a referrer's portal needs.
+
+Information, in priority order
+1. **Filled from your resume**, marked to check · component · has states: slow, half done, won't
+2. **Still needed, not usually on a resume**: date of birth, career gaps, preferred interview locations, notice period · component
+3. **Resume file** · component
+4. **Save** · component
+
+Not here
+- Projects and a tagline → not needed by any portal the research saw; optional, later (V2 step 3 and 4 fields)
+
+### Ask [referrer] for a referral · link page
+**This screen is for:** a stranger sending a complete referral request without installing anything.
+
+Information, in priority order
+1. **Who you're asking, and for which job ID** · static · from the referrer's link
+2. **Upload your resume** · component · fills the details
+3. **The details the referrer needs** · component · same as Check your referral request
+4. **Send** · component
+5. **"Save these details and track this request"** → install the app · component · after sending
+
+Not here
+- Browsing jobs → in the app
+
+### Kept from V2, unchanged in job
+- **Welcome** (Login), **Choose your side** (Role Selection), **Post a job from its description** (JD upload, reduced to one review screen), **Your job posts** (Manage Posts), **Messages**, **Profile**, **Edit profile**. Their states: open, to check in molades-attack
+
+## The main path
+
+**A candidate asks a referrer they don't know, and learns it was submitted · 8 steps, 2 people**
+
+Before it: the candidate's profile is built once from their resume.
+
+1. **Candidate** · Jobs → taps a job → **Job**
+2. Taps "Ask for a referral" → **Check your referral request**, details filled, job ID from the post
+3. Adds anything still missing, taps Send → **Your referral requests**, status Sent
+4. **Referrer** · notification → **Referral requests for this job**, the request near the top if it matches
+5. Opens it → **Referral request (referrer)**, how they match
+6. Taps Refer → portal-ready details appear; copies them into their company portal (**leaves Sidedoor**)
+7. Comes back, taps "I've submitted it on my portal" → **Your referrals**
+8. **Candidate** · notification → **Referral request**: "Submitted on [company]'s portal" · **job finished**
+
+**Cut from this path:** writing a message (optional one line), messaging before a decision, a "match" celebration
+screen, choosing among six stages.
+
+**For Devansh:** eight steps across two people. Which one could somebody skip the second time, and which is only there
+because we weren't sure what goes in between? (Step 6 can't go: the portal is outside Sidedoor.)
+
+## Other routes
+
+- **Not moving forward:** referrer taps it, optionally a reason chip ("Experience doesn't match", "Skills don't match",
+  "Role is closed", "Can't refer for this team") → the candidate sees it at once, with the reason if given
+- **No reply in 7 days:** the candidate's request shows "No answer yet. You can withdraw it and ask someone else." A
+  withdrawn request gives the request back
+- **The link page:** a stranger messages a referrer on LinkedIn → the referrer pastes their link → the stranger sends a
+  complete request from the web → it lands in Referral requests for this job like any other
+- **Later stages:** once a week, a submitted referral asks the referrer "Seen it move?" (LinkedIn's "Did you hear back?")
+  → one tap to In interviews, On hold, Selected, Not selected
+- **Requests left: none:** Send is off with "You've used this week's 5. They come back on Monday."
+- **Job closed:** open requests for it move to Not moving forward, reason "Role is closed", automatically, and the
+  candidate is told
+
+## When it's not perfect
+
+### Check your referral request
+- **Empty:** not applicable; it always opens from a job with a profile behind it
+- **Loading:** the match is worked out when the request is sent (AX Spec), so nothing waits here. The profile filling is on Your profile from your resume
+- **Error:** sending fails → "Couldn't send. Your details are saved. Try again." and a retry
+- **Done:** lands on Your referral requests with this one at the top, "Sent to [referrer] · [job]"
+- **Too much:** a long job title or company name wraps to two lines; the details list is long by design, grouped
+- **Not allowed:** a required detail missing → Send off, the missing item named. No requests left → Send off, when they come back
+
+### Referral requests for this job
+- **Empty, new post:** "No referral requests yet. Share your link when someone messages you about this job."
+- **Empty, all handled:** "You're through every request for this job."
+- **Loading:** the list's shape before the data
+- **Error:** "Couldn't load requests. Pull to try again."
+- **Done:** not applicable; it's a list
+- **Too much:** 40 requests on one job → the ones that match stay first; "Lower match" stays collapsed with its count. **Open:** whether to cap requests per job, not only per candidate
+- **Not allowed:** a paused post → "This post is paused. Requests that already came in are still here."
+
+### Referral request (referrer)
+- **Empty:** not applicable
+- **Loading:** not applicable; the match is stored
+- **Error:** the copy button fails → the field stays selectable to copy by hand
+- **Done:** after "I've submitted it on my portal": "Submitted. [Name] has been told."
+- **Too much:** a resume with twenty skills → the match shows the job's skills only, not the resume's full list
+- **Not allowed:** already referred by another referrer at the same company → **open**, the research doesn't say how portals handle a duplicate referral (Riya's six-month rule, n74, suggests the portal refuses it)
+
+### Your referrals
+- **Empty:** "No referrals yet. When you refer someone, you'll pass on their stage here."
+- **Loading:** the list's shape before the data
+- **Error:** an update fails → the stage goes back, "Couldn't update. Try again."
+- **Done:** "Updated. [Name] can see it."
+- **Too much:** a referrer with dozens of referrals → waiting-on-update first, the rest by job
+- **Not allowed:** moving a stage backwards → **open**; LinkedIn refuses it ("You can't move this job to an earlier stage"), but a referrer's mistaken tap needs a way back
+
+### Referral request · candidate
+- **Empty:** not applicable
+- **Loading:** the timeline's shape before the data
+- **Error:** "Couldn't load this request. Pull to try again."
+- **Done:** Selected → "Selected at [company]." and a small "Thank [referrer]"
+- **Too much:** not applicable
+- **Not allowed:** messaging before Refer → the Message button isn't there, and no disabled button is shown
+
+### Your profile from your resume
+- **States:** as the AX Spec: slow, half done, won't (a rule and a fault), wrong
+- **Empty:** first time, no resume yet → "Start with your resume. We'll fill in what we can." and "Fill in myself"
+- **Done:** "Your details are ready. Every referral request will use them."
+- **Too much:** a very long work history → only what portals ask for is kept on this screen
+
+### Link page
+- **Error:** the referrer's link is old or the post is closed → "This job isn't open for referrals any more." and nothing to fill
+- **Not allowed:** the same person sending twice to the same referrer for the same job → "You've already asked for this job."
+- **Other states:** **open**
+
+### Kept V2 screens
+**Open**, to check in molades-attack.
+
+## Not in this project
+
+- **Anything a company or recruiter uses** (phase 2, BUSINESS.md)
+- **Reading or writing a company's portal** (no access, n46)
+- **Referrer rewards, like credits for accepting requests** (Landscape, open question 4)
+- **Referrers browsing candidates who didn't ask**
+- **Predicting a candidate's chance of being selected** (AX Spec)
+- **Interview preparation and resume writing**
+
+## What changes from Figma V2
+
+Not "what breaks if this ships", since there's no product to break. Instead, what the V2 file has to change.
+
+| V2 flow | Keep, change or cut | Why |
+|---|---|---|
+| Login | **Keep** | Does its job |
+| Onboarding · role selection | **Keep** | Does its job |
+| Onboarding · resume or JD upload, then four manual steps | **Change** to upload, then one review screen with "Still needed" fields | Portal fields a resume lacks were missing; four steps repeat what the document already filled (AX Spec) |
+| Explore · candidate job cards (swipe) | **Change** to the Jobs list and Job screen | No swiping; add the job ID and "Ask for a referral" |
+| Explore · referrer candidate cards (swipe) | **Change** to Referral requests for this job | Requests, ordered by match, "Lower match" collapsed; reuse the card design |
+| Match · "Referral Accepted" screens | **Cut**, fold into the timeline | Not the finish; Submitted is |
+| Match · Share Resume sheet | **Change** to the portal-ready details with copy | Carries what the portal needs, not just the resume |
+| Messaging | **Keep**, open only after Refer | Stops chasing before a decision |
+| Tracking · list and details | **Keep**, rename stages | Five stages in portal words |
+| Update · list and five-stage sheet | **Change** to one tap for the current stage, weekly "Seen it move?" | Less work for the scarce side (BUSINESS.md) |
+| Profile · Live / Paused | **Keep** | Lets a candidate stop receiving job suggestions |
+| Manage posts, Edit | **Keep** | Does its job |
+| Edit profile | **Change** to match the new profile fields | Same as onboarding |
+| Premium | **Change** to Match check | BUSINESS.md, Premium |
+| **New** | **Check your referral request**, **Your referrals' record**, **Link page** | The problem statement has nowhere to live in V2 without them |

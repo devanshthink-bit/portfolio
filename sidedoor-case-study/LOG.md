@@ -7,11 +7,11 @@
 
 Bet:        employees drop strangers' referral requests because the request makes them do the candidate's work, not because they won't help (SCOPE v2, draft)
 Evidence:   thin. 4 real interviews with 2 people (each as candidate and as referrer), 1 remembered follow-up, desk research without source links
-Files:      SCOPE.md [x] v2 draft, v1 kept, landscape · BUSINESS.md [x] draft · BRIEF.md [x] AX Spec draft · RESEARCH.md [x] notes, sort, five clusters, jobs, insights, three candidate problem statements · BRIEF.md [ ] · DESIGN_LANGUAGE.md [ ] · build [ ] Figma V2 exists, not a coded build · live [ ]
+Files:      SCOPE.md [x] v2 draft, v1 kept, landscape · BUSINESS.md [x] draft · BRIEF.md [x] AX Spec, plan draft · RESEARCH.md [x] notes, sort, five clusters, jobs, insights, three candidate problem statements · BRIEF.md [ ] · DESIGN_LANGUAGE.md [ ] · build [ ] Figma V2 exists, not a coded build · live [ ]
 Rounds:     1. Mentor's critique (the product and referrer incentive). No change has come from it yet
 Open:       business lens with sources, source links for desk research,
             live case study still shows AI-sourced quotes and screens that aren't in Figma
-Next:       molades-brief (shape, screens, states), after Devansh reacts to the AX Spec
+Next:       Devansh reacts to the brief (main path question), then molades-language
 
 ## Entries
 
@@ -268,4 +268,16 @@ Decided:             Lower-match requests stay visible to the referrer, collapse
 Rejected:            Hiding them completely (Devansh's earlier "only showing curated candidates").
 Because:             Devansh: "visible but collapsed". Reasons given: a hidden request is silence for the candidate (C3),
                      and Samarth refers borderline matches on purpose (n53).
+How sure:            worked it out
+
+DECISION · 17 Sep 2026 · molades-brief
+Decided:             Shape: its own app for both sides, with a no-install link page as the way in for strangers. Words from
+                     the interviews: referral request, job ID, portal, match, and five stages (Submitted, In interviews,
+                     On hold, Selected, Not selected) in their portals' words. 16 screens; main path 8 steps across two
+                     people, ending when the candidate sees "Submitted". Every V2 flow marked keep, change or cut.
+Rejected:            The link page alone (can't hold status over weeks, n44 n45). A LinkedIn change (Devansh, 17 Sep).
+                     V2's swipe cards (volume), "Referral Accepted" match screens (not the finish), six manual stages
+                     (work for the scarce side), four-step manual creation (the document already fills it), referrers
+                     browsing candidates who didn't ask (consent the research never touched), a long message box (n76).
+Because:             Tied to C2 (complete request), C3 (status back), C4 (referrer effort), and the landscape's gaps.
 How sure:            worked it out
