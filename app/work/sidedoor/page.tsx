@@ -1,4 +1,5 @@
 import { Poppins, Caveat } from "next/font/google";
+import { notFound } from "next/navigation";
 import RubberBackButton from "../../../components/RubberBackButton";
 import CaseStudyTOC from "../../../components/CaseStudyTOCClient";
 
@@ -182,6 +183,9 @@ const decisionH = { ...T.h3, margin: "36px 0 12px 0" } as React.CSSProperties;
 const decisionHFirst = { ...T.h3, margin: "0 0 12px 0" } as React.CSSProperties;
 
 export default function SideDoorCaseStudy() {
+  // Hidden on the live site until the new Sidedoor case study is finished (Devansh, 17 Sep 2026).
+  // Vercel previews still show it. Remove this line when launching from the sidedoor branch.
+  if (process.env.VERCEL_ENV === "production") notFound();
   return (
     <main className={caveat.variable} style={{ padding: "40px 0 96px" }}>
       <CaseStudyTOC />
