@@ -35,9 +35,9 @@ const recentWork = [
     title: "Sidedoor — Job referral platform",
     desc: "0→1 referral platform — research & concept design.",
     tag: "Product Design · 0→1",
-    // Same three colours as before (#d4e2ff, #7aa5fb 45%, #b0caff), eased into and out of each one
-    // so the wide card shows no crease along the 45% line.
-    gradient: "linear-gradient(135deg, #d4e2ff 0%, #c6d9fe 11%, #a7c4fd 22.5%, #88aefc 34%, #7aa5fb 45%, #82abfc 59%, #95b8fd 72.5%, #a8c4fe 86%, #b0caff 100%)",
+    // Same three colours as before (#d4e2ff, #7aa5fb, #b0caff), as soft glows from the two corners over
+    // the mid blue, each fading out gradually so no edge shows. A straight three-stop gradient left a dark diagonal line along its darkest point.
+    gradient: "radial-gradient(110% 130% at 0% 0%, #d4e2ff 0%, rgba(212,226,255,0.72) 22%, rgba(212,226,255,0.38) 45%, rgba(212,226,255,0.12) 68%, rgba(212,226,255,0) 88%), radial-gradient(110% 130% at 100% 100%, #b0caff 0%, rgba(176,202,255,0.72) 22%, rgba(176,202,255,0.38) 45%, rgba(176,202,255,0.12) 68%, rgba(176,202,255,0) 88%), #7aa5fb",
     tooltipBg: "#3d6bc4",
     slug: "sidedoor",
   },
