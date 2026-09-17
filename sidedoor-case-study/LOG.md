@@ -897,3 +897,8 @@ Expected:           Colour alone would make the candidate view match the Job car
 Actually happened:  It looked foreign. V2's coloured blocks carry only a picture; text and tags always sit on white.
 Cost:               one rebuild of four screens
 Now know:           Copy the structure of the matching V2 screen (page, card, banner, title row), not just its colour.
+
+CHANGE · 2026-09-17 · V6 login fix · Source: Devansh ("its broken")
+Seen:     Devansh's view showed Google and Email still labelled "Continue with…", overlapping, and Email taller than Google.
+Found:    In the file the labels were already "Google" and "Email", but both buttons were set to fill the row's height (56) while LinkedIn is 44.
+Changed:  Both buttons fixed at 44 like LinkedIn, labels set again, 12 side padding, row hugs its buttons. Screenshot checked: one row, no overlap.
