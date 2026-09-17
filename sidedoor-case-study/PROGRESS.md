@@ -13,7 +13,7 @@ Updated 17 Sep 2026.
 - [—] **molades-ideate** · not run, on purpose. molades-ai says run it *instead of* ideate when the idea has a model in it, and "never run both"
 - [x] **molades-brief** · BRIEF.md, the plan + one-page Design Brief
 - [x] **molades-language** · DESIGN_LANGUAGE.md + language/test-screen.html
-- [ ] **molades-build** · in progress. Figma V3 copies made; 14 screens done; V0 photos restored
+- [ ] **molades-build** · in progress. Figma V3 copies made; 16 screens done; V0 photos restored
 - [ ] **molades-attack** · break the V3 screens on purpose, then craft and accessibility checks
 - [ ] **molades-build (again)** · fix attack findings one at a time
 - [ ] **molades-test** · no real tests planned. Write the test script anyway and say plainly it wasn't run
@@ -29,12 +29,12 @@ Updated 17 Sep 2026.
 - [x] Your referral requests + Referral request timeline · candidate (5 states: Sent, Referred, Submitted, Not selected, Selected)
 - [x] Your profile from your resume · candidate (one review screen)
 - [x] Post a job from its description · referrer (one review screen)
-- [ ] Jobs + Job · candidate (swipe cards become a list)
+- [x] Jobs + Job · candidate (swipe cards become a list)
 - [x] Update sheet · one tap for current stage ("Seen it move?")
 - [ ] Match check (replaces Premium)
 - [ ] Link page (web, no install)
 - [ ] Edit profile · new fields
-- [ ] Remove cut screens from V3: swipe cards, "Referral Accepted", old Premium (manual 4-step forms done)
+- [ ] Remove cut screens from V3: "Referral Accepted", old Premium (manual 4-step forms and swipe cards done)
 
 ## Other work
 

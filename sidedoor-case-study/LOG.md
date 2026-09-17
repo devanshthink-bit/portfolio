@@ -447,3 +447,21 @@ CHANGE · 2026-09-17 · molades-build
 Changed:    Deleted V3 copies of Candidate/Manual Profile Creation Screen/2–4 and Referrer/Manual Job Creation Screen/2–4. V2 originals untouched. Checked the flow with a screenshot: no stacking.
 Caused by:  BRIEF.md: "Four-step manual profile and job creation → one review screen each".
 Result:     V3 Onboarding: 5 referrer screens, 4 candidate screens.
+
+CHANGE · 2026-09-17 · molades-build
+Changed:    Flipkart job counted as 7 skills everywhere (V2 candidate card: "Matching 4/7 skills"; chips UX Research, Interaction Design, Prototyping, AI-Assisted Design, Design System, Figma, plus A/B Testing from V2's JD). Abhinav 4 of 7; missing AI-assisted design, Design system, A/B testing. Location on the job post: "Bengaluru, KA · Remote or hybrid" (V2 card).
+Caused by:  Self-check before building Jobs: V2's own card said 4/7, my screens said 4 of 6.
+Result:     Numbers agree across Jobs, Job, Check, request list, request, job post.
+
+Note: V2 itself disagrees on Flipkart's skills (JD upload lists UX Research, Prototyping, A/B Testing, User Flows, Figma; the card lists different chips). V3 follows the candidate card.
+
+DECISION · 2026-09-17 · molades-build
+Decided:   Slice 7, V3 Explore candidate side. "Jobs with someone who refers", newest first: each card shows the referrer's photo, job, company, location, experience, "4 of 7 skills match · Nithin refers", when posted. "Job" keeps V2's full job card, match reworded, Skip removed, one button "Ask Nithin for a referral". Explore laid out as two paths: candidate row (Jobs → Job → Check your referral request), referrer row (Referral requests → Referral request → After Refer).
+Rejected:  Swipe cards with Skip / Request Referral (Idea 10 rejected; built for volume).
+Because:   Ask with intent, not by volume (BUSINESS.md quality-as-identity; landscape do-not-inherit).
+How sure:  worked it out. PhonePe and Zomato match counts are V2's.
+
+CHANGE · 2026-09-17 · molades-build
+Changed:    Deleted the 6 remaining V3 swipe copies in Explore (Vanya, Avinash, Aarush, Ayesha short and long). V2 originals untouched. Checked with a screenshot.
+Caused by:  BRIEF.md cut list: swipe cards, both sides.
+Result:     V3 Explore is 6 screens in two rows.
