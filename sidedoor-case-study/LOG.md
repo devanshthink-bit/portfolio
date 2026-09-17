@@ -217,3 +217,13 @@ Changed:             Participants named: Samarth (the Infosys employee, Candidat
 Caused by:           Devansh, 17 Sep 2026: "You can mention the real name. Samarth is the candidate one and refer one. And
                      Riya is candidate 2 and refer 2."
 Result:              Notes use real first names, as the rules ask. Not the same Samarth as in the RedBus research.
+
+DECISION · 17 Sep 2026 · molades-scope
+Decided:             Premium: candidates pay only for tools that help themselves (fit check before asking, profile
+                     feedback). Never to reach, see or jump ahead of referrers. V2's Premium screen becomes a candidate tool.
+Rejected:            Candidates paying to see who wants to refer them (V2 as designed); no candidate payment at all.
+Because:             Devansh: "Whatever is correct and has proper reasoning behind it, so that I can explain and justify
+                     it properly in interviews". AI's reasons: referrers are the scarce side and selling their attention
+                     breaks the quality promise; paying doesn't change a referrer's rule (n50, n76, n77); candidate tools
+                     raise request quality, which moves the North Star (n23, C5); companies already pay for referrals (n62, n87).
+How sure:            worked it out · guessing (that candidates or companies will pay)

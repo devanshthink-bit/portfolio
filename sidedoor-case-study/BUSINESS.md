@@ -44,6 +44,48 @@ limited by its scarce side, so every business decision protects referrers first.
 - **Ads.** Ad models push for time spent in the app (L04, p11). Sidedoor's value is the opposite: a referral done in
   minutes. **worked it out**
 
+### Premium · decided 17 Sep 2026
+
+**Candidates can pay only for tools that help themselves. Never to reach, see or jump ahead of referrers.**
+Devansh asked for the decision with its reasoning; this is it.
+
+**Why, in order of weight:**
+1. **A marketplace is only as good as its scarce side.** Referrers are scarce. If candidates can pay to reach them, the
+   thing being sold is referrers' attention, and referrers get more requests from people who paid instead of people who
+   fit. The quality promise breaks, referrers leave, and there is nothing left to sell. **worked it out**
+2. **Paying doesn't change a referrer's rule.** Samarth refers on skills and experience match (n50); Riya on whether the
+   job ID was shared (n76, n77). A paid badge moves neither. So a paying candidate still gets dropped, and has now paid
+   to hear silence. That costs trust, not just a refund. **worked it out**
+3. **Tools for the candidate raise request quality, which is what the North Star needs.** A fit check before asking
+   (C5; Samarth asked for a match percentage, n23) and profile feedback help the candidate send better requests. Better
+   requests mean more referrals submitted. The paid feature pushes the same way as the strategy instead of against it.
+   **worked it out**
+4. **The people who gain most from better referrals already pay for referrals: companies** (bonuses, n62, n87). They are
+   the natural payer once both sides are on the platform. **guessing** that they would pay a platform
+
+**What it costs:** less candidate revenue early, and a longer road to revenue overall. Candidate tools are a smaller
+product to sell than access. Accepted, because selling access would sell the one thing the marketplace can't replace.
+
+**What changes in Figma V2:** the Premium screen ("Referrers want to connect with you… See who's referring you.
+Subscribe") becomes a candidate tool, for example seeing how well you fit a role before you ask. Settled in molades-brief.
+
+### Say it in an interview
+
+> "Referrers are the scarce side of the marketplace, so I never sell access to them. If candidates could pay to reach
+> referrers, referrers would get requests from people who paid rather than people who fit, and they'd leave. Paying
+> doesn't change a referrer's rule anyway: they refer on skills match or a shared job ID. So candidates pay only for
+> tools that help them send a better request, like checking their fit before asking. That pushes the same number the
+> product is built on. The natural payer long term is the company, which already pays referral bonuses."
+
+**The follow-ups you'll get, and the answer:**
+
+| Question | Answer |
+|---|---|
+| "If it's free, won't candidates spam referrers?" | Spam is controlled by request limits (Idea 3) and complete-request rules, not by price. A price filters for money, not fit |
+| "Why would a candidate pay for a fit check?" | Samarth asked for exactly that (n23). Whether enough people pay is unproven, and I'd say so. It's the first thing to test |
+| "Isn't revenue too late if companies pay only in phase 2?" | Yes, it's later. A two-sided marketplace has to have both sides before anyone pays for it. Charging early would block the side it can least afford to lose |
+| "GetMeReferred charges candidates. Why not you?" | Their model is the pay-to-play bias I noted in my competitor analysis. I chose to protect the referrer's queue instead. Before saying this in a room, check GetMeReferred's current pricing page |
+
 **Why companies:** they are the ones that already value referrals enough to pay bonuses for them, and the thing Sidedoor
 improves (complete, matched referrals) is what they want more of. **guessing** that companies would pay a platform;
 needs sourced evidence of what companies spend on referral programmes.
