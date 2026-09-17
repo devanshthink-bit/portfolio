@@ -521,3 +521,22 @@ CHANGE · 2026-09-17 · molades-build
 Changed:    Deleted V3 copies of Candidate/Edit Profile Screen/1–4. V2 originals untouched.
 Caused by:  Slice 10.
 Result:     First build pass complete. Next: molades-attack.
+
+CRITIQUE · 2026-09-17 · molades-build · Source: self
+Said:     "The new screens don't match the existing design language. They don't feel part of this app."
+Checked:  Measured V2 (Track Referrals 1198:8792, Track details 1247:5475, Add your experience 1054:5510) against new V3 screens (Referral requests, Referral request, Check your referral request). Same tokens (Inter, colours, radius 12, elevation-1, padding 16), different patterns:
+  1 Titles: V2 centred (in the top bar, or centred title + subtitle). New: left-aligned 20/600 titles in the body, with a caption line above.
+  2 Section labels: V2 puts an icon + 14/600 label above a card ("Current Location", "About", "Work Experience ✎"). New: headings inside cards with a caption on the right.
+  3 Callouts: V2 has none; it uses white cards with shadow, #FAFAFA inputs with shadow, or a small Tag. New: flat grey #F0F1F2 and amber #FFFBEB boxes with no shadow.
+  4 Status: V2 shows a coloured Tag plus time with a refresh icon. New: plain text lines, time with no icon.
+  5 Icons: V2 uses blue filled checks and outline circles for progress, a green verified shield after names, one small edit icon per section. New: green checks, grey x icons, no shield, a large grey pencil on every row.
+  6 Detail rows: V2 lists are single 14/600 lines. New: two-line rows with a blue "From resume" line under each.
+  7 Spacing: V2 content starts 24 below the header; new 16. People avatars V2 44, new 40 and 56.
+Action:   Fix across V3 (pending Devansh's go-ahead). Add a "V2 patterns" section to DESIGN_LANGUAGE.md so new screens use them.
+
+LEARNED · 2026-09-17 · molades-language
+Tried:              Matching V2 with a generic test screen (header, cards, field, buttons, empty, error) and 6 token checks.
+Expected:           Matching tokens would make new screens feel native.
+Actually happened:  Tokens matched, but V2's patterns (centred titles, labels above cards, tags for status, no tinted boxes, blue progress checks) weren't in the test, so new screens used generic patterns. Devansh saw it before any check did.
+Cost:               a fix pass over the V3 screens
+Now know:           For a design that already exists, extract its patterns, not only its tokens, and compare real screens side by side.
