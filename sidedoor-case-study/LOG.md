@@ -476,3 +476,8 @@ CHANGE · 2026-09-17 · molades-build
 Changed:    Deleted "V3 · Premium Flow" and "V3 · Matching Flow" (Referral Accepted screens and the Share Resume sheet). Removed the "SideDoor Premium" menu card from the 3 V3 profile screens. BUSINESS.md, BRIEF.md and PROGRESS.md updated. V2 originals untouched.
 Caused by:  Premium dropped (above); BRIEF.md: "Referral Accepted" folds into the timeline, the share sheet becomes the portal-ready details (built in After Refer).
 Result:     V3 has 9 flows. Nothing in V3 mentions Premium (checked by search).
+
+CHANGE · 2026-09-17 · molades-build
+Changed:    BUSINESS.md Premium update now carries the full reasoning (4 reasons with how-sure tags), when to revisit, and an interview line.
+Caused by:  Devansh, 17 Sep: "Did you write the reasoning why premium was dropped?" The first note had one short reason only.
+Result:     The call is Devansh's; the reasons are marked worked out / guessing for him to check.

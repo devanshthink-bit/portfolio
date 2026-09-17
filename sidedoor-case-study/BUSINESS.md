@@ -46,10 +46,25 @@ limited by its scarce side, so every business decision protects referrers first.
 
 ### Premium · decided 17 Sep 2026
 
-> **Update, 17 Sep 2026 · Devansh: drop Premium for now.** No paid candidate tool in V3. The rule below still holds:
-> if candidates ever pay, it is only for tools that help themselves, never access to referrers. Revenue for now is
-> Phase 2, companies. Reason for dropping: the free app already shows the match on every job, so a paid tool would
-> need to be something new (e.g. match on any job link, or fix tips). Not worth designing before the core works.
+> **Update, 17 Sep 2026 · Devansh: drop Premium for now.** No paid candidate tool in V3.
+>
+> **Why dropped** (Devansh made the call; the reasons below are worked out, for him to check):
+> 1. **The old Premium sold access to referrers.** Rejected above: it breaks the scarce side.
+> 2. **The obvious replacement is already free.** Every job and request shows "4 of 7 skills match". A paid match
+>    check would sell what the free app gives away, or need a new tool nobody has asked for. **worked it out**
+> 3. **It's too early to charge candidates.** Phase 1 is free on purpose: the product needs referrers and complete
+>    requests first. A paywall now means fewer requests, fewer referrals submitted, a lower North Star.
+>    **worked it out**
+> 4. **Companies are the better payer later.** They already pay for referrals through bonuses (n62, n87). **guessing**
+>    that they'd pay a platform
+>
+> **What stays:** the rule. If candidates ever pay, only for tools that help themselves, never access to referrers.
+> **When to revisit:** once referrers reply to most complete requests; then test a candidate tool (e.g. match on any
+> job link, or fix tips) against the North Star.
+>
+> **Say it in an interview:** "I cut Premium. The old version sold access to referrers, the scarce side. The fair
+> version, a match check, was already free in the product. And charging candidates before the marketplace works would
+> cut the requests the product depends on. Money comes from companies later, who already pay for referrals."
 
 **Candidates can pay only for tools that help themselves. Never to reach, see or jump ahead of referrers.**
 Devansh asked for the decision with its reasoning; this is it.
