@@ -315,3 +315,8 @@ DECISION · 2026-09-17 · molades-build
 Decided:   Existing V2 screens stay untouched. All screens are copied below them after a gap, and changes happen only in the copies.
 Because:   V2 is kept as a backup and shown as an iteration in the case study.
 How sure:  saw it (Source: self)
+
+CHANGE · 2026-09-17 · molades-build
+Changed:    All 11 V2 flows duplicated in Figma V2 file (page "UI Screens"), 14,218px below the originals, named "V3 · <flow>", with a "V3 — redo from research" label above. V2 frames not touched (checked: 11 originals, 11 copies).
+Caused by:  Devansh, 17 Sep: keep V2 as a backup and as an iteration for the case study.
+Result:     All V3 edits happen in the copies only.
