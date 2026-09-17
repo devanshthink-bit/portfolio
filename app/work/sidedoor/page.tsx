@@ -8,6 +8,7 @@ import { T, SectionLabel, Card, MetaStrip } from "../../../components/caseStudy"
 const poppins = Poppins({ weight: "700", subsets: ["latin"] });
 // The handwritten face for the story lines between screens.
 const caveat = Caveat({ subsets: ["latin"] });
+const handQuote = { fontSize: 22, fontWeight: 500, color: "var(--text-primary)", lineHeight: 1.55, margin: 0 } as React.CSSProperties;
 
 // Sidedoor's brand colours, as tokens in globals.css: referrers blue, candidates green.
 const BLUE = "var(--sd-blue)";
@@ -202,7 +203,7 @@ export default function SideDoorCaseStudy() {
         &quot;will check&quot; reply. Nothing more.
       </p>
       <ToneCard tone="candidate" style={{ margin: "32px 0" }}>
-        <p style={T.quote}>
+        <p className={caveat.className} style={handQuote}>
           &quot;I don&apos;t even know if they submitted it. I have no way to track it.&quot;
         </p>
         <p className="sd-tone-text" style={{ ...T.small, color: undefined, fontWeight: 500, marginTop: 8 }}>— Candidate, interview</p>
@@ -467,7 +468,7 @@ export default function SideDoorCaseStudy() {
         ].map((item) => {
           const inner = (
             <>
-              <p style={T.quote}>&quot;{item.quote}&quot;</p>
+              <p className={caveat.className} style={handQuote}>&quot;{item.quote}&quot;</p>
               <p className={item.tone ? "sd-tone-text" : undefined} style={{ ...T.small, color: item.tone ? undefined : T.small.color, fontWeight: 500, marginTop: 8 }}>— {item.who}</p>
             </>
           );
