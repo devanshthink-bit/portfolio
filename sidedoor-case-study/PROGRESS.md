@@ -16,6 +16,7 @@ Updated 17 Sep 2026.
 - [x] **molades-build** · first pass done. Figma V3 copies made; 24 screens done; V0 photos restored
 - [x] **Product and growth review** · PRODUCT_REVIEW.md (AARRR, drop-offs, events, dashboards)
 - [x] **V4 build** · 11 P1 fixes built, 43 screens; ITERATIONS.md (V2 → V3 → V4)
+- [x] **V5** · shared background (borrowed, research-backed) + full design audit, 41 screens clean; 4 borrowed ideas logged as not built
 - [ ] **molades-attack** · break the V3 screens on purpose, then craft and accessibility checks
 - [ ] **molades-build (again)** · fix attack findings one at a time
 - [ ] **molades-test** · no real tests planned. Write the test script anyway and say plainly it wasn't run

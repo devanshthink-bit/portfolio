@@ -1,7 +1,7 @@
 # Sidedoor · iterations
 
-For the case study. Each version keeps the one before it untouched in Figma (V2 file, "UI Screens": V2 on top, V3
-below, V4 below that). Full reasoning for every change is in LOG.md, dated.
+For the case study. Each version keeps the one before it untouched in Figma (V2 file, "UI Screens": V2 on top, then
+V3, V4 and V5 below). Full reasoning for every change is in LOG.md, dated.
 
 ---
 
@@ -68,6 +68,29 @@ side, so the curve that decides product-market fit is referrer retention. Review
 
 **Honest limit:** nobody has used V3 or V4. Every V4 change is reasoned from the research and the business model, and
 each comes with the metric that would prove or disprove it (PRODUCT_REVIEW.md, section 7).
+
+---
+
+## V5 · one borrowed idea, and a full design audit
+
+**Question:** could features from Cutshort, Instahyre, LinkedIn, Naukri or Indeed make Sidedoor better? Test for a
+must-have: the research shows the pain, V4 doesn't already solve it, and it serves the problem.
+
+| Idea (borrowed from) | Evidence in our research | Decision |
+|---|---|---|
+| **Shared background: "Both ex-MakeMyTrip", "Same college"** (LinkedIn, people you know at a company) | Strong: n03, n16, n02 (candidate goes to their circle first); n69 (referrer: "for known people, I always take that pain"); cluster C1 | **Built** on Jobs, Referral requests and Referral request |
+| "Usually answers in 2 days" (Indeed) | Some: n37, n30 | Later: needs reply data |
+| "Opened" status (Naukri) | Some: n35 | Not now: V4 handles silence; "opened, then nothing" can hurt |
+| Follow a company (LinkedIn, Naukri alerts) | None | Later |
+| Open the company's referral portal (one-tap apply) | Weak | Skipped |
+| Profile strength meter, reviews and salaries, skill tests, paid boosts | Against the strategy or out of scope | Rejected |
+
+*Competitor features are from memory; verify on the live products before quoting.*
+
+**Design audit.** Every V5 screen checked by script and by eye against DESIGN_LANGUAGE.md. Fixed 8 things: placeholder
+icons on info notes, a share icon that read as "open website", one screen laying out details differently from the rest,
+capitalisation, a squeezed "Still needed" note, and editing a job post still using V2's 3 steps while posting was one
+screen. Re-check: 41 screens clean.
 
 ---
 

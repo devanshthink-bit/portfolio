@@ -653,3 +653,44 @@ How sure:  guessing that thanks move retention; worked it out that bonuses don't
 CHANGE · 2026-09-17 · V4
 Changed:   All 11 P1 fixes built in V4. Checked: 43 V4 screens, no stacked, hidden, out-of-frame or overlapping screens. V3 untouched.
 Result:    ITERATIONS.md written: V2 → V3 → V4 with reasons, for the case study.
+
+CHANGE · 2026-09-17 · V5
+Changed:   All V4 flows and label duplicated 16,344px below V4 as "V5 · <flow>". V4 untouched.
+Caused by: Devansh, 17 Sep: new version for the borrowed-idea change and a full design audit.
+
+DECISION · 2026-09-17 · V5 · Shared background, borrowed from LinkedIn's "people you know at this company"
+Changed:   Jobs (and Jobs for skippers): "Both ex-MakeMyTrip" tag on Nithin's job. Referral requests: "Both ex-MakeMyTrip" on Abhinav, "Same college" on Arpita. Referral request: "In common · Both worked at MakeMyTrip. From your profile and their resume. You were there 2021–22, they were there 2022–23."
+Rejected:  Ranking requests by shared background (would push strangers down and hide fit); a separate "connections" screen.
+Because:   The strongest pattern in the research that V4 didn't address. Samarth (as candidate): "The first instinct is to look within your circle if you have mutual connections… That works out very well." (n03); after being ghosted, thought they "should have tried harder to find mutual connections instead" (n16); last success came through a college junior (n02). Riya (as referrer): "For friends, for known people, I always take that pain." (n69). C1 is named "the only route that works is people they already know". Shared background makes a stranger's request less cold, using data already in resumes and profiles.
+Metric:    request-to-referral rate for requests with vs without shared background; request_opened rate by the same split.
+How sure:  saw it (research pattern); worked it out (that a tag moves behaviour). Nithin's MakeMyTrip years and Arpita's college are sample data. Needs referrers' past companies and colleges in their profile.
+
+DECISION · 2026-09-17 · V5 · Borrowed ideas considered and not built
+1 "Usually answers in 2 days" (Indeed's responsive employer): some evidence (candidates pursue whoever replies, n37; 80% don't reply, n30). Not now: needs reply data a new product doesn't have; can shame slow referrers. Revisit once there's 4+ weeks of reply data.
+2 "Opened" status (Naukri's viewed by recruiter): some evidence (silence read as no, n35). Not now: V4 already shows stages and handles 7 days of silence; "opened, then nothing" can hurt more than silence.
+3 Follow a company for alerts (LinkedIn/Naukri job alerts): no research evidence; a business idea for returning. Later, once enough companies have referrers.
+4 Open the company's referral portal (one-tap apply): weak evidence; nobody complained about finding the portal, the pain was job ID and details (n59 n60 n70 n76). Skipped.
+5 Profile strength meter (Naukri/LinkedIn): rejected, profile completion is a vanity metric (BUSINESS.md). Company reviews/salaries (Indeed/Naukri): out of scope. Skill tests (Indeed): extra work nobody asked for. Paid boosts (Naukri/LinkedIn Premium): same "pay for access" cut in V3.
+Because:   Must-have test: the research shows the pain, V4 doesn't already solve it, and it's needed for the problem. Only shared background passed on evidence.
+Note:      Competitor features are from memory, not checked on the live products on 17 Sep. Verify before quoting them in the case study.
+
+CRITIQUE · 2026-09-17 · V5 design audit · Source: self ("no screen should look even a little bit alien")
+Checked:   Every V5 screen (41) by script (Inter only, text styles, colour tokens, radius scale, shadow styles, avatar sizes, flat tinted boxes, stacked/outside/overlap) and by eye, flow by flow.
+Found and fixed:
+  1 Info notes showed V2's empty placeholder circle instead of the info icon (8 tags) → information icon
+  2 Share icon was an external-link arrow (reads as "open website") → link icon, same as "Your link"
+  3 Check your referral request listed details as label left / value right; every other screen stacks label over value → stacked
+  4 Share sheet "Copy Link", "Whatsapp" → "Copy link", "WhatsApp" (sentence case, brand spelling)
+  5 Check your job post: "Still needed" tag and its note sat squeezed side by side → stacked under the Job ID field
+  6 "Drop your Resume" (capital R) → "Drop your resume"
+  7 Login helper line had a hard-coded colour; Your referrals caption had no text style → tokens and label/sm
+  8 Editing a job post was still V2's 3 steps ("Edit Referral", Step 1 of 3, Go Live) while posting is one review screen → one "Edit your job post" screen: job ID filled, same sections, "Saving checks the match again for requests already in.", Save changes. V5 copies of the 3 steps deleted.
+Left as V2 on purpose: Job screen card radius 25, Manage posts status tags, referrer Edit Profile avatar 94 (V2's own components).
+Result:    Re-run: 41 screens, no token, style, radius, font, layout or overlap issues.
+
+LEARNED · 2026-09-17 · V5
+Tried:              Switching the details rows from side-by-side to stacked in place.
+Expected:           Same text, new layout.
+Actually happened:  The value text collapsed to zero width and disappeared until each text was set to fill and wrap.
+Cost:               one pass
+Now know:           When changing a layout's direction, reset the children's sizing too, then look at the screenshot.
