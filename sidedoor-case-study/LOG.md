@@ -936,3 +936,18 @@ CHANGE · 2026-09-17 · V6 status tags still cut · Source: Devansh ("They are s
 Found:    The fresh tag didn't help, so the tag wasn't the problem. In Devansh's screenshot the row ends about 48 px early, at 302 wide: the green card's inner width. The Person row frame had been moved into the green card and back out; Devansh's editor kept its old width, so the tag was squeezed.
 Changed:  On After Refer and Marked as submitted, built new Person rows (new frame, new name-and-role column) and moved the avatar, texts and tag into them; old frames deleted.
 LEARNED:  Moving an auto-layout frame between parents of different widths can leave a stale width in other editors. Build new frames when moving layout between containers.
+
+DECISION · 2026-09-17 · V6 (in place) · Green banner: photo, then name
+Asked:    Devansh: in the green banner, show only the photo and the name, photo first, name in a fitting size.
+Decided:  Banner holds the photo (88) with the name under it (text/heading/md, dark). Below the banner, one row: role on the left, status tag on the right. Nothing else on the green.
+Because:
+  - The Flipkart banner shows the company's logo, which is its name. For a person, the photo alone doesn't say who it is; photo plus name is the person's equivalent of a logo. (worked it out)
+  - Still no tags, links or small text on colour, which is what looked foreign before. One dark heading on #10B981 is about 6:1. (worked it out)
+Built as new frames and fresh instances, not moved ones (LEARNED earlier today: moved frames showed stale sizes in Devansh's editor).
+
+CHANGE · 2026-09-17 · V6 green banner: photo then name, built fresh
+Changed (Referral request, Not enough to judge):
+  - New banner frame: fresh avatar instance (88, same photo and shadow) with the name under it (text/heading/md, text/primary, centred), 12 apart, banner still 175 tall.
+  - New row under the banner: role (text/label/md, text/secondary) left, fresh status Tag right.
+  - Old banner and title frames deleted.
+Checked: screenshot; Explore flow fit and overlaps.
