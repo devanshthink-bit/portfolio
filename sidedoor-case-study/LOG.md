@@ -545,3 +545,15 @@ CHANGE · 2026-09-17 · molades-build
 Changed:    Rebuilt 3 V3 screens with V2 patterns (DESIGN_LANGUAGE.md, V2 patterns): Referral requests (title in the top bar, section label with job ID tag, person cards with 44 avatar, verified shield, label/md role, match Tag, refresh-icon time), Referral request (person row + tag, "How they match" label above a timeline-style card with blue checks and empty circles, info tag, note and resume in #FAFAFA boxes), Check your referral request (centred title + subtitle, person row, "Still needed" as a Buffer tag on the field label, details in one #FAFAFA box with one edit icon, no per-row pencils, requests-left as an info tag). Same content, same words.
 Caused by:  CRITIQUE 17 Sep (Source: self): new screens didn't feel part of the app.
 Result:     Side by side with V2 Track Referrals, Track details and Add your experience, the three read as one app. Remaining V3 screens to redo the same way after Devansh confirms.
+
+CHANGE · 2026-09-17 · molades-build
+Changed:    Every remaining new V3 screen rebuilt with V2 patterns (DESIGN_LANGUAGE.md, V2 patterns). Explore: Jobs, Referral requests empty, After Refer, Not enough to judge, Marked as submitted, Not moving forward sheet. Updates: Your referrals (record and groups as icon labels with tags), Seen it move sheet (options as a timeline-style card). Tracking: status sentences as icon labels, "Heard from Google?" in a #FAFAFA box with shadow. Onboarding: Check your details, Check your job post. Edit: Edit your details. Link page: all 3 screens. Same content and words; referrer role shown as "Design Manager, Flipkart" with the job in a tag.
+Caused by:  CRITIQUE 17 Sep (Source: self); Devansh: "Do all the screens first."
+Result:     Scan of all V3 flows: no flat tinted callout boxes left (only V2's own tags), no per-row pencils, no stacked, hidden or overlapping screens.
+
+LEARNED · 2026-09-17 · molades-build
+Tried:              Giving a rebuilt section a white fill bound to the surface colour.
+Expected:           White background.
+Actually happened:  Two screens rendered the section black, and the screens behind were V2's grey, not white like V2's list screens.
+Cost:               two small passes
+Now know:           Copy fills from a V2 screen that already looks right instead of rebuilding them.
