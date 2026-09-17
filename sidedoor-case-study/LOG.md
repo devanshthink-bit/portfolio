@@ -392,3 +392,15 @@ CHANGE · 2026-09-17 · molades-build
 Changed:    After Refer screen moved to its own spot (x 2364). It had been placed on top of the Referral Request screen in slice 2.
 Caused by:  Found while placing this slice: two screens at the same position.
 Result:     No overlapping screens in V3 Explore.
+
+LEARNED · 2026-09-17 · molades-build
+Tried:              Placing new screens by setting x and y inside V3 Explore.
+Expected:           Each screen at its own spot.
+Actually happened:  Explore is a grid frame. It ignores x and y, so Check your referral request, Referral request and After Refer all sat stacked in one cell. Devansh couldn't find the screen; his screenshot showed the stack. My earlier "overlap fixed" was wrong: I checked the numbers, not the picture.
+Cost:               one round with Devansh
+Now know:           In a grid frame, place screens by row and column. Check with a screenshot of the whole flow, not the x/y values.
+
+CHANGE · 2026-09-17 · molades-build
+Changed:    V3 Explore row 2 now reads: Job screens (2), Check your referral request, Referral request, After Refer, Ayesha's card (still to cut).
+Caused by:  Devansh, 17 Sep: "where?" with screenshot.
+Result:     All three new screens visible side by side (checked with a screenshot).
