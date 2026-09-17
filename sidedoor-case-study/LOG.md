@@ -951,3 +951,8 @@ Changed (Referral request, Not enough to judge):
   - New row under the banner: role (text/label/md, text/secondary) left, fresh status Tag right.
   - Old banner and title frames deleted.
 Checked: screenshot; Explore flow fit and overlaps.
+
+CHANGE · 2026-09-17 · V6 green banner: side by side, white name · Source: Devansh
+Asked:    "Not top-down. Image on the left, name after that. The whole thing should look centred. Keep the name text in white."
+Changed (Referral request, Not enough to judge): banner is now a centred row: photo 72 on the left, name on the right 16 apart, banner still 175 tall. Name uses color/text/onBrand (the file's own white-on-brand token).
+Risk, told to Devansh: white on #10B981 is about 2.5:1. At 20 px semibold that is under the 3:1 minimum for large text, so the name may be hard to read in sunlight or for low-vision users. Options if it's a problem: a darker brand green behind the name, or 24 px bold (still under 3:1 on this green). (worked it out)
