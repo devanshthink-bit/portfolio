@@ -93,6 +93,13 @@ says it doesn't verify identity. So it's there for familiarity (candidates and r
 LinkedIn, n04 n29 n56), not for data. Resume upload and work-email verification stay. Verified on LinkedIn can't be used
 to rank candidates, so it's noted as a possible extra trust signal for referrers only.
 
+**Profile on the referral request, corrected.** Devansh noticed V3 had made the candidate profile plain and asked for
+only what's correct, not what he'd designed. Judged each V2 piece against what referrers check (n50 n53 n56 n59). Brought
+back experience (with logos and dates), projects (titles and skill chips, details collapsed), quick facts and links,
+because they are the evidence a referrer reads. Left out the green tagline card, About and the full skills list,
+because they are pitch or repetition, not evidence. *Learned: V3 over-corrected. Cutting a volume pattern (swipe) is
+not a reason to cut the content inside it.*
+
 **Design audit.** Every V5 screen checked by script and by eye against DESIGN_LANGUAGE.md. Fixed 8 things: placeholder
 icons on info notes, a share icon that read as "open website", one screen laying out details differently from the rest,
 capitalisation, a squeezed "Still needed" note, and editing a job post still using V2's 3 steps while posting was one

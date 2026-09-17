@@ -711,3 +711,14 @@ Because:   The asking already happens on LinkedIn (n04, n29) and referrers check
 Metric:    signup_completed(method: linkedin / google / email) and onboarding completion by method.
 How sure:  saw it (docs); worked it out (that it lifts sign-up).
 Later, not built: (a) an optional "LinkedIn profile link" field the candidate pastes, shown to referrers as "View LinkedIn profile" (backed by n56); (b) Verified on LinkedIn Lite as a second trust signal for referrers, never for ranking candidates.
+
+CRITIQUE · 2026-09-17 · V5 · Source: self
+Said:     "The candidate profile was designed very beautifully by me, but right now you made everything plain. Any reason?" Then: "I wanted to do the correct things only. Don't do it just because I have done it."
+Checked:  Every piece of V2's candidate card against one test: does it help the referrer decide whether to put their name on this person? Evidence: skill match 50–70% and experience "non-negotiable", reads the resume to check experience shows the skills (n50); scans LinkedIn profile and resume (n56); refers borderline people sometimes (n53); portal fields (n59).
+Found:    V3–V5 had over-corrected. The request screen was detailed about the match but thin about the person: the evidence referrers read (experience, projects) was reduced to a PDF link.
+
+DECISION · 2026-09-17 · V5 · Referral request shows the evidence, not the pitch
+Changed:   V5 Referral request (edited in place). Order: person + In common → quick facts (location, years, notice period) → How they match → Experience (V2's experience block: company logos, roles, dates) → Projects (V2's project block: titles + skill chips; bullet details collapsed behind "Show project details") → Resume and links (resume + LinkedIn, Dribbble, Behance icons) → Their note → Not moving forward / Refer. Not enough to judge version: quick facts + a one-line experience, no projects (shows what a thin resume looks like).
+Kept out:  Green tagline quote card (puts the candidate's pitch above the evidence in the loudest style; referrers' irritation is about missing basics like the job ID, n76, not missing pitch). About paragraph (self-description, not evidence; no referrer mentioned it). Full skills list (repeats the match section, adds skills the job doesn't need). 9.4 Strong Fit, Skip / Refer Candidate, bookmark (cut since V3).
+Because:   Experience is the non-negotiable check and projects are where a skill is proven (n50); LinkedIn is part of the referrer's routine (n56); collapsed details serve borderline calls (n53) without burying the decision. Reused V2's own blocks, so it looks like the app.
+How sure:  worked it out from saw-it evidence. Portfolio links are reasoned for design roles, not from research. Project skill chips run off the right edge, as in V2 (horizontal chip row).
