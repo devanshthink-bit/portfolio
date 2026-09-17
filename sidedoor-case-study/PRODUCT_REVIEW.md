@@ -172,6 +172,10 @@ Named `object_action`. Each carries `user_role`, `user_id`, `session_id`, `platf
 **Link page (web)**
 `link_opened` · `link_resume_uploaded` · `link_request_sent` · `app_install_tapped`
 
+**Suggested candidates**
+`findable_turned_on` / `_off` · `suggestion_shown` · `candidate_invited` · `invite_opened` · `invite_request_sent` ·
+referred rate for invited vs asked requests. Guardrail: `findable_turned_off`
+
 **Dashboards**
 1. **Referrer retention curve** by weekly cohort (PMF signal)
 2. **Candidate activation funnel:** signup → resume → jobs viewed → request sent (complete), with skip vs no-skip split

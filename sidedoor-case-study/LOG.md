@@ -785,3 +785,33 @@ Expected:           Cutting the wrong patterns keeps the good parts.
 Actually happened:  Cuts took good parts with them: the referrer's own details, drafts, tips, experience and projects for the candidate to check, salary on job cards, saved jobs under a weekly cap, messaging after Refer, status tabs, the Selected celebration. Devansh saw it on one screen and asked for the whole app.
 Cost:               a full carry-over pass
 Now know:           When replacing a design, list everything the old one did and decide each item on evidence, both what to cut and what to keep. A cut needs a reason as much as an addition does.
+
+CRITIQUE · 2026-09-17 · Referrers only wait for requests · Source: Devansh
+Said:     "Why restrict referrers from seeing any candidate and waiting for a candidate? They would have no incentive. They should have the freedom to pick from the curated, high-quality candidates whose skills and other things match."
+Checked:  BUSINESS.md strategy decision 2 already says "Referrers see only candidates who match their roles (Idea 1, AI curation)". BRIEF narrowed that to ordering requests that were already sent, and put "Referrers browsing candidates who didn't ask" in Not in this project. That narrowing was mine, not the research's.
+
+DECISION · 2026-09-17 · V6 (in place, Devansh asked: "build in v6 only") · Suggested candidates for each job post
+Decided:  Referrers see "Suggested for this job" on the requests list: the top matches (not a feed) among candidates who turned on "Let referrers find me". "Invite to request" sends the candidate a notice; one tap sends a complete request, which lands in the same list and flow. Reverses the BRIEF cut "Referrers browsing candidates who didn't ask".
+Because:
+  - The business strategy already promised curated candidates to referrers (BUSINESS.md, decision 2). Only waiting leaves the referrer nothing to do between requests. (worked it out)
+  - Samarth asked for "an automated matching score or feedback on whether a candidate matches a job profile" (n65) and would refer a complete stranger who meets the criteria (n64). (saw it)
+  - Riya wants to refer people who actually join (n89). Picking lets them choose on that. (worked it out)
+Shaped by what pushes back:
+  - Bonus is not a strong pull: "not my primary objective" (n62), "very low" (n87). "Earn more bonuses" is n92, Devansh's note, not a referrer's words. So the screen sells better matches, not more bonuses. (saw it)
+  - No referrer said they want to go looking. Their pain is work after saying yes (n60 n70 n76). So picking is one tap, and the candidate fills nothing: the invite becomes a complete request from their saved details. (saw it)
+  - Consent: a referrer only sees candidates who turned the switch on, and it starts off. The research never covered this; it is a guard, not a finding. (worked it out)
+  - Top matches only (5 or fewer shown), not everyone: n65 asked for matching, and an endless list is the open-inbox problem again. (worked it out)
+  - Riya feels "obligated" when a candidate took pain, like sharing the job ID (n77). An invite skips that signal; the complete details and job ID on the request stand in for it. (worked it out)
+  - An invite does not use one of the candidate's 5 weekly requests: the referrer asked, so the cap's job (protecting referrers) isn't needed. (worked it out)
+Screens:  Edit your details (switch) · Referral requests for this job (Suggested section, one card shows Invited) · new candidate screen "Nithin suggests you for this job".
+Test:     `candidate_invited`, `invite_accepted`, then referred rate for invites vs requests candidates sent. If invites are referred less often, the idea is wrong. Guardrail: candidates turning the switch off. (guessing until measured)
+
+CHANGE · 2026-09-17 · V6 (in place) · Suggested candidates built (see DECISION "Suggested candidates for each job post")
+Changed:
+  - Referral requests (referrer): new "Suggested for this job" section below Lower match, with the lightbulb icon and the subtitle "They match this job and chose to be found." Two cards reuse the request card: Shreya Verma with a blue "Invite" link where the time sits, and Advika Singh with a neutral "Invited" tag. Requests from people who asked stay on top: they already did the work (n77).
+  - Candidate Profile, both states: V2's "Profile Status" switch renamed "Let referrers find me" (LIVE / PAUSED tags kept).
+  - New candidate screen "Job Screen/Suggested By Referrer": a copy of the Job screen with the title "Nithin suggests you for this job", the subtitle "Your details are ready. Sending won't use one of your 5 requests this week." and the button "Send my request to Nithin".
+Moved from the decision:
+  - The switch went on Profile, not Edit your details. V2 already had a "Profile Status" switch on Profile, and in V2 it meant "show my profile to referrers in Explore". That is this feature, so reusing the row is a carry-over, not a new pattern. (saw it in V2)
+Design language: only existing parts were used (request card, Section Label, Tag, the blue text link from "Lower match", the Job card, the Headline block from Edit your details, the Switch row). No new colours or styles.
+Checked: every new text has a text style; screens fit their flow frame; no overlaps; the Explore section was grown by 264 px to fit the taller Job copy.

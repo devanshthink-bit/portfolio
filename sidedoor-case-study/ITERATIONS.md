@@ -132,6 +132,22 @@ update; referrer list tabs (waiting-first is action-first); 4-step onboarding; P
 
 *Learned: a cut needs a reason as much as an addition does.*
 
+**Suggested candidates (added to V6).** Devansh asked why referrers only wait for requests. The business plan
+already promised referrers curated candidates; I had narrowed it to sorting requests. Now each job's request list has
+"Suggested for this job": the top matches among candidates who turned on "Let referrers find me" (V2's own Profile
+Status switch, reused). "Invite" sends the candidate the job with "Nithin suggests you for this job", and one tap sends
+a complete request that doesn't count against their 5 a week.
+
+| Shaped by | What it changed |
+|---|---|
+| Referrers asked for matching (n65) and refer strangers who meet criteria (n64) | Suggestions are matches, not a feed |
+| Bonus isn't the main reason to refer (n62, n87) | The screen offers better matches, not more bonuses |
+| Referrers' pain is work after yes (n60, n76) | An invite becomes a complete request; the referrer fills nothing |
+| Candidates never agreed to be browsed | Only people who turned the switch on show up |
+| Effort from the candidate earns goodwill (n77) | People who asked stay above suggestions |
+
+*Test: are invites referred as often as requests candidates send? If not, the idea is wrong.*
+
 ---
 
 ## Say it in an interview

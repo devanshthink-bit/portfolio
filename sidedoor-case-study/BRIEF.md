@@ -246,8 +246,8 @@ and every notification.
 - **"Referral Accepted" full-screen match (Match)** → folded into the request's timeline. A referral isn't a match; the
   job isn't done until it's submitted
 - **Premium "Referrers want to connect with you"** → **cut** (17 Sep: Devansh dropped Premium for now; BUSINESS.md, Premium)
-- **Referrer browsing candidates who didn't ask** → not in this project. It needs candidate consent the research never
-  touched, and it's the open-inbox problem the other way round
+- **Referrer browsing candidates who didn't ask** → **brought back as "Suggested for this job"** (17 Sep, Devansh). Only
+  candidates who turned on "Let referrers find me", top matches only, and an invite becomes a complete request (LOG.md)
 - **Four-step manual profile and job creation** → one review screen each, filled from the document (AX Spec)
 
 ## Where they hang off the existing product
@@ -468,7 +468,7 @@ since missing details are saved the first time.
 - **Anything a company or recruiter uses** (phase 2, BUSINESS.md)
 - **Reading or writing a company's portal** (no access, n46)
 - **Referrer rewards, like credits for accepting requests** (Landscape, open question 4)
-- **Referrers browsing candidates who didn't ask**
+- **Referrers browsing everyone** (a feed of all candidates). Suggested top matches who opted in are in (17 Sep)
 - **Predicting a candidate's chance of being selected** (AX Spec)
 - **Interview preparation and resume writing**
 
