@@ -7,7 +7,7 @@
 
 Bet:        employees drop strangers' referral requests because the request makes them do the candidate's work, not because they won't help (SCOPE v2, draft)
 Evidence:   thin. 4 real interviews (2 candidates, 2 referrers) and desk research without source links
-Files:      SCOPE.md [x] v2 draft, v1 kept · RESEARCH.md [x] notes, sort, five clusters, jobs, insights, three candidate problem statements · BRIEF.md [ ] · DESIGN_LANGUAGE.md [ ] · build [ ] Figma V2 exists, not a coded build · live [ ]
+Files:      SCOPE.md [x] v2 draft, v1 kept · BUSINESS.md [x] draft · RESEARCH.md [x] notes, sort, five clusters, jobs, insights, three candidate problem statements · BRIEF.md [ ] · DESIGN_LANGUAGE.md [ ] · build [ ] Figma V2 exists, not a coded build · live [ ]
 Rounds:     1. Mentor's critique (the product and referrer incentive). No change has come from it yet
 Open:       business lens with sources, first names for the four participants, source links for desk research,
             live case study still shows AI-sourced quotes and screens that aren't in Figma
@@ -173,3 +173,28 @@ Layer:               the bet
 Action:              saved as Idea 1–4 in SCOPE.md for molades-ai. Not evidence until the conversation is written down
                      (who, and what they said). Checked against the notes: the AI match is backed as a wish (n65, n23);
                      "more bonuses" is in tension with n87; request limits can't rest on spam (n19, n61).
+
+DECISION · 17 Sep 2026 · molades-scope
+Decided:             BUSINESS.md, built with the mentor's Product Anatomy slides (PAM04 L01–L04, PAM05 L03). Business
+                     model: two-sided marketplace, referrers are the scarce side. Free for both sides first; companies pay
+                     later; candidates may pay only for tools that help themselves. Strategy: quality-as-identity, every
+                     request reaching a referrer is complete and a real fit. NSM: referrals submitted per active referrer
+                     per month. Input metric: request-to-referral rate. Guardrail: referrers turning off requests or
+                     leaving must not rise. Four loops: two acquisition, one engagement, one monetisation.
+Rejected:            Candidates paying to see or reach referrers (V2 Premium; sells access to the scarce side, the
+                     pay-to-play bias FigJam criticised). Referrers paying (kills supply). Ads (rewards time spent, the
+                     opposite of a referral done in minutes). NSM candidates: sign-ups, requests sent, swipes or matches,
+                     profile completion, messages sent (all vanity by the L02 checklist).
+Because:             Devansh asked for the business side to be decided and included (17 Sep 2026). Applied the slides'
+                     tools: the marketplace row of the model → pressure → design table, the four-question NSM checklist,
+                     input vs output categories, the causal chain, and loop type with touchpoint and metric.
+How sure:            worked it out (model, strategy, metrics) · guessing (that companies pay, and that the loops run)
+
+CRITIQUE · 17 Sep 2026 · molades-scope · Source: AI
+Finding:             Checked Figma V2 against the strategy (L04 "advance, neutral or contradict"). Contradicts: swipe cards
+                     (built for volume), Premium paywall (sells access to referrers), referrer updating five stages by hand
+                     (adds work to the scarce side). Advances: resume auto-fill, referrer JD upload, candidate tracking.
+                     Neutral with risk: messaging.
+Severity:            major
+Layer:               the bet
+Action:              deferred to molades-brief, flow by flow
