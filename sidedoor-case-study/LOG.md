@@ -304,3 +304,14 @@ LEARNED · 2026-09-17 · molades-language
 Rounds run:      4
 Biggest gap between round 1 and final:  density. The fit line "(you need 2–5)" wrapped and made each card about 25% taller than V2's. Second: blue was doing two jobs (button and status).
 Did not close:   nothing on the 6 dimensions. The tone adjectives are a draft until Devansh confirms them.
+
+DECISION · 2026-09-17 · molades-language
+Decided:   Short on list screens, detailed on the single request screen.
+Rejected:  One density everywhere.
+Because:   On the list the referrer is scanning. On one request they are deciding whether to put their name on a stranger, so they need to see where each fact came from.
+How sure:  worked it out (Source: self)
+
+DECISION · 2026-09-17 · molades-build
+Decided:   Existing V2 screens stay untouched. All screens are copied below them after a gap, and changes happen only in the copies.
+Because:   V2 is kept as a backup and shown as an iteration in the case study.
+How sure:  saw it (Source: self)

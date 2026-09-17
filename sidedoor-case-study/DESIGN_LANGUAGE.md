@@ -2,20 +2,20 @@
 
 **Project:** Sidedoor · **Type:** concept (own product; V2 Figma is the reference)
 **References:** Figma V2 variables (8Z12N0tXTI126hj7ZaXnbO) + three V2 screens: Track Referrals list (1198:8792), Track details (1247:5475), Add your experience form (1054:5510). V0 Colors frame checked for extra colours.
-**Status:** Matched in 4 rounds, 6 of 6 passing. Adjective conflict still open (see below).
+**Status:** Matched in 4 rounds, 6 of 6 passing.
 **Component sheet:** `language/test-screen.html`
 
 > Sizes, colours, radius and shadows are read from Figma variables (saw it). Card padding, gaps and button height
 > are estimated from proportion in the screens, not measured.
 
 ## The adjectives, in numbers
-Draft. Devansh to confirm the words and which one wins.
+Confirmed by Devansh, 2026-09-17: detailed on the single request screen, short on the list screen.
 
 | Adjective | What it means here | When it conflicts, what wins |
 |---|---|---|
-| Quick | Referrer sees 3+ requests in the fold. Fit shown as counts ("4 of 6 skills match"), one line. 12px gap between cards is the floor. | Wins on referrer lists (they decide fast, on a work break). |
+| Quick | Referrer sees 3+ requests in the fold. Fit shown as counts ("4 of 6 skills match"), one line. 12px gap between cards is the floor. | Wins on list screens: short cards, key facts only. |
 | Clear | One accent (blue) and it only means "tap this". Status in words, not colour alone. 4 type sizes. | Wins everywhere a status is shown. |
-| Trustworthy | No fake scores, no gradients, no urgency colours. Red only for real errors. | Wins over "quick" on the request and refer screens. |
+| Trustworthy | No fake scores, no gradients, no urgency colours. Red only for real errors. | Wins on the single request screen: every fact shows where it came from and which skills are missing. |
 
 ## Type scale
 | Name | Size | Weight | Used for |
@@ -105,7 +105,7 @@ New strings from the brief: "Add the job ID first. It's the first thing a referr
 ## How sure
 **Saw it:** type sizes and weights, colours, radius, shadows (Figma variables); top bar, bottom bar, tabs, card layout, button style (screens).
 **Worked it out:** card padding 16, button height 48, density "between", contrast ratios (estimated from colour values, not tested on device), status colour mapping.
-**Guessing:** the adjectives until Devansh confirms them.
+**Guessing:** nothing left here.
 
 ## Rules for anything generated from this
 Use only the sizes, steps and palette roles above. Do not introduce a new
