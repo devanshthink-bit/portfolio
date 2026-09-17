@@ -320,3 +320,16 @@ CHANGE · 2026-09-17 · molades-build
 Changed:    All 11 V2 flows duplicated in Figma V2 file (page "UI Screens"), 14,218px below the originals, named "V3 · <flow>", with a "V3 — redo from research" label above. V2 frames not touched (checked: 11 originals, 11 copies).
 Caused by:  Devansh, 17 Sep: keep V2 as a backup and as an iteration for the case study.
 Result:     All V3 edits happen in the copies only.
+
+DECISION · 2026-09-17 · molades-build
+Decided:   Slice 1: "Referral requests for this job" (referrer), built in the V3 copy of Referrer/Candidate Screen/1 (Figma node 5195:8420). Reused V2 AppHeader, BottomNav, AvatarPlaceholder, text styles, elevation-1 and colour variables; no new values. Cards short: name, current role, "4 of 6 skills match · 3 yrs", sent when. "Lower match (2)" collapsed below.
+Rejected:  Building it as a new frame from scratch (loses V2's components); showing the experience range on the card (moved to the request screen, per the density call).
+Because:   The list is for choosing which request to open first; detail belongs on the request screen.
+How sure:  worked it out. Names and companies on the cards are sample data, not research.
+
+LEARNED · 2026-09-17 · molades-build
+Tried:              Clearing the swipe screen's Card Section and dropping the new list in.
+Expected:           List sits at the top, left-aligned.
+Actually happened:  The section was centre-aligned both ways with a grey background, so the list floated in the middle and the new list frame got a default white fill.
+Cost:               one extra pass
+Now know:           V2's containers carry alignment and fills that don't show until content changes. Check container settings before reusing one.
