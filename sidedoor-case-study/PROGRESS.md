@@ -4,7 +4,7 @@ Updated 17 Sep 2026.
 
 ## Molades skills
 
-- [x] **molades-start** · LOG.md set up, route worked out
+- [x] **molades-start** · its job is done (LOG.md exists, route set), though it wasn't run as a separate step
 - [x] **molades-scope** · SCOPE.md (v2: its own product)
 - [x] **molades-landscape** · SCOPE.md, Landscape section
 - [x] **molades-research** · RESEARCH.md, 92 notes from Samarth and Riya + desk research
