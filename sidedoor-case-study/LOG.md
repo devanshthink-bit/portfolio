@@ -902,3 +902,9 @@ CHANGE · 2026-09-17 · V6 login fix · Source: Devansh ("its broken")
 Seen:     Devansh's view showed Google and Email still labelled "Continue with…", overlapping, and Email taller than Google.
 Found:    In the file the labels were already "Google" and "Email", but both buttons were set to fill the row's height (56) while LinkedIn is 44.
 Changed:  Both buttons fixed at 44 like LinkedIn, labels set again, 12 side padding, row hugs its buttons. Screenshot checked: one row, no overlap.
+
+CHANGE · 2026-09-17 · V6 login fix, second try · Source: Devansh ("Is still broken", "Text is getting cut in half")
+Seen:     In Devansh's Figma the half-width buttons still said "Continue with…", cut off.
+Why my first fix failed: I trusted the API and my own screenshot, which both said "Google"/"Email". The old instances carried text overrides from V5, so Devansh's editor kept showing the long label. I should have rebuilt the buttons instead of setting the label again.
+Changed:  Removed both old instances. Placed two fresh Secondary Button instances from the component: labels "Google" and "Email", same icons, right icon hidden, 44 tall, LinkedIn's radius and shadow.
+Checked:  screenshot of the whole login screen.
