@@ -45,7 +45,7 @@ tool (BUSINESS.md), but LinkedIn already does that (Landscape), so it is seconda
 | **The model does it, the person checks** | Requests ordered by fit; strong matches first; lower matches collected under "Lower match", **still visible and still referable**; the referrer decides every one | **Chosen** |
 | **The model just does it** | Only matched candidates ever reach the referrer; low fits are declined or hidden automatically | Rejected. A hidden request is silence for the candidate, which is C3. A declined request carries the referrer's name without their decision. And Samarth refers borderline matches on purpose (n53) |
 
-**Note on Devansh's idea (n92, "only showing curated candidates"):** kept as ordering, not hiding. The referrer sees the
+**Note on Devansh's idea (n92, "only showing curated candidates"):** kept as ordering, not hiding. **Confirmed by Devansh, 17 Sep 2026: "visible but collapsed".** The referrer sees the
 curated candidates first, and nothing is thrown away where they can't see it.
 
 ### Turning documents into fields, both sides

@@ -262,3 +262,10 @@ Rejected:            The model just does it (hiding or auto-declining low fits: 
                      box. Generating the candidate's message (n76 n77; the landscape's do-not-inherit). Predicting hire chance.
 Because:             Draft by AI following the skill; Devansh's n92 idea kept as ordering, not hiding.
 How sure:            worked it out · every material fact guessing
+
+DECISION · 17 Sep 2026 · molades-ai · Source: user
+Decided:             Lower-match requests stay visible to the referrer, collapsed under "Lower match", and can still be referred.
+Rejected:            Hiding them completely (Devansh's earlier "only showing curated candidates").
+Because:             Devansh: "visible but collapsed". Reasons given: a hidden request is silence for the candidate (C3),
+                     and Samarth refers borderline matches on purpose (n53).
+How sure:            worked it out
