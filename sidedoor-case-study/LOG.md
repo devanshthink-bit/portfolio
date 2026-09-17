@@ -9,7 +9,7 @@ Bet:        employees drop strangers' referral requests because the request make
 Evidence:   thin. 4 real interviews with 2 people (each as candidate and as referrer), 1 remembered follow-up, desk research without source links
 Files:      SCOPE.md [x] v2 draft, v1 kept · BUSINESS.md [x] draft · RESEARCH.md [x] notes, sort, five clusters, jobs, insights, three candidate problem statements · BRIEF.md [ ] · DESIGN_LANGUAGE.md [ ] · build [ ] Figma V2 exists, not a coded build · live [ ]
 Rounds:     1. Mentor's critique (the product and referrer incentive). No change has come from it yet
-Open:       business lens with sources, first names for the two participants, source links for desk research,
+Open:       business lens with sources, source links for desk research,
             live case study still shows AI-sourced quotes and screens that aren't in Figma
 Next:       molades-landscape, what GetMeReferred, EasyRefer, Jumbl, Instahyre, LinkedIn and others already do, from the FigJam screenshots
 
@@ -209,3 +209,11 @@ Changed:             Every file now names them by company and role ("Infosys (as
                      follow-up conversation (with the Infosys employee) added as n92, marked remembered.
 What this made worthless: any claim that a pattern came from four people. The strongest patterns are now "both people".
                      Worth keeping: both have been on both sides of a referral.
+
+CHANGE · 17 Sep 2026 · molades-research
+Changed:             Participants named: Samarth (the Infosys employee, Candidate 1 and Referrer 1) and Riya (the Accenture
+                     employee, Candidate 2 and Referrer 2). Labels in RESEARCH, SCOPE, BUSINESS and the raw transcript
+                     headers now read "Samarth (as candidate)", "Riya (as referrer)". Earlier LOG entries keep the old labels.
+Caused by:           Devansh, 17 Sep 2026: "You can mention the real name. Samarth is the candidate one and refer one. And
+                     Riya is candidate 2 and refer 2."
+Result:              Notes use real first names, as the rules ask. Not the same Samarth as in the RedBus research.

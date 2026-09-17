@@ -1,6 +1,6 @@
-# Referrer 2 — interview transcript
+# Riya, as a referrer — interview transcript
 
-**Who:** Employee at Accenture
+**Who:** Riya, employee at Accenture
 **Source:** FigJam `CPoRM8dMgCywFz0ZbAfA6A`, section Interview Transcripts, node 488:5527. Copied verbatim; only split into one line per question.
 **Real interview:** yes (confirmed by Devansh, 17 Sep 2026)
 **Same person as:** `candidate-2.md`. The same employee was interviewed once as a candidate and once as a referrer (Devansh, 17 Sep 2026)

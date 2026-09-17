@@ -11,9 +11,9 @@ would be fiction (molades-research, edge case). This file starts at checking wha
 
 | Source | Count | Where | Real? |
 |---|---|---|---|
-| Interviews with the Infosys employee, once as a candidate and once as a referrer | 2 | `raw/candidate-1.md`, `raw/referrer-1-infosys.md` | Yes |
-| Interviews with the Accenture employee, once as a candidate and once as a referrer | 2 | `raw/candidate-2.md`, `raw/referrer-2-accenture.md` | Yes |
-| Follow-up conversation with the Infosys employee | 1 | Not recorded. Reported by Devansh, 17 Sep 2026 (n92) | Yes, remembered |
+| Interviews with Samarth, once as a candidate and once as a referrer | 2 | `raw/candidate-1.md`, `raw/referrer-1-infosys.md` | Yes |
+| Interviews with Riya, once as a candidate and once as a referrer | 2 | `raw/candidate-2.md`, `raw/referrer-2-accenture.md` | Yes |
+| Follow-up conversation with Samarth | 1 | Not recorded. Reported by Devansh, 17 Sep 2026 (n92) | Yes, remembered |
 | Desk research | 11 stickies | `raw/desk-research.md` | Done by Devansh with Perplexity. No original source links recorded |
 | Competitor screenshots | 11 products | FigJam, Competitive Analysis | Real screenshots. Not yet read here |
 | Interviews, 2 recruiters, 2 referrers, 2 candidates | 6 | FigJam only | **Not real** (AI-generated). Excluded from everything below |
@@ -27,7 +27,7 @@ one. Both work in tech, both have been on both sides, and each talks about the l
 
 Nothing real exists about:
 - **Recruiters.** Anything about what recruiters want or do is a guess.
-- **Referrers who ignore requests.** Both people already refer. Neither is flooded (Infosys (as referrer)
+- **Referrers who ignore requests.** Both people already refer. Neither is flooded (Samarth (as referrer)
   says they don't get too many). Anything about referrer overload is a guess.
 - **Numbers at scale.** Two people give counts, never percentages.
 - **Different people.** Every pattern here is at most two people. Where both say the same thing it is a pattern of two; where one says it, it is one person's experience.
@@ -46,8 +46,8 @@ needs. **A limit worth stating:** two people is a small base, and every claim bu
 1. *"One PM I interviewed got 40–50 DMs a day whenever their company posted a public listing."*
    Traces to Referrer-4, an AI-generated transcript. **Not real. Must come off the page.**
 2. *"Referrers aren't unwilling: they're uncertain."* (Screen 03 of the live page)
-   Both people, as referrers, contradict it: Infosys (as referrer) has fixed rules (n50) and says the risk is not theirs (n55);
-   Accenture (as referrer)'s rule is whether the job ID was sent (n76, n77). **Not supported. Change or cut.**
+   Both people, as referrers, contradict it: Samarth (as referrer) has fixed rules (n50) and says the risk is not theirs (n55);
+   Riya (as referrer)'s rule is whether the job ID was sent (n76, n77). **Not supported. Change or cut.**
 
 ---
 
@@ -57,9 +57,9 @@ One observation per note, in the person's own words where possible. Nothing dele
 `Q` is the question number in the transcript. Marks (in scope / out of scope / not a problem) come next, in
 molades-synthesise step 2, against the scope card.
 
-People are named by role until Devansh gives first names.
+People are named by first name and the side they were speaking from. Names used with Devansh's permission (17 Sep 2026).
 
-### Infosys (as candidate) · `raw/candidate-1.md`
+### Samarth (as candidate) · `raw/candidate-1.md`
 
 | # | Note | Q |
 |---|---|---|
@@ -90,7 +90,7 @@ People are named by role until Devansh gives first names.
 | n25 | Wants to know "if my profile was shortlisted, rejected, or if the referral was even successfully made" | 40 |
 | n26 | Would like updates by email: "a much more professional approach for job-related updates" | 41 |
 
-### Accenture (as candidate) · `raw/candidate-2.md`
+### Riya (as candidate) · `raw/candidate-2.md`
 
 | # | Note | Q |
 |---|---|---|
@@ -116,7 +116,7 @@ People are named by role until Devansh gives first names.
 | n46 | Doubts an outside app can show company status: "this is organization level data and I'm not sure if companies would be ready to share that" | 31 |
 | n47 | At their own company, a referrer gets Workday emails at each stage (submitted, HR call, each round) and can check the portal | 32–35 |
 
-### Infosys (as referrer), Infosys · `raw/referrer-1-infosys.md`
+### Samarth (as referrer), Infosys · `raw/referrer-1-infosys.md`
 
 | # | Note | Q |
 |---|---|---|
@@ -141,7 +141,7 @@ People are named by role until Devansh gives first names.
 | n66 | Suggested: "a link is sent to the candidate to fill out their own personal details, which would cut the referrer's effort by 50%", and one candidate profile instead of repeating everything for every job ID | 24 |
 | n67 | Candidates also rarely give their three preferred interview locations upfront, "forcing me to ask them manually" | 26 |
 
-### Accenture (as referrer), Accenture · `raw/referrer-2-accenture.md`
+### Riya (as referrer), Accenture · `raw/referrer-2-accenture.md`
 
 | # | Note | Q |
 |---|---|---|
@@ -170,7 +170,7 @@ People are named by role until Devansh gives first names.
 | n90 | Suggested: a way to rate candidates on referrals taken versus times they joined | 30–32 |
 | n91 | Wants "a good UX": to refer, track status, see messages and check submissions from the first page | 33–35 |
 
-### Follow-up conversation with the Infosys employee · remembered, not recorded
+### Follow-up conversation with Samarth · remembered, not recorded
 
 Reported by Devansh on 17 Sep 2026. Devansh's summary of what was discussed, not the person's own words. Marked
 **remembered**: it can be used as a lead, not quoted.
@@ -213,26 +213,26 @@ happened to it, up to the interview stage.
 
 ### Out of scope · real problems, different moment (3)
 
-- n39 Accenture (as candidate): asks for referrals because HRs won't read a resume "for even more than 10 seconds". This is why
+- n39 Riya (as candidate): asks for referrals because HRs won't read a resume "for even more than 10 seconds". This is why
   referrals exist, about job portals, not about the referral itself
-- n86 Accenture (as referrer): HR tells rejected candidates nothing, even after an interview. Company hiring workflow
-- n88 Accenture (as referrer): a referral cancelled because of what the candidate said on the HR call. Interview stage
+- n86 Riya (as referrer): HR tells rejected candidates nothing, even after an interview. Company hiring workflow
+- n88 Riya (as referrer): a referral cancelled because of what the candidate said on the HR call. Interview stage
 
 ### Not a problem · this worked (13)
 
-- n02 Infosys (as candidate): the Adobe referral through a friend worked, with a confirmation mail
-- n03 Infosys (as candidate): asking your own circle first "works out very well"
-- n05 Infosys (as candidate): WhatsApp with known contacts "feels a bit more connected"
-- n06 Infosys (as candidate): people they knew needed no pitch, only the resume and details
-- n47 Accenture (as candidate): at their company, a referrer gets Workday emails at every stage
-- n54 Infosys (as referrer): tells candidates openly when they don't match
-- n55 Infosys (as referrer): doesn't worry about their reputation
-- n58 Infosys (as referrer): can check status themselves on the referral portal
-- n61 Infosys (as referrer): doesn't get too many requests
-- n64 Infosys (as referrer): would refer a complete stranger who meets the criteria
-- n72 Accenture (as referrer): automated emails after submitting; everyone they referred got a call back
-- n80 Accenture (as referrer): almost every job on the portal is open for referral
-- n83 Accenture (as referrer): tracks status through links in those emails
+- n02 Samarth (as candidate): the Adobe referral through a friend worked, with a confirmation mail
+- n03 Samarth (as candidate): asking your own circle first "works out very well"
+- n05 Samarth (as candidate): WhatsApp with known contacts "feels a bit more connected"
+- n06 Samarth (as candidate): people they knew needed no pitch, only the resume and details
+- n47 Riya (as candidate): at their company, a referrer gets Workday emails at every stage
+- n54 Samarth (as referrer): tells candidates openly when they don't match
+- n55 Samarth (as referrer): doesn't worry about their reputation
+- n58 Samarth (as referrer): can check status themselves on the referral portal
+- n61 Samarth (as referrer): doesn't get too many requests
+- n64 Samarth (as referrer): would refer a complete stranger who meets the criteria
+- n72 Riya (as referrer): automated emails after submitting; everyone they referred got a call back
+- n80 Riya (as referrer): almost every job on the portal is open for referral
+- n83 Riya (as referrer): tracks status through links in those emails
 
 ## Clusters
 
@@ -243,8 +243,8 @@ starts with the side it belongs to, **Candidate** or **Referrer**, where RedBus 
 
 **Tension:** the route that works, friends and mutuals, runs out; the route left over, strangers, almost never answers.
 **What they did:** looked in their own circle first, then cold-messaged two or three strangers per company on LinkedIn
-and mostly heard nothing; followed up with no change; guessed who might help from LinkedIn activity. Infosys (as candidate),
-Accenture (as candidate). On the other side, Accenture (as referrer) leaves strangers' LinkedIn messages unanswered.
+and mostly heard nothing; followed up with no change; guessed who might help from LinkedIn activity. Samarth (as candidate),
+Riya (as candidate). On the other side, Riya (as referrer) leaves strangers' LinkedIn messages unanswered.
 **So what?** A candidate with nobody at the company has no dependable way in. Their request is ignored before anyone
 can judge whether it's any good, so being a strong candidate doesn't help them.
 
@@ -265,8 +265,8 @@ at it, so I'm not sending messages nobody reads.
 fields, or any sign of fit.
 **What they did:** ignored asks without a job ID; got candidates on a call to fill in city, date of birth, gaps,
 country code and preferred locations; typed skills from the resume into the portal by hand; read resumes against their
-own rules. Infosys (as referrer), Accenture (as referrer). Candidates, for their part, sent the job link and the job ID. Infosys (as candidate),
-Accenture (as candidate).
+own rules. Samarth (as referrer), Riya (as referrer). Candidates, for their part, sent the job link and the job ID. Samarth (as candidate),
+Riya (as candidate).
 **So what?** The referrer's real cost is admin, not judgement. Every missing field means another round of chasing, so
 incomplete requests get dropped, including from candidates who would have fit.
 
@@ -284,7 +284,7 @@ referring takes minutes, not days of back-and-forth.
 
 **Tension:** the status already exists inside the company's portal, but only the referrer can see it, and nobody says no.
 **What they did:** waited two or three weeks; read silence as "not referred"; checked each chat one by one; kept
-a promised Citibank referral in mind that never happened. Infosys (as candidate), Accenture (as candidate).
+a promised Citibank referral in mind that never happened. Samarth (as candidate), Riya (as candidate).
 **So what?** The candidate is waiting on information that already sits one person away. They can't move on from a
 "no" nobody tells them, so they stay stuck on dead requests instead of trying someone else.
 
@@ -303,8 +303,8 @@ can move on or follow up instead of guessing from silence.
 
 **Tension:** the effort is certain; the reward is small, late, and only if the person is hired and stays.
 **What they did:** referred mostly people they knew (about 8 of 10); helped friends out of a sense of obligation and
-left strangers unanswered; counted the bonus as too low or not the main reason. Both people, the Infosys and the Accenture employee, as
-referrers (Accenture also said it in their candidate interview, n32 n42).
+left strangers unanswered; counted the bonus as too low or not the main reason. Both people, the Infosys and Riya, as
+referrers (Riya also said it in their candidate interview, n32 n42).
 **So what?** For a stranger, the referrer does real work for a reward that rarely arrives, so strangers lose by
 default. Nothing on the referrer's side makes a good stranger worth the effort.
 
@@ -326,7 +326,7 @@ even if they're never hired, so it doesn't feel like working for nothing.
 **Tension:** they judge fit by eye, reading the job description against their own resume, and have nothing to show the
 referrer except that resume.
 **What they did:** checked the job description matched their resume before searching for referrers; led their pitch
-with passion and ownership; asked for a match percentage they could share with the referrer. Infosys (as candidate), Accenture (as candidate).
+with passion and ownership; asked for a match percentage they could share with the referrer. Samarth (as candidate), Riya (as candidate).
 **So what?** A candidate goes into every ask unsure whether they are really a fit, and with no way to show a referrer
 that they are, so a good fit and a long shot arrive looking the same.
 
@@ -347,7 +347,7 @@ state it. To use it, it needs a sourced figure or a quote.
 
 ## Parked · fits nowhere yet
 
-- n91 Accenture (as referrer) wants to refer, track, see messages and check submissions from the first page. It's a wish for a
+- n91 Riya (as referrer) wants to refer, track, see messages and check submissions from the first page. It's a wish for a
   whole product, not a problem in one moment. Comes back at the brief
 
 ## What was merged, and what got lost
@@ -361,10 +361,10 @@ state it. To use it, it needs a sourced figure or a quote.
 
 ## What this draft already contradicts in the old Sidedoor
 
-- **Reputation fear** as the referrer's blocker: Infosys (as referrer) says the risk isn't theirs (n55, not a problem). Nothing real supports it
-- **Referrers overwhelmed by volume:** Infosys (as referrer) doesn't get many (n61). Only a generated transcript said otherwise
+- **Reputation fear** as the referrer's blocker: Samarth (as referrer) says the risk isn't theirs (n55, not a problem). Nothing real supports it
+- **Referrers overwhelmed by volume:** Samarth (as referrer) doesn't get many (n61). Only a generated transcript said otherwise
 - **Referrers need help deciding:** both have simple rules already (n50, n76, n81). Their pain is the admin (C2)
-- **Candidates spam everyone:** Infosys (as candidate) messages two or three at a time (n19). Accenture (as candidate) cold-messages "everyone
+- **Candidates spam everyone:** Samarth (as candidate) messages two or three at a time (n19). Riya (as candidate) cold-messages "everyone
   whoever I think will be suitable" (n40). Mixed, two people. Not a pattern
 
 ## Jobs to be done · draft
@@ -429,7 +429,7 @@ referrer is asked to do anything. · n57 n59 n60 n66 n67 n70 n71 n73 n74 n75 n76
 **A · The referrer side.** *Referring a stranger costs the referrer admin work nobody pays them for, so they don't do it.*
 Covers C2, C4. Leaves out C3, and C1 except as its effect.
 Against it: it's silent on the candidate who never learns what happened (C3). And it assumes making referral cheap
-makes referrers willing, but Accenture (as referrer) still calls the bonus too low (n87) and wastes effort on people who don't join
+makes referrers willing, but Riya (as referrer) still calls the bonus too low (n87) and wastes effort on people who don't join
 (n89). Cheap is necessary, maybe not enough.
 
 **B · The candidate side.** *A candidate with nobody at the company has no way to reach a referrer who will read the
@@ -462,8 +462,8 @@ Chosen 17 Sep 2026: candidate **C**, narrowed.
 > Meanwhile the status of a submitted referral already exists, in the referrer's portal and emails. It never reaches the
 > candidate, who reads silence as a no.
 >
-> The barrier is not that referrers won't help strangers. Infosys (as referrer) would refer a complete stranger who fits, and
-> Accenture (as referrer) feels "a little obligated" once a candidate has done the work of sharing the job ID. It is that the request
+> The barrier is not that referrers won't help strangers. Samarth (as referrer) would refer a complete stranger who fits, and
+> Riya (as referrer) feels "a little obligated" once a candidate has done the work of sharing the job ID. It is that the request
 > hands the referrer the work, and nothing hands the answer back.
 
 **Short form:** the request asks the referrer to do the candidate's work, and the answer never travels back.
@@ -480,7 +480,7 @@ n58 n83 n47 (status already exists on the referrer's side) · n64 (would refer a
 
 **How sure:**
 - What happens today: **saw it**. All four interviews, two people
-- That the work in the request is why strangers get dropped: **worked it out**. Both people as referrers, and the Accenture employee's own rule (n76, n77)
+- That the work in the request is why strangers get dropped: **worked it out**. Both people as referrers, and Riya's own rule (n76, n77)
 - That a complete request would get referred more often: **guessing**. Nobody was shown one
 
 **Leaves out:**
@@ -514,19 +514,19 @@ Primary: the request makes the referrer do the candidate's work. Secondary: the 
 
 ## Walking the chain back
 
-Problem statement → C2, the referrer drops incomplete requests → group a, no job ID → **n76**, Accenture (as referrer): "they don't
+Problem statement → C2, the referrer drops incomplete requests → group a, no job ID → **n76**, Riya (as referrer): "they don't
 share the job ID, which irritates me a lot... I will not take the pain and go and check for it". The chain holds.
 
-Problem statement → C3, the candidate can't tell what happened → **n35**, Accenture (as candidate): "whoever did not reply, they did
+Problem statement → C3, the candidate can't tell what happened → **n35**, Riya (as candidate): "whoever did not reply, they did
 not refer me". The chain holds.
 
 ## What the research killed
 
 These were the old Sidedoor's reasons. The four interviews with two people don't support them.
 
-- **Referrers fear for their reputation.** Infosys (as referrer): "that responsibility should not fall on the referrer" (n55)
+- **Referrers fear for their reputation.** Samarth (as referrer): "that responsibility should not fall on the referrer" (n55)
 - **Referrers need help deciding**, so graded recommendations. Both already have simple rules (n50, n76, n81)
-- **Referrers are flooded with spam**, so request limits and a ranked inbox. Infosys (as referrer) doesn't get many (n61)
+- **Referrers are flooded with spam**, so request limits and a ranked inbox. Samarth (as referrer) doesn't get many (n61)
 - **Trust between strangers is the core gap.** The notes show work and silence, not distrust. Nobody mentioned trust as
   the reason they didn't refer
 
