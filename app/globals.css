@@ -1705,7 +1705,8 @@
 
 /* Phones show only the middle screen of each trio, at a size that fits. */
 @media (max-width: 640px) {
-  .work-card-panel-text.is-brand-only .work-card-brand { font-size: 24px; }
+  /* Phones: no logo and name in the RedBus card, just the screens. */
+  .work-card-panel-text.is-brand-only { display: none; }
   .work-card-phones .iphone:nth-child(2) { --n: 190; }
   .phone-row.hero { padding-bottom: 0; }
   .phone-row.hero .phone-fig:nth-child(2) .iphone { --n: 272; }
@@ -1805,7 +1806,7 @@
    The web keeps its four counting numbers ("in the web, revert these changes"). */
 .stats-line { display: none; }
 @media (max-width: 640px) {
-.stats-line { display: flex; justify-content: space-between; align-items: baseline; white-space: nowrap; margin: 0;
+.stats-line { display: flex; justify-content: space-between; align-items: baseline; white-space: nowrap; margin: 16px 0 0;
   font-size: var(--fs-14); letter-spacing: -0.011em; color: var(--text-muted); }
 .stats-line b { font: 700 18px/1 var(--font-manrope), sans-serif; letter-spacing: -0.02em; color: var(--text-primary); margin-right: 5px; }
 .stats-line i { align-self: center; width: 1px; height: var(--sep-h); background: var(--sep-bg); opacity: var(--sep-o); }
