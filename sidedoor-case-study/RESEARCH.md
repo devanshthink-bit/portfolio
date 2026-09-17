@@ -185,7 +185,7 @@ The figures used on the live case study, and whether a source link exists yet:
 
 ---
 
-# Making sense of it · draft 1, 17 Sep 2026
+# Making sense of it · draft 2, 17 Sep 2026
 
 **This is a first draft and parts of it are wrong.** Grouping is a judgement call. Every note Devansh moves, renames
 or rejects gets its reason written in LOG.md.
@@ -222,7 +222,7 @@ happened to it, up to the interview stage.
 
 ## Clusters
 
-Four, not six. Labels are from the person's side and name a pain. Because Sidedoor has two kinds of user, each label
+Five, not six. Labels are from the person's side and name a pain. Because Sidedoor has two kinds of user, each label
 starts with the side it belongs to, **Candidate** or **Referrer**, where RedBus used **User**.
 
 ### C1 · Candidate's message to a stranger isn't even seen, so the only route that works is people they already know
@@ -251,14 +251,14 @@ at it, so I'm not sending messages nobody reads.
 fields, or any sign of fit.
 **What they did:** ignored asks without a job ID; got candidates on a call to fill in city, date of birth, gaps,
 country code and preferred locations; typed skills from the resume into the portal by hand; read resumes against their
-own rules. Referrer 1, Referrer 2. Candidates, for their part, sent the job link and tried to show fit in the message.
-Candidate 1, Candidate 2.
+own rules. Referrer 1, Referrer 2. Candidates, for their part, sent the job link and the job ID. Candidate 1,
+Candidate 2.
 **So what?** The referrer's real cost is admin, not judgement. Every missing field means another round of chasing, so
 incomplete requests get dropped, including from candidates who would have fit.
 
 - **a · no job ID, no referral** n07 n38 n70 n76 n77 n78 n79 n81
 - **b · the portal asks for things a resume doesn't have** n57 n59 n60 n66 n67 n71 n73 n74 n75
-- **c · fit, checked by hand** n11 n22 n23 n29 n50 n51 n53 n56 n63 n65 n82
+- **c · fit, checked by hand** n50 n51 n53 n56 n63 n65 n82
 
 What they're trying to get done: refer someone without spending an evening on it.
 What gets in the way: the request arrives incomplete, so every referral turns into chasing details and retyping them.
@@ -305,6 +305,30 @@ What gets in the way: the only reward is a bonus that is low and depends on a hi
 **Job to be done:** When a stranger asks me for a referral, I want helping to cost me little enough that it's worth it
 even if they're never hired, so it doesn't feel like working for nothing.
 
+### C5 · Candidate can't tell how strong a fit they are before they spend a request `THIN`
+
+**Tension:** they judge fit by eye, reading the job description against their own resume, and have nothing to show the
+referrer except that resume.
+**What they did:** checked the job description matched their resume before searching for referrers; led their pitch
+with passion and ownership; asked for a match percentage they could share with the referrer. Candidate 1, Candidate 2.
+**So what?** A candidate goes into every ask unsure whether they are really a fit, and with no way to show a referrer
+that they are, so a good fit and a long shot arrive looking the same.
+
+- **a · checking fit by eye before asking** n11 n29
+- **b · wanting a way to show it** n22 n23
+
+`THIN`: four notes from two people, and two of them are wishes (n22 a pitch, n23 a suggested feature).
+
+What they're trying to get done: ask for roles where they have a real chance, and show it.
+What gets in the way: fit is judged by eye, and a resume is the only proof they can send.
+
+**Job to be done:** When I find a role I want a referral for, I want to know how well I fit before I ask, so I spend
+my asks where I have a real chance.
+
+**Devansh's view, not in the data (guessing):** many candidates tailor their resume to each job description because
+they know ATS software filters resumes on match. None of the four people said this and the desk research doesn't
+state it. To use it, it needs a sourced figure or a quote.
+
 ## Parked · fits nowhere yet
 
 - n91 Referrer 2 wants to refer, track, see messages and check submissions from the first page. It's a wish for a
@@ -314,8 +338,9 @@ even if they're never hired, so it doesn't feel like working for nothing.
 
 - **Silence instead of a no** (n18) was going to be its own cluster. Merged into C3, because not getting a "no" and not
   knowing the status are the same gap seen from two sides. Lost: the emotional cost of silence (n16) now sits in C1.
-- **Proving fit** (n11 n22 n23 n29) was a candidate-side cluster. Merged into C2 as group c, because the only person who
-  acts on fit is the referrer. Lost: the candidate's wish to feel confident before asking (n23) is now secondary.
+- **Proving fit** (n11 n22 n23 n29) was merged into C2 in draft 1. **Split back out as C5 in draft 2, at Devansh's
+  call:** checking fit is mostly the referrer's pain and stays in C2, but candidates want it too, to see their chances
+  before they ask. C5 is `THIN`.
 - **No cluster was dropped for having no friction.**
 
 ## What this draft already contradicts in the old Sidedoor
@@ -325,3 +350,81 @@ even if they're never hired, so it doesn't feel like working for nothing.
 - **Referrers need help deciding:** both have simple rules already (n50, n76, n81). Their pain is the admin (C2)
 - **Candidates spam everyone:** Candidate 1 messages two or three at a time (n19). Candidate 2 cold-messages "everyone
   whoever I think will be suitable" (n40). Mixed, two people. Not a pattern
+
+## Jobs to be done · draft
+
+### Five, one per cluster
+
+| | Job to be done |
+|---|---|
+| **C1** | When I don't know anyone at the company, I want my request to reach someone who is willing to look at it, so I'm not sending messages nobody reads |
+| **C2** | When someone asks me for a referral, I want everything I need to decide and submit in one go, so referring takes minutes, not days of back-and-forth |
+| **C3** | When I've asked someone to refer me, I want to know whether it went in and where it stands, so I can move on or follow up instead of guessing from silence |
+| **C4** | When a stranger asks me for a referral, I want helping to cost me little enough that it's worth it even if they're never hired, so it doesn't feel like working for nothing |
+| **C5** `THIN` | When I find a role I want a referral for, I want to know how well I fit before I ask, so I spend my asks where I have a real chance |
+
+### What combines, and what doesn't
+
+- **C2 + C4 · one referrer job seen twice.** C2 is what the effort is made of; C4 is why the effort isn't worth it for
+  a stranger. Both want referring a stranger to cost almost nothing. Lost in the merge: n89 and n90, referrers wasting
+  effort on people who take the referral and never join. That is about who they refer, not how much it costs, and it
+  stays visible.
+- **C1 + C5 · one candidate job seen twice.** Both are about spending a limited number of asks well: on someone who
+  will read it (C1), for a role they fit (C5). Merging lifts C5's notes into a cluster that isn't thin, but its own
+  evidence stays thin.
+- **C3 stays alone.** It happens after the ask, not before it, and the person who holds the answer is the referrer.
+
+### Three final jobs
+
+| | Final job to be done | From |
+|---|---|---|
+| **J1 · Asking where it will be read** | When I need a referral at a company where I know nobody, I want to ask someone who is willing, for a role I fit, so my request gets read and has a real chance | C1 + C5 |
+| **J2 · Knowing what happened** | When I've asked someone to refer me, I want to know whether it went in and where it stands, so I can move on or follow up instead of guessing from silence | C3 |
+| **J3 · Referring a stranger for minutes, not an evening** | When someone I don't know asks me for a referral, I want everything I need already there, so helping takes minutes and is worth it even if they're never hired | C2 + C4 |
+
+**All three reduce to one:** *a referral depends on one busy employee's effort, and nothing makes that effort small or
+lets its result travel back.*
+
+## Insight statements · draft, one per final job
+
+Structure: *[user segment] struggles with [problem] because [root cause], which means [implication for design].*
+**Segment and problem come from the notes. Root cause and implication are interpretation (worked it out).**
+
+**J1** Candidates with nobody they know at the company struggle with getting a stranger to even read their request,
+messaging two or three people on LinkedIn and hearing nothing, **because** nothing shows which employees are open to
+referring or how well the candidate fits the role, so every ask arrives as the same cold message, **which means** the
+ask has to go to someone who has already said they're willing, and carry the fit with it. · n09 n13 n14 n15 n17 n30
+n04 n08 n20 n21 n24 n28 n37 n43 n49 n68 · n11 n22 n23 n29
+
+**J2** Candidates who have asked for a referral struggle with not knowing whether it was ignored, declined, submitted
+or rejected, waiting weeks and reading silence as a no, **because** the status sits in the company's portal and the
+referrer's inbox where only the referrer can see it, and nobody's job is to tell the candidate, **which means** the
+status has to reach the candidate through the referrer, without depending on the company sharing its data. · n01 n18
+n25 n33 n34 n35 n36 n41 n44 n45 n46 n84 n85
+
+**J3** Referrers asked by people they don't know struggle with requests that cost them rounds of chasing job IDs,
+cities and dates of birth, for a bonus that is low and only paid if the person is hired, **because** the request
+arrives as a message and a resume while their company's portal needs structured fields, so the referrer ends up doing
+the candidate's data entry, **which means** the candidate has to supply everything the portal asks for before the
+referrer is asked to do anything. · n57 n59 n60 n66 n67 n70 n71 n73 n74 n75 n76 n77 n78 n79 · n31 n32 n42 n52 n62 n69 n87
+
+## Three candidate problem statements · for Devansh to choose
+
+**A · The referrer side.** *Referring a stranger costs the referrer admin work nobody pays them for, so they don't do it.*
+Covers C2, C4. Leaves out C3, and C1 except as its effect.
+Against it: it's silent on the candidate who never learns what happened (C3). And it assumes making referral cheap
+makes referrers willing, but Referrer 2 still calls the bonus too low (n87) and wastes effort on people who don't join
+(n89). Cheap is necessary, maybe not enough.
+
+**B · The candidate side.** *A candidate with nobody at the company has no way to reach a referrer who will read the
+request, and no way to learn what happened after.*
+Covers C1, C3, C5. Leaves out C2, C4.
+Against it: it describes what the candidate suffers, not why. The why is on the referrer's side (C2, C4). Designing
+for the candidate alone rebuilds old Sidedoor, which is exactly what the mentor attacked: nothing in it gives the
+referrer a reason to take part.
+
+**C · Both sides.** *A referral runs on one busy employee's unpaid effort, and the request a candidate sends makes that
+effort as large as possible: no job ID, missing details, no fit shown, and no way for the result to come back.*
+Covers C1, C2, C3, C4, and C5 in part. Leaves out n89 and n90 (people who take a referral and don't join).
+Against it: broad. "Make the effort small" could be three different projects. And it still doesn't give the referrer
+a reason to start (C4); it only takes away a reason to stop.

@@ -7,11 +7,11 @@
 
 Bet:        not set. The original was never written as a falsifiable guess; the FigJam scope lists five problems at once
 Evidence:   thin. 4 real interviews (2 candidates, 2 referrers) and desk research without source links
-Files:      SCOPE.md [x] v1 reconstructed · RESEARCH.md [x] notes, sort, draft clusters · BRIEF.md [ ] · DESIGN_LANGUAGE.md [ ] · build [ ] Figma V2 exists, not a coded build · live [ ]
+Files:      SCOPE.md [x] v1 reconstructed · RESEARCH.md [x] notes, sort, five clusters, jobs, insights, three candidate problem statements · BRIEF.md [ ] · DESIGN_LANGUAGE.md [ ] · build [ ] Figma V2 exists, not a coded build · live [ ]
 Rounds:     1. Mentor's critique (the product and referrer incentive). No change has come from it yet
 Open:       problem statement, scope card, first names for the four participants, source links for desk research,
             live case study still shows AI-sourced quotes and screens that aren't in Figma
-Next:       molades-synthesise, Devansh reacts to the draft clusters, then the three candidate problem statements
+Next:       molades-synthesise, Devansh picks one of the three problem statements and says why the other two lose
 
 ## Entries
 
@@ -92,4 +92,24 @@ Rejected:            Six clusters, with "silence instead of a no" and "proving f
                      RESEARCH.md, What was merged). Labels starting with "User", replaced by "Candidate" or "Referrer"
                      because Sidedoor has two kinds of user.
 Because:             Draft by AI, not yet reviewed by Devansh.
+How sure:            worked it out
+
+CHANGE · 17 Sep 2026 · molades-synthesise
+Changed:             "Proving fit" split back out of C2. Referrer-side fit checks (n50 n51 n53 n56 n63 n65 n82) stay in C2;
+                     candidate-side notes (n11 n22 n23 n29) become C5, "Candidate can't tell how strong a fit they are
+                     before they spend a request", marked THIN.
+Caused by:           Devansh, 17 Sep 2026: "checking fit is mostly pain point of referrer, but candidates wud also like
+                     to have it so that they can see the potential of them getting selected acc to fit".
+Result:              Five clusters. Devansh also said many candidates tailor resumes to the job description because ATS
+                     software filters on match. Not in the four transcripts or the desk research, so recorded in C5 as
+                     guessing, not used as evidence.
+
+DECISION · 17 Sep 2026 · molades-synthesise
+Decided:             Draft jobs: C2 + C4 combine into J3 (referring a stranger for minutes), C1 + C5 into J1 (asking where
+                     it will be read), C3 stays as J2 (knowing what happened). One insight statement each. Three
+                     candidate problem statements: A referrer side, B candidate side, C both sides.
+Rejected:            Keeping five separate jobs (two pairs are one job seen twice); combining jobs across the two sides
+                     (a job has one "I").
+Because:             Draft by AI, following the RedBus artefacts page (combine, then one insight per final job).
+                     The choice between A, B and C is Devansh's.
 How sure:            worked it out
