@@ -143,7 +143,7 @@ function WorkCard({ item }: { item: Work }) {
             <div className="work-card-panel-text is-brand-only">
               <p className="work-card-brand" style={{ color: item.brandColor, display: "flex", alignItems: "center", gap: 10 }}>
                 {/* RedBus logo, the same unaltered path the prototype uses, in brand red */}
-                {item.slug === "redbus" && <img src="/images/redbus/logo.svg" alt="" aria-hidden width={45} height={30} style={{ height: "1.15em", width: "auto", display: "block" }} />}
+                {item.slug === "redbus" && <img src="/images/redbus/logo.svg" alt="" aria-hidden width={45} height={30} style={{ height: "1.15em", width: "auto", display: "block", filter: "brightness(0) invert(1)" }} />}
                 {item.brand}
               </p>
             </div>
