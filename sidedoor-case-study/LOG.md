@@ -481,3 +481,16 @@ CHANGE · 2026-09-17 · molades-build
 Changed:    BUSINESS.md Premium update now carries the full reasoning (4 reasons with how-sure tags), when to revisit, and an interview line.
 Caused by:  Devansh, 17 Sep: "Did you write the reasoning why premium was dropped?" The first note had one short reason only.
 Result:     The call is Devansh's; the reasons are marked worked out / guessing for him to check.
+
+DECISION · 2026-09-17 · molades-build
+Decided:   Slice 8, new "V3 · Link Page Flow" (where V3 Matching was). A web page, no app: (1) sidedoor.app/r/nithin-agarwal, "Ask Nithin Agarwal for a referral", job and job ID from the link, "Send a complete request. No app needed.", upload resume, Send off; (2) resume read, the same details as Check your referral request (including preferred interview locations), optional note, Send on; (3) "Sent to Nithin. Nithin gets every detail Flipkart's portal asks for. We'll email you when there's news." then "Save these details and track this request" with "Get the Sidedoor app" / "Not now". Sample candidate: Arpita Singh, who already appears in Nithin's request list.
+Rejected:  Making a stranger install the app before asking; app header back/bell and bottom nav on a web page.
+Because:   Cold start (SCOPE.md, Acquisition loop 1, n66): referrers bring the candidates who already message them; the install ask comes after the candidate got value.
+How sure:  worked it out. That referrers will share the link is guessing (BUSINESS.md).
+
+LEARNED · 2026-09-17 · molades-build
+Tried:              Hiding the back and bell icons inside a copied header by searching all its nested icons.
+Expected:           Icons hidden.
+Actually happened:  Figma lost track of a nested node mid-search and rolled the whole script back. Twice in this build, a failed script left nothing half-done, which made retries safe.
+Cost:               one retry
+Now know:           Reach nested parts of an instance by their direct path, not a broad search.
