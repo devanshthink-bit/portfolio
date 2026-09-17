@@ -722,3 +722,45 @@ Changed:   V5 Referral request (edited in place). Order: person + In common → 
 Kept out:  Green tagline quote card (puts the candidate's pitch above the evidence in the loudest style; referrers' irritation is about missing basics like the job ID, n76, not missing pitch). About paragraph (self-description, not evidence; no referrer mentioned it). Full skills list (repeats the match section, adds skills the job doesn't need). 9.4 Strong Fit, Skip / Refer Candidate, bookmark (cut since V3).
 Because:   Experience is the non-negotiable check and projects are where a skill is proven (n50); LinkedIn is part of the referrer's routine (n56); collapsed details serve borderline calls (n53) without burying the decision. Reused V2's own blocks, so it looks like the app.
 How sure:  worked it out from saw-it evidence. Portfolio links are reasoned for design roles, not from research. Project skill chips run off the right edge, as in V2 (horizontal chip row).
+
+CRITIQUE · 2026-09-17 · V6 carry-over review · Source: self
+Said:     "Do this exercise for all the screens… you might have ignored a lot of good designs in my earlier versions… Don't outrightly reject things… log it along with proper reasoning."
+Method:   Pulled the text and structure of every V2 screen (V0 checked too: same content as V2, so V2 covers both). For each V2 element missing or changed in V5, one test: does it help the person on that screen do their job (candidate: find a job worth one of 5 weekly asks, send a complete request, know where it stands; referrer: decide, refer, pass on stage), backed by research or the business model? Restore it, move it, or leave it out, with a reason. Built in V6 (copy of V5) because it touches many screens.
+
+DECISION · 2026-09-17 · V6 · Carry-over from V2, screen by screen
+
+RESTORE
+R1  Referrer "Create manually" (V2 job creation choice) → "Fill in myself" link on Add the job.
+    Because: a referrer may have only a job ID and title, no JD file or link (the portal is where the job lives, n56 n70). Without it, those referrers can't post. Candidate side already has it; one rule for both sides.
+R2  Referrer's own details (V2 Manual Job step 1, Edit Profile: name, company, role, location) → name and company filled from sign-in and work email; role and location asked on Confirm where you work.
+    Because: every candidate screen shows "Nithin Agarwal · Design Manager, Flipkart". V4 removed the only place a referrer gave that. A referrer's role is also how candidates judge who to ask (n29: "HRs, managers or people in similar roles").
+R3  "Add tips (optional)" and "Save as Draft" (V2 job steps 3–4, Edit step 3) → both on Check your job post and Edit your job post.
+    Because: Tips show on the candidate's Job screen ("Tips from the referrer", kept since V2) and are the referrer's cheap way to get better requests, which is the whole point for them (n92). Draft: the job ID is the thing referrers must fetch from their portal (n70); if it isn't at hand, they should be able to come back, and Manage posts already shows a "Draft" status that nothing created.
+R4  Candidate work experience and projects (V2 profile steps 2–3, Edit steps 2–3) → Experience and Projects sections on Check your details and Edit your details, using V2's own blocks, plus optional Links (LinkedIn, portfolio).
+    Because: V5 shows these to referrers as the evidence they read (n50 n56). If the candidate can't see or fix them, a misread resume goes straight to the referrer (AX Spec: the model fills, the person checks).
+R5  Salary and location on job cards (V2 Explore cards: "28-40 LPA*", "Bengaluru, KA") → back on the Jobs list.
+    Because: with 5 requests a week, a candidate has to choose which jobs are worth an ask. Pay and city are the first two filters anyone uses. Worked out, not from our interviews.
+R6  Saved jobs (V2 bookmark on the job card, kept on the Job screen) → "Saved jobs" in candidate Profile.
+    Because: V4 cut "Saved Referrals" as a way to postpone deciding. With a weekly cap (Fix 10) postponing is legitimate: save now, ask on Monday. Reverses part of Fix 8 for candidates; referrers' "Saved candidates" stays cut (see L3).
+R7  "Message Abhinav" (V2 referrer Match screen) → secondary action on After Refer and Marked as submitted; "Messages" row in referrer Profile.
+    Because: V4 removed the referrer's Messages tab saying messages open from a request, but no request screen had a way to open one. Messaging after Refer is when it's useful (portal questions, n59).
+R8  Status tabs on the candidate's list (V2: All · Interviews · Awaiting Response · Closed) → All · Waiting · In progress · Closed.
+    Because: requests pile up over weeks; filtering by where they stand is what n45 describes ("one place like Naukri's applied list"). V3 removed them only to rename stages. Renamed to plan words instead of cutting.
+R9  "Congratulations! You've landed the job" and a primary Thank button (V2 Selected screen) → "Congratulations, you're selected at Swiggy!" and "Thank Joy" as the primary button.
+    Because: V3 demoted both to plain. Selected is the best moment in the product, and since Fix 11 the thank-you is what reaches the referrer and brings them back. It should be the main action.
+R10 Job preferences (V2 profile step 4: preferred roles, employment type, work mode) → optional section in Edit your details only, not onboarding.
+    Because: useful to order Jobs by relevance later, but not needed to send a first request, so it stays out of onboarding (Fix 2).
+
+KEEP AS V5 (V2 element considered, not restored)
+L1  Candidate tagline, About, full skills list on the referrer view: pitch or repetition, not evidence (logged 17 Sep).
+L2  "9.4 Strong Fit", swipe Skip / Refer Candidate / Request Referral: unverifiable score and volume pattern (V3, AX Spec).
+L3  Referrer "Saved Candidates": the request list is already the referrer's queue, ordered by match with Lower match kept; a second saved list splits it. No weekly-cap reason like candidates have.
+L4  "Referral Accepted" full-screen (both sides): the finish line is Submitted, not accepted (V3). Its useful parts live on After Refer (details, message) and in the Referred status.
+L5  "Message Referrer" before the referrer decides: chasing is the referrer's pain (C2). Messaging opens after Refer.
+L6  Six-stage update sheet with Submit: one-tap stages (V3, Devansh's critique).
+L7  Referrer's list tabs (All · Awaiting Action · Interviews · Closed): "Waiting on an update" first is action-first for the referrer; tabs would hide it behind a tap. Different from R8 because the referrer acts on the list, the candidate reads it.
+L8  4-step onboarding with step dots, "Resume/JD uploaded successfully" screens: one review screen (Fix 2, Fix 5).
+L9  Premium: dropped for now (17 Sep).
+L10 "Right swipe to your next job", SIGN UP: V4 Fix 1.
+L11 Header counts "Explore top referrals (82)" / "top profiles (147)": a count of everything isn't a decision aid; the referrer's list shows its own job and Lower match count.
+How sure: R1 R2 R3 R4 R7 R8 R9 worked out from research or from a gap in V5; R5 R6 R10 worked out without research. Nothing here is "saw it" in use.
