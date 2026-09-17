@@ -8,7 +8,7 @@ import { T, SectionLabel, Card, MetaStrip } from "../../../components/caseStudy"
 const poppins = Poppins({ weight: "700", subsets: ["latin"] });
 // The handwritten face for the story lines between screens.
 const caveat = Caveat({ subsets: ["latin"] });
-// Caveat draws small for its size: 20px (18px on phones) matches the 18px lede by eye.
+// Caveat at 20px (18px on phones): its letters then read about as large as the 18px lede, below the 20px headings.
 const handQuote = { fontSize: "var(--fs-20)", fontWeight: 500, color: "var(--text-primary)", lineHeight: 1.5, margin: 0 } as React.CSSProperties;
 
 // Sidedoor's brand colours, as tokens in globals.css: referrers blue, candidates green.
