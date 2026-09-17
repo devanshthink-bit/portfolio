@@ -618,12 +618,13 @@
     color: #E3A47C;
   }
 
-  /* Second case study, in progress: neutral stone panel, only a hint warm, phone outlines still being drawn. */
-  .wip-panel { background: linear-gradient(180deg, #f8f8f7 0%, #efeeeb 100%); }
+  /* Second case study, in progress: the Sidedoor card's 135deg three-stop gradient in a soft slate grey,
+     phone outlines still being drawn. */
+  .wip-panel { background: linear-gradient(135deg, #eeeff2 0%, #bcc0c8 45%, #dadde3 100%); }
   .wip-status {
     display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
     margin: 0 0 8px; padding: 5px 11px 5px 9px; border-radius: 100px;
-    background: rgba(100, 97, 92, 0.08); color: #4a4743;
+    background: rgba(255, 255, 255, 0.6); color: #3d424c;
     font-family: var(--font-inter), sans-serif; font-size: var(--fs-14); font-weight: 500; letter-spacing: -0.011em;
   }
   .wip-dot { position: relative; width: 7px; height: 7px; border-radius: 50%; background: #4f6bd8; }
@@ -641,14 +642,14 @@
   }
   .wip-phone {
     position: relative; width: 196px; height: 411px; flex: none;   /* the RedBus card's side phones: 196 wide, 430:902 */
-    border-radius: 28px; border: 1.5px dashed rgba(100, 97, 92, 0.35);
+    border-radius: 28px; border: 1.5px dashed rgba(61, 66, 76, 0.38);
     background: rgba(255, 255, 255, 0.55);
     padding: 44px 18px 0; display: flex; flex-direction: column; gap: 12px;
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .wip-phone::before { /* notch */
     content: ""; position: absolute; top: 14px; left: 50%; width: 46px; height: 12px;
-    transform: translateX(-50%); border-radius: 10px; background: rgba(100, 97, 92, 0.13);
+    transform: translateX(-50%); border-radius: 10px; background: rgba(61, 66, 76, 0.14);
   }
   .wip-phone:nth-child(1) { transform: translate(28px, 58px) rotate(-8deg); }
   .wip-phone:nth-child(2) { width: 236px; height: 495px; border-radius: 34px; z-index: 2; background: rgba(255, 255, 255, 0.85); }
@@ -659,7 +660,7 @@
 
   .wip-bar, .wip-block {
     display: block; height: 10px; border-radius: 6px; flex: none;
-    background: linear-gradient(90deg, rgba(100,97,92,0.09) 0%, rgba(100,97,92,0.18) 50%, rgba(100,97,92,0.09) 100%);
+    background: linear-gradient(90deg, rgba(61,66,76,0.09) 0%, rgba(61,66,76,0.18) 50%, rgba(61,66,76,0.09) 100%);
     background-size: 200% 100%; animation: wip-shimmer 2.2s ease-in-out infinite;
   }
   .wip-block { height: 96px; border-radius: 12px; }
