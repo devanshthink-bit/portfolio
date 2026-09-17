@@ -26,7 +26,7 @@ const recentWork = [
     phones: ["hifi_06a", "hifi_05a", "hifi_16"],
     // Jahanvi's card anatomy: brand, what I did, tags, image, title + year, one line, impact.
     brand: "RedBus",
-    brandColor: "var(--brand-red)",
+    brandColor: "#ffffff",
     did: "Redesigned RedBus checkout to capture the return trip, even without a date",
     tags: ["Travel", "B2C", "iOS app", "Concept"],
     blurb: "Travellers book one way and leave the return for later, where it often goes to another app. A self-initiated RedBus concept that wins that revenue back by turning one booking into two, in the same checkout.",
