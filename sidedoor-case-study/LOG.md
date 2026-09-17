@@ -494,3 +494,8 @@ Expected:           Icons hidden.
 Actually happened:  Figma lost track of a nested node mid-search and rolled the whole script back. Twice in this build, a failed script left nothing half-done, which made retries safe.
 Cost:               one retry
 Now know:           Reach nested parts of an instance by their direct path, not a broad search.
+
+CHANGE · 2026-09-17 · molades-build
+Changed:    V3 Link Page grid column gap 0 → 101, same as the other flows.
+Caused by:  Devansh, 17 Sep: "Why are these screens stuck with each other?" The flow was copied from Messaging, whose grid had one column and no column gap.
+Result:     Screens spaced like every other flow (checked with a screenshot).
