@@ -87,6 +87,12 @@ must-have: the research shows the pain, V4 doesn't already solve it, and it serv
 
 *Competitor features are from memory; verify on the live products before quoting.*
 
+**Login with LinkedIn.** Added "Continue with LinkedIn" first, above Google and email (V5 login only). Checked
+LinkedIn's developer docs first: sign-in gives name, photo and email only, no work history or profile link, and LinkedIn
+says it doesn't verify identity. So it's there for familiarity (candidates and referrers already ask and check on
+LinkedIn, n04 n29 n56), not for data. Resume upload and work-email verification stay. Verified on LinkedIn can't be used
+to rank candidates, so it's noted as a possible extra trust signal for referrers only.
+
 **Design audit.** Every V5 screen checked by script and by eye against DESIGN_LANGUAGE.md. Fixed 8 things: placeholder
 icons on info notes, a share icon that read as "open website", one screen laying out details differently from the rest,
 capitalisation, a squeezed "Still needed" note, and editing a job post still using V2's 3 steps while posting was one

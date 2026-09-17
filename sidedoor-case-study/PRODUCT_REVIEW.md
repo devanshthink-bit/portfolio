@@ -157,7 +157,7 @@ has everything my portal needs. I submitted it in two minutes."
 Named `object_action`. Each carries `user_role`, `user_id`, `session_id`, `platform` (app / web link).
 
 **Candidate**
-`signup_completed` (method) · `role_selected` · `resume_upload_started` / `_completed` / `_failed` (reason) ·
+`signup_completed` (method: linkedin / google / email) · `role_selected` · `resume_upload_started` / `_completed` / `_failed` (reason) ·
 `onboarding_skipped` (step) · `profile_saved` (fields_filled) · `jobs_viewed` · `job_viewed` (match_count, has_resume) ·
 `request_started` · `request_missing_field_shown` (field) · `request_missing_field_filled` (field) · `request_sent` ·
 `request_stage_changed` (stage, set_by: referrer / candidate) · `request_status_viewed` (source: push / email / organic) ·

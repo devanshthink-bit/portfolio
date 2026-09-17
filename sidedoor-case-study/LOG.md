@@ -694,3 +694,20 @@ Expected:           Same text, new layout.
 Actually happened:  The value text collapsed to zero width and disappeared until each text was set to fill and wrap.
 Cost:               one pass
 Now know:           When changing a layout's direction, reset the children's sizing too, then look at the screenshot.
+
+LEARNED · 2026-09-17 · V5 · What LinkedIn sign-in actually gives (checked LinkedIn's developer docs)
+Sources:  learn.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/sign-in-with-linkedin-v2 (last updated 02/05/2025); learn.microsoft.com/en-us/linkedin/consumer/integrations/verified-on-linkedin/overview; developer.linkedin.com/product-catalog. Read 17 Sep 2026.
+Found:
+  1 Sign In with LinkedIn (OpenID Connect) returns name, first and last name, profile picture, locale, and email (email optional, may be missing). No work history, no college, no current company, no public profile link.
+  2 The docs say it "does not verify user identities and should not be marketed as such."
+  3 A separate product, Verified on LinkedIn, gives verification signals. Lite tier (free, application review): only whether identity or workplace is verified, not which company. Plus tier (business approval, paid): adds current experience and recent education.
+  4 Verified on LinkedIn must not be used for "hiring or employment decisions… Do not use to rank or approve candidates."
+Before:   I said standard sign-in gives name, email and photo only (right), and suggested a "View LinkedIn profile" link on requests from sign-in (wrong: sign-in has no profile link; the candidate would have to paste it).
+
+DECISION · 2026-09-17 · V5 · "Continue with LinkedIn" on the login screen
+Changed:   V5 login (edited in place, one screen; Devansh asked not to make V6): "Continue with LinkedIn" added as the first option, above Google and email. Uses the file's own LinkedIn logo component.
+Rejected:  Claiming LinkedIn sign-in fills the profile or verifies the person; replacing resume upload or work-email verification with it; using Verified on LinkedIn to rank or filter candidates (its terms forbid it); Plus tier for shared background (needs a paid partnership, not a first-version dependency).
+Because:   The asking already happens on LinkedIn (n04, n29) and referrers check LinkedIn before submitting (n56), so it's the most familiar, trusted one-tap option for this audience. It only speeds up sign-in; everything else stays as designed.
+Metric:    signup_completed(method: linkedin / google / email) and onboarding completion by method.
+How sure:  saw it (docs); worked it out (that it lifts sign-up).
+Later, not built: (a) an optional "LinkedIn profile link" field the candidate pastes, shown to referrers as "View LinkedIn profile" (backed by n56); (b) Verified on LinkedIn Lite as a second trust signal for referrers, never for ranking candidates.
