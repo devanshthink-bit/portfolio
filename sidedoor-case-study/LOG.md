@@ -628,3 +628,28 @@ Rejected:  Keeping Saved (V2).
 Because:   Saving belongs to no growth loop (BUSINESS.md) and lets people postpone the decision the product exists to make quick. The link is the acquisition loop, so it needs a place a referrer can always find.
 Metric:    link_shared from profile.
 How sure:  worked it out
+
+DECISION · 2026-09-17 · V4 · Fix 9 · No answer after 7 days has a next step (PRODUCT_REVIEW T2)
+Changed:   New V4 tracking state "No answer after 7 days": tag "No answer", "Sent to Shivangi 7 days ago. No answer. Your request is back, so it doesn't count against this week.", "3 others at Zepto refer for this job. Your details are ready. It takes one tap to ask.", "Ask someone else at Zepto", "Keep waiting for Shivangi".
+Rejected:  V3's "you can withdraw it and ask someone else" with no way to do it; auto-sending to someone else without asking.
+Because:   Silence is C1, the first candidate pain. The moment a candidate realises nobody answered is when they give up on the product. Giving the request back and offering the next referrer turns a dead end into the next request.
+Metric:    ask_someone_else_tapped; % requests closed with an answer; candidate 30-day return.
+How sure:  worked it out. "3 others" is sample; the screen only shows when others exist.
+
+DECISION · 2026-09-17 · V4 · Fix 10 · Referrers set a weekly request limit (PRODUCT_REVIEW T4)
+Changed:   "Your rules" on Check your job post: "Up to 10 requests a week" (on), "When it's full, candidates see you're full this week and ask again on Monday." Jobs list: Avinash's card shows "Avinash is full this week".
+Rejected:  Unlimited requests; hiding a full referrer.
+Because:   The guardrail is that referrers turning off requests must not rise (BUSINESS.md). An easier way to ask can flood the scarce side. A cap the referrer controls protects them; showing "full this week" is honest with candidates instead of silent.
+Metric:    request_limit_changed; guardrail: referrers turning off requests; % referrers who hit the cap.
+How sure:  worked it out. 10 is a placeholder default, not from data.
+
+DECISION · 2026-09-17 · V4 · Fix 11 · Thank-yous reach the referrer (PRODUCT_REVIEW T3)
+Changed:   Your referrals record shows "Himani thanked you" with her message, under "What your referrals reached".
+Rejected:  Points, badges or leaderboards for referrers.
+Because:   Both referrers said the bonus isn't the main reason (Samarth n62; Riya n87 says it's too low to motivate). Knowing a referral helped someone is a reason to open the next request. Gamified points reward activity, not value.
+Metric:    thanks_sent; % referrers who submit again within 30 days, with vs without a thank-you.
+How sure:  guessing that thanks move retention; worked it out that bonuses don't.
+
+CHANGE · 2026-09-17 · V4
+Changed:   All 11 P1 fixes built in V4. Checked: 43 V4 screens, no stacked, hidden, out-of-frame or overlapping screens. V3 untouched.
+Result:    ITERATIONS.md written: V2 → V3 → V4 with reasons, for the case study.
