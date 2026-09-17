@@ -10,8 +10,8 @@
     --card-bg: #f2f2f0;
     --hero-bg: #f6f5f3;
     --brand-red: #E81E38;   /* the RedBus name: the brand red (a deeper #B42335 was tried and dropped, 15 Sep) */   /* warm stone, not cool grey (Devansh, 15 Sep) */
-    --sd-blue: #2563EB;    /* Sidedoor's brand blue and green (the case study title, charts) */
-    --sd-green: #0E9F6E;
+    --sd-blue: #2563EB;    /* Sidedoor's brand blue and green: referrers blue, candidates green */
+    --sd-green: #10B981;
     --cs-callout-bg: rgba(0, 0, 0, 0.028);
     --cs-stat-gap: #e8e4df;
     --tag-bg: var(--bg);
@@ -58,8 +58,8 @@
     --hero-bg: #171614;
     --ink-surface: #3a3836;
     --brand-red: #E81E38;
-    --sd-blue: #7EA6F7;    /* lighter, so they keep their contrast on the dark ground */
-    --sd-green: #5FD3A5;
+    --sd-blue: #2563EB;    /* brand colours, the same on both themes */
+    --sd-green: #10B981;
     --cs-callout-bg: #22211f;
     --cs-stat-gap: rgba(255, 255, 255, 0.09);
     --tag-bg: #3d3b39;   /* solid, so the bucket's watermark never shows through a tag */
@@ -1476,6 +1476,20 @@
   }
   .cs-page .ask-input:focus-within { border-color: var(--text-primary); }
   .cs-page .ask-input input:focus-visible { outline: none; }
+
+  /* Sidedoor theming: candidates green, referrers blue. A tinted panel in the same shape as
+     .cs-callout-warn, and the tone on labels and names. */
+  .sd-candidate { --sd-tone: var(--sd-green); }
+  .sd-referrer { --sd-tone: var(--sd-blue); }
+  .sd-tint {
+    background: color-mix(in srgb, var(--sd-tone) 8%, var(--bg));
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--sd-tone) 24%, transparent), var(--shadow-md);
+  }
+  .sd-tone-text,
+  .sd-candidate .cs-label-lead,
+  .sd-referrer .cs-label-lead { color: var(--sd-tone); }
+  /* The SideDoor logo keeps its own face and size on every screen. */
+  .cs-page h1.sd-logo { font-size: 44px !important; }
 
   /* Something you give up: an amber panel, not a thick side stripe. */
   .cs-callout-warn {

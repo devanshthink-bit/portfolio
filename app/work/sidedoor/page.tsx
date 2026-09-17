@@ -1,10 +1,13 @@
 // Built on the shared case study kit (components/caseStudy.tsx + the cs-* classes), the same as
 // RedBus, so type, colour, corners, shadows and spacing match the rest of the portfolio.
+import { Poppins } from "next/font/google";
 import RubberBackButton from "../../../components/RubberBackButton";
 import SidedoorTOCClient from "../../../components/SidedoorTOCClient";
 import { T, SectionLabel, Card, MetaStrip } from "../../../components/caseStudy";
 
-// Sidedoor's two brand colours, as tokens in globals.css (lighter on the dark theme).
+const poppins = Poppins({ weight: "700", subsets: ["latin"] });
+
+// Sidedoor's brand colours, as tokens in globals.css: referrers blue, candidates green.
 const BLUE = "var(--sd-blue)";
 const GREEN = "var(--sd-green)";
 
@@ -88,16 +91,24 @@ function NumberedRows({ items }: { items: { n: string; title: string; desc: stri
   );
 }
 
-function PeopleCards({ items }: { items: { label: string; sub?: string; desc: string }[] }) {
+// A card tinted for one side: candidates green, referrers blue (.sd-tint in globals.css).
+function ToneCard({ tone, children, style }: { tone: "candidate" | "referrer"; children: React.ReactNode; style?: React.CSSProperties }) {
+  return <div className={`sd-${tone} sd-tint`} style={{ borderRadius: "var(--r-md)", padding: "20px 22px", ...style }}>{children}</div>;
+}
+
+function PeopleCards({ items }: { items: { label: string; sub?: string; desc: string; tone?: "candidate" | "referrer" }[] }) {
   return (
     <div className="cs-swatches">
-      {items.map((u) => (
-        <Card key={u.label}>
-          <p style={T.cardH}>{u.label}</p>
-          {u.sub && <p style={{ ...T.small, marginTop: 2 }}>{u.sub}</p>}
-          <p style={{ ...T.body, marginTop: 8 }}>{u.desc}</p>
-        </Card>
-      ))}
+      {items.map((u) => {
+        const inner = (
+          <>
+            <p style={T.cardH}>{u.label}</p>
+            {u.sub && <p style={{ ...T.small, marginTop: 2 }}>{u.sub}</p>}
+            <p style={{ ...T.body, marginTop: 8 }}>{u.desc}</p>
+          </>
+        );
+        return u.tone ? <ToneCard key={u.label} tone={u.tone}>{inner}</ToneCard> : <Card key={u.label}>{inner}</Card>;
+      })}
     </div>
   );
 }
@@ -121,7 +132,7 @@ export default function SideDoorCaseStudy() {
 
       {/* Title */}
       <SectionLabel>Case Study · Product Design</SectionLabel>
-      <h1 style={T.h1}>
+      <h1 className={`sd-logo ${poppins.className}`} style={{ fontSize: 44, fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 1.1, margin: "0 0 14px 0" }}>
         <span style={{ color: BLUE }}>Side</span><span style={{ color: GREEN }}>Door</span>
       </h1>
       <p style={T.lede}>
@@ -153,7 +164,7 @@ export default function SideDoorCaseStudy() {
             "Both sides track every stage after the referral is submitted , no black box, no repeated follow-ups.",
           ].map((point, i) => (
             <li key={i}>
-              <span className="cs-numbered-n" style={{ color: BLUE }}>0{i + 1}</span>
+              <span className="cs-numbered-n" style={{ color: "var(--text-muted)" }}>0{i + 1}</span>
               <span style={T.body}>{point}</span>
             </li>
           ))}
@@ -166,13 +177,13 @@ export default function SideDoorCaseStudy() {
 
       {/* ── The problem, lived ─────────────────────────────────────── */}
       <Act id="toc-problem" kicker="The problem, lived" />
-      <Card>
+      <ToneCard tone="candidate">
         <p style={{ ...T.h2, margin: 0, lineHeight: 1.5 }}>
           Meet Ishaan. 2 years into his career as a product designer. He finds a role he&apos;s genuinely
           excited about: Product Designer at CRED. He opens LinkedIn, searches for CRED employees,
           and starts messaging.
         </p>
-      </Card>
+      </ToneCard>
       <div style={{ display: "flex", justifyContent: "center", margin: "32px 0 48px 0" }}>
         <div style={{ width: 200, height: 168, overflow: "hidden", position: "relative" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -188,12 +199,12 @@ export default function SideDoorCaseStudy() {
         idea if anything actually happened. He checks his email obsessively. Sends a follow-up. Gets a
         &quot;will check&quot; reply. Nothing more.
       </p>
-      <Card style={{ margin: "32px 0" }}>
+      <ToneCard tone="candidate" style={{ margin: "32px 0" }}>
         <p style={T.quote}>
           &quot;I don&apos;t even know if they submitted it. I have no way to track it.&quot;
         </p>
-        <p style={{ ...T.small, marginTop: 8 }}>— Candidate, interview</p>
-      </Card>
+        <p className="sd-tone-text" style={{ ...T.small, color: undefined, fontWeight: 500, marginTop: 8 }}>— Candidate, interview</p>
+      </ToneCard>
       <p style={bodyLast}>
         Ishaan&apos;s not an edge case. He&apos;s every candidate. The employees he&apos;s messaging? They&apos;re getting
         10–50 requests like his every week. One PM I interviewed got 40–50 DMs a day whenever their
@@ -218,8 +229,8 @@ export default function SideDoorCaseStudy() {
       {/* Who this was built for */}
       <div style={{ margin: "48px 0 16px" }}><SectionLabel>Who I was designing for</SectionLabel></div>
       <PeopleCards items={[
-        { label: "Candidates", sub: "0–5 yrs exp", desc: "They know referrals work. They've tried cold applying. They just can't reach the right people." },
-        { label: "Referrers", sub: "Mid-level, tech", desc: "Every referral puts their reputation on the line. The ask feels social. The risk is professional." },
+        { tone: "candidate", label: "Candidates", sub: "0–5 yrs exp", desc: "They know referrals work. They've tried cold applying. They just can't reach the right people." },
+        { tone: "referrer", label: "Referrers", sub: "Mid-level, tech", desc: "Every referral puts their reputation on the line. The ask feels social. The risk is professional." },
         { label: "Recruiters", sub: "Secondary", desc: "They value referrals in theory, but bonus gaming has made them skeptical. Trust needs rebuilding." },
       ]} />
 
@@ -230,10 +241,10 @@ export default function SideDoorCaseStudy() {
       </p>
 
       {/* 01 */}
-      <section className="cs-beat" style={{ marginBottom: 72 }}>
+      <section className="cs-beat sd-candidate" style={{ marginBottom: 72 }}>
         <SectionLabel>01 · Referrer Discovery</SectionLabel>
         <h2 style={beatH}><E>➡️</E>How can a candidate find the right person to approach, not just any random employee?</h2>
-        <Card style={{ marginTop: 24 }}>
+        <ToneCard tone="candidate" style={{ marginTop: 24 }}>
           <p style={{ ...T.cardH, marginBottom: 8 }}>
             Ishaan clicks &quot;Get Referral&quot; on the Product Designer role at CRED. Instead of a search bar,
             he sees a curated, ranked list of CRED employees.
@@ -242,7 +253,7 @@ export default function SideDoorCaseStudy() {
             Diya Sharma is at the top: 92% match, Same College, responds in ~8 hrs, has referred 12
             people before. That&apos;s not a stranger anymore.
           </p>
-        </Card>
+        </ToneCard>
         <Card style={{ marginTop: 12 }}>
           <p style={T.cardH}>
             <E>🎯</E>Ishaan isn&apos;t messaging into the void. He&apos;s reaching out to the most relevant person for
@@ -258,10 +269,10 @@ export default function SideDoorCaseStudy() {
       <Interlude img="/images/ishaan-3.PNG" text="Ishaan had been playing a numbers game. Then he saw the ranked list: Diya Sharma, 92% match, same university. For the first time, a name felt like a real lead. 🎯" />
 
       {/* 02 */}
-      <section className="cs-beat" style={{ marginBottom: 72 }}>
+      <section className="cs-beat sd-candidate" style={{ marginBottom: 72 }}>
         <SectionLabel>02 · Structured Request</SectionLabel>
         <h2 style={beatH}><E>➡️</E>How can a candidate send a request a stranger actually wants to respond to?</h2>
-        <Card style={{ marginTop: 24 }}>
+        <ToneCard tone="candidate" style={{ marginTop: 24 }}>
           <p style={{ ...T.cardH, marginBottom: 8 }}>
             Ishaan doesn&apos;t write a DM. He fills a guided form: role is pre-filled, fit points are
             suggested from the JD, he writes a short pitch. Preview screen. Send.
@@ -270,7 +281,7 @@ export default function SideDoorCaseStudy() {
             Diya receives Ishaan&apos;s request and understands the fit in under 30 seconds. No back-and-forth.
             No chasing for details.
           </p>
-        </Card>
+        </ToneCard>
         <Card style={{ marginTop: 12 }}>
           <p style={T.cardH}>
             <E>🎯</E>Every request is structured the same way: clear, scannable, easy to evaluate. No more &quot;refer me anywhere&quot; messages.
@@ -285,10 +296,10 @@ export default function SideDoorCaseStudy() {
       <Interlude img="/images/diya-2.PNG" text="Diya opened it on her lunch break. No wall of text, just a clean card: 85% match, three fit points, a short pitch. She read it in under 30 seconds. 👀" />
 
       {/* 03 */}
-      <section className="cs-beat" style={{ marginBottom: 72 }}>
+      <section className="cs-beat sd-referrer" style={{ marginBottom: 72 }}>
         <SectionLabel>03 · Referrer Evaluation</SectionLabel>
         <h2 style={beatH}><E>➡️</E>How can a referrer decide confidently without risking their own reputation?</h2>
-        <Card style={{ marginTop: 24 }}>
+        <ToneCard tone="referrer" style={{ marginTop: 24 }}>
           <p style={{ ...T.cardH, marginBottom: 8 }}>
             Diya opens Ishaan&apos;s request. She doesn&apos;t see a resume dump. She sees a structured evaluation:
             85% overall match with breakdown, key strengths (green), potential concerns (orange), and
@@ -298,7 +309,7 @@ export default function SideDoorCaseStudy() {
             Instead of &quot;Refer or Don&apos;t Refer,&quot; she has four options: Decline / Review Later / Refer /
             Strongly Recommend. She clicks Strongly Recommend. Adds a private note for the recruiter.
           </p>
-        </Card>
+        </ToneCard>
         <Card style={{ marginTop: 12 }}>
           <p style={T.cardH}>
             <E>🎯</E>Diya didn&apos;t guess. She made a confident, informed decision in under 2 minutes.
@@ -313,10 +324,10 @@ export default function SideDoorCaseStudy() {
       <Interlude img="/images/diya-4.PNG" text={"Diya clicked \"Strongly Recommend.\" Ishaan's phone buzzed a minute later. Request accepted. For the first time, the silence didn't feel like being ignored. 🥹"} />
 
       {/* 04 */}
-      <section className="cs-beat" style={{ marginBottom: 72 }}>
+      <section className="cs-beat sd-candidate" style={{ marginBottom: 72 }}>
         <SectionLabel>04 · Shared Pipeline</SectionLabel>
         <h2 style={beatH}><E>➡️</E>How can both sides know what&apos;s happening after the referral is submitted?</h2>
-        <Card style={{ marginTop: 24 }}>
+        <ToneCard tone="candidate" style={{ marginTop: 24 }}>
           <p style={{ ...T.cardH, marginBottom: 8 }}>
             Ishaan gets a notification. He opens SideDoor and sees a shared timeline: Request Accepted →
             Referral Submitted → Application Under Review → Screening → Interview → Outcome.
@@ -325,7 +336,7 @@ export default function SideDoorCaseStudy() {
             At each stage, he can see who owns the next action: &quot;Recruiter reviewing your application.&quot;
             No ambiguity. No need to follow up.
           </p>
-        </Card>
+        </ToneCard>
         <Card style={{ marginTop: 12 }}>
           <p style={T.cardH}>
             <E>🎯</E>Ishaan doesn&apos;t check his email 20 times a day anymore. He knows exactly where things stand, and so does Diya.
@@ -340,7 +351,7 @@ export default function SideDoorCaseStudy() {
       <Interlude img="/images/ishaan-5.PNG" text="Ishaan tapped it expecting another follow-up to chase. Instead: a timeline. Request Accepted. Referral Submitted. Under Review. He put his phone down. Not once did he pick it back up. 😌" />
 
       {/* 05 */}
-      <section className="cs-beat" style={{ marginBottom: 72 }}>
+      <section className="cs-beat sd-referrer" style={{ marginBottom: 72 }}>
         <SectionLabel>05 · Quality Over Volume</SectionLabel>
         <h2 style={beatH}><E>➡️</E>How do we stop spam without making it harder for serious candidates?</h2>
         <p style={{ ...T.sub, marginBottom: 24 }}>
@@ -367,8 +378,8 @@ export default function SideDoorCaseStudy() {
       {/* Who gains what */}
       <div style={{ margin: "0 0 16px" }}><SectionLabel>Who gains what</SectionLabel></div>
       <PeopleCards items={[
-        { label: "Candidates", desc: "Higher conversion from outreach to referral. Less time wasted messaging people who won't reply." },
-        { label: "Referrers", desc: "Less effort, less risk to their reputation. Participating feels normal, not like a personal favour." },
+        { tone: "candidate", label: "Candidates", desc: "Higher conversion from outreach to referral. Less time wasted messaging people who won't reply." },
+        { tone: "referrer", label: "Referrers", desc: "Less effort, less risk to their reputation. Participating feels normal, not like a personal favour." },
         { label: "Recruiters", desc: "Better-quality signals. Less time screening bad referrals, more confidence in the ones that come through." },
       ]} />
 
@@ -448,15 +459,18 @@ export default function SideDoorCaseStudy() {
       </p>
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
         {[
-          { quote: "Whenever a higher referral bonus is announced, suddenly the system gets flooded with random resumes.", who: "Recruiter" },
-          { quote: "If I'm doing a favor for somebody, why would I go through all this back and forth for someone I don't even know?", who: "Referrer" },
-          { quote: "I messaged 40 people. 9 replied. 3 actually submitted. I have no idea what happened after.", who: "Candidate" },
-        ].map((item) => (
-          <Card key={item.who}>
-            <p style={T.quote}>&quot;{item.quote}&quot;</p>
-            <p style={{ ...T.small, marginTop: 8 }}>— {item.who}</p>
-          </Card>
-        ))}
+          { quote: "Whenever a higher referral bonus is announced, suddenly the system gets flooded with random resumes.", who: "Recruiter", tone: undefined },
+          { quote: "If I'm doing a favor for somebody, why would I go through all this back and forth for someone I don't even know?", who: "Referrer", tone: "referrer" as const },
+          { quote: "I messaged 40 people. 9 replied. 3 actually submitted. I have no idea what happened after.", who: "Candidate", tone: "candidate" as const },
+        ].map((item) => {
+          const inner = (
+            <>
+              <p style={T.quote}>&quot;{item.quote}&quot;</p>
+              <p className={item.tone ? "sd-tone-text" : undefined} style={{ ...T.small, color: item.tone ? undefined : T.small.color, fontWeight: 500, marginTop: 8 }}>— {item.who}</p>
+            </>
+          );
+          return item.tone ? <ToneCard key={item.who} tone={item.tone}>{inner}</ToneCard> : <Card key={item.who}>{inner}</Card>;
+        })}
       </div>
       <ImagePlaceholder label="FigJam · Interview transcripts · Affinity map · Research synthesis · Pain points · Key insights" />
 
