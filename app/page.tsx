@@ -14,15 +14,6 @@ const STATS = [
 ];
 
 const recentWork = [
-  // Hidden for now at Devansh's request (13 Sep 2026). Kept, not deleted: uncomment to bring back.
-  // {
-  //   title: "Sidedoor — Job referral platform",
-  //   desc: "0→1 referral platform — research & concept design.",
-  //   tag: "Product Design · 0→1",
-  //   gradient: "linear-gradient(135deg, #d4e2ff 0%, #7aa5fb 45%, #b0caff 100%)",
-  //   tooltipBg: "#3d6bc4",
-  //   slug: "sidedoor",
-  // },
   {
     title: "Winning the return ticket at checkout",
     desc: "View project",
@@ -37,6 +28,14 @@ const recentWork = [
     did: "Redesigned RedBus checkout to capture the return trip, even without a date",
     tags: ["Travel", "B2C", "iOS app", "Concept"],
     blurb: "Travellers book one way and leave the return for later, where it often goes to another app. A self-initiated RedBus concept that wins that revenue back by turning one booking into two, in the same checkout.",
+  },
+  {
+    title: "Sidedoor — Job referral platform",
+    desc: "0→1 referral platform — research & concept design.",
+    tag: "Product Design · 0→1",
+    gradient: "linear-gradient(135deg, #d4e2ff 0%, #7aa5fb 45%, #b0caff 100%)",
+    tooltipBg: "#3d6bc4",
+    slug: "sidedoor",
   },
   // Hidden for now at Devansh's request (13 Sep 2026). Kept, not deleted: uncomment to bring back.
   // {
