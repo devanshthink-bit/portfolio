@@ -381,3 +381,14 @@ Cost:               one retry
 Now know:           Pick every node by ID before removing any of them.
 
 Also noted for molades-attack: V2's Tag component uses the light success/error/amber text colours flagged in DESIGN_LANGUAGE.md. Not changed, because the component is shared with the V2 originals.
+
+DECISION · 2026-09-17 · molades-build
+Decided:   Slice 4: "Check your referral request" (candidate), new V3 screen in Explore, in place of the V3 copy of long Candidate/Job Screen/3. Order from BRIEF.md: to Nithin Agarwal with job and job ID; "Still needed · 1: Preferred interview locations. Flipkart's portal asks for this, and it isn't on your resume" with the field right there; "Your details, filled from your resume", each editable; "How you match" with what's missing; optional one-line note; "2 of 5 referral requests left this week"; Send off with "Add preferred interview locations to send."
+Rejected:  V2's free-text message to the referrer; letting Send go with details missing.
+Because:   The chosen problem: referrers do the candidate's work before they can say yes. This screen moves that work to the candidate, before sending. Built in the state that shows the point (one detail missing).
+How sure:  worked it out. Detail values, the job ID and "2 of 5" are sample data.
+
+CHANGE · 2026-09-17 · molades-build
+Changed:    After Refer screen moved to its own spot (x 2364). It had been placed on top of the Referral Request screen in slice 2.
+Caused by:  Found while placing this slice: two screens at the same position.
+Result:     No overlapping screens in V3 Explore.
