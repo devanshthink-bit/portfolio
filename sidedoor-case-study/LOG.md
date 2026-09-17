@@ -925,3 +925,9 @@ Changed:
   - Spacing above the buttons tightened (gap 40 → 28, top 40 → 24) so everything fits above the home bar.
 Not built: a separate "Welcome back" screen. Log in shows the same options; no new screen was needed to show that.
 Checked: screenshot of the whole screen.
+
+CHANGE · 2026-09-17 · V6 status tags cut off · Source: Devansh ("Why is this tag cut?")
+Seen:     On After Refer, the "Referred" tag showed as "Re" in Devansh's Figma.
+Found:    The file data said the tag was 74 wide with its text fully inside, and my screenshot showed it whole. Same pattern as the login buttons: these tag instances had been moved and resized several times (person row → green card → link row → person row), and Devansh's editor kept an old size.
+Changed:  Replaced the status tag with a fresh Tag instance (same style and label, hug width) on Referral request, Not enough to judge, After Refer and Marked as submitted.
+LEARNED:  After moving and resizing an instance many times, place a fresh instance instead. The API and screenshots can look right while the designer's editor shows an old layout.
