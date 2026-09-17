@@ -333,3 +333,15 @@ Expected:           List sits at the top, left-aligned.
 Actually happened:  The section was centre-aligned both ways with a grey background, so the list floated in the middle and the new list frame got a default white fill.
 Cost:               one extra pass
 Now know:           V2's containers carry alignment and fills that don't show until content changes. Check container settings before reusing one.
+
+CHANGE · 2026-09-17 · molades-build
+Changed:    People's photos copied from Figma V0 into Figma V2: 105 avatars, 16 people, in both the original V2 screens and the V3 copies. Only the avatar image was set; nothing else on the V2 screens changed.
+Caused by:  Devansh, 17 Sep: photos were in V0 but missing in V2. Asked where; answered "both".
+Result:     Each avatar gets the photo of the person named on the same card (matched by name, V0 → V2). The 3 sample cards on the new Referral requests screen stay without photos, since those names aren't from V0.
+
+LEARNED · 2026-09-17 · molades-build
+Tried:              Using V0's image references directly in the V2 file.
+Expected:           Would need to download and re-upload each photo.
+Actually happened:  V2 already holds V0's images (V2 was built from V0), so they applied directly. One avatar (Candidate Match Screen) had no name next to it; V0 showed it was Abhinav Saxena.
+Cost:               none
+Now know:           Check the node in the older file when a match by name fails, instead of guessing.
