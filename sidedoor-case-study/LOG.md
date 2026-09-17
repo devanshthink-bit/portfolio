@@ -857,3 +857,43 @@ Changed:
   - Not enough to judge (Amit): "Full time", "Remote".
   - Not enough to judge was a fixed 844 screen; the green header plus chips pushed Refer under the bottom nav, so the screen now grows with its content (888).
 Checked: fits the Explore flow; no overlaps; chips reuse the Tag component.
+
+CRITIQUE · 2026-09-17 · V6 screens that don't feel part of the app · Source: Devansh
+Said:     Some built screens don't feel like a natural part of the app. The three stacked login buttons look ugly ("no app has three login tabs like this"). The green cards with tags and three link icons inside look ugly and off-language.
+Audit (all V6 flows screenshotted and compared with V2 patterns: Job screen, lists, tracking, sheets, profile, edit):
+  - Matches V2: Jobs lists, Job and invite screens, Check your referral request, tracking (company logo + Tag + timeline), Your referrals and Seen it move sheet, sheets, profiles, manage and edit posts, messages, link pages, onboarding.
+  - Off-language 1 · Referral request (referrer) and Not enough to judge: text, a tag and link icons sit on the green; name and role are squeezed into it. V2 never puts text or tags on a coloured block: the Job card's coloured banner holds only the logo, and the title, bookmark, chips sit on white below. These screens also skip V2's page frame for a detail view (grey page, centred title, white card), which the Job screen uses.
+  - Off-language 2 · After Refer and Marked as submitted: a big green header for a small status screen; V2 status screens use the compact person row.
+  - Off-language 3 · Login: three equal white buttons. V2 buttons are one primary and secondary actions; three equal rows give no main path.
+  - Minor, left as is: "Your job is live" has empty space below; "Share later" is grey text like "Skip for now". Both are V2-consistent.
+
+DECISION · 2026-09-17 · V6 (in place) · Candidate view mirrors the Job card exactly
+Decided:  Referral request and Not enough to judge use the Job screen's frame: grey page, centred title "Referral request", white card (radius 25, same shadow). Inside, in the Job card's order: green banner (radius 16, 175 tall) holding only the photo, like Flipkart's banner holds only the logo; then the name (heading/md) with the status tag where the bookmark sits; role below; then facts, chips and sections on white. Links go back to "Resume and links". After Refer and Marked as submitted go back to the compact person row (avatar 44, name, role, tag), no green.
+Because:
+  - The candidate's view and the job view are now the same shape; only the colour and the picture change. That's what Devansh asked the green for. (saw it in V2's Job card)
+  - Nothing sits on the green, so there's no contrast problem and no clutter. (worked it out)
+  - Status screens are about the action, not the person; V2 uses the small person row there (sheets, Seen it move). (saw it)
+
+DECISION · 2026-09-17 · V6 (in place) · Login: one main button, two small options
+Decided:  "Continue with LinkedIn" as the one primary button, an "or" divider, then Google and email as two half-width secondary buttons side by side. Caption "New or returning, it's the same button." removed.
+Because:
+  - Mobbin (17 Sep): apps with several sign-in methods lead with one main button and shrink the rest: Mimo (email button, then "Or continue with" and round icon buttons), Skip (icon buttons in one row), Todoist and foodpanda (two buttons, then "more options"), Meetup ("or" divider before email). None shows three identical rows as the only option. (saw it)
+  - LinkedIn goes first because it fills name and role for both sides (V5 LinkedIn decision). (worked it out)
+  - Uses V2's own Button component (Primary and Secondary); nothing new. The caption was explaining a problem the layout no longer has: "Continue" already means both. (worked it out)
+
+CHANGE · 2026-09-17 · V6 (in place) · Design-language fixes built (see the three decisions above)
+Changed:
+  - Referral request and Not enough to judge: grey page, centred "Referral request" title, white card (radius 25, the Job screen's shadow). Green banner 175 tall, radius 16, photo 96 only. Name (text/heading/md) with the status tag on the right; role (text/label/md, text/secondary) below. LinkedIn, Dribbble, Behance back under "Resume and links".
+  - Inside the narrower card: "Both worked at MakeMyTrip" → "Both ex-MakeMyTrip" (same as the list card), the hint tag → "Tap a skill that isn't really there" (it was clipped), Refer and Not moving forward stacked full width, Refer first ("Not moving forward" didn't fit half width).
+  - After Refer and Marked as submitted: green header removed; compact person row back (avatar 44, heading/sm name, grey role, tag).
+  - Login: "Continue with LinkedIn" is the primary button (white LinkedIn logo, blue "in"); "or" divider in the border colour; Google and Email as two half-width secondary buttons. Email's extra border removed so both match. Caption removed. Spacing above tightened so the buttons fit the screen.
+  - Explore section grown by 473 to fit the taller screens.
+Checked: every V6 flow for screens outside frames and overlaps (none); text styles on all texts in the five changed screens (all set).
+Tried first: primary LinkedIn button with the logo as is; the button's white icon colour turned it into a plain white square. Recoloured the "in" to the primary blue.
+
+LEARNED · 2026-09-17 · V6 design language
+Tried:              Bringing V2's green card back by putting the name, role, tag and links on it.
+Expected:           Colour alone would make the candidate view match the Job card.
+Actually happened:  It looked foreign. V2's coloured blocks carry only a picture; text and tags always sit on white.
+Cost:               one rebuild of four screens
+Now know:           Copy the structure of the matching V2 screen (page, card, banner, title row), not just its colour.

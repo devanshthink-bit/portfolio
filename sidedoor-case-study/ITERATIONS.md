@@ -157,6 +157,14 @@ because white on that green fails contrast.
 out with a logged reason. One thing was missing and came back: the "Full time" and "Remote or hybrid" chips, so the
 referrer can see the person's way of working lines up with the job, like the Job screen shows for the job.
 
+**Design-language pass (V6).** Devansh said a few screens didn't feel part of the app. An audit of every V6 flow found
+three: the green header had text, a tag and icons on colour (V2 never does that), status screens used a big header for
+a small action, and login had three equal buttons. The candidate view now copies the Job card's structure exactly
+(grey page, white card, a colour banner with only the photo, name row with the status where the bookmark sits). Login
+leads with one LinkedIn button, then Google and Email side by side, as apps like Mimo, Meetup and Todoist do.
+
+*Learned: copy the structure of the matching screen, not just its colour.*
+
 ---
 
 ## Say it in an interview
