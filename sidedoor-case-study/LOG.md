@@ -908,3 +908,20 @@ Seen:     In Devansh's Figma the half-width buttons still said "Continue with…
 Why my first fix failed: I trusted the API and my own screenshot, which both said "Google"/"Email". The old instances carried text overrides from V5, so Devansh's editor kept showing the long label. I should have rebuilt the buttons instead of setting the label again.
 Changed:  Removed both old instances. Placed two fresh Secondary Button instances from the component: labels "Google" and "Email", same icons, right icon hidden, 44 tall, LinkedIn's radius and shadow.
 Checked:  screenshot of the whole login screen.
+
+DECISION · 2026-09-17 · V6 (in place, Devansh: "yes") · Login: returning-user line and terms line
+Asked:    Devansh compared with V2's login (Continue with Google, SIGN UP, "Already have an account? Login").
+Decided:  Add V2's "Already have an account? Log in" (blue link) under the buttons, and a small grey "By continuing, you agree to our Terms and Privacy Policy" line at the bottom. Keep out V2's separate SIGN UP button.
+Because:
+  - Removing "New or returning, it's the same button" left returning users with no sign of where to go. Me+ ("Already have an account? Log in!") and Meetup ("Log in with email") keep this line with the same layout (Mobbin, 17 Sep). (saw it)
+  - Log in shows the same three options (LinkedIn and Google sign-in are the same step for new and returning people), so no new flow. (worked it out)
+  - Terms line: nearly every Mobbin login in the search had one (Todoist, Mimo, GO Club, Replika). LinkedIn and Google sign-in share name and email with us; this is where people agree to it. (saw it; the legal need is not checked)
+  - No SIGN UP button: with "Continue with…" buttons, a second sign-up button splits one action in two; uppercase doesn't match V6 buttons. (worked it out)
+
+CHANGE · 2026-09-17 · V6 login: returning-user and terms lines built
+Changed:
+  - "Already have an account? Log in" under Google and Email: V2's own text node copied (body text, blue semibold underlined link), "Login" → "Log in".
+  - Grey caption at the bottom: "By continuing, you agree to our Terms and Privacy". The full "…Privacy Policy" wrapped with "Policy" alone on a second line, so it was shortened to fit one line.
+  - Spacing above the buttons tightened (gap 40 → 28, top 40 → 24) so everything fits above the home bar.
+Not built: a separate "Welcome back" screen. Log in shows the same options; no new screen was needed to show that.
+Checked: screenshot of the whole screen.
