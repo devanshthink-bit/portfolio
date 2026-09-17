@@ -107,6 +107,31 @@ New strings from the brief: "Add the job ID first. It's the first thing a referr
 **Worked it out:** card padding 16, button height 48, density "between", contrast ratios (estimated from colour values, not tested on device), status colour mapping.
 **Guessing:** nothing left here.
 
+## V2 patterns · added 17 Sep 2026
+
+Tokens alone didn't make new screens feel native (LOG, 17 Sep critique). These are V2's layout habits, measured from
+Track Referrals (1198:8792), Track details (1247:5475) and Add your experience (1054:5510). **saw it** (Figma values).
+
+| Pattern | V2 does | Numbers |
+|---|---|---|
+| **Screen title** | Lists: title centred in the top bar. Forms: logo in the top bar, centred title + subtitle in the body | Title heading/sm 16/600 ink; subtitle label/md 14/500 muted; gap 4; centred |
+| **Content start** | Body starts below the top bar with space | Top padding 24 (lists, details), 32 (forms); sides 16 (20 on details); blocks 20–28 apart |
+| **Section label** | Small icon + label **above** a box, never a heading inside the box | Icon 16, gap 8, heading/xs 14/600 ink; 8 above the box. If the section is editable: one edit-2-fill 18 at the right end of the label row |
+| **Content box** | Filled or read-only details sit in a light box | #FAFAFA, radius 8 (10 for a grouped box), elevation-1, padding 12/16 |
+| **Card** | Lists and timelines | White, radius 12 (timeline card 15), elevation-1, padding 16 (timeline 24, rows 32 apart) |
+| **Person row** | Photo, name with verified shield, role; time on the right | Avatar 44 with elevation-1; name heading/sm + check-shield 16 (gap 3); role label/md muted; gap 4; time = loop-right-line 13–14 + label/sm or label/md muted |
+| **Status** | Always a Tag, next to or under the name | Tag component, radius 4, padding 3/8 |
+| **Progress** | Timeline, no ticks-and-crosses lists | Done: Component 9 filled primary (blue) + heading/xs blue. Current: active-radio. Pending: Circle default + heading/xs ink. Dashed line after current |
+| **Info note** | A small neutral Tag with an info icon, not a coloured box | Tag Style=Neutral, left icon on ("All updates will be shared with the candidates") |
+| **Secondary text** | Medium weight | label/md 14/500 or label/sm 12/500. body/md 14/400 only for paragraphs |
+| **Buttons** | One full-width primary at the bottom of the content | Button component, 52 tall |
+
+**Never in V3:** flat tinted boxes (grey #F0F1F2 or amber) as callouts; headings inside cards; a pencil on every row;
+green ticks with grey crosses; left-aligned 20/600 page titles; blue secondary lines under every row.
+
+**How "still needed" works in V2's language:** a Tag Style=Buffer ("Still needed") on the section label row, and the
+empty field as a normal InputField below it. No amber box.
+
 ## Rules for anything generated from this
 Use only the sizes, steps and palette roles above. Do not introduce a new
 size, step or colour. If something seems to need one, that is a hierarchy
