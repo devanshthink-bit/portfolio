@@ -11,7 +11,7 @@ Files:      SCOPE.md [x] v2 draft, v1 kept · RESEARCH.md [x] notes, sort, five 
 Rounds:     1. Mentor's critique (the product and referrer incentive). No change has come from it yet
 Open:       business lens with sources, first names for the four participants, source links for desk research,
             live case study still shows AI-sourced quotes and screens that aren't in Figma
-Next:       molades-landscape, what LinkedIn and others already do for referrals, from the FigJam screenshots
+Next:       molades-landscape, what GetMeReferred, EasyRefer, Jumbl, Instahyre, LinkedIn and others already do, from the FigJam screenshots
 
 ## Entries
 
@@ -22,7 +22,7 @@ Finding:             Mentor: this would make more sense as a feature inside Link
                      join a brand-new app, so the product can't get its supply side.
 Severity:            blocker
 Layer:               the bet
-Action:              answered in SCOPE.md v2 (17 Sep 2026): the product becomes a feature inside LinkedIn
+Action:              rejected (17 Sep 2026), Devansh's call: Sidedoor stays its own product. Answered with reasoning in SCOPE.md v2, not tested
 
 LEARNED · 17 Sep 2026 · molades-research
 Believed:            The research base was 10 interviews: 2 recruiters, 4 referrers, 4 candidates.
@@ -145,3 +145,20 @@ Rejected:            A new standalone app (both sides must join; referrers have 
 Because:             All four already ask and get asked on LinkedIn (n04 n07 n09 n29 n49 n68 n69). Answers the mentor's
                      critique with the notes.
 How sure:            saw it (where they ask) · guessing (the number and guardrail, no baseline)
+
+CHANGE · 17 Sep 2026 · molades-scope
+Changed:             SCOPE.md v2 rewritten: Sidedoor is its own product, not a feature inside LinkedIn. Added the
+                     cold-start bet (referrers first use a link candidates fill in, n66) and a second kill condition.
+Caused by:           Devansh, 17 Sep 2026: "I don't want it to be just a feature... Let's be confident that it can be a
+                     new product... Through the business lens and product thinking lens, we will justify why this
+                     product will work with proper reasoning, data, and research."
+Result:              The mentor's critique is rejected, and the rejection has to be defended. AI said the risk once:
+                     all four people ask on LinkedIn today, and Fishbowl's referral communities are quiet (n28).
+
+DECISION · 17 Sep 2026 · molades-scope
+Decided:             Sidedoor as its own product.
+Rejected:            A feature inside LinkedIn (mentor's suggestion, and the earlier draft of v2).
+Because:             Devansh's call. Supporting reasons: the work sits between LinkedIn and the company portal, which
+                     neither owns (n46 n47 n57 n58 n59 n60 n71); referrers get value from the link before the network
+                     exists (n66); both candidates asked for a dedicated place (n24 n45).
+How sure:            worked it out (the reasons) · guessing (that referrers adopt it)
