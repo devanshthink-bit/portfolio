@@ -92,6 +92,28 @@ a real test would check.
 - Business lens with sources
 - Landscape: what GetMeReferred, EasyRefer, Jumbl, Instahyre, LinkedIn and others already do, from the FigJam screenshots
 
+## Ideas raised before ideation · for molades-ai
+
+Raised by Devansh on 17 Sep 2026, from a follow-up conversation with one of the interviewees and the mentor's view.
+Not decided. They involve a model, so they go to **molades-ai** (instead of molades-ideate), which also works out what
+happens when the AI is wrong.
+
+- **Idea 1 · AI-curated candidates for referrers.** An engine behind the scenes shows each referrer only candidates
+  whose skills match their open roles, not everyone. Supported as a wish: Referrer 1 asked for "an automated matching
+  score" (n65). **worked it out**
+- **Idea 2 · Referrer incentive is quality, not a new reward.** Better-matched candidates let referrers refer for more
+  roles and earn more company bonuses. Tension with the notes: Referrer 2 says the bonus is "very low. It doesn't
+  encourage me to refer" (n87). Less effort per referral (C2) may be the stronger pitch. **guessing**
+- **Idea 3 · Request limits for candidates.** A cap on how many referrals a candidate can ask for. Neither real
+  candidate or referrer described spam (n19, n61), so the reason can't be spam. It can be the guardrail: protecting
+  referrers from being flooded. **worked it out**
+- **Idea 4 · Skill-matched referral search for candidates.** Searching a company shows the referral openings whose job
+  descriptions best match the candidate's skills. Supported as a wish: Candidate 1 asked for a match percentage (n23).
+  **worked it out**
+
+**Waiting on Devansh:** who the follow-up conversation was with, and what that person actually said, in their words.
+Until then these are Devansh's ideas, not research.
+
 ---
 
 ## v1 · reconstructed from FigJam

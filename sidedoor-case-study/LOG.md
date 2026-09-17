@@ -162,3 +162,14 @@ Because:             Devansh's call. Supporting reasons: the work sits between L
                      neither owns (n46 n47 n57 n58 n59 n60 n71); referrers get value from the link before the network
                      exists (n66); both candidates asked for a dedicated place (n24 n45).
 How sure:            worked it out (the reasons) · guessing (that referrers adopt it)
+
+CRITIQUE · 17 Sep 2026 · molades-scope · Source: user
+Finding:             Devansh reports a follow-up conversation with one interviewee, and the mentor's view that there is no
+                     new reward for referrers. Proposed: the referrer's incentive is better candidates picked by an AI
+                     engine, so they can refer for more roles and earn more bonuses; candidates get request limits and
+                     skill-matched referral search.
+Severity:            major
+Layer:               the bet
+Action:              saved as Idea 1–4 in SCOPE.md for molades-ai. Not evidence until the conversation is written down
+                     (who, and what they said). Checked against the notes: the AI match is backed as a wish (n65, n23);
+                     "more bonuses" is in tension with n87; request limits can't rest on spam (n19, n61).
