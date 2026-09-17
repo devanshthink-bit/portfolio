@@ -815,3 +815,26 @@ Moved from the decision:
   - The switch went on Profile, not Edit your details. V2 already had a "Profile Status" switch on Profile, and in V2 it meant "show my profile to referrers in Explore". That is this feature, so reusing the row is a carry-over, not a new pattern. (saw it in V2)
 Design language: only existing parts were used (request card, Section Label, Tag, the blue text link from "Lower match", the Job card, the Headline block from Edit your details, the Switch row). No new colours or styles.
 Checked: every new text has a text style; screens fit their flow frame; no overlaps; the Explore section was grown by 264 px to fit the taller Job copy.
+
+DECISION · 2026-09-17 · V6 (in place, Devansh: "v6") · Green candidate header on the referrer's Referral request
+Asked:    Devansh wants V2's green quote card back on the candidate view, because job cards show the company in its brand colour (Flipkart blue) and green is Sidedoor's colour, so candidates get the same kind of header.
+Decided:  Bring back the green card as the header of Referral request (referrer) and its states (After Refer, Not enough to judge, Marked as submitted). Inside: photo, name large with verified tick, role, and the link row (resume, LinkedIn, Dribbble, Behance, email). The "Sent today" tag stays on the screen.
+Because:
+  - Parallel structure: the candidate reads a job as "brand card, then details"; the referrer now reads a person the same way. One pattern for both sides. (worked it out)
+  - The link row is evidence referrers use: they scan LinkedIn and the resume (n56). (saw it)
+  - Green is the product's own colour, so it looks part of Sidedoor, not a new style. (saw it in V2)
+Left out of the card, with reasons:
+  - The quote/tagline: self-description, not evidence (L1).
+  - "9.4 Strong Fit": unverifiable score (L2); "4 of 7 skills · 3 yrs" with reasons stays below.
+  - The bookmark: referrers have no saved list (L3).
+Rule:     text on the green stays dark, as in V2. White on that green (#10B981, color/surface/brand/secondary) is about 2.5:1, below 4.5:1; dark text is about 6:1. (worked it out)
+Not here: the list cards stay white, like the Jobs list cards.
+
+CHANGE · 2026-09-17 · V6 (in place) · Green candidate header built (see DECISION "Green candidate header on the referrer's Referral request")
+Changed (Referral request, After Refer, Not enough to judge, Marked as submitted):
+  - New "Candidate Header" card: fill bound to color/surface/brand/secondary (the same token as V2's card), radius 16, padding 24, like V2.
+  - Inside: photo 64, name in text/heading/md, role in text/label/md, both text/primary. Role was text/secondary; grey on green fails contrast, so it went dark.
+  - Bottom row: V2's link block (LinkedIn, Dribbble, Behance) on the left; the status tag (Sent today / Referred / Sent 2 days ago / Submitted) on the right.
+  - The "Resume and links" section below is now "Resume": the links moved into the header, so they aren't shown twice.
+Tried first:  the status tag beside the name, as before. The name got cut off ("Abhinav Saxe"). Moved the tag to the link row.
+Checked: text styles on every new text; screens inside the Explore flow; no overlaps.

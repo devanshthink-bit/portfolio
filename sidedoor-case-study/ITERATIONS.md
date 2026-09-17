@@ -148,6 +148,11 @@ a complete request that doesn't count against their 5 a week.
 
 *Test: are invites referred as often as requests candidates send? If not, the idea is wrong.*
 
+**Green candidate header (added to V6).** Devansh wanted V2's green card back. Candidates see a job as a card in the
+company's colour (Flipkart blue), so referrers now see a person as a card in Sidedoor's green: photo, name, role, links
+and status. The quote and "9.4 Strong Fit" stayed out (self-description and an unverifiable score); text stays dark
+because white on that green fails contrast.
+
 ---
 
 ## Say it in an interview
