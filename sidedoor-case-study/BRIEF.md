@@ -228,7 +228,6 @@ and every notification.
 - **Check your referral request** · the place where you see exactly what the referrer will get, before it's sent
 - **Your referral requests** · the place where every request's status lives
 - **Referral request** · the place where one request's timeline lives
-- **Match check** (Premium) · the place where you see how well you match a job before asking
 
 **Referrer**
 - **Post a job from its description** · the place where a job ID and role become a job post
@@ -246,7 +245,7 @@ and every notification.
   card designs are reused, not thrown away
 - **"Referral Accepted" full-screen match (Match)** → folded into the request's timeline. A referral isn't a match; the
   job isn't done until it's submitted
-- **Premium "Referrers want to connect with you"** → becomes **Match check** (BUSINESS.md, Premium)
+- **Premium "Referrers want to connect with you"** → **cut** (17 Sep: Devansh dropped Premium for now; BUSINESS.md, Premium)
 - **Referrer browsing candidates who didn't ask** → not in this project. It needs candidate consent the research never
   touched, and it's the open-inbox problem the other way round
 - **Four-step manual profile and job creation** → one review screen each, filled from the document (AX Spec)
@@ -492,5 +491,5 @@ Not "what breaks if this ships", since there's no product to break. Instead, wha
 | Profile · Live / Paused | **Keep** | Lets a candidate stop receiving job suggestions |
 | Manage posts, Edit | **Keep** | Does its job |
 | Edit profile | **Change** to match the new profile fields | Same as onboarding |
-| Premium | **Change** to Match check | BUSINESS.md, Premium |
+| Premium | **Cut** for now | Sold access to referrers; replacement tool dropped for now (BUSINESS.md, Premium) |
 | **New** | **Check your referral request**, **Your referrals' record**, **Link page** | The problem statement has nowhere to live in V2 without them |

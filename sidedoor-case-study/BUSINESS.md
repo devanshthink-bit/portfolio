@@ -46,6 +46,11 @@ limited by its scarce side, so every business decision protects referrers first.
 
 ### Premium · decided 17 Sep 2026
 
+> **Update, 17 Sep 2026 · Devansh: drop Premium for now.** No paid candidate tool in V3. The rule below still holds:
+> if candidates ever pay, it is only for tools that help themselves, never access to referrers. Revenue for now is
+> Phase 2, companies. Reason for dropping: the free app already shows the match on every job, so a paid tool would
+> need to be something new (e.g. match on any job link, or fix tips). Not worth designing before the core works.
+
 **Candidates can pay only for tools that help themselves. Never to reach, see or jump ahead of referrers.**
 Devansh asked for the decision with its reasoning; this is it.
 

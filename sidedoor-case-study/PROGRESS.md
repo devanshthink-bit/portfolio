@@ -31,10 +31,10 @@ Updated 17 Sep 2026.
 - [x] Post a job from its description · referrer (one review screen)
 - [x] Jobs + Job · candidate (swipe cards become a list)
 - [x] Update sheet · one tap for current stage ("Seen it move?")
-- [ ] Match check (replaces Premium)
+- [x] Premium cut (Devansh: drop for now); Premium rows removed from V3 profiles
 - [ ] Link page (web, no install)
 - [ ] Edit profile · new fields
-- [ ] Remove cut screens from V3: "Referral Accepted", old Premium (manual 4-step forms and swipe cards done)
+- [x] Remove cut screens from V3: swipe cards, manual 4-step forms, "Referral Accepted" + share sheet (Matching flow), Premium flow
 
 ## Other work
 

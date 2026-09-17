@@ -465,3 +465,14 @@ CHANGE · 2026-09-17 · molades-build
 Changed:    Deleted the 6 remaining V3 swipe copies in Explore (Vanya, Avinash, Aarush, Ayesha short and long). V2 originals untouched. Checked with a screenshot.
 Caused by:  BRIEF.md cut list: swipe cards, both sides.
 Result:     V3 Explore is 6 screens in two rows.
+
+DECISION · 2026-09-17 · molades-build · Source: self
+Decided:   Drop Premium for now. No paid candidate tool in V3.
+Rejected:  Premium as "see who wants to refer you" (sells access to referrers); a paid Match check (the free app already shows match on every job, so it would need a new tool: match on any job link, or fix tips).
+Because:   Devansh, 17 Sep: "drop premium for now". The access rule stays: if candidates ever pay, only for tools that help themselves.
+How sure:  worked it out
+
+CHANGE · 2026-09-17 · molades-build
+Changed:    Deleted "V3 · Premium Flow" and "V3 · Matching Flow" (Referral Accepted screens and the Share Resume sheet). Removed the "SideDoor Premium" menu card from the 3 V3 profile screens. BUSINESS.md, BRIEF.md and PROGRESS.md updated. V2 originals untouched.
+Caused by:  Premium dropped (above); BRIEF.md: "Referral Accepted" folds into the timeline, the share sheet becomes the portal-ready details (built in After Refer).
+Result:     V3 has 9 flows. Nothing in V3 mentions Premium (checked by search).
