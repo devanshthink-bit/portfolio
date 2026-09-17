@@ -13,7 +13,7 @@ Updated 17 Sep 2026.
 - [—] **molades-ideate** · not run, on purpose. molades-ai says run it *instead of* ideate when the idea has a model in it, and "never run both"
 - [x] **molades-brief** · BRIEF.md, the plan + one-page Design Brief
 - [x] **molades-language** · DESIGN_LANGUAGE.md + language/test-screen.html
-- [ ] **molades-build** · in progress. Figma V3 copies made; 6 screens done; V0 photos restored
+- [ ] **molades-build** · in progress. Figma V3 copies made; 12 screens done; V0 photos restored
 - [ ] **molades-attack** · break the V3 screens on purpose, then craft and accessibility checks
 - [ ] **molades-build (again)** · fix attack findings one at a time
 - [ ] **molades-test** · no real tests planned. Write the test script anyway and say plainly it wasn't run
@@ -26,7 +26,7 @@ Updated 17 Sep 2026.
 - [ ] Referral request (referrer) · other states: Not moving forward reasons, "Not enough to judge", "Marked as submitted" confirmation
 - [x] Your referrals · referrer
 - [x] Check your referral request · candidate (state: 1 detail still needed, Send off)
-- [ ] Your referral requests + Referral request timeline · candidate (rename to 5 stages)
+- [x] Your referral requests + Referral request timeline · candidate (5 states: Sent, Referred, Submitted, Not selected, Selected)
 - [ ] Your profile from your resume · candidate (one review screen)
 - [ ] Post a job from its description · referrer (one review screen)
 - [ ] Jobs + Job · candidate (swipe cards become a list)

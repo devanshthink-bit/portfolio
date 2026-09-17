@@ -404,3 +404,23 @@ CHANGE · 2026-09-17 · molades-build
 Changed:    V3 Explore row 2 now reads: Job screens (2), Check your referral request, Referral request, After Refer, Ayesha's card (still to cut).
 Caused by:  Devansh, 17 Sep: "where?" with screenshot.
 Result:     All three new screens visible side by side (checked with a screenshot).
+
+DECISION · 2026-09-17 · molades-build
+Decided:   Slice 5, V3 Tracking (candidate). List renamed "Your referral requests", tabs removed, newest first (Flipkart, submitted today, matches the referrer story). Tags in plan words: Sent, Referred, Submitted, In interviews, Selected, Not selected, Not moving forward. Five detail screens, one per state, each with "where it is now" in a sentence and what happens next above the timeline: Sent (Zepto, no Message button before Refer, "No answer in 7 days? You can withdraw it"); Referred (Google, "Heard from Google? Got an email saying your application was submitted? Mark it."); Submitted (Meta, "Interviews usually start within 2–3 weeks", Riya's figure); Not selected (CRED, "Find more jobs"); Selected (Swiggy, "Thank Joy" demoted to a secondary button). Timeline: Sent · Referred · Submitted · In interviews · Selected (or not).
+Rejected:  V2's tabs, "Waiting for Referrer / Under Review / Interview Scheduled / Interview in Progress / Final Decision", Message Referrer before a referral, green "Thank Referrer" as the main button.
+Because:   C3: the candidate can't tell what happened. A sentence says it; the timeline shows it. Every stage word is one a referrer can see on their portal (BRIEF.md words).
+How sure:  worked it out. Companies, dates and referrers are V2's sample data; "2–3 weeks" is from one interview (guessing as a norm).
+
+CHANGE · 2026-09-17 · molades-build
+Changed:    Deleted V3 copies of Candidate/Track Preview Screen/2–4 (tab views); moved detail screens left in the grid; removed V2's "Unfortunately…" and "Congratulations…" lines that overlapped buttons once the summary was added. V2 originals untouched.
+Caused by:  BRIEF.md tracking changes; overlap seen in the flow screenshot.
+Result:     V3 Tracking is 6 screens: list + 5 states.
+
+LEARNED · 2026-09-17 · molades-build
+Tried:              Adding the "Heard from Google?" card to a fixed 844px screen.
+Expected:           Screen grows.
+Actually happened:  V2's inner frames had fixed heights, so the Message Referrer button was pushed out of view and cut off.
+Cost:               two small passes
+Now know:           When adding content to a V2 screen, set the inner frames to hug first, then check the bottom of the screen.
+
+For molades-attack: "Mark it" uses V2's small Tag as a button, likely under 44pt to tap.
