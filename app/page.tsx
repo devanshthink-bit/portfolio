@@ -200,13 +200,17 @@ function WorkCard({ item }: { item: Work }) {
 
 // Second case study, still being written. Not a link. Phone outlines with placeholder bars,
 // as if the screens are still being drawn. Names no project on purpose.
-// Not a link, so nothing reacts to the pointer: no hover tag, no moving phones, the cursor stays as it is.
 function InProgressCard() {
+  const [hovered, setHovered] = useState(false);
+  const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
   const bars = (rows: number[]) => rows.map((w, i) => <span key={i} className="wip-bar" style={{ width: `${w}%` }} />);
   return (
     <div
       className="work-card wip-card"
       aria-label="Next case study, in progress"
+      onMouseEnter={() => { if (!window.matchMedia("(hover: hover)").matches) return; setHovered(true); window.dispatchEvent(new Event("cursor:hide")); }}
+      onMouseLeave={() => { setHovered(false); setPos(null); window.dispatchEvent(new Event("cursor:show")); }}
+      onMouseMove={(e) => setPos({ x: e.clientX, y: e.clientY })}
     >
       <div className="work-card-panel wip-panel">
         <div className="work-card-panel-text">
@@ -226,6 +230,15 @@ function InProgressCard() {
         <p className="work-card-blurb">This one is in progress. Please check back soon.</p>
         <p className="work-card-tags"><span>Research</span><span>Sketching</span><span>Writing it up</span></p>
       </div>
+      {hovered && pos && (
+        <div style={{
+          position: "fixed", left: pos.x + 18, top: pos.y + 18, background: "#3d424c", borderRadius: "var(--r-sm)",
+          padding: "7px 12px", fontSize: "var(--fs-12)", fontFamily: "var(--font-manrope)", fontWeight: 700,
+          letterSpacing: "-0.011em", color: "#ffffff", pointerEvents: "none", zIndex: 9999, whiteSpace: "nowrap",
+        }}>
+          In progress
+        </div>
+      )}
     </div>
   );
 }
