@@ -956,3 +956,20 @@ CHANGE · 2026-09-17 · V6 green banner: side by side, white name · Source: Dev
 Asked:    "Not top-down. Image on the left, name after that. The whole thing should look centred. Keep the name text in white."
 Changed (Referral request, Not enough to judge): banner is now a centred row: photo 72 on the left, name on the right 16 apart, banner still 175 tall. Name uses color/text/onBrand (the file's own white-on-brand token).
 Risk, told to Devansh: white on #10B981 is about 2.5:1. At 20 px semibold that is under the 3:1 minimum for large text, so the name may be hard to read in sunlight or for low-vision users. Options if it's a problem: a darker brand green behind the name, or 24 px bold (still under 3:1 on this green). (worked it out)
+
+CHANGE · 2026-09-19 · V6 sanity pass before attack · Source: Devansh asked for a quick check of all screens
+Checked: all 40 V6 screens. Scripted checks for clipped text, text outside the screen, missing styles and placeholder text, then a screenshot of every flow.
+Fixed:
+  - Candidate Profile (paused): the PAUSED tag had a green "live" dot. Now orange, same as the Paused tag on Manage posts. (saw it)
+  - Referrer Messages: an unread badge "3" sat on the Posts tab. It was left over from V2, where that slot was Messages. Hidden. (saw it)
+  - Edit job post and Check your job post: the two side-by-side buttons were 52 and 56 tall. Both are 52 now, like V2. (saw it)
+  - Link page Sent screen: "Get the Sidedoor app" changed to "SideDoor", the brand spelling. (saw it)
+  - The second Candidate Profile screen was renamed "Candidate/Profile Screen/Paused" so the two names differ.
+Not changed (checked, fine):
+  - Chips cut at the right edge are sideways-scroll rows, same as V2.
+  - Lists cut at the bottom sit in scroll areas.
+  - The "9:41" status bar font is missing on this machine, same as V2.
+Left open:
+  - The empty Referral requests screen has a bell and a link icon in the header. The full list has only the link icon.
+  - The Edit job post subtitle leaves "in." alone on the second line.
+  - White name on green still fails contrast (logged 2026-09-17).
