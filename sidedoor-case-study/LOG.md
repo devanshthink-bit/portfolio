@@ -992,3 +992,20 @@ Changed:
   - Candidate Edit your details: new "Cover photo (optional)" section after Links. It shows a thumbnail, "Shown on your requests" and Replace.
   - Edit Profile section grown by 220 so the flow stays inside it.
 Checked: screenshots, flow fit, section overlaps.
+
+DECISION · 2026-09-19 · V6 (in place) · Green banner shows the match, not the person · Source: Devansh
+Asked:    "What better can we use the green section for if not a cover image? I don't like image and name inside it." Then: "do whatever is the best."
+Decided:  The green banner holds the match summary: "4 of 7 skills match" (text/heading/lg, dark) and "Both ex-MakeMyTrip" (text/label/md) under it. The photo, name, status and role move to one row below the banner. The cover photo idea is undone.
+Because:
+  - The referrer's first question on this screen is "does this person fit my job?" The biggest spot on the screen should answer it. (worked it out)
+  - It mirrors the Job card: that banner says who is hiring, this banner says how well this person fits. (worked it out)
+  - Dark text on #10B981 is about 6:1, so the contrast problem is gone. (worked it out)
+  - Two lines only, no tags or links on colour. That keeps clear of what Devansh called ugly before.
+  - "Not enough to judge" uses a grey banner (surface/tertiary), not green. Green reads as a good match, which would be wrong here. V2's "Not enough to judge" tag was neutral grey too. (worked it out)
+Removed as repeats (hidden, not deleted): the "4 of 7 skills · 3 yrs" tag on How they match, the "Both ex-MakeMyTrip" tag on In common, and the "Not enough to judge" tag on Amit's How they match.
+
+CHANGE · 2026-09-19 · V6 match banner built
+Changed:
+  - Referral request (Abhinav) and Not enough to judge (Amit): Profile Header replaced by Match Banner (175 tall, radius 16) and a Person row (photo 48, name text/heading/sm with a status tag on the right, role text/label/md secondary). The old Role And Status rows were removed.
+  - The cover photo field was removed from Candidate Edit your details. The Edit Profile section is back to 5343 tall.
+Checked: screenshots, Explore flow fit and overlaps.
