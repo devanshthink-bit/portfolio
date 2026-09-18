@@ -94,7 +94,7 @@ LinkedIn, n04 n29 n56), not for data. Resume upload and work-email verification 
 to rank candidates, so it's noted as a possible extra trust signal for referrers only.
 
 **Profile on the referral request, corrected.** Devansh noticed V3 had made the candidate profile plain and asked for
-only what's correct, not what he'd designed. Judged each V2 piece against what referrers check (n50 n53 n56 n59). Brought
+only what's correct, not what was designed before. Judged each V2 piece against what referrers check (n50 n53 n56 n59). Brought
 back experience (with logos and dates), projects (titles and skill chips, details collapsed), quick facts and links,
 because they are the evidence a referrer reads. Left out the green tagline card, About and the full skills list,
 because they are pitch or repetition, not evidence. *Learned: V3 over-corrected. Cutting a volume pattern (swipe) is
@@ -148,10 +148,31 @@ a complete request that doesn't count against their 5 a week.
 
 *Test: are invites referred as often as requests candidates send? If not, the idea is wrong.*
 
-**Green candidate header (added to V6).** Devansh wanted V2's green card back. Candidates see a job as a card in the
-company's colour (Flipkart blue), so referrers now see a person as a card in Sidedoor's green: photo, name, role, links
-and status. The quote and "9.4 Strong Fit" stayed out (self-description and an unverifiable score); text stays dark
-because white on that green fails contrast.
+**The green banner on the referrer's Referral request (six rounds, 17–19 Sep).** Devansh wanted V2's green card back,
+so the candidate view would match the Job card. Candidates see a job as a banner in the company's colour (Flipkart
+blue), and referrers should see a person the same way in Sidedoor's green. What went on the green changed six times:
+
+| Round | On the green | Why it changed |
+|---|---|---|
+| 1 | Photo, name, role, links, status tag | Looked foreign. V2 never puts text or tags on a coloured block (Devansh, then the audit) |
+| 2 | Photo only, like Flipkart's logo | A photo alone doesn't say who it is |
+| 3 | Photo, then name under it | Devansh: side by side, white name |
+| 4 | Photo left, white name right | Devansh didn't like the image and name inside it |
+| 5 | Cover photo tried, then dropped | Adds no evidence and can invite bias (looks, lifestyle) on the screen where the referrer decides |
+| 6 | **"4 of 7 skills match"** | Final. The biggest spot answers the referrer's first question |
+
+**Why the match is on the green (final):** Samarth's rule for referring is "at least a 50% to 70% skill match" (n50),
+and Riya drops people who don't match the job (n73, n82). So the skill ratio is the first thing a referrer judges, and
+it gets the biggest spot. It also mirrors the Job card: that banner says who is hiring, this one says how well this
+person fits. "Not enough to judge" uses a grey banner, because green would read as a good match. The photo and name
+moved to a row under the banner. Tags repeating the banner were hidden.
+
+**Taste calls, said plainly:** keeping bright brand green with white text was Devansh's call ("I don't want to change
+brand green"). White on #10B981 is about 2.5:1 and fails contrast. That's logged as a known risk for the attack phase.
+The same number also appears in dark text lower on the screen, so no information lives only in the banner. A bar,
+a logo line and a deeper green were tried and removed as clutter or rejected.
+
+*Learned: a colour block should carry one idea. Each round that added more to the green made it worse.*
 
 **Checked against V2's candidate card.** Everything V2 showed is either in V6, replaced by something checkable, or left
 out with a logged reason. One thing was missing and came back: the "Full time" and "Remote or hybrid" chips, so the
@@ -159,11 +180,49 @@ referrer can see the person's way of working lines up with the job, like the Job
 
 **Design-language pass (V6).** Devansh said a few screens didn't feel part of the app. An audit of every V6 flow found
 three: the green header had text, a tag and icons on colour (V2 never does that), status screens used a big header for
-a small action, and login had three equal buttons. The candidate view now copies the Job card's structure exactly
-(grey page, white card, a colour banner with only the photo, name row with the status where the bookmark sits). Login
-leads with one LinkedIn button, then Google and Email side by side, as apps like Mimo, Meetup and Todoist do.
+a small action, and login had three equal buttons. The candidate view now copies the Job card's structure (grey page,
+white card, colour banner, then details on white). Login leads with one LinkedIn button, then Google and Email side by
+side, as apps like Mimo, Meetup and Todoist do (Mobbin, 17 Sep). V2's "Already have an account? Log in" came back,
+because removing the old caption left returning users no sign of where to go. A terms line was added, as nearly
+every login on Mobbin has one. The legal need was not checked.
 
 *Learned: copy the structure of the matching screen, not just its colour.*
+
+**Sanity pass (19 Sep).** Before the attack phase, all 40 V6 screens were checked by script and by eye. Four slips
+were fixed: a green "live" dot on the PAUSED tag, a leftover unread badge on the referrer's Posts tab, mismatched
+button heights, and "Sidedoor" spelled against the brand.
+
+### What backs each V6 decision
+
+For interviews. Types of evidence: **Quote** (a research note, real person), **Business** (BUSINESS.md), **V2**
+(the product's own pattern), **Benchmark** (other apps, seen on Mobbin or docs), **Reasoning** (worked out, not
+tested), **Taste** (Devansh's visual call). Nobody has used V6. Every item is a reasoned bet with a way to test it.
+
+| Decision | Backed by | Type | How strong |
+|---|---|---|---|
+| Referrer "Fill in myself" | Referrers can't find the job ID (n70) | Quote | Strong |
+| Referrer's role on their profile | Candidates pick who to ask by role (n29) | Quote | Strong |
+| Tips and Save as draft | Job ID often not at hand (n70); tips were Devansh's reported talk with Samarth (n92, not recorded) | Quote + reported | Medium |
+| Experience and projects for the candidate to check | Referrers read them (n50, n56) | Quote | Strong |
+| Salary and city on job cards | 5 asks a week means choosing | Reasoning | Weak, test it |
+| Saved jobs | Weekly cap makes "ask Monday" real | Reasoning | Weak, test it |
+| Message after Refer | Portal questions go back and forth (n59) | Quote | Medium |
+| Status tabs | "One place like Naukri's applied list" (n45) | Quote | Strong |
+| Thank as the main button | Bonus isn't why they refer (n62, n87) | Quote | Medium |
+| Job preferences in Edit only | Not needed to send a request | Reasoning | Weak |
+| Suggested candidates | n65, n64, BUSINESS.md decision 2 | Quote + Business | Medium, consent guard is reasoning |
+| Work chips on the candidate | Mismatched city and job details waste time (n73, n82) | Quote | Medium |
+| Match on the green banner | "50% to 70% skill match" rule (n50) | Quote | Strong |
+| Grey for Not enough to judge | Green reads as good; V2's tag was grey | V2 + Reasoning | Medium |
+| Brand green with white text | Devansh's brand call. Fails contrast | Taste | Known risk |
+| Login: one main button | Mimo, Meetup, Todoist, foodpanda, Skip | Benchmark | Medium |
+| LinkedIn first | Both sides already use LinkedIn (n04, n29, n56) | Quote | Medium |
+| "Already have an account?" and terms | V2 had it; Me+, Meetup, Todoist | V2 + Benchmark | Medium |
+| Status screens use the small person row | V2's sheets and Seen it move | V2 | Strong |
+
+**Weak spots to own in an interview:** only 2 real people (Samarth, Riya), each interviewed twice, once as a candidate and once as a referrer. Neither is flooded with requests. n92
+is Devansh's memory of a follow-up, not a recording. Competitor features are from memory. Salary on cards, saved jobs
+and job preferences rest on reasoning alone. The brand-green contrast is a known accessibility failure.
 
 ---
 

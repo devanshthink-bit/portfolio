@@ -1031,3 +1031,15 @@ Changed (Referral request and Not enough to judge):
 Kept brand green #10B981 as Devansh asked.
 Risk, told to Devansh: white on #10B981 is about 2.5:1. That fails even the 3:1 minimum for large text. The same number and wording also appear in text on white lower on the screen (the How they match checklist), so no information lives only in the banner. Goes into molades-attack as a known finding. (worked it out)
 Checked: screenshots of both banners and the Not enough to judge screen.
+
+CRITIQUE · 2026-09-19 · Is every V6 decision backed? · Source: Devansh
+Said:     Make sure every iteration's reasoning is logged, and that V6 comes from the process and research, not at random, so every decision can be defended in interviews.
+Method:   Checked every research note cited in LOG.md and ITERATIONS.md (27 notes) against RESEARCH.md. Checked every V6 decision for a written reason and an evidence type.
+Found:
+  - All 27 cited notes exist and say what we claim. (saw it)
+  - n92 is Devansh's memory of a follow-up talk with Samarth, not a recording. R3 (tips) cited it without saying so. Now marked. (saw it)
+  - ITERATIONS.md V6 was out of date. It still described the green header with photo, name and links and "text stays dark", and it missed the login lines, the six banner rounds and the sanity pass. Rewritten. (saw it)
+  - Two 17 Sep entries say dark text on green is "about 6:1". That was wrong: text/primary #3B3F46 is about 4.1:1. Corrected in the 19 Sep polish entry. The old entries are left as written, because the log is a record. (worked it out)
+  - The final match banner had a stronger reason than first logged: Samarth's rule "at least a 50% to 70% skill match" (n50) makes the skill ratio the referrer's first check. Added to ITERATIONS. (saw it)
+  - Some V6 choices rest on reasoning or taste, not research: salary on cards, saved jobs, job preferences in Edit only, and brand green with white text (Devansh's call, fails contrast). Now labelled as such, not dressed up as research.
+Added:    "What backs each V6 decision" table in ITERATIONS.md: decision, evidence, type (Quote, Business, V2, Benchmark, Reasoning, Taste) and strength, plus the weak spots to own in an interview.
