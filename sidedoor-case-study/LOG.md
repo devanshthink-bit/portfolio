@@ -973,3 +973,22 @@ Left open:
   - The empty Referral requests screen has a bell and a link icon in the header. The full list has only the link icon.
   - The Edit job post subtitle leaves "in." alone on the second line.
   - White name on green still fails contrast (logged 2026-09-17).
+
+DECISION · 2026-09-19 · V6 (in place) · Cover photo replaces the green banner · Source: Devansh
+Asked:    "Can we give an option to add a cover photo instead of green, and move name and image somewhere else, better than LinkedIn?" (LinkedIn profile screenshot as reference)
+Decided:  The candidate can add a cover photo. The cover is 104 tall. The photo (72, white ring) overlaps the cover's bottom-left edge. The name sits to the right of the photo, under the cover. The role and status row stays below. No cover means brand green in the same spot.
+Because:
+  - LinkedIn's photo overlaps the cover, then leaves empty space beside it, and the name starts under the photo. Putting the name next to the photo uses that space, so the header is about 35 px shorter. The match evidence moves up the screen. (worked it out)
+  - The name is now dark text on white, not white on green. That fixes the 2.5:1 contrast problem logged on 2026-09-17. (worked it out)
+  - The green fallback keeps the SideDoor look and still sits next to brand-coloured job cards. (worked it out)
+Pushback, logged:
+  - A cover photo gives the referrer no evidence about fit, and it can show looks, religion or lifestyle. That invites bias on the very screen where they decide. Possible guards: covers are optional, and any flagged cover falls back to green. Not tested. (guessing)
+  - It weakens the one-to-one match with the job card's brand banner, where the company logo sits on colour. (worked it out)
+
+CHANGE · 2026-09-19 · V6 cover photo built
+Changed:
+  - Referral request (Abhinav): the green banner was replaced by a Profile Header with a sample cover. The cover is an abstract gradient standing in for a photo he uploaded, because the file has no real cover image. There is also a fresh photo ring and the name in text/primary.
+  - Not enough to judge (Amit): same header, cover left brand green, to show the "no cover added" state.
+  - Candidate Edit your details: new "Cover photo (optional)" section after Links. It shows a thumbnail, "Shown on your requests" and Replace.
+  - Edit Profile section grown by 220 so the flow stays inside it.
+Checked: screenshots, flow fit, section overlaps.
