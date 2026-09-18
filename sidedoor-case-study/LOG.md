@@ -1043,3 +1043,9 @@ Found:
   - The final match banner had a stronger reason than first logged: Samarth's rule "at least a 50% to 70% skill match" (n50) makes the skill ratio the referrer's first check. Added to ITERATIONS. (saw it)
   - Some V6 choices rest on reasoning or taste, not research: salary on cards, saved jobs, job preferences in Edit only, and brand green with white text (Devansh's call, fails contrast). Now labelled as such, not dressed up as research.
 Added:    "What backs each V6 decision" table in ITERATIONS.md: decision, evidence, type (Quote, Business, V2, Benchmark, Reasoning, Taste) and strength, plus the weak spots to own in an interview.
+
+DECISION · 2026-09-19 · molades-research · Kill conditions with numbers · Source: Devansh
+Decided:  Added two numbered kill conditions to SCOPE.md for the next real test: (1) under 1 in 5 complete requests from strangers submitted to the portal → main guess dead; (2) under 3 of 8 referrers sending their link in 2 weeks → cold-start bet dead. The test is 8 referrers in tech using their link for 2 weeks.
+Rejected: Writing a research plan or kill condition backdated to the interviews, and judging the old data against it. molades-research says a plan written after collecting is fiction.
+Because:  The research went ahead without a kill condition, so nothing could have proved the guess wrong. The next test should have one. "1 in 5" comes from n30 ("80% of the time they don't reply"), so a complete request has to beat today's best case.
+How sure: guessing (the numbers are a line in the sand, not measured)

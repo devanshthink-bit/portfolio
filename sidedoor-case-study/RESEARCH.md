@@ -5,6 +5,9 @@
 No research plan exists from the time of collection, and none is written now: a plan written after the data is in
 would be fiction (molades-research, edge case). This file starts at checking what was collected.
 
+**Kill condition:** none was written before collecting. Numbered kill conditions for the next test were added to
+SCOPE.md (What could prove this wrong) on 19 Sep 2026. The interviews above were not judged against them.
+
 ---
 
 ## What was collected

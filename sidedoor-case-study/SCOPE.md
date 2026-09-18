@@ -76,6 +76,23 @@ business makes money. Sidedoor needs the same, with real data. To research and s
 **Neither can be tested now: no more interviews or tests are planned.** Both go into the case study as the first thing
 a real test would check.
 
+### Kill conditions, with numbers · added 19 Sep 2026
+
+Written after the research, so they were **not** used to judge it. Judging the old interviews against a line drawn
+after reading them would be fiction (molades-research). They are for the next real test only.
+
+**The test they need:** 8 referrers in tech who got at least one referral request from a stranger in the last month.
+Each uses their Sidedoor link for 2 weeks with whoever messages them.
+
+1. **Main guess.** If fewer than 1 in 5 complete requests from strangers gets submitted to the company portal, a
+   complete request doesn't beat today's cold message, and the main guess is dead. Back to the scope card.
+   Why 1 in 5: Samarth (as candidate) says strangers don't reply "80% of the time" (n30), so today's best case is about
+   1 in 5 replies, before any referral.
+2. **Cold start.** If fewer than 3 of the 8 referrers send their link to anyone in the 2 weeks, referrers won't
+   start the loop alone, and the cold-start bet is dead.
+
+Both numbers are Devansh's line in the sand, not industry figures. Change them before the test, never after.
+
 ## Not in this project
 
 1. The company's referral bonus, how much and when it's paid (n87, n62). No product controls it
