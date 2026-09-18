@@ -1020,3 +1020,14 @@ Changed (Referral request and Not enough to judge):
   - Tried and removed: a big faded lightbulb in the corner. Cropped, it looked like a random blob.
 Correction: on 2026-09-19 I wrote that dark text on #10B981 is "about 6:1". text/primary is #3B3F46, which is about 4.1:1. The new deep green #022C22 is about 5.9:1, which passes 4.5:1 for small text. (worked it out)
 Checked: screenshots of both banners. Banner height is unchanged at 175, so the flow layout is unchanged.
+
+CHANGE · 2026-09-19 · V6 match banner cut to two lines, white on brand green · Source: Devansh
+Asked:    "Looks really ugly and too cluttered. This font colour is not looking good on this background." Then, when shown a deeper green: "I don't want to change brand green colour."
+Changed (Referral request and Not enough to judge):
+  - Green banner: only "4 of 7" (text/display/lg) and "skills match" (text/heading/sm), both white (color/text/onBrand).
+  - Removed the 7-part bar and the "Both ex-MakeMyTrip" logo line. The checklist and In common below already say both.
+  - Grey banner: only "Not enough" / "to judge fit for this job". Removed "Resume too thin…", because the How they match box says it.
+  - Deleted the deep-green ink tokens added earlier today (green/950, text/onBrandSecondary), now unused.
+Kept brand green #10B981 as Devansh asked.
+Risk, told to Devansh: white on #10B981 is about 2.5:1. That fails even the 3:1 minimum for large text. The same number and wording also appear in text on white lower on the screen (the How they match checklist), so no information lives only in the banner. Goes into molades-attack as a known finding. (worked it out)
+Checked: screenshots of both banners and the Not enough to judge screen.
