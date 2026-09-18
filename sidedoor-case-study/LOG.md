@@ -1009,3 +1009,14 @@ Changed:
   - Referral request (Abhinav) and Not enough to judge (Amit): Profile Header replaced by Match Banner (175 tall, radius 16) and a Person row (photo 48, name text/heading/sm with a status tag on the right, role text/label/md secondary). The old Role And Status rows were removed.
   - The cover photo field was removed from Candidate Edit your details. The Edit Profile section is back to 5343 tall.
 Checked: screenshots, Explore flow fit and overlaps.
+
+CHANGE · 2026-09-19 · V6 match banner polish · Source: Devansh ("looking pretty generic")
+Changed (Referral request and Not enough to judge):
+  - Type hierarchy. The big number "4 of 7" is text/display/lg (32), with "skills match this job" in text/heading/sm under it. Before, it was one flat 24 px line.
+  - New 7-part match bar: 4 dark parts, 3 faded. It mirrors the 7-row checklist under "How they match", so the referrer sees the ratio before reading.
+  - "Both ex-MakeMyTrip" now has the MakeMyTrip logo (18 px) in front of it. It reuses the logo already in the Experience block.
+  - Text colour on green changed from grey to a deep brand green. New tokens: color/palette/brand/green/950 #022C22 and color/text/onBrandSecondary, which aliases it in Light and Dark.
+  - Grey "Not enough" banner has the same layout: "Not enough" / "to judge fit for this job", all 7 parts empty, and "Resume too thin to match skills".
+  - Tried and removed: a big faded lightbulb in the corner. Cropped, it looked like a random blob.
+Correction: on 2026-09-19 I wrote that dark text on #10B981 is "about 6:1". text/primary is #3B3F46, which is about 4.1:1. The new deep green #022C22 is about 5.9:1, which passes 4.5:1 for small text. (worked it out)
+Checked: screenshots of both banners. Banner height is unchanged at 175, so the flow layout is unchanged.
