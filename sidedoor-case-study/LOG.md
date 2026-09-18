@@ -1049,3 +1049,41 @@ Decided:  Added two numbered kill conditions to SCOPE.md for the next real test:
 Rejected: Writing a research plan or kill condition backdated to the interviews, and judging the old data against it. molades-research says a plan written after collecting is fiction.
 Because:  The research went ahead without a kill condition, so nothing could have proved the guess wrong. The next test should have one. "1 in 5" comes from n30 ("80% of the time they don't reply"), so a complete request has to beat today's best case.
 How sure: guessing (the numbers are a line in the sand, not measured)
+
+CHANGE · 2026-09-19 · molades-build · V6 missing states built · Source: Devansh ("build the missing states strictly according to the same design language … and prototype")
+Why:      molades-build builds every screen state before molades-attack. BRIEF.md ("When it's not perfect" and the AX Spec failure table) planned about 20 states that V6 didn't have.
+Where:    New section "V6 · States Flow" on UI Screens, right of Message Flow. Row 1 candidate, row 2 referrer, row 3 link page. Each screen is a copy of its V6 parent with only the state's change. Existing screens untouched.
+Built (19), each from its BRIEF line:
+  Candidate
+  - Upload Your Resume/Couldn't Read File: "Couldn't read this file" + "Try a PDF with text you can select, or fill in the details yourself." (AX Spec: Won't, a fault). The auto-fill list is hidden so the error sits above Next.
+  - Your Profile From Your Resume/Reading: "Reading your resume. You can fill the rest while it works." Experience and Projects show loading bars, See jobs stays on (AX Spec: Slow).
+  - Check Your Referral Request/Couldn't Send: "Couldn't send. Your details are saved." + Try again (BRIEF: Error).
+  - Check Your Referral Request/No Requests Left: "No requests left this week. More on Monday." Send stays off (BRIEF: Not allowed). Shortened from the BRIEF line, which ran past the screen edge.
+  - Your Referral Requests/Just Sent: "Sent to Nithin · Interaction Designer, Flipkart" at the top, the new request first as Sent, "Just now" (BRIEF: Done).
+  - Track Details/Loading and /Couldn't Load: "Couldn't load this request" + "Pull down to try again." (BRIEF).
+  Referrer
+  - Referral Requests/Loading, /Couldn't Load, /All Handled ("You're through every request for this job. Share your link to get more."), /Paused Post ("This post is paused" + "Requests that already came in are still here.", Suggested hidden because a paused post shouldn't invite), /Fit Checked Again ("You changed this job. Fit was checked again.") (BRIEF + AX Spec: Out of date).
+  - Referral Request/Skill Removed: Prototyping struck through, "You removed this. Tap to undo", banner 3 of 7, "Count updated for you only" (AX Spec: Wrong).
+  - Referral Request/Profile Updated: "Profile updated since the 12 Sep fit check" above How they match (AX Spec: Out of date).
+  - Your Referrals/Empty ("No referrals yet. When you refer someone, you'll pass on their stage here.") and /Updated ("Updated. Aviral can see it.", Aviral leaves the waiting list, count 2 → 1) (BRIEF).
+  - Seen It Move/Couldn't Update: "Couldn't update. Try again." (BRIEF: Error).
+  Link page
+  - Job Closed ("This job is closed", nothing to fill) and Already Asked ("One request per job, per referrer.") (BRIEF).
+Design language, kept to DESIGN_LANGUAGE.md:
+  - Messages are the V2 info note: a Tag with the info icon, not a coloured box. Neutral for info, Success for done, Failure only for real errors, Buffer (amber) for paused, the same amber as "On hold".
+  - Longer explanations are the Empty screen's own paragraph text, copied, under the tag.
+  - Loading uses grey bars in the Neutral tag's fill (Surface raised, the palette role for empty states) inside white cards with elevation-1. The only new pattern; it uses existing tokens only.
+Not built, with reasons:
+  - Half done ("Filled 9 of 12"): V4 Fix 3 moved portal details to the first request. That state already exists as "Still needed · 4" on Check your referral request.
+  - Copy fails on After Refer: the fix is text that stays selectable, which has no visual state.
+  - Duplicate referral at the same company and moving a stage backwards: still open in BRIEF, so there's nothing decided to draw.
+  - "Too much" states (40 requests, 20 skills): left for molades-attack, which is built to test them.
+Known issue carried to attack: the Failure tag uses V2's red text #EF4444, which DESIGN_LANGUAGE.md says not to inherit (about 3.5:1). Kept so the states match the rest of V6.
+Checked: screenshots of all 19; section sized to fit, no overlaps.
+
+CHANGE · 2026-09-19 · molades-build · V6 clickable prototype
+Why:      molades-build ends with a link somebody else can open, and molades-test needs one. V6 had 3 links and no starting point.
+Found:    Figma only links top-level frames. V6 screens sit inside section frames, so every link was refused.
+Changed:  New page "🔗 V6 Prototype" with top-level copies of 61 V6 screens (the main flows plus the new states). UI Screens is untouched. 265 links: login → role → both onboardings; Jobs → Job → Check your request → Just sent → tracking; Post job → Live → Referral requests → Referral request → Refer → Mark as submitted; Update sheet, Not moving forward and Share sheets as overlays; every bottom tab; every back arrow; profile switch LIVE ↔ PAUSED; link page upload → details → sent.
+Starting points: 1 Sidedoor app (from Login), 2 Link page, 3 Referrer requests, 4 Candidate jobs.
+Limits:   The copies are a snapshot. If a V6 screen changes, recopy it. Sheets open centred, because the API can't set overlay position; set "Bottom" on the three sheets in Figma's Prototype panel. Error and loading states are on the page but not on the happy path.

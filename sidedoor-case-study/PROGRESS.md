@@ -1,6 +1,6 @@
 # Sidedoor redo · where we are
 
-Updated 17 Sep 2026.
+Updated 19 Sep 2026.
 
 ## Molades skills
 
@@ -19,6 +19,9 @@ Updated 17 Sep 2026.
 - [x] **V5** · shared background (borrowed, research-backed) + full design audit, 41 screens clean; 4 borrowed ideas logged as not built
 - [x] **V6** · carry-over from V2: 10 good earlier designs restored, 11 kept out with reasons; 41 screens checked
 - [x] **V6** · suggested candidates for referrers: opt-in switch on Profile, "Suggested for this job", invite screen; logged
+- [x] **V6 states** · 19 missing states from BRIEF built in "V6 · States Flow"; 4 not built, with reasons (LOG 19 Sep)
+- [x] **V6 prototype** · page "🔗 V6 Prototype", 61 screens, 265 links, 4 starting points
+- [x] **Kill conditions** · numbered, for the next test (SCOPE.md, 19 Sep)
 - [ ] **molades-attack** · break the V3 screens on purpose, then craft and accessibility checks
 - [ ] **molades-build (again)** · fix attack findings one at a time
 - [ ] **molades-test** · no real tests planned. Write the test script anyway and say plainly it wasn't run
