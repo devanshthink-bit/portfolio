@@ -192,6 +192,13 @@ every login on Mobbin has one. The legal need was not checked.
 were fixed: a green "live" dot on the PAUSED tag, a leftover unread badge on the referrer's Posts tab, mismatched
 button heights, and "Sidedoor" spelled against the brand.
 
+**Missing states and the prototype (19 Sep).** BRIEF.md planned the loading, error, empty and "not allowed" states,
+but V6 only had a few. 19 were built in "V6 · States Flow", each from its BRIEF line and in the V2 info-note style:
+failed upload, still reading, couldn't send, no requests left, just sent, loading and error for lists and tracking,
+all handled, paused post, fit checked again, skill removed, profile updated, referrals empty, updated, couldn't
+update, closed link and already asked. Four were not built, with reasons (LOG, 19 Sep). A clickable prototype of 61
+screens now lives on the "🔗 V6 Prototype" page.
+
 ### What backs each V6 decision
 
 For interviews. Types of evidence: **Quote** (a research note, real person), **Business** (BUSINESS.md), **V2**
