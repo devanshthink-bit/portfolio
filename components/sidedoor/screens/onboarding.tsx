@@ -42,8 +42,10 @@ export function Login() {
       <div className="sd-login">
         <div style={{ display: "flex", flexDirection: "column", gap: 36, alignItems: "center", paddingTop: 18 }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "center" }}>
-            <Image src="/images/sidedoor/sidedoor-mark.png" alt="" width={54} height={69} style={{ width: 54, height: "auto" }} />
-            <Image src="/images/sidedoor/sidedoor-word.png" alt="SideDoor" width={132} height={24} style={{ width: 132, height: "auto" }} />
+            {/* the mark is a bitmap in Figma (exported at 4x); the wordmark is a vector, so it is
+                the same SVG Figma draws, not a flattened PNG */}
+            <Image src="/images/sidedoor/sidedoor-mark.png" alt="" width={216} height={276} style={{ width: 54, height: 69 }} priority />
+            <Image src="/images/sidedoor/sidedoor-word.svg" alt="SideDoor" width={132} height={24} style={{ width: 132, height: 24 }} unoptimized priority />
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center" }}>
             <p className="t-h-sm">{lines[page]}</p>
@@ -63,21 +65,21 @@ export function Login() {
               ))}
             </div>
           </div>
-          <Image src="/images/sidedoor/splash.png" alt="" width={227} height={256} style={{ width: 227, height: "auto" }} priority />
+          <Image src="/images/sidedoor/splash.png" alt="" width={908} height={1024} style={{ width: 227, height: 256 }} priority />
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 12, width: "100%", alignItems: "center" }}>
           {/* order and the 8 gap are decisions in LOG.md: LinkedIn, Google, Apple */}
           <div style={{ display: "flex", flexDirection: "column", gap: 8, width: "100%" }}>
             <Button
               onClick={() => nav.reset("role")}
-              icon={<Image src="/images/sidedoor/linkedin.png" alt="" width={24} height={24} />}
+              icon={<Image src="/images/sidedoor/linkedin.png" alt="" width={48} height={48} style={{ width: 24, height: 24 }} />}
             >
               Sign in with LinkedIn
             </Button>
             <Button
               type="secondary"
               onClick={() => nav.reset("role")}
-              icon={<Image src="/images/sidedoor/google-icon.png" alt="" width={24} height={24} />}
+              icon={<Image src="/images/sidedoor/google-icon.png" alt="" width={64} height={66} style={{ height: 24, width: "auto" }} />}
             >
               Sign in with Google
             </Button>

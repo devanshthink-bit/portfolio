@@ -95,8 +95,11 @@
 .sd *::before,
 .sd *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-.sd button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
-.sd input, .sd textarea { font: inherit; color: inherit; background: none; border: 0; outline: none; }
+/* :where() so the reset has no specificity: a class on the button must always win. Written as
+   `.sd button` it beat every .sd-btn rule, and every button in the app lost its weight and
+   line height to the inherited body values (found 20 Sep 2026). */
+:where(.sd) button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+:where(.sd) input, :where(.sd) textarea { font: inherit; color: inherit; background: none; border: 0; outline: none; }
 .sd ul { list-style: none; }
 
 /* ── type styles (text/* in Figma) ───────────────────────────────────────── */
@@ -528,7 +531,7 @@
 .sd-wheel-sel { position: absolute; left: 0; right: 0; top: 90px; height: 36px; border-radius: var(--sd-r-md); background: var(--sd-fill-3); pointer-events: none; }
 
 /* ── login splash ───────────────────────────────────────────────────────── */
-.sd-login { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 16px 48px 40px; background: #fff; }
+.sd-login { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 16px 48px 40px; background: var(--sd-n75); }
 
 /* the link page is a web page, not the app: it keeps a logo bar and has no tab bar */
 .sd-web-bar { height: 56px; flex: 0 0 auto; display: flex; align-items: center; gap: 8px; padding: 0 16px; background: #fff; box-shadow: 0 0.5px 0 rgba(0, 0, 0, 0.1); }

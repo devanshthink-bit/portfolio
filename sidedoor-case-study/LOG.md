@@ -1798,3 +1798,29 @@ tapping as well.
 **Not built, said plainly:** the prototype is one candidate (Abhinav) and one referrer (Nithin) on
 one job. Other people in the lists are fixed data. Nothing is stored between reloads, and nothing
 here has been in front of a real user yet — that is still `molades-test`.
+
+FIX · 20 Sep 2026 · prototype · Login did not match V6
+Found:  `.sd button { font: inherit }` in app.css. Specificity (0,1,1) beat every
+        `.sd-btn` rule (0,1,0), so every button in the app lost its font-weight and
+        line-height to the inherited body values. Buttons rendered 400 weight at
+        1.6 line-height and 53.6px tall instead of 500 at 24px and 52px tall.
+        This was app-wide, not just Login.
+Fixed:  the reset is now `:where(.sd) button`, specificity zero, so a class always wins.
+
+FIX · 20 Sep 2026 · prototype · Login assets and background
+- Screen fill was #fff. Figma's Login is #f2f2f7. Corrected.
+- Wordmark was a 132x24 PNG. In Figma it is a vector, so the prototype now uses the
+  same SVG Figma draws.
+- Mark PNG was exported at 64x83 (1x, and the wrong aspect against Figma's 54x69).
+  Re-exported at 4x, 216x276.
+- Splash PNG was 320x360; re-exported at 4x, 908x1024.
+- Icons inside buttons are now given explicit sizes rather than letting the file's
+  aspect decide.
+
+DECISION · 20 Sep 2026 · prototype · content column left at 306, not 294
+Decided:  keep the 48px side gutters from V6.
+Because:  V6 Login is drawn at 390x844 (iPhone 14). The prototype phone is an
+          iPhone 17 at 402x874. Holding the gutters gives a 306 column instead of
+          Figma's 294. iOS grows the content, not the margins, so this is the
+          right way round — but it is a real 12px difference and it is not a bug.
+How sure: saw it (measured both).
