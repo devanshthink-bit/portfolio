@@ -1707,3 +1707,9 @@ DECISION · 2026-09-20 · Login button gap
 Decided:   Gap between the three sign-in buttons 12 → 8, on the UI login screen and its prototype copy (checked by screenshot). Stack is 172 tall (was 180). "Log in" line stays 12 below, so it still reads as separate from the buttons.
 Because:   Devansh: the buttons felt chunky and took too much space. Three sign-in choices are one group, and 8 keeps them together. Button height (52) is unchanged so it matches every other full-width button in V6.
 Note:      This is a login-only exception to "Button → button 12". V2–V5 copies unchanged on purpose.
+
+FIX · 2026-09-20 · Logo tiles padding
+Found:     The white 68×68 company logo box in the Track details header had 0 padding; wordmarks (Zepto, Google, Meta…) touched both sides. Devansh caught it.
+Checked by type: every Logo/* inside a filled box on V6. 9 Track details headers had 0 padding. Share sheet app tiles already had 10–14. List cards (ReferralBar) have no box of their own, so nothing touches an edge there.
+Fixed:     All 9 tiles get 10 padding on every side; logo 48 wide, height kept to its shape. UI page and 9 prototype copies. Checked by screenshot (Zepto, Google, Meta).
+Not done:  ReferralBar logos left at 68 wide. Tried padding one and it only made the logo look small on a white card. That variant is also used by V3–V5, so it was not edited.
