@@ -1487,3 +1487,9 @@ Fixed (UI and prototype):
   - Login (UI copy) had lost its bottom-anchored buttons in an earlier pass; restored to match the prototype.
 Kept on purpose: the Undo toast covers the line under the buttons for 5 seconds (iOS toast over content); dashed upload areas keep a fixed height across states; the "2" badge on the Messages tab.
 Final: 0 on every check, both pages; all 70 prototype copies match their UI twins.
+
+CHANGE · 2026-09-19 · Experience dates back on the right; "Both worked at" matches the details row · Source: Devansh ("didn't we have duration on the right?", "Both worked at … looks alien … and smaller")
+Dates: I had moved them under the company because titles broke into 2–3 lines inside the old inner boxes. With the card flat, the row is 32px wider, so the dates go back on the right (V2 layout). "Associate Product Designer" wraps to 2 lines, as in V2. The Stacked variant is removed (unused).
+"Both worked at MakeMyTrip" on Referral request (3 screens + prototype): was the Plain tag (12/500, 14px logo) right above the details row (Bengaluru · 3+ years · 30 days: 14/500, 18px icons, 4 gap). Now uses that exact row style. The years line stays 12/500 (same as the company and date lines in experience rows), lined up under the text.
+Kept: on Jobs cards the Plain tag stays 12, matching the card's other small line ("₹28–40 LPA · Nithin refers").
+Rule: a meta line takes the style of the lines next to it. 14 + 18px icon in detail headers, 12 + 14px icon in list cards.
