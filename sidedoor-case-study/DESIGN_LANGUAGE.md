@@ -198,5 +198,5 @@ Outline is no longer used: in-common facts moved to Primary, and "Mark it" was a
 | Last element → bottom bar | ≥ 24 |
 | Last element → screen bottom (no bottom bar) | ≥ 40 |
 | First content under the top bar | 24 on lists and details, 32 on forms (V2) |
-Action blocks sit 24 under the content. They are never centred in, or pinned to the bottom of, leftover space (only Login pins its buttons to the bottom, by choice). Cards hug their content; no card stretches to fill the screen.
+Action blocks sit at a fixed spot: 40 above the screen bottom, or 24 above the tab bar. Spare space goes between content and buttons (at least 24). On long screens they follow the content and the page ends 40 below them. Empty-state buttons stay with their message; Log out stays at the end of the Profile list; buttons inside a card stay in the card. Cards hug their content; no card stretches to fill the screen.
 Every tappable text is blue, including dismissive ones ("Not now", "Share later", "Skip for now"). A disabled countdown ("Resend code in 0:28") stays grey. Every screen is at least 844 tall.

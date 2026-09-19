@@ -1497,3 +1497,13 @@ Rule: a meta line takes the style of the lines next to it. 14 + 18px icon in det
 FIX · 2026-09-19 · Inline logo size on "Both worked at" · Source: Devansh ("some alignment issue with the icon and text")
 Both rows were centred the same way (icon y=1 in a 20 line). The problem was optical: the pin is a thin glyph inside its 18 box, the logo is a solid 18 tile, so it looked bigger and sat above the letters. Logo now 16, which lines up with the letters; the years line still starts under the text.
 Why not 40 like the experience logos: those are the row's picture (same role as the 40–44 person photos). An inline logo is an icon next to text, so it follows the text size: 14 next to 12 text on Jobs cards, 16 next to 14 text here.
+
+CHANGE · 2026-09-19 · Buttons pinned to the bottom · Source: Devansh ("empty space between buttons and content is better with buttons fixed at the bottom at a position")
+Replaces my earlier rule "action block 24 under the content". Now:
+  - Short screens: the action block sits at a fixed spot, 40 above the screen bottom (no tab bar) or 24 above the tab bar. Spare space goes between content and buttons, at least 24. 15 screens: Add the job, Upload your resume (+ both error states), Your job is live, Edit profile, Link page Sent and Before upload, Marked as submitted, Track details 3/4/5, Not moving forward, On hold, Role closed.
+  - Long (scrolling) screens: buttons follow the content and the page ends 40 below them (was 32 or 64). 9 screens: Verify (+2 states), Post a job, Check your details (+Reading), Edit job post, Edit your details, Link page Details filled.
+  - Not moved, on purpose: empty-state buttons stay with their message (the button is the answer to the message); Log out stays at the end of the Profile list (iOS settings pattern); buttons inside the Job and Referral request cards stay in the card.
+UI and prototype.
+
+CHANGE · 2026-09-19 · Filled link icon · Source: Devansh ("make the link icon filled in referrer profile")
+New icon link-fill (Icons frame, next to link): two chain links, 20 in a 24 box, color/icon/secondary, scales with its box. "Your links to share" now uses it, so all five Profile rows use filled icons.
