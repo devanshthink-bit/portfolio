@@ -1493,3 +1493,7 @@ Dates: I had moved them under the company because titles broke into 2–3 lines 
 "Both worked at MakeMyTrip" on Referral request (3 screens + prototype): was the Plain tag (12/500, 14px logo) right above the details row (Bengaluru · 3+ years · 30 days: 14/500, 18px icons, 4 gap). Now uses that exact row style. The years line stays 12/500 (same as the company and date lines in experience rows), lined up under the text.
 Kept: on Jobs cards the Plain tag stays 12, matching the card's other small line ("₹28–40 LPA · Nithin refers").
 Rule: a meta line takes the style of the lines next to it. 14 + 18px icon in detail headers, 12 + 14px icon in list cards.
+
+FIX · 2026-09-19 · Inline logo size on "Both worked at" · Source: Devansh ("some alignment issue with the icon and text")
+Both rows were centred the same way (icon y=1 in a 20 line). The problem was optical: the pin is a thin glyph inside its 18 box, the logo is a solid 18 tile, so it looked bigger and sat above the letters. Logo now 16, which lines up with the letters; the years line still starts under the text.
+Why not 40 like the experience logos: those are the row's picture (same role as the 40–44 person photos). An inline logo is an icon next to text, so it follows the text size: 14 next to 12 text on Jobs cards, 16 next to 14 text here.

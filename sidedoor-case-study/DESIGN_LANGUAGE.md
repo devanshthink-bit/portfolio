@@ -191,7 +191,7 @@ Outline is no longer used: in-common facts moved to Primary, and "Mark it" was a
 | Section → section | 24 |
 | Content → action block | 24 |
 | Card → card in a list (jobs, requests, referrals, skeletons) | 16 |
-| Meta line (icon + fact) | 14/500 + 18 icon in detail headers; 12/500 + 14 icon in list cards |
+| Meta line (icon + fact) | 14/500 + 18 icon (16 for a solid logo tile) in detail headers; 12/500 + 14 icon in list cards |
 | Button → button (always stacked full width, primary first) | 12 |
 | Note above a button, or hint below it (12/500 grey, centred) | 12 |
 | Text action below a button (14/500, link blue, centred) | 16 |
