@@ -587,6 +587,7 @@ export function Timeline({ steps }: { steps: Step[] }) {
 /* ── inputs ─────────────────────────────────────────────────────────────── */
 export function Field({
   label,
+  icon,
   value,
   onChange,
   placeholder,
@@ -599,6 +600,8 @@ export function Field({
   onClick,
 }: {
   label?: string;
+  /** V6 puts a small icon beside the field's label, not inside the box */
+  icon?: IconName;
   value: string;
   onChange?: (v: string) => void;
   placeholder?: string;
@@ -613,7 +616,12 @@ export function Field({
   const [focus, setFocus] = useState(false);
   return (
     <div className="sd-field">
-      {label && <label className="t-h-xs">{label}</label>}
+      {label && (
+        <label className="t-h-xs" style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          {icon && <Icon name={icon} size={16} style={{ color: "var(--sd-icon-2)" }} />}
+          {label}
+        </label>
+      )}
       <div
         className={`sd-input${focus ? " is-focus" : ""}${error ? " is-error" : ""}`}
         onClick={onClick}

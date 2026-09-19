@@ -385,26 +385,28 @@ export function EditDetails() {
         </div>
         <Section label="About you" icon="person.fill">
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <Field label="Full name" value={name} onChange={setName} />
-            <Field label="Email" value={email} onChange={setEmail} />
+            <Field label="Full name" icon="person.fill" value={name} onChange={setName} />
+            <Field label="Email" icon="envelope.fill" value={email} onChange={setEmail} />
             <Field label="Phone" value={phone} onChange={setPhone} />
-            <Field label="Current city" value={city} onChange={setCity} />
+            <Field label="Current city" icon="mappin.and.ellipse" value={city} onChange={setCity} />
           </div>
         </Section>
         <Section label="What portals also ask for" icon="info.circle.fill">
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             <Field
               label="Date of birth"
+              icon="calendar"
               value={details.dob}
               placeholder="Select date"
               readOnly
               onClick={() => nav.openSheet("dob")}
               end={<Icon name="calendar" size={18} style={{ color: "var(--sd-icon-2)" }} />}
             />
-            <Field label="Notice period" value={details.notice} onChange={(v) => dispatch({ t: "detail", k: "notice", v })} placeholder="e.g. 30 days" />
-            <Field label="Career gaps" value={details.gaps} onChange={(v) => dispatch({ t: "detail", k: "gaps", v })} placeholder="None, or when and why" />
+            <Field label="Notice period" icon="hourglass" value={details.notice} onChange={(v) => dispatch({ t: "detail", k: "notice", v })} placeholder="e.g. 30 days" />
+            <Field label="Career gaps" icon="briefcase.fill" value={details.gaps} onChange={(v) => dispatch({ t: "detail", k: "gaps", v })} placeholder="None, or when and why" />
             <Field
               label="Preferred interview locations"
+              icon="mappin.and.ellipse"
               value={details.locations}
               onChange={(v) => dispatch({ t: "detail", k: "locations", v })}
               placeholder="e.g. Bengaluru, Remote"
@@ -439,9 +441,9 @@ export function EditProfileReferrer() {
         </div>
         <Section label="Where you work" icon="briefcase.fill">
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <Field label="Your name" value="Nithin Agarwal" />
-            <Field label="Your role" value={role} onChange={setRole} />
-            <Field label="Where you work from" value={city} onChange={setCity} />
+            <Field label="Your name" icon="person.fill" value="Nithin Agarwal" />
+            <Field label="Your role" icon="briefcase.fill" value={role} onChange={setRole} />
+            <Field label="Where you work from" icon="mappin.and.ellipse" value={city} onChange={setCity} />
           </div>
         </Section>
         <Section label="Work email" icon="envelope.fill">

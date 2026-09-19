@@ -440,6 +440,7 @@ export function CheckRequest() {
             <p className="t-label-sm muted">Not on your resume. Asked once, saved for your next request.</p>
             <Field
               label="Date of birth"
+              icon="calendar"
               value={details.dob}
               placeholder="Select date"
               readOnly
@@ -448,18 +449,21 @@ export function CheckRequest() {
             />
             <Field
               label="Career gaps"
+              icon="briefcase.fill"
               value={details.gaps}
               onChange={(v) => dispatch({ t: "detail", k: "gaps", v })}
               placeholder="None, or when and why"
             />
             <Field
               label="Preferred interview locations"
+              icon="mappin.and.ellipse"
               value={details.locations}
               onChange={(v) => dispatch({ t: "detail", k: "locations", v })}
               placeholder="e.g. Bengaluru, Remote"
             />
             <Field
               label="Notice period"
+              icon="hourglass"
               value={details.notice}
               onChange={(v) => dispatch({ t: "detail", k: "notice", v })}
               placeholder="e.g. 30 days"

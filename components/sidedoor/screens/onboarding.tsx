@@ -312,11 +312,12 @@ export function CheckProfile() {
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           <Field
             label="LinkedIn profile (optional)"
+            icon="link"
             value={linkedin}
             onChange={setLinkedin}
             placeholder="Paste your profile link. Referrers check it."
           />
-          <Field label="Portfolio (optional)" value={portfolio} onChange={setPortfolio} placeholder="Behance, Dribbble or your site" />
+          <Field label="Portfolio (optional)" icon="link" value={portfolio} onChange={setPortfolio} placeholder="Behance, Dribbble or your site" />
         </div>
 
         <Section label="Resume" icon="paperclip">
@@ -395,23 +396,25 @@ export function VerifyEmail() {
           Candidates see your name, role and company. The verified tick shows after we check your work email.
         </p>
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-          <Field label="Your name" value="Nithin Agarwal" />
+          <Field label="Your name" icon="person.fill" value="Nithin Agarwal" />
           <Field
             label="Work email"
+            icon="envelope.fill"
             value={email}
             onChange={setEmail}
             error={personal ? "Use your work email. A personal one can’t be verified." : undefined}
           />
           <Field
             label="Code from your email"
+            icon="lock.fill"
             value={code}
             onChange={(v) => setCode(v.replace(/\D/g, "").slice(0, 6))}
             placeholder="6-digit code"
             help={!wrong ? "For this prototype the code is 482013" : undefined}
             error={wrong ? "That code doesn’t match. Check the email again." : undefined}
           />
-          <Field label="Your role" value="Design Manager" />
-          <Field label="Where you work from" value="Bengaluru, KA" />
+          <Field label="Your role" icon="briefcase.fill" value="Design Manager" />
+          <Field label="Where you work from" icon="mappin.and.ellipse" value="Bengaluru, KA" />
         </div>
       </div>
     </Screen>
@@ -499,6 +502,7 @@ export function CheckPost() {
           end={!jobId.trim() ? <Tag style="buffer">Still needed</Tag> : undefined}
         >
           <Field
+            icon="doc.on.doc.fill"
             value={jobId}
             onChange={(v) => dispatch({ t: "jobId", v })}
             placeholder="From the job’s page on your portal"
@@ -539,6 +543,7 @@ export function CheckPost() {
 
         <Field
           label="Tips for candidates (optional)"
+          icon="lightbulb.fill"
           value={tips}
           onChange={(v) => dispatch({ t: "tips", v })}
           placeholder="e.g. Link a portfolio with end-to-end case studies. Shown on the job."
