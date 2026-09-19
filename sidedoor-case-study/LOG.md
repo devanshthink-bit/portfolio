@@ -1662,3 +1662,11 @@ FIX · 2026-09-20 · The accepted contrast and tap-size cases, fixed too · Sour
   - "Update" and "Mark it": 28pt → 44pt tall (Apple's minimum tap size), padding only. 8 on each page.
 Checked: contrast 0 failures (only the badge numbers flag, a false alarm: the check misses the dot behind them; real 5.17 blue / 6.47 red); no button under 44pt; 75/75 prototype frames match UI incl. colours and button sizes.
 Dark mode for all new AA tokens keeps the old dark values.
+
+AUDIT · 2026-09-20 · Final sanity and polish · Source: Devansh ("do a final sanity & polish")
+Scripted, 87 UI frames: no placeholder words, double spaces or straight quotes; every text has a style and a colour token; no old failing text colours left; every SF icon scales with its box; shadows only on glass pieces (back, bell, +, tab bar) and the selected segment; empty frames are only the named 44pt hit areas and spacers. Flagged but fine: list rows past the screen bottom (scroll), overlapping salary-source logos (clipped on purpose), PhonePe logo art.
+Polish fixed (UI and prototype):
+  - Time stamps ("Today", "Thursday", "12 days") used arrow.clockwise, which reads as "reload" in iOS, and the Job card used clock.fill for the same thing. New SF/clock (glyph 0x42b); 65 swapped on each page. clock.fill stays for status (timeline "Sent/On hold", "Waiting on an update").
+  - Verified tick size now equals the name's text size everywhere (14 / 16 / 20). Messages had 19 and Track details referrer card 18 next to 16pt names (22 fixed on each page).
+  - "Drop your" + "resume" were two texts with a trailing space plus a 4 gap (double gap); trailing space removed (7 UI / 6 prototype).
+Checked: label → icon inventory (one icon per meaning), looked at the changed screens, 75/75 prototype frames match UI incl. icon names and sizes.
