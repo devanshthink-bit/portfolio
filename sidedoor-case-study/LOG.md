@@ -1268,3 +1268,15 @@ Fills in the Action lines of attack findings S1, S3, S8, S10, S12 and C2: fixed.
 DECISION · 2026-09-19 · molades-attack · C3 and C4 kept · Source: Devansh ("don't change 6, 7")
 Decided:  Keep field edges as a soft shadow (1.04:1) and placeholders at #9CA3AF (2.54:1), after seeing before and after.
 Because:  Devansh's call. They keep V2's look ("shadow, no borders"). Risk kept: low-vision users may not find fields, and placeholders are faint. Listed as known exceptions in BRIEF.md Constraints.
+
+CRITIQUE · 2026-09-19 · molades-attack · Whole-app stress pass · Source: Devansh ("do it for all the cases… every kind of attack")
+Finding:  The first attack covered all four kinds on 2 screens only. It's now run on every V6 flow. "Too much" was tested for real on copies of 8 more screens. Result: 2 blockers, 18 majors, 19 minors, 18 already handled, 1 can't tell. Full tables in ATTACK.md, "Whole-app stress pass".
+Blockers: referrer email verification has no personal-email or wrong-code state.
+Majors, grouped:
+  - Long text collides with the time or tag in ReferralBar, the Messages row, the Job card header, the Track details header and RequestCard.
+  - First-run empty screens (Jobs, Your referral requests, Messages, Manage posts).
+  - Loading and failure for Jobs, Messages and Your referrals.
+  - An unreadable job link on the referrer side.
+  - Link page upload progress, offline.
+Next 5 to fix: listed in ATTACK.md.
+Action:
