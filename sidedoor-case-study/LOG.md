@@ -1605,3 +1605,8 @@ Fixes (V6 only, UI page and prototype):
   - Chat: incoming bubbles white (ChatMessage is V6-only).
   - Illustrations with a white image background (Login, Role, doc icon) blend into the page (multiply), so no white box shows.
 Checked: every token-bound colour on the UI page, prototype and components page stores its token's value (0 mismatches); prototype matches UI (68/68).
+
+FIX · 2026-09-19 · Sheets match the page · Source: Devansh ("bg is still different in diff screens")
+Cause: sheets were glass with a see-through fill (stored at 20%; the Log out groups at 10%). On the dark canvas they drew muddy grey (measured 95,98,105) next to screens at 242,242,247.
+Fix (UI page and prototype, 7 sheets each): sheets are solid color/background/grouped (#F2F2F7) with no glass or shadow, like iOS form sheets. Log out action groups are solid white. Glass stays only on the tab bar, top-bar buttons and toast, which always sit over the page.
+Checked by pixel: sheet, Referral requests empty and Not enough to judge all read 242,242,247.
