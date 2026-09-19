@@ -1244,3 +1244,27 @@ Decided:  Keep the V2 tag text colours in every version, after seeing before and
 Rejected: Darker text (#047857, #B45309, #4B5563, #1D4ED8, #B91C1C; 4.8–6.7:1).
 Because:  Devansh's call. What limits the risk: every tag carries a word, so no status is shown by colour alone.
 Risk kept: 2.07–4.49:1 against a 4.5:1 minimum, hardest to read for low-vision users and in sunlight. Stays in ATTACK.md as a known failure; the fix is one change to the Tag component.
+
+DECISION · 2026-09-19 · V6 (in place) · Green match banner removed · Source: Devansh ("this doesn't look good, maybe I shouldn't have forced you to use this green card … design it how the best you feel … the green card is optional")
+Decided:  No banner on the referrer's Referral request (and its Not enough, Skill removed and Profile updated states). The card opens with the person row. The match shows as the tag beside "How they match" ("4 of 7 skills · 3 yrs", or "Not enough to judge"). Shared background shows as the tag beside "In common" ("Both ex-MakeMyTrip").
+Because:
+  - Same summary, same tags, as the request list card the referrer just tapped, so there's nothing new to read. (worked it out)
+  - The evidence moves up by a whole banner's height. (saw it)
+  - Nothing sits on colour, so attack finding C5 (2.54:1) is gone. (worked it out)
+  - Six rounds of the banner never landed. That's a sign the pattern didn't belong. (worked it out)
+Done: MatchBanner instances removed on both pages. The component was moved to the Trash page with a note, and has 0 instances.
+
+CHANGE · 2026-09-19 · molades-build (round 2) · Attack fixes built
+  S1/S2: PersonRow restructured. Name on its own line (max 220, one line, "…"), then role (two lines, "…") with the tag beside it. Tested at 310 and 358 wide with "Krishnamurthy Venkataraghavan Subramanian". The tag never clips.
+  S3: MatchRow skill text fills the width and wraps in full; the source ends in "…".
+  S8: InputField gets State=Error (Small, Medium, Large) with an "Error message" property; built from the Empty variants so the heading, icon and swaps stay. New state "Check Your Referral Request Screen/Date Error".
+  S10: new Toast component and three tokens (color/surface/inverse, color/text/onInverse, color/text/linkOnInverse). New state "After Refer/Undo".
+  S12: Button gets Type=Primary, State=Loading. New state "Check Your Referral Request Screen/Sending".
+  C2: invisible "Hit area 44" frames on header back and bell (Header, AppHeader Title), the section edit pencil (shown with Show edit), skill rows, external-link icons (4), "Show project details" (6), "Mark it".
+  Prototype: 3 new states copied. Send → Sending → Just sent (1.2 s); tapping the date field → Date Error; Refer → Undo toast → After Refer (5 s), and Undo goes back. 288 links.
+Caught while building: variants copied inside a set lost their property links (Button Loading showed "Label" and icons; the error field lost its heading and icon). Re-linked from the source variants.
+Fills in the Action lines of attack findings S1, S3, S8, S10, S12 and C2: fixed.
+
+DECISION · 2026-09-19 · molades-attack · C3 and C4 kept · Source: Devansh ("don't change 6, 7")
+Decided:  Keep field edges as a soft shadow (1.04:1) and placeholders at #9CA3AF (2.54:1), after seeing before and after.
+Because:  Devansh's call. They keep V2's look ("shadow, no borders"). Risk kept: low-vision users may not find fields, and placeholders are faint. Listed as known exceptions in BRIEF.md Constraints.

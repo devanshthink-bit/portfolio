@@ -409,12 +409,12 @@ since missing details are saved the first time.
 ## When it's not perfect
 
 ### Check your referral request
-- **Empty:** not applicable; it always opens from a job with a profile behind it
-- **Loading:** the match is worked out when the request is sent (AX Spec), so nothing waits here. The profile filling is on Your profile from your resume
-- **Error:** sending fails → "Couldn't send. Your details are saved. Try again." and a retry
+- **Empty:** not applicable; it always opens from a job with a profile behind it. **Open (attack S5):** a candidate who skipped the resume can still tap Ask; the route after that isn't decided
+- **Loading:** nothing to load. While sending, the button reads "Sending…" and can't be tapped again (attack S12)
+- **Error:** sending fails → "Couldn't send. Your details are saved." and Try again. A field breaks a rule → red edge and the reason under the field, e.g. "February has no 31st. Check the date." Send stays off (attack S8)
 - **Done:** lands on Your referral requests with this one at the top, "Sent to [referrer] · [job]"
-- **Too much:** a long job title or company name wraps to two lines; the details list is long by design, grouped
-- **Not allowed:** a required detail missing → Send off, the missing item named. No requests left → Send off, when they come back
+- **Too much:** the referrer's name ends in "…" after one line; their role wraps to two lines, then "…". The Job ID tag always stays visible (attack S1)
+- **Not allowed:** a required detail missing → Send off, the missing item named. No requests left → Send off, "No requests left this week. More on Monday."
 
 ### Referral requests for this job
 - **Empty, new post:** "No referral requests yet. Share your link when someone messages you about this job."
@@ -426,11 +426,11 @@ since missing details are saved the first time.
 - **Not allowed:** a paused post → "This post is paused. Requests that already came in are still here."
 
 ### Referral request (referrer)
-- **Empty:** not applicable
+- **Empty:** not applicable. Sections the candidate left empty (note, links) don't show. **Open (attack S6)**
 - **Loading:** not applicable; the match is stored
 - **Error:** the copy button fails → the field stays selectable to copy by hand
-- **Done:** after "Mark as submitted": "Marked as submitted. [Name] has been told."
-- **Too much:** a resume with twenty skills → the match shows the job's skills only, not the resume's full list
+- **Done:** after Refer, a toast: "Referred. [Name] is told in 5 seconds." with Undo (attack S10). After "Mark as submitted": "Marked as submitted. [Name] has been told."
+- **Too much:** long names end in "…"; long skill names wrap in full, because the skill is the evidence (attack S3). A resume with twenty skills → only the job's skills show
 - **Not allowed:** already referred by another referrer at the same company → **open**, the research doesn't say how portals handle a duplicate referral (Riya's six-month rule, n74, suggests the portal refuses it)
 
 ### Your referrals
@@ -462,6 +462,16 @@ since missing details are saved the first time.
 
 ### Kept V2 screens
 **Open**, to check in molades-attack.
+
+## Constraints
+**Spacing scale:** 2 · 4 · 8 · 12 · 16 · 20 · 24 · 32 · 40 · 48 · 64 (spacing tokens), and nothing else
+**Type scale:** 12 labels and meta · 14 body and labels · 16 names and headings · 20 screen titles · 24/32 headings only
+**Weights:** 400 body, 500 labels, 600 headings
+**Emphasis:** one primary action per view (Send on Check your request; Refer on Referral request)
+**Contrast floor:** 4.5:1 body, 3:1 UI and large text. Known exceptions, kept by Devansh: status tag text (2.07–4.49:1), field edges (1.04:1), placeholders (2.54:1)
+**Target minimum:** 44×44. Small icons get an invisible 44×44 tap area
+**Every input:** visible label above the field
+**Never colour alone:** every state also carries a word or an icon
 
 ## Not in this project
 

@@ -174,6 +174,13 @@ a logo line and a deeper green were tried and removed as clutter or rejected.
 
 *Learned: a colour block should carry one idea. Each round that added more to the green made it worse.*
 
+**Round 7, the green card removed (19 Sep, during the attack).** Devansh made the green card optional and asked for
+the best design overall. The card now opens with the person (photo, name, role, status). The match reads the same way
+as on the request list card: "4 of 7 skills · 3 yrs" beside "How they match", and "Both ex-MakeMyTrip" beside
+"In common". Why: the referrer sees the same summary on the list and the detail screen. There's nothing on colour, so
+the 2.5:1 contrast failure is gone. The evidence moves up by a full banner's height. *Learned: when a pattern needs
+six rounds to look right, ask whether it should be there at all.*
+
 **Checked against V2's candidate card.** Everything V2 showed is either in V6, replaced by something checkable, or left
 out with a logged reason. One thing was missing and came back: the "Full time" and "Remote or hybrid" chips, so the
 referrer can see the person's way of working lines up with the job, like the Job screen shows for the job.
@@ -219,9 +226,9 @@ tested), **Taste** (Devansh's visual call). Nobody has used V6. Every item is a 
 | Job preferences in Edit only | Not needed to send a request | Reasoning | Weak |
 | Suggested candidates | n65, n64, BUSINESS.md decision 2 | Quote + Business | Medium, consent guard is reasoning |
 | Work chips on the candidate | Mismatched city and job details waste time (n73, n82) | Quote | Medium |
-| Match on the green banner | "50% to 70% skill match" rule (n50) | Quote | Strong |
-| Grey for Not enough to judge | Green reads as good; V2's tag was grey | V2 + Reasoning | Medium |
-| Brand green with white text | Devansh's brand call. Fails contrast | Taste | Known risk |
+| Match count shown first on the request | "50% to 70% skill match" rule (n50) | Quote | Strong |
+| Same match tags on list and detail | One summary in both places | Reasoning | Medium |
+| Green banner removed | Six rounds never looked right; contrast failed | Taste + contrast | Medium |
 | Login: one main button | Mimo, Meetup, Todoist, foodpanda, Skip | Benchmark | Medium |
 | LinkedIn first | Both sides already use LinkedIn (n04, n29, n56) | Quote | Medium |
 | "Already have an account?" and terms | V2 had it; Me+, Meetup, Todoist | V2 + Benchmark | Medium |

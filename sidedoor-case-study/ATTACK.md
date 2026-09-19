@@ -89,3 +89,19 @@ information reach the other side, which undoes the product's promise. S12 can cr
 network behaviour.
 
 This file doesn't claim the screens are accessible. It checked seven things on two static screens.
+
+---
+
+## After the attack · 19 Sep
+
+**Built (molades-build, round 2):**
+- S1, S2 · PersonRow: the name gets its own line and ends in "…"; the role wraps to two lines, then "…"; the tag moved beside the role and never gets pushed off.
+- S3 · MatchRow: the skill wraps in full; the source line ends in "…".
+- S8 · New InputField State=Error (red edge, reason under the field). New screen "Check your referral request/Date Error".
+- S10 · New Toast component (color/surface/inverse, text/onInverse, text/linkOnInverse tokens). New screen "After Refer/Undo": "Referred. Abhinav is told in 5 seconds." with Undo. Prototype: Refer → toast → After Refer after 5 s; Undo goes back.
+- S12 · New Button State=Loading. New screen "Check your referral request/Sending". Prototype: Send → Sending… → Just sent after 1.2 s.
+- C2 · Invisible 44×44 tap areas: header back and bell (Header, AppHeader), section edit pencil, skill rows, external-link icons, "Show project details", "Mark it".
+
+**Rejected by Devansh (19 Sep), kept as known failures:** tag text colours (C1), field edges (C3), placeholder contrast (C4).
+
+**Also changed during the attack:** the green match banner was removed from the referrer's Referral request (Devansh: "this green card is optional … whole UI design should be best"). C5 no longer applies.
