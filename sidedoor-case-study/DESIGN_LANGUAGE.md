@@ -60,7 +60,7 @@ Between. Lists are dense functional: 3 cards plus a field and buttons fit one ph
 Forms and the no-install link page are spacious: one question block per view, 32 between blocks.
 
 ## Navigation
-Top bar: back arrow left, title centred (or SideDoor logo on home), one action right (bell).
+Top bar: iOS back chevron left (changed 19 Sep 2026, was a long arrow), title centred (or SideDoor logo on home), one action right (bell).
 Bottom bar: 5 items with labels, active item blue. Kept from V2.
 Tabs on lists: text tabs with a blue underline on the active one.
 The no-install link page has no bottom bar.

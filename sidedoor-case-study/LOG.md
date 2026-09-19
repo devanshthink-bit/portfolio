@@ -1291,3 +1291,14 @@ Checked:
   - 0 unstyled texts and 0 unlinked spacing values on the new screens.
 Caught: new Primary buttons showed the component's placeholder icons (hidden now), and "Your referrals/Loading" still showed real numbers (hidden).
 Still open (ATTACK.md): offline everywhere, a cancelled login, link page upload progress, S5 and S9, and all minors.
+
+DECISION · 2026-09-19 · Platform: iOS back chevron · Source: Devansh ("use ios chevron… change v2-v5 also")
+Decided:  The back icon is now an iOS chevron (‹) in every version, V2 to V6. The one icon component (605:3762) was redrawn as a mirror of the library's chevron-right and renamed chevron-left, so all 295 uses changed at once and colour overrides were kept.
+Rejected: A new icon swapped in per screen. More work, same result, and it would leave an unused long arrow in the library.
+Because:  The app is presented as iOS (390 wide, SF Pro status bar, centred titles, 44px taps). The long arrow (←) is Android's back icon, so it was the one mismatch. saw it (Figma).
+Checked:  V6 "Your referral requests" and V2 "Track Referrals" top bars render the chevron.
+
+DECISION · 2026-09-19 · Font: tried SF Pro, kept Inter · Source: Devansh ("can we use sf pro…", then "use previous font only that looked better")
+Tried:    The 12 text/* styles switched to SF Pro with Apple's tracking table (HIG, e.g. 16pt −0.31, 20pt −0.45).
+Decided:  Back to Inter, as it was (0% tracking, same weights and line heights). Devansh preferred how Inter looked.
+Because:  Devansh's call on looks. Inter is platform-neutral, so the app still reads as iOS. If asked in an interview: SF Pro was tried and reverted by choice, not missed.
