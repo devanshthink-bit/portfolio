@@ -1695,3 +1695,4 @@ Changed to the iOS pattern (V6, UI page and prototype, 75/75 match):
 New SF components: checkmark (0x185), chevron.up.chevron.down (0x18f).
 Kept, because iOS apps commonly do them: icons before section titles (Apple Health, Weather), coloured status tags, progress timeline, trailing copy buttons, undo bar (Mail), wheel date picker with Done, stacked buttons at the bottom of confirm sheets (action sheets).
 Open, asked Devansh: the unlabelled overlapping logos next to the salary on Job details.
+DECISION · 2026-09-20 · Salary source logos on Job details kept as they are · Source: Devansh (chose "Keep as is").
