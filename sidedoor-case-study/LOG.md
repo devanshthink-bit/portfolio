@@ -1409,3 +1409,9 @@ CHANGE · 2026-09-19 · Spacing by role · Source: Devansh
 Applied the "Spacing by role" table (DESIGN_LANGUAGE.md) to every V6 screen and the prototype copies. Text actions blue and centred, each button + its text wrapped in one "Actions" block. 90 section groups set to 24, 45 label groups to 8. Tight screens grown or padded; every screen ≥ 844.
 Re-ran the role audit after: one value per role, except the two page-top values kept on purpose (lists 24, forms 32, from V2).
 Slips caught: a findOne picked the V3 copy of "Marked as submitted"; reverted, applied to V6.
+
+CHANGE · 2026-09-19 · Button pairs arranged one way · Source: Devansh (screenshot of "Save as draft | Post job": "you again missed this")
+Miss: my role audit measured the gap between buttons (12 here too) but not their arrangement. Post a job and Edit your job post put the pair side by side; every other pair in V6 stacks full width, primary on top ("Refer / Not moving forward", "Mark as submitted / Message Abhinav").
+Fix: both screens now stack, primary first ("Post job", then "Save as draft"; "Save changes", then "Pause post"), 52 tall, 12 apart, hint 12 below. Screens grown to keep 40 at the bottom. UI and prototype.
+Caught while fixing: the old one-row container kept its height, which clipped the stack and squashed the buttons; set to hug and buttons back to 52. Checked on screenshots.
+Rule added to "Spacing by role": two or more buttons always stack full width, primary first.
