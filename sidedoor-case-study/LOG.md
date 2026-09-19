@@ -1722,3 +1722,8 @@ FIX · 2026-09-20 · Warning icons too dark
 Found:     On hold timeline circle and line looked brown. They used color/text/warningAA (#B45309), the colour picked so small text passes 4.5:1. Icons and lines only need 3:1. Devansh: "isnt it too dark".
 Fixed:     New tokens color/palette/warning/600 #D97706 and color/icon/warning (light → 600, dark → 500; scopes shape fill and stroke). #D97706 on white = 3.2:1, passes 3:1 for shapes. #F59E0B was not used: 2.1:1 fails. Rebound every non-text use of warningAA in V6: 3 clock icons, 3 timeline lines, 1 tag dot, 1 note icon. 8 on the UI page, 8 in the prototype. Checked by screenshot (On hold).
 Kept:      "On hold" text stays #B45309 (4.5:1 needed for text).
+
+FIX · 2026-09-20 · One warning colour for text and icons
+Found:     After the last fix, the On hold icon (#D97706) and its text (#B45309) were two different oranges. Devansh: "text and icons of diff colors?" Same thing must look the same.
+Fixed:     One colour for both: #C93400, Apple's own high-contrast orange. Contrast: white 5.3, tag bg 5.1, grey page 4.7, so it passes 4.5:1 for text everywhere. New color/palette/warning/700; color/text/warningAA and color/icon/warning (light) both point to it; dark mode unchanged. Refreshed the stored colour on 23 paints on the UI page and 23 in the prototype (15 text, 5 icons, 3 lines). Removed color/palette/warning/600, now unused. Checked by screenshot (On hold).
+Watch:     #C93400 sits closer to red than the old amber. It is still clearly apart from error #B91C1C; worth a look next to a "Not selected" screen.
