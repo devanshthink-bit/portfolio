@@ -1696,3 +1696,4 @@ New SF components: checkmark (0x185), chevron.up.chevron.down (0x18f).
 Kept, because iOS apps commonly do them: icons before section titles (Apple Health, Weather), coloured status tags, progress timeline, trailing copy buttons, undo bar (Mail), wheel date picker with Done, stacked buttons at the bottom of confirm sheets (action sheets).
 Open, asked Devansh: the unlabelled overlapping logos next to the salary on Job details.
 DECISION · 2026-09-20 · Salary source logos on Job details kept as they are · Source: Devansh (chose "Keep as is").
+FIX CHECK · 2026-09-20 · Devansh saw the old grey "Newest first" tag drawn under the new sort button (Jobs, Jobs / Skipped resume). Checked: no second "Newest first" layer exists on UI or prototype; the section title's tag is off; Figma's renderer draws both screens clean (UI and prototype). Could not reproduce, so the cause is not confirmed; possibly a view that had not refreshed.
