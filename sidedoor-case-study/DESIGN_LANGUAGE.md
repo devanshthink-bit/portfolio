@@ -146,3 +146,34 @@ Everything on V6 is built from the library. Rules for anything new:
 - **Type:** the 12 text/* styles only. doc/* styles are for documentation pages.
 - **Shadow:** effect/elevation-1, 2 or 3 only.
 - **Patterns to reuse, not redraw:** AppHeader (Logo, Title), SectionLabel, DetailField, MatchRow, MatchBanner, Headline, PersonRow, RequestCard, PostCard, MenuRow, RadioOption, SheetPersonCard, SkeletonCard, plus V2's Button, Tag, InputField, ReferralBar, Card, BottomNav.
+
+## Consistency rules · added 19 Sep 2026
+
+Same kind of thing, same values. Every difference left in V6 has a reason, listed here. Checked by script on every V6 screen (saw it).
+
+**Type roles** (Inter, 0% letter spacing; line height 12/16, 14/20, 16/24, 20/28)
+| Role | Style | Size / weight |
+|---|---|---|
+| Hero title, one per detail page (job title on Job, name on Profile) | heading/md | 20/600 |
+| Screen title in the top bar, card title, person name in any row, form headline | heading/sm | 16/600 |
+| Section label, field label, matched skill | heading/xs | 14/600 |
+| Subtitle (role, company), tag text, detail value, text action ("Invite", "Replace") | label/md | 14/500 |
+| Time, meta line ("Live · Job ID"), field name in DetailField, error under a field | label/sm | 12/500 |
+| Paragraphs, typed input and placeholder | body/md | 14/400 |
+| Full-width button / small in-card button | button/md / button/sm | 16/500 / 14/500 |
+
+Weights: 400 only for paragraphs and typed text. 500 for secondary text. 600 for anything you scan for first.
+
+**Differences kept, with the reason**
+| Thing | Sizes | Why |
+|---|---|---|
+| Avatar | 44 in every person row and card · 36 in a byline · 68 on a profile header | Byline (job card "posted by", "Himani thanked you"): the person is not the main content. Profile header: the person is the whole screen. |
+| Leading slot in ReferralBar | 44 person photo · 68 company logo | Logos are wide wordmarks; at 44 they are unreadable. Two variants: Leading=Person, Leading=Logo. |
+| Button | 52 full-width · small hug (4/12 padding, 14/500) | Small is only for an action inside a card row ("Update"), where a 52 button would be bigger than the card's content. Both radius 8. The round + button on Manage posts is a floating add button, a different kind. |
+| Card gap | 16 between cards in a list · 12 between Profile menu rows | Menu rows are one group of settings, so they sit closer (rhythm rule: gap inside a group < gap between groups). |
+| Screen edge | 16 on every screen · Login centred | Login is a splash screen with no content column. |
+| Search field | no label above it | iOS search pattern: the search icon and placeholder say what it is. |
+| Tab text | active 14/600 blue · others 14/500 | Weight change marks the selected tab without relying on colour alone. |
+
+**Text links** use label/md 14/500 and color/text/link. The timeline's done steps (heading/xs, blue) are not links; they are V2's timeline pattern.
+**Tags and notes** are one component. Label cap 322 = the widest a tag can be on a 390 screen (358 − 16 padding − 16 icon − 4 gap), so a full-sentence note never cuts off.

@@ -1302,3 +1302,27 @@ DECISION · 2026-09-19 · Font: tried SF Pro, kept Inter · Source: Devansh ("ca
 Tried:    The 12 text/* styles switched to SF Pro with Apple's tracking table (HIG, e.g. 16pt −0.31, 20pt −0.45).
 Decided:  Back to Inter, as it was (0% tracking, same weights and line heights). Devansh preferred how Inter looked.
 Because:  Devansh's call on looks. Inter is platform-neutral, so the app still reads as iOS. If asked in an interview: SF Pro was tried and reverted by choice, not missed.
+
+CRITIQUE · 2026-09-19 · Consistency audit · Source: Devansh ("same type of things shud look exactly same… if they are different there shud be proper reasoning")
+Method: scripts compared every component copy in V6 (size, padding, radius, shadow, text style, colour), then every text by role (names, times, job titles, subtitles, text links), then screen edges and list gaps. saw it.
+Found:
+  - Salary tag on the Job card: Semibold and ink colour; every other tag is 14/500 grey.
+  - Messages list: names 20px and times 14px with 68 avatars; every other list is 16px names, 12px times, 44 avatars. Messages rows were raw frames, which is why they drifted.
+  - Person cards: 68 avatar in ReferralBar (Your referrals) and the sheet person card; 44 in RequestCard for the same job.
+  - Edit profile photo 94; Profile photo 68.
+  - Login buttons 44 tall; all others 52.
+  - Small in-card buttons ("Update") radius 4, which is the tag radius; all buttons are 8.
+  - Text actions in two weights (500 and 600) and two blue tokens.
+  - Draft post meta line 12/400; all meta lines 12/500.
+  - Screen edges 16, 18, 20 or 24 depending on the screen (a "Card Section" padding and a 2px "Scroll Section").
+  - My miss from round 3: the 240 tag cap cut off 18 full-sentence info notes ("We never contact your company or…"). Not caught in round 3 because the too-much retest looked at cards, not notes.
+Action: fixed, see CHANGE below.
+
+CHANGE · 2026-09-19 · Consistency fixes · Source: Devansh ("yes all these things shud be consistent in whole app")
+Fixed all of the above to the rules in DESIGN_LANGUAGE.md "Consistency rules". Differences left each have a written reason there.
+  - ReferralBar is now a set: Leading=Logo (68) and Leading=Person (44). First try set the slot to 44 for both and shrank company logos; caught on screenshot, fixed with the variant.
+  - Tag label cap 240 → 322. All 18 notes show in full; checked.
+  - Screen edge 16 (spacing/lg) on every V6 screen except Login.
+  - Also applied on the V6 Prototype page copies.
+Knock-on to V2–V5: the component-level fixes (Job card salary tag, ReferralBar, Tag cap, small button radius) also show in V2–V5 because they share those components. Raw V2–V5 frames were not touched.
+Checked: re-ran the component audit; the only differences left are the reasoned ones. Screenshots of Messages, Your referrals, Your referral requests, Referral requests, Edit profile, Login, Verify email, Track details, Manage posts, Role selection.
