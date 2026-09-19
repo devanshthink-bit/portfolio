@@ -1615,3 +1615,14 @@ FIX · 2026-09-19 · No shadows in sheets either · Source: Devansh ("some cards
 Answer: no shadow (Apple look rule: white cards on the grey page, no shadows). The earlier shadow removal skipped sheets.
 Removed 25 leftover shadows on each page (UI and prototype), all inside the 6 sheets: person cards, reason options, buttons, quick-share tiles, doc upload box. Kept on purpose: the small shadow under the selected segment of the segmented control (iOS draws it) and glass pieces (tab bar, bar buttons, toast).
 Checked: 0 non-glass shadows left on V6 except the selected segment.
+
+AUDIT · 2026-09-19 · Full V6 sweep after the Apple look · Source: Devansh ("check all screens again for any other inconsistencies or mistakes or any improvements")
+Ran: scripted checks on 87 UI frames (text cut off or overlapping, placeholder words, text without a style, radius without a token, hidden layers, raw colours, first child at y=0); an element-by-element list of every white card (radius, padding, border); and a look at every screen at 0.5×.
+Clean: no cut or overlapping text (except list rows scrolling under the glass tab bar, kept on purpose), no placeholders, every text uses a style, every radius uses a token, no hidden leftovers. Raw colours are only brand logo drawings.
+Fixed (UI page and prototype, parity 75/75):
+  - Cards used three corner sizes (12, 16, 24) for the same thing. All white cards now use radius/component/card (12): Window ×8, Frame 327 timeline ×9, DocUpload, OnboardingCard, Job card, Options, Done, Live.
+  - Job details card had 24 padding while the Referral request card had 16 → 16 (instance override, shared Job card component untouched).
+  - Track details: the referrer row sat loose on the grey with a leftover divider → white card, 16 padding, no divider (9 screens).
+  - Track details: company logo sat on a square white box → rounded tile, same radius as cards (9 screens).
+  - Track details loading: skeleton was light grey on the grey page, almost invisible → timeline and referrer placeholders are white cards; bars on the page use color/fill/tertiary.
+Open, needs a decision (asked): page-subject header in a card on some screens and flat on others; Link Page "Already asked" / "Job closed" end with no action.
