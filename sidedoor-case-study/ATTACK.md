@@ -248,3 +248,24 @@ Covered in the first pass: long names and skills, Undo after Refer. **Open:** S6
 - Link page upload progress: covered by the Reading pattern once built.
 - S5 and S9: need product decisions.
 - All minors.
+
+## Whole-app fixes built · 19 Sep
+
+1. **Verify work email (B):**
+   - "Verify Work Email/Personal Email": a red field edge with "Use your work email. We check it's a company address."
+   - "Verify Work Email/Wrong Code": "That code didn't work. Check it or resend." and "Resend code in 0:28".
+   - Both use the InputField Error state.
+2. **Text collisions (M, 6 screens):**
+   - Every name beside a verified tick now has a maximum width and ends in "…". That's 21 names on V6 and in the ReferralBar, Card and RequestCard components.
+   - Job titles wrap (up to 3 lines).
+   - Header roles end in "…", message previews stop at 2 lines, and Tag labels are capped at 240 with "…".
+   - Retested with the long strings on Messages, Track details, Your referrals, Your referral requests and Job: nothing collides.
+3. **First-run empty screens (M):**
+   - Jobs: "No one refers for jobs like yours here yet…" with "Set job preferences".
+   - Your referral requests: "No requests yet…" with "See jobs".
+   - Messages: "No messages yet. A chat opens when a referrer refers you." with "See your requests".
+   - Manage posts: "No posts yet…" with "Post a job".
+4. **Loading and failed (M):** Jobs (loading, couldn't load), Messages (loading, couldn't load), Your referrals (loading). They use SkeletonCard and the Failure note, like the states already built.
+5. **Job link can't be read (M):** "Add The Job/Couldn't Read Link", the same pattern as the candidate's upload error.
+
+All 12 new screens are in "V6 · States Flow" (rows 4–5). A script check found 0 unstyled texts and 0 unlinked spacing values.

@@ -1280,3 +1280,14 @@ Majors, grouped:
   - Link page upload progress, offline.
 Next 5 to fix: listed in ATTACK.md.
 Action:
+
+CHANGE · 2026-09-19 · molades-build (round 3) · Whole-app attack fixes · Source: Devansh ("yes", after the before and after)
+Built: the five fixes listed in ATTACK.md, "Whole-app fixes built". 12 new state screens. Components changed: ReferralBar, Card (Job and Candidate), RequestCard, SheetPersonCard (names get a max width and "…"); Tag (labels max 240 with "…"; normal labels look the same in every version).
+Why these five: the two blockers (verification) stopped referrers from getting in at all. The other four were the majors that hit the most screens, or hit new users first.
+Checked:
+  - The long-string test was re-run on 5 screens: no collisions.
+  - Normal data looks the same.
+  - Section resized, no overlaps.
+  - 0 unstyled texts and 0 unlinked spacing values on the new screens.
+Caught: new Primary buttons showed the component's placeholder icons (hidden now), and "Your referrals/Loading" still showed real numbers (hidden).
+Still open (ATTACK.md): offline everywhere, a cancelled login, link page upload progress, S5 and S9, and all minors.
