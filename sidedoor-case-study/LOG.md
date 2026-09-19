@@ -1641,3 +1641,16 @@ FIX · 2026-09-20 · Track details header, loading gaps, referrals icon · Sourc
   - Track details loading: gaps were 12; now 20 inside the top block and 24 before the referrer card, the same as the loaded screen.
   - "What your referrals reached" used chart.bar.fill, which reads as phone signal bars. New SF/flag.fill (SF Pro glyph 0x2ca, built like the other SF components) — a flag for milestones reached. Swapped on Your referrals and Your referrals/Updated.
 UI page and prototype; all 14 changed screens match.
+
+AUDIT · 2026-09-20 · Final audit: Apple guidelines, consistency, problem statement · Source: Devansh ("do a final audit …")
+Apple (HIG) checks, 87 UI frames:
+  - Pass: no text under 11pt; every screen has a status bar; tab roots use large titles with no back (28), inner screens a 44pt bar with back (46); bar buttons 44×44; sheets have a drag handle; one primary action per view; SF Symbols only; tab bar hidden only on onboarding, forms, chat, sheets and web pages.
+  - Contrast FAIL, caused by the grey page (my 19 Sep change): secondary text #6b7280 on #f2f2f7 = 4.33, on tags #f0f0f5 = 4.26. Old status colours also failed: green #22c55e on #ecfdf5 = 2.16, amber #f59e0b on #fffbeb = 2.07, blue on its tint 4.49, red #ef4444 on white 3.76.
+    Fix (V6 only, V2–V5 keep their tokens): new color/palette/neutral/700 #636a75 and semantic color/text/secondaryAA (4.80 on tags), successAA → success/700 (4.76), warningAA → warning/800 (4.84), errorAA → error/700 (6.47), infoAA → brand/blue/700 on tinted tags (6.55). Dark mode keeps the old values. Rebound 841 text and status colours on UI, 815 on prototype. Switch tracks kept iOS green (not text, knob shows state).
+  - Accepted, not changed: placeholders #9ca3af (2.54, Apple's placeholder is lighter too); disabled buttons (exempt); faded date-wheel rows (iOS); 28pt "Update" / "Mark it" buttons (Apple's small control size; hit area in code must be 44).
+Consistency fixes (UI and prototype):
+  - Page top gap: Job details (Suggested) 32 → 24 like the other Job screens; Job posted 32 → 24 (not a form); Profile 4 → 24 like other tab screens. Forms keep 32 (DESIGN_LANGUAGE).
+  - Job card: button now 24 below content (was 32; Referral request uses 24) and the card ends 16 below the button (was 36); "You asked Nithin today" hint 28 → 12 above its button. First try set 16 on screens without the hint; caught and fixed in the same pass.
+  - Share your link sheet: message box was grey on the grey sheet → white like every other box.
+Checked after: contrast 0 failures outside the accepted list; spacing by role; 75/75 prototype frames match UI incl. colours; looked at every screen.
+Problem statement: COVERAGE.md re-checked against today's screens; J1, J2, J3, the 7-step main path and all 7 AX failure states still have screens. Unchanged honest limit: research was 2 people; the kill conditions in SCOPE.md are untested.

@@ -1,6 +1,6 @@
 # COVERAGE · does V6 answer the problem statement?
 
-**Checked:** 19 Sep 2026, against BRIEF.md (problem statement, screens, main path, other routes, states, AX Spec) and
+**Checked:** 19 Sep 2026, re-checked 20 Sep 2026 after the Apple look and final audit (all screens still present), against BRIEF.md (problem statement, screens, main path, other routes, states, AX Spec) and
 RESEARCH.md (jobs J1–J3, clusters C1–C5), by reading every V6 screen in Figma (76). **saw it** for what is on screen.
 **Not checked:** whether any of this works for real people. No usability test has been run (next: molades-test).
 
