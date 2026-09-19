@@ -1654,3 +1654,11 @@ Consistency fixes (UI and prototype):
   - Share your link sheet: message box was grey on the grey sheet → white like every other box.
 Checked after: contrast 0 failures outside the accepted list; spacing by role; 75/75 prototype frames match UI incl. colours; looked at every screen.
 Problem statement: COVERAGE.md re-checked against today's screens; J1, J2, J3, the 7-step main path and all 7 AX failure states still have screens. Unchanged honest limit: research was 2 people; the kill conditions in SCOPE.md are untested.
+
+FIX · 2026-09-20 · The accepted contrast and tap-size cases, fixed too · Source: Devansh ("do these also", "this also")
+  - Placeholders: #9ca3af on white (2.54) → new color/text/placeholderAA = neutral/600 #6b7280 (4.83). Typed values stay text/primary #3b3f46, so the two still look different. 22 UI / 21 prototype.
+  - Disabled buttons: #9ca3af on #d1d3d8 (1.70) → new color/action/bg/disabledAA (neutral/150 #e6e7eb) and color/action/fg/disabledAA (neutral/650 #5f6671) = 4.69. Still reads as off: flat grey, no brand colour. 8 UI / 7 prototype.
+  - Date picker: faded wheel rows #9ca3af on #f2f2f7 (2.28) → color/text/secondaryAA (about 5.0). The selected row keeps its band and dark text.
+  - "Update" and "Mark it": 28pt → 44pt tall (Apple's minimum tap size), padding only. 8 on each page.
+Checked: contrast 0 failures (only the badge numbers flag, a false alarm: the check misses the dot behind them; real 5.17 blue / 6.47 red); no button under 44pt; 75/75 prototype frames match UI incl. colours and button sizes.
+Dark mode for all new AA tokens keeps the old dark values.
