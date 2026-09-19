@@ -1345,3 +1345,17 @@ CHANGE · 2026-09-19 · Boxes, tags, login · Source: Devansh
 Risk kept: removing the Terms line means there is no consent notice on sign-up. Fine for a concept; a real build needs it somewhere in the flow.
 Knock-on to V2–V5: SkillBlock wrap, Tag icon colour and the ReferralBar button come from shared components.
 Checked: screenshots of Referral request, Referral requests card, Track details 2, Login, and the Projects block.
+
+CRITIQUE · 2026-09-19 · UI bug sweep · Source: Devansh ("why are you not able to catch these small and obvious UI bugs")
+Why I missed them: my earlier checks compared properties across copies (same style, same size) and looked at screenshots at about half size. That does not catch position bugs (a badge off its icon), clipping (a button cut by its frame) or layout drift (a whole screen pushed down). New checks added and run on all 76 V6 screens: anything clipped by a frame, anything outside the screen, text overlapping text, leftover placeholder words, colours stored wrong, floating (absolute) pieces, and a proofread of every visible string.
+Found and fixed:
+  - Login: screen centred its content, so the status bar sat 44px down. Now starts at the top; buttons sit near the bottom (24 top, 40 bottom padding).
+  - Messages badge 12px off the icon: V6's bottom bar has 4 tabs, V2's had 5, and the badge kept V2's position. Pinned to the icon's top right on 5 screens.
+  - Job card: title row 26 tall for 28px text, meta row 18 for 20px, and chip rows that did not wrap, so text was cut. Rows now hug and wrap; both Job screens grew so the "Ask Nithin" button stays visible.
+  - 34 colours bound to the right token but stored as black, from my own edits today (the in-common tag rendered black). Re-applied with real values.
+  - Copy (154 texts): straight vs curly apostrophes; "28-40 LPA*" vs "₹28–40 LPA"; the same skill in two cases ("User Research" / "User research", now sentence case); two resume file names; "..." vs "…" and "Search by names or jobs"; "Cred" vs "CRED"; "What are we looking for"; all-caps "LIVE"/"PAUSED" (banned in the design language); "2d ago"/"1w ago" next to "Yesterday"/"Monday" (now weekday or date); trailing spaces; typo "Seach".
+Left on purpose: toast overlapping content (it floats by design); list content running under the bottom bar (scrolling).
+
+CHANGE · 2026-09-19 · Login and in-common · Source: Devansh
+  - Google button label "Sign in with Google" (Devansh). Note: LinkedIn still says "Continue with LinkedIn".
+  - In-common facts ("Both ex-MakeMyTrip", "Same college") are no longer a chip: person icon + ink text, a new Tag Style=Plain. Why: the blue chip mixed with the skill-match chip (Devansh). Plain icon + text matches the app's other meta lines ("⟳ Today") and LinkedIn's mutual-connection line.
