@@ -1111,3 +1111,33 @@ CHANGE · 2026-09-19 · V6 Manage your posts rebuilt
 Changed: four new Post Card frames built fresh (white, radius 10, elevation-1, padding 16): title text/heading/sm with a Switch (Status On/Off), status and job ID text/label/sm secondary, activity text/label/md with the blue link colour on the tappable part, and V2's edit-2-fill pencil. Section label "Flipkart · 4 posts" copied from the Referral requests label. Cards 16 apart. The + button, removed by mistake with the old list, was restored from V5 and set 8 above the bottom of the list.
 Prototype: the copy on "🔗 V6 Prototype" was replaced and 21 incoming links repointed. Cards open Referral requests (paused post → the paused state), Finish → Check your job post, pencils → Edit your job post, + → Add the job. The Product Manager card isn't linked, because there's no requests screen for that job.
 Checked: screenshots; nothing clipped.
+
+CRITIQUE · 2026-09-19 · Full audit of V6 and its states · Source: Devansh ("audit every screen + states … strictly without deviating from design language")
+Method:   All 61 V6 screens (42 flow screens + 19 states). A script checked every visible text, header icon and primary button, and flagged blue text that isn't tappable. Then screenshots of every flow, read against DESIGN_LANGUAGE.md and the research.
+Checked and kept, with reasons:
+  - Blue on done timeline stages, matched skills, match tags and the active tab: DESIGN_LANGUAGE.md's V2 patterns set these, and matched skills are tappable ("Tap a skill…").
+  - Back arrow on tab screens: DESIGN_LANGUAGE.md top bar pattern, kept from V2.
+  - "Not moving forward" as the sheet's blue button: the sheet exists to confirm that one action.
+  - Skill chips cut at the right edge: V2's sideways-scroll rows.
+
+DECISION · 2026-09-19 · V6 audit fixes (in place)
+  1 · Main action colour. DESIGN_LANGUAGE.md: blue is "the one thing to tap".
+      - Log out: primary → secondary on all 3 profiles. Leaving the app isn't the screen's main job.
+      - Your referrals: Update buttons under "All referrals" → secondary. Blue stays only on the two under "Waiting on an update", which are the ones due, so blue now means "act here". Also on the Updated state.
+      - Track details, Referred and Submitted: "Message Referrer" primary → secondary, renamed "Message Advika" / "Message Abhishek", like "Thank Joy". After Submitted there's nothing for the candidate to do, and a big message button invites chasing, which is the referrer's pain (C2, n60, kept-out L5). Still one tap away.
+  2 · Blue text that isn't a link. Unread message previews were blue. Now ink (text/primary). The blue count badge still marks unread, and read ones stay grey. (DESIGN_LANGUAGE.md: blue only for tappable things.)
+  3 · Headers.
+      - Link page (5 screens): bell and back arrow hidden. It's a web page for people without the app, so there are no notifications to open and the browser has its own back.
+      - Referral requests Empty, Loading, Couldn't load, All handled: bell → share-link icon, the same header as the full list (V4 Fix 6: share icon on requests).
+  4 · Words, sentence case like the rest of the app:
+      - Refer someone / Get referred, Switch role, Quick share, Edit profile.
+      - "Full time", "Remote or hybrid" on the Job and invite screens, the same words as the candidate's chips.
+      - "Logout" → "Log out" (the verb).
+  5 · Referrer Edit profile, which was V2's screen left as it was:
+      - A pencil in every field is on DESIGN_LANGUAGE.md's "never" list, so it was hidden. The fields are editable already.
+      - Labels now match Confirm where you work: Your name, Company, Your role, Where you work from.
+      - "Save Profile" → "Save changes", like the other edit screens.
+  6 · Edit your job post subtitle: "…for requests already in." left "in." alone on a line. Now "Saving checks the match again for current requests."
+Prototype: the same fixes applied to the copies on "🔗 V6 Prototype", so their links stay. The share icon on Referral requests and its states now opens the Share sheet.
+Not changed, flagged for molades-attack: status and error tag text colours are V2's (#22C55E, #EF4444, #F59E0B), which DESIGN_LANGUAGE.md says not to inherit. Changing them means editing the shared Tag component, which touches V2–V5 too, so that's a decision for Devansh, not a quiet fix. The white "4 of 7" on brand green is the same kind of issue.
+How sure: worked it out, from DESIGN_LANGUAGE.md rules and the research. None tested with users.
