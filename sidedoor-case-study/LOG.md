@@ -1727,3 +1727,8 @@ FIX · 2026-09-20 · One warning colour for text and icons
 Found:     After the last fix, the On hold icon (#D97706) and its text (#B45309) were two different oranges. Devansh: "text and icons of diff colors?" Same thing must look the same.
 Fixed:     One colour for both: #C93400, Apple's own high-contrast orange. Contrast: white 5.3, tag bg 5.1, grey page 4.7, so it passes 4.5:1 for text everywhere. New color/palette/warning/700; color/text/warningAA and color/icon/warning (light) both point to it; dark mode unchanged. Refreshed the stored colour on 23 paints on the UI page and 23 in the prototype (15 text, 5 icons, 3 lines). Removed color/palette/warning/600, now unused. Checked by screenshot (On hold).
 Watch:     #C93400 sits closer to red than the old amber. It is still clearly apart from error #B91C1C; worth a look next to a "Not selected" screen.
+
+FIX · 2026-09-20 · Last pencils replaced by "Edit"
+Found:     Manage your posts cards still had a pencil icon, though section headers already use "Edit" text (iOS patterns pass). Devansh caught it. A sweep of V6 found one more: a pencil badge on the Edit profile photo.
+Fixed:     PostCard (V6-only component, Live and Paused variants): pencil → "Edit", text/label/md, color/text/link, right end of the activity row. Edit profile: pencil badge removed; "Edit" under the photo, 8 below, centred, same style (as in iOS Contacts). UI page and prototype; screenshots match. 0 pencil icons left in V6.
+Note:      The cloned "Edit" text got stuck outside the row (Figma layout would not update); rebuilt as a new text node.
