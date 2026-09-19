@@ -1359,3 +1359,27 @@ Left on purpose: toast overlapping content (it floats by design); list content r
 CHANGE · 2026-09-19 · Login and in-common · Source: Devansh
   - Google button label "Sign in with Google" (Devansh). Note: LinkedIn still says "Continue with LinkedIn".
   - In-common facts ("Both ex-MakeMyTrip", "Same college") are no longer a chip: person icon + ink text, a new Tag Style=Plain. Why: the blue chip mixed with the skill-match chip (Devansh). Plain icon + text matches the app's other meta lines ("⟳ Today") and LinkedIn's mutual-connection line.
+
+CHANGE · 2026-09-19 · Full-size visual pass, all 76 V6 screens · Source: Devansh ("I wanted to catch all such UI bugs and fix them")
+Method: every V6 screen looked at at full size, plus the script checks (cut-offs, off-screen, overlaps, wrong stored colours, copy). Re-ran the cut-off and colour checks at the end: 0 and 0.
+Fixed:
+  - Back chevron on tab screens (Jobs, Requests, Messages, Profile, Referral requests, Your referrals, Posts and their states): iOS tab roots have nothing to go back to. New AppHeader property "Show back" (Title type), off on 28 UI and 19 prototype screens.
+  - Typed values showed in placeholder-like grey (Verify email, Edit details, Edit job post). InputField Filled now shows values in ink (component change). Pre-filled share message too.
+  - Buttons crowded by content on 4 form screens: the container was "space between" while hugging, so the 32 gap collapsed to 0. Now normal stacking.
+  - "Not selected" timeline end was red; design language says neutral (not an error). Now grey ✕, grey text.
+  - Selected timeline turned every step green; now done steps are blue like every other timeline, and only the final "Selected" is green.
+  - Pending last step read "Selected" in some timelines, "Selected or not" in others. Now "Selected or not".
+  - Job ID tag blue on 5 screens, grey on others. Blue is for fit signals; Job ID is a fact. Now grey everywhere.
+  - Tag icons were grey on red and green tags. Icons now match their tag's text colour. The amber style got an icon slot, so "This post is paused" has the info icon like other notes.
+  - Messages empty, loading and failed showed an unread "2" badge. Hidden.
+  - Loading skeletons were swapped: Your referrals loaded as rows but shows cards; Messages loaded as a card but shows rows. Skeleton card now uses the card radius; Messages skeletons are plain rows.
+  - Link page "Job closed" and "Already asked" were 390 tall. Now full 844.
+  - Profile menu icons mixed outline and filled. Now filled (message bubble from the bottom bar, filled bookmark). Kept: the link icon, because the icon set (Remix) has no filled link.
+  - "Quick share" was the only section label without an icon. Now a SectionLabel.
+  - Role selection cards 48 apart; now 16, the list gap.
+  - Copy: Title Case autofill lists ("Role & Level") to sentence case; "PDF, DOCX, TXT • Max 10MB" → "PDF, DOCX or TXT · up to 10 MB"; bullets → middots; "Copy your link" → "Copy link" (same action, one label); underlined file names → plain link text.
+Not changed, on purpose:
+  - "Still needed" under the Job ID field on Check your job post, not on its label row. The InputField component has no slot on its label row; adding one changes every form. Offered to Devansh.
+  - "Update" is blue in "Waiting on an update" and white in "All referrals" on the same screen: the waiting ones ask for action, the rest are optional.
+  - Quick share icon is an outline "external-link": no filled share icon in the set.
+Knock-on to V2–V5 (shared components): InputField filled colour, Tag icon colours, AutofillInfo copy, SkeletonCard radius. A timeline script also touched V2–V5 timelines by mistake; caught and reverted (16 icons).
