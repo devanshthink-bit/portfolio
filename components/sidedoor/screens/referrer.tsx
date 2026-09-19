@@ -53,16 +53,20 @@ const SUGGESTED: Req[] = [
 /* ── Referral requests ──────────────────────────────────────────────────── */
 export function ReferralRequests() {
   const nav = useNav();
-  const { handled, invited, unread, jobId, dispatch } = useStore();
+  const { handled, invited, unread, jobId, force, dispatch } = useStore();
   const [phase, setPhase] = useState<"loading" | "ok">("loading");
   const [open, setOpen] = useState(false);
   useEffect(() => {
+    if (force === "reqs.loading") return;
     const t = window.setTimeout(() => setPhase("ok"), 900);
     return () => clearTimeout(t);
-  }, []);
+  }, [force]);
 
-  const outstanding = REQUESTS.filter((r) => !r.lower && !handled[r.id]);
-  const lower = REQUESTS.filter((r) => r.lower && !handled[r.id]);
+  const cleared = force === "reqs.handled" || force === "reqs.empty";
+  const paused = force === "reqs.paused";
+  const failed = force === "reqs.error" && phase === "ok";
+  const outstanding = cleared ? [] : REQUESTS.filter((r) => !r.lower && !handled[r.id]);
+  const lower = cleared ? [] : REQUESTS.filter((r) => r.lower && !handled[r.id]);
   const allHandled = phase === "ok" && outstanding.length === 0 && lower.length === 0;
 
   return (
@@ -76,12 +80,41 @@ export function ReferralRequests() {
           <Tag>Job ID {jobId || "184223"}</Tag>
         </div>
 
+        {paused && (
+          <Note style="buffer">
+            This post is paused, so nobody can ask. Turn it back on in Manage your posts.
+          </Note>
+        )}
         {phase === "loading" ? (
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             <SkeletonCard />
             <SkeletonCard />
             <SkeletonCard />
           </div>
+        ) : failed ? (
+          <Empty
+            icon="xmark.circle.fill"
+            title="Couldn’t load requests"
+            body="Nothing is lost. Check your connection and try again."
+            action={
+              <Button
+                onClick={() => {
+                  dispatch({ t: "force", v: null });
+                  setPhase("loading");
+                  window.setTimeout(() => setPhase("ok"), 900);
+                }}
+              >
+                Try again
+              </Button>
+            }
+          />
+        ) : force === "reqs.empty" ? (
+          <Empty
+            icon="tray"
+            title="No requests yet"
+            body="Share your link with people who already messaged you about this job."
+            action={<Button onClick={() => nav.openSheet("shareLink")}>Share your link</Button>}
+          />
         ) : allHandled ? (
           <Empty
             icon="checkmark.seal.fill"
@@ -499,17 +532,20 @@ const REFERRALS: Referral[] = [
 
 export function YourReferrals() {
   const nav = useNav();
-  const { handled, unread } = useStore();
+  const { handled, unread, force } = useStore();
   const [moved, setMoved] = useState<Record<string, Stage>>({});
   const abhinav = handled.abhinav;
+  const none = force === "referrals.empty";
   const stageOf = (r: Referral) => moved[r.name] ?? r.stage;
-  const waiting = REFERRALS.filter((r) => r.days && stageOf(r) === "submitted");
-  const all: Referral[] = [
+  const waiting = none ? [] : REFERRALS.filter((r) => r.days && stageOf(r) === "submitted");
+  const all: Referral[] = none
+    ? []
+    : [
     ...(abhinav?.stage === "submitted"
       ? [{ name: "Abhinav Saxena", role: "Product Designer, Blinkit", stage: "submitted" as Stage, when: "Today" }]
       : []),
     ...REFERRALS.filter((r) => !r.days),
-  ];
+      ];
 
   const bar = (r: Referral, withUpdate: boolean) => (
     <Card key={r.name} style={{ padding: 12 }}>
@@ -548,6 +584,7 @@ export function YourReferrals() {
   return (
     <Screen largeTitle="Your referrals" right={<BellButton unread={unread} />}>
       <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 24 }}>
+        {!none && (
         <Section label="What your referrals reached" icon="flag.fill">
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -567,6 +604,7 @@ export function YourReferrals() {
             </Card>
           </div>
         </Section>
+        )}
 
         {waiting.length > 0 && (
           <Section label={`Waiting on an update (${waiting.length})`} icon="clock.fill">
@@ -603,8 +641,9 @@ const POSTS: Post[] = [
 
 export function ManagePosts() {
   const nav = useNav();
-  const { unread } = useStore();
+  const { unread, force } = useStore();
   const [paused, setPaused] = useState<string[]>(["Software Engineer-I"]);
+  const none = force === "posts.empty";
   return (
     <Screen
       largeTitle="Manage your posts"
@@ -618,6 +657,14 @@ export function ManagePosts() {
       }
     >
       <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 24 }}>
+        {none ? (
+          <Empty
+            icon="square.grid.2x2"
+            title="No posts yet"
+            body="Add a job and we fill in the rest from its description."
+            action={<Button onClick={() => nav.push("addJob")}>Add a job</Button>}
+          />
+        ) : (
         <Section label="Flipkart · 4 posts" icon="briefcase.fill">
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {POSTS.map((p) => {
@@ -654,6 +701,7 @@ export function ManagePosts() {
             })}
           </div>
         </Section>
+        )}
       </div>
     </Screen>
   );

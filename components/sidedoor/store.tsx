@@ -75,6 +75,11 @@ type State = {
   /** transient */
   toast: string | null;
   unread: number;
+  /**
+   * A state the prototype has been put into on purpose, so the V6 state screens are reachable
+   * without waiting for a backend to misbehave. Screens read it; nothing else does.
+   */
+  force: string | null;
 };
 
 const ABHINAV = { candidate: "Abhinav Saxena", candidateRole: "Product Designer, Blinkit", match: "4 of 7 skills · 3 yrs" };
@@ -112,6 +117,7 @@ const initial: State = {
   removedSkills: [],
   toast: null,
   unread: 2,
+  force: null,
 };
 
 type Action =
@@ -133,6 +139,8 @@ type Action =
   | { t: "removeSkill"; v: string }
   | { t: "toast"; v: string | null }
   | { t: "readAll" }
+  | { t: "force"; v: string | null }
+  | { t: "jump"; role: "candidate" | "referrer"; force: string | null }
   | { t: "reset" };
 
 function reduce(s: State, a: Action): State {
@@ -185,6 +193,11 @@ function reduce(s: State, a: Action): State {
       return { ...s, toast: a.v };
     case "readAll":
       return { ...s, unread: 0 };
+    case "force":
+      return { ...s, force: a.v };
+    case "jump":
+      // start from a clean slate so one state can't leak into the next
+      return { ...initial, role: a.role, force: a.force, resume: "Abhinav_Saxena_Resume.pdf", verified: true, jobId: "184223", posted: true };
     case "reset":
       return initial;
     default:

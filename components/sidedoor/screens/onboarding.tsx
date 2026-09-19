@@ -218,7 +218,8 @@ function AutofillInfo({ items }: { items: string[] }) {
 /* ── Candidate: upload your resume ──────────────────────────────────────── */
 export function UploadResume() {
   const nav = useNav();
-  const { resume, dispatch } = useStore();
+  const { resume, force, dispatch } = useStore();
+  const [failed, setFailed] = useState(force === "resume.unreadable");
   return (
     <Screen
       title="Your resume"
@@ -244,11 +245,19 @@ export function UploadResume() {
     >
       <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 24 }}>
         <p className="t-label muted">We fill in your details, you check them.</p>
+        {failed && (
+          <Note style="failure" icon="xmark.circle.fill">
+            Couldn’t read this file. Try another, or fill it in yourself.
+          </Note>
+        )}
         <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
           <DocUpload
             what="resume"
             file={resume}
-            onUpload={() => dispatch({ t: "resume", v: "Abhinav_Saxena_Resume.pdf" })}
+            onUpload={() => {
+              setFailed(false);
+              dispatch({ t: "resume", v: "Abhinav_Saxena_Resume.pdf" });
+            }}
           />
           <AutofillInfo items={["Work details", "Role and level", "Projects and skills", "Education"]} />
         </div>
@@ -356,9 +365,9 @@ export function Project({ title, skills }: { title: string; skills: string[] }) 
 /* ── Referrer: where you work ───────────────────────────────────────────── */
 export function VerifyEmail() {
   const nav = useNav();
-  const { dispatch } = useStore();
-  const [code, setCode] = useState("");
-  const [email, setEmail] = useState("nithin.agarwal@flipkart.com");
+  const { force, dispatch } = useStore();
+  const [code, setCode] = useState(force === "verify.wrong-code" ? "482010" : "");
+  const [email, setEmail] = useState(force === "verify.personal" ? "nithin.agarwal@gmail.com" : "nithin.agarwal@flipkart.com");
   const personal = /@(gmail|yahoo|outlook|hotmail)\./i.test(email);
   const wrong = code.length === 6 && code !== "482013";
   return (
@@ -412,8 +421,9 @@ export function VerifyEmail() {
 /* ── Referrer: add a job ────────────────────────────────────────────────── */
 export function AddJob() {
   const nav = useNav();
+  const { force } = useStore();
   const [file, setFile] = useState<string | null>(null);
-  const [failed, setFailed] = useState(false);
+  const [failed, setFailed] = useState(force === "job.unreadable");
   return (
     <Screen
       title="Add a job"
@@ -443,8 +453,7 @@ export function AddJob() {
             what="job description"
             file={file}
             onUpload={() => {
-              // one in three uploads fails on purpose, so the error state is reachable
-              if (!file && Math.random() < 0.0) setFailed(true);
+              setFailed(false);
               setFile("Flipkart_IxDesigner_JD.docx");
             }}
           />

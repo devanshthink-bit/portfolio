@@ -1737,3 +1737,64 @@ DECISION · 2026-09-20 · Underline "Log in"
 Decided:   "Log in" in "Already have an account? Log in" is underlined, on the UI login screen and its prototype copy. Checked by screenshot.
 Because:   Devansh asked. It is a link inside a sentence, so the underline also means it no longer relies on colour alone.
 Checked:   Swept V6 for other link-coloured words inside a sentence: only "5 new" and "1 still open" on Manage posts, which are blue counts, not links, so left as is.
+
+---
+
+## 20 Sep 2026 · the V6 screens as a working app
+
+**DECISION · Build the prototype in code, not in Figma's prototype mode**
+Decided: every V6 screen rebuilt as a React app at iPhone 17 size (402 × 874pt), at
+`/work/sidedoor/prototype`. Rejected: Figma's own prototype links, and a click-through of
+exported images.
+Because: the thing V6 has to prove is that an answer reaches the candidate without extra work
+from the referrer. A click-through can only show that as two unrelated screens. In code both
+sides read one store, so the request the candidate sends **is** the object the referrer acts on.
+How sure: saw it — sent as Abhinav, referred and marked submitted as Nithin, switched back and
+watched the same request read Submitted with the timeline moved.
+
+**DECISION · One shared store, and "Switch role" as the way between the sides**
+Decided: Profile → Switch role flips candidate/referrer on the same data.
+Rejected: two separate prototypes.
+Because: the handover is the product. Splitting it hides the only part worth testing.
+
+**DECISION · Tokens read out of Figma, not retyped**
+Decided: the colours, type styles, radii and shadows in `components/sidedoor/app.css` are exported
+from the file's variables; all 49 SF Symbols are the library's own vectors; logos and
+illustrations are exported PNGs.
+Because: "same type of thing looks exactly the same" only holds if there is one source.
+
+**FIX · Every text style was silently not applying**
+Found: the type classes were written `font: 500 12px/16px inherit`. `inherit` is not a valid
+family token, so the whole shorthand was dropped and every string rendered at the browser default
+(16/400). Card text was wrapping and nothing matched the screens.
+Fixed: longhand `font-weight` / `font-size` / `line-height` in all 38 places.
+How sure: saw it — measured the computed style before and after.
+
+**FIX · The back gesture never finished**
+Found: dragging from the left edge moved the screen but releasing did nothing, because the
+release handler read the drag distance from a closure React had not re-rendered yet.
+Fixed: the distance lives in a ref; the pointer is captured on the edge strip so the click that
+ends the gesture cannot land on a row underneath.
+How sure: saw it — a long swipe pops, a short one springs back.
+
+**FIX · The match list did not match V6**
+Found: the tag counted 8 rows ("5 of 8 skills") because it included the experience row, and
+missing skills used a red cross.
+Fixed: the tag counts skills only ("4 of 7 skills · 3 yrs"), matched rows use the filled blue
+step and missing ones the empty circle, as in the Figma components. Red stays for errors.
+
+**FIX · The company logo in a 44 list tile was invisible**
+Found: the V6 logos are wordmarks; forced to a fixed width in a 44 box they rendered ~8px tall.
+Fixed: the tile fits the logo inside its padding instead, and the job list uses the square brand
+mark where the library has one.
+
+**DECISION · A state switcher beside the phone, not inside the app**
+Decided: the page lists all 38 states (`components/sidedoor/scenarios.ts`) and puts the app into
+each one. Rejected: a debug menu inside the app.
+Because: the app must stay the app. The switcher only sets the store the way the app itself would
+and navigates; every state is the screen's own code path, and all of them are reachable by
+tapping as well.
+
+**Not built, said plainly:** the prototype is one candidate (Abhinav) and one referrer (Nithin) on
+one job. Other people in the lists are fixed data. Nothing is stored between reloads, and nothing
+here has been in front of a real user yet — that is still `molades-test`.

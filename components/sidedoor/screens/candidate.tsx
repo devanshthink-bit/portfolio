@@ -81,12 +81,15 @@ const JOBS: Job[] = [
 
 export function Jobs() {
   const nav = useNav();
-  const { skippedResume, unread } = useStore();
+  const { skippedResume, unread, force, dispatch } = useStore();
   const [phase, setPhase] = useState<"loading" | "ok">("loading");
   useEffect(() => {
+    if (force === "jobs.loading") return;
     const t = window.setTimeout(() => setPhase("ok"), 900);
     return () => clearTimeout(t);
-  }, []);
+  }, [force]);
+  const empty = force === "jobs.empty";
+  const failed = force === "jobs.error" && phase === "ok";
   return (
     <Screen largeTitle="Jobs" right={<BellButton unread={unread} />}>
       <div style={{ paddingTop: 16, display: "flex", flexDirection: "column", gap: 8 }}>
@@ -114,6 +117,29 @@ export function Jobs() {
               <SkeletonCard />
               <SkeletonCard />
             </>
+          ) : failed ? (
+            <Empty
+              icon="xmark.circle.fill"
+              title="Couldn’t load jobs"
+              body="Nothing is lost. Check your connection and try again."
+              action={
+                <Button
+                  onClick={() => {
+                    dispatch({ t: "force", v: null });
+                    setPhase("loading");
+                    window.setTimeout(() => setPhase("ok"), 900);
+                  }}
+                >
+                  Try again
+                </Button>
+              }
+            />
+          ) : empty ? (
+            <Empty
+              icon="briefcase"
+              title="No jobs with a referrer yet"
+              body="We’ll tell you the moment someone at a company you follow posts one."
+            />
           ) : (
             JOBS.map((j) => (
               <Card
@@ -344,16 +370,20 @@ function Bullets({ items }: { items: string[] }) {
 /* ── Check your request ─────────────────────────────────────────────────── */
 export function CheckRequest() {
   const nav = useNav();
-  const { details, note, stillNeeded, requestsLeft, dispatch } = useStore();
+  const { details, note, stillNeeded, requestsLeft, force, dispatch } = useStore();
   const [sending, setSending] = useState(false);
-  const [failed, setFailed] = useState(false);
-  const noneLeft = requestsLeft === 0;
+  const [failed, setFailed] = useState(force === "send.error");
+  const noneLeft = requestsLeft === 0 || force === "send.none-left";
 
   const send = () => {
     setSending(true);
     setFailed(false);
     window.setTimeout(() => {
       setSending(false);
+      if (force === "send.error") {
+        setFailed(true);
+        return;
+      }
       dispatch({ t: "send" });
       nav.reset("tabs", { tab: "requests", justSent: true });
       window.setTimeout(() => dispatch({ t: "toast", v: null }), 2400);
@@ -478,9 +508,10 @@ function bucket(s: Stage): (typeof FILTERS)[number] {
 
 export function RequestList({ justSent }: { justSent?: boolean }) {
   const nav = useNav();
-  const { requests, unread } = useStore();
+  const { requests, unread, force } = useStore();
   const [filter, setFilter] = useState<string>("All");
-  const shown = requests.filter((r) => filter === "All" || bucket(r.stage) === filter);
+  const all = force === "requests.empty" ? [] : requests;
+  const shown = all.filter((r) => filter === "All" || bucket(r.stage) === filter);
   return (
     <Screen largeTitle="Your referral requests" right={<BellButton unread={unread} />}>
       <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 16 }}>
@@ -533,24 +564,39 @@ function ReferralBar({ r, onClick }: { r: Request; onClick: () => void }) {
 }
 
 /* ── Track details ──────────────────────────────────────────────────────── */
-/** The timeline the candidate sees. "On hold" is a step of its own, not a colour. */
+/**
+ * The timeline the candidate sees. "On hold" is a step of its own, not a colour, and the endings
+ * that stop the flow (no answer, not moving forward, role closed) say so in the last step
+ * rather than leaving every circle empty.
+ */
 function steps(stage: Stage): Step[] {
   const order: Stage[] = ["sent", "referred", "submitted", "interviews"];
-  const reached = (s: Stage) => {
-    const i = order.indexOf(s);
-    const cur = order.indexOf(stage);
-    if (stage === "selected" || stage === "notselected") return true;
-    if (stage === "onhold") return i <= 2;
-    return i <= cur;
-  };
-  const out: Step[] = order.map((s) => ({
+
+  // nobody acted: the request is still sitting with the referrer
+  if (stage === "noanswer")
+    return [
+      { title: "Sent", state: "current" },
+      ...order.slice(1).map((s) => ({ title: STAGE_LABEL[s], state: "pending" as const })),
+      { title: "Selected or not", state: "pending" },
+    ];
+
+  // the referrer closed it: sent happened, nothing after it will
+  if (stage === "notmoving" || stage === "closed")
+    return [
+      { title: "Sent", state: "done" },
+      { title: STAGE_LABEL[stage], state: "current" },
+    ];
+
+  const cur = order.indexOf(stage);
+  const ended = stage === "selected" || stage === "notselected";
+  const out: Step[] = order.map((s, i) => ({
     title: STAGE_LABEL[s],
-    state: stage === s ? "current" : reached(s) ? "done" : "pending",
+    state: stage === s ? "current" : ended || i <= (stage === "onhold" ? 2 : cur) ? "done" : "pending",
   }));
   if (stage === "onhold") out.splice(3, 0, { title: "On hold", state: "current" });
   out.push({
-    title: stage === "selected" ? "Selected" : stage === "notselected" ? "Not selected" : "Selected or not",
-    state: stage === "selected" || stage === "notselected" ? "current" : "pending",
+    title: ended ? STAGE_LABEL[stage] : "Selected or not",
+    state: ended ? "current" : "pending",
   });
   return out;
 }
@@ -568,15 +614,30 @@ const NOW: Partial<Record<Stage, { line: string; sub: string }>> = {
   closed: { line: "The role is closed at {co}.", sub: "{co} closed it, so nobody can refer for it now." },
 };
 
-export function TrackDetails({ id }: { id: string }) {
+export function TrackDetails({ id, stage }: { id: string; stage?: Stage }) {
   const nav = useNav();
-  const { requests } = useStore();
-  const r = requests.find((x) => x.id === id) ?? requests[0];
+  const { requests, force, dispatch } = useStore();
+  const found = requests.find((x) => x.id === id) ?? requests[0];
+  // a stage passed in shows a state the referrer cannot cause from here (no answer, role closed)
+  const r = stage ? { ...found, stage } : found;
   const [phase, setPhase] = useState<"loading" | "ok">("loading");
   useEffect(() => {
+    if (force === "track.loading") return;
     const t = window.setTimeout(() => setPhase("ok"), 550);
     return () => clearTimeout(t);
-  }, [id]);
+  }, [id, force]);
+
+  if (force === "track.error" && phase === "ok")
+    return (
+      <Screen title="Referral request" back>
+        <Empty
+          icon="xmark.circle.fill"
+          title="Couldn’t load this request"
+          body="Nothing has changed. Try again in a moment."
+          action={<Button onClick={() => dispatch({ t: "force", v: null })}>Try again</Button>}
+        />
+      </Screen>
+    );
 
   // "on Just now" reads wrong: a weekday or date takes "on", a relative time does not
   const whenPhrase = /^(Just now|Today|Yesterday)$/.test(r.updated)

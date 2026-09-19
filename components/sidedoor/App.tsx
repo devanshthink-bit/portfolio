@@ -1,7 +1,7 @@
 "use client";
 // The app. One stack, one registry, and the gesture that makes it feel native: drag from the left
 // edge to go back, with the screen underneath sliding out from behind it.
-import { useCallback, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import "./app.css";
 import { NavProvider, useNav, useNavStack } from "./nav";
 import { StoreProvider, useStore } from "./store";
@@ -22,6 +22,7 @@ import {
   Settings,
 } from "./screens/shared";
 import { AddResumeSheet, DobSheet, LogoutSheet, NotMovingSheet, SeenItMoveSheet, ShareLinkSheet } from "./screens/sheets";
+import { SCENARIOS } from "./scenarios";
 
 /* ── the tabs, per role ─────────────────────────────────────────────────── */
 const CANDIDATE_TABS = [
@@ -85,7 +86,7 @@ const SCREENS: Record<string, (p: any) => ReactNode> = {
   tabs: (p) => <Tabs {...p} />,
   job: () => <JobDetails />,
   checkRequest: () => <CheckRequest />,
-  trackDetails: (p) => <TrackDetails id={p.id} />,
+  trackDetails: (p) => <TrackDetails id={p.id} stage={p.stage} />,
   referralRequest: (p) => <ReferralRequest id={p.id} />,
   yourReferrals: () => <YourReferrals />,
   managePosts: () => <ManagePosts />,
@@ -231,21 +232,51 @@ function Stack() {
   );
 }
 
-function Inner() {
+/**
+ * Puts the app into one of the V6 states. Nothing here fakes a screen: it sets the store the way
+ * the app would have set it, then navigates to where that state shows.
+ */
+function Jump({ spec }: { spec?: { id: string; n: number } }) {
+  const nav = useNav();
+  const { dispatch } = useStore();
+  const last = useRef(0);
+  useEffect(() => {
+    if (!spec || spec.n === last.current) return;
+    last.current = spec.n;
+    const sc = SCENARIOS.find((s) => s.id === spec.id);
+    if (!sc) return;
+    if (sc.id === "start") {
+      dispatch({ t: "reset" });
+      nav.reset("login");
+      return;
+    }
+    dispatch({ t: "jump", role: sc.role, force: sc.force ?? null });
+    nav.reset("tabs", { tab: sc.tab });
+    sc.push?.forEach((p) => nav.push(p.key, p.props));
+    if (sc.sheet) nav.openSheet(sc.sheet.key, sc.sheet.props);
+  }, [spec, nav, dispatch]);
+  return null;
+}
+
+function Inner({ jump }: { jump?: { id: string; n: number } }) {
   const nav = useNavStack("login");
   return (
     <NavProvider value={nav}>
+      <Jump spec={jump} />
       <Stack />
     </NavProvider>
   );
 }
 
-/** The whole app at iPhone 17 size (402 x 874pt). Drop it inside the IPhone mock. */
-export default function SidedoorApp() {
+/**
+ * The whole app at iPhone 17 size (402 x 874pt). Drop it inside the IPhone mock.
+ * `jump` puts it into a named state from scenarios.ts; bump `n` to re-run the same one.
+ */
+export default function SidedoorApp({ jump }: { jump?: { id: string; n: number } }) {
   return (
     <div className="sd">
       <StoreProvider>
-        <Inner />
+        <Inner jump={jump} />
       </StoreProvider>
     </div>
   );

@@ -46,9 +46,10 @@ const REFERRER_CHATS: Chat[] = [
 
 export function Messages() {
   const nav = useNav();
-  const { role, unread } = useStore();
+  const { role, unread, force } = useStore();
   const [q, setQ] = useState("");
-  const all = role === "referrer" ? REFERRER_CHATS : CANDIDATE_CHATS;
+  const base = role === "referrer" ? REFERRER_CHATS : CANDIDATE_CHATS;
+  const all = force === "messages.empty" ? [] : base;
   const shown = all.filter((c) => c.name.toLowerCase().includes(q.toLowerCase()));
   return (
     <Screen largeTitle="Messages" right={<BellButton unread={unread} />}>
@@ -58,7 +59,11 @@ export function Messages() {
           <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search by name or job…" />
         </div>
         {shown.length === 0 ? (
-          <Empty icon="bubble.left" title="No messages" body="Nothing matches that. Chats start once someone replies." />
+          <Empty
+            icon="bubble.left"
+            title="No messages"
+            body={q ? "Nothing matches that." : "Chats start once a referrer replies to a request."}
+          />
         ) : (
           <ListGroup>
             {shown.map((c) => (
@@ -648,7 +653,8 @@ export function LinkPage() {
  */
 function LogoBar() {
   const nav = useNav();
-  const preview = nav.top.anim === "modal";
+  // when it was opened from inside the app there has to be a way back out of it
+  const preview = nav.canGoBack;
   return (
     <div className="sd-web-bar">
       <Image src="/images/sidedoor/sidedoor-mark.png" alt="" width={18} height={23} style={{ width: 18, height: "auto" }} />

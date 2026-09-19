@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { IPhone } from "@/components/IPhone";
-import SidedoorApp from "@/components/sidedoor/App";
+import Viewer from "@/components/sidedoor/Viewer";
 
 export const metadata: Metadata = {
   title: "Sidedoor — working prototype",
@@ -19,11 +18,7 @@ export default function SidedoorPrototypePage() {
           him, and switch back to watch the same request move. Swipe from the left edge to go back.
         </p>
       </header>
-      <div className="proto-stage">
-        <IPhone n={430}>
-          <SidedoorApp />
-        </IPhone>
-      </div>
+      <Viewer />
       <section className="proto-notes">
         <h2>How to walk it</h2>
         <ol>
