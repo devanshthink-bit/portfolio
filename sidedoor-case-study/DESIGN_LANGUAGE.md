@@ -211,5 +211,6 @@ Every tappable text is blue, including dismissive ones ("Not now", "Share later"
 **Page header (20 Sep 2026)**: the person or company a detail screen is about sits on the grey page at the top, never inside a card. White cards (radius/component/card, 16 padding) hold the content below. Every web link page ends with a next step.
 
 **Contrast (20 Sep 2026)**: V6 text uses the AA tokens: color/text/secondaryAA for grey text, successAA / warningAA / errorAA for status text and status icons, infoAA for blue text on tinted tags, placeholderAA for placeholders, action/bg+fg/disabledAA for disabled buttons. Every one is 4.5:1 or more on white, the grouped page and its tag tint. Switch tracks stay iOS green.
+Warning icons and lines use color/icon/warning (#D97706, 3.2:1). The AA text colour (#B45309) is only for text; on shapes it looks brown.
 Every tappable control has a 44pt tap area (20 Sep 2026). Small in-row actions (Update, Mark it) use Button Type=Secondary Small: 28pt visible, with a "Hit area 44" frame; they sit on the line of the thing they act on (the status tag).
 Section and group counts go in the title in brackets, e.g. "Lower match (2)" (20 Sep 2026). Unread counts are the blue dot at the row's right.

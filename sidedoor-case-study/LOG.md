@@ -1717,3 +1717,8 @@ Not done:  ReferralBar logos left at 68 wide. Tried padding one and it only made
 FIX · 2026-09-20 · Logo box matches the text beside it
 Found:     Track details header: logo box 68 tall, text block beside it (name, role, tag) 74 tall. Devansh: it should be the same height.
 Fixed:     All 9 boxes 74×74, still 10 padding, logo 54 wide with its shape kept. UI page and 9 prototype copies. Row stays 74; text column 278 → 272, every line still on one line. Checked by screenshot (Meta, PhonePe).
+
+FIX · 2026-09-20 · Warning icons too dark
+Found:     On hold timeline circle and line looked brown. They used color/text/warningAA (#B45309), the colour picked so small text passes 4.5:1. Icons and lines only need 3:1. Devansh: "isnt it too dark".
+Fixed:     New tokens color/palette/warning/600 #D97706 and color/icon/warning (light → 600, dark → 500; scopes shape fill and stroke). #D97706 on white = 3.2:1, passes 3:1 for shapes. #F59E0B was not used: 2.1:1 fails. Rebound every non-text use of warningAA in V6: 3 clock icons, 3 timeline lines, 1 tag dot, 1 note icon. 8 on the UI page, 8 in the prototype. Checked by screenshot (On hold).
+Kept:      "On hold" text stays #B45309 (4.5:1 needed for text).
