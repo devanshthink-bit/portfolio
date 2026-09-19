@@ -1383,3 +1383,13 @@ Not changed, on purpose:
   - "Update" is blue in "Waiting on an update" and white in "All referrals" on the same screen: the waiting ones ask for action, the rest are optional.
   - Quick share icon is an outline "external-link": no filled share icon in the set.
 Knock-on to V2–V5 (shared components): InputField filled colour, Tag icon colours, AutofillInfo copy, SkeletonCard radius. A timeline script also touched V2–V5 timelines by mistake; caught and reverted (16 icons).
+
+CHANGE · 2026-09-19 · "In common" rewritten the way real apps do it · Source: Devansh ("why do these two use the same icon… no app would write this heading 'in common'")
+Before: a section headed "In common" with a person icon, a person-icon tag "Both ex-MakeMyTrip" on the same row, and a sentence "From your profile and their resume. You were there 2021–22, they were there 2022–23." Same icon twice, and a heading real apps don't use.
+Now: no section. One meta line under the person, the way LinkedIn shows shared history: [MakeMyTrip logo] "Both worked at MakeMyTrip", and under it "You 2021–22 · Abhinav 2022–23". List cards use the same line.
+Why these choices:
+  - Company logo instead of a person icon: it says which company at a glance and removes the duplicate icon. College has no logo in the set, so it uses the building icon.
+  - "Both worked at", not "worked together": the dates don't overlap, so "together" would be false. The dates line keeps the source visible (trust rule).
+  - 12/500, the meta-line size (like "⟳ Today"). At 12px, "You both worked at MakeMyTrip" still didn't fit the Jobs card (190px). "Both worked at MakeMyTrip" fits every card, so one label everywhere.
+  - "Both studied at NID Ahmedabad" was cut on Referral requests; now "Both studied at NID" (how people say it). College name is mock data, like the names.
+Checked: detail screen, Referral requests cards, Jobs card; nothing cut (script). Logos keep their own colours (an old icon tint was reset).
