@@ -1468,3 +1468,22 @@ FIX · 2026-09-19 · Cut icons · Source: Devansh (screenshot: download icon cut
 Cause: 62 icon components (the 3089/3090 icon family) kept their drawing at a fixed size when shrunk. At 16–18px the 20×18 drawing spilled out of the box and was cut. Now they scale with the box, like the older icons.
 On V6 this fixed 8 icons: download (3), external-link, bar-chart (2), clock (2). Prototype: 0 left.
 Missed before because the cut-off check looked for layers clipped by a frame, not a drawing spilling out of its own icon box. New check added: vector inside its icon box.
+
+CHANGE · 2026-09-19 · Full V6 sanity pass · Source: Devansh ("do a full sanity on all screens of v6 … any issue/inconsistencies still there")
+Scripted checks on all 82 UI screens and 70 prototype copies, then every screen looked at. New checks added this time: a layer bigger than its parent, a drawing spilling out of its icon box, action blocks centred in leftover space, cards with empty space, card-list gaps.
+Fixed (UI and prototype):
+  - Boxes inside cards (Devansh: "why are we having cards/blocks under cards?"). The 4 Referral request screens had grey shadowed boxes inside the white card. Flattened to the V2 pattern: the Job card already worked this way. Rule updated: a content box sits on the screen, never inside a card.
+  - Job card stretched to the screen height and left ~80px empty at the bottom (Devansh: "why this empty space"). Card now hugs its content, as on the suggested Job screen.
+  - Action blocks centred in leftover space, so the gap above the button changed with content length: Track details (7 screens, 24 to 108), Profile ×3 (Log out), Add the job, Upload your resume (+ their error states), Edit profile (120). All now 24 under the content. Login keeps its bottom buttons by choice.
+  - Card lists used 8, 16 and 24 between cards. Now 16 everywhere (Jobs, Referral requests suggested list, Your referrals, loading skeletons). Your referrals also had its "All referrals" heading 8 under the card above; sections now 24 apart, label → content 8.
+  - Experience rows: dates took the right side and squeezed titles into 2–3 lines ("Product / Designer"). New Company Row variant Layout=Stacked (title, company, dates on their own lines, like LinkedIn); V6 uses it, V2–V5 keep Side. The Freelance row on "Not enough to judge" was hand-built; now the same component with a new AvatarPlaceholder Type=No Logo (grey tile + briefcase), since an empty grey square read as a broken image.
+  - ProjectRow skill tags laid out 360 wide inside a 294–326 row (stale width, hidden by clipping). Refitted on 10 copies.
+  - "You both" dates line was 20px wider than the card and 2px off the label above. Now fills the card and lines up exactly (14 icon slot + spacing/xs, same as the tag).
+  - Referrer home (Referral requests + 6 states) had a link icon where every other tab screen has the bell, so referrers couldn't reach Notifications from home. Now the bell; the link stays in Profile → Your links to share.
+  - Referrer Notifications highlighted the Referrals tab; now Requests (home), like the candidate side (Jobs).
+  - Candidate Profile had no Settings row (referrer did). Added.
+  - Edit profile: "Your role" used the person icon like "Your name" (briefcase on Confirm where you work); "Where you work from" had a search icon and ✕ the same field doesn't have elsewhere; field gap 12 vs 20 on the other form. All matched.
+  - Couldn't send, No requests left, Sending: the details box lacked the 4 portal details, but sending needs them. Added (same order as the link page).
+  - Login (UI copy) had lost its bottom-anchored buttons in an earlier pass; restored to match the prototype.
+Kept on purpose: the Undo toast covers the line under the buttons for 5 seconds (iOS toast over content); dashed upload areas keep a fixed height across states; the "2" badge on the Messages tab.
+Final: 0 on every check, both pages; all 70 prototype copies match their UI twins.

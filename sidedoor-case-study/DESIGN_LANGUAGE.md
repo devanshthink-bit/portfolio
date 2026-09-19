@@ -182,7 +182,7 @@ Weights: 400 only for paragraphs and typed text. 500 for secondary text. 600 for
 Neutral grey (facts, skills, info notes) · Primary blue-tint (fit signals: "4 of 7 skills", "Both ex-MakeMyTrip" with a person icon) · Success green (progress status) · Buffer amber (still needed, waiting) · Failure red (errors).
 Outline is no longer used: in-common facts moved to Primary, and "Mark it" was an action, so it is now a small secondary button.
 
-**Content box** (inside a card): #FAFAFA (color/surface/secondary), radius 8, padding 12/16, elevation-1, never clipped by its parent. Outer card padding 16.
+**Content box** (on the screen, never inside a card): #FAFAFA (color/surface/secondary), radius 8, padding 12/16, elevation-1, never clipped by its parent. Inside a card (Job, Referral request) content sits flat: no fill, no shadow, no inner padding; the card's 16 padding and the section labels do the grouping (V2 pattern, Devansh 19 Sep 2026).
 
 **Spacing by role** (added 19 Sep 2026; checked by script on every V6 screen)
 | Role | Value |
@@ -190,10 +190,12 @@ Outline is no longer used: in-common facts moved to Primary, and "Mark it" was a
 | Section label → its content | 8 |
 | Section → section | 24 |
 | Content → action block | 24 |
+| Card → card in a list (jobs, requests, referrals, skeletons) | 16 |
 | Button → button (always stacked full width, primary first) | 12 |
 | Note above a button, or hint below it (12/500 grey, centred) | 12 |
 | Text action below a button (14/500, link blue, centred) | 16 |
 | Last element → bottom bar | ≥ 24 |
 | Last element → screen bottom (no bottom bar) | ≥ 40 |
 | First content under the top bar | 24 on lists and details, 32 on forms (V2) |
+Action blocks sit 24 under the content. They are never centred in, or pinned to the bottom of, leftover space (only Login pins its buttons to the bottom, by choice). Cards hug their content; no card stretches to fill the screen.
 Every tappable text is blue, including dismissive ones ("Not now", "Share later", "Skip for now"). A disabled countdown ("Resend code in 0:28") stays grey. Every screen is at least 844 tall.
