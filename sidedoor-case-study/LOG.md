@@ -1569,3 +1569,12 @@ V2–V5 keep their look: every shared component got a new variant; only V6 was s
 Knock-on fixes: two Track details screens had a fixed height, so the shorter bar left a 32 gap under the tab bar; they now hug.
 Not changed (listed as minor): badge colour, status bar 44 vs 47, tab bar 88 vs 83, Undo toast, Inter/Remix instead of SF Pro/SF Symbols (chosen), 14pt body (accessibility).
 Final: 0 on every check, all prototype frames match their UI twins.
+
+FIX · 2026-09-19 · Text styles in the new pieces · Source: Devansh ("you have started using different fonts in new additions")
+All Inter, but the new pieces picked styles that don't match their role elsewhere:
+  - Log out sheet: "Log out" used text/body/lg (its only use in the app) and "Cancel" text/heading/sm. Tappable actions everywhere use text/button/md → both button/md (red / blue).
+  - Date picker: rows 14 Regular with the selected row 16 SemiBold (two sizes in one column) → all text/label/md; the selected row is shown by colour and the band.
+  - Segmented control: text/heading/xs → text/label/md (same as other chip-like controls, tags).
+  - Resume sheet body: text/body/md → text/label/md (other sheet bodies).
+Checked by role across all V6 screens (sheet titles, sheet body, sheet actions, top bar titles, page intro lines, headline subtitles): one style per role now. Kept: the Log out sheet's message is text/label/sm grey (the hint style), matching how iOS shows an action sheet message.
+Prototype matches, styles included.
