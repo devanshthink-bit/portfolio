@@ -1,0 +1,525 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   Sidedoor V6 · working prototype
+   Every value here comes from the Figma variables and text styles of
+   file 8Z12N0tXTI126hj7ZaXnbO (V6). Do not add a value that is not a token.
+   Scope: everything is under .sd so the portfolio's own styles never leak in.
+   ────────────────────────────────────────────────────────────────────────── */
+
+.sd {
+  /* palette */
+  --sd-blue-50: #e9effd;
+  --sd-blue-500: #2563eb;
+  --sd-blue-700: #1d4eb2;
+  --sd-blue-800: #084a84;
+  --sd-green-50: #e7f8f2;
+  --sd-green-500: #10b981;
+  --sd-n0: #ffffff;
+  --sd-n50: #fafafa;
+  --sd-n75: #f2f2f7;
+  --sd-n100: #f0f1f2;
+  --sd-n150: #e6e7eb;
+  --sd-n200: #d1d3d8;
+  --sd-n400: #9ca3af;
+  --sd-n600: #6b7280;
+  --sd-n650: #5f6671;
+  --sd-n700: #636a75;
+  --sd-n800: #3b3f46;
+  --sd-n900: #1a1a1a;
+  --sd-success-50: #ecfdf5;
+  --sd-warning-50: #fffbeb;
+  --sd-error-50: #fef2f2;
+
+  /* semantic */
+  --sd-text: #3b3f46;
+  --sd-text-2: #636a75;          /* secondaryAA */
+  --sd-text-dis: #9ca3af;
+  --sd-link: #2563eb;
+  --sd-text-success: #15803d;    /* successAA */
+  --sd-text-warning: #c93400;    /* warningAA */
+  --sd-text-error: #b91c1c;      /* errorAA */
+  --sd-text-info: #1d4eb2;       /* infoAA */
+  --sd-placeholder: #6b7280;
+  --sd-surface: #ffffff;
+  --sd-surface-2: #fafafa;
+  --sd-surface-3: #f0f1f2;
+  --sd-page: #f2f2f7;            /* background/grouped */
+  --sd-fill-3: rgba(118, 118, 128, 0.12);
+  --sd-border: #d1d3d8;
+  --sd-border-subtle: #f0f1f2;
+  --sd-action-bg: #2563eb;
+  --sd-action-bg-dis: #e6e7eb;
+  --sd-action-fg-dis: #5f6671;
+  --sd-icon: #3b3f46;
+  --sd-icon-2: #6b7280;
+  --sd-icon-warning: #c93400;
+  --sd-apple: #000000;
+  --sd-ios-green: #34c759;
+  --sd-ios-red: #ff3b30;
+
+  /* radius */
+  --sd-r-sm: 4px;
+  --sd-r-md: 8px;
+  --sd-r-lg: 12px;
+  --sd-r-xl: 16px;
+  --sd-r-2xl: 24px;
+  --sd-r-sheet: 32px;
+  --sd-r-full: 9999px;
+
+  /* elevation */
+  --sd-e1: 0 1px 4px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --sd-e2: 0 6px 16px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.08);
+  --sd-e3: 0 12px 32px rgba(0, 0, 0, 0.14), 0 4px 12px rgba(0, 0, 0, 0.1);
+  --sd-glass-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+
+  /* iOS motion */
+  --sd-ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --sd-spring: cubic-bezier(0.25, 1.4, 0.4, 1);
+
+  position: relative;
+  width: 402px;
+  height: 874px;
+  overflow: hidden;
+  background: var(--sd-page);
+  font-family: -apple-system, "SF Pro Text", "Inter", system-ui, sans-serif;
+  color: var(--sd-text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  isolation: isolate;
+  touch-action: manipulation;
+}
+
+.sd *,
+.sd *::before,
+.sd *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+.sd button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+.sd input, .sd textarea { font: inherit; color: inherit; background: none; border: 0; outline: none; }
+.sd ul { list-style: none; }
+
+/* ── type styles (text/* in Figma) ───────────────────────────────────────── */
+.sd .t-display { font: 600 32px/40px inherit; }
+.sd .t-h-lg { font: 600 24px/32px inherit; letter-spacing: -0.4px; }
+.sd .t-h-md { font: 600 20px/28px inherit; letter-spacing: -0.3px; }
+.sd .t-h-sm { font: 600 16px/24px inherit; letter-spacing: -0.2px; }
+.sd .t-h-xs { font: 600 14px/20px inherit; }
+.sd .t-body-lg { font: 400 16px/24px inherit; }
+.sd .t-body { font: 400 14px/20px inherit; }
+.sd .t-label { font: 500 14px/20px inherit; }
+.sd .t-label-sm { font: 500 12px/16px inherit; }
+.sd .t-btn { font: 500 16px/24px inherit; }
+.sd .t-btn-sm { font: 500 14px/20px inherit; }
+.sd .muted { color: var(--sd-text-2); }
+.sd .link { color: var(--sd-link); }
+
+/* ── screen stack · iOS push navigation ──────────────────────────────────── */
+.sd-stack { position: absolute; inset: 0; }
+
+.sd-screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--sd-page);
+  overflow: hidden;
+  will-change: transform;
+}
+/* the card that pushes in from the right */
+.sd-screen[data-anim="push-in"] { animation: sd-push-in 420ms var(--sd-ease) both; box-shadow: -8px 0 24px rgba(0, 0, 0, 0.14); }
+.sd-screen[data-anim="push-out"] { animation: sd-push-out 380ms var(--sd-ease) both; box-shadow: -8px 0 24px rgba(0, 0, 0, 0.14); }
+/* the screen underneath slides a little and dims: iOS parallax */
+.sd-screen[data-anim="under-in"] { animation: sd-under-in 420ms var(--sd-ease) both; }
+.sd-screen[data-anim="under-out"] { animation: sd-under-out 380ms var(--sd-ease) both; }
+/* a full-screen modal comes up from the bottom */
+.sd-screen[data-anim="modal-in"] { animation: sd-modal-in 460ms var(--sd-ease) both; }
+.sd-screen[data-anim="modal-out"] { animation: sd-modal-out 380ms var(--sd-ease) both; }
+/* replacing the root (login → app) cross-fades with a small scale, like iOS hand-off */
+.sd-screen[data-anim="fade-in"] { animation: sd-fade-in 420ms var(--sd-ease) both; }
+.sd-screen[data-anim="fade-out"] { animation: sd-fade-out 300ms var(--sd-ease) both; }
+
+@keyframes sd-push-in { from { transform: translateX(402px); } to { transform: translateX(0); } }
+@keyframes sd-push-out { from { transform: translateX(0); } to { transform: translateX(402px); } }
+@keyframes sd-under-in { from { transform: translateX(0); filter: brightness(1); } to { transform: translateX(-100px); filter: brightness(0.92); } }
+@keyframes sd-under-out { from { transform: translateX(-100px); filter: brightness(0.92); } to { transform: translateX(0); filter: brightness(1); } }
+@keyframes sd-modal-in { from { transform: translateY(874px); } to { transform: translateY(0); } }
+@keyframes sd-modal-out { from { transform: translateY(0); } to { transform: translateY(874px); } }
+@keyframes sd-fade-in { from { opacity: 0; transform: scale(1.04); } to { opacity: 1; transform: scale(1); } }
+@keyframes sd-fade-out { from { opacity: 1; } to { opacity: 0; } }
+
+/* the live drag of an edge-swipe back */
+.sd-screen.is-dragging { animation: none !important; transition: none; }
+.sd-screen.is-settling { animation: none !important; transition: transform 300ms var(--sd-ease), filter 300ms var(--sd-ease); }
+
+/* the invisible strip on the left edge that starts a swipe back */
+.sd-edge { position: absolute; left: 0; top: 44px; bottom: 0; width: 24px; z-index: 40; }
+
+/* ── status bar ──────────────────────────────────────────────────────────── */
+.sd-statusbar {
+  flex: 0 0 auto;
+  height: 54px;
+  padding: 16px 30px 0 34px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+  z-index: 30;
+  pointer-events: none;
+}
+.sd-statusbar b { font: 600 17px/22px inherit; letter-spacing: -0.4px; color: var(--sd-text); }
+.sd-statusbar .sd-sb-right { display: flex; align-items: center; gap: 6px; }
+.sd-statusbar.is-light b, .sd-statusbar.is-light svg { color: #fff; }
+
+/* ── nav bar ─────────────────────────────────────────────────────────────── */
+.sd-nav {
+  flex: 0 0 auto;
+  height: 44px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 0 8px;
+  position: relative;
+  z-index: 25;
+}
+.sd-nav-title { font: 600 17px/22px inherit; letter-spacing: -0.4px; text-align: center; white-space: nowrap; }
+.sd-nav-lead { justify-self: start; display: flex; align-items: center; }
+.sd-nav-trail { justify-self: end; display: flex; align-items: center; gap: 4px; }
+.sd-nav.has-border { border-bottom: 0.5px solid rgba(0, 0, 0, 0.18); }
+/* the bar gets its glass and hairline only once the content scrolls under it */
+.sd-nav-wrap { position: relative; flex: 0 0 auto; z-index: 25; transition: background 200ms linear; }
+.sd-nav-wrap.is-scrolled { background: rgba(242, 242, 247, 0.82); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); box-shadow: 0 0.5px 0 rgba(0, 0, 0, 0.16); }
+.sd-nav-wrap.is-scrolled .sd-nav-title { opacity: 1; }
+.sd-nav-wrap.has-large .sd-nav-title { opacity: 0; transition: opacity 180ms linear; }
+
+/* a bar button: 44pt tap area, glass only when it floats over content */
+.sd-barbtn { width: 44px; height: 44px; display: grid; place-items: center; color: var(--sd-link); border-radius: var(--sd-r-full); }
+.sd-barbtn:active { opacity: 0.4; }
+.sd-barbtn.is-back { width: auto; min-width: 44px; padding-right: 6px; }
+
+/* large title (tab roots) */
+.sd-largetitle { padding: 0 16px 8px; font: 700 34px/41px inherit; letter-spacing: -0.8px; color: var(--sd-text); }
+
+/* ── scrolling body ──────────────────────────────────────────────────────── */
+.sd-body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  scrollbar-width: none;
+}
+.sd-body::-webkit-scrollbar { display: none; }
+.sd-body > .sd-pad { padding: 0 16px; }
+
+/* ── liquid glass tab bar ────────────────────────────────────────────────── */
+.sd-tabbar {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 22px;
+  height: 64px;
+  z-index: 35;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: var(--sd-r-full);
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: saturate(200%) blur(28px);
+  -webkit-backdrop-filter: saturate(200%) blur(28px);
+  box-shadow: var(--sd-glass-shadow), inset 0 0.5px 0 rgba(255, 255, 255, 0.85), inset 0 0 0 0.5px rgba(255, 255, 255, 0.4);
+}
+/* the specular sheen that makes glass read as glass */
+.sd-tabbar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 42%, rgba(255, 255, 255, 0.18) 100%);
+}
+.sd-tab {
+  flex: 1 1 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  color: var(--sd-n650);
+  position: relative;
+  z-index: 1;
+}
+.sd-tab span { font: 500 10px/12px inherit; letter-spacing: -0.1px; }
+.sd-tab.is-on { color: var(--sd-link); }
+.sd-tab:active { transform: scale(0.92); }
+.sd-tab { transition: transform 140ms var(--sd-spring); }
+.sd-tab-badge {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  margin-left: 6px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: var(--sd-r-full);
+  background: var(--sd-ios-red);
+  color: #fff;
+  font: 600 10px/16px inherit;
+  text-align: center;
+}
+
+/* home indicator */
+.sd-home {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  width: 140px;
+  height: 5px;
+  margin-left: -70px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.32);
+  z-index: 60;
+  pointer-events: none;
+}
+.sd-home.is-light { background: rgba(255, 255, 255, 0.5); }
+
+/* ── buttons ─────────────────────────────────────────────────────────────── */
+.sd-btn {
+  width: 100%;
+  min-height: 52px;
+  border-radius: var(--sd-r-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font: 500 16px/24px inherit;
+  padding: 14px 32px;
+  transition: transform 120ms var(--sd-ease), opacity 120ms linear, background 120ms linear;
+}
+.sd-btn:active { transform: scale(0.975); }
+.sd-btn.primary { background: var(--sd-action-bg); color: #fff; }
+.sd-btn.primary:active { background: var(--sd-blue-700); }
+.sd-btn.secondary { background: #fff; color: var(--sd-text); box-shadow: inset 0 0 0 1px var(--sd-border); }
+.sd-btn.secondary:active { background: var(--sd-n50); }
+.sd-btn.apple { background: #000; color: #fff; }
+.sd-btn.destructive { background: #fff; color: var(--sd-ios-red); box-shadow: inset 0 0 0 1px var(--sd-border); }
+.sd-btn[disabled] { background: var(--sd-action-bg-dis); color: var(--sd-action-fg-dis); transform: none; }
+.sd-btn.small {
+  width: auto;
+  min-height: 28px;
+  padding: 4px 12px;
+  font: 500 14px/20px inherit;
+  background: #fff;
+  color: var(--sd-link);
+  box-shadow: inset 0 0 0 1px var(--sd-border);
+  border-radius: var(--sd-r-md);
+}
+/* small controls keep a 44pt tap area without growing (Apple's rule) */
+.sd-hit44 { position: relative; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; }
+.sd-textbtn { color: var(--sd-link); font: 500 14px/20px inherit; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+.sd-textbtn:active { opacity: 0.45; }
+.sd-actions { display: flex; flex-direction: column; gap: 12px; }
+
+/* ── cards, boxes, sections ──────────────────────────────────────────────── */
+.sd-card { background: #fff; border-radius: var(--sd-r-lg); padding: 16px; }
+.sd-box { background: var(--sd-surface-2); border-radius: var(--sd-r-md); padding: 12px 16px; box-shadow: var(--sd-e1); }
+.sd-seclabel { display: flex; align-items: center; gap: 8px; font: 600 14px/20px inherit; color: var(--sd-text); }
+.sd-seclabel .sd-sl-end { margin-left: auto; }
+.sd-section + .sd-section { margin-top: 24px; }
+.sd-section > .sd-seclabel + * { margin-top: 8px; }
+.sd-list { background: #fff; border-radius: var(--sd-r-lg); overflow: hidden; }
+.sd-row { display: flex; align-items: center; gap: 12px; padding: 12px 16px; min-height: 44px; position: relative; }
+.sd-row + .sd-row::before { content: ""; position: absolute; left: 16px; right: 0; top: 0; height: 0.5px; background: rgba(60, 60, 67, 0.2); }
+.sd-row.is-tap:active { background: var(--sd-n100); }
+.sd-row-chev { margin-left: auto; color: var(--sd-n400); }
+.sd-divider { height: 0.5px; background: rgba(60, 60, 67, 0.2); margin-left: 16px; }
+
+/* ── tags ────────────────────────────────────────────────────────────────── */
+.sd-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 22px;
+  padding: 2px 8px;
+  border-radius: var(--sd-r-sm);
+  font: 500 14px/18px inherit;
+  max-width: 322px;
+}
+.sd-tag.neutral { background: var(--sd-fill-3); color: var(--sd-text); }
+.sd-tag.primary { background: var(--sd-blue-50); color: var(--sd-text-info); }
+.sd-tag.success { background: var(--sd-success-50); color: var(--sd-text-success); }
+.sd-tag.buffer { background: var(--sd-warning-50); color: var(--sd-text-warning); }
+.sd-tag.failure { background: var(--sd-error-50); color: var(--sd-text-error); }
+.sd-tag.note { height: auto; align-items: flex-start; padding: 6px 8px; }
+.sd-tag.note svg { flex: 0 0 auto; margin-top: 1px; }
+
+/* ── inputs ──────────────────────────────────────────────────────────────── */
+.sd-field { display: flex; flex-direction: column; gap: 8px; }
+.sd-field > label { font: 600 14px/20px inherit; }
+.sd-input {
+  min-height: 48px;
+  background: #fff;
+  border-radius: var(--sd-r-md);
+  box-shadow: var(--sd-e1);
+  padding: 13px 14px;
+  font: 400 14px/20px inherit;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+.sd-input input, .sd-input textarea { flex: 1 1 auto; width: 100%; font: 400 14px/20px inherit; resize: none; }
+.sd-input input::placeholder, .sd-input textarea::placeholder { color: var(--sd-placeholder); }
+.sd-input.is-focus { box-shadow: var(--sd-e1), inset 0 0 0 2px var(--sd-link); }
+.sd-input.is-error { box-shadow: var(--sd-e1), inset 0 0 0 1.5px var(--sd-text-error); }
+.sd-field-err { font: 500 12px/16px inherit; color: var(--sd-text-error); }
+.sd-field-help { font: 500 12px/16px inherit; color: var(--sd-text-2); }
+.sd-search {
+  height: 36px;
+  border-radius: var(--sd-r-md);
+  background: var(--sd-fill-3);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 8px;
+  color: var(--sd-placeholder);
+}
+.sd-search input { font: 400 17px/22px inherit; letter-spacing: -0.4px; }
+
+/* iOS switch */
+.sd-switch { width: 51px; height: 31px; border-radius: var(--sd-r-full); background: var(--sd-fill-3); position: relative; flex: 0 0 auto; transition: background 240ms var(--sd-ease); }
+.sd-switch.is-on { background: var(--sd-ios-green); }
+.sd-switch i { position: absolute; top: 2px; left: 2px; width: 27px; height: 27px; border-radius: 50%; background: #fff; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15), 0 1px 1px rgba(0, 0, 0, 0.16); transition: transform 240ms var(--sd-ease); }
+.sd-switch.is-on i { transform: translateX(20px); }
+
+/* segmented control */
+.sd-seg { display: flex; padding: 2px; background: var(--sd-fill-3); border-radius: 9px; height: 32px; }
+.sd-seg button { flex: 1 1 0; border-radius: 7px; font: 500 13px/16px inherit; color: var(--sd-text); transition: background 200ms var(--sd-ease); }
+.sd-seg button.is-on { background: #fff; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.04); font-weight: 600; }
+
+/* underline tabs on lists */
+.sd-tabs { display: flex; gap: 20px; }
+.sd-tabs button { padding-bottom: 8px; font: 500 14px/20px inherit; color: var(--sd-text-2); position: relative; }
+.sd-tabs button.is-on { font-weight: 600; color: var(--sd-link); }
+.sd-tabs button.is-on::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; border-radius: 1px; background: var(--sd-link); }
+
+/* ── avatars, logos ─────────────────────────────────────────────────────── */
+.sd-av { border-radius: 50%; overflow: hidden; flex: 0 0 auto; background: var(--sd-n100); display: grid; place-items: center; font: 600 16px/1 inherit; color: var(--sd-n600); box-shadow: var(--sd-e1); }
+.sd-logotile { width: 74px; height: 74px; flex: 0 0 auto; background: #fff; border-radius: var(--sd-r-md); box-shadow: var(--sd-e1); display: grid; place-items: center; padding: 10px; }
+.sd-logotile img { width: 54px; height: auto; display: block; }
+.sd-logo-sm { width: 40px; height: 40px; flex: 0 0 auto; background: #fff; border-radius: var(--sd-r-md); box-shadow: var(--sd-e1); display: grid; place-items: center; padding: 6px; }
+.sd-logo-sm img { width: 28px; height: auto; display: block; }
+
+/* ── person row ─────────────────────────────────────────────────────────── */
+.sd-person { display: flex; gap: 12px; align-items: flex-start; }
+.sd-person .sd-av { width: 44px; height: 44px; }
+.sd-person-name { display: flex; align-items: center; gap: 3px; font: 600 16px/24px inherit; }
+.sd-person-sub { font: 500 14px/20px inherit; color: var(--sd-text-2); }
+.sd-person-time { margin-left: auto; display: flex; align-items: center; gap: 4px; font: 500 12px/16px inherit; color: var(--sd-text-2); flex: 0 0 auto; }
+
+/* ── timeline ───────────────────────────────────────────────────────────── */
+.sd-timeline { display: flex; flex-direction: column; }
+.sd-tl-step { display: flex; gap: 12px; }
+.sd-tl-rail { width: 20px; display: flex; flex-direction: column; align-items: center; flex: 0 0 auto; }
+.sd-tl-line { flex: 1 1 auto; width: 2px; background: var(--sd-border); margin: 4px 0; min-height: 12px; }
+.sd-tl-line.is-dashed { background: none; border-left: 2px dashed var(--sd-border); width: 0; }
+.sd-tl-body { padding-bottom: 20px; flex: 1 1 auto; }
+.sd-tl-step:last-child .sd-tl-body { padding-bottom: 0; }
+.sd-tl-title { font: 600 14px/20px inherit; }
+.sd-tl-title.is-done { color: var(--sd-link); }
+.sd-tl-when { font: 500 12px/16px inherit; color: var(--sd-text-2); margin-top: 2px; }
+
+/* ── sheets ─────────────────────────────────────────────────────────────── */
+.sd-scrim { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.4); z-index: 50; animation: sd-scrim-in 320ms linear both; }
+.sd-scrim.is-out { animation: sd-scrim-out 280ms linear both; }
+@keyframes sd-scrim-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes sd-scrim-out { from { opacity: 1; } to { opacity: 0; } }
+
+.sd-sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 55;
+  background: var(--sd-page);
+  border-radius: var(--sd-r-sheet) var(--sd-r-sheet) 0 0;
+  padding: 8px 16px 40px;
+  max-height: 92%;
+  display: flex;
+  flex-direction: column;
+  animation: sd-sheet-in 460ms var(--sd-ease) both;
+  will-change: transform;
+}
+.sd-sheet.is-out { animation: sd-sheet-out 320ms var(--sd-ease) both; }
+.sd-sheet.is-dragging { animation: none; transition: none; }
+.sd-sheet.is-settling { animation: none; transition: transform 320ms var(--sd-ease); }
+@keyframes sd-sheet-in { from { transform: translateY(100%); } to { transform: translateY(0); } }
+@keyframes sd-sheet-out { from { transform: translateY(0); } to { transform: translateY(100%); } }
+.sd-grab { width: 36px; height: 5px; border-radius: 3px; background: rgba(60, 60, 67, 0.3); margin: 0 auto 8px; flex: 0 0 auto; }
+.sd-sheet-title { font: 600 16px/24px inherit; }
+.sd-sheet-body { overflow-y: auto; scrollbar-width: none; }
+.sd-sheet-body::-webkit-scrollbar { display: none; }
+
+/* action sheet (Log out) */
+.sd-actionsheet { position: absolute; left: 8px; right: 8px; bottom: 8px; z-index: 55; animation: sd-sheet-in 420ms var(--sd-ease) both; }
+.sd-actionsheet.is-out { animation: sd-sheet-out 300ms var(--sd-ease) both; }
+.sd-as-group { border-radius: 14px; overflow: hidden; background: rgba(255, 255, 255, 0.78); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); }
+.sd-as-msg { padding: 14px 16px; text-align: center; font: 400 13px/18px inherit; color: var(--sd-text-2); border-bottom: 0.5px solid rgba(60, 60, 67, 0.22); }
+.sd-as-btn { width: 100%; height: 57px; font: 400 20px/25px inherit; color: var(--sd-link); }
+.sd-as-btn + .sd-as-btn { border-top: 0.5px solid rgba(60, 60, 67, 0.22); }
+.sd-as-btn.is-destructive { color: var(--sd-ios-red); }
+.sd-as-btn:active { background: rgba(0, 0, 0, 0.06); }
+.sd-as-cancel { margin-top: 8px; background: rgba(255, 255, 255, 0.92); border-radius: 14px; font-weight: 600; }
+
+/* ── toast · glass, slides down from under the bar ───────────────────────── */
+.sd-toast {
+  position: absolute;
+  top: 60px;
+  left: 16px;
+  right: 16px;
+  z-index: 70;
+  padding: 12px 16px;
+  border-radius: var(--sd-r-xl);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: saturate(200%) blur(24px);
+  -webkit-backdrop-filter: saturate(200%) blur(24px);
+  box-shadow: var(--sd-glass-shadow), inset 0 0 0 0.5px rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font: 500 14px/20px inherit;
+  animation: sd-toast-in 460ms var(--sd-spring) both;
+}
+.sd-toast.is-out { animation: sd-toast-out 280ms var(--sd-ease) both; }
+@keyframes sd-toast-in { from { transform: translateY(-80px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes sd-toast-out { from { transform: translateY(0); opacity: 1; } to { transform: translateY(-40px); opacity: 0; } }
+
+/* ── skeletons ──────────────────────────────────────────────────────────── */
+.sd-skel { background: var(--sd-n100); border-radius: var(--sd-r-sm); position: relative; overflow: hidden; }
+.sd-skel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.75), transparent); animation: sd-shimmer 1.4s infinite; }
+@keyframes sd-shimmer { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
+
+/* spinner */
+.sd-spin { width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(60, 60, 67, 0.2); border-top-color: var(--sd-text-2); animation: sd-spin 800ms linear infinite; }
+@keyframes sd-spin { to { transform: rotate(360deg); } }
+
+/* pull to refresh */
+.sd-ptr { display: grid; place-items: center; overflow: hidden; }
+
+/* ── empty state ────────────────────────────────────────────────────────── */
+.sd-empty { display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; padding: 48px 24px 0; }
+.sd-empty-icon { width: 64px; height: 64px; border-radius: 50%; background: var(--sd-fill-3); display: grid; place-items: center; color: var(--sd-text-2); }
+
+/* ── wheel date picker ──────────────────────────────────────────────────── */
+.sd-wheels { display: flex; height: 216px; position: relative; }
+.sd-wheel { flex: 1 1 0; overflow-y: scroll; scroll-snap-type: y mandatory; scrollbar-width: none; text-align: center; }
+.sd-wheel::-webkit-scrollbar { display: none; }
+.sd-wheel div { height: 36px; line-height: 36px; scroll-snap-align: center; font: 400 21px/36px inherit; }
+.sd-wheel-sel { position: absolute; left: 0; right: 0; top: 90px; height: 36px; border-radius: var(--sd-r-md); background: var(--sd-fill-3); pointer-events: none; }
+
+/* ── login splash ───────────────────────────────────────────────────────── */
+.sd-login { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 16px 48px 40px; background: #fff; }
+
+/* the link page is a web page, not the app: it keeps a logo bar and has no tab bar */
+.sd-web-bar { height: 56px; flex: 0 0 auto; display: flex; align-items: center; gap: 8px; padding: 0 16px; background: #fff; box-shadow: 0 0.5px 0 rgba(0, 0, 0, 0.1); }
