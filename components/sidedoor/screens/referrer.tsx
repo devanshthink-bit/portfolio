@@ -224,7 +224,10 @@ export function ReferralRequest({ id }: { id: string }) {
       actions={
         <Actions>
           <Button onClick={() => dispatch({ t: "handle", id: r.id, stage: "referred" })}>Refer</Button>
-          <Button type="secondary" onClick={() => nav.openSheet("notMoving", { id: r.id, name: r.name })}>
+          <Button
+            type="secondary"
+            onClick={() => nav.openSheet("notMoving", { id: r.id, name: r.name, role: r.role, match: r.match })}
+          >
             Not moving forward
           </Button>
         </Actions>
@@ -482,16 +485,16 @@ function MarkedSubmitted({ id }: { id: string }) {
 }
 
 /* ── Your referrals ─────────────────────────────────────────────────────── */
-type Referral = { name: string; stage: Stage; when: string; days?: number };
+type Referral = { name: string; role: string; stage: Stage; when: string; days?: number };
 
 const REFERRALS: Referral[] = [
-  { name: "Aviral Dixit", stage: "submitted", when: "12 days", days: 12 },
-  { name: "Aarush Gupta", stage: "submitted", when: "9 days", days: 9 },
-  { name: "Arpita Singh", stage: "interviews", when: "Tuesday" },
-  { name: "Ayesha Sharma", stage: "onhold", when: "Friday" },
-  { name: "Himani Kaushik", stage: "selected", when: "Yesterday" },
-  { name: "Shreya Verma", stage: "notselected", when: "12 Sep" },
-  { name: "Amit Patel", stage: "notselected", when: "5 Sep" },
+  { name: "Aviral Dixit", role: "UX Designer, Razorpay", stage: "submitted", when: "12 days", days: 12 },
+  { name: "Aarush Gupta", role: "Product Designer, Swiggy", stage: "submitted", when: "9 days", days: 9 },
+  { name: "Arpita Singh", role: "Product Designer, Myntra", stage: "interviews", when: "Tuesday" },
+  { name: "Ayesha Sharma", role: "UX Designer, Groww", stage: "onhold", when: "Friday" },
+  { name: "Himani Kaushik", role: "Product Designer, Zepto", stage: "selected", when: "Yesterday" },
+  { name: "Shreya Verma", role: "UX Designer, CRED", stage: "notselected", when: "12 Sep" },
+  { name: "Amit Patel", role: "UI Designer, PhonePe", stage: "notselected", when: "5 Sep" },
 ];
 
 export function YourReferrals() {
@@ -502,7 +505,9 @@ export function YourReferrals() {
   const stageOf = (r: Referral) => moved[r.name] ?? r.stage;
   const waiting = REFERRALS.filter((r) => r.days && stageOf(r) === "submitted");
   const all: Referral[] = [
-    ...(abhinav?.stage === "submitted" ? [{ name: "Abhinav Saxena", stage: "submitted" as Stage, when: "Today" }] : []),
+    ...(abhinav?.stage === "submitted"
+      ? [{ name: "Abhinav Saxena", role: "Product Designer, Blinkit", stage: "submitted" as Stage, when: "Today" }]
+      : []),
     ...REFERRALS.filter((r) => !r.days),
   ];
 
@@ -526,6 +531,7 @@ export function YourReferrals() {
               onClick={() =>
                 nav.openSheet("seenItMove", {
                   name: r.name,
+                  role: r.role,
                   since: r.days ? `Submitted ${r.days} days ago` : `Submitted ${r.when}`,
                   onPick: (s: Stage) => setMoved((m) => ({ ...m, [r.name]: s })),
                 })

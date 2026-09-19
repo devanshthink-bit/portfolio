@@ -49,7 +49,7 @@ function SheetPerson({ name, role, tag }: { name: string; role: string; tag?: Re
 }
 
 /* ── Not moving forward ─────────────────────────────────────────────────── */
-export function NotMovingSheet({ id, name, leaving }: { id: string; name: string; leaving?: boolean }) {
+export function NotMovingSheet({ id, name, role, match, leaving }: { id: string; name: string; role: string; match: string; leaving?: boolean }) {
   const nav = useNav();
   const { dispatch } = useStore();
   const [reason, setReason] = useState<string | null>(null);
@@ -57,7 +57,7 @@ export function NotMovingSheet({ id, name, leaving }: { id: string; name: string
   const reasons = ["Experience doesn’t match", "Skills don’t match", "Role is closed", "Can’t refer for this team"];
   return (
     <Sheet title={`Not moving forward with ${first}?`} onClose={nav.closeSheet} leaving={leaving}>
-      <SheetPerson name={name} role="Product Designer, Blinkit" tag={<Tag style="primary">4 of 7 skills</Tag>} />
+      <SheetPerson name={name} role={role} tag={<Tag style="primary">{match}</Tag>} />
       <p className="t-label-sm muted" style={{ marginBottom: 12 }}>
         A reason helps {first} ask better next time. It’s optional.
       </p>
@@ -87,11 +87,13 @@ export function NotMovingSheet({ id, name, leaving }: { id: string; name: string
 /* ── Seen it move ───────────────────────────────────────────────────────── */
 export function SeenItMoveSheet({
   name,
+  role,
   since,
   onPick,
   leaving,
 }: {
   name: string;
+  role: string;
   since: string;
   onPick?: (s: Stage) => void;
   leaving?: boolean;
@@ -103,7 +105,7 @@ export function SeenItMoveSheet({
   const stages: Stage[] = ["submitted", "interviews", "onhold", "selected", "notselected"];
   return (
     <Sheet title="Seen it move?" onClose={nav.closeSheet} leaving={leaving}>
-      <SheetPerson name={name} role="UX Designer, Razorpay" tag={<Tag>{since}</Tag>} />
+      <SheetPerson name={name} role={role} tag={<Tag>{since}</Tag>} />
       <p className="t-label-sm muted" style={{ marginBottom: 12 }}>
         Where is it on Flipkart’s portal now? One tap.
       </p>
@@ -206,6 +208,16 @@ export function ShareLinkSheet({ leaving }: { leaving?: boolean }) {
           </div>
         </div>
 
+        {/* the link is a web page, so you can look at what the other person gets */}
+        <Button
+          type="secondary"
+          onClick={() => {
+            nav.closeSheet();
+            nav.present("linkPage");
+          }}
+        >
+          See the page they get
+        </Button>
         <Button type="secondary" onClick={nav.closeSheet}>
           Cancel
         </Button>

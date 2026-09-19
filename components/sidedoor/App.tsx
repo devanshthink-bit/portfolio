@@ -118,28 +118,39 @@ function Stack() {
   const [drag, setDrag] = useState<number | null>(null);
   const [settling, setSettling] = useState(false);
   const startX = useRef(0);
+  // how far the finger has travelled, kept in a ref as well: pointerup can arrive before React
+  // has re-rendered, and the decision to go back must not read a stale value
+  const dragX = useRef<number | null>(null);
 
   const canSwipe = nav.canGoBack && nav.top.anim === "push";
 
   const onDown = useCallback(
     (e: React.PointerEvent) => {
       if (!canSwipe) return;
+      // capture, so the rest of the gesture — and the click that ends it — stay on the edge
+      // strip instead of landing on whatever is under the finger when it lifts
+      try {
+        (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+      } catch {
+        // no active pointer (some synthetic events): the gesture still works without capture
+      }
       startX.current = e.clientX;
+      dragX.current = 0;
       setSettling(false);
       setDrag(0);
     },
     [canSwipe]
   );
-  const onMove = useCallback(
-    (e: React.PointerEvent) => {
-      if (drag === null) return;
-      setDrag(Math.max(0, e.clientX - startX.current));
-    },
-    [drag]
-  );
+  const onMove = useCallback((e: React.PointerEvent) => {
+    if (dragX.current === null) return;
+    const dx = Math.max(0, e.clientX - startX.current);
+    dragX.current = dx;
+    setDrag(dx);
+  }, []);
   const onUp = useCallback(() => {
-    if (drag === null) return;
-    const far = drag > 120;
+    if (dragX.current === null) return;
+    const far = dragX.current > 120;
+    dragX.current = null;
     setDrag(null);
     if (far) nav.pop();
     else {
@@ -147,7 +158,7 @@ function Stack() {
       setSettling(true);
       window.setTimeout(() => setSettling(false), 320);
     }
-  }, [drag, nav]);
+  }, [nav]);
 
   const count = nav.stack.length;
 
@@ -201,7 +212,16 @@ function Stack() {
         </div>
       )}
 
-      {canSwipe && <div className="sd-edge" onPointerDown={onDown} onPointerMove={onMove} onPointerUp={onUp} onPointerCancel={onUp} />}
+      {canSwipe && (
+        <div
+          className="sd-edge"
+          onPointerDown={onDown}
+          onPointerMove={onMove}
+          onPointerUp={onUp}
+          onPointerCancel={onUp}
+          onClick={(e) => e.stopPropagation()}
+        />
+      )}
 
       {nav.sheet && SHEETS[nav.sheet.key]?.({ ...(nav.sheet.props ?? {}), leaving: nav.sheetLeaving })}
 

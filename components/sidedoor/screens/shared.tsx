@@ -230,16 +230,16 @@ function BackChevron() {
 
 /* ── Notifications ──────────────────────────────────────────────────────── */
 const CANDIDATE_NOTIF = [
-  { text: "You’re selected at Swiggy. Joy referred you on 2 Aug.", at: "11:11 am", go: "swiggy" },
-  { text: "Submitted on Flipkart’s portal. Nithin marked it.", at: "10:02 am", go: "flipkart" },
-  { text: "Advika referred you for Interaction Designer at Google.", at: "Yesterday", go: "google" },
-  { text: "Avinash isn’t moving forward with your PhonePe request.", at: "5 Sep", go: "phonepe" },
+  { who: "Joy Sengupta", text: "You’re selected at Swiggy. Joy referred you on 2 Aug.", at: "11:11 am", go: "swiggy" },
+  { who: "Nithin Agarwal", text: "Submitted on Flipkart’s portal. Nithin marked it.", at: "10:02 am", go: "flipkart" },
+  { who: "Advika Singh", text: "Advika referred you for Interaction Designer at Google.", at: "Yesterday", go: "google" },
+  { who: "Avinash Banerjee", text: "Avinash isn’t moving forward with your PhonePe request.", at: "5 Sep", go: "phonepe" },
 ];
 
 const REFERRER_NOTIF = [
-  { text: "Abhinav Saxena asked you for a referral. Everything is filled in.", at: "10:04 am", go: "abhinav" },
-  { text: "Arpita Singh is in interviews at Flipkart.", at: "Yesterday", go: "arpita" },
-  { text: "Aviral Dixit was submitted 12 days ago. Seen it move?", at: "Monday", go: "aviral" },
+  { who: "Abhinav Saxena", text: "Abhinav Saxena asked you for a referral. Everything is filled in.", at: "10:04 am", go: "abhinav" },
+  { who: "Arpita Singh", text: "Arpita Singh is in interviews at Flipkart.", at: "Yesterday", go: "arpita" },
+  { who: "Aviral Dixit", text: "Aviral Dixit was submitted 12 days ago. Seen it move?", at: "Monday", go: "aviral" },
 ];
 
 export function Notifications() {
@@ -262,7 +262,7 @@ export function Notifications() {
                 else nav.push("trackDetails", { id: n.go });
               }}
             >
-              <Avatar name={n.text.split(" ")[0]} size={36} />
+              <Avatar name={n.who} size={36} />
               <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 2 }}>
                 <span className="t-body">{n.text}</span>
                 <span className="t-label-sm muted">{n.at}</span>
@@ -642,13 +642,24 @@ export function LinkPage() {
   );
 }
 
+/**
+ * The link page keeps SideDoor's logo bar because it is a web page, not the app. When it is
+ * opened from inside the app to preview it, the bar also carries a way back out.
+ */
 function LogoBar() {
+  const nav = useNav();
+  const preview = nav.top.anim === "modal";
   return (
     <div className="sd-web-bar">
       <Image src="/images/sidedoor/sidedoor-mark.png" alt="" width={18} height={23} style={{ width: 18, height: "auto" }} />
       <Image src="/images/sidedoor/sidedoor-word.png" alt="SideDoor" width={88} height={16} style={{ width: 88, height: "auto" }} />
-      <span style={{ marginLeft: "auto" }}>
+      <span style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 8 }}>
         <Tag>sidedoor.app/r/nithin-agarwal</Tag>
+        {preview && (
+          <button className="sd-barbtn" style={{ width: 32 }} onClick={nav.pop} aria-label="Close preview">
+            <Icon name="xmark.circle.fill" size={22} style={{ color: "var(--sd-n400)" }} />
+          </button>
+        )}
       </span>
     </div>
   );
