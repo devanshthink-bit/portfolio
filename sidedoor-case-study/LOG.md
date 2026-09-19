@@ -1238,3 +1238,9 @@ CRITIQUE · 2026-09-19 · molades-attack · Source: self · C5
 Finding:   White "4 of 7" / "skills match" on brand green #10B981 = 2.54:1 (32px needs 3:1, 16px needs 4.5:1).
 Severity:  major · Layer: looks
 Action:    rejected by Devansh (keep brand green with white, 19 Sep). The count repeats in dark text in "How they match".
+
+DECISION · 2026-09-19 · molades-attack · C1 tag colours kept · Source: Devansh ("don't fix them, they are fine at present")
+Decided:  Keep the V2 tag text colours in every version, after seeing before and after side by side.
+Rejected: Darker text (#047857, #B45309, #4B5563, #1D4ED8, #B91C1C; 4.8–6.7:1).
+Because:  Devansh's call. What limits the risk: every tag carries a word, so no status is shown by colour alone.
+Risk kept: 2.07–4.49:1 against a 4.5:1 minimum, hardest to read for low-vision users and in sunlight. Stays in ATTACK.md as a known failure; the fix is one change to the Tag component.

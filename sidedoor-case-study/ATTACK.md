@@ -75,13 +75,13 @@ information reach the other side, which undoes the product's promise. S12 can cr
 | Text at 200% | CAN'T TELL | Needs a build. The long-string test (S1–S3) suggests single-line rows will clip |
 
 **Fixing (5), in order:**
-1. **Status and match tag colours** (Success, Buffer, Neutral, Primary). Every status in the app is read through these. Use DESIGN_LANGUAGE.md's own values: `#047857 on #ECFDF5 = 5.2:1`, `#B45309 on #FFFBEB = 4.8:1`, `#4B5563 on #F0F1F2 = 6.7:1`, `#1D4ED8 on #E9EFFD = 5.8:1`.
-2. **Tap targets.** Give the back, bell, pencil and external-link icons 44×44 hit areas. Give skill rows 44 height.
-3. **Input edges.** A 1px `#8E939B` line (3.1:1) on fields, or a darker fill.
-4. **Placeholder text** to `#6B7280` (4.8:1).
-5. **Long text** (S1, S3). Names and skills wrap to two lines, then end in "…". Tags never get pushed off.
+1. **Tap targets.** Give the back, bell, pencil and external-link icons 44×44 hit areas. Give skill rows 44 height.
+2. **Input edges.** A 1px `#8E939B` line (3.1:1) on fields, or a darker fill.
+3. **Placeholder text** to `#6B7280` (4.8:1).
+4. **Long text** (S1, S3). Names and skills wrap to two lines, then end in "…". Tags never get pushed off.
 
 **Not fixed, on purpose:**
+- **Tag text colours (2.07–4.49:1).** Shown before and after (`#047857`, `#B45309`, `#4B5563`, `#1D4ED8`, `#B91C1C`, all 4.8–6.7:1). Devansh decided to keep the current colours for now (19 Sep). Every tag carries a word, so no status depends on colour alone. The fix is ready if the decision changes.
 - **White "4 of 7" on brand green (2.54:1).** Devansh chose to keep brand green with white text (19 Sep). The same count appears in dark text in "How they match", so no information lives only in the banner. Logged as rejected, with the reason.
 - **The 32px banner size outside the four-size scale.** It's a named style used once; the banner is the screen's headline.
 
