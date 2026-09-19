@@ -556,7 +556,7 @@ function steps(stage: Stage): Step[] {
 }
 
 const NOW: Partial<Record<Stage, { line: string; sub: string }>> = {
-  sent: { line: "Sent to {who} on {when}. No answer yet.", sub: "No answer in 7 days? You can withdraw it and ask someone else." },
+  sent: { line: "Sent to {who} {when}. No answer yet.", sub: "No answer in 7 days? You can withdraw it and ask someone else." },
   referred: { line: "{who} referred you.", sub: "Next they add you to {co}’s portal." },
   submitted: { line: "Submitted on {co}’s portal.", sub: "Interviews usually start within 2–3 weeks." },
   interviews: { line: "In interviews at {co}.", sub: "{who} will tell you what they hear." },
@@ -578,11 +578,15 @@ export function TrackDetails({ id }: { id: string }) {
     return () => clearTimeout(t);
   }, [id]);
 
+  // "on Just now" reads wrong: a weekday or date takes "on", a relative time does not
+  const whenPhrase = /^(Just now|Today|Yesterday)$/.test(r.updated)
+    ? r.updated.toLowerCase()
+    : `on ${r.updated}`;
   const fill = (s: string) =>
     s
       .replace("{who}", r.referrer.split(" ")[0])
       .replace("{co}", r.company)
-      .replace("{when}", r.updated)
+      .replace("{when}", whenPhrase)
       .replace("{reason}", r.reason ?? "none given");
   const now = NOW[r.stage] ?? NOW.sent!;
   const canMessage = ["referred", "submitted", "interviews", "onhold", "selected"].includes(r.stage);

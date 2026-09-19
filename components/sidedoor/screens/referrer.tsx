@@ -146,8 +146,8 @@ export function ReferralRequests() {
 function RequestCard({ r, onClick, end }: { r: Req; onClick?: () => void; end?: React.ReactNode }) {
   return (
     <Card onClick={onClick}>
-      <div style={{ display: "flex", gap: 8 }}>
-        <div style={{ display: "flex", gap: 12, flex: 1 }}>
+      <div style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+        <div style={{ display: "flex", gap: 12, flex: 1, minWidth: 0 }}>
           <Avatar name={r.name} />
           <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1 }}>
             <span className="t-h-sm">{r.name}</span>
@@ -167,8 +167,8 @@ function RequestCard({ r, onClick, end }: { r: Req; onClick?: () => void; end?: 
           </div>
         </div>
         {end ?? (
-          <span style={{ display: "flex", alignItems: "center", gap: 4, flex: "0 0 auto" }}>
-            <Icon name="clock" size={14} style={{ color: "var(--sd-icon-2)" }} />
+          <span style={{ display: "flex", alignItems: "center", gap: 4, flex: "0 0 auto", whiteSpace: "nowrap" }}>
+            <Icon name="clock" size={13} style={{ color: "var(--sd-icon-2)" }} />
             <span className="t-label-sm muted">{r.when}</span>
           </span>
         )}
@@ -178,12 +178,12 @@ function RequestCard({ r, onClick, end }: { r: Req; onClick?: () => void; end?: 
 }
 
 /* ── One referral request ───────────────────────────────────────────────── */
-const SKILLS: { name: string; ok: boolean; source: string }[] = [
+const SKILLS: { name: string; ok: boolean; source: string; isExperience?: boolean }[] = [
   { name: "Interaction design", ok: true, source: "From resume · MakeMyTrip" },
   { name: "Figma", ok: true, source: "From resume · Blinkit" },
   { name: "User research", ok: true, source: "From resume · Blinkit" },
   { name: "Prototyping", ok: true, source: "From resume · Blinkit" },
-  { name: "3 yrs experience", ok: true, source: "You need 3+" },
+  { name: "3 yrs experience", ok: true, source: "You need 3+", isExperience: true },
   { name: "AI-assisted design", ok: false, source: "Not in their resume" },
   { name: "Design system", ok: false, source: "Not in their resume" },
   { name: "A/B testing", ok: false, source: "Not in their resume" },
@@ -195,7 +195,9 @@ export function ReferralRequest({ id }: { id: string }) {
   const r = REQUESTS.find((x) => x.id === id) ?? REQUESTS[0];
   const state = handled[r.id];
   const skills = SKILLS.filter((s) => !removedSkills.includes(s.name));
-  const matched = skills.filter((s) => s.ok).length;
+  // the tag counts skills only — the experience row is a separate fact, as in V6
+  const skillRows = skills.filter((s) => !s.isExperience);
+  const matched = skillRows.filter((s) => s.ok).length;
 
   if (state?.stage === "referred") return <AfterRefer id={r.id} />;
   if (state?.stage === "submitted") return <MarkedSubmitted id={r.id} />;
@@ -263,27 +265,27 @@ export function ReferralRequest({ id }: { id: string }) {
         <Section
           label="How they match"
           icon="lightbulb.fill"
-          end={<Tag style="primary">{matched} of {skills.length} skills · 3 yrs</Tag>}
+          end={<Tag style="primary">{matched} of {skillRows.length} skills · 3 yrs</Tag>}
         >
           <Card>
-            {skills.map((s) => (
-              <div key={s.name} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={{ flex: 1 }}>
-                  <MatchRow ok={s.ok} source={s.source}>
+            {skills.map((s) =>
+              s.ok && !s.isExperience ? (
+                <button
+                  key={s.name}
+                  onClick={() => dispatch({ t: "removeSkill", v: s.name })}
+                  aria-label={`${s.name} isn’t really there`}
+                  style={{ display: "block", width: "100%", textAlign: "left", minHeight: 44 }}
+                >
+                  <MatchRow ok source={s.source}>
                     {s.name}
                   </MatchRow>
-                </span>
-                {s.ok && (
-                  <button
-                    className="sd-hit44"
-                    onClick={() => dispatch({ t: "removeSkill", v: s.name })}
-                    aria-label={`${s.name} isn’t really there`}
-                  >
-                    <Icon name="xmark.circle.fill" size={18} style={{ color: "var(--sd-n400)" }} />
-                  </button>
-                )}
-              </div>
-            ))}
+                </button>
+              ) : (
+                <MatchRow key={s.name} ok={s.ok} source={s.source}>
+                  {s.name}
+                </MatchRow>
+              )
+            )}
             <div style={{ height: 8 }} />
             <Tag>Tap a skill that isn’t really there</Tag>
           </Card>
@@ -363,25 +365,32 @@ function Fact({ icon, children }: { icon: Parameters<typeof Icon>[0]["name"]; ch
 }
 
 /* ── After refer: the portal fields, ready to copy ───────────────────────── */
-const PORTAL: { name: string; value: string; download?: boolean }[] = [
-  { name: "Full name", value: "Abhinav Saxena" },
-  { name: "Email", value: "abhinav.saxena@email.com" },
-  { name: "Phone", value: "+91 98XXX XXX21" },
-  { name: "Current city", value: "Bengaluru" },
-  { name: "Total experience", value: "3 yrs" },
-  { name: "Relevant experience", value: "3 yrs" },
-  { name: "Notice period", value: "30 days" },
-  { name: "Career gaps", value: "None" },
-  { name: "Date of birth", value: "12 Mar 1999" },
-  { name: "Preferred locations", value: "Bengaluru, Remote" },
-  { name: "Resume", value: "Abhinav_Saxena_Resume.pdf", download: true },
-];
+/**
+ * These are the same four answers the candidate typed on "Check your request" — that is the
+ * point of asking once. The rest come from the resume.
+ */
+function portalFields(d: { dob: string; gaps: string; locations: string; notice: string }) {
+  return [
+    { name: "Full name", value: "Abhinav Saxena" },
+    { name: "Email", value: "abhinav.saxena@email.com" },
+    { name: "Phone", value: "+91 98XXX XXX21" },
+    { name: "Current city", value: "Bengaluru" },
+    { name: "Total experience", value: "3 yrs" },
+    { name: "Relevant experience", value: "3 yrs" },
+    { name: "Notice period", value: d.notice || "30 days" },
+    { name: "Career gaps", value: d.gaps || "None" },
+    { name: "Date of birth", value: d.dob || "12 Mar 1999" },
+    { name: "Preferred locations", value: d.locations || "Bengaluru, Remote" },
+    { name: "Resume", value: "Abhinav_Saxena_Resume.pdf", download: true },
+  ];
+}
 
 function AfterRefer({ id }: { id: string }) {
   const nav = useNav();
-  const { jobId, dispatch } = useStore();
+  const { jobId, details, dispatch } = useStore();
   const r = REQUESTS.find((x) => x.id === id) ?? REQUESTS[0];
   const [copied, setCopied] = useState<string[]>([]);
+  const fields = portalFields(details);
   const first = r.name.split(" ")[0];
 
   return (
@@ -406,7 +415,7 @@ function AfterRefer({ id }: { id: string }) {
 
         <Section label="Add to Flipkart’s portal" icon="arrow.up.right.square" end={<Tag>Job ID {jobId || "184223"}</Tag>}>
           <Card>
-            {PORTAL.map((f) => (
+            {fields.map((f) => (
               <div key={f.name} style={{ display: "flex", gap: 12, alignItems: "flex-start", padding: "8px 0" }}>
                 <span className="t-label-sm muted" style={{ width: 104, flex: "0 0 auto" }}>
                   {f.name}

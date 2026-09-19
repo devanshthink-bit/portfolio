@@ -398,11 +398,33 @@ export function DetailField({ name, value, icon }: { name: string; value: ReactN
 export function MatchRow({ ok, children, source }: { ok: boolean; children: ReactNode; source?: string }) {
   return (
     <div style={{ display: "flex", gap: 8, alignItems: "flex-start", padding: "6px 0" }}>
-      <Icon
-        name={ok ? "checkmark" : "xmark.circle.fill"}
-        size={16}
-        style={{ color: ok ? "var(--sd-text-success)" : "var(--sd-text-warning)", marginTop: 2 }}
-      />
+      {ok ? (
+        <span
+          style={{
+            width: 18,
+            height: 18,
+            borderRadius: "50%",
+            background: "var(--sd-link)",
+            display: "grid",
+            placeItems: "center",
+            flex: "0 0 auto",
+            marginTop: 1,
+          }}
+        >
+          <Icon name="checkmark" size={11} style={{ color: "#fff" }} />
+        </span>
+      ) : (
+        <span
+          style={{
+            width: 18,
+            height: 18,
+            borderRadius: "50%",
+            border: "2px solid var(--sd-border)",
+            flex: "0 0 auto",
+            marginTop: 1,
+          }}
+        />
+      )}
       <span style={{ flex: "1 1 auto" }}>
         <span className="t-h-xs">{children}</span>
         {source && (
@@ -852,37 +874,90 @@ export function Spinner() {
 }
 
 /* ── the wheel date picker ──────────────────────────────────────────────── */
+const ROW = 36;
+
+/**
+ * One column of the picker. The browser's own scroll snapping fought the initial position, so
+ * the column snaps itself: it scrolls to the chosen row on mount, and when a drag stops it
+ * settles on the nearest row and reports it.
+ */
+function Wheel({ items, value, onPick }: { items: string[]; value: string; onPick: (v: string) => void }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const settle = useRef<number | null>(null);
+  const quiet = useRef(true);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const i = Math.max(0, items.indexOf(value));
+    quiet.current = true;
+    el.scrollTop = i * ROW;
+    // let the programmatic jump land before scroll events count again
+    const t = window.setTimeout(() => (quiet.current = false), 60);
+    return () => clearTimeout(t);
+    // only on mount: after that the scroll drives the value
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const pickAt = (top: number) => {
+    const i = Math.max(0, Math.min(items.length - 1, Math.round(top / ROW)));
+    if (items[i] !== value) onPick(items[i]);
+    return i;
+  };
+
+  return (
+    <div
+      className="sd-wheel"
+      ref={ref}
+      onScroll={(e) => {
+        if (quiet.current) return;
+        const el = e.target as HTMLDivElement;
+        if (settle.current) clearTimeout(settle.current);
+        settle.current = window.setTimeout(() => {
+          const i = pickAt(el.scrollTop);
+          quiet.current = true;
+          el.scrollTo({ top: i * ROW, behavior: "smooth" });
+          window.setTimeout(() => (quiet.current = false), 260);
+        }, 90) as unknown as number;
+      }}
+    >
+      <div className="sd-wheel-pad" />
+      {items.map((it, i) => (
+        <div
+          key={it}
+          onClick={() => {
+            quiet.current = true;
+            ref.current?.scrollTo({ top: i * ROW, behavior: "smooth" });
+            onPick(it);
+            window.setTimeout(() => (quiet.current = false), 260);
+          }}
+          style={{ color: it === value ? "var(--sd-text)" : "var(--sd-text-2)", fontWeight: it === value ? 600 : 400 }}
+        >
+          {it}
+        </div>
+      ))}
+      <div className="sd-wheel-pad" />
+    </div>
+  );
+}
+
+const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const DAYS = Array.from({ length: 31 }, (_, i) => String(i + 1));
+const YEARS = Array.from({ length: 40 }, (_, i) => String(2006 - i));
+
 export function WheelDate({ onPick }: { onPick: (v: string) => void }) {
-  const days = Array.from({ length: 31 }, (_, i) => String(i + 1));
-  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  const years = Array.from({ length: 40 }, (_, i) => String(2006 - i));
   const [d, setD] = useState("14");
   const [m, setM] = useState("March");
   const [y, setY] = useState("1997");
   useEffect(() => {
-    onPick(`${d} ${m} ${y}`);
+    onPick(`${d} ${m.slice(0, 3)} ${y}`);
   }, [d, m, y, onPick]);
-  const col = (items: string[], v: string, set: (s: string) => void) => (
-    <div className="sd-wheel">
-      <div style={{ height: 90 }} />
-      {items.map((i) => (
-        <div
-          key={i}
-          onClick={() => set(i)}
-          style={{ color: i === v ? "var(--sd-text)" : "var(--sd-text-2)", fontWeight: i === v ? 600 : 400 }}
-        >
-          {i}
-        </div>
-      ))}
-      <div style={{ height: 90 }} />
-    </div>
-  );
   return (
     <div className="sd-wheels">
       <span className="sd-wheel-sel" />
-      {col(days, d, setD)}
-      {col(months, m, setM)}
-      {col(years, y, setY)}
+      <Wheel items={DAYS} value={d} onPick={setD} />
+      <Wheel items={MONTHS} value={m} onPick={setM} />
+      <Wheel items={YEARS} value={y} onPick={setY} />
     </div>
   );
 }

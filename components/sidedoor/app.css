@@ -483,7 +483,7 @@
 /* ── toast · glass, slides down from under the bar ───────────────────────── */
 .sd-toast {
   position: absolute;
-  top: 60px;
+  bottom: 100px;
   left: 16px;
   right: 16px;
   z-index: 70;
@@ -500,8 +500,8 @@
   animation: sd-toast-in 460ms var(--sd-spring) both;
 }
 .sd-toast.is-out { animation: sd-toast-out 280ms var(--sd-ease) both; }
-@keyframes sd-toast-in { from { transform: translateY(-80px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-@keyframes sd-toast-out { from { transform: translateY(0); opacity: 1; } to { transform: translateY(-40px); opacity: 0; } }
+@keyframes sd-toast-in { from { transform: translateY(60px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes sd-toast-out { from { transform: translateY(0); opacity: 1; } to { transform: translateY(30px); opacity: 0; } }
 
 /* ── skeletons ──────────────────────────────────────────────────────────── */
 .sd-skel { background: var(--sd-n100); border-radius: var(--sd-r-sm); position: relative; overflow: hidden; }
@@ -521,9 +521,10 @@
 
 /* ── wheel date picker ──────────────────────────────────────────────────── */
 .sd-wheels { display: flex; height: 216px; position: relative; }
-.sd-wheel { flex: 1 1 0; overflow-y: scroll; scroll-snap-type: y mandatory; scrollbar-width: none; text-align: center; }
+.sd-wheel { flex: 1 1 0; overflow-y: scroll; scrollbar-width: none; text-align: center; }
 .sd-wheel::-webkit-scrollbar { display: none; }
-.sd-wheel div { height: 36px; line-height: 36px; scroll-snap-align: center; font-weight: 400; font-size: 21px; line-height: 36px; }
+.sd-wheel > div:not(.sd-wheel-pad) { height: 36px; font-size: 21px; line-height: 36px; cursor: pointer; }
+.sd-wheel-pad { height: 90px; flex: 0 0 auto; }
 .sd-wheel-sel { position: absolute; left: 0; right: 0; top: 90px; height: 36px; border-radius: var(--sd-r-md); background: var(--sd-fill-3); pointer-events: none; }
 
 /* ── login splash ───────────────────────────────────────────────────────── */
