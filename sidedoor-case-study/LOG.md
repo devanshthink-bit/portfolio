@@ -1591,3 +1591,17 @@ Sources: Apple's own "iOS and iPadOS 26" Figma kit (already linked to the file) 
 Prototype: rebuilding the bar buttons dropped their links; re-linked 43 back, 19 bell, 1 "+".
 Kept on purpose: list content scrolls under the glass tab bar (Jobs, Skipped resume), as in iOS 26.
 Final: 0 on every check; only raw effects left are the Login illustration blurs; all prototype frames match their UI twins.
+
+FIX · 2026-09-19 · One background, uncut shadows · Source: Devansh ("bg colors are not same … shadows on icons are getting cut")
+Causes:
+  - Screens were bound to color/background/grouped but the colour stored behind the token was white, and Figma sometimes draws the stored colour. So some screens showed grey and others white.
+  - Plain-list screens (Login, Messages, Notifications, Chat) were white on purpose.
+  - The top bar (AppHeader Nav/Large) had its own grey (surface/tertiary, #F1F1F1), different from the page (#F2F2F7), which drew a band.
+  - The bar's "Header" frame clipped its contents, so the glass buttons' shadows were cut.
+Fixes (V6 only, UI page and prototype):
+  - All 80 V6 screens (68 prototype) use color/background/grouped (#F2F2F7), stored colour included. Chosen because it is the iOS grouped background and white cards stand out on it without shadows.
+  - Top bar has no fill (takes the page colour); Header, Leading, Trailing and Large Title no longer clip. Component variants Nav/Large are V6-only.
+  - Messages and Notifications lists are one white rounded group (radius/lg, 16 inside, hairline dividers, none under the last row), like Profile. Messages loading skeletons too. Search → list gap 16 (card→card). Notifications content starts 24 below the bar.
+  - Chat: incoming bubbles white (ChatMessage is V6-only).
+  - Illustrations with a white image background (Login, Role, doc icon) blend into the page (multiply), so no white box shows.
+Checked: every token-bound colour on the UI page, prototype and components page stores its token's value (0 mismatches); prototype matches UI (68/68).
