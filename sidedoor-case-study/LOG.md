@@ -1458,3 +1458,13 @@ Built from existing V6 screens and components, so tokens, styles and layout rule
 Checked: full audit on all 83 V6 screens: 0 on every check (tokens, styles, spacing/radius binding, fill-in-hug, stale, cut-offs, overlaps, hidden layers, top, bottom bar, screen size). The composer sits flush at the bottom like the tab bar (40 padding inside for the home indicator).
 Slips caught: text-based lookups miss a fresh clone's instance text; notification text first stopped at 1 line; the send button first fell under the field; the outgoing bubble was cut. All fixed on screenshots.
 Prototype: 7 screens copied; bottom-bar links, back, bell → Notifications (12 tab screens), message rows → Chat, PhonePe row → Not moving forward, notification rows → their screens.
+
+CHANGE · 2026-09-19 · "Still needed" on the Job ID label row · Source: Devansh ("yes")
+InputField got a "Show tag" switch (off by default) with a Buffer "Still needed" tag at the end of the label row, in all 9 variants. Same placement as SectionLabel's tag, so "Check your job post" now matches "Check your referral request". Every other form is unchanged (tag off).
+Job ID (UI and prototype): tag on; the old tag under the field removed; the note stays under the field, 8 below it (same gap as the field's own error line).
+Also fixed in InputField: the heading icon in the Medium and Large Error variants wasn't wired to "Show Heading Icon" / "Heading Icon".
+
+FIX · 2026-09-19 · Cut icons · Source: Devansh (screenshot: download icon cut on "Save these details")
+Cause: 62 icon components (the 3089/3090 icon family) kept their drawing at a fixed size when shrunk. At 16–18px the 20×18 drawing spilled out of the box and was cut. Now they scale with the box, like the older icons.
+On V6 this fixed 8 icons: download (3), external-link, bar-chart (2), clock (2). Prototype: 0 left.
+Missed before because the cut-off check looked for layers clipped by a frame, not a drawing spilling out of its own icon box. New check added: vector inside its icon box.
