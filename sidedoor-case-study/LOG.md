@@ -1426,3 +1426,20 @@ Fix:
   - Forced a re-layout of all 4,049 auto-layout frames in V6 (token bindings kept). One visible shift: prototype Role selection card moved 8px to match the UI page, which it now matches exactly.
   - Deleted the 118 hidden leftovers. Each state screen now holds only what it shows.
 Re-check: 0 conflicts, 0 out-of-date layouts. The one flag left ("About the employer" logos) is a measurement quirk from the logo group's negative gap (-5.5); the render is correct.
+
+CRITIQUE + CHANGE · 2026-09-19 · Final audit of all V6 screens · Source: Devansh ("Do a final audit of all V6 screens")
+Ran every check on all 76 V6 screens and the 64 prototype copies (140 frames): tokens and styles, component consistency, spacing and type by role, cut-offs, overlaps, layout stability, hidden layers, screen frame rules, copy, prototype-vs-UI match; then looked at every screen.
+Found and fixed:
+  - 10 screens (plus prototype twins) centred their content vertically, so after height changes the status bar and header sat 7–227px down (Verify email, link pages) or were cut at the top (Post a job, Edit job post, −22/−24). All screens now stack from the top. New check added: first element at y = 0.
+  - My earlier spacing pass had set a 24 gap on the screen frame itself on 11 Jobs / Referral requests screens, adding 24 under the top bar and above the bottom bar. Screens now 0; bottom sheets 24 (section rule).
+  - Prototype copies still had the old 20/24 screen edges (the 16-edge fix had only run on the UI page): 24 screens were 2–8px off their UI twins. Fixed; all 64 twins now match text, positions and heights exactly.
+  - Bell icon on some inner screens (Referral request, Track details, Job, Edit profile) but not others. Now on tab screens only (iOS pattern: pushed screens show back + title).
+  - Candidate Profile had a pencil badge on the photo and a pencil by the name (two edit actions); referrer Profile had one. Badge removed from Profile views; kept on Edit profile.
+  - 3 form screens had 32 between content and the button (rule 24). Fixed.
+  - Track details: 0 gap between content and the Message button; row time 14px (rows use 12px). Fixed.
+  - Job card sections 16 apart (other detail cards 24). Fixed in the component.
+  - Referral requests "Couldn't load": 24 between the red note and its help line (others 8). Fixed.
+  - Paused post: bottom bar 46px above the screen bottom. Content area now fills.
+  - 19 spacing values and 1 radius not bound to tokens. Bound.
+Final re-check (140 frames): 0 on every check: unbound colours, unstyled text, raw shadows, unbound spacing/radius, fill-in-hug, stale layouts, cut-offs, off-screen, hidden layers, first element not at top, bar not at bottom, screens under 844, tight bottoms, wrong stored colours, prototype mismatches.
+Open (not bugs): 12 newer state screens have no prototype copy yet; "Still needed" under the Job ID field (needs an InputField slot); link icon outline (no filled version).
