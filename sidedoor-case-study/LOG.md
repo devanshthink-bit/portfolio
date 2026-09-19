@@ -1181,3 +1181,60 @@ Not changed, on purpose:
   - "Card Section", "Box", "Window" and "Scroll Section" stay plain frames: they're layout containers, not repeated designs.
   - The Job Card component has one 52 px gap. Rounding it to 48 would shift V2–V5 job cards; left for Devansh.
   - Tag text colours (#22C55E, #EF4444, #F59E0B) still fail contrast. They need a decision, because the change shows in every version.
+
+DECISION · 2026-09-19 · molades-attack · Scope and prediction
+Decided:  Attack the two screens the product rests on: Check your referral request (candidate) and Referral request (referrer). Full tables in ATTACK.md.
+Prediction: Devansh predicted 1 of 13 stress findings ("something too long or too many"). Missed every nothing, wrong and waiting case.
+
+CRITIQUE · 2026-09-19 · molades-attack · Source: self · S1
+Finding:   A long referrer name ("Krishnamurthy Venkataraghavan Subramanian") cuts mid-word and pushes the Job ID tag off the candidate's screen.
+Severity:  major · Layer: looks
+Action:
+CRITIQUE · 2026-09-19 · molades-attack · Source: self · S3
+Finding:   A long skill name is cut to "Human-centred service design ar" in How they match, so the referrer decides on evidence they can't read.
+Severity:  major · Layer: looks
+Action:
+CRITIQUE · 2026-09-19 · molades-attack · Source: self · S5
+Finding:   A candidate who skipped the resume can tap "Ask Nithin for a referral", and nothing is designed after that tap.
+Severity:  major · Layer: steps
+Action:    deferred: needs a molades-brief decision (can you ask without a resume?)
+CRITIQUE · 2026-09-19 · molades-attack · Source: self · S8
+Finding:   A wrongly formatted date of birth (31/02/1999) has no field error on Check your referral request.
+Severity:  major · Layer: moments
+Action:
+CRITIQUE · 2026-09-19 · molades-attack · Source: self · S9
+Finding:   Asking the same referrer for the same job again from the app has no "already asked" state (only the link page has one).
+Severity:  major · Layer: moments
+Action:    deferred: rarer than the five being fixed
+CRITIQUE · 2026-09-19 · molades-attack · Source: self · S10
+Finding:   Tapping Refer by mistake can't be undone, and the candidate is told at once.
+Severity:  major · Layer: moments
+Action:
+CRITIQUE · 2026-09-19 · molades-attack · Source: self · S12
+Finding:   No "Sending…" state on Send; a double tap on a slow network may send twice (can't confirm statically).
+Severity:  major · Layer: moments
+Action:
+CRITIQUE · 2026-09-19 · molades-attack · Source: self · minor stress findings
+Finding:   S2 long name hides "Sent today"; S6 empty note and links not designed; S7 "0 of 7" not designed; S11 job closed mid-form only handled after sending.
+Severity:  minor
+Action:    deferred
+CRITIQUE · 2026-09-19 · molades-attack · Source: self · C1
+Finding:   Tag text contrast fails: Success #22C55E/#ECFDF5 2.16:1, Buffer #F59E0B/#FFFBEB 2.07:1, Neutral #6B7280/#F0F1F2 4.27:1, Primary #2563EB/#E9EFFD 4.49:1 (needs 4.5:1). DESIGN_LANGUAGE.md already said not to inherit these.
+Severity:  major · Layer: looks
+Action:    waiting on Devansh: the fix is in the shared Tag component and changes V2–V5 too
+CRITIQUE · 2026-09-19 · molades-attack · Source: self · C2
+Finding:   Tap targets under 44×44: back 24, bell 24, edit pencil 18, external link 20, "Show project details" 20 tall, skill rows 38 tall, "Mark it".
+Severity:  major · Layer: looks
+Action:
+CRITIQUE · 2026-09-19 · molades-attack · Source: self · C3
+Finding:   Input fields have no visible edge: #FAFAFA on #FFFFFF with a soft shadow, about 1.04:1 (needs 3:1).
+Severity:  major · Layer: looks
+Action:
+CRITIQUE · 2026-09-19 · molades-attack · Source: self · C4
+Finding:   Placeholder text #9CA3AF on white = 2.54:1.
+Severity:  minor · Layer: looks
+Action:
+CRITIQUE · 2026-09-19 · molades-attack · Source: self · C5
+Finding:   White "4 of 7" / "skills match" on brand green #10B981 = 2.54:1 (32px needs 3:1, 16px needs 4.5:1).
+Severity:  major · Layer: looks
+Action:    rejected by Devansh (keep brand green with white, 19 Sep). The count repeats in dark text in "How they match".
