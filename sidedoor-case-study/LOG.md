@@ -1610,3 +1610,8 @@ FIX · 2026-09-19 · Sheets match the page · Source: Devansh ("bg is still diff
 Cause: sheets were glass with a see-through fill (stored at 20%; the Log out groups at 10%). On the dark canvas they drew muddy grey (measured 95,98,105) next to screens at 242,242,247.
 Fix (UI page and prototype, 7 sheets each): sheets are solid color/background/grouped (#F2F2F7) with no glass or shadow, like iOS form sheets. Log out action groups are solid white. Glass stays only on the tab bar, top-bar buttons and toast, which always sit over the page.
 Checked by pixel: sheet, Referral requests empty and Not enough to judge all read 242,242,247.
+
+FIX · 2026-09-19 · No shadows in sheets either · Source: Devansh ("some cards have shadow some dont which is correct?")
+Answer: no shadow (Apple look rule: white cards on the grey page, no shadows). The earlier shadow removal skipped sheets.
+Removed 25 leftover shadows on each page (UI and prototype), all inside the 6 sheets: person cards, reason options, buttons, quick-share tiles, doc upload box. Kept on purpose: the small shadow under the selected segment of the segmented control (iOS draws it) and glass pieces (tab bar, bar buttons, toast).
+Checked: 0 non-glass shadows left on V6 except the selected segment.
