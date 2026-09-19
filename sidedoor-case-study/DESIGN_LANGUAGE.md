@@ -184,6 +184,8 @@ Outline is no longer used: in-common facts moved to Primary, and "Mark it" was a
 
 **Content box** (on the screen, never inside a card): #FAFAFA (color/surface/secondary), radius 8, padding 12/16, elevation-1, never clipped by its parent. Inside a card (Job, Referral request) content sits flat: no fill, no shadow, no inner padding; the card's 16 padding and the section labels do the grouping (V2 pattern, Devansh 19 Sep 2026).
 
+**iOS system parts (19 Sep 2026)**: top bar = AppHeader Type=Nav, 44pt, bold page name centred, back chevron, bell on tab screens only, "+" in the bar (no floating buttons); selected tab tints icon and label; Switch Size=iOS 51×31; filters = SegmentedControl; search fields show the search icon; dates use a wheel picker sheet; Log out is red and confirmed in an action sheet; Sign in with Apple first on Login. Link pages are web pages and keep the SideDoor logo bar.
+
 **Spacing by role** (added 19 Sep 2026; checked by script on every V6 screen)
 | Role | Value |
 |---|---|

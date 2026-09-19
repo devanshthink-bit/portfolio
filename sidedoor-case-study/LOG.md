@@ -1554,3 +1554,18 @@ Same thing, different look:
   - Checked, same: timeline "done" blue and How-they-match blue use two token names with the same value (#2563EB); no visible difference.
 Slip caught during the pass: my text-link fix also changed the label layout inside 9 buttons whose label read "Fill in myself" / "Not now"; restored to the component's own settings.
 Final: 0 on every check, 0 messages below a button, all 73 prototype frames match their UI twins.
+
+CHANGE · 2026-09-19 · Apple guidelines pass (HIG + App Store rules; accessibility out of scope) · Source: Devansh ("check if all the UI screens follow proper Apple guidelines" → "fix all of them properly; for the second use the page name in bold instead of SideDoor")
+V2–V5 keep their look: every shared component got a new variant; only V6 was switched.
+  1. Sign in with Apple (App Store 4.8: third-party login needs an equivalent privacy login). New Button Type=Apple (black, white Apple logo), Logo/Apple, tokens color/social/apple/bg + fg (black/white, flipped in Dark), primitive color/palette/black. First on Login, same size as the others. Labels now all "Sign in with …" (LinkedIn said "Continue with").
+  2+3. Top bar: new AppHeader Type=Nav, 44pt (iOS standard; was 76), bold page name centred, back chevron, 60pt slots both sides so the title stays centred, optional "+" (Show add). All V6 screens use it except the link pages, which are web pages for people without the app, so they keep the SideDoor logo. Page names: Choose your role, Where you work, Add a job, Check your job post, Your resume, Check your details, Job posted, Job details, Check your request, Referral request, Edit your job post/details/profile; tab screens keep theirs. Where the old in-page title repeated the page name it was removed; its subtitle stays as the first line (left). "Nithin suggests you for this job" stays (a message, not a title).
+  4. Selected tab: label now blue with the icon (color/primary). Referrer Messages (opened from Profile) had no tab selected; Profile now is.
+  5. Switch: new Size=iOS variants, 51×31 (was 36×20). Also fixed inside PostCard, where the old size was held by the card.
+  6. All / Waiting / In progress / Closed: new SegmentedControl (grey track, white selected segment with elevation-1, equal widths, 32pt), 16 above the list.
+  7. Messages search: search icon on (was off); placeholder kept, it says what you can search.
+  8. Manage posts: floating round "+" (Android pattern) removed; "+" in the top bar next to the bell; prototype link moved with it.
+  9. Date of birth: field reads "Select date" and opens a new iOS wheel picker sheet (Candidate/Date Of Birth Sheet, Done). The typed-date error state ("February has no 31st") can't happen any more and was removed (UI and prototype).
+  10. Log out: red label (color/text/error) and a new iOS action sheet (Profile/Log Out Sheet): "Log out of SideDoor? …", red Log out, separate Cancel. Prototype: Log out → sheet; Cancel closes; Log out → Login.
+Knock-on fixes: two Track details screens had a fixed height, so the shorter bar left a 32 gap under the tab bar; they now hug.
+Not changed (listed as minor): badge colour, status bar 44 vs 47, tab bar 88 vs 83, Undo toast, Inter/Remix instead of SF Pro/SF Symbols (chosen), 14pt body (accessibility).
+Final: 0 on every check, all prototype frames match their UI twins.
