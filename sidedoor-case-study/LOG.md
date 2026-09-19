@@ -1534,3 +1534,23 @@ FIX · 2026-09-19 · "Fill in myself" and "Skip for now" looked the same · Sour
 No. They are different kinds of action: "Fill in myself" is another way to finish the step (a real choice); "Skip for now" leaves the step (least important). Now three levels: Next (primary) → Fill in myself (secondary button, 12 under, stacked pair rule) → Skip for now (blue text link, 16 under). Same on Add the job, where "Fill in myself" was also a bare link.
 Screens: Upload your resume (+ Couldn't read file), Add the job (+ Couldn't read link). UI and prototype.
 Rule: another way to finish a step is a secondary button; leaving or postponing it is a text link.
+
+CHANGE · 2026-09-19 · Consistency sweep by element type · Source: Devansh ("check anything that is in multiple screens … I don't want the same thing to look different"; "no consistency in these message positions … Can't you check everything screen by screen?")
+Method this time: inventory every instance of each repeated element on all 85 V6 screens (and the 73 prototype copies), set one rule per element, fix every break, then look at every screen.
+Messages (notes, info tags, errors, hints), 94 found:
+  - Rule: left-aligned to the content edge; above the buttons they explain, 12 apart. Only text links (Skip, Not now, Share later, Resend code, Log in, Keep waiting) stay centred under buttons.
+  - Fixed: 9 centred messages ("2 of 5 requests left", "Add the 4 details…", "Couldn't send", "No requests left", "Sent to Nithin", "Updated. Aviral can see it.", "Add the job ID to post.", "Tap once it's in the portal…", Job card hint); 5 below their button ("Add the 4 details…", "Fix the date…", "Paste it in the LinkedIn or WhatsApp chat" ×2, Job card hint); Verify's "We never contact your company or HR" moved from the end of the form to 12 above Verify; sheet note → button 8 → 12; "This post is paused" → its line 4 → 8; empty-state message → button 16 → 12; empty-state and paused-post text centred → left; resume sheet body centred → left (other sheets: title centred, body left); Your referrals top padding 8 removed so sections are 24 apart.
+  - Checked, kept: link page URL chip is centred as part of the centred page title; "Couldn't load" uses the same Tag component everywhere (two layer names only).
+Same thing, different look:
+  - "4 of 7 skills match" grey in the Not moving forward sheet, blue elsewhere → blue.
+  - "Submitted" grey on Your referrals, green elsewhere → green.
+  - "Update" primary in Waiting, secondary in All referrals (two primaries on one screen) → secondary everywhere.
+  - "Not now" a button in the resume sheet, a text link on the link page → text link.
+  - Marked as submitted had two secondary buttons, no primary → "Back to referral requests" primary first, "Message Abhinav" secondary.
+  - Edit profile used a title bar and no page title; the other two edit screens use the logo bar + page title → "Edit your profile" / "Candidates see your name, role and company." (A bell also appeared on it; header replaced with the Edit job post one.)
+  - Page title → content 32 on 7 screens, 24 on 17 → 24.
+  - Placeholders: 21 used color/border/default (#D1D3D8, ~1.4:1, a border token on text), the note field used color/text/disabled (#9CA3AF) → all text/disabled, in InputField and ChatComposer. Visible on V2–V5 too (slightly darker placeholders).
+  - Job card hint: "One request per job." vs link page "One request per job, per referrer." → both say "per referrer" (the rule is per referrer).
+  - Checked, same: timeline "done" blue and How-they-match blue use two token names with the same value (#2563EB); no visible difference.
+Slip caught during the pass: my text-link fix also changed the label layout inside 9 buttons whose label read "Fill in myself" / "Not now"; restored to the component's own settings.
+Final: 0 on every check, 0 messages below a button, all 73 prototype frames match their UI twins.
