@@ -1697,3 +1697,8 @@ Kept, because iOS apps commonly do them: icons before section titles (Apple Heal
 Open, asked Devansh: the unlabelled overlapping logos next to the salary on Job details.
 DECISION · 2026-09-20 · Salary source logos on Job details kept as they are · Source: Devansh (chose "Keep as is").
 FIX CHECK · 2026-09-20 · Devansh saw the old grey "Newest first" tag drawn under the new sort button (Jobs, Jobs / Skipped resume). Checked: no second "Newest first" layer exists on UI or prototype; the section title's tag is off; Figma's renderer draws both screens clean (UI and prototype). Could not reproduce, so the cause is not confirmed; possibly a view that had not refreshed.
+
+DECISION · 2026-09-20 · Login button order
+Decided:   Sign-in order is LinkedIn, Google, Apple (Apple last). "Already have an account? Log in" sits 12 under the last button (was 16). Applied to the UI login screen (5247:18389) and its prototype copy (5291:24151); both checked by screenshot.
+Because:   Devansh asked for Apple at the bottom and the line closer to the buttons. LinkedIn is the main path (profile data for matching). Apple's rule is that Sign in with Apple is offered and is as easy to see as the others; the same size and style still meets that.
+Note:      The 12 gap is only for this line on the login screen. "Text action below a button" (Skip, Not now) stays 16. V2–V5 login copies are left unchanged on purpose.
