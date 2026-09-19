@@ -1393,3 +1393,19 @@ Why these choices:
   - 12/500, the meta-line size (like "⟳ Today"). At 12px, "You both worked at MakeMyTrip" still didn't fit the Jobs card (190px). "Both worked at MakeMyTrip" fits every card, so one label everywhere.
   - "Both studied at NID Ahmedabad" was cut on Referral requests; now "Both studied at NID" (how people say it). College name is mock data, like the names.
 Checked: detail screen, Referral requests cards, Jobs card; nothing cut (script). Logos keep their own colours (an old icon tint was reset).
+
+CRITIQUE · 2026-09-19 · Spacing and text-by-role audit · Source: Devansh (screenshots of four lines under buttons: "why don't these things have consistent spacing and consistent font sizing… it's a grave blunder")
+Why I missed it: my audits compared copies of the same component. The lines under buttons are loose text, not a component, so nothing compared them. Fix to the method: audit by role (what the element does), across all screens, whatever it is built from.
+Found (saw it, script on all 76 V6 screens):
+  - Text actions under buttons: gap 12, 16 or 24; half blue, half grey; Upload resume had two actions left/right, everywhere else centred.
+  - Hint under side-by-side buttons 32 away ("Add the job ID to post."), others 12.
+  - Stacked buttons 8, 12, 16 or 20 apart.
+  - Section label → content 4, 8, 12, 16 or 20. Section → section 0, 12, 16, 20 or 24. Content → buttons 8 to 32.
+  - Bottom: "Resend code" 1px from the screen edge on two states; Track details button touching the bottom bar (0 and 14px); link-page screens 682 and 776 tall.
+  - Two more "space between + hug" containers that collapsed a 16 gap to 0.
+Action: fixed, see CHANGE below.
+
+CHANGE · 2026-09-19 · Spacing by role · Source: Devansh
+Applied the "Spacing by role" table (DESIGN_LANGUAGE.md) to every V6 screen and the prototype copies. Text actions blue and centred, each button + its text wrapped in one "Actions" block. 90 section groups set to 24, 45 label groups to 8. Tight screens grown or padded; every screen ≥ 844.
+Re-ran the role audit after: one value per role, except the two page-top values kept on purpose (lists 24, forms 32, from V2).
+Slips caught: a findOne picked the V3 copy of "Marked as submitted"; reverted, applied to V6.
