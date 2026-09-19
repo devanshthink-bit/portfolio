@@ -1670,3 +1670,13 @@ Polish fixed (UI and prototype):
   - Verified tick size now equals the name's text size everywhere (14 / 16 / 20). Messages had 19 and Track details referrer card 18 next to 16pt names (22 fixed on each page).
   - "Drop your" + "resume" were two texts with a trailing space plus a 4 gap (double gap); trailing space removed (7 UI / 6 prototype).
 Checked: label → icon inventory (one icon per meaning), looked at the changed screens, 75/75 prototype frames match UI incl. icon names and sizes.
+
+FIX · 2026-09-20 · Small buttons: compact look, 44pt tap area · Source: Devansh ("you changed these buttons, but in a lot of places, these are not updated … doesn't look symmetric and consistent")
+What was wrong:
+  - Making "Update" and "Mark it" 44pt tall (earlier today) made them boxy and pushed "Update" below its row's rhythm. That was the wrong fix: Apple keeps small controls small and makes the tap area 44pt.
+  - The small 28pt buttons still seen are V3, V4 and V5 (Update Flow, Tracking Flow on the UI page). Those are history and are never changed (rule). Every V6 copy had been changed.
+Fix (V6, UI and prototype):
+  - New Button variant Type=Secondary Small (V2–V5 untouched): same border, radius and text style as Secondary, 4/12 padding (28pt with the label, Apple's small size), no shadow, and an invisible "Hit area 44" frame (the same pattern the file already uses for rows).
+  - 8 buttons swapped on each page ("Update" ×7, "Mark it" ×1); the prototype link on "Update" kept.
+  - Your referrals rows: the time now lines up with the name and "Update" is centred on the status tag (it sat 5–14 lower before).
+Checked: all three affected screens match between UI and prototype; looked at them.
