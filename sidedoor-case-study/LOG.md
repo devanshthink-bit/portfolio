@@ -1524,3 +1524,8 @@ FIX · 2026-09-19 · Prototype: referrer home bell opened the share sheet
 When the header icon on referrer home became the bell, its old tap action (open "Share your link") stayed. All 10 bell/header hotspots on the 5 referrer-home prototype screens now go to Notifications. Profile → "Your links to share" now opens the share sheet.
 Also: Not enough to judge fell to 834 tall after flattening its card; back to 844.
 Final: 0 on every check; all 74 prototype frames match their UI twins.
+
+FIX · 2026-09-19 · Hints under the wrong button · Source: Devansh ("why are we writing 'Add job ID' here at the bottom")
+"Add the job ID to post." explains why Post job is off, but sat under Save as draft, so it read as if it belonged to the draft button. Same on After refer (+ Undo): "Tap once it's in the portal. Abhinav will be told." explains Mark as submitted but sat under Message Abhinav. Both moved above their button pair, 12 above the primary (note-above-a-button rule). Single-button hints ("Add the 4 details above to send.") stay below. Rule written in DESIGN_LANGUAGE.md.
+Knock-on: on After refer/Undo the toast then covered half of Message Abhinav. Added a 48 "Toast space" slot at the end of the content (the toast's height), card section bottom 16, toast 16 above the tab bar. Buttons now end 24 above the toast.
+UI and prototype.
