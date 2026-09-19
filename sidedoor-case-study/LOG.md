@@ -1680,3 +1680,8 @@ Fix (V6, UI and prototype):
   - 8 buttons swapped on each page ("Update" ×7, "Mark it" ×1); the prototype link on "Update" kept.
   - Your referrals rows: the time now lines up with the name and "Update" is centred on the status tag (it sat 5–14 lower before).
 Checked: all three affected screens match between UI and prototype; looked at them.
+
+FIX · 2026-09-20 · Section counts go in the title · Source: Devansh ("1 hanging alone at right? is it correct everywhere")
+Inventory of every count on V6: section and group counts sit in the title ("Skills (7)", "Lower match (2)", "Flipkart · 4 posts"); unread counts are blue dots at the row's right (iOS). "Waiting on an update" was the only one with a lone amber tag at the far right.
+Fix: "Waiting on an update (2)" / "(1)" in the label, the tag turned off (Section Label's Show tag). The line under it already says why it needs attention. Your referrals and Your referrals / Updated, UI page and prototype.
+Rule added to DESIGN_LANGUAGE: section counts in brackets in the title.
