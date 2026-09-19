@@ -177,3 +177,9 @@ Weights: 400 only for paragraphs and typed text. 500 for secondary text. 600 for
 
 **Text links** use label/md 14/500 and color/text/link. The timeline's done steps (heading/xs, blue) are not links; they are V2's timeline pattern.
 **Tags and notes** are one component. Label cap 322 = the widest a tag can be on a 390 screen (358 − 16 padding − 16 icon − 4 gap), so a full-sentence note never cuts off.
+
+**Tags** (added 19 Sep 2026): one size, 14/500, 22 tall, padding 2/8, radius 4. Five filled styles, chosen by meaning:
+Neutral grey (facts, skills, info notes) · Primary blue-tint (fit signals: "4 of 7 skills", "Both ex-MakeMyTrip" with a person icon) · Success green (progress status) · Buffer amber (still needed, waiting) · Failure red (errors).
+Outline is no longer used: in-common facts moved to Primary, and "Mark it" was an action, so it is now a small secondary button.
+
+**Content box** (inside a card): #FAFAFA (color/surface/secondary), radius 8, padding 12/16, elevation-1, never clipped by its parent. Outer card padding 16.

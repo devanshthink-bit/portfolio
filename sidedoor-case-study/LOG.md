@@ -1326,3 +1326,22 @@ Fixed all of the above to the rules in DESIGN_LANGUAGE.md "Consistency rules". D
   - Also applied on the V6 Prototype page copies.
 Knock-on to V2–V5: the component-level fixes (Job card salary tag, ReferralBar, Tag cap, small button radius) also show in V2–V5 because they share those components. Raw V2–V5 frames were not touched.
 Checked: re-ran the component audit; the only differences left are the reasoned ones. Screenshots of Messages, Your referrals, Your referral requests, Referral requests, Edit profile, Login, Verify email, Track details, Manage posts, Role selection.
+
+CRITIQUE · 2026-09-19 · Referral request detail, tags, login · Source: Devansh (screenshots: "why is it getting cut at the bottom edge", "too much gap on both sides", "different kind of tag", "different font sizes for tags")
+Found (saw it, Figma values):
+  - Boxes looked cut: white boxes inside a white card, and their parent frames clipped content, so only the bottom shadow showed. 57 boxes in V6 used two styles ("Match Card" white r16 p24; "Box" white r8 with 16/12 or 12/16 padding).
+  - Side gap: rows sat 64px from the screen edge (16 screen + 24 card + 24 box). Card padding 24 broke the 16 card rule.
+  - Project tags cut off at the right: the SkillBlock row did not wrap.
+  - Outline tag was the only unfilled tag, used for "in common" facts and for "Mark it", which is an action, not a label.
+  - Tag text sizes: all 236 tags are 14/500. The difference in the screenshots was zoom level. No change needed.
+Action: fixed, see CHANGE below.
+
+CHANGE · 2026-09-19 · Boxes, tags, login · Source: Devansh
+  - One content box everywhere: #FAFAFA, radius 8, padding 12/16, elevation-1, parents no longer clip. Outer card (Window) padding 24 → 16. Rows now 48 from the edge (was 64).
+  - .Payload/SkillBlock wraps (8 gap), so project tags go to a second line instead of cutting off.
+  - In-common tags: Outline → Primary (blue tint) with the person icon from the "In common" label. Why Primary: it is a fit signal, like "4 of 7 skills", which is already Primary. Icon tinted with the link token to match the text.
+  - "Mark it": Outline tag → small secondary button, the same as "Update" in cards.
+  - Login (V6 and prototype): removed "or" divider, Email button and the Terms line (Devansh). Google is full width and 52 tall like LinkedIn, relabelled "Continue with Google" so the two read the same. "Already have an account? Log in" sits below; "Log in" follows the text-link rule (14/500, link blue, no underline).
+Risk kept: removing the Terms line means there is no consent notice on sign-up. Fine for a concept; a real build needs it somewhere in the flow.
+Knock-on to V2–V5: SkillBlock wrap, Tag icon colour and the ReferralBar button come from shared components.
+Checked: screenshots of Referral request, Referral requests card, Track details 2, Login, and the Projects block.
