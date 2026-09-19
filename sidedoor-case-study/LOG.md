@@ -1685,3 +1685,13 @@ FIX · 2026-09-20 · Section counts go in the title · Source: Devansh ("1 hangi
 Inventory of every count on V6: section and group counts sit in the title ("Skills (7)", "Lower match (2)", "Flipkart · 4 posts"); unread counts are blue dots at the row's right (iOS). "Waiting on an update" was the only one with a lone amber tag at the far right.
 Fix: "Waiting on an update (2)" / "(1)" in the label, the tag turned off (Section Label's Show tag). The line under it already says why it needs attention. Your referrals and Your referrals / Updated, UI page and prototype.
 Rule added to DESIGN_LANGUAGE: section counts in brackets in the title.
+
+AUDIT · 2026-09-20 · Patterns iOS users don't know · Source: Devansh ("check all the screens for such things … which is weird and not normally done in iOS apps … I don't want to deviate from the UI which users already know")
+Changed to the iOS pattern (V6, UI page and prototype, 75/75 match):
+  1. Single choice used radio circles (Android/web). RadioOption (V6-only component) is now an iOS list row: label left, blue SF checkmark right when chosen, 44pt+, hairline divider, none under the last row; label stays dark. Not moving forward reasons, Seen it move stages (3 sheets).
+  2. Sort was a grey tag "Newest first". Now an iOS pull-down button: "Newest first" in link blue + SF chevron.up.chevron.down, 44pt hit area (Jobs, Jobs / Skipped resume).
+  3. Help text sat in grey pills with an ⓘ (34). iOS writes it as a plain footnote. Neutral notes: no pill, no icon, text/label/sm like the other hint lines. Error / success / paused messages: no pill, icon kept so meaning is not colour alone. Salary chip untouched (it is a tag, not help).
+  4. Pencil icons for edit. iOS uses the word "Edit" in link blue. Section Label (V6-only) now shows "Edit" (text/label/md, like "Replace"); Profile name row "Edit", centred. Kept: the pencil badge on the Edit profile photo (iOS marks photos to edit too).
+New SF components: checkmark (0x185), chevron.up.chevron.down (0x18f).
+Kept, because iOS apps commonly do them: icons before section titles (Apple Health, Weather), coloured status tags, progress timeline, trailing copy buttons, undo bar (Mail), wheel date picker with Done, stacked buttons at the bottom of confirm sheets (action sheets).
+Open, asked Devansh: the unlabelled overlapping logos next to the salary on Job details.
