@@ -1702,3 +1702,8 @@ DECISION · 2026-09-20 · Login button order
 Decided:   Sign-in order is LinkedIn, Google, Apple (Apple last). "Already have an account? Log in" sits 12 under the last button (was 16). Applied to the UI login screen (5247:18389) and its prototype copy (5291:24151); both checked by screenshot.
 Because:   Devansh asked for Apple at the bottom and the line closer to the buttons. LinkedIn is the main path (profile data for matching). Apple's rule is that Sign in with Apple is offered and is as easy to see as the others; the same size and style still meets that.
 Note:      The 12 gap is only for this line on the login screen. "Text action below a button" (Skip, Not now) stays 16. V2–V5 login copies are left unchanged on purpose.
+
+DECISION · 2026-09-20 · Login button gap
+Decided:   Gap between the three sign-in buttons 12 → 8, on the UI login screen and its prototype copy (checked by screenshot). Stack is 172 tall (was 180). "Log in" line stays 12 below, so it still reads as separate from the buttons.
+Because:   Devansh: the buttons felt chunky and took too much space. Three sign-in choices are one group, and 8 keeps them together. Button height (52) is unchanged so it matches every other full-width button in V6.
+Note:      This is a login-only exception to "Button → button 12". V2–V5 copies unchanged on purpose.

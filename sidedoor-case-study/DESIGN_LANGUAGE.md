@@ -197,7 +197,7 @@ Outline is no longer used: in-common facts moved to Primary, and "Mark it" was a
 | Page title → content | 24 |
 | Card → card in a list (jobs, requests, referrals, skeletons) | 16 |
 | Meta line (icon + fact) | 14/500 + 18 icon (16 for a solid logo tile) in detail headers; 12/500 + 14 icon in list cards |
-| Button → button (always stacked full width, primary first) | 12 |
+| Button → button (always stacked full width, primary first) | 12 (8 for the three sign-in buttons on login) |
 | Message → the buttons it explains (notes, info tags, errors, hints; always above, left-aligned) | 12 |
 | Text action below a button (14/500, link blue, centred). Only for leaving or postponing (Skip, Not now, Share later); another way to finish the step is a secondary button | 16 |
 | Login "Already have an account? Log in" line → last sign-in button | 12 |
