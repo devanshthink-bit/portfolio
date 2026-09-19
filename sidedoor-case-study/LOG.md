@@ -1443,3 +1443,7 @@ Found and fixed:
   - 19 spacing values and 1 radius not bound to tokens. Bound.
 Final re-check (140 frames): 0 on every check: unbound colours, unstyled text, raw shadows, unbound spacing/radius, fill-in-hug, stale layouts, cut-offs, off-screen, hidden layers, first element not at top, bar not at bottom, screens under 844, tight bottoms, wrong stored colours, prototype mismatches.
 Open (not bugs): 12 newer state screens have no prototype copy yet; "Still needed" under the Job ID field (needs an InputField slot); link icon outline (no filled version).
+
+CHANGE · 2026-09-19 · Generic page titles removed · Source: Devansh ("does the single title job make sense?")
+No. "Job" above the job card, and "Referral request" above the request card, repeat what the card already says (its heading is the job title or the person). Job apps like LinkedIn show no generic title above a job. The referrer's After refer state already had none, so these were also inconsistent with it.
+Removed on Job and on Referral request plus its 3 states (UI and prototype, 10 frames). Card now starts 24 under the top bar (details rule). Kept "Nithin suggests you for this job" on the suggested Job screen: it is a message, not a label.
