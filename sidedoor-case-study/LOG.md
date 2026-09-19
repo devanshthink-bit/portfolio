@@ -1141,3 +1141,43 @@ DECISION · 2026-09-19 · V6 audit fixes (in place)
 Prototype: the same fixes applied to the copies on "🔗 V6 Prototype", so their links stay. The share icon on Referral requests and its states now opens the Share sheet.
 Not changed, flagged for molades-attack: status and error tag text colours are V2's (#22C55E, #EF4444, #F59E0B), which DESIGN_LANGUAGE.md says not to inherit. Changing them means editing the shared Tag component, which touches V2–V5 too, so that's a decision for Devansh, not a quiet fix. The white "4 of 7" on brand green is the same kind of issue.
 How sure: worked it out, from DESIGN_LANGUAGE.md rules and the research. None tested with users.
+
+CRITIQUE · 2026-09-19 · Design-system audit of the whole Figma file · Source: Devansh ("all screens using real components … proper tokens, styles … nothing orphan … industry standard")
+Found (by script, then by eye):
+  - Tokens: 149 variables could be picked for any property (ALL_SCOPES). Palette colours showed up in every picker, so a designer could use a raw hex-level colour instead of a semantic token.
+  - Library: 3 icon colours hard-coded, 2 upload-button texts at an off-scale 13 px with no style, 6 components named "Component 1/2/3/9", "Circle", "Slot", and no component had a description. Radius and spacing inside components weren't linked to tokens.
+  - V6 screens: repeated patterns were plain frames, not components. Section label ×87, detail field ×68, match row ×24, headline ×18, radio option ×14, person row ×14, request card ×15, profile menu row ×11, list top bar ×21, sheet person card ×3, post card ×4, match banner ×4, loading card ×3. Radius (217) and spacing (1,995 values) were typed in by hand, including off-grid values (3, 6, 7.27, 10, 14, 26 …). 12 stray white fills, 14 avatars with hand-made shadows, 1 text only partly styled.
+  - Doc pages: Colors, Typography and Spacing were drawn by hand. Swatches weren't linked to the variables, the "Aa" samples didn't use the text styles, 498 doc texts had no style, 9 semantic colours and the new radius/spacing tokens weren't documented, and 15 stray layers sat loose on the Colors page.
+  - Logos: file-dump names ("imageigi 1", "vecteezy_infosys-…").
+
+DECISION · 2026-09-19 · Make the file work like a real design system
+Decided and done:
+  1 · Token scopes. Palette colours hidden from pickers (used only through semantic tokens). Semantic colours scoped by job: text → text fill, surface → fills, border → strokes, icon → shapes. Spacing → gap and size, radius → corner radius, type tokens → font size, line height, weight, family. color/primary and color/secondary are brand bases, hidden and described.
+  2 · New tokens, only for values V6 really uses: spacing/2 (spacing/2xs), spacing/64 (spacing/5xl), radius/24 (radius/2xl, radius/component/window), radius/40 (radius/component/device for phone corners).
+  3 · Library fixes. Icon colours linked to color/icon/secondary. Upload button text on text/button/sm (13 → 14 px; this shows in V2–V5 too, a 1 px change). Clear names: Icon/Team, Icon/Posts, Icon/Bookmark, Progress/Step, Indicator/Circle, .Slot. Every component has a description saying when to use it. 44 radii and 52 gaps inside components linked to tokens (gaps of 2–3 → spacing/2xs, 5 → 4).
+  4 · New components (section "Patterns (V6)" on the Components page), each with text, boolean and swap properties and a description:
+      - SectionLabel, DetailField (Copy Off/On), MatchRow (Matched/Missing/Removed), Headline, RadioOption (Default/Selected), PersonRow.
+      - PostCard (Live/Paused/Draft), MatchBanner (Match/Not enough), SkeletonCard, RequestCard, MenuRow, SheetPersonCard.
+      - AppHeader now has Type=Logo (the old component; its 40 instances stay linked) and Type=Title (title text, right icon swap, show/hide).
+  5 · V6 screens and the prototype page: every repeated frame above swapped for an instance with the same content. 775 component instances on V6 now. Prototype links carried over to the new instances (281 links, up from 265).
+  6 · V6 radius and spacing linked to tokens. Off-grid values rounded down to the nearest step so nothing grows and clips (3→2, 6→4, 10→8, 14→12, 26→24 …). Cards that were radius 10 → radius/component/card (12, per DESIGN_LANGUAGE.md). Phone frames → radius/component/device (40). 25 → 24 (window).
+  7 · Stray white fills removed. Avatar shadows → effect/elevation-1. The login line's spaces are styled.
+  8 · Doc pages linked to the real tokens:
+      - Colors: 27 palette swatches and every semantic row linked to its variable, with Dark shown via the Dark mode and hex labels refreshed from the variables. 9 missing tokens added. 15 stray layers moved to the Trash page.
+      - Typography: the 12 "Aa" samples use their real styles.
+      - Spacing: radius samples linked, new tokens documented, elevation samples use the effect styles.
+      - Doc chrome uses new doc/* text styles (marked "documentation only").
+  9 · Logos and illustrations renamed to Logo/… and Illustration/… (38).
+Final test (script, V6 UI screens): 0 hard-coded colours, 0 unstyled texts (besides the iOS status bar), 0 raw shadows, 0 unlinked radius, 0 unlinked spacing. Library: 209 components, all described, 0 hard-coded colours, 0 unstyled texts, 0 raw shadows. Screenshots of every changed screen checked.
+Mistakes caught and fixed during the pass:
+  - Rounding radius 40 hit phone frames; the device token was added.
+  - Radius 10 (a tie) rounded to 8; cards were moved to 12.
+  - The new Title header came out 430 tall; fixed to 390×120.
+  - PersonRow read a tag's text as the role on 4 screens; fixed. Its role wrapped; the tag moved beside the name.
+  - A page-wide text search restyled two spaces on V2's login line; reverted.
+Not changed, on purpose:
+  - V2–V5 screens stay as they were (project rule: earlier versions are the record of the redo). Only shared components they use were fixed.
+  - The iOS status bar keeps the system font (SF Pro). It's missing on this machine, so it can't take a style.
+  - "Card Section", "Box", "Window" and "Scroll Section" stay plain frames: they're layout containers, not repeated designs.
+  - The Job Card component has one 52 px gap. Rounding it to 48 would shift V2–V5 job cards; left for Devansh.
+  - Tag text colours (#22C55E, #EF4444, #F59E0B) still fail contrast. They need a decision, because the change shows in every version.

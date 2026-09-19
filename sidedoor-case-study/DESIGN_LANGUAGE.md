@@ -136,3 +136,13 @@ empty field as a normal InputField below it. No amber box.
 Use only the sizes, steps and palette roles above. Do not introduce a new
 size, step or colour. If something seems to need one, that is a hierarchy
 problem — solve it with the existing scale.
+
+## Components and tokens · added 19 Sep 2026
+
+Everything on V6 is built from the library. Rules for anything new:
+- **Colour:** only semantic tokens (color/text/*, color/surface/*, color/border/*, color/icon/*, color/feedback/*). Palette tokens are hidden on purpose.
+- **Spacing:** spacing tokens only, on the grid 2, 4, 8, 12, 16, 20, 24, 32, 40, 48, 64.
+- **Radius:** radius/sm 4 (tags), md 8 (buttons, inputs, boxes), lg 12 (cards), xl 16 (sheets, banners), 2xl 24 (window), full (avatars, pills), device 40 (phone frames).
+- **Type:** the 12 text/* styles only. doc/* styles are for documentation pages.
+- **Shadow:** effect/elevation-1, 2 or 3 only.
+- **Patterns to reuse, not redraw:** AppHeader (Logo, Title), SectionLabel, DetailField, MatchRow, MatchBanner, Headline, PersonRow, RequestCard, PostCard, MenuRow, RadioOption, SheetPersonCard, SkeletonCard, plus V2's Button, Tag, InputField, ReferralBar, Card, BottomNav.
