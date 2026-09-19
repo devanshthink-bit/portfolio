@@ -1626,3 +1626,12 @@ Fixed (UI page and prototype, parity 75/75):
   - Track details: company logo sat on a square white box → rounded tile, same radius as cards (9 screens).
   - Track details loading: skeleton was light grey on the grey page, almost invisible → timeline and referrer placeholders are white cards; bars on the page use color/fill/tertiary.
 Open, needs a decision (asked): page-subject header in a card on some screens and flat on others; Link Page "Already asked" / "Job closed" end with no action.
+
+DECISION · 2026-09-20 · Page header sits on the grey, not in a card · Source: Devansh ("whichever you feel is the best")
+Decided: the person or company a detail screen is about sits loose on the grey page at the top; white cards hold the content below. Same as Apple's Profile/Contacts header and our Profile tab, and already how After refer, Marked as submitted, Track details and Check your request worked.
+Changed: Referral request, Not enough to judge, Skill removed, Profile updated: Person row moved out of the card, 24 above it (UI and prototype).
+Not changed: Job details. Its subject is the job; the poster row belongs to the job card, same as on the Jobs list.
+
+CHANGE · 2026-09-20 · Link page dead ends get a next step · Source: Devansh (chose "Add Get the SideDoor app")
+"You've already asked" and "This job is closed" ended with no action. Both now end with "Get the SideDoor app", pinned 40 above the bottom like Link Page/Sent (track the request / find other jobs). No prototype link, same as the Sent button (the store is outside the prototype).
+Parity: all 6 changed screens match their prototype copies.
