@@ -1415,3 +1415,14 @@ Miss: my role audit measured the gap between buttons (12 here too) but not their
 Fix: both screens now stack, primary first ("Post job", then "Save as draft"; "Save changes", then "Pause post"), 52 tall, 12 apart, hint 12 below. Screens grown to keep 40 at the bottom. UI and prototype.
 Caught while fixing: the old one-row container kept its height, which clipped the stack and squashed the buttons; set to hug and buttons back to 52. Checked on screenshots.
 Rule added to "Spacing by role": two or more buttons always stack full width, primary first.
+
+CHANGE · 2026-09-19 · Layouts that jumped when selected · Source: Devansh ("when I am selecting elements they are changing positions, aren't they responsive?… check for all the screens, this should never happen")
+Cause (saw it, script on every V6 screen, UI and prototype):
+  - 119 "Fill inside Hug" conflicts: a child set to fill a parent that sizes itself to its children. Figma resolves these differently each time it recalculates, so things move when selected.
+  - Saved positions older than the layout settings, left by scripted edits that never re-ran the layout.
+  - 118 hidden leftover layers in the state screens (the original content, hidden when the states were made). Figma does not re-lay hidden layers, so they kept stale positions.
+Fix:
+  - Conflicts resolved (28 parents set to fill, 124 children to hug/fixed). Checked every visible text before and after: the only visible change was Messages rows growing 51px each; the rows were set to fill the list's height. Rows now hug; Messages looks as before.
+  - Forced a re-layout of all 4,049 auto-layout frames in V6 (token bindings kept). One visible shift: prototype Role selection card moved 8px to match the UI page, which it now matches exactly.
+  - Deleted the 118 hidden leftovers. Each state screen now holds only what it shows.
+Re-check: 0 conflicts, 0 out-of-date layouts. The one flag left ("About the employer" logos) is a measurement quirk from the logo group's negative gap (-5.5); the render is correct.
