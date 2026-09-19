@@ -201,7 +201,7 @@ Outline is no longer used: in-common facts moved to Primary, and "Mark it" was a
 | Message → the buttons it explains (notes, info tags, errors, hints; always above, left-aligned) | 12 |
 | Text action below a button (14/500, link blue, centred). Only for leaving or postponing (Skip, Not now, Share later); another way to finish the step is a secondary button | 16 |
 | Login "Already have an account? Log in" line → last sign-in button | 12 |
-| Logo inside a white logo box (68 box) | 10 on every side; logo 48 wide, shape kept |
+| Logo box in a detail header | Same height as the text beside it (74×74); 10 padding on every side; logo 54 wide, shape kept |
 | Last element → bottom bar | ≥ 24 |
 | Last element → screen bottom (no bottom bar) | ≥ 40 |
 | First content under the top bar | 24 on lists and details, 32 on forms (V2) |

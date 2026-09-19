@@ -1713,3 +1713,7 @@ Found:     The white 68×68 company logo box in the Track details header had 0 p
 Checked by type: every Logo/* inside a filled box on V6. 9 Track details headers had 0 padding. Share sheet app tiles already had 10–14. List cards (ReferralBar) have no box of their own, so nothing touches an edge there.
 Fixed:     All 9 tiles get 10 padding on every side; logo 48 wide, height kept to its shape. UI page and 9 prototype copies. Checked by screenshot (Zepto, Google, Meta).
 Not done:  ReferralBar logos left at 68 wide. Tried padding one and it only made the logo look small on a white card. That variant is also used by V3–V5, so it was not edited.
+
+FIX · 2026-09-20 · Logo box matches the text beside it
+Found:     Track details header: logo box 68 tall, text block beside it (name, role, tag) 74 tall. Devansh: it should be the same height.
+Fixed:     All 9 boxes 74×74, still 10 padding, logo 54 wide with its shape kept. UI page and 9 prototype copies. Row stays 74; text column 278 → 272, every line still on one line. Checked by screenshot (Meta, PhonePe).
