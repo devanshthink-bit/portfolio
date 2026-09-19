@@ -145,7 +145,7 @@ Everything on V6 is built from the library. Rules for anything new:
 - **Radius:** radius/sm 4 (tags), md 8 (buttons, inputs, boxes), lg 12 (cards), xl 16 (sheets, banners), 2xl 24 (window), full (avatars, pills), device 40 (phone frames).
 - **Type:** the 12 text/* styles only. doc/* styles are for documentation pages.
 - **Shadow:** effect/elevation-1, 2 or 3 only.
-- **Patterns to reuse, not redraw:** AppHeader (Logo, Title), SectionLabel, DetailField, MatchRow, MatchBanner, Headline, PersonRow, RequestCard, PostCard, MenuRow, RadioOption, SheetPersonCard, SkeletonCard, plus V2's Button, Tag, InputField, ReferralBar, Card, BottomNav.
+- **Patterns to reuse, not redraw:** AppHeader (Logo, Title), SectionLabel, DetailField, MatchRow, MatchBanner, Headline, PersonRow, RequestCard, PostCard, MenuRow, RadioOption, SheetPersonCard, SkeletonCard, NotificationRow, ChatMessage, ChatComposer, plus V2's Button, Tag, InputField, ReferralBar, Card, BottomNav.
 
 ## Consistency rules · added 19 Sep 2026
 

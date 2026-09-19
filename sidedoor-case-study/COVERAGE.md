@@ -12,7 +12,7 @@ the answer reach the candidate without asking the referrer for more work?
 | Job | What the design has to do | Where V6 does it | Verdict |
 |---|---|---|---|
 | **J3 · referring a stranger in minutes** (C2 + C4) | Request arrives complete; fit visible; portal fields ready to copy; saying no costs one tap | Check your referral request ("Flipkart's portal also asks for · Still needed · 4"), Referral requests (ordered by match, Lower match collapsed), Referral request ("How they match", item by item), After refer (every portal field with copy), Not moving forward sheet (optional reason chips), Your rules | **Covered** |
-| **J2 · knowing what happened** (C3) | The answer reaches the candidate at one tap's cost to the referrer; silence becomes a state | Mark as submitted (last tap of Refer), "Seen it move?" weekly sheet, candidate timelines (Sent → Selected / Not selected), "Heard from Google? Mark it", No answer after 7 days (request given back, ask someone else) | **Mostly covered, 2 gaps** (below) |
+| **J2 · knowing what happened** (C3) | The answer reaches the candidate at one tap's cost to the referrer; silence becomes a state | Mark as submitted (last tap of Refer), "Seen it move?" weekly sheet, candidate timelines (Sent → Selected / Not selected), "Heard from Google? Mark it", No answer after 7 days (request given back, ask someone else) | **Covered** (gaps 1–2 built) |
 | **J1 · asking where it will be read** (C1 + C5) | Only people willing to refer; fit shown before asking; limits so referrers aren't flooded | Jobs ("Jobs with someone who refers"), match on every card, "Avinash is full this week", "2 of 5 referral requests left this week", Suggested for this job + "Let referrers find me" | **Covered** |
 
 ## The main path (BRIEF.md, 7 steps)
@@ -30,7 +30,7 @@ on purpose, LOG V4 Fix 3), Out of date (Profile updated, Fit checked again). **A
 
 Referrers turning off requests must not rise: Pause post, "Up to 10 requests a week", candidate weekly limit. **Built.**
 
-## Gaps · things the plan promises that V6 does not show
+## Gaps found · all 4 built on 19 Sep 2026 (see LOG.md)
 
 1. **The candidate never sees a "Not moving forward".** The list shows the tag (Paytm), but there is no Referral
    request (candidate) state for it, with the reason if the referrer gave one. BRIEF.md: "the candidate sees it at once,
