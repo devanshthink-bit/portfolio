@@ -1087,3 +1087,27 @@ Found:    Figma only links top-level frames. V6 screens sit inside section frame
 Changed:  New page "🔗 V6 Prototype" with top-level copies of 61 V6 screens (the main flows plus the new states). UI Screens is untouched. 265 links: login → role → both onboardings; Jobs → Job → Check your request → Just sent → tracking; Post job → Live → Referral requests → Referral request → Refer → Mark as submitted; Update sheet, Not moving forward and Share sheets as overlays; every bottom tab; every back arrow; profile switch LIVE ↔ PAUSED; link page upload → details → sent.
 Starting points: 1 Sidedoor app (from Login), 2 Link page, 3 Referrer requests, 4 Candidate jobs.
 Limits:   The copies are a snapshot. If a V6 screen changes, recopy it. Sheets open centred, because the API can't set overlay position; set "Bottom" on the three sheets in Figma's Prototype panel. Error and loading states are on the page but not on the happy path.
+
+CRITIQUE · 2026-09-19 · V6 Manage your posts · Source: Devansh asked for a senior review
+Found:
+  - The screen was built around editing, the rarest action. Nothing showed which post has new requests, the reason a referrer opens this tab. (worked it out)
+  - Four filled blue Edit buttons. DESIGN_LANGUAGE.md: blue means "the one thing to tap". (saw it)
+  - The Flipkart logo repeated on every card. A referrer posts for one company, so it told them nothing and took a quarter of each card. (saw it)
+  - The Live/Paused tag and the switch said the same thing. (saw it)
+  - The Draft card didn't say why it was a draft. Drafts exist for a missing job ID (V6 R3, n70). (saw it)
+  - "2:36 pm" didn't say what happened at that time. The job ID, which referrers use on their portal, was missing (n70). (saw it)
+
+DECISION · 2026-09-19 · V6 (in place, Devansh: "yes") · Manage your posts shows activity first
+Decided:  Each card shows the title with the switch, then status in words plus the job ID ("Live · Job ID 184223"), then activity ("5 new · 8 referred"), with "5 new" in blue as the one thing to tap and a small pencil for Edit. The logo shows once, as "Flipkart · 4 posts" above the list. Order: new requests first, then live, paused, draft. Draft reads "Draft · Add the job ID to post" with a blue "Finish". Paused reads "1 still open", because pausing keeps requests that already came in (BRIEF).
+Because:
+  - The referrer's job here is "which post needs me?" Activity answers it. Editing is rare. (worked it out)
+  - One blue action per card, per DESIGN_LANGUAGE.md. (saw it)
+  - Job ID is how referrers match a post to their portal (n70). (saw it)
+  - Status stays in words ("Live", "Paused"), not the switch colour alone ("Clear": status in words, not colour). (saw it)
+Not built: "6 of 10 this week" per post (the weekly limit). Useful, but it adds clutter; left out unless Devansh wants it.
+Test: taps from Posts into Referral requests versus into Edit. If Edit is still used most, the order is wrong. (guessing until measured)
+
+CHANGE · 2026-09-19 · V6 Manage your posts rebuilt
+Changed: four new Post Card frames built fresh (white, radius 10, elevation-1, padding 16): title text/heading/sm with a Switch (Status On/Off), status and job ID text/label/sm secondary, activity text/label/md with the blue link colour on the tappable part, and V2's edit-2-fill pencil. Section label "Flipkart · 4 posts" copied from the Referral requests label. Cards 16 apart. The + button, removed by mistake with the old list, was restored from V5 and set 8 above the bottom of the list.
+Prototype: the copy on "🔗 V6 Prototype" was replaced and 21 incoming links repointed. Cards open Referral requests (paused post → the paused state), Finish → Check your job post, pencils → Edit your job post, + → Add the job. The Product Manager card isn't linked, because there's no requests screen for that job.
+Checked: screenshots; nothing clipped.
