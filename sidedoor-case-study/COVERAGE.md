@@ -45,8 +45,10 @@ Referrers turning off requests must not rise: Pause post, "Up to 10 requests a w
 
 ## Open decisions, not gaps
 
-From ATTACK.md and BRIEF.md: a candidate who skipped the resume taps Ask (S5); the same person asked twice from the app
-(S9); a referrer undoing a wrong stage; duplicate referral at the same company. Menu items with no screen (Saved jobs,
+S5 (skipped resume taps Ask) and S9 (asking the same person twice from the app) were decided and built on 19 Sep 2026.
+
+
+From ATTACK.md and BRIEF.md: a referrer undoing a wrong stage; duplicate referral at the same company. Menu items with no screen (Saved jobs,
 Settings, Help, Your links to share) are outside the problem statement.
 
 ## What "correct" means here

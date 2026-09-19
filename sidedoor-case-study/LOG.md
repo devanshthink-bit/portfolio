@@ -1507,3 +1507,20 @@ UI and prototype.
 
 CHANGE · 2026-09-19 · Filled link icon · Source: Devansh ("make the link icon filled in referrer profile")
 New icon link-fill (Icons frame, next to link): two chain links, 20 in a 24 box, color/icon/secondary, scales with its box. "Your links to share" now uses it, so all five Profile rows use filled icons.
+
+DECISION · 2026-09-19 · S5: a candidate with no resume taps Ask · Source: Devansh ("design what is the best what a sr product designer would do")
+Decided:  Ask with no resume opens a sheet, "Add your resume to ask Nithin": "Flipkart's portal asks for it. We fill in your details from it, and you check them before anything is sent." The same upload block as onboarding (Upload file / Paste link), "Saved for your next requests too", and "Not now". After upload the candidate lands on Check your referral request with details filled.
+Rejected: (a) letting them send without a resume: the referrer's portal needs the file, so the request would arrive incomplete, which breaks J3 (a request a stranger can act on in minutes). (b) Sending them back to onboarding: loses the job they chose and feels like a punishment. (c) Hiding Ask until a resume exists: they can't tell why they can't ask.
+Because:  asking at the moment of intent, in context, costs one step and keeps their place; the "Skip for now" path now ends somewhere.
+Also:     the Job screen in this state shows "Add resume to see match" (neutral), the same as the Jobs list.
+Built:    Candidate/Job Screen/Skipped Resume and Candidate/Add Resume To Ask Sheet (States flow + prototype: Jobs/Skipped → Job → Ask → sheet; Upload file → Check your referral request; Not now closes).
+How sure: worked it out.
+
+DECISION · 2026-09-19 · S9: asking the same person twice from the app · Source: Devansh ("S9 - OK")
+Built: Candidate/Job Screen/Already Asked. The Ask button becomes "View your request" (goes to Your referral requests), with the hint "You asked Nithin today. One request per job." 12 under it. Same rule as the link page's "Already asked".
+Component: the Job card got a hidden "Hint" line under its buttons (Show hint off by default), in a vertical group so the Skip/Request row keeps its layout. The row's gap is now bound to spacing/component/gap/md (12, same as the Candidate card). I had bound it to spacing/md while adding the hint; the sibling variant uses 12 too, so the value most likely didn't change.
+
+FIX · 2026-09-19 · Prototype: referrer home bell opened the share sheet
+When the header icon on referrer home became the bell, its old tap action (open "Share your link") stayed. All 10 bell/header hotspots on the 5 referrer-home prototype screens now go to Notifications. Profile → "Your links to share" now opens the share sheet.
+Also: Not enough to judge fell to 834 tall after flattening its card; back to 844.
+Final: 0 on every check; all 74 prototype frames match their UI twins.

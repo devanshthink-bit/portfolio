@@ -161,7 +161,7 @@ Severity is graded against each flow's job: **B** blocker, **M** major, **m** mi
 | Wrong | Job closed while it's open on screen | "This job is closed" before asking | Not designed (attack S11) | m |
 
 ### Asking (Check your referral request)
-Covered in the first pass (S1–S13): long names, date error, sending state and no-requests-left are built. **Open:** S5 (skipped resume taps Ask) and S9 (asking the same person twice from the app).
+Covered in the first pass (S1–S13): long names, date error, sending state and no-requests-left are built. ~~Open: S5 and S9~~ Built 19 Sep 2026 (see LOG.md): S5 → "Add your resume to ask Nithin" sheet; S9 → Job screen "Already asked" state.
 
 ### Tracking (Your referral requests → Track details)
 | Kind | Throw | Expected | Actual | |
@@ -246,7 +246,7 @@ Covered in the first pass: long names and skills, Undo after Refer. **Open:** S6
 **Deliberately not now:**
 - Login cancelled and offline everywhere: need platform decisions.
 - Link page upload progress: covered by the Reading pattern once built.
-- S5 and S9: need product decisions.
+- S5 and S9: decided and built 19 Sep 2026 (LOG.md).
 - All minors.
 
 ## Whole-app fixes built · 19 Sep
