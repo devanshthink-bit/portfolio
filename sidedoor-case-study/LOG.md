@@ -1635,3 +1635,9 @@ Not changed: Job details. Its subject is the job; the poster row belongs to the 
 CHANGE · 2026-09-20 · Link page dead ends get a next step · Source: Devansh (chose "Add Get the SideDoor app")
 "You've already asked" and "This job is closed" ended with no action. Both now end with "Get the SideDoor app", pinned 40 above the bottom like Link Page/Sent (track the request / find other jobs). No prototype link, same as the Sent button (the store is outside the prototype).
 Parity: all 6 changed screens match their prototype copies.
+
+FIX · 2026-09-20 · Track details header, loading gaps, referrals icon · Source: Devansh ("do them", "why use network icon")
+  - Track details (9 screens): the status tag sat right of the job title and squeezed it ("Sr. Product Designer" wrapped beside "Not moving forward"). The tag now sits under the title, the same as on the Your referral requests list cards.
+  - Track details loading: gaps were 12; now 20 inside the top block and 24 before the referrer card, the same as the loaded screen.
+  - "What your referrals reached" used chart.bar.fill, which reads as phone signal bars. New SF/flag.fill (SF Pro glyph 0x2ca, built like the other SF components) — a flag for milestones reached. Swapped on Your referrals and Your referrals/Updated.
+UI page and prototype; all 14 changed screens match.
