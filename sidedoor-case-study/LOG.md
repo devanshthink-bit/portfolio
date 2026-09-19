@@ -1732,3 +1732,8 @@ FIX · 2026-09-20 · Last pencils replaced by "Edit"
 Found:     Manage your posts cards still had a pencil icon, though section headers already use "Edit" text (iOS patterns pass). Devansh caught it. A sweep of V6 found one more: a pencil badge on the Edit profile photo.
 Fixed:     PostCard (V6-only component, Live and Paused variants): pencil → "Edit", text/label/md, color/text/link, right end of the activity row. Edit profile: pencil badge removed; "Edit" under the photo, 8 below, centred, same style (as in iOS Contacts). UI page and prototype; screenshots match. 0 pencil icons left in V6.
 Note:      The cloned "Edit" text got stuck outside the row (Figma layout would not update); rebuilt as a new text node.
+
+DECISION · 2026-09-20 · Underline "Log in"
+Decided:   "Log in" in "Already have an account? Log in" is underlined, on the UI login screen and its prototype copy. Checked by screenshot.
+Because:   Devansh asked. It is a link inside a sentence, so the underline also means it no longer relies on colour alone.
+Checked:   Swept V6 for other link-coloured words inside a sentence: only "5 new" and "1 still open" on Manage posts, which are blue counts, not links, so left as is.
