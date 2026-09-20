@@ -22,12 +22,10 @@ import {
   DetailField,
 } from "../ui";
 
-/** The Apple mark, drawn white so it reads on the black button. */
+/** Figma's own Apple vector, not a redraw. */
 function AppleMark() {
   return (
-    <svg width="20" height="24" viewBox="0 0 20 24" fill="#fff" aria-hidden="true" style={{ display: "block" }}>
-      <path d="M16.6 12.7c0-2.8 2.3-4.2 2.4-4.2-1.3-1.9-3.3-2.2-4.1-2.2-1.7-.2-3.4 1-4.3 1s-2.2-1-3.7-1C5.1 6.3 3.3 7.4 2.3 9.2c-2 3.5-.5 8.6 1.4 11.4.9 1.4 2 2.9 3.5 2.9 1.4-.1 1.9-.9 3.6-.9s2.2.9 3.7.9c1.5 0 2.5-1.4 3.4-2.8 1.1-1.6 1.5-3.1 1.5-3.2-.1 0-2.9-1.1-2.8-4.4ZM13.8 4.3c.8-.9 1.3-2.2 1.1-3.5-1.1 0-2.5.8-3.3 1.7-.7.8-1.3 2.1-1.2 3.4 1.3.1 2.5-.6 3.4-1.6Z" />
-    </svg>
+    <Image src="/images/sidedoor/apple-mark.svg" alt="" width={24} height={24} style={{ width: 24, height: 24, display: "block" }} unoptimized />
   );
 }
 
@@ -72,14 +70,14 @@ export function Login() {
           <div style={{ display: "flex", flexDirection: "column", gap: 8, width: "100%" }}>
             <Button
               onClick={() => nav.reset("role")}
-              icon={<Image src="/images/sidedoor/linkedin.png" alt="" width={48} height={48} style={{ width: 24, height: 24 }} />}
+              icon={<Image src="/images/sidedoor/linkedin.svg" alt="" width={24} height={24} style={{ width: 24, height: 24 }} unoptimized />}
             >
               Sign in with LinkedIn
             </Button>
             <Button
               type="secondary"
               onClick={() => nav.reset("role")}
-              icon={<Image src="/images/sidedoor/google-icon.png" alt="" width={64} height={66} style={{ height: 24, width: "auto" }} />}
+              icon={<Image src="/images/sidedoor/google-icon.svg" alt="" width={24} height={24} style={{ width: 24, height: 24 }} unoptimized />}
             >
               Sign in with Google
             </Button>
