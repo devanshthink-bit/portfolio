@@ -35,13 +35,26 @@ type Req = {
   when: string;
   common?: { logo?: string; icon?: "building.2.fill"; text: string };
   lower?: boolean;
+  /** V6 draws one lower-match request whose resume says too little to judge fit. */
+  thin?: { city: string; years: string; notice: string; work: string[]; role: string; company: string; when: string; resume: string };
 };
 
 const REQUESTS: Req[] = [
   { id: "abhinav", name: "Abhinav Saxena", role: "Product Designer, Blinkit", match: "4 of 7 skills · 3 yrs", when: "Today", common: { logo: "makemytrip", text: "Both worked at MakeMyTrip" } },
   { id: "arpita", name: "Arpita Singh", role: "Product Designer, Myntra", match: "4 of 7 skills · 3 yrs", when: "Yesterday", common: { icon: "building.2.fill", text: "Both studied at NID" } },
   { id: "aviral", name: "Aviral Dixit", role: "UX Designer, Razorpay", match: "3 of 7 skills · 4 yrs", when: "Tuesday" },
-  { id: "rahul", name: "Rahul Nair", role: "Visual Designer, Dunzo", match: "2 of 7 skills · 1 yr", when: "Monday", lower: true },
+  {
+    id: "amit",
+    name: "Amit Patel",
+    role: "Visual Designer",
+    match: "Not enough to judge",
+    when: "2 days ago",
+    lower: true,
+    thin: {
+      city: "Pune, MH", years: "2 years", notice: "60 days", work: ["Full time", "Remote"],
+      role: "Visual Designer", company: "Freelance", when: "2023–Present", resume: "Amit_Patel_Resume.pdf",
+    },
+  },
   { id: "nisha", name: "Nisha Rao", role: "UI Designer, Urban Company", match: "2 of 7 skills · 2 yrs", when: "12 Sep", lower: true },
 ];
 
@@ -278,6 +291,69 @@ export function ReferralRequest({ id }: { id: string }) {
               {state.reason ? `Reason given: ${state.reason}.` : "No reason given."} It doesn’t count against their week.
             </p>
           </Card>
+        </div>
+      </Screen>
+    );
+
+  if (r.thin)
+    return (
+      <Screen title="Referral request" back>
+        <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
+          <PersonHead name={r.name} role={r.role} tag={<Tag>Sent {r.when}</Tag>} />
+          {/* Figma's "Not Enough To Judge": the same Window, but with no shared history, no fit
+              rows and no projects — just the facts, one line saying why, and the decision. */}
+          <div className="sd-card" style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
+              <Fact icon="mappin.and.ellipse">{r.thin.city}</Fact>
+              <Fact icon="calendar">{r.thin.years}</Fact>
+              <Fact icon="hourglass">{r.thin.notice}</Fact>
+            </div>
+            <div style={{ display: "flex", gap: 8 }}>
+              {r.thin.work.map((w) => (
+                <Tag key={w}>{w}</Tag>
+              ))}
+            </div>
+            <Section label="How they match" icon="lightbulb.fill" end={<Tag>Not enough to judge</Tag>}>
+              <p className="t-body muted">
+                Not enough in their resume to judge fit for this job. Read it before you decide.
+              </p>
+            </Section>
+            <Section label="Experience" icon="briefcase.fill">
+              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                {/* Figma uses a grey r8 placeholder tile with a briefcase where a logo would go */}
+                <span
+                  style={{
+                    width: 40, height: 40, flex: "0 0 auto", borderRadius: "var(--sd-r-md)",
+                    background: "var(--sd-n100)", display: "grid", placeItems: "center",
+                  }}
+                >
+                  <Icon name="briefcase.fill" size={20} style={{ color: "var(--sd-icon-2)" }} />
+                </span>
+                <span style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", minWidth: 0 }}>
+                  <span className="t-h-sm">{r.thin.role}</span>
+                  <span className="t-label-sm muted">{r.thin.company}</span>
+                </span>
+                <span className="t-label-sm muted" style={{ flex: "0 0 auto" }}>{r.thin.when}</span>
+              </div>
+            </Section>
+            <Section label="Resume" icon="paperclip">
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span className="t-label" style={{ flex: 1 }}>{r.thin.resume}</span>
+                <button aria-label="Open resume" style={{ display: "flex" }}>
+                  <Icon name="arrow.up.right.square" size={20} style={{ color: "var(--sd-icon-2)" }} />
+                </button>
+              </div>
+            </Section>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              <Button onClick={() => dispatch({ t: "handle", id: r.id, stage: "referred" })}>Refer</Button>
+              <Button
+                type="secondary"
+                onClick={() => nav.openSheet("notMoving", { id: r.id, name: r.name, role: r.role, match: r.match })}
+              >
+                Not moving forward
+              </Button>
+            </div>
+          </div>
         </div>
       </Screen>
     );
