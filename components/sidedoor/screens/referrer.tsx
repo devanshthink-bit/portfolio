@@ -71,7 +71,9 @@ export function ReferralRequests() {
 
   return (
     <Screen largeTitle="Referral requests" right={<BellButton unread={unread} />}>
-      <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
+      {/* Figma's Card Section on this screen has a gap of 8, not 24: the job line, the request
+          list and the suggested block sit close together. */}
+      <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 8 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <Icon name="briefcase.fill" size={16} style={{ color: "var(--sd-icon-2)" }} />
           <span className="t-h-xs" style={{ flex: 1 }}>
@@ -123,20 +125,24 @@ export function ReferralRequests() {
             action={<Button type="secondary" onClick={() => nav.push("yourReferrals")}>See your referrals</Button>}
           />
         ) : (
-          <>
-            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-              {outstanding.map((r) => (
-                <RequestCard key={r.id} r={r} onClick={() => nav.push("referralRequest", { id: r.id })} />
-              ))}
-            </div>
-
+          // Figma's Request List is one 16-gap column: the cards and the "Lower match" row are
+          // siblings inside it, which is what puts that row at y618 and ends the list at 650.
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            {outstanding.map((r) => (
+              <RequestCard key={r.id} r={r} onClick={() => nav.push("referralRequest", { id: r.id })} />
+            ))}
             {lower.length > 0 && (
-              <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                <button onClick={() => setOpen(!open)} style={{ display: "flex", alignItems: "center", gap: 6, minHeight: 44 }}>
-                  <span className="t-h-xs">Lower match ({lower.length})</span>
+              <>
+                {/* The row runs the full width with 4 of padding top and bottom, a Medium 14/20
+                    link and a 24 chevron pushed to the right edge. */}
+                <button
+                  onClick={() => setOpen(!open)}
+                  style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, width: "100%", padding: "4px 0" }}
+                >
+                  <span className="t-label link">Lower match ({lower.length})</span>
                   <Icon
                     name="chevron.down"
-                    size={14}
+                    size={24}
                     style={{ color: "var(--sd-icon-2)", transform: open ? "rotate(180deg)" : "none", transition: "transform 200ms" }}
                   />
                 </button>
@@ -144,15 +150,16 @@ export function ReferralRequests() {
                   lower.map((r) => (
                     <RequestCard key={r.id} r={r} onClick={() => nav.push("referralRequest", { id: r.id })} />
                   ))}
-              </div>
+              </>
             )}
-          </>
+          </div>
         )}
 
+        {/* Figma's "Suggested For This Job" frame carries 16 of top padding. */}
         {phase === "ok" && (
-          <Section label="Suggested for this job" icon="lightbulb.fill">
+          <Section label="Suggested for this job" icon="lightbulb.fill" style={{ paddingTop: 16 }}>
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              <p className="t-label-sm muted">They match this job and chose to be found.</p>
+              <p className="t-label muted">They match this job and chose to be found.</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                 {SUGGESTED.map((r) => (
                   <RequestCard
@@ -162,7 +169,7 @@ export function ReferralRequests() {
                       invited.includes(r.name) ? (
                         <Tag>Invited</Tag>
                       ) : (
-                        <SmallButton onClick={() => dispatch({ t: "invite", v: r.name })}>Invite</SmallButton>
+                        <TextButton onClick={() => dispatch({ t: "invite", v: r.name })}>Invite</TextButton>
                       )
                     }
                   />
@@ -184,7 +191,9 @@ function RequestCard({ r, onClick, end }: { r: Req; onClick?: () => void; end?: 
           <Avatar name={r.name} />
           <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1 }}>
             <span className="t-h-sm">{r.name}</span>
-            <span className="t-label-sm muted">{r.role}</span>
+            {/* Figma's RequestCard role line is Medium 14/20, which is what makes the text
+                column 100 tall and the card 132. */}
+            <span className="t-label muted">{r.role}</span>
             {/* Figma RequestCard Tags frame: 4px gap, and the shared-history line is a
                 Plain tag — 22 tall with a 14px mark, not a bare 16px span. */}
             <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>

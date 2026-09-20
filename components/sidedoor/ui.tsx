@@ -340,9 +340,9 @@ export function SectionLabel({ icon, children, end }: { icon?: IconName; childre
   );
 }
 
-export function Section({ label, icon, end, children }: { label?: string; icon?: IconName; end?: ReactNode; children: ReactNode }) {
+export function Section({ label, icon, end, children, style }: { label?: string; icon?: IconName; end?: ReactNode; children: ReactNode; style?: CSSProperties }) {
   return (
-    <section className="sd-section">
+    <section className="sd-section" style={style}>
       {label && (
         <SectionLabel icon={icon} end={end}>
           {label}
