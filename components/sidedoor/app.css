@@ -392,6 +392,13 @@
 /* Figma's NotificationRow: 16 of padding above and below a 60 block, a 12 gap, no rule. */
 .sd-notifrow { padding: 16px 0; gap: 12px; align-items: flex-start; min-height: 92px; }
 .sd-notifrow + .sd-notifrow::before { display: none; }
+/* Figma clamps a notification to two lines and ends it with an ellipsis. */
+.sd-notifrow .t-body {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 .sd-list:has(> .sd-notifrow) { padding: 0 16px; }
 .sd-row-chev { margin-left: auto; color: var(--sd-icon-2); }
 .sd-divider { height: 0.5px; background: rgba(60, 60, 67, 0.2); margin-left: 16px; }

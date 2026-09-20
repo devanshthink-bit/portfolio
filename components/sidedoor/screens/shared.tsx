@@ -39,10 +39,13 @@ const CANDIDATE_CHATS: Chat[] = [
 ];
 
 const REFERRER_CHATS: Chat[] = [
-  { name: "Abhinav Saxena", last: "Thanks for referring me, Nithin!", when: "3:28 pm", unread: 1 },
-  { name: "Arpita Singh", last: "I have 3 yrs at Myntra, happy to share more.", when: "Yesterday" },
-  { name: "Himani Kaushik", last: "You made the referral easy. I start next month!", when: "Monday" },
+  { name: "Abhinav Saxena", last: "Sure, can we get on a quick call?", when: "2:30 pm", unread: 2 },
+  { name: "Aarush Gupta", last: "Thanks, Nithin.", when: "10:17 am", unread: 3 },
+  { name: "Ayesha Sharma", last: "It was great, will let you know updates.", when: "Yesterday", unread: 1 },
+  { name: "Himani Kaushik", last: "Okay, I will ping her.", when: "Tuesday" },
 ];
+
+const isReferrerRole = (r: string | null) => r === "referrer";
 
 export function Messages() {
   const nav = useNav();
@@ -51,8 +54,12 @@ export function Messages() {
   const base = role === "referrer" ? REFERRER_CHATS : CANDIDATE_CHATS;
   const all = force === "messages.empty" ? [] : base;
   const shown = all.filter((c) => c.name.toLowerCase().includes(q.toLowerCase()));
+  // For the candidate this is a tab root with the big title. The referrer reaches it from their
+  // profile, and Figma draws that one as a pushed screen: a small centred title and a back
+  // chevron, with no bell.
+  const asTab = !isReferrerRole(role);
   return (
-    <Screen largeTitle="Messages" right={<BellButton unread={unread} />}>
+    <Screen {...(asTab ? { largeTitle: "Messages", right: <BellButton unread={unread} /> } : { title: "Messages", back: true })}>
       <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 16 }}>
         <div className="sd-search">
           <Icon name="magnifyingglass" size={22} style={{ color: "var(--sd-placeholder)" }} />
@@ -269,9 +276,10 @@ const CANDIDATE_NOTIF: Notif[] = [
 ];
 
 const REFERRER_NOTIF: Notif[] = [
-  { who: "Abhinav Saxena", text: "Abhinav Saxena asked you for a referral. Everything is filled in.", at: "10:04 am", go: "abhinav" },
-  { who: "Arpita Singh", text: "Arpita Singh is in interviews at Flipkart.", at: "Yesterday", go: "arpita" },
-  { who: "Aviral Dixit", text: "Aviral Dixit was submitted 12 days ago. Seen it move?", at: "Monday", go: "aviral" },
+  { who: "Abhinav Saxena", text: "Abhinav Saxena sent a referral request for Interaction Designer. 4 of 7 skills · 3 yrs.", at: "10:40 am", go: "abhinav", unread: true },
+  { who: "Aviral Dixit", text: "Seen it move? You submitted Aviral Dixit 12 days ago.", at: "9:00 am", go: "aviral", unread: true },
+  { who: "Arpita Singh", text: "Arpita Singh sent a referral request for Interaction Designer. 4 of 7 skills · 3 yrs.", at: "Yesterday", go: "arpita" },
+  { who: "Himani Kaushik", text: "Himani thanked you: “You made the referral easy. I start next month!”", at: "Tuesday", go: "abhinav" },
 ];
 
 export function Notifications() {
