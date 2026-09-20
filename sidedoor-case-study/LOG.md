@@ -2202,3 +2202,66 @@ rule rows 12 apart, Figma 8.
 
 Verified on localhost, not the Vercel preview — the preview redirects to a Vercel
 login I will not sign into on Devansh's behalf.
+
+## AUDIT · 2026-09-21 · Screens 7–13 · Onboarding done, Explore under way
+
+**Screen 7 · Check your details (5247:18517)** — Experience and Projects rows were
+separated by spacer divs, so each gap was the box's 12 plus the spacer plus another
+12. Figma wraps those rows in their own 16-gap frame. The LinkedIn field carried the
+generic link symbol; Figma uses the LinkedIn logo.
+
+**Screen 8 · Job posted (5247:18561)** — the white card was missing entirely: mark,
+heading and line were loose on the grey page, 8 apart, with a hand-built 44 blue
+circle instead of Figma's 40 filled check-circle. The copy mark was in the section
+label at 18; Figma puts it inside the box at 20. The link read blue where Figma
+paints it #3b3f46.
+
+**Screen 9 · Jobs (5247:18584)** — see the avatars note below. Everything else
+already matched.
+
+**Screen 10 · Referral requests (5247:18631)** — card role line 12/16 where Figma is
+14/20 (card 128 vs 132); column gap 24 where Figma is 8; "Lower match (2)" a dark
+heading where Figma has a link with a 24 chevron at the right edge, and it belongs
+inside the 16-gap list; "Suggested" missing its 16 top padding; "Invite" a bordered
+pill where Figma has a plain link.
+
+**Screen 11 · Job details (5247:18687)** — Figma has a 326x175 #2563eb panel with the
+company wordmark centred in it. The code drew a small logo on white. The three rating
+marks were missing in both places. Content column was 338 at x32; Figma 326 at x38.
+Ad-hoc 8/16/24 spacers where Figma has a uniform 16. No rule under the CompanyRow.
+Location row left-packed with dark labels. The action button was pinned to the screen;
+Figma has it inside the card at 322.
+
+**Screen 12 · Check your request (5247:18695)** — fields 12 apart where Figma has 24,
+which put everything below 48 too high. Short-note box was the 100-tall multiline
+input; Figma's is 44. "2 of 5 referral requests left" a filled chip where Figma draws
+it plain.
+
+**Screen 13 · Referral request (5247:18762)** — five separate cards where Figma has
+one 370x1464 Window holding everything, including the two decision buttons.
+
+### Shared fixes from this run
+
+- **Avatars.** Figma leads every card with a round 44 photo of the person. The code
+  showed a white tile with the company logo. Censused V6: 16 people across 96 card
+  instances — job cards, request cards, chat rows, notifications, profile headers.
+  Exported all 16 portraits at 88x88 and taught Avatar to resolve a photo from the
+  name, so every list picks up the right face.
+- **Tag marks were 16.** Figma's are 14, everywhere.
+- **Bullet lists.** Figma draws one text node with the bullet inline and no gap. The
+  code used a <ul> with a 4 gap and a hanging indent, so every long section ran tall.
+- **Notes hug their text** wherever they sit.
+
+### Open, needs Devansh
+
+- Some exported portraits are AI stock images with a "stablediffusionweb.com"
+  watermark burned in — Nithin Agarwal's is one. At 44px it is faint but visible on
+  the bottom edge, and they now sit in a public repo. They want replacing with
+  licensed photos before this goes to main.
+- The Verify screen still carries the "the code is 482013" help line Figma has no
+  node for. It is the only way past that screen in the prototype.
+
+Two temporary clones were made in Figma to export the job banner assets; both were
+deleted and the page has no leftovers.
+
+Verified on localhost, not the Vercel preview.
