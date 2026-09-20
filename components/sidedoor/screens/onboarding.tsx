@@ -193,7 +193,7 @@ function DocUpload({
   );
   const mark = (label: ReactNode) => (
     <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }}>
-      <Image src="/images/sidedoor/doc-icon.png" alt="" width={44} height={51} style={{ width: 44, height: "auto" }} />
+      <Image src="/images/sidedoor/doc-icon.png" alt="" width={44} height={51} style={{ width: 44, height: 51.1 }} />
       <span className="t-h-xs">{label}</span>
     </div>
   );
@@ -236,7 +236,8 @@ function DocUpload({
           Paste link
         </Button>
       </div>
-      <p className="t-label-sm muted">PDF, DOCX or TXT · up to 10 MB</p>
+      {/* Figma runs the format line the full 306 wide and centres it, rather than hugging. */}
+      <p className="t-label-sm muted" style={{ width: "100%", textAlign: "center" }}>PDF, DOCX or TXT · up to 10 MB</p>
     </>
   );
 }
