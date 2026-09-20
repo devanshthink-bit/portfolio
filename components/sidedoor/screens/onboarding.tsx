@@ -109,6 +109,11 @@ export function RoleSelection() {
     dispatch({ t: "role", v: role });
     nav.push(role === "referrer" ? "verifyEmail" : "uploadResume");
   };
+  /**
+   * Figma OnboardingCard: a 370x310 white r12 card padded 16, its illustration and the two
+   * lines of text 24 apart and centred in the leftover height. The 310 is fixed — both cards
+   * fill the 636 between them — which is what puts the first illustration at y241, not y206.
+   */
   const card = (img: string, w: number, h: number, head: string, sub: string, go: () => void) => (
     <button
       onClick={go}
@@ -116,15 +121,17 @@ export function RoleSelection() {
         background: "#fff",
         borderRadius: "var(--sd-r-lg)",
         padding: 16,
+        height: 310,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        justifyContent: "center",
         gap: 24,
         width: "100%",
       }}
     >
-      <Image src={`/images/sidedoor/${img}.png`} alt="" width={w} height={h} style={{ width: w, height: "auto" }} />
-      <span style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      <Image src={`/images/sidedoor/${img}.png`} alt="" width={w} height={h} style={{ width: w, height: h }} />
+      <span style={{ display: "flex", flexDirection: "column", gap: 8, width: "100%", textAlign: "center" }}>
         <span className="t-h-sm">{head}</span>
         <span className="t-label muted">{sub}</span>
       </span>
@@ -132,11 +139,13 @@ export function RoleSelection() {
   );
   return (
     <Screen title="Choose your role" back onBack={() => nav.reset("login")}>
-      <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24, alignItems: "center" }}>
+      {/* Figma Card Section: 32 of top padding, 64 of bottom, 24 between the line and the cards.
+          The line runs the full width and reads from the left — it is not centred. */}
+      <div style={{ paddingTop: 32, paddingBottom: 64, display: "flex", flexDirection: "column", gap: 24 }}>
         <p className="t-label muted">You can change this later</p>
         <div style={{ display: "flex", flexDirection: "column", gap: 16, width: "100%" }}>
           {card("role-referrer", 109, 100, "Refer someone", "I work at a company and can refer candidates", () => pick("referrer"))}
-          {card("role-candidate", 114, 103, "Get referred", "I’m looking for jobs through referrals", () => pick("candidate"))}
+          {card("role-candidate", 109, 98.48, "Get referred", "I’m looking for jobs through referrals", () => pick("candidate"))}
         </div>
       </div>
     </Screen>
