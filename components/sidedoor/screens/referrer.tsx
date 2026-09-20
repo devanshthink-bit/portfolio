@@ -111,12 +111,32 @@ export function ReferralRequests() {
             }
           />
         ) : force === "reqs.empty" ? (
-          <Empty
-            icon="tray"
-            title="No requests yet"
-            body="Share your link with people who already messaged you about this job."
-            action={<Button onClick={() => nav.openSheet("shareLink")}>Share your link</Button>}
-          />
+          // Figma's empty screen is not the generic Empty block: it is the line, the referrer's
+          // link in a 44-tall box, and a Copy link button — and it shows no suggested people.
+          <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+            <p className="t-label muted">
+              No referral requests yet. Share your link when someone messages you about this job.
+            </p>
+            <Section label="Your link" icon="link">
+              <div
+                style={{
+                  background: "var(--sd-n0)",
+                  borderRadius: "var(--sd-r-md)",
+                  padding: "12px 16px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                }}
+              >
+                <span className="t-label" style={{ flex: 1 }}>sidedoor.app/r/nithin-agarwal</span>
+                <Icon name="doc.on.doc.fill" size={20} style={{ color: "var(--sd-icon-2)" }} />
+              </div>
+            </Section>
+            <Actions>
+              <Note>Paste it in the LinkedIn or WhatsApp chat</Note>
+              <Button onClick={() => nav.openSheet("shareLink")}>Copy link</Button>
+            </Actions>
+          </div>
         ) : allHandled ? (
           <Empty
             icon="checkmark.seal.fill"
@@ -155,8 +175,9 @@ export function ReferralRequests() {
           </div>
         )}
 
-        {/* Figma's "Suggested For This Job" frame carries 16 of top padding. */}
-        {phase === "ok" && (
+        {/* Figma's "Suggested For This Job" frame carries 16 of top padding, and the empty
+            screen does not show it at all. */}
+        {phase === "ok" && force !== "reqs.empty" && (
           <Section label="Suggested for this job" icon="lightbulb.fill" style={{ paddingTop: 16 }}>
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               <p className="t-label muted">They match this job and chose to be found.</p>
