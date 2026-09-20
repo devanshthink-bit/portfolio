@@ -35,7 +35,11 @@ const SCREENS_WITHOUT_TABS = new Set([
   "jobLive", "chat", "editDetails", "editProfileReferrer", "editPost", "linkPage",
 ]);
 
-/** Which tab is showing, lifted out of the tab root so the persistent bar can read it. */
+/**
+ * Which tab is showing. The stack owns it, because the bar is drawn above the stack and because
+ * a screen on its way out renders a second copy of the tab root — anything kept in the root
+ * itself gets clobbered by that copy when it unmounts.
+ */
 const TabCtx = createContext<{ tab: string; pick: (k: string) => void }>({ tab: "", pick: () => {} });
 
 /* ── the tabs, per role ─────────────────────────────────────────────────── */
@@ -55,11 +59,18 @@ const REFERRER_TABS = [
 
 /** The four tab roots. Anything deeper is pushed onto the same stack, as iOS does. */
 function Tabs({ tab: initial, justSent }: { tab?: string; justSent?: boolean }) {
-  const { role, unread } = useStore();
+  const { role } = useStore();
   const tabs = role === "referrer" ? REFERRER_TABS : CANDIDATE_TABS;
-  const [picked, setTab] = useState(initial ?? tabs[0].key);
+  const { tab: picked, pick } = useContext(TabCtx);
   // switching role changes which tabs exist, so fall back to the first one it has
   const tab = tabs.some((t) => t.key === picked) ? picked : tabs[0].key;
+  // land on the tab the scenario asked for, once
+  const started = useRef(false);
+  useEffect(() => {
+    if (started.current) return;
+    started.current = true;
+    pick(initial && tabs.some((t) => t.key === initial) ? initial : tabs[0].key);
+  }, [initial, tabs, pick]);
 
   const body = () => {
     if (role === "referrer") {
@@ -74,17 +85,8 @@ function Tabs({ tab: initial, justSent }: { tab?: string; justSent?: boolean }) 
     return <Profile />;
   };
 
-  // publish the active tab so the persistent bar, which is drawn above the stack, can show it
-  const { pick } = useContext(TabCtx);
-  useEffect(() => { pick(tab); }, [tab, pick]);
-  void unread;
-  useEffect(() => { pickRef.current = setTab; }, [setTab]);
-
   return <>{body()}</>;
 }
-
-/** The tab root's own setter, so a tap on the persistent bar switches it in place. */
-const pickRef = { current: null as null | ((k: string) => void) };
 
 /* ── the registry ───────────────────────────────────────────────────────── */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -132,7 +134,8 @@ function Stack() {
   const { toast, role, unread } = useStore();
   const [tab, setTab] = useState("");
   const tabCtx = useRef({ tab: "", pick: (k: string) => setTab(k) });
-  tabCtx.current.tab = tab;
+  // a plain object so the provider value never changes identity; the tab is read through it
+  tabCtx.current = { tab, pick: (k: string) => setTab(k) };
   const [drag, setDrag] = useState<number | null>(null);
   const [settling, setSettling] = useState(false);
   const startX = useRef(0);
@@ -259,7 +262,7 @@ function Stack() {
           active={tab}
           onPick={(k) => {
             // on a tab root, switch in place; deeper in, come back to the root on that tab
-            if (nav.top.key === "tabs" && pickRef.current) pickRef.current(k);
+            if (nav.top.key === "tabs") setTab(k);
             else nav.reset("tabs", { tab: k });
           }}
         />

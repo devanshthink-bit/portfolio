@@ -615,7 +615,7 @@ export function RequestList({ justSent }: { justSent?: boolean }) {
             action={<Button onClick={() => nav.push("job", { id: "flipkart" })}>See jobs</Button>}
           />
         ) : (
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {shown.map((r) => (
               <ReferralBar key={r.id} r={r} onClick={() => nav.push("trackDetails", { id: r.id })} />
             ))}
@@ -626,22 +626,37 @@ export function RequestList({ justSent }: { justSent?: boolean }) {
   );
 }
 
-function ReferralBar({ r, onClick }: { r: Request; onClick: () => void }) {
+/**
+ * Figma's ReferralBar, used on this list and at the top of a chat: a 100-tall white card padded
+ * 16, the company logo in a 68 square, the name at 16/24 with its seal, the stage tag 8 under it,
+ * and the time at the top right.
+ */
+export function ReferralBar({ r, onClick }: { r: { logo: string; company: string; stage: Stage; updated: string }; onClick?: () => void }) {
   return (
-    <Card onClick={onClick} style={{ padding: 12 }}>
-      <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-        <LogoTile logo={r.logo} alt={r.company} size={52} />
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4 }}>
-          <span style={{ display: "flex", alignItems: "center", gap: 2 }} className="t-h-sm">
-            {r.company}
-            <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)" }} />
+    <Card onClick={onClick}>
+      <div style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+        <div style={{ display: "flex", gap: 12, flex: 1, minWidth: 0 }}>
+          <span style={{ width: 68, height: 68, flex: "0 0 auto", display: "grid", placeItems: "center" }}>
+            <Image
+              src={`/images/sidedoor/${r.logo}.png`}
+              alt={r.company}
+              width={68}
+              height={18}
+              style={{ width: 68, height: "auto" }}
+            />
           </span>
-          <span>
-            <Tag style={stageTag(r.stage)}>{STAGE_LABEL[r.stage]}</Tag>
-          </span>
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 8, minWidth: 0 }}>
+            <span style={{ display: "flex", alignItems: "center", gap: 2 }} className="t-h-sm">
+              {r.company}
+              <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)" }} />
+            </span>
+            <span>
+              <Tag style={stageTag(r.stage)}>{STAGE_LABEL[r.stage]}</Tag>
+            </span>
+          </div>
         </div>
         <span style={{ display: "flex", alignItems: "center", gap: 4, flex: "0 0 auto" }}>
-          <Icon name="clock" size={14} style={{ color: "var(--sd-icon-2)" }} />
+          <Icon name="clock" size={13} style={{ color: "var(--sd-icon-2)" }} />
           <span className="t-label-sm muted">{r.updated}</span>
         </span>
       </div>
