@@ -166,8 +166,10 @@
 /* ── status bar ──────────────────────────────────────────────────────────── */
 .sd-statusbar {
   flex: 0 0 auto;
+  /* Figma StatusBar (V6) at 402x54: the clock's box starts at x48.5/y16, and the indicator
+     group runs 291 -> 375, which is 27 in from the right, 2 below the clock. */
   height: 54px;
-  padding: 16px 30px 0 34px;
+  padding: 16px 27px 0 48px;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -176,7 +178,7 @@
   pointer-events: none;
 }
 .sd-statusbar b { font: 600 17px/22px -apple-system, "SF Pro Text", var(--font-inter), sans-serif; letter-spacing: -0.68px; color: var(--sd-text); }
-.sd-statusbar .sd-sb-right { display: flex; align-items: center; gap: 6px; }
+.sd-statusbar .sd-sb-right { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
 .sd-statusbar.is-light b, .sd-statusbar.is-light svg { color: #fff; }
 
 /* ── nav bar ─────────────────────────────────────────────────────────────── */

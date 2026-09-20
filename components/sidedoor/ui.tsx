@@ -14,16 +14,16 @@ export function StatusBar({ light }: { light?: boolean }) {
     <div className={`sd-statusbar${light ? " is-light" : ""}`} aria-hidden="true">
       <b>9:41</b>
       <span className="sd-sb-right">
-        <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor" style={{ color: light ? "#fff" : "#1a1a1a" }}>
+        <svg width="20" height="14" viewBox="0 0 18 12" fill="currentColor" style={{ color: light ? "#fff" : "#1a1a1a" }}>
           <rect x="0" y="7.5" width="3" height="4.5" rx="1" />
           <rect x="5" y="5" width="3" height="7" rx="1" />
           <rect x="10" y="2.5" width="3" height="9.5" rx="1" />
           <rect x="15" y="0" width="3" height="12" rx="1" />
         </svg>
-        <svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor" style={{ color: light ? "#fff" : "#1a1a1a" }}>
+        <svg width="20" height="12" viewBox="0 0 17 12" fill="currentColor" style={{ color: light ? "#fff" : "#1a1a1a" }}>
           <path d="M8.5 11.4 6.3 9.1a3.2 3.2 0 0 1 4.4 0l-2.2 2.3ZM4.4 7.2 2.8 5.5a8.2 8.2 0 0 1 11.4 0l-1.6 1.7a5.9 5.9 0 0 0-8.2 0ZM1 3.7 0 2.6a12 12 0 0 1 17 0l-1 1.1a10.6 10.6 0 0 0-15 0Z" />
         </svg>
-        <svg width="27" height="13" viewBox="0 0 27 13" style={{ color: light ? "#fff" : "#1a1a1a" }}>
+        <svg width="28" height="14" viewBox="0 0 27 13" style={{ color: light ? "#fff" : "#1a1a1a" }}>
           <rect x="0.5" y="0.5" width="22" height="12" rx="3.5" fill="none" stroke="currentColor" strokeOpacity="0.4" />
           <rect x="2" y="2" width="19" height="9" rx="2.2" fill="currentColor" />
           <path d="M24.5 4.3c1 .3 1.6 1 1.6 2.2s-.6 1.9-1.6 2.2V4.3Z" fill="currentColor" fillOpacity="0.5" />

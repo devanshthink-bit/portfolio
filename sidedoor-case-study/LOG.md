@@ -2043,3 +2043,13 @@ FIX · 2026-09-20 · two traps in the header swap
 Verified:  87 screens, all 402 wide, 80 status bars at 54, no child overflowing its frame,
            and the Jobs card lands at 16/198/370/152 in Figma — the exact numbers the running
            prototype measures.
+
+FIX · 2026-09-20 · the coded status bar now sits where Figma's does
+Read the exact boxes off StatusBar (V6) at 402x54 and matched them: clock box starts x48/y16
+(code had x34), and the indicator group runs 291 -> 375 with 8px gaps (code ended at 372 with
+6px gaps). Indicator sizes corrected to Figma's: signal 20x14, wifi 20x12, battery 28x14.
+Measured in the running prototype: right group 291/18/84/14, signal 291/18/20/14, wifi
+319/19/20/12, battery 347/18/28/14 — identical to Figma.
+Caveat:    The clock's text box measures 31.6 wide against Figma's 35 because "SF Pro Text"
+           is not installed; Figma keeps the original metrics but renders a fallback too (it
+           refuses to load that family). Both sides show a substitute, not the same one.
