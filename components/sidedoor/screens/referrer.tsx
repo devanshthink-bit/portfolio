@@ -537,10 +537,21 @@ function MarkedSubmitted({ id }: { id: string }) {
     >
       <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
         <PersonHead name={r.name} role={r.role} tag={<Tag style="success">Submitted</Tag>} />
-        <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center", textAlign: "center", paddingTop: 16 }}>
-          <span style={{ width: 44, height: 44, borderRadius: "50%", background: "var(--sd-link)", display: "grid", placeItems: "center" }}>
-            <Icon name="checkmark" size={24} style={{ color: "#fff" }} />
-          </span>
+        {/* Figma's "Done" frame: a white r12 card padded 24, its 40 mark, heading and line 12
+            apart and centred — not loose text on the grey page with a 44 circle. */}
+        <div
+          style={{
+            background: "var(--sd-n0)",
+            borderRadius: "var(--sd-r-lg)",
+            padding: 24,
+            display: "flex",
+            flexDirection: "column",
+            gap: 12,
+            alignItems: "center",
+            textAlign: "center",
+          }}
+        >
+          <Icon name="checkmark.circle.fill" size={40} style={{ color: "var(--sd-link)" }} />
           <h2 className="t-h-sm">Marked as submitted</h2>
           <p className="t-label muted">{first} has been told. Once a week we’ll ask if you’ve seen it move.</p>
         </div>

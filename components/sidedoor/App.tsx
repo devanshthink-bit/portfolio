@@ -1,7 +1,7 @@
 "use client";
 // The app. One stack, one registry, and the gesture that makes it feel native: drag from the left
 // edge to go back, with the screen underneath sliding out from behind it.
-import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import "./app.css";
 import { NavProvider, useNav, useNavStack } from "./nav";
 import { StoreProvider, useStore } from "./store";
@@ -23,6 +23,20 @@ import {
 } from "./screens/shared";
 import { AddResumeSheet, DobSheet, LogoutSheet, NotMovingSheet, SeenItMoveSheet, ShareLinkSheet } from "./screens/sheets";
 import { SCENARIOS } from "./scenarios";
+
+/**
+ * Figma keeps the tab bar on 57 of its 80 screens — it stays put when you push into a job, a
+ * request or a track detail, and only disappears on login and onboarding, the two chat screens,
+ * the three edit screens and the link page. So the bar lives above the stack rather than inside
+ * the tab root, and these are the screens that hide it.
+ */
+const SCREENS_WITHOUT_TABS = new Set([
+  "login", "role", "uploadResume", "checkProfile", "verifyEmail", "addJob", "checkPost",
+  "jobLive", "chat", "editDetails", "editProfileReferrer", "editPost", "linkPage",
+]);
+
+/** Which tab is showing, lifted out of the tab root so the persistent bar can read it. */
+const TabCtx = createContext<{ tab: string; pick: (k: string) => void }>({ tab: "", pick: () => {} });
 
 /* ── the tabs, per role ─────────────────────────────────────────────────── */
 const CANDIDATE_TABS = [
@@ -60,17 +74,17 @@ function Tabs({ tab: initial, justSent }: { tab?: string; justSent?: boolean }) 
     return <Profile />;
   };
 
-  const withBadge = tabs.map((t) =>
-    t.key === "messages" && unread ? { ...t, badge: unread } : t
-  );
+  // publish the active tab so the persistent bar, which is drawn above the stack, can show it
+  const { pick } = useContext(TabCtx);
+  useEffect(() => { pick(tab); }, [tab, pick]);
+  void unread;
+  useEffect(() => { pickRef.current = setTab; }, [setTab]);
 
-  return (
-    <>
-      {body()}
-      <TabBar tabs={withBadge} active={tab} onPick={setTab} />
-    </>
-  );
+  return <>{body()}</>;
 }
+
+/** The tab root's own setter, so a tap on the persistent bar switches it in place. */
+const pickRef = { current: null as null | ((k: string) => void) };
 
 /* ── the registry ───────────────────────────────────────────────────────── */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -115,7 +129,10 @@ const SHEETS: Record<string, (p: any) => ReactNode> = {
 /* ── the stack, with the edge-swipe back gesture ────────────────────────── */
 function Stack() {
   const nav = useNav();
-  const { toast } = useStore();
+  const { toast, role, unread } = useStore();
+  const [tab, setTab] = useState("");
+  const tabCtx = useRef({ tab: "", pick: (k: string) => setTab(k) });
+  tabCtx.current.tab = tab;
   const [drag, setDrag] = useState<number | null>(null);
   const [settling, setSettling] = useState(false);
   const startX = useRef(0);
@@ -164,6 +181,7 @@ function Stack() {
   const count = nav.stack.length;
 
   return (
+    <TabCtx.Provider value={tabCtx.current}>
     <div className="sd-stack">
       {nav.stack.map((s, i) => {
         const isTop = i === count - 1;
@@ -195,7 +213,13 @@ function Stack() {
           .join(" ");
 
         return (
-          <div key={s.id} className={cls} data-anim={anim} style={style} aria-hidden={!isTop}>
+          <div
+            key={s.id}
+            className={cls + (SCREENS_WITHOUT_TABS.has(s.key) ? "" : " has-tabs")}
+            data-anim={anim}
+            style={style}
+            aria-hidden={!isTop}
+          >
             {SCREENS[s.key]?.(s.props ?? {}) ?? null}
           </div>
         );
@@ -226,9 +250,25 @@ function Stack() {
 
       {nav.sheet && SHEETS[nav.sheet.key]?.({ ...(nav.sheet.props ?? {}), leaving: nav.sheetLeaving })}
 
+      {/* the bar sits above the whole stack, so it stays put while a screen pushes over */}
+      {!SCREENS_WITHOUT_TABS.has(nav.top.key) && (
+        <TabBar
+          tabs={(role === "referrer" ? REFERRER_TABS : CANDIDATE_TABS).map((t) =>
+            t.key === "messages" && unread ? { ...t, badge: unread } : t
+          )}
+          active={tab}
+          onPick={(k) => {
+            // on a tab root, switch in place; deeper in, come back to the root on that tab
+            if (nav.top.key === "tabs" && pickRef.current) pickRef.current(k);
+            else nav.reset("tabs", { tab: k });
+          }}
+        />
+      )}
+
       {toast && <Toast>{toast}</Toast>}
       <HomeIndicator />
     </div>
+    </TabCtx.Provider>
   );
 }
 

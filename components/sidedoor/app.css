@@ -230,9 +230,12 @@
 .sd-body { display: flex; flex-direction: column; }
 .sd-body > * { flex: 0 0 auto; }
 .sd-actionblock { margin-top: auto; padding: 24px 16px 40px; }
-/* on a tab screen the page ends 24 above the tab bar, and the bar is 62 + 22 clear */
-.sd-screen.has-tabs .sd-actionblock { padding-bottom: 108px; }
-.sd-screen.has-tabs .sd-body > div:last-child:empty { height: 108px; }
+/* Figma's BottomNav is 88 tall and the Card Section keeps 24 under its content, so a screen
+   with the bar ends 112 above the bottom. */
+.sd-screen.has-tabs .sd-actionblock { padding-bottom: 112px; }
+.sd-screen.has-tabs .sd-body > div:last-child:empty { height: 112px; }
+.sd-screen.has-tabs .sd-body { padding-bottom: 112px; }
+.sd-screen.has-tabs .sd-body:has(> .sd-actionblock) { padding-bottom: 0; }
 
 /* ── liquid glass tab bar ────────────────────────────────────────────────── */
 .sd-tabbar {
