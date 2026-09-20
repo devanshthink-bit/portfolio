@@ -38,15 +38,17 @@ export function Login() {
     <>
       <StatusBar />
       <div className="sd-login">
-        <div style={{ display: "flex", flexDirection: "column", gap: 36, alignItems: "center", paddingTop: 18 }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "center" }}>
+        {/* Figma Frame 181 runs the full 306 wide; its rows are centred inside it, not hugged. */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 36, alignItems: "center", paddingTop: 18, width: "100%" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "center", width: "100%" }}>
             {/* the mark is a bitmap in Figma (exported at 4x); the wordmark is a vector, so it is
                 the same SVG Figma draws, not a flattened PNG */}
             <Image src="/images/sidedoor/sidedoor-mark.png" alt="" width={216} height={276} style={{ width: 54, height: 69 }} priority />
             <Image src="/images/sidedoor/sidedoor-word.svg" alt="SideDoor" width={132} height={24} style={{ width: 132, height: 24 }} unoptimized priority />
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center" }}>
-            <p className="t-h-sm">{lines[page]}</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center", width: "100%" }}>
+            {/* Figma's PageCarousel label is the full 306 wide and centred, not a hugging line. */}
+            <p className="t-h-sm muted" style={{ width: "100%", textAlign: "center" }}>{lines[page]}</p>
             <div style={{ display: "flex", gap: 8 }}>
               {lines.map((l, i) => (
                 <button
@@ -89,7 +91,7 @@ export function Login() {
               Sign in with Apple
             </Button>
           </div>
-          <p className="t-label muted" style={{ textAlign: "center" }}>
+          <p className="t-label muted" style={{ textAlign: "center", width: "100%" }}>
             Already have an account?{" "}
             <button className="link" style={{ textDecoration: "underline" }} onClick={() => nav.reset("role")}>
               Log in
