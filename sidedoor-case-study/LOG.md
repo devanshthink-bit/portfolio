@@ -2118,3 +2118,35 @@ Verified:  Browser measurement, converted out of the preview's 0.577 scale: badg
            Residual is the render scale, not a position error.
 Not done:  Only this one screen carries a badge in Figma, so there was nothing else to move.
 Caveat:    Checked on localhost. The Vercel preview needs a login I will not do.
+
+AUDIT · 2026-09-20 · Screen 1 of 103 · Candidate/Upload Your Resume Screen (5247:18502)
+Method:    New rule after Devansh caught more misses: no more spot-checks. Dump every node of
+           the Figma screen with resolved geometry, fills, strokes, dash patterns, radii,
+           layout and type; measure every matching DOM element; diff the numbers. A screen is
+           done when every diff reads 0.
+Found:     9 mismatches on one screen.
+           1. Drop zone border was solid. Figma: 1px #d1d3d8 dashed 7 on / 7 off, inside, r12.
+           2. "resume" was blue. Figma paints both words #3b3f46 Semi Bold 14/20, 4 apart.
+           3. That label was 16/24. Figma is 14/20.
+           4. "Upload file" was a white secondary button. Figma: #2563eb, white label and icon.
+           5. Its icon was SF square.and.arrow.down at 18. Figma: upload-2-line at 20.
+           6. "Paste link" icon was 18 and the wrong shape. Figma: its own link vector at 20,
+              #6b7280.
+           7. Both buttons used the 52-tall 16/24 action style. Figma: 44 tall, 14/20.
+           8. Auto-fill marks were a bare 16 checkmark. Figma: a 24 outline circle-check
+              (Component 9, Type=Outline Style=Success) with a 20 vector in #15803d.
+           9. Auto-fill labels were --sd-text. Figma: --sd-text-2. The right column's rows also
+              hug their content against the right edge; a plain 1fr 1fr grid put them 54 left.
+           Plus two structural ones: Frame 214 is a fixed 218 tall with its content centred,
+           not a hugging box, which is what puts the doc icon at y211.45 rather than y206; and
+           a trailing text button sits in a frame with 4 of top padding, so it is 16 below the
+           button above it, not 12.
+Fixed:     All of them. Three Figma vectors were pulled exactly and baked into Icon.tsx's
+           24-unit space: checkmark.circle, upload-2-line, link.line.
+Verified:  Every measured box now differs from Figma by 0.0: card, drop zone, doc icon, both
+           buttons, both button icons, the format line's centre, Next, Fill in myself and the
+           Skip frame. The two words measure within 0.3 of Figma, which is glyph rasterising.
+Open:      The uploaded state was rebuilt from the DocUpload component rather than a screen,
+           because no V6 screen shows it. Its library colour is #22c55e; I used the AA #15803d
+           the screens use everywhere else. Worth a look.
+Caveat:    Checked on localhost. The Vercel preview needs a login I will not do.

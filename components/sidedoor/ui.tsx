@@ -228,6 +228,7 @@ export function Button({
   disabled,
   icon,
   small,
+  inline,
   style,
 }: {
   children: ReactNode;
@@ -236,11 +237,13 @@ export function Button({
   disabled?: boolean;
   icon?: ReactNode;
   small?: boolean;
+  /** A button that shares a row with another, as in the drop zone: 44 tall, label 14/20. */
+  inline?: boolean;
   style?: CSSProperties;
 }) {
   return (
     <button
-      className={`sd-btn ${type}${small ? " small" : ""}`}
+      className={`sd-btn ${type}${small ? " small" : ""}${inline ? " inline" : ""}`}
       onClick={onClick}
       disabled={disabled}
       style={style}

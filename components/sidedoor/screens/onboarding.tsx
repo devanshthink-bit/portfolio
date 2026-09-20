@@ -161,13 +161,17 @@ function DocUpload({
 }) {
   const shell = (gap: number, children: ReactNode) => (
     <div style={{ background: "var(--sd-n0)", borderRadius: "var(--sd-r-lg)", padding: 16 }}>
+      {/* Figma Frame 214 is a fixed 218 tall in both states, with its content centred inside —
+          not a box that hugs. That 218 is what puts the doc icon at y211.45, not y206. */}
       <div
+        className="sd-dropzone"
         style={{
-          border: "1px solid var(--sd-border)",
           borderRadius: "var(--sd-r-lg)",
+          height: 218,
           padding: 16,
           display: "flex",
           flexDirection: "column",
+          justifyContent: "center",
           gap,
           alignItems: "center",
         }}
@@ -179,31 +183,45 @@ function DocUpload({
   const mark = (label: ReactNode) => (
     <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }}>
       <Image src="/images/sidedoor/doc-icon.png" alt="" width={44} height={51} style={{ width: 44, height: "auto" }} />
-      <span className="t-h-sm">{label}</span>
+      <span className="t-h-xs">{label}</span>
     </div>
   );
   if (file)
     return shell(
       12,
       <>
-        {mark("Uploaded")}
+        {/* Figma Frame 228: the word and a 16 check 4 apart, then the name, then the format
+            row as three nodes 8 apart. */}
+        {mark(
+          <span style={{ display: "inline-flex", gap: 4, alignItems: "center", color: "var(--sd-text-success)" }}>
+            Uploaded
+            <Icon name="checkmark.circle.fill" size={16} />
+          </span>
+        )}
         <span className="t-h-xs link">{file}</span>
-        <span className="t-label-sm muted">PDF · 212 KB</span>
+        <span className="t-label-sm muted" style={{ display: "inline-flex", gap: 8 }}>
+          <span>PDF</span>
+          <span>•</span>
+          <span>212 KB</span>
+        </span>
       </>
     );
   return shell(
     16,
     <>
+      {/* Figma draws "Drop your" and the file type as two text nodes 4 apart, both Semi Bold
+          14/20 in --sd-text. Neither is a link. */}
       {mark(
-        <>
-          Drop your <span className="link">{what}</span>
-        </>
+        <span style={{ display: "inline-flex", gap: 4 }}>
+          <span>Drop your</span>
+          <span>{what}</span>
+        </span>
       )}
       <div style={{ display: "flex", gap: 12, width: "100%" }}>
-        <Button type="secondary" onClick={onUpload} icon={<Icon name="square.and.arrow.down" size={18} />} style={{ padding: "12px 12px", minHeight: 44 }}>
+        <Button onClick={onUpload} icon={<Icon name="upload-2-line" size={20} />} style={{ minHeight: 44 }} inline>
           Upload file
         </Button>
-        <Button type="secondary" onClick={onUpload} icon={<Icon name="link" size={18} />} style={{ padding: "12px 12px", minHeight: 44 }}>
+        <Button type="secondary" onClick={onUpload} icon={<Icon name="link.line" size={20} style={{ color: "var(--sd-icon-2)" }} />} style={{ minHeight: 44 }} inline>
           Paste link
         </Button>
       </div>
@@ -216,12 +234,29 @@ function AutofillInfo({ items }: { items: string[] }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
       <p className="t-h-xs">What we’ll auto fill</p>
+      {/* Figma Frame 224: two 179-wide columns 12 apart, rows 12 apart, each row a 24x24
+          outline check 8 from a Medium 14/20 label in --sd-text-2. The second column's rows
+          hug their content and sit against the right edge. */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-        {items.map((i) => (
-          <span key={i} style={{ display: "flex", gap: 8, alignItems: "center" }}>
-            <Icon name="checkmark" size={16} style={{ color: "var(--sd-text-success)" }} />
-            <span className="t-label">{i}</span>
-          </span>
+        {[0, 1].map((col) => (
+          <div
+            key={col}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 12,
+              alignItems: col === 1 ? "flex-end" : "flex-start",
+            }}
+          >
+            <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "flex-start" }}>
+              {items.filter((_, n) => n % 2 === col).map((i) => (
+                <span key={i} style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                  <Icon name="checkmark.circle" size={24} style={{ color: "var(--sd-text-success)" }} />
+                  <span className="t-label muted">{i}</span>
+                </span>
+              ))}
+            </div>
+          </div>
         ))}
       </div>
     </div>
