@@ -158,21 +158,32 @@ export function ChatScreen({ who = "Nithin Agarwal" }: { who?: string }) {
         </div>
       </div>
       <div className="sd-body">
-        <div className="sd-pad" style={{ paddingTop: 12, display: "flex", flexDirection: "column", gap: 12 }}>
-          {/* the request this chat is about, so nobody has to remember which one it is */}
-          <Card style={{ padding: 12 }}>
-            <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-              <LogoTile logo={live.logo} alt={live.company} size={44} />
-              <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4 }}>
-                <span style={{ display: "flex", alignItems: "center", gap: 4 }} className="t-h-xs">
-                  {live.company}
-                  <Icon name="checkmark.seal.fill" size={14} style={{ color: "var(--sd-text-success)" }} />
+        <div className="sd-pad" style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 16 }}>
+          {/* Figma's ReferralBar: a 100-tall white card padded 16, the company logo in a 68
+              square, the name at 16/24 with its seal and stage tag, and the time top-right. */}
+          <Card>
+            <div style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+              <div style={{ display: "flex", gap: 12, flex: 1, minWidth: 0 }}>
+                <span style={{ width: 68, height: 68, flex: "0 0 auto", display: "grid", placeItems: "center" }}>
+                  <Image
+                    src={`/images/sidedoor/${live.logo}.png`}
+                    alt={live.company}
+                    width={68}
+                    height={18}
+                    style={{ width: 68, height: "auto" }}
+                  />
                 </span>
-                <span>
-                  <Tag style={stageTag(live.stage)}>{STAGE_LABEL[live.stage]}</Tag>
+                <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 8, minWidth: 0 }}>
+                  <span style={{ display: "flex", alignItems: "center", gap: 2 }} className="t-h-sm">
+                    {live.company}
+                    <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)" }} />
+                  </span>
+                  <span>
+                    <Tag style={stageTag(live.stage)}>{STAGE_LABEL[live.stage]}</Tag>
+                  </span>
                 </span>
-              </span>
-              <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+              </div>
+              <span style={{ display: "flex", alignItems: "center", gap: 4, flex: "0 0 auto" }}>
                 <Icon name="clock" size={13} style={{ color: "var(--sd-icon-2)" }} />
                 <span className="t-label-sm muted">{live.updated}</span>
               </span>
