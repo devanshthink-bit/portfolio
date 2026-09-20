@@ -2080,3 +2080,24 @@ Not fixed: The Icon.tsx paths are rounded to 1 decimal. Measured error on chevro
            than pulling ~220KB of exact path data for all 53 icons. Say so, don't hide it.
 Open:      Figma has no saved-state job card, so the bookmark "on" appearance has no source
            to copy. Left filled in the same grey. Needs a decision, not a guess.
+
+FIX · 2026-09-20 · Status bar clipping and alignment, and the tab badge
+Found:     Devansh: the wifi icon is cut off, and the clock and indicators are not vertically
+           centred with the Dynamic Island. Separately, the Figma tab badge does not match.
+Wifi:      The arc peaked at y -0.93 inside a viewBox starting at 0, so its top was clipped.
+           Rebuilt all three status icons from Figma's own vectors at Figma's offsets
+           (SIM 20x14, WiFi 20x12, Battery 28x14). Measured bboxes now sit inside their
+           viewBoxes, and the wifi group is 15.68x10.97 at (2.2, 0.5) against Figma's 15.7x11.
+           Status icons were also #1a1a1a in code where Figma has #3b3f46.
+Alignment: The island is 36 tall at y11, so its middle is y29. Clock sat at 27, indicators at
+           25 - not centred on the island, and not even on each other. Figma's own StatusBar
+           had the same problem (26 and 25) because it draws no island, so I moved BOTH sides:
+           clock box to y19 and the indicator row to y22, giving mid 29 on each. Figma
+           StatusBar (V6) Mode=Dark and Mode=Light both updated; V3-V5 untouched.
+           Clock line-height 22 -> 20 to match Figma's 20-tall text box.
+Badge:     Figma builds it as a SIBLING of the nav, floating clear above the capsule, not
+           inside a tab: circle 17x17 #b91c1c with a 1px WHITE ring drawn outside, label
+           Medium 12/16. Code had it inside the tab at 16x16, #ff3b30, 600 10px, no ring.
+           Rebuilt: lands at 244.3,761.5 17x17, identical to Figma.
+Verified:  Browser measurement - island/clock/all three icons all mid 29; badge exact to the
+           decimal. Localhost, not Vercel. tsc clean, build passes.

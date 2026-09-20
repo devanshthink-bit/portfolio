@@ -166,10 +166,13 @@
 /* ── status bar ──────────────────────────────────────────────────────────── */
 .sd-statusbar {
   flex: 0 0 auto;
-  /* Figma StatusBar (V6) at 402x54: the clock's box starts at x48.5/y16, and the indicator
-     group runs 291 -> 375, which is 27 in from the right, 2 below the clock. */
+  /* Figma StatusBar (V6) at 402x54: the clock's box starts at x48.5, the indicator group runs
+     291 -> 375, so 27 in from the right. Vertically both sit on the Dynamic Island's centre
+     line: the island is 36 tall at y11, so its middle is y29. The clock's 20-tall box starts
+     at 19 and the 14-tall indicator row at 22. Figma's StatusBar (V6) carries the same two
+     numbers, so the two stay identical. */
   height: 54px;
-  padding: 16px 27px 0 48px;
+  padding: 19px 27px 0 48px;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -177,8 +180,9 @@
   z-index: 30;
   pointer-events: none;
 }
-.sd-statusbar b { font: 600 17px/22px -apple-system, "SF Pro Text", var(--font-inter), sans-serif; letter-spacing: -0.68px; color: var(--sd-text); }
-.sd-statusbar .sd-sb-right { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
+.sd-statusbar b { font: 600 17px/20px -apple-system, "SF Pro Text", var(--font-inter), sans-serif; letter-spacing: -0.68px; color: var(--sd-text); }
+.sd-statusbar svg { color: var(--sd-text); }
+.sd-statusbar .sd-sb-right { display: flex; align-items: center; gap: 8px; margin-top: 3px; }
 .sd-statusbar.is-light b, .sd-statusbar.is-light svg { color: #fff; }
 
 /* ── nav bar ─────────────────────────────────────────────────────────────── */
@@ -266,18 +270,25 @@
 .sd-tab:active { transform: scale(0.92); }
 .sd-tab { transition: transform 140ms var(--sd-spring); }
 .sd-tab-badge {
+  /* Figma draws this as a sibling of the nav, not inside a tab: a 17x17 circle in #b91c1c with
+     a 1px white ring drawn OUTSIDE it, floating clear above the capsule rather than sitting on
+     it. Screen coords put it at y760 with the capsule top at y786, and its centre 6.55 to the
+     right of the tab's centre. Figma's 20x20 frame starts at y760 but the circle it draws sits
+     at y761.5; the tab starts at y790, hence the -28.5. */
   position: absolute;
-  top: 10px;
+  top: -28.5px;
   left: 50%;
-  margin-left: 6px;
-  min-width: 16px;
-  height: 16px;
+  transform: translateX(-50%);
+  margin-left: 6.55px;
+  min-width: 17px;
+  height: 17px;
   padding: 0 4px;
   border-radius: var(--sd-r-full);
-  background: var(--sd-ios-red);
+  background: #b91c1c;
+  box-shadow: 0 0 0 1px #fff;
   color: #fff;
-  font-weight: 600; font-size: 10px; line-height: 16px;
-  text-align: center;
+  font-weight: 500; font-size: 12px; line-height: 16px;
+  display: flex; align-items: center; justify-content: center;
 }
 
 /* home indicator */
