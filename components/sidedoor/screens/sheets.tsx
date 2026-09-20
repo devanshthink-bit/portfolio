@@ -8,14 +8,14 @@ import { ActionSheet, Avatar, Button, Card, Icon, Note, RadioList, RadioOption, 
 
 function SheetPerson({ name, role, tag }: { name: string; role: string; tag?: React.ReactNode }) {
   return (
-    <Card style={{ padding: 12, marginBottom: 16 }}>
-      <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-        <Avatar name={name} size={40} />
-        <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4 }}>
-          <span className="t-h-xs">{name}</span>
-          <span className="t-label-sm muted">{role}</span>
+    <Card style={{ marginBottom: 16 }}>
+      <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+        <Avatar name={name} size={44} />
+        <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4, minWidth: 0 }}>
+          <span className="t-h-sm">{name}</span>
+          <span className="t-label muted">{role}</span>
+          {tag && <span>{tag}</span>}
         </span>
-        {tag}
       </div>
     </Card>
   );

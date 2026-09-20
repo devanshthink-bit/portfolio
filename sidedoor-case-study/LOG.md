@@ -1950,3 +1950,25 @@ FIX · 2026-09-20 · second component pass, all from as-used instance counts
     Code had a 44px block and two bars plus a stray third.
   · ChatMessage (7) — padding 8/12, radius 16 with a 4px tail corner, Regular 14/20, time 4
     below. Code had 10/14, a uniform 18px radius, 15px type and a 2px gap.
+
+FIX · 2026-09-20 · third component pass
+  · Empty states — Figma has NO icon disc and NO heading. Every "Empty" frame in V6 (4 of 4,
+    plus the inline ones) is a left-aligned line of Inter Medium 14/20 #636a75 with a
+    full-width primary button 12 below. Code drew a 64px grey circle, a centred 16/24 title
+    and centred body text with 48px of top padding. All invented. Rewritten.
+  · Timeline — the marks are 24px (filled circle-check in #2563eb when done, active-radio for
+    the current step, the empty circle in #d1d3d8 ahead), 8 clear of a Semi Bold 14/20 label,
+    steps 32 apart, connector 2px: solid #2563eb behind a done step, dashed 5/5 #d1d3d8
+    otherwise. Code used hand-drawn 18px circles, a 12px gap, 20px spacing and a solid grey
+    line throughout. The current step's label is #3b3f46, not blue — code coloured it blue.
+  · ChatComposer — white with a 1px #f0f1f2 rule on top, padding 8/16/40, a standard 52px
+    field and a 48px round send button with a 24px arrow. Code had a 44px pill field, a 44px
+    button and a 20px arrow on the page background.
+  · Company Row — 40px logo (code had 28), role Semi Bold 16/24 (code had 14/20), centred.
+  · ProjectRow title is Semi Bold 16/24, not 14/20.
+  · SheetPersonCard — padding 16 and a 44px avatar with the tag under the role; code had
+    padding 12, a 40px avatar and the tag floated right.
+  · PersonRow — the avatar is centred against the 50px row, and the verified mark sits 2 from
+    the name, not 3.
+  · PostCard activity line is Medium 14/20, not 12/16.
+  · TextButton had the same min-height:44 bug as .sd-hit44 and stretched every row it sat in.

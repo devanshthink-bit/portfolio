@@ -511,26 +511,16 @@ export function Timeline({ steps }: { steps: Step[] }) {
       {steps.map((s, i) => (
         <div className="sd-tl-step" key={s.title}>
           <span className="sd-tl-rail">
+            {/* Figma marks are 24px: a filled circle-check once done, active-radio for the
+                step you are on, and the empty circle in #d1d3d8 for the ones ahead. */}
             {s.state === "done" && (
-              <span
-                style={{
-                  width: 18,
-                  height: 18,
-                  borderRadius: "50%",
-                  background: "var(--sd-link)",
-                  display: "grid",
-                  placeItems: "center",
-                  flex: "0 0 auto",
-                }}
-              >
-                <Icon name="checkmark" size={11} style={{ color: "#fff" }} />
-              </span>
+              <Icon name="checkmark.circle.fill" size={24} style={{ color: "var(--sd-link)", flex: "0 0 auto" }} />
             )}
             {s.state === "current" && (
               <span
                 style={{
-                  width: 18,
-                  height: 18,
+                  width: 24,
+                  height: 24,
                   borderRadius: "50%",
                   border: "2px solid var(--sd-link)",
                   display: "grid",
@@ -538,26 +528,18 @@ export function Timeline({ steps }: { steps: Step[] }) {
                   flex: "0 0 auto",
                 }}
               >
-                <i style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--sd-link)" }} />
+                <i style={{ width: 10, height: 10, borderRadius: "50%", background: "var(--sd-link)" }} />
               </span>
             )}
             {s.state === "pending" && (
-              <span
-                style={{
-                  width: 18,
-                  height: 18,
-                  borderRadius: "50%",
-                  border: "2px solid var(--sd-border)",
-                  flex: "0 0 auto",
-                }}
-              />
+              <Icon name="circle" size={24} style={{ color: "var(--sd-border)", flex: "0 0 auto" }} />
             )}
             {i < steps.length - 1 && (
-              <span className={`sd-tl-line${s.state === "current" || s.state === "pending" ? " is-dashed" : ""}`} />
+              <span className={`sd-tl-line${s.state === "done" ? "" : " is-dashed"}`} />
             )}
           </span>
           <span className="sd-tl-body">
-            <span className={`sd-tl-title${s.state === "done" || s.state === "current" ? " is-done" : ""}`}>{s.title}</span>
+            <span className={`sd-tl-title${s.state === "done" ? " is-done" : ""}`}>{s.title}</span>
             {s.when && <span className="sd-tl-when">{s.when}</span>}
           </span>
         </div>
@@ -821,25 +803,27 @@ export function SkeletonCard() {
   );
 }
 
+/**
+ * Figma draws an empty state as one left-aligned line of Inter Medium 14/20 in #636a75 with
+ * a full-width primary button 12 below it — no icon disc, no separate heading. `icon` is kept
+ * on the signature so call sites read the same, and is not drawn.
+ */
 export function Empty({
   icon,
   title,
   body,
   action,
 }: {
-  icon: IconName;
+  icon?: IconName;
   title: string;
   body?: string;
   action?: ReactNode;
 }) {
+  const line = body ? `${title.replace(/\.$/, "")}. ${body}` : title;
   return (
     <div className="sd-empty">
-      <span className="sd-empty-icon">
-        <Icon name={icon} size={30} />
-      </span>
-      <h3 className="t-h-sm">{title}</h3>
-      {body && <p className="t-body muted" style={{ maxWidth: 300 }}>{body}</p>}
-      {action && <div style={{ width: "100%", marginTop: 12 }}>{action}</div>}
+      <p className="t-label muted">{line}</p>
+      {action}
     </div>
   );
 }

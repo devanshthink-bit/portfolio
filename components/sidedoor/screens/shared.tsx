@@ -202,24 +202,36 @@ export function ChatScreen({ who = "Nithin Agarwal" }: { who?: string }) {
         </div>
         <div style={{ height: 16 }} />
       </div>
-      <div style={{ flex: "0 0 auto", padding: "8px 16px 24px", display: "flex", gap: 8, alignItems: "center", background: "var(--sd-page)" }}>
-        <div className="sd-input" style={{ minHeight: 44, borderRadius: 22 }}>
+      {/* Figma ChatComposer: white, a 1px #f0f1f2 rule on top, padding 8/16/40, gap 8,
+          a standard 52px field and a 48px round blue send button with a 24px arrow. */}
+      <div
+        style={{
+          flex: "0 0 auto",
+          padding: "8px 16px 40px",
+          display: "flex",
+          gap: 8,
+          alignItems: "center",
+          background: "var(--sd-n0)",
+          boxShadow: "inset 0 1px 0 var(--sd-border-subtle)",
+        }}
+      >
+        <div className="sd-input">
           <input value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="Message" onKeyDown={(e) => e.key === "Enter" && send()} />
         </div>
         <button
           onClick={send}
           aria-label="Send"
           style={{
-            width: 44,
-            height: 44,
-            borderRadius: "50%",
+            width: 48,
+            height: 48,
+            borderRadius: "var(--sd-r-full)",
             background: draft.trim() ? "var(--sd-link)" : "var(--sd-action-bg-dis)",
             display: "grid",
             placeItems: "center",
             flex: "0 0 auto",
           }}
         >
-          <Icon name="arrow.right" size={20} style={{ color: draft.trim() ? "#fff" : "var(--sd-action-fg-dis)" }} />
+          <Icon name="arrow.right" size={24} style={{ color: draft.trim() ? "#fff" : "var(--sd-action-fg-dis)" }} />
         </button>
       </div>
     </>

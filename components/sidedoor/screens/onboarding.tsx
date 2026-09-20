@@ -337,10 +337,11 @@ export function CheckProfile() {
 
 export function CompanyRow({ logo, role, company, when }: { logo: string; role: string; company: string; when: string }) {
   return (
-    <div style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-      <Image src={`/images/sidedoor/${logo}.png`} alt="" width={28} height={28} style={{ width: 28, height: "auto", flex: "0 0 auto", marginTop: 2 }} />
+    // Figma Company Row: a 40px logo, 8 clear, role Semi Bold 16/24 over company 12/16
+    <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+      <Image src={`/images/sidedoor/${logo}.png`} alt="" width={40} height={40} style={{ width: 40, height: "auto", flex: "0 0 auto" }} />
       <span style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-        <span className="t-h-xs">{role}</span>
+        <span className="t-h-sm">{role}</span>
         <span className="t-label-sm muted">{company}</span>
       </span>
       <span className="t-label-sm muted" style={{ flex: "0 0 auto" }}>
@@ -353,7 +354,7 @@ export function CompanyRow({ logo, role, company, when }: { logo: string; role: 
 export function Project({ title, skills }: { title: string; skills: string[] }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-      <span className="t-h-xs">{title}</span>
+      <span className="t-h-sm">{title}</span>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
         {skills.map((s) => (
           <Tag key={s}>{s}</Tag>

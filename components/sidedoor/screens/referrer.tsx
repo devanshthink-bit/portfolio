@@ -693,8 +693,9 @@ export function ManagePosts() {
                     {state === "Draft" ? "Draft · Add the job ID to post" : `${state} · Job ID ${p.jobId}`}
                   </p>
                   <div style={{ height: 12 }} />
+                  {/* Figma PostCard activity row: Inter Medium 14/20, 20 tall */}
                   <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                    <span className="t-label-sm muted" style={{ flex: 1 }}>
+                    <span className="t-label muted" style={{ flex: 1 }}>
                       {p.activity}
                     </span>
                     <TextButton onClick={() => nav.push(p.state === "Draft" ? "checkPost" : "editPost", { title: p.title })}>

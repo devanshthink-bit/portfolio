@@ -330,7 +330,10 @@
    an overlay here too — as min-height it pushed every row it sat in from 20px to 44px. */
 .sd-hit44 { position: relative; display: inline-flex; align-items: center; justify-content: center; }
 .sd-hit44::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 44px; transform: translateY(-50%); }
-.sd-textbtn { color: var(--sd-link); font-weight: 500; font-size: 14px; line-height: 20px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+/* Figma draws these inline actions as plain 20px text with an overlapping 44pt target, so
+   min-height would stretch every row they sit in (see .sd-hit44). */
+.sd-textbtn { color: var(--sd-link); font-weight: 500; font-size: 14px; line-height: 20px; display: inline-flex; align-items: center; justify-content: center; position: relative; }
+.sd-textbtn::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 44px; transform: translateY(-50%); }
 .sd-textbtn:active { opacity: 0.45; }
 .sd-actions { display: flex; flex-direction: column; gap: 12px; }
 
@@ -436,19 +439,19 @@
 .sd-logo-sm img { width: 28px; height: auto; display: block; }
 
 /* ── person row ─────────────────────────────────────────────────────────── */
-.sd-person { display: flex; gap: 12px; align-items: flex-start; }
+.sd-person { display: flex; gap: 12px; align-items: center; }
 .sd-person .sd-av { width: 44px; height: 44px; }
-.sd-person-name { display: flex; align-items: center; gap: 3px; font-weight: 600; font-size: 16px; line-height: 24px; }
+.sd-person-name { display: flex; align-items: center; gap: 2px; font-weight: 600; font-size: 16px; line-height: 24px; }
 .sd-person-sub { font-weight: 500; font-size: 14px; line-height: 20px; color: var(--sd-text-2); }
 .sd-person-time { margin-left: auto; display: flex; align-items: center; gap: 4px; font-weight: 500; font-size: 12px; line-height: 16px; color: var(--sd-text-2); flex: 0 0 auto; }
 
 /* ── timeline ───────────────────────────────────────────────────────────── */
 .sd-timeline { display: flex; flex-direction: column; }
-.sd-tl-step { display: flex; gap: 12px; }
-.sd-tl-rail { width: 20px; display: flex; flex-direction: column; align-items: center; flex: 0 0 auto; }
-.sd-tl-line { flex: 1 1 auto; width: 2px; background: var(--sd-border); margin: 4px 0; min-height: 12px; }
+.sd-tl-step { display: flex; gap: 8px; }
+.sd-tl-rail { width: 24px; display: flex; flex-direction: column; align-items: center; flex: 0 0 auto; }
+.sd-tl-line { flex: 1 1 auto; width: 2px; background: var(--sd-link); margin: 0; min-height: 37px; }
 .sd-tl-line.is-dashed { background: none; border-left: 2px dashed var(--sd-border); width: 0; }
-.sd-tl-body { padding-bottom: 20px; flex: 1 1 auto; }
+.sd-tl-body { padding-bottom: 32px; flex: 1 1 auto; }
 .sd-tl-step:last-child .sd-tl-body { padding-bottom: 0; }
 .sd-tl-title { font-weight: 600; font-size: 14px; line-height: 20px; }
 .sd-tl-title.is-done { color: var(--sd-link); }
@@ -532,8 +535,8 @@
 .sd-ptr { display: grid; place-items: center; overflow: hidden; }
 
 /* ── empty state ────────────────────────────────────────────────────────── */
-.sd-empty { display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; padding: 48px 24px 0; }
-.sd-empty-icon { width: 64px; height: 64px; border-radius: 50%; background: var(--sd-fill-3); display: grid; place-items: center; color: var(--sd-text-2); }
+/* Figma "Empty": a vertical stack, 12px gap, left-aligned, nothing else. */
+.sd-empty { display: flex; flex-direction: column; align-items: stretch; gap: 12px; }
 
 /* ── wheel date picker ──────────────────────────────────────────────────── */
 .sd-wheels { display: flex; height: 216px; position: relative; }
