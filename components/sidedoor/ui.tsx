@@ -599,7 +599,7 @@ export function Field({
       <div
         className={`sd-input${focus ? " is-focus" : ""}${error ? " is-error" : ""}`}
         onClick={onClick}
-        style={{ alignItems: multiline ? "flex-start" : "center", minHeight: multiline ? 96 : 52 }}
+        style={{ alignItems: multiline ? "flex-start" : "center", minHeight: multiline ? 100 : 52 }}
       >
         {multiline ? (
           <textarea
@@ -608,7 +608,7 @@ export function Field({
             onChange={(e) => onChange?.(e.target.value)}
             onFocus={() => setFocus(true)}
             onBlur={() => setFocus(false)}
-            rows={4}
+            rows={2}
             readOnly={readOnly}
           />
         ) : (

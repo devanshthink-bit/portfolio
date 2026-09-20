@@ -374,7 +374,8 @@
   display: flex; flex-direction: column; gap: 12px; }
 .sd-seclabel { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; line-height: 20px; color: var(--sd-text); }
 .sd-seclabel .sd-sl-end { margin-left: auto; }
-.sd-section + .sd-section { margin-top: 24px; }
+/* Figma's Frame 235 puts 24 between blocks and the screens set that as the column's gap,
+   so a margin here was adding a second 24 and every section sat 48 apart. */
 .sd-section > .sd-seclabel + * { margin-top: 8px; }
 .sd-list { background: #fff; border-radius: var(--sd-r-lg); overflow: hidden; }
 .sd-row { display: flex; align-items: center; gap: 8px; padding: 12px 16px; min-height: 50px; position: relative; }

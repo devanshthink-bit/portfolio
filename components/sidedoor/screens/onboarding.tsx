@@ -587,7 +587,7 @@ export function CheckPost() {
         </Section>
 
         <Section label="Your rules" icon="gearshape.fill">
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             <RuleRow
               title="Experience must match"
               sub="Requests under 3 yrs go to Lower match. You can still refer them."
@@ -629,8 +629,10 @@ export function CheckPost() {
 
 function RuleRow({ title, sub, on, onChange }: { title: string; sub: string; on: boolean; onChange: (v: boolean) => void }) {
   return (
-    <div style={{ background: "#fff", borderRadius: "var(--sd-r-lg)", padding: 16, display: "flex", gap: 12, alignItems: "flex-start" }}>
-      <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4 }}>
+    /* Figma's rule Box is r8 with 12/16 of padding, its row centred, and only 2 between
+       the two lines — so the box is 78 tall, not 88. */
+    <div style={{ background: "#fff", borderRadius: "var(--sd-r-md)", padding: "12px 16px", display: "flex", gap: 12, alignItems: "center" }}>
+      <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 2 }}>
         <span className="t-h-xs">{title}</span>
         <span className="t-label-sm muted">{sub}</span>
       </span>
