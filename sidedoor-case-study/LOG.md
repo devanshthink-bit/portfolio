@@ -1883,3 +1883,36 @@ Found:     At 1280x720 "Rules and limits" and "Sheets" vanished. A multi-column 
            `overflow-y: auto` cannot reach that — the groups were there, just off the side.
 Fix:       Below 880px window height the list goes back to auto-fitting as many columns as fit
            (`columns: 185px`, then 170px below 840px), and the phone returns to the right edge.
+
+FIX · 2026-09-20 · the whole app carried letter-spacing that Figma does not have
+Found:     Every text node in all 11 V6 flows has letter-spacing 0 (censused: 1,802 nodes, the
+           only exception being the SF Pro status-bar clock at -4%). The prototype rendered
+           every string at -0.32px, inherited from the portfolio's `body { letter-spacing:
+           -0.02em }`, plus invented -0.4/-0.3/-0.2px on the three heading classes.
+Fix:       `.sd` resets letter-spacing to normal and the heading rules no longer set it. The
+           clock is now -0.68px (Figma's -4% of 17px), not -0.4px.
+Note:      `body { line-height: 1.6 }` was leaking in the same way; `.sd` now sets 14/20,
+           which is Figma's text/body/md.
+
+FIX · 2026-09-20 · 44pt tap areas were stretching the rows they sat in
+Found:     Figma draws a "Hit area 44" as an overlapping frame, so a 20px row stays 20px. In
+           code `.sd-hit44` used min-height:44px, so the Jobs header row was 44 and every
+           card below it sat 24px too low.
+Fix:       The target is now an ::after overlay. Jobs card 1 lands at y188, 358 wide, 152
+           tall — the Figma numbers exactly.
+
+FIX · 2026-09-20 · shared components did not match their Figma instances
+Censused every Button and Tag instance across the V6 flows rather than trusting the library:
+  · BottomNav capsule is solid #ffffff with effect/glass (blur 7, shadow 0 8 40 #000/0.12)
+    and a #f0f1f2 pill behind the selected tab. Code had a translucent bar, a sheen gradient
+    and no pill. Inactive tabs are #3b3f46, not #5f6671. Icons are 24, not 25.
+  · Capsule sits 26px above the screen bottom, not 22.
+  · Tag label line-height is 20, not 18; the Neutral tag's label is #636a75, not #3b3f46.
+    Added the Plain variant (no fill, padding 2/0, 12/16) — it is 22 tall, and rendering it
+    as a bare 16px span made every card holding one 6px short.
+  · Secondary, disabled and small buttons carry a 0.5px #d1d3d8 inside stroke, not 1px.
+    Small button labels are #3b3f46, not blue. The destructive button is r12, no stroke,
+    #b91c1c — code had r8, a border and iOS red #ff3b30.
+Note:      The Figma *style library* is stale — it still holds #22c55e/#ef4444/#f59e0b and
+           text/secondary #6b7280. The screens themselves use the AA values the code already
+           had (#15803d, #b91c1c, #c93400, #636a75), so the screens are the source of truth.

@@ -92,7 +92,7 @@ export function Jobs() {
   const failed = force === "jobs.error" && phase === "ok";
   return (
     <Screen largeTitle="Jobs" right={<BellButton unread={unread} />}>
-      <div style={{ paddingTop: 16, display: "flex", flexDirection: "column", gap: 8 }}>
+      <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 8 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <Icon name="briefcase.fill" size={16} style={{ color: "var(--sd-icon-2)" }} />
           <span className="t-h-xs" style={{ flex: 1 }}>
@@ -100,8 +100,8 @@ export function Jobs() {
           </span>
           <span className="sd-hit44">
             <button style={{ display: "flex", alignItems: "center", gap: 4, color: "var(--sd-link)" }}>
-              <span className="t-label-sm">Newest first</span>
-              <Icon name="chevron.up.chevron.down" size={13} />
+              <span className="t-label">Newest first</span>
+              <Icon name="chevron.up.chevron.down" size={14} />
             </button>
           </span>
         </div>
@@ -110,7 +110,7 @@ export function Jobs() {
             Add your resume to ask. Referrers need it before they can act.
           </Note>
         )}
-        <div style={{ display: "flex", flexDirection: "column", gap: 16, marginTop: 8 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           {phase === "loading" ? (
             <>
               <SkeletonCard />
@@ -157,14 +157,14 @@ export function Jobs() {
                       <span className="t-label-sm muted">
                         {j.pay} · {j.refers}
                       </span>
-                      <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginTop: 4 }}>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
                         {j.tag && <Tag style={j.tag.style}>{j.tag.text}</Tag>}
                         {j.common && (
-                          <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                          <span className="sd-tag plain">
                             {j.common.logo && (
-                              <Image src={`/images/sidedoor/${j.common.logo}.png`} alt="" width={16} height={16} style={{ width: 16, height: "auto" }} />
+                              <Image src={`/images/sidedoor/${j.common.logo}.png`} alt="" width={14} height={14} style={{ width: 14, height: "auto" }} />
                             )}
-                            <span className="t-label-sm muted">{j.common.text}</span>
+                            <span>{j.common.text}</span>
                           </span>
                         )}
                       </div>

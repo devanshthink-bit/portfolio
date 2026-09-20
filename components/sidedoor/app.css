@@ -81,6 +81,11 @@
   overflow: hidden;
   background: var(--sd-page);
   font-family: var(--font-inter), "Inter", -apple-system, system-ui, sans-serif;
+  /* the portfolio's body sets letter-spacing -0.02em and line-height 1.6; every V6 text
+     node in Figma has letter-spacing 0, so both have to stop at the phone's edge. */
+  letter-spacing: normal;
+  font-size: 14px;
+  line-height: 20px;
   color: var(--sd-text);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -104,9 +109,9 @@
 
 /* ── type styles (text/* in Figma) ───────────────────────────────────────── */
 .sd .t-display { font-weight: 600; font-size: 32px; line-height: 40px; }
-.sd .t-h-lg { font-weight: 600; font-size: 24px; line-height: 32px; letter-spacing: -0.4px; }
-.sd .t-h-md { font-weight: 600; font-size: 20px; line-height: 28px; letter-spacing: -0.3px; }
-.sd .t-h-sm { font-weight: 600; font-size: 16px; line-height: 24px; letter-spacing: -0.2px; }
+.sd .t-h-lg { font-weight: 600; font-size: 24px; line-height: 32px; }
+.sd .t-h-md { font-weight: 600; font-size: 20px; line-height: 28px; }
+.sd .t-h-sm { font-weight: 600; font-size: 16px; line-height: 24px; }
 .sd .t-h-xs { font-weight: 600; font-size: 14px; line-height: 20px; }
 .sd .t-body-lg { font-weight: 400; font-size: 16px; line-height: 24px; }
 .sd .t-body { font-weight: 400; font-size: 14px; line-height: 20px; }
@@ -170,7 +175,7 @@
   z-index: 30;
   pointer-events: none;
 }
-.sd-statusbar b { font: 600 17px/22px -apple-system, "SF Pro Text", var(--font-inter), sans-serif; letter-spacing: -0.4px; color: var(--sd-text); }
+.sd-statusbar b { font: 600 17px/22px -apple-system, "SF Pro Text", var(--font-inter), sans-serif; letter-spacing: -0.68px; color: var(--sd-text); }
 .sd-statusbar .sd-sb-right { display: flex; align-items: center; gap: 6px; }
 .sd-statusbar.is-light b, .sd-statusbar.is-light svg { color: #fff; }
 
@@ -185,7 +190,7 @@
   position: relative;
   z-index: 25;
 }
-.sd-nav-title { font-weight: 600; font-size: 16px; line-height: 24px; letter-spacing: -0.2px; text-align: center; white-space: nowrap; }
+.sd-nav-title { font-weight: 600; font-size: 16px; line-height: 24px; text-align: center; white-space: nowrap; }
 .sd-nav-lead { justify-self: start; display: flex; align-items: center; }
 .sd-nav-trail { justify-self: end; display: flex; align-items: center; gap: 4px; }
 .sd-nav.has-border { border-bottom: 0.5px solid rgba(0, 0, 0, 0.18); }
@@ -227,41 +232,34 @@
   position: absolute;
   left: 16px;
   right: 16px;
-  bottom: 22px;
+  bottom: 26px;
   height: 62px;
   z-index: 35;
   display: flex;
   align-items: center;
   justify-content: space-around;
   border-radius: var(--sd-r-full);
-  background: rgba(255, 255, 255, 0.62);
-  backdrop-filter: saturate(200%) blur(28px);
-  -webkit-backdrop-filter: saturate(200%) blur(28px);
-  box-shadow: var(--sd-glass-shadow), inset 0 0.5px 0 rgba(255, 255, 255, 0.85), inset 0 0 0 0.5px rgba(255, 255, 255, 0.4);
-}
-/* the specular sheen that makes glass read as glass */
-.sd-tabbar::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 42%, rgba(255, 255, 255, 0.18) 100%);
+  padding: 4px;
+  background: var(--sd-n0);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  box-shadow: var(--sd-glass-shadow);
 }
 .sd-tab {
   flex: 1 1 0;
-  height: 100%;
+  height: 54px;
+  border-radius: var(--sd-r-full);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 2px;
-  color: var(--sd-n650);
+  color: var(--sd-text);
   position: relative;
   z-index: 1;
 }
 .sd-tab span { font-weight: 500; font-size: 12px; line-height: 16px; }
-.sd-tab.is-on { color: var(--sd-link); }
+.sd-tab.is-on { color: var(--sd-link); background: var(--sd-n100); }
 .sd-tab:active { transform: scale(0.92); }
 .sd-tab { transition: transform 140ms var(--sd-spring); }
 .sd-tab-badge {
@@ -310,23 +308,26 @@
 .sd-btn:active { transform: scale(0.975); }
 .sd-btn.primary { background: var(--sd-action-bg); color: #fff; }
 .sd-btn.primary:active { background: var(--sd-blue-700); }
-.sd-btn.secondary { background: #fff; color: var(--sd-text); box-shadow: inset 0 0 0 1px var(--sd-border); }
+.sd-btn.secondary { background: #fff; color: var(--sd-text); box-shadow: inset 0 0 0 0.5px var(--sd-border); }
 .sd-btn.secondary:active { background: var(--sd-n50); }
 .sd-btn.apple { background: #000; color: #fff; }
-.sd-btn.destructive { background: #fff; color: var(--sd-ios-red); box-shadow: inset 0 0 0 1px var(--sd-border); }
-.sd-btn[disabled] { background: var(--sd-action-bg-dis); color: var(--sd-action-fg-dis); transform: none; }
+.sd-btn.destructive { background: #fff; color: var(--sd-text-error); border-radius: var(--sd-r-lg); }
+.sd-btn[disabled] { background: var(--sd-action-bg-dis); color: var(--sd-action-fg-dis); box-shadow: inset 0 0 0 0.5px var(--sd-border); transform: none; }
 .sd-btn.small {
   width: auto;
   min-height: 28px;
   padding: 4px 12px;
   font-weight: 500; font-size: 14px; line-height: 20px;
   background: #fff;
-  color: var(--sd-link);
-  box-shadow: inset 0 0 0 1px var(--sd-border);
+  color: var(--sd-text);
+  box-shadow: inset 0 0 0 0.5px var(--sd-border);
   border-radius: var(--sd-r-md);
 }
-/* small controls keep a 44pt tap area without growing (Apple's rule) */
-.sd-hit44 { position: relative; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; }
+/* small controls keep a 44pt tap area without growing (Apple's rule). Figma draws this as a
+   "Hit area 44" frame that overlaps its row rather than stretching it, so the target has to be
+   an overlay here too — as min-height it pushed every row it sat in from 20px to 44px. */
+.sd-hit44 { position: relative; display: inline-flex; align-items: center; justify-content: center; }
+.sd-hit44::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 44px; transform: translateY(-50%); }
 .sd-textbtn { color: var(--sd-link); font-weight: 500; font-size: 14px; line-height: 20px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
 .sd-textbtn:active { opacity: 0.45; }
 .sd-actions { display: flex; flex-direction: column; gap: 12px; }
@@ -353,15 +354,17 @@
   height: 22px;
   padding: 2px 8px;
   border-radius: var(--sd-r-sm);
-  font-weight: 500; font-size: 14px; line-height: 18px;
+  font-weight: 500; font-size: 14px; line-height: 20px;
   max-width: 322px;
   white-space: nowrap;
 }
-.sd-tag.neutral { background: var(--sd-fill-3); color: var(--sd-text); }
+.sd-tag.neutral { background: var(--sd-fill-3); color: var(--sd-text-2); }
 .sd-tag.primary { background: var(--sd-blue-50); color: var(--sd-text-info); }
 .sd-tag.success { background: var(--sd-success-50); color: var(--sd-text-success); }
 .sd-tag.buffer { background: var(--sd-warning-50); color: var(--sd-text-warning); }
 .sd-tag.failure { background: var(--sd-error-50); color: var(--sd-text-error); }
+/* Figma Tag/Style=Plain: no fill, padding 2/0, 12/16 label, still 22 tall. */
+.sd-tag.plain { background: none; padding: 2px 0; font-size: 12px; line-height: 16px; color: var(--sd-text); }
 .sd-tag.note { height: auto; align-items: flex-start; padding: 6px 8px; white-space: normal; }
 .sd-tag.note svg { flex: 0 0 auto; margin-top: 1px; }
 

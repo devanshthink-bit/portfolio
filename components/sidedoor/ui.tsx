@@ -204,7 +204,7 @@ export function TabBar({
         const on = t.key === active;
         return (
           <button key={t.key} className={`sd-tab${on ? " is-on" : ""}`} onClick={() => onPick(t.key)} aria-current={on}>
-            <Icon name={on ? t.iconOn : t.icon} size={25} />
+            <Icon name={on ? t.iconOn : t.icon} size={24} />
             <span>{t.label}</span>
             {!!t.badge && <i className="sd-tab-badge">{t.badge}</i>}
           </button>
