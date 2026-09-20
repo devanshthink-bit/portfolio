@@ -259,14 +259,16 @@ function BackChevron() {
 }
 
 /* ── Notifications ──────────────────────────────────────────────────────── */
-const CANDIDATE_NOTIF = [
-  { who: "Joy Sengupta", text: "You’re selected at Swiggy. Joy referred you on 2 Aug.", at: "11:11 am", go: "swiggy" },
-  { who: "Nithin Agarwal", text: "Submitted on Flipkart’s portal. Nithin marked it.", at: "10:02 am", go: "flipkart" },
+type Notif = { who: string; text: string; at: string; go: string; unread?: boolean };
+
+const CANDIDATE_NOTIF: Notif[] = [
+  { who: "Joy Sehgal", text: "You’re selected at Swiggy. Joy referred you on 2 Aug.", at: "11:11 am", go: "swiggy", unread: true },
+  { who: "Nithin Agarwal", text: "Submitted on Flipkart’s portal. Nithin marked it.", at: "10:02 am", go: "flipkart", unread: true },
   { who: "Advika Singh", text: "Advika referred you for Interaction Designer at Google.", at: "Yesterday", go: "google" },
   { who: "Avinash Banerjee", text: "Avinash isn’t moving forward with your PhonePe request.", at: "5 Sep", go: "phonepe" },
 ];
 
-const REFERRER_NOTIF = [
+const REFERRER_NOTIF: Notif[] = [
   { who: "Abhinav Saxena", text: "Abhinav Saxena asked you for a referral. Everything is filled in.", at: "10:04 am", go: "abhinav" },
   { who: "Arpita Singh", text: "Arpita Singh is in interviews at Flipkart.", at: "Yesterday", go: "arpita" },
   { who: "Aviral Dixit", text: "Aviral Dixit was submitted 12 days ago. Seen it move?", at: "Monday", go: "aviral" },
@@ -283,8 +285,7 @@ export function Notifications() {
           {list.map((n) => (
             <div
               key={n.text}
-              className="sd-row is-tap"
-              style={{ alignItems: "flex-start", padding: "12px 16px" }}
+              className="sd-row is-tap sd-notifrow"
               role="button"
               onClick={() => {
                 dispatch({ t: "readAll" });
@@ -292,11 +293,15 @@ export function Notifications() {
                 else nav.push("trackDetails", { id: n.go });
               }}
             >
-              <Avatar name={n.who} size={36} />
-              <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 2 }}>
+              <Avatar name={n.who} />
+              <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4, minWidth: 0 }}>
                 <span className="t-body">{n.text}</span>
                 <span className="t-label-sm muted">{n.at}</span>
               </span>
+              {/* Figma marks an unread row with an 8px blue dot level with the first line */}
+              {n.unread && (
+                <i style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--sd-link)", flex: "0 0 auto" }} />
+              )}
             </div>
           ))}
         </ListGroup>

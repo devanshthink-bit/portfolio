@@ -389,6 +389,10 @@
 .sd-chatrow { padding: 20px 0; gap: 12px; align-items: flex-start; min-height: 88px; }
 .sd-chatrow + .sd-chatrow::before { display: none; }
 .sd-list:has(> .sd-chatrow) { padding: 0 16px; }
+/* Figma's NotificationRow: 16 of padding above and below a 60 block, a 12 gap, no rule. */
+.sd-notifrow { padding: 16px 0; gap: 12px; align-items: flex-start; min-height: 92px; }
+.sd-notifrow + .sd-notifrow::before { display: none; }
+.sd-list:has(> .sd-notifrow) { padding: 0 16px; }
 .sd-row-chev { margin-left: auto; color: var(--sd-icon-2); }
 .sd-divider { height: 0.5px; background: rgba(60, 60, 67, 0.2); margin-left: 16px; }
 
