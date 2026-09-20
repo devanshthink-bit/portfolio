@@ -210,28 +210,25 @@ export function JobDetails() {
   const asked = live.stage !== "sent" || live.updated === "Just now";
   const on = saved.includes("flipkart");
   return (
-    <Screen
-      title="Job details"
-      back
-      actions={
-        asked ? (
-          <Actions>
-            <Note>You already asked Nithin. It’s in Your referral requests.</Note>
-            <Button type="secondary" onClick={() => nav.push("trackDetails", { id: "flipkart" })}>
-              See your request
-            </Button>
-          </Actions>
-        ) : (
-          <Button onClick={() => nav.push("checkRequest")}>Ask Nithin for a referral</Button>
-        )
-      }
-    >
+    <Screen title="Job details" back>
       <div style={{ paddingTop: 24 }}>
-        <Card>
-          <div style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-            <div style={{ display: "flex", gap: 8, flex: 1 }}>
+        {/* Figma nests a 358-wide Card inside a 370-wide Window, so the content column is 326
+            starting at x38 — a 22 horizontal padding on one card gives the same thing. The
+            column's own gap is a uniform 16 between every block. */}
+        <div className="sd-card" style={{ padding: "16px 22px", display: "flex", flexDirection: "column", gap: 16 }}>
+          {/* CompanyRow is 56 tall: a 40 row, 16 of padding under it, and a 1px rule on the bottom. */}
+          <div
+            style={{
+              display: "flex",
+              gap: 12,
+              alignItems: "center",
+              paddingBottom: 16,
+              boxShadow: "inset 0 -1px 0 var(--sd-border)",
+            }}
+          >
+            <div style={{ display: "flex", gap: 8, flex: 1, alignItems: "center" }}>
               <Avatar name="Nithin Agarwal" size={36} />
-              <span style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              <span style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                 <span style={{ display: "flex", alignItems: "center", gap: 4 }} className="t-h-xs">
                   Nithin Agarwal
                   <Icon name="checkmark.seal.fill" size={14} style={{ color: "var(--sd-text-success)" }} />
@@ -239,38 +236,57 @@ export function JobDetails() {
                 <span className="t-label-sm muted">Design Manager, Flipkart</span>
               </span>
             </div>
-            <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+            <span style={{ display: "flex", alignItems: "center", gap: 4, flex: "0 0 auto" }}>
               <Icon name="clock" size={14} style={{ color: "var(--sd-icon-2)" }} />
               <span className="t-label-sm muted">Thursday</span>
             </span>
           </div>
 
-          <div style={{ height: 16 }} />
-          <Image src="/images/sidedoor/flipkart.png" alt="Flipkart" width={110} height={30} style={{ width: 110, height: "auto" }} />
+          {/* Figma Frame 200: a 175-tall #2563eb panel, r16, padded 24/52, with the company
+              wordmark centred in the 222x127 it leaves. The code drew a small logo on white. */}
+          <div
+            style={{
+              background: "var(--sd-action-bg)",
+              borderRadius: 16,
+              height: 175,
+              padding: "24px 52px",
+              display: "grid",
+              placeItems: "center",
+            }}
+          >
+            <Image
+              src="/images/sidedoor/flipkart-banner-logo.png"
+              alt="Flipkart"
+              width={222}
+              height={58.53}
+              style={{ width: 222, height: 58.53 }}
+            />
+          </div>
 
-          <div style={{ height: 16 }} />
-          <div style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
             <h1 className="t-h-md" style={{ flex: 1 }}>
               Interaction Designer
             </h1>
-            <button className="sd-hit44" onClick={() => dispatch({ t: "save", v: "flipkart" })} aria-label="Save job">
+            <button onClick={() => dispatch({ t: "save", v: "flipkart" })} aria-label="Save job" style={{ display: "flex" }}>
               <Icon name={on ? "bookmark.fill" : "bookmark"} size={26} style={{ color: "var(--sd-icon-2)" }} />
             </button>
           </div>
 
-          <div style={{ height: 8 }} />
-          <Tag icon="info.circle.fill">₹28–40 LPA</Tag>
+          {/* Figma Frame 174: the pay tag and the three rating marks, 8 apart. */}
+          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+            <Tag icon="info.circle.fill">₹28–40 LPA</Tag>
+            <Image src="/images/sidedoor/rating-logos.png" alt="" width={37} height={16} style={{ width: 37, height: 16 }} />
+          </div>
 
-          <div style={{ height: 16 }} />
-          <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
+          {/* Figma Frame 175 spreads the three across the full width. */}
+          <div style={{ display: "flex", justifyContent: "space-between", gap: 24 }}>
             <Meta icon="mappin.and.ellipse">Bengaluru, KA</Meta>
             <Meta icon="calendar">3+ years</Meta>
             <Meta icon="briefcase.fill">Full time</Meta>
           </div>
 
-          <div style={{ height: 16 }} />
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-            <Tag style="primary">4 of 7 skills match</Tag>
+            <Tag style="primary" icon="checkmark.circle.fill">4 of 7 skills match</Tag>
             <Tag>Remote or hybrid</Tag>
             <Tag>Joining within 30 days</Tag>
           </div>
@@ -282,7 +298,7 @@ export function JobDetails() {
             validation.
           </Block>
 
-          <div style={{ height: 24 }} />
+          {/* Figma Frame 156 is the one block with a gap of 8 rather than 2. */}
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             <span style={{ display: "flex", gap: 8, alignItems: "center" }}>
               <Icon name="briefcase.fill" size={16} style={{ color: "var(--sd-icon-2)" }} />
@@ -325,11 +341,34 @@ export function JobDetails() {
             />
           </Block>
 
-          <Block icon="info.circle.fill" title="About the employer">
+          <Block
+            icon="info.circle.fill"
+            title="About the employer"
+            end={<Image src="/images/sidedoor/rating-logos.png" alt="" width={30} height={13} style={{ width: 30.06, height: 13 }} />}
+          >
             Flipkart is one of India’s leading e-commerce platforms, serving millions of customers across categories. The
             company focuses on building scalable, customer-first experiences through technology, design, and innovation.
           </Block>
-        </Card>
+
+          {/* Figma's Actions frame is the last child of the card, not a block pinned to the
+              screen: 8 of top padding, then a 322-wide button inset 2 from the column. */}
+          <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 12 }}>
+            {asked ? (
+              <>
+                <Note>You already asked Nithin. It’s in Your referral requests.</Note>
+                <div style={{ padding: "0 2px" }}>
+                  <Button type="secondary" onClick={() => nav.push("trackDetails", { id: "flipkart" })}>
+                    See your request
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <div style={{ padding: "0 2px" }}>
+                <Button onClick={() => nav.push("checkRequest")}>Ask Nithin for a referral</Button>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </Screen>
   );
@@ -339,36 +378,36 @@ function Meta({ icon, children }: { icon: Parameters<typeof Icon>[0]["name"]; ch
   return (
     <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
       <Icon name={icon} size={18} style={{ color: "var(--sd-icon-2)" }} />
-      <span className="t-label">{children}</span>
+      {/* Figma's Frame 175 labels are Medium 14/20 in --sd-text-2, not the dark text colour. */}
+      <span className="t-label muted">{children}</span>
     </span>
   );
 }
 
-function Block({ icon, title, children }: { icon: Parameters<typeof Icon>[0]["name"]; title: string; children: React.ReactNode }) {
+function Block({ icon, title, children, end }: { icon: Parameters<typeof Icon>[0]["name"]; title: string; children: React.ReactNode; end?: React.ReactNode }) {
+  // Figma's blocks are plain 2-gap frames; the 16 between them is the card column's own gap.
   return (
-    <>
-      <div style={{ height: 24 }} />
-      <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-        <span style={{ display: "flex", gap: 8, alignItems: "center" }}>
-          <Icon name={icon} size={16} style={{ color: "var(--sd-icon-2)" }} />
-          <span className="t-h-xs">{title}</span>
-        </span>
-        {typeof children === "string" ? <p className="t-body muted">{children}</p> : children}
-      </div>
-    </>
+    <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+      <span style={{ display: "flex", gap: 8, alignItems: "center" }}>
+        <Icon name={icon} size={16} style={{ color: "var(--sd-icon-2)" }} />
+        {/* Figma fills the title across the row, except where a mark follows it — there the
+            title hugs so the mark sits right after the words. */}
+        <span className="t-h-xs" style={{ flex: end ? "0 0 auto" : 1 }}>{title}</span>
+        {end}
+      </span>
+      {typeof children === "string" ? <p className="t-body muted">{children}</p> : children}
+    </div>
   );
 }
 
 function Bullets({ items }: { items: string[] }) {
+  // Figma draws these as a single text node: the bullet sits inline, a wrapped line runs back
+  // to the left edge, and there is no gap between items. A <ul> with a gap made each block
+  // 4 taller per item and gave the wrapped lines a hanging indent.
   return (
-    <ul style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-      {items.map((i) => (
-        <li key={i} className="t-body muted" style={{ display: "flex", gap: 8 }}>
-          <span aria-hidden="true">•</span>
-          <span>{i}</span>
-        </li>
-      ))}
-    </ul>
+    <p className="t-body muted" style={{ whiteSpace: "pre-line" }}>
+      {items.map((i) => `\u2022 ${i}`).join("\n")}
+    </p>
   );
 }
 

@@ -293,7 +293,8 @@ export function Tag({
 }) {
   return (
     <span className={`sd-tag ${kind}${note ? " note" : ""}`}>
-      {icon && <Icon name={icon} size={16} />}
+      {/* Figma's tag marks are 14, not 16 — the logo, the check and the info symbol all match. */}
+      {icon && <Icon name={icon} size={14} />}
       <span>{children}</span>
     </span>
   );
