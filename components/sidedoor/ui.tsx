@@ -429,16 +429,32 @@ export function MatchRow({ ok, children, source }: { ok: boolean; children: Reac
 }
 
 /* ── people and logos ───────────────────────────────────────────────────── */
+/**
+ * The people V6 draws as a photo. Figma fills every AvatarPlaceholder with a portrait — 16 of
+ * them across 96 cards — so a name that is on this list resolves to its photo automatically and
+ * every list, chat row and header gets the right face without being told.
+ */
+const PEOPLE = new Set([
+  "aarush-gupta", "abhay-verma", "abhinav-saxena", "abhishek-tyagi", "advika-singh", "amit-patel",
+  "arpita-singh", "avinash-banerjee", "aviral-dixit", "ayesha-sharma", "himani-kaushik",
+  "joy-sehgal", "nithin-agarwal", "shivangi-joshi", "shreya-verma", "vanya-kapoor",
+]);
+
+const slugOf = (name: string) =>
+  name.toLowerCase().replace(/[^a-z\s]/g, "").trim().replace(/\s+/g, "-");
+
 export function Avatar({ name, size = 44, src }: { name: string; size?: number; src?: string | StaticImageData }) {
   const initials = name
     .split(" ")
     .map((w) => w[0])
     .slice(0, 2)
     .join("");
+  const slug = slugOf(name);
+  const photo = src ?? (PEOPLE.has(slug) ? `/images/sidedoor/people/${slug}.png` : undefined);
   return (
     <span className="sd-av" style={{ width: size, height: size, fontSize: Math.round(size * 0.36) }}>
-      {src ? (
-        <Image src={src} alt="" width={size} height={size} style={{ objectFit: "cover" }} />
+      {photo ? (
+        <Image src={photo} alt="" width={size} height={size} style={{ width: size, height: size, objectFit: "cover" }} />
       ) : (
         initials
       )}

@@ -37,6 +37,8 @@ type Job = {
   city: string;
   pay: string;
   refers: string;
+  /** Figma's job card leads with the referrer's photo, not the company logo. */
+  person: string;
   when: string;
   tag?: { text: string; style: "primary" | "buffer" };
   common?: { logo?: string; text: string };
@@ -51,6 +53,7 @@ const JOBS: Job[] = [
     city: "Bengaluru",
     pay: "₹28–40 LPA",
     refers: "Nithin refers",
+    person: "Nithin Agarwal",
     when: "Thursday",
     tag: { text: "4 of 7 skills · 3+ yrs", style: "primary" },
     common: { logo: "makemytrip", text: "Both worked at MakeMyTrip" },
@@ -63,6 +66,7 @@ const JOBS: Job[] = [
     city: "Pune",
     pay: "₹40–50 LPA",
     refers: "Avinash refers",
+    person: "Avinash Banerjee",
     when: "Wednesday",
     tag: { text: "Avinash is full this week", style: "buffer" },
   },
@@ -74,6 +78,7 @@ const JOBS: Job[] = [
     city: "Noida",
     pay: "₹25–30 LPA",
     refers: "Vanya refers",
+    person: "Vanya Kapoor",
     when: "12 Sep",
     tag: { text: "5 of 7 skills · 4+ yrs", style: "primary" },
   },
@@ -148,7 +153,7 @@ export function Jobs() {
               >
                 <div style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
                   <div style={{ display: "flex", gap: 12, flex: 1, minWidth: 0 }}>
-                    <LogoTile logo={j.logo} alt={j.company} size={44} />
+                    <Avatar name={j.person} size={44} />
                     <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1, minWidth: 0 }}>
                       <span className="t-h-sm">{j.title}</span>
                       <span className="t-label muted">
