@@ -662,39 +662,40 @@ export function JobLive() {
       }
     >
       <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center", textAlign: "center" }}>
-          <span
-            style={{
-              width: 44,
-              height: 44,
-              borderRadius: "50%",
-              background: "var(--sd-link)",
-              display: "grid",
-              placeItems: "center",
-            }}
-          >
-            <Icon name="checkmark" size={24} style={{ color: "#fff" }} />
-          </span>
+        {/* Figma's "Live" frame is a white r12 card padded 24, holding a 40 Progress/Step mark,
+            the heading and the line 12 apart and centred — not a bare 44 circle on the page. */}
+        <div
+          style={{
+            background: "var(--sd-n0)",
+            borderRadius: "var(--sd-r-lg)",
+            padding: 24,
+            display: "flex",
+            flexDirection: "column",
+            gap: 12,
+            alignItems: "center",
+            textAlign: "center",
+          }}
+        >
+          <Icon name="checkmark.circle.fill" size={40} style={{ color: "var(--sd-link)" }} />
           <h2 className="t-h-sm">Your job is live</h2>
           <p className="t-label muted">Interaction Designer · Flipkart · Job ID {jobId || "184223"}</p>
         </div>
-        <Section
-          label="Your link for this job"
-          icon="link"
-          end={
-            <span className="sd-hit44">
-              <Icon name="doc.on.doc.fill" size={18} style={{ color: "var(--sd-icon-2)" }} />
-            </span>
-          }
-        >
-          <Box>
-            <p className="t-label link">sidedoor.app/r/nithin-agarwal</p>
-          </Box>
+        <Section label="Your link for this job" icon="link">
+          {/* Figma's "Your Link" frame holds the box and the line beneath it 8 apart, and the
+              copy mark sits inside the box at its right edge, not up in the section label. */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            <Box>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <p className="t-label" style={{ flex: 1 }}>sidedoor.app/r/nithin-agarwal</p>
+                <Icon name="doc.on.doc.fill" size={20} style={{ color: "var(--sd-icon-2)" }} />
+              </div>
+            </Box>
+            <p className="t-label-sm muted">
+              Send it to people who already messaged you about this job. They send everything your portal needs, without
+              the app.
+            </p>
+          </div>
         </Section>
-        <p className="t-label muted">
-          Send it to people who already messaged you about this job. They send everything your portal needs, without the
-          app.
-        </p>
       </div>
     </Screen>
   );
