@@ -51,7 +51,7 @@ export function BarButton({
 }) {
   return (
     <button className="sd-barbtn" onClick={onClick} aria-label={label ?? icon} style={{ position: "relative" }}>
-      {icon && <Icon name={icon} size={22} />}
+      {icon && <Icon name={icon} size={24} />}
       {label && !icon && <span className="t-label">{label}</span>}
       {badge && (
         <i
@@ -74,7 +74,7 @@ export function BackButton({ onClick }: { onClick?: () => void }) {
   const nav = useNav();
   return (
     <button className="sd-barbtn is-back" onClick={onClick ?? nav.pop} aria-label="Back">
-      <Icon name="chevron.left" size={22} style={{ color: "var(--sd-link)" }} />
+      <Icon name="chevron.left" size={24} />
     </button>
   );
 }
@@ -488,7 +488,7 @@ export function PersonRow({
       <div style={{ flex: "1 1 auto", display: "flex", flexDirection: "column", gap: 4 }}>
         <span className="sd-person-name">
           {name}
-          {verified && <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-link)" }} />}
+          {verified && <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)" }} />}
         </span>
         {sub && <span className="sd-person-sub">{sub}</span>}
       </div>

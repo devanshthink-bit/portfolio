@@ -628,7 +628,7 @@ export function JobLive() {
           icon="link"
           end={
             <span className="sd-hit44">
-              <Icon name="doc.on.doc.fill" size={18} style={{ color: "var(--sd-link)" }} />
+              <Icon name="doc.on.doc.fill" size={18} style={{ color: "var(--sd-icon-2)" }} />
             </span>
           }
         >

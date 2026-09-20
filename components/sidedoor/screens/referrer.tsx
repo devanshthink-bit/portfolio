@@ -359,7 +359,7 @@ export function ReferralRequest({ id }: { id: string }) {
                 Abhinav_Saxena_Resume.pdf
               </span>
               <button className="sd-hit44" aria-label="Open resume">
-                <Icon name="arrow.up.right.square" size={20} style={{ color: "var(--sd-link)" }} />
+                <Icon name="arrow.up.right.square" size={20} style={{ color: "var(--sd-icon-2)" }} />
               </button>
             </div>
             <div style={{ height: 12 }} />
@@ -479,7 +479,7 @@ function AfterRefer({ id }: { id: string }) {
                   <Icon
                     name={copied.includes(f.name) ? "checkmark" : f.download ? "square.and.arrow.down" : "doc.on.doc.fill"}
                     size={18}
-                    style={{ color: copied.includes(f.name) ? "var(--sd-text-success)" : "var(--sd-link)" }}
+                    style={{ color: copied.includes(f.name) ? "var(--sd-text-success)" : "var(--sd-icon-2)" }}
                   />
                 </button>
               </div>
@@ -657,7 +657,7 @@ export function ManagePosts() {
       right={
         <>
           <button className="sd-barbtn" onClick={() => nav.push("addJob")} aria-label="Add a job">
-            <Icon name="plus" size={22} />
+            <Icon name="plus" size={24} />
           </button>
           <BellButton unread={unread} />
         </>

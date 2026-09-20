@@ -2053,3 +2053,30 @@ Measured in the running prototype: right group 291/18/84/14, signal 291/18/20/14
 Caveat:    The clock's text box measures 31.6 wide against Figma's 35 because "SF Pro Text"
            is not installed; Figma keeps the original metrics but renders a fallback too (it
            refuses to load that family). Both sides show a substitute, not the same one.
+
+FIX · 2026-09-20 · Icon colours and sizes, caught by eye not by my own check
+Found:     Devansh spotted the back chevron: blue in the prototype, dark in Figma. I had
+           reported "matches exactly" after measuring only the status bar, cards and tab bar.
+           The claim was wider than the check.
+Method:    Censused all 1156 SF icon instances across 269 V6 screen frames, recording each
+           one's resolved vector fill, rendered size and ancestor chain. Instances, not the
+           style library - the library is stale (see sidedoor-figma-source-of-truth).
+Evidence:  chevron.left in Back  #3b3f46 x92 - zero blue
+           bell in Bell          #3b3f46 x56
+           plus in Add           #3b3f46 x4
+           checkmark.seal.fill   #15803d x116 - zero blue, sizes only 14/16/20
+           arrow.up.right.square #6b7280 - never blue
+           doc.on.doc.fill       #6b7280 - never blue
+           bookmark/.fill        #6b7280 at 26px, both states
+Fixed:     .sd-barbtn colour link -> text; dropped .sd-barbtn.is-back's extra width so the
+           back button is the plain 44x44 circle Figma draws; all bar-button icons 22 -> 24;
+           10 verified badges link -> success, and their sizes/gaps matched per context
+           (profile card 20px gap4; name-and-tag rows 16px gap2, which also corrected two
+           name rows from 20/28 to Figma's 16/24); three more icons link -> icon-2.
+Verified:  Browser measurement - back button 44.0x44.0 design px, icon 24, rgb(59,63,70);
+           badge 16x16 rgb(21,128,61) in a gap-2 row of 16/24 600. Localhost, not Vercel.
+Not fixed: The Icon.tsx paths are rounded to 1 decimal. Measured error on chevron.left is
+           <=0.08px against Figma's exact vector - below one pixel, so left as is rather
+           than pulling ~220KB of exact path data for all 53 icons. Say so, don't hide it.
+Open:      Figma has no saved-state job card, so the bookmark "on" appearance has no source
+           to copy. Left filled in the same grey. Needs a decision, not a guess.

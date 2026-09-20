@@ -203,11 +203,10 @@
 .sd-nav-wrap.has-large .sd-nav-title { opacity: 0; transition: opacity 180ms linear; }
 
 /* a bar button: 44pt tap area, glass only when it floats over content */
-.sd-barbtn { width: 44px; height: 44px; display: grid; place-items: center; color: var(--sd-link);
+.sd-barbtn { width: 44px; height: 44px; display: grid; place-items: center; color: var(--sd-text);
   border-radius: var(--sd-r-full); background: var(--sd-n0);
   backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px); box-shadow: var(--sd-glass-shadow); }
 .sd-barbtn:active { opacity: 0.4; }
-.sd-barbtn.is-back { width: auto; min-width: 44px; padding-right: 6px; }
 
 /* large title (tab roots) */
 .sd-largetitle { padding: 0 16px 8px; font-weight: 600; font-size: 32px; line-height: 40px; color: var(--sd-text); }

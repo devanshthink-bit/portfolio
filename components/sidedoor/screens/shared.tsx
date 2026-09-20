@@ -78,7 +78,7 @@ export function Messages() {
                 <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 2, minWidth: 0 }}>
                   <span style={{ display: "flex", alignItems: "center", gap: 4 }} className="t-h-sm">
                     {c.name}
-                    <Icon name="checkmark.seal.fill" size={14} style={{ color: "var(--sd-link)" }} />
+                    <Icon name="checkmark.seal.fill" size={14} style={{ color: "var(--sd-text-success)" }} />
                   </span>
                   <span
                     className="t-body muted"
@@ -166,7 +166,7 @@ export function ChatScreen({ who = "Nithin Agarwal" }: { who?: string }) {
               <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4 }}>
                 <span style={{ display: "flex", alignItems: "center", gap: 4 }} className="t-h-xs">
                   {live.company}
-                  <Icon name="checkmark.seal.fill" size={14} style={{ color: "var(--sd-link)" }} />
+                  <Icon name="checkmark.seal.fill" size={14} style={{ color: "var(--sd-text-success)" }} />
                 </span>
                 <span>
                   <Tag style={stageTag(live.stage)}>{STAGE_LABEL[live.stage]}</Tag>
@@ -242,7 +242,7 @@ function BackChevron() {
   const nav = useNav();
   return (
     <button className="sd-barbtn is-back" onClick={nav.pop} aria-label="Back">
-      <Icon name="chevron.left" size={22} style={{ color: "var(--sd-link)" }} />
+      <Icon name="chevron.left" size={24} />
     </button>
   );
 }
@@ -308,7 +308,7 @@ export function Profile() {
             <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4 }}>
               <span style={{ display: "flex", alignItems: "center", gap: 4 }} className="t-h-md">
                 {isReferrer ? "Nithin Agarwal" : "Abhinav Saxena"}
-                {isReferrer && <Icon name="checkmark.seal.fill" size={18} style={{ color: "var(--sd-link)" }} />}
+                {isReferrer && <Icon name="checkmark.seal.fill" size={20} style={{ color: "var(--sd-text-success)" }} />}
               </span>
               <span className="t-label muted">{isReferrer ? "Design Manager, Flipkart" : "Product Designer, Blinkit"}</span>
             </span>
@@ -611,7 +611,7 @@ export function LinkPage() {
             <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4 }}>
               <span className="sd-person-name">
                 Nithin Agarwal
-                <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-link)" }} />
+                <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)" }} />
               </span>
               <span style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
                 <span className="sd-person-sub">Design Manager, Flipkart</span>

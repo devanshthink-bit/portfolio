@@ -188,7 +188,7 @@ export function BellButton({ unread }: { unread: number }) {
   const nav = useNav();
   return (
     <button className="sd-barbtn" onClick={() => nav.push("notifications")} aria-label="Notifications" style={{ position: "relative" }}>
-      <Icon name="bell" size={22} />
+      <Icon name="bell" size={24} />
       {unread > 0 && (
         <i
           style={{ position: "absolute", top: 9, right: 10, width: 8, height: 8, borderRadius: "50%", background: "var(--sd-ios-red)" }}
@@ -229,7 +229,7 @@ export function JobDetails() {
               <span style={{ display: "flex", flexDirection: "column", gap: 2 }}>
                 <span style={{ display: "flex", alignItems: "center", gap: 4 }} className="t-h-xs">
                   Nithin Agarwal
-                  <Icon name="checkmark.seal.fill" size={14} style={{ color: "var(--sd-link)" }} />
+                  <Icon name="checkmark.seal.fill" size={14} style={{ color: "var(--sd-text-success)" }} />
                 </span>
                 <span className="t-label-sm muted">Design Manager, Flipkart</span>
               </span>
@@ -249,7 +249,7 @@ export function JobDetails() {
               Interaction Designer
             </h1>
             <button className="sd-hit44" onClick={() => dispatch({ t: "save", v: "flipkart" })} aria-label="Save job">
-              <Icon name={on ? "bookmark.fill" : "bookmark"} size={22} style={{ color: on ? "var(--sd-link)" : "var(--sd-icon-2)" }} />
+              <Icon name={on ? "bookmark.fill" : "bookmark"} size={26} style={{ color: "var(--sd-icon-2)" }} />
             </button>
           </div>
 
@@ -422,7 +422,7 @@ export function CheckRequest() {
           <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1 }}>
             <span className="sd-person-name">
               Nithin Agarwal
-              <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-link)" }} />
+              <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)" }} />
             </span>
             <span style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
               <span className="sd-person-sub">Design Manager, Flipkart</span>
@@ -550,9 +550,9 @@ function ReferralBar({ r, onClick }: { r: Request; onClick: () => void }) {
       <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
         <LogoTile logo={r.logo} alt={r.company} size={52} />
         <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4 }}>
-          <span style={{ display: "flex", alignItems: "center", gap: 4 }} className="t-h-sm">
+          <span style={{ display: "flex", alignItems: "center", gap: 2 }} className="t-h-sm">
             {r.company}
-            <Icon name="checkmark.seal.fill" size={15} style={{ color: "var(--sd-link)" }} />
+            <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)" }} />
           </span>
           <span>
             <Tag style={stageTag(r.stage)}>{STAGE_LABEL[r.stage]}</Tag>
@@ -688,9 +688,9 @@ export function TrackDetails({ id, stage }: { id: string; stage?: Stage }) {
         <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
           <LogoTile logo={r.logo} alt={r.company} />
           <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1 }}>
-            <span style={{ display: "flex", alignItems: "center", gap: 4 }} className="t-h-md">
+            <span style={{ display: "flex", alignItems: "center", gap: 2 }} className="t-h-sm">
               {r.company}
-              <Icon name="checkmark.seal.fill" size={18} style={{ color: "var(--sd-link)" }} />
+              <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)" }} />
             </span>
             <span className="t-label muted">{r.job}</span>
             <span>
@@ -726,7 +726,7 @@ export function TrackDetails({ id, stage }: { id: string; stage?: Stage }) {
               <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4 }}>
                 <span className="sd-person-name">
                   {r.referrer}
-                  <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-link)" }} />
+                  <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)" }} />
                 </span>
                 <span className="sd-person-sub">{r.referrerRole}</span>
               </span>
