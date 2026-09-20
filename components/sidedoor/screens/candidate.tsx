@@ -97,7 +97,28 @@ export function Jobs() {
   const failed = force === "jobs.error" && phase === "ok";
   return (
     <Screen largeTitle="Jobs" right={<BellButton unread={unread} />}>
-      <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 8 }}>
+      <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
+        {skippedResume && (
+          // Figma's "Add Resume Prompt": a white r12 card padded 12/16 with the two lines on the
+          // left and the link at the right — not a buffer note tucked under the section label.
+          <div
+            style={{
+              background: "var(--sd-n0)",
+              borderRadius: "var(--sd-r-lg)",
+              padding: "12px 16px",
+              display: "flex",
+              gap: 12,
+              alignItems: "center",
+            }}
+          >
+            <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 2 }}>
+              <span className="t-h-xs">See how well you match</span>
+              <span className="t-label-sm muted">Add your resume and every job shows your match.</span>
+            </span>
+            <TextButton onClick={() => nav.openSheet("addResume")}>Add resume</TextButton>
+          </div>
+        )}
+        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <Icon name="briefcase.fill" size={16} style={{ color: "var(--sd-icon-2)" }} />
           <span className="t-h-xs" style={{ flex: 1 }}>
@@ -110,11 +131,6 @@ export function Jobs() {
             </button>
           </span>
         </div>
-        {skippedResume && (
-          <Note style="buffer" icon="info.circle.fill">
-            Add your resume to ask. Referrers need it before they can act.
-          </Note>
-        )}
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           {phase === "loading" ? (
             <>
@@ -163,7 +179,12 @@ export function Jobs() {
                         {j.pay} · {j.refers}
                       </span>
                       <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
-                        {j.tag && <Tag style={j.tag.style}>{j.tag.text}</Tag>}
+                        {j.tag &&
+                          (skippedResume && j.tag.style === "primary" ? (
+                            <Tag>Add resume to see match</Tag>
+                          ) : (
+                            <Tag style={j.tag.style}>{j.tag.text}</Tag>
+                          ))}
                         {j.common && (
                           <span className="sd-tag plain">
                             {j.common.logo && (
@@ -183,6 +204,7 @@ export function Jobs() {
               </Card>
             ))
           )}
+        </div>
         </div>
       </div>
     </Screen>
