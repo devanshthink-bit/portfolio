@@ -1972,3 +1972,15 @@ FIX · 2026-09-20 · third component pass
     the name, not 3.
   · PostCard activity line is Medium 14/20, not 12/16.
   · TextButton had the same min-height:44 bug as .sd-hit44 and stretched every row it sat in.
+
+FIX · 2026-09-20 · every screen body started 16px too high
+Censused all 87 V6 screen frames: the body section pads 24 at the top on tab and detail
+screens and 32 on the onboarding and edit forms, with 16 at the sides and a 24 gap between
+sections. Not one screen pads 8. The code used `paddingTop: 8` on 28 screen bodies, and
+FormScreen wrote `paddingTop: 32 - 24` on the assumption Screen already added 24 — it
+doesn't, so those forms were 24px short. All 28 corrected to their per-screen value and
+FormScreen set to 32. Verified: Referral requests now starts its section label at y160, the
+Figma number.
+Also: the RequestCard shared-history line ("Both worked at MakeMyTrip") had the same Plain
+tag bug as the job cards — a 16px span where Figma has a 22px tag, making every request card
+126 tall instead of 132.

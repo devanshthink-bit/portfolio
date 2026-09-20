@@ -175,7 +175,8 @@ export function FormScreen({
 }) {
   return (
     <Screen back={back} onBack={onBack} title={step} right={right} actions={actions}>
-      <div style={{ paddingTop: 32 - 24 }} />
+      {/* Figma pads the onboarding/edit form bodies 32 at the top */}
+      <div style={{ paddingTop: 32 }} />
       <div style={{ display: "flex", flexDirection: "column", gap: 4, textAlign: "center" }}>
         <h2 className="t-h-sm">{title}</h2>
         {subtitle && <p className="t-label muted">{subtitle}</p>}

@@ -71,7 +71,7 @@ export function ReferralRequests() {
 
   return (
     <Screen largeTitle="Referral requests" right={<BellButton unread={unread} />}>
-      <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 24 }}>
+      <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <Icon name="briefcase.fill" size={16} style={{ color: "var(--sd-icon-2)" }} />
           <span className="t-h-xs" style={{ flex: 1 }}>
@@ -185,15 +185,17 @@ function RequestCard({ r, onClick, end }: { r: Req; onClick?: () => void; end?: 
           <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1 }}>
             <span className="t-h-sm">{r.name}</span>
             <span className="t-label-sm muted">{r.role}</span>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginTop: 4 }}>
+            {/* Figma RequestCard Tags frame: 4px gap, and the shared-history line is a
+                Plain tag — 22 tall with a 14px mark, not a bare 16px span. */}
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
               <Tag style="primary">{r.match}</Tag>
               {r.common && (
-                <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                <span className="sd-tag plain">
                   {r.common.logo && (
-                    <Image src={`/images/sidedoor/${r.common.logo}.png`} alt="" width={16} height={16} style={{ width: 16, height: "auto" }} />
+                    <Image src={`/images/sidedoor/${r.common.logo}.png`} alt="" width={14} height={14} style={{ width: 14, height: "auto" }} />
                   )}
                   {r.common.icon && <Icon name={r.common.icon} size={14} style={{ color: "var(--sd-icon-2)" }} />}
-                  <span className="t-label-sm muted">{r.common.text}</span>
+                  <span>{r.common.text}</span>
                 </span>
               )}
             </div>
@@ -237,7 +239,7 @@ export function ReferralRequest({ id }: { id: string }) {
   if (state?.stage === "notmoving")
     return (
       <Screen title="Referral request" back actions={<Button onClick={() => nav.pop()}>Back to referral requests</Button>}>
-        <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 24 }}>
+        <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
           <PersonHead name={r.name} role={r.role} tag={<Tag>Not moving forward</Tag>} />
           <Card>
             <p className="t-h-xs">{r.name.split(" ")[0]} has been told</p>
@@ -266,7 +268,7 @@ export function ReferralRequest({ id }: { id: string }) {
         </Actions>
       }
     >
-      <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 24 }}>
+      <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
         <PersonHead name={r.name} role={r.role} tag={<Tag>Sent {r.when.toLowerCase()}</Tag>} />
 
         <Card>
@@ -448,7 +450,7 @@ function AfterRefer({ id }: { id: string }) {
         </Actions>
       }
     >
-      <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 24 }}>
+      <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
         <PersonHead name={r.name} role={r.role} tag={<Tag style="success">Referred</Tag>} />
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <TextButton onClick={() => dispatch({ t: "handle", id: r.id, stage: "sent" })}>Undo refer</TextButton>
@@ -508,7 +510,7 @@ function MarkedSubmitted({ id }: { id: string }) {
         </Actions>
       }
     >
-      <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 24 }}>
+      <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
         <PersonHead name={r.name} role={r.role} tag={<Tag style="success">Submitted</Tag>} />
         <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center", textAlign: "center", paddingTop: 16 }}>
           <span style={{ width: 44, height: 44, borderRadius: "50%", background: "var(--sd-link)", display: "grid", placeItems: "center" }}>
@@ -588,7 +590,7 @@ export function YourReferrals() {
 
   return (
     <Screen largeTitle="Your referrals" right={<BellButton unread={unread} />}>
-      <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 24 }}>
+      <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
         {!none && (
         <Section label="What your referrals reached" icon="flag.fill">
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -661,7 +663,7 @@ export function ManagePosts() {
         </>
       }
     >
-      <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 24 }}>
+      <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
         {none ? (
           <Empty
             icon="square.grid.2x2"
@@ -729,7 +731,7 @@ export function EditPost({ title }: { title?: string }) {
         </Actions>
       }
     >
-      <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 24 }}>
+      <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
         <p className="t-label muted">Changes show on the job straight away.</p>
         <Section label="The job" icon="briefcase.fill">
           <Box>

@@ -53,7 +53,7 @@ export function Messages() {
   const shown = all.filter((c) => c.name.toLowerCase().includes(q.toLowerCase()));
   return (
     <Screen largeTitle="Messages" right={<BellButton unread={unread} />}>
-      <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 16 }}>
+      <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 16 }}>
         <div className="sd-search">
           <Icon name="magnifyingglass" size={17} style={{ color: "var(--sd-placeholder)" }} />
           <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search by name or job…" />
@@ -267,7 +267,7 @@ export function Notifications() {
   const list = role === "referrer" ? REFERRER_NOTIF : CANDIDATE_NOTIF;
   return (
     <Screen title="Notifications" back onBack={() => { dispatch({ t: "readAll" }); nav.pop(); }}>
-      <div style={{ paddingTop: 8 }}>
+      <div style={{ paddingTop: 24 }}>
         <ListGroup>
           {list.map((n) => (
             <div
@@ -301,7 +301,7 @@ export function Profile() {
   const isReferrer = role === "referrer";
   return (
     <Screen largeTitle="Profile" right={<BellButton unread={unread} />}>
-      <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 24 }}>
+      <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
         <Card>
           <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
             <Avatar name={isReferrer ? "Nithin Agarwal" : "Abhinav Saxena"} size={68} />
@@ -391,7 +391,7 @@ export function EditDetails() {
   const [city, setCity] = useState("Bengaluru, KA");
   return (
     <Screen title="Edit your details" back actions={<Button onClick={() => nav.pop()}>Save changes</Button>}>
-      <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 24 }}>
+      <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
         {/* a photo, with "Edit photo" as text under it — no pencil badge (LOG, 20 Sep) */}
         <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center" }}>
           <Avatar name={name} size={88} />
@@ -448,7 +448,7 @@ export function EditProfileReferrer() {
   const [city, setCity] = useState("Bengaluru, KA");
   return (
     <Screen title="Edit profile" back actions={<Button onClick={() => nav.pop()}>Save changes</Button>}>
-      <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 24 }}>
+      <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
         <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center" }}>
           <Avatar name="Nithin Agarwal" size={88} />
           <TextButton>Edit photo</TextButton>
@@ -483,7 +483,7 @@ export function SavedJobs() {
   const { saved } = useStore();
   return (
     <Screen title="Saved jobs" back>
-      <div style={{ paddingTop: 8 }}>
+      <div style={{ paddingTop: 24 }}>
         {saved.length === 0 ? (
           <Empty icon="bookmark" title="Nothing saved" body="Tap the bookmark on a job to keep it here." />
         ) : (
@@ -508,7 +508,7 @@ export function Settings() {
   const [email, setEmail] = useState(false);
   return (
     <Screen title="Settings" back>
-      <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 24 }}>
+      <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
         <Section label="Notifications" icon="bell">
           <ListGroup>
             <Row end={<Switch on={push} onChange={setPush} />}>Push notifications</Row>
@@ -529,7 +529,7 @@ export function Settings() {
 export function Help() {
   return (
     <Screen title="Help" back>
-      <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 24 }}>
+      <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
         <ListGroup>
           <Row icon="lightbulb.fill" chevron>
             How referrals work here

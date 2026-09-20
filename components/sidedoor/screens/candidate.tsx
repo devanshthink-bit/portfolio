@@ -221,7 +221,7 @@ export function JobDetails() {
         )
       }
     >
-      <div style={{ paddingTop: 8 }}>
+      <div style={{ paddingTop: 24 }}>
         <Card>
           <div style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
             <div style={{ display: "flex", gap: 8, flex: 1 }}>
@@ -414,7 +414,7 @@ export function CheckRequest() {
         </Actions>
       }
     >
-      <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 24 }}>
+      <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
         <p className="t-label muted">This is exactly what Nithin will get.</p>
 
         <div style={{ display: "flex", gap: 12 }}>
@@ -518,7 +518,7 @@ export function RequestList({ justSent }: { justSent?: boolean }) {
   const shown = all.filter((r) => filter === "All" || bucket(r.stage) === filter);
   return (
     <Screen largeTitle="Your referral requests" right={<BellButton unread={unread} />}>
-      <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 16 }}>
+      <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 16 }}>
         <Segmented options={[...FILTERS]} value={filter} onChange={setFilter} />
         {justSent && (
           <Note style="success" icon="checkmark">
@@ -659,7 +659,7 @@ export function TrackDetails({ id, stage }: { id: string; stage?: Stage }) {
   if (phase === "loading")
     return (
       <Screen title="Referral request" back>
-        <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 16 }}>
+        <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 16 }}>
           <SkeletonCard />
           <SkeletonCard />
         </div>
@@ -683,7 +683,7 @@ export function TrackDetails({ id, stage }: { id: string; stage?: Stage }) {
         ) : undefined
       }
     >
-      <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 24 }}>
+      <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
         {/* the company the request is about sits on the grey page, never in a card (20 Sep rule) */}
         <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
           <LogoTile logo={r.logo} alt={r.company} />

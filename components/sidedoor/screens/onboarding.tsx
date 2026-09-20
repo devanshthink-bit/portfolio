@@ -132,7 +132,7 @@ export function RoleSelection() {
   );
   return (
     <Screen title="Choose your role" back onBack={() => nav.reset("login")}>
-      <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 24, alignItems: "center" }}>
+      <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24, alignItems: "center" }}>
         <p className="t-label muted">You can change this later</p>
         <div style={{ display: "flex", flexDirection: "column", gap: 16, width: "100%" }}>
           {card("role-referrer", 109, 100, "Refer someone", "I work at a company and can refer candidates", () => pick("referrer"))}
@@ -243,7 +243,7 @@ export function UploadResume() {
         </Actions>
       }
     >
-      <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 24 }}>
+      <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
         <p className="t-label muted">We fill in your details, you check them.</p>
         {failed && (
           <Note style="failure" icon="xmark.circle.fill">
@@ -277,7 +277,7 @@ export function CheckProfile() {
       back
       actions={<Button onClick={() => nav.reset("tabs")}>See jobs</Button>}
     >
-      <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 24 }}>
+      <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
         <p className="t-label muted">Filled from your resume. Check these before you send anything.</p>
 
         <Section label="From your resume" icon="person.fill" end={<TextButton>Edit</TextButton>}>
@@ -392,7 +392,7 @@ export function VerifyEmail() {
         </Actions>
       }
     >
-      <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 24 }}>
+      <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
         <p className="t-label muted">
           Candidates see your name, role and company. The verified tick shows after we check your work email.
         </p>
@@ -443,7 +443,7 @@ export function AddJob() {
         </Actions>
       }
     >
-      <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 24 }}>
+      <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
         <p className="t-label muted">
           Paste its link from your careers page, or upload the description. We fill in the rest.
         </p>
@@ -494,7 +494,7 @@ export function CheckPost() {
         </Actions>
       }
     >
-      <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 24 }}>
+      <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
         <p className="t-label muted">Filled from Flipkart_IxDesigner_JD.docx. Check it before you post.</p>
 
         <Section
@@ -593,7 +593,7 @@ export function JobLive() {
         </Actions>
       }
     >
-      <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 24 }}>
+      <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
         <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center", textAlign: "center" }}>
           <span
             style={{
