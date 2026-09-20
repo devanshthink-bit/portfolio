@@ -96,7 +96,7 @@ const initial: State = {
   requests: [
     { id: "flipkart", referrer: "Nithin Agarwal", referrerRole: "Design Manager, Flipkart", company: "Flipkart", logo: "flipkart", job: "Interaction Designer", jobId: "184223", stage: "sent", updated: "Today", live: true, ...ABHINAV },
     { id: "swiggy", referrer: "Joy Sengupta", referrerRole: "SDE-3, Swiggy", company: "Swiggy", logo: "swiggy", job: "Software Engineer-II", jobId: "170884", stage: "selected", updated: "11:11 am" },
-    { id: "google", referrer: "Advika Singh", referrerRole: "UX Designer, Google", company: "Google", logo: "google", job: "Interaction Designer", jobId: "G-4471", stage: "referred", updated: "Yesterday" },
+    { id: "google", referrer: "Advika Singh", referrerRole: "Product Designer-II, Google", company: "Google", logo: "google", job: "Interaction Designer", jobId: "G-4471", stage: "referred", updated: "Yesterday" },
     { id: "cred", referrer: "Shreya Verma", referrerRole: "UX Designer, CRED", company: "CRED", logo: "cred", job: "Product Designer", jobId: "CR-220", stage: "notselected", updated: "Thursday" },
     { id: "razorpay", referrer: "Aviral Dixit", referrerRole: "UX Designer, Razorpay", company: "Razorpay", logo: "razorpay", job: "Design Lead", jobId: "RZP-91", stage: "interviews", updated: "Tuesday" },
     { id: "zepto", referrer: "Shivangi Joshi", referrerRole: "SWE-I, Zepto", company: "Zepto", logo: "zepto", job: "Software Engineer-I", jobId: "ZP-338", stage: "sent", updated: "Monday" },

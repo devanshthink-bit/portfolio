@@ -704,8 +704,8 @@ function steps(stage: Stage): Step[] {
 
 const NOW: Partial<Record<Stage, { line: string; sub: string }>> = {
   sent: { line: "Sent to {who} {when}. No answer yet.", sub: "No answer in 7 days? You can withdraw it and ask someone else." },
-  referred: { line: "{who} referred you.", sub: "Next they add you to {co}’s portal." },
-  submitted: { line: "Submitted on {co}’s portal.", sub: "Interviews usually start within 2–3 weeks." },
+  referred: { line: "{who} referred you {when}.", sub: "Next, {who} adds you on {co}’s portal." },
+  submitted: { line: "Submitted on {co}’s portal {when}.", sub: "Interviews usually start within 2–3 weeks." },
   interviews: { line: "In interviews at {co}.", sub: "{who} will tell you what they hear." },
   onhold: { line: "On hold at {co}.", sub: "{who} marked it. Nothing for you to do yet." },
   selected: { line: "You’re selected at {co}.", sub: "{who} referred you. Congratulations." },
@@ -808,6 +808,27 @@ export function TrackDetails({ id, stage }: { id: string; stage?: Stage }) {
           <p className="t-label-sm muted">{fill(now.sub)}</p>
         </div>
 
+        {/* Figma's "Heard From The Company" card sits between "where it is now" and the
+            timeline: a 78-tall white card padded 12/16, two lines left, a link right. */}
+        {r.stage === "referred" && (
+          <div
+            style={{
+              background: "var(--sd-n0)",
+              borderRadius: "var(--sd-r-lg)",
+              padding: "12px 16px",
+              display: "flex",
+              gap: 12,
+              alignItems: "center",
+            }}
+          >
+            <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 2, minWidth: 0 }}>
+              <span className="t-h-xs">Heard from {r.company}?</span>
+              <span className="t-label-sm muted">Got an email saying your application was submitted? Mark it.</span>
+            </span>
+            <TextButton onClick={() => dispatch({ t: "handle", id: r.id, stage: "submitted" })}>Mark it</TextButton>
+          </div>
+        )}
+
         <div className="sd-card" style={{ padding: 24 }}>
           <Timeline steps={steps(r.stage)} />
         </div>
@@ -820,6 +841,7 @@ export function TrackDetails({ id, stage }: { id: string; stage?: Stage }) {
             <p className="t-label-sm muted">Your details are ready. It takes one tap to ask.</p>
           </Card>
         )}
+
 
         {/* Figma has no section label over this card, and no "what they got" block at all */}
         <Card>
