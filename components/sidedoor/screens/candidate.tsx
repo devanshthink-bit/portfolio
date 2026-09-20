@@ -228,12 +228,23 @@ export function BellButton({ unread }: { unread: number }) {
 /* ── Job details ────────────────────────────────────────────────────────── */
 export function JobDetails() {
   const nav = useNav();
-  const { saved, dispatch, live } = useStore();
+  const { saved, dispatch, live, force } = useStore();
+  const suggested = force === "job.suggested";
   const asked = live.stage !== "sent" || live.updated === "Just now";
   const on = saved.includes("flipkart");
   return (
     <Screen title="Job details" back>
-      <div style={{ paddingTop: 24 }}>
+      <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
+        {suggested && (
+          // Figma's Headline block, shown when a referrer has put you forward: the line and its
+          // explanation 4 apart, 24 above the card.
+          <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+            <span className="t-h-sm">Nithin suggests you for this job</span>
+            <span className="t-label muted">
+              Your details are ready. Sending won’t use one of your 5 requests this week.
+            </span>
+          </div>
+        )}
         {/* Figma nests a 358-wide Card inside a 370-wide Window, so the content column is 326
             starting at x38 — a 22 horizontal padding on one card gives the same thing. The
             column's own gap is a uniform 16 between every block. */}
