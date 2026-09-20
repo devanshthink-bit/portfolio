@@ -2321,3 +2321,17 @@ overwrote the setter the bar called. The stack now owns the tab state.
   request; the prototype carries one date per request.
 
 Verified on localhost, not the Vercel preview.
+
+---
+
+DECISION · 2026-09-21 · Verify screen: the prototype-only help line is gone
+Decided:   Removed "For this prototype the code is 482013" from the Code field on
+           Where you work. Any 6 digits now pass. The wrong-code error is driven by
+           the seeded value 482010 from the `verify.wrong-code` scenario, so that
+           state still demos, and editing any digit clears it.
+Rejected:  Keeping the line (Figma has no text node for it); pre-filling 482013
+           (still a value Figma does not show).
+Because:   Devansh's bar is an exact match with Figma. The line only existed so a
+           first-time user could get past the screen; letting any code through
+           solves that without adding a node Figma doesn't have.
+How sure:  Verified on localhost, not the Vercel preview.

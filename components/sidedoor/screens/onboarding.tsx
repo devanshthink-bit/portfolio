@@ -436,7 +436,9 @@ export function VerifyEmail() {
   const [code, setCode] = useState(force === "verify.wrong-code" ? "482010" : "");
   const [email, setEmail] = useState(force === "verify.personal" ? "nithin.agarwal@gmail.com" : "nithin.agarwal@flipkart.com");
   const personal = /@(gmail|yahoo|outlook|hotmail)\./i.test(email);
-  const wrong = code.length === 6 && code !== "482013";
+  // Any 6 digits pass. Only the seeded code from the wrong-code scenario fails,
+  // so editing a digit clears the error and lets you through.
+  const wrong = code === "482010";
   return (
     <Screen
       title="Where you work"
@@ -477,7 +479,6 @@ export function VerifyEmail() {
             value={code}
             onChange={(v) => setCode(v.replace(/\D/g, "").slice(0, 6))}
             placeholder="6-digit code"
-            help={!wrong ? "For this prototype the code is 482013" : undefined}
             error={wrong ? "That code doesn’t match. Check the email again." : undefined}
           />
           <Field label="Your role" icon="briefcase.fill" value="Design Manager" />
