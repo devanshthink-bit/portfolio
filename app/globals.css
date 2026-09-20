@@ -1893,46 +1893,83 @@
 .work-card-panel .wip-phones { flex: 1 1 0; min-height: 0; height: auto; }
 
 /* ── Sidedoor working prototype page (app/work/sidedoor/prototype) ────────
-   The viewer only: the app itself is styled entirely in components/sidedoor/app.css. */
+   One fixed screen: nothing here scrolls the page. The phone sits on the right at
+   whatever size the window height allows; the state list fills the left in two
+   columns and scrolls inside itself only if the window is short.
+   The app itself is styled entirely in components/sidedoor/app.css. */
+html:has(.proto-page), body:has(.proto-page) { height: 100%; overflow: hidden; }
+/* the floating dock would sit on top of the phone, and this page is its own tool */
+body:has(.proto-page) .bottom-dock { display: none !important; }
+
+.page-wrapper:has(.proto-page) {
+  max-width: none;
+  height: 100dvh;
+  padding: calc(var(--nav-h) + 20px) 32px 20px;
+  gap: 0;
+  overflow: hidden;
+}
+.content-wrapper:has(.proto-page) { height: 100%; min-height: 0; gap: 0; }
+
 .proto-page {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 40px 24px 96px;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
+  height: 100%;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 18px;
+  overflow: hidden;
 }
 
-.proto-head { display: flex; flex-direction: column; gap: 10px; }
+.proto-head { display: flex; flex-direction: column; gap: 6px; }
 .proto-eyebrow { font: 500 12px/16px var(--font-geist-mono), monospace; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
-.proto-head h1 { font: 600 32px/40px var(--font-manrope), sans-serif; letter-spacing: -0.02em; }
-.proto-sub { max-width: 620px; color: var(--text-secondary); font-size: 15px; line-height: 24px; }
-/* the phone on the left, every state on the right */
-.proto-layout { display: flex; gap: 40px; align-items: flex-start; }
-/* room under the phone so the site dock never covers the app tab bar */
-.proto-stage { display: flex; justify-content: center; padding-bottom: 120px; flex: 0 0 auto; }
+.proto-head h1 { font: 600 26px/34px var(--font-manrope), sans-serif; letter-spacing: -0.02em; }
+.proto-sub { max-width: 760px; color: var(--text-secondary); font-size: 14px; line-height: 21px; }
 
-.proto-states { flex: 1 1 auto; display: flex; flex-direction: column; gap: 18px; position: sticky; top: 24px; }
-.proto-states h2 { font: 600 18px/26px var(--font-manrope), sans-serif; }
-.proto-state-group { display: flex; flex-direction: column; gap: 8px; }
+/* the list on the left, the phone on the right */
+.proto-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 36px;
+  min-height: 0;
+  align-items: stretch;
+}
+.proto-stage { display: flex; justify-content: center; align-items: center; min-height: 0; }
+
+.proto-states {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.proto-states h2 { font: 600 17px/24px var(--font-manrope), sans-serif; }
+/* two columns so all 38 states fit without the panel needing to scroll */
+.proto-groups {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  /* as many columns as fit, so every group lands on screen without the panel scrolling */
+  columns: 230px;
+  column-gap: 28px;
+  padding-right: 4px;
+}
+.proto-state-group { break-inside: avoid; display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
 .proto-state-group h3 {
   font: 500 11px/14px var(--font-geist-mono), monospace;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-muted);
 }
-.proto-state-group ul { display: flex; flex-direction: column; gap: 2px; }
+.proto-state-group ul { display: flex; flex-direction: column; gap: 1px; }
 .proto-state {
   display: flex;
   align-items: center;
   gap: 8px;
   width: 100%;
   text-align: left;
-  padding: 6px 10px;
+  padding: 4px 10px;
   margin-inline: -10px;
   border-radius: 6px;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: 13px;
+  line-height: 19px;
   color: var(--text-secondary);
   background: none;
   border: 0;
@@ -1943,8 +1980,8 @@
 .proto-state.is-on { background: rgba(120, 113, 108, 0.12); color: var(--text-primary); font-weight: 500; }
 .proto-role {
   flex: 0 0 auto;
-  width: 18px;
-  height: 18px;
+  width: 17px;
+  height: 17px;
   border-radius: 5px;
   display: grid;
   place-items: center;
@@ -1952,19 +1989,42 @@
 }
 .proto-role.is-candidate { background: #dce8ff; color: #2a4a8a; }
 .proto-role.is-referrer { background: #d7f0e4; color: #16603f; }
-.proto-notes { display: flex; flex-direction: column; gap: 12px; max-width: 620px; }
-.proto-notes h2 { font: 600 18px/26px var(--font-manrope), sans-serif; }
-.proto-notes ol { display: flex; flex-direction: column; gap: 10px; padding-left: 20px; color: var(--text-secondary); font-size: 15px; line-height: 24px; }
-.proto-notes li { list-style: decimal; }
 
-@media (max-width: 1040px) {
-  .proto-layout { flex-direction: column; gap: 24px; }
-  .proto-states { position: static; }
-  .proto-stage { padding-bottom: 0; }
+/* Short windows: tighten the list so every group still lands on screen. */
+@media (max-height: 840px) {
+  .proto-head h1 { font-size: 22px; line-height: 28px; }
+  .proto-sub { font-size: 13px; line-height: 19px; }
+  .proto-states h2 { font-size: 15px; line-height: 21px; }
+  .proto-groups { columns: 195px; column-gap: 22px; }
+  .proto-state-group { margin-bottom: 10px; }
+  .proto-state { padding: 3px 8px; margin-inline: -8px; font-size: 12.5px; line-height: 18px; }
+  .proto-role { width: 16px; height: 16px; font-size: 9px; }
 }
 
-@media (max-width: 640px) {
-  .proto-page { padding: 24px 16px 64px; gap: 28px; }
-  .proto-head h1 { font-size: 26px; line-height: 34px; }
-  .proto-stage .iphone { --n: 340; }
+/* The phone is drawn at a fixed size and scaled as one piece, so --n has to be a
+   number. Step it by window height rather than calc so it stays predictable. */
+.proto-stage .iphone { --n: 420; }
+@media (max-height: 1020px) { .proto-stage .iphone { --n: 380; } }
+@media (max-height: 940px)  { .proto-stage .iphone { --n: 345; } }
+@media (max-height: 870px)  { .proto-stage .iphone { --n: 310; } }
+@media (max-height: 790px)  { .proto-stage .iphone { --n: 280; } }
+@media (max-height: 720px)  { .proto-stage .iphone { --n: 250; } }
+
+@media (max-width: 1040px) {
+  .proto-groups { columns: 200px; column-gap: 20px; }
+  .proto-layout { gap: 24px; }
+}
+
+/* Below this the two columns stop fitting side by side, so the page goes back to
+   being an ordinary scrolling page — a phone and a list stacked. */
+@media (max-width: 760px) {
+  html:has(.proto-page), body:has(.proto-page) { height: auto; overflow: visible; }
+  body:has(.proto-page) .bottom-dock { display: flex !important; }
+  .page-wrapper:has(.proto-page) { height: auto; padding: calc(var(--nav-h) + 24px) 16px 120px; overflow: visible; }
+  .content-wrapper:has(.proto-page) { height: auto; }
+  .proto-page { height: auto; display: flex; flex-direction: column; gap: 24px; overflow: visible; }
+  .proto-layout { display: flex; flex-direction: column; gap: 24px; }
+  .proto-stage, .proto-states { height: auto; }
+  .proto-groups { overflow: visible; }
+  .proto-stage .iphone { --n: 300; }
 }

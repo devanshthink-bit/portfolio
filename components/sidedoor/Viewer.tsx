@@ -11,18 +11,13 @@ export default function Viewer() {
 
   return (
     <div className="proto-layout">
-      <div className="proto-stage">
-        <IPhone n={430}>
-          <SidedoorApp jump={jump} />
-        </IPhone>
-      </div>
-
       <aside className="proto-states">
         <h2>Every screen and state</h2>
         <p className="proto-sub">
           The app runs its own code either way — these only put it where a state shows. Everything
           is reachable by tapping too.
         </p>
+        <div className="proto-groups">
         {GROUPS.map((g) => {
           const items = SCENARIOS.filter((s) => s.group === g);
           if (!items.length) return null;
@@ -45,7 +40,15 @@ export default function Viewer() {
             </section>
           );
         })}
+        </div>
       </aside>
+
+      <div className="proto-stage">
+        {/* no n here: the page CSS sets --n from the window height so the phone always fits */}
+        <IPhone>
+          <SidedoorApp jump={jump} />
+        </IPhone>
+      </div>
     </div>
   );
 }

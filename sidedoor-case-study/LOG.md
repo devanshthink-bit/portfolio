@@ -1839,3 +1839,29 @@ So:       "pixel perfect" here means every colour, type style, radius, asset and
           component size matches the Figma node values exactly. It does not mean
           the screen overlays a 390-wide artboard.
 How sure: saw it (measured every element on Login against its Figma node).
+
+DECISION · 20 Sep 2026 · prototype page · one fixed screen, list left, phone right
+Decided:  the prototype page fills the window and never scrolls. The state list sits
+          on the left in as many columns as fit (CSS `columns: 230px`), the phone on
+          the right, and the site's floating dock is hidden on this page.
+Because:  Devansh: "make the prtottype page fixed not scrollable... nothing shud
+          overflow page". A tool you are driving should not move under you, and the
+          dock was sitting on top of the phone.
+How:      - html/body get `overflow: hidden` only on this page, via `:has(.proto-page)`.
+          - The phone size steps by window height in media queries. The `n` prop was
+            removed from the Viewer: an inline style beat every stylesheet rule, so
+            the phone stayed 430 wide whatever the window did.
+          - The "How to walk it" notes are gone; the one line that mattered (the
+            482013 code) moved into the header.
+          - Below 760px wide it goes back to an ordinary scrolling page, stacked.
+Checked:  1440x900 and 1280x720 — all 38 states on screen, no page scroll, no panel
+          scroll, phone fully inside the window.
+
+FIX · 20 Sep 2026 · dev server served stale CSS
+Symptom:  edits to app/globals.css did not reach the browser. The CSS chunk kept the
+          same hash across restarts, so the page kept the old layout and I nearly
+          chased a bug that was not there.
+Cause:    a next-server process survived the preview stop and held port 3000, and
+          .next/static was never invalidated.
+Fix:      kill whatever holds the port, `rm -rf .next`, restart. Worth knowing before
+          trusting what the browser shows.
