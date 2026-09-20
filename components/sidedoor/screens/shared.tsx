@@ -55,7 +55,7 @@ export function Messages() {
     <Screen largeTitle="Messages" right={<BellButton unread={unread} />}>
       <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 16 }}>
         <div className="sd-search">
-          <Icon name="magnifyingglass" size={17} style={{ color: "var(--sd-placeholder)" }} />
+          <Icon name="magnifyingglass" size={22} style={{ color: "var(--sd-placeholder)" }} />
           <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search by name or job…" />
         </div>
         {shown.length === 0 ? (
@@ -69,25 +69,25 @@ export function Messages() {
             {shown.map((c) => (
               <div
                 key={c.name}
-                className="sd-row is-tap"
-                style={{ alignItems: "flex-start", padding: "12px 16px" }}
+                className="sd-row is-tap sd-chatrow"
                 onClick={() => nav.push("chat", { who: c.name })}
                 role="button"
               >
                 <Avatar name={c.name} />
-                <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 2, minWidth: 0 }}>
-                  <span style={{ display: "flex", alignItems: "center", gap: 4 }} className="t-h-sm">
+                <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4, minWidth: 0 }}>
+                  <span style={{ display: "flex", alignItems: "center", gap: 2 }} className="t-h-sm">
                     {c.name}
-                    <Icon name="checkmark.seal.fill" size={14} style={{ color: "var(--sd-text-success)" }} />
+                    <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)" }} />
                   </span>
+                  {/* Figma paints an unread preview in the dark text colour and a read one grey */}
                   <span
-                    className="t-body muted"
+                    className={`t-label${c.unread ? "" : " muted"}`}
                     style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}
                   >
                     {c.last}
                   </span>
                 </span>
-                <span style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 4, flex: "0 0 auto" }}>
+                <span style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 8, flex: "0 0 auto" }}>
                   <span className="t-label-sm muted">{c.when}</span>
                   {c.unread && (
                     <span
@@ -98,7 +98,7 @@ export function Messages() {
                         borderRadius: 10,
                         background: "var(--sd-link)",
                         color: "#fff",
-                        fontWeight: 600,
+                        fontWeight: 500,
                         fontSize: 12,
                         lineHeight: "20px",
                         textAlign: "center",

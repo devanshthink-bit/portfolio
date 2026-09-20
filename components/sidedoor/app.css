@@ -384,6 +384,11 @@
 .sd-row { display: flex; align-items: center; gap: 8px; padding: 12px 16px; min-height: 50px; position: relative; }
 .sd-row + .sd-row::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--sd-border-subtle); }
 .sd-row.is-tap:active { background: var(--sd-n100); }
+/* Figma's message rows are 88 tall — a 48 block with 20 above and below — and carry no rule
+   between them. */
+.sd-chatrow { padding: 20px 0; gap: 12px; align-items: flex-start; min-height: 88px; }
+.sd-chatrow + .sd-chatrow::before { display: none; }
+.sd-list:has(> .sd-chatrow) { padding: 0 16px; }
 .sd-row-chev { margin-left: auto; color: var(--sd-icon-2); }
 .sd-divider { height: 0.5px; background: rgba(60, 60, 67, 0.2); margin-left: 16px; }
 
@@ -456,17 +461,19 @@
 .sd-input.is-error { box-shadow: inset 0 0 0 1px var(--sd-text-error); }
 .sd-field-err { font-weight: 500; font-size: 12px; line-height: 16px; color: var(--sd-text-error); }
 .sd-field-help { font-weight: 500; font-size: 12px; line-height: 16px; color: var(--sd-text-2); }
+/* Figma's search is the InputField box, not an iOS fill: white, r8, 52 tall, padded 12/16,
+   with a 22 magnifier 8 from a Regular 14/20 placeholder. */
 .sd-search {
-  height: 36px;
+  min-height: 52px;
   border-radius: var(--sd-r-md);
-  background: var(--sd-fill-3);
+  background: var(--sd-n0);
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 0 8px;
+  gap: 8px;
+  padding: 12px 16px;
   color: var(--sd-placeholder);
 }
-.sd-search input { font-weight: 400; font-size: 17px; line-height: 22px; letter-spacing: -0.4px; }
+.sd-search input { font-weight: 400; font-size: 14px; line-height: 20px; }
 
 /* iOS switch */
 .sd-switch { width: 51px; height: 31px; border-radius: var(--sd-r-full); background: var(--sd-n400); position: relative; flex: 0 0 auto; transition: background 240ms var(--sd-ease); }
