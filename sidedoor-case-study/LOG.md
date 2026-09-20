@@ -2101,3 +2101,20 @@ Badge:     Figma builds it as a SIBLING of the nav, floating clear above the cap
            Rebuilt: lands at 244.3,761.5 17x17, identical to Figma.
 Verified:  Browser measurement - island/clock/all three icons all mid 29; badge exact to the
            decimal. Localhost, not Vercel. tsc clean, build passes.
+
+FIX · 2026-09-20 · The tab badge was floating off the tab, in Figma too
+Finding:   On Candidate/Messages Screen the unread badge was a loose frame parked at
+           (242.8, 760) — 26px clear above the nav capsule, touching nothing. It read as a
+           stray dot, not as a count on the Messages tab. Figma was the source of the
+           problem; the code had been matched to it, so both were wrong together.
+Method:    Censused every V6 screen for a node filled #b91c1c under 24px. One hit: frame
+           "Circle" (5247:19304), a sibling of BottomNav, not a child of any tab.
+Fixed:     Moved it onto the top-right corner of the Messages icon, the placement iOS uses.
+           The icon is 24x24 at (234.3, 796); the badge centre now sits on its corner at
+           (255.3, 799), so the visible 17x17 circle starts at (246.82, 790.52). Figma and
+           app.css both changed. .sd-tab-badge is now top 0.5px, margin-left 9.05px.
+Verified:  Browser measurement, converted out of the preview's 0.577 scale: badge offset
+           from the tab is 45.78 across and 0.50 down, against Figma's 45.82 and 0.52.
+           Residual is the render scale, not a position error.
+Not done:  Only this one screen carries a badge in Figma, so there was nothing else to move.
+Caveat:    Checked on localhost. The Vercel preview needs a login I will not do.

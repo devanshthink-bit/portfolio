@@ -270,16 +270,16 @@
 .sd-tab:active { transform: scale(0.92); }
 .sd-tab { transition: transform 140ms var(--sd-spring); }
 .sd-tab-badge {
-  /* Figma draws this as a sibling of the nav, not inside a tab: a 17x17 circle in #b91c1c with
-     a 1px white ring drawn OUTSIDE it, floating clear above the capsule rather than sitting on
-     it. Screen coords put it at y760 with the capsule top at y786, and its centre 6.55 to the
-     right of the tab's centre. Figma's 20x20 frame starts at y760 but the circle it draws sits
-     at y761.5; the tab starts at y790, hence the -28.5. */
+  /* A 17x17 circle in #b91c1c with a 1px white ring drawn OUTSIDE it, sitting on the top-right
+     corner of the tab icon the way iOS does it. Figma screen coords: the Messages icon is 24x24
+     at (234.3, 796) and the circle's centre lands on its corner at (255.3, 799), so the circle
+     starts at (246.82, 790.52). The tab starts at y790 and its centre is x246.25 — hence the
+     0.5 down and the 9.05 across. */
   position: absolute;
-  top: -28.5px;
+  top: 0.5px;
   left: 50%;
   transform: translateX(-50%);
-  margin-left: 6.55px;
+  margin-left: 9.05px;
   min-width: 17px;
   height: 17px;
   padding: 0 4px;
