@@ -505,7 +505,8 @@
 
 /* ── avatars, logos ─────────────────────────────────────────────────────── */
 .sd-av { border-radius: 50%; overflow: hidden; flex: 0 0 auto; background: var(--sd-n100); display: grid; place-items: center; font-weight: 600; font-size: 16px; line-height: 1; color: var(--sd-n600); box-shadow: var(--sd-e1); }
-.sd-logotile { width: 74px; height: 74px; flex: 0 0 auto; background: #fff; border-radius: var(--sd-r-md); box-shadow: var(--sd-e1); display: grid; place-items: center; padding: 10px; }
+/* Figma's logo tile is r12, padded 10, and carries no shadow. */
+.sd-logotile { width: 74px; height: 74px; flex: 0 0 auto; background: #fff; border-radius: var(--sd-r-lg); display: grid; place-items: center; padding: 10px; }
 .sd-logotile img { display: block; }
 .sd-logo-sm { width: 40px; height: 40px; flex: 0 0 auto; background: #fff; border-radius: var(--sd-r-md); box-shadow: var(--sd-e1); display: grid; place-items: center; padding: 6px; }
 .sd-logo-sm img { width: 28px; height: auto; display: block; }
@@ -521,7 +522,9 @@
 .sd-timeline { display: flex; flex-direction: column; }
 .sd-tl-step { display: flex; gap: 8px; }
 .sd-tl-rail { width: 24px; display: flex; flex-direction: column; align-items: center; flex: 0 0 auto; }
-.sd-tl-line { flex: 1 1 auto; width: 2px; background: var(--sd-link); margin: 0; min-height: 37px; }
+/* Figma's connector is 37 long but overlaps the 24 marks at both ends, so consecutive steps
+   sit 56 apart: the 24 mark plus the frame's 32 gap. */
+.sd-tl-line { flex: 1 1 auto; width: 2px; background: var(--sd-link); margin: 0; min-height: 32px; }
 .sd-tl-line.is-dashed { background: none; border-left: 2px dashed var(--sd-border); width: 0; }
 .sd-tl-body { padding-bottom: 32px; flex: 1 1 auto; }
 .sd-tl-step:last-child .sd-tl-body { padding-bottom: 0; }

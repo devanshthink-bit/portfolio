@@ -780,7 +780,10 @@ export function TrackDetails({ id, stage }: { id: string; stage?: Stage }) {
         ) : undefined
       }
     >
+      {/* Figma: a 24-gap column holding a 20-gap block (the header, where it is now, and the
+          timeline card) and then the person card. */}
       <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
         {/* the company the request is about sits on the grey page, never in a card (20 Sep rule) */}
         <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
           <LogoTile logo={r.logo} alt={r.company} />
@@ -796,17 +799,19 @@ export function TrackDetails({ id, stage }: { id: string; stage?: Stage }) {
           </div>
         </div>
 
-        <Card>
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            <span style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-              <Icon name="info.circle.fill" size={16} style={{ color: "var(--sd-icon-2)", marginTop: 2 }} />
-              <span className="t-h-xs">{fill(now.line)}</span>
-            </span>
-            <p className="t-label-sm muted">{fill(now.sub)}</p>
-          </div>
-          <div style={{ height: 20 }} />
+        {/* Figma keeps "where it is now" on the grey page and puts only the timeline in a card */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+          <span style={{ display: "flex", gap: 8, alignItems: "center" }}>
+            <Icon name="info.circle.fill" size={16} style={{ color: "var(--sd-icon-2)" }} />
+            <span className="t-h-xs">{fill(now.line)}</span>
+          </span>
+          <p className="t-label-sm muted">{fill(now.sub)}</p>
+        </div>
+
+        <div className="sd-card" style={{ padding: 24 }}>
           <Timeline steps={steps(r.stage)} />
-        </Card>
+        </div>
+        </div>
 
         {r.stage === "noanswer" && (
           <Card>
@@ -816,33 +821,23 @@ export function TrackDetails({ id, stage }: { id: string; stage?: Stage }) {
           </Card>
         )}
 
-        <Section label="Who you asked" icon="person.fill">
-          <Card>
-            <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-              <Avatar name={r.referrer} />
-              <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4 }}>
-                <span className="sd-person-name">
-                  {r.referrer}
-                  <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)" }} />
-                </span>
-                <span className="sd-person-sub">{r.referrerRole}</span>
+        {/* Figma has no section label over this card, and no "what they got" block at all */}
+        <Card>
+          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+            <Avatar name={r.referrer} />
+            <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4, minWidth: 0 }}>
+              <span className="sd-person-name">
+                {r.referrer}
+                <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)" }} />
               </span>
-              <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                <Icon name="clock" size={14} style={{ color: "var(--sd-icon-2)" }} />
-                <span className="t-label-sm muted">{r.updated}</span>
-              </span>
-            </div>
-          </Card>
-        </Section>
-
-        <Section label="What they got" icon="paperclip">
-          <Box>
-            <DetailField name="Full name" value="Abhinav Saxena" />
-            <DetailField name="Experience" value="3 yrs total · 3 yrs relevant" />
-            <DetailField name="Notice period" value="30 days" />
-            <DetailField name="Resume" value="Abhinav_Saxena_Resume.pdf" />
-          </Box>
-        </Section>
+              <span className="sd-person-sub">{r.referrerRole}</span>
+            </span>
+            <span style={{ display: "flex", alignItems: "center", gap: 2, flex: "0 0 auto" }}>
+              <Icon name="clock" size={14} style={{ color: "var(--sd-icon-2)" }} />
+              <span className="t-label-sm muted">{r.updated}</span>
+            </span>
+          </div>
+        </Card>
       </div>
     </Screen>
   );
