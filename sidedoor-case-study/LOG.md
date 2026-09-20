@@ -1824,3 +1824,18 @@ Because:  V6 Login is drawn at 390x844 (iPhone 14). The prototype phone is an
           Figma's 294. iOS grows the content, not the margins, so this is the
           right way round — but it is a real 12px difference and it is not a bug.
 How sure: saw it (measured both).
+
+DECISION · 20 Sep 2026 · prototype · iPhone 17, and the design flexes to it
+Decided:  keep the prototype at 402x874 with the real 54pt iOS status bar.
+Rejected: shrinking the app to 390x844 so it would overlay the Figma frames exactly.
+Because:  Devansh: "Designs in figma shud be responsive right? how does it matter
+          what phone we have?" He is right. V6 happens to be drawn on a 390x844
+          artboard, but the layout is auto-layout with FILL children, so the correct
+          behaviour on a larger phone is a wider content column, not a scaled copy
+          of the artboard. The measured differences are content growing, not
+          drifting: side gutters still 48, column 306 instead of 294, everything
+          10px lower because the real status bar is 54 not 44.
+So:       "pixel perfect" here means every colour, type style, radius, asset and
+          component size matches the Figma node values exactly. It does not mean
+          the screen overlays a 390-wide artboard.
+How sure: saw it (measured every element on Login against its Figma node).
