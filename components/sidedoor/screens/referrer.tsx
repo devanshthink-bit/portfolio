@@ -262,61 +262,48 @@ export function ReferralRequest({ id }: { id: string }) {
     );
 
   return (
-    <Screen
-      title="Referral request"
-      back
-      actions={
-        <Actions>
-          <Button onClick={() => dispatch({ t: "handle", id: r.id, stage: "referred" })}>Refer</Button>
-          <Button
-            type="secondary"
-            onClick={() => nav.openSheet("notMoving", { id: r.id, name: r.name, role: r.role, match: r.match })}
-          >
-            Not moving forward
-          </Button>
-        </Actions>
-      }
-    >
+    <Screen title="Referral request" back>
       <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
         <PersonHead name={r.name} role={r.role} tag={<Tag>Sent {r.when.toLowerCase()}</Tag>} />
 
-        <Card>
+        {/* Figma holds this whole screen in one white "Window" card, padded 16 with a 24 gap —
+            every block below is a plain frame inside it, not a card of its own, and the two
+            decision buttons are the card's last block rather than a bar pinned to the screen. */}
+        <div className="sd-card" style={{ display: "flex", flexDirection: "column", gap: 24 }}>
           {r.common && (
-            <>
-              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
                 {r.common.logo && (
-                  <Image src={`/images/sidedoor/${r.common.logo}.png`} alt="" width={20} height={20} style={{ width: 20, height: "auto" }} />
+                  <Image src={`/images/sidedoor/${r.common.logo}.png`} alt="" width={16} height={16} style={{ width: 16, height: 16 }} />
                 )}
-                {r.common.icon && <Icon name={r.common.icon} size={18} style={{ color: "var(--sd-icon-2)" }} />}
-                <span className="t-h-xs">{r.common.text}</span>
+                {r.common.icon && <Icon name={r.common.icon} size={16} style={{ color: "var(--sd-icon-2)" }} />}
+                <span className="t-label muted">{r.common.text}</span>
               </div>
-              <div style={{ height: 2 }} />
-              <p className="t-label-sm muted" style={{ paddingLeft: 28 }}>
+              {/* Figma keeps an empty 16 "Icon space" in front of this line so it lines up
+                  under the words above, not under the mark. */}
+              <p className="t-label-sm muted" style={{ paddingLeft: 20 }}>
                 You 2021–22 · {r.name.split(" ")[0]} 2022–23
               </p>
-              <div style={{ height: 16 }} />
-            </>
+            </div>
           )}
-          <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
             <Fact icon="mappin.and.ellipse">Bengaluru, KA</Fact>
             <Fact icon="calendar">3+ years</Fact>
             <Fact icon="hourglass">30 days</Fact>
           </div>
-          <div style={{ height: 12 }} />
           <div style={{ display: "flex", gap: 8 }}>
             <Tag>Full time</Tag>
             <Tag>Remote or hybrid</Tag>
           </div>
-        </Card>
 
         <Section
           label="How they match"
           icon="lightbulb.fill"
           end={<Tag style="primary">{matched} of {skillRows.length} skills · 3 yrs</Tag>}
         >
-          <Card>
-            {/* Figma: the fit rows sit 20 apart inside the card, each 38 tall, and the 44pt
-                target overlaps the row rather than stretching it. */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {/* Figma: the fit rows sit 20 apart, each 38 tall, and the 44pt target overlaps the
+                row rather than stretching it. */}
             <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
               {skills.map((s) =>
                 s.ok && !s.isExperience ? (
@@ -338,68 +325,77 @@ export function ReferralRequest({ id }: { id: string }) {
                 )
               )}
             </div>
-            <div style={{ height: 8 }} />
-            <Tag>Tap a skill that isn’t really there</Tag>
-          </Card>
+            {/* Figma draws this hint plain at 12/16, not as a filled chip. */}
+            <Note>Tap a skill that isn’t really there</Note>
+          </div>
         </Section>
 
         <Section label="Experience" icon="briefcase.fill">
-          <Card>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             <CompanyRow logo="blinkit" role="Product Designer" company="Blinkit" when="Sep 2023–Present" />
-            <div style={{ height: 16 }} />
             <CompanyRow logo="makemytrip" role="Associate Product Designer" company="MakeMyTrip" when="Jun 2022–Aug 2023" />
-          </Card>
+          </div>
         </Section>
 
         <Section label="Projects" icon="folder.fill">
-          <Card>
-            <Project title="Blinkit Merchant App UX Revamp" skills={["Product strategy", "Systems design", "Prototyping", "User research", "Figma"]} />
-            <div style={{ height: 16 }} />
-            <Project title="MakeMyTrip Booking Experience Redesign" skills={["User research", "Interaction design", "Usability testing", "Figma"]} />
-            <div style={{ height: 8 }} />
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              <Project title="Blinkit Merchant App UX Revamp" skills={["Product strategy", "Systems design", "Prototyping", "User research", "Figma"]} />
+              <Project title="MakeMyTrip Booking Experience Redesign" skills={["User research", "Interaction design", "Usability testing", "Figma"]} />
+            </div>
             <TextButton>Show project details</TextButton>
-          </Card>
+          </div>
         </Section>
 
         <Section label="Resume and links" icon="paperclip">
-          <Card>
-            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               <span className="t-label" style={{ flex: 1 }}>
                 Abhinav_Saxena_Resume.pdf
               </span>
-              <button className="sd-hit44" aria-label="Open resume">
+              <button aria-label="Open resume" style={{ display: "flex" }}>
                 <Icon name="arrow.up.right.square" size={20} style={{ color: "var(--sd-icon-2)" }} />
               </button>
             </div>
-            <div style={{ height: 12 }} />
-            <div style={{ display: "flex", gap: 12 }}>
+            {/* Figma's LinkBlock is three 20 marks, 8 apart. */}
+            <div style={{ display: "flex", gap: 8 }}>
               {["linkedin", "dribbble", "behance"].map((l) => (
-                <Image key={l} src={`/images/sidedoor/${l}.png`} alt={l} width={24} height={24} style={{ width: 24, height: "auto" }} />
+                <Image key={l} src={`/images/sidedoor/${l}.png`} alt={l} width={20} height={20} style={{ width: 20, height: 20 }} />
               ))}
             </div>
-          </Card>
+          </div>
         </Section>
 
         <Section label="Their note" icon="quote.bubble.fill">
-          <Card>
-            <p className="t-body muted">I led the merchant app redesign at Blinkit. Happy to share more.</p>
-          </Card>
+          <p className="t-body muted">I led the merchant app redesign at Blinkit. Happy to share more.</p>
         </Section>
 
-        <p className="t-label-sm muted">Job ID {jobId || "184223"} goes with every request.</p>
+          {/* Figma's Decision frame is the Window's last block: two full-width buttons 12 apart. */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            <Button onClick={() => dispatch({ t: "handle", id: r.id, stage: "referred" })}>Refer</Button>
+            <Button
+              type="secondary"
+              onClick={() => nav.openSheet("notMoving", { id: r.id, name: r.name, role: r.role, match: r.match })}
+            >
+              Not moving forward
+            </Button>
+          </div>
+        </div>
       </div>
     </Screen>
   );
 }
 
 function PersonHead({ name, role, tag }: { name: string; role: string; tag: React.ReactNode }) {
+  // Figma's Person row is 50 tall: a 44 avatar centred, a Semi Bold 16/24 name, and the tag
+  // pushed to the right edge of the row rather than packed against the role.
   return (
-    <div style={{ display: "flex", gap: 12 }}>
-      <Avatar name={name} size={56} />
+    <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+      <Avatar name={name} size={44} />
       <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1 }}>
-        <span className="t-h-md">{name}</span>
-        <span style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-          <span className="sd-person-sub">{role}</span>
+        <span className="t-h-sm">{name}</span>
+        <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span className="sd-person-sub" style={{ flex: 1 }}>{role}</span>
           {tag}
         </span>
       </div>
@@ -410,8 +406,9 @@ function PersonHead({ name, role, tag }: { name: string; role: string; tag: Reac
 function Fact({ icon, children }: { icon: Parameters<typeof Icon>[0]["name"]; children: React.ReactNode }) {
   return (
     <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
-      <Icon name={icon} size={16} style={{ color: "var(--sd-icon-2)" }} />
-      <span className="t-label">{children}</span>
+      <Icon name={icon} size={18} style={{ color: "var(--sd-icon-2)" }} />
+      {/* Figma's Quick Facts labels are Medium 14/20 in --sd-text-2. */}
+      <span className="t-label muted">{children}</span>
     </span>
   );
 }

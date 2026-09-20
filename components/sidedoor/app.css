@@ -429,9 +429,9 @@
 .sd-tag.note.buffer { color: var(--sd-text-warning); }
 .sd-tag.note.failure { color: var(--sd-text-error); }
 .sd-tag.note svg { flex: 0 0 auto; }
-/* Figma's Actions frame is MIN-aligned, so a note in it hugs its text at the left edge
-   instead of stretching to the column width. */
-.sd-actions > .sd-tag { align-self: flex-start; }
+/* Figma's note frames hug their text at the left edge wherever they sit, rather than
+   stretching to the width of the column they are in. */
+.sd-tag.note, .sd-actions > .sd-tag { align-self: flex-start; }
 
 /* ── inputs ──────────────────────────────────────────────────────────────── */
 .sd-field { display: flex; flex-direction: column; gap: 8px; }
