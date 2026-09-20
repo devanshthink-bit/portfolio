@@ -561,6 +561,7 @@ export function Timeline({ steps }: { steps: Step[] }) {
 export function Field({
   label,
   icon,
+  iconNode,
   value,
   onChange,
   placeholder,
@@ -575,6 +576,8 @@ export function Field({
   label?: string;
   /** V6 puts a small icon beside the field's label, not inside the box */
   icon?: IconName;
+  /** A field whose mark is a brand logo rather than an SF symbol (the LinkedIn field). */
+  iconNode?: ReactNode;
   value: string;
   onChange?: (v: string) => void;
   placeholder?: string;
@@ -591,7 +594,7 @@ export function Field({
     <div className="sd-field">
       {label && (
         <label className="t-h-xs" style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          {icon && <Icon name={icon} size={16} style={{ color: "var(--sd-icon-2)" }} />}
+          {iconNode ?? (icon && <Icon name={icon} size={16} style={{ color: "var(--sd-icon-2)" }} />)}
           {label}
         </label>
       )}

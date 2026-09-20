@@ -353,18 +353,23 @@ export function CheckProfile() {
 
         <Section label="Experience" icon="briefcase.fill" end={<TextButton>Edit</TextButton>}>
           <Box>
-            <CompanyRow logo="blinkit" role="Product Designer" company="Blinkit" when="Sep 2023–Present" />
-            <div style={{ height: 16 }} />
-            <CompanyRow logo="makemytrip" role="Associate Product Designer" company="MakeMyTrip" when="Jun 2022–Aug 2023" />
+            {/* Figma's ExperienceBlock is its own frame with a 16 gap, so the rows sit 16 apart
+                inside a box whose own gap is 12. A spacer div made it 12 + 16 + 12. */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              <CompanyRow logo="blinkit" role="Product Designer" company="Blinkit" when="Sep 2023–Present" />
+              <CompanyRow logo="makemytrip" role="Associate Product Designer" company="MakeMyTrip" when="Jun 2022–Aug 2023" />
+            </div>
           </Box>
         </Section>
 
         <Section label="Projects" icon="folder.fill" end={<TextButton>Edit</TextButton>}>
           <Box>
-            <Project title="Blinkit Merchant App UX Revamp" skills={["Product strategy", "Systems design", "Prototyping", "User research", "Figma"]} />
-            <div style={{ height: 16 }} />
-            <Project title="MakeMyTrip Booking Experience Redesign" skills={["User research", "Interaction design", "Usability testing", "Figma"]} />
-            <div style={{ height: 8 }} />
+            {/* Same as Experience: ProjectBlock is a 16-gap frame, and the box's own 12 is what
+                separates it from the link below. */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              <Project title="Blinkit Merchant App UX Revamp" skills={["Product strategy", "Systems design", "Prototyping", "User research", "Figma"]} />
+              <Project title="MakeMyTrip Booking Experience Redesign" skills={["User research", "Interaction design", "Usability testing", "Figma"]} />
+            </div>
             <TextButton>Show project details</TextButton>
           </Box>
         </Section>
@@ -372,7 +377,7 @@ export function CheckProfile() {
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           <Field
             label="LinkedIn profile (optional)"
-            icon="link"
+            iconNode={<Image src="/images/sidedoor/linkedin.svg" alt="" width={16} height={16} style={{ width: 16, height: 16 }} unoptimized />}
             value={linkedin}
             onChange={setLinkedin}
             placeholder="Paste your profile link. Referrers check it."
