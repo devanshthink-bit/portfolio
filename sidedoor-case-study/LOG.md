@@ -2008,3 +2008,24 @@ FIX · 2026-09-20 · DocUpload and the link page "Sent" card
     a Semi Bold 16/24 title and centred Medium 14/20 body. Code drew a hand-made 56px blue
     disc with a 20/28 title and 16/24 body on the bare page background, and pushed the body
     40 from the top instead of 24.
+
+DECISION · 2026-09-20 · V6 Figma frames moved to iPhone 17
+Decided:   All 87 V6 screen frames resized from 390 to 402 wide. Full screens went 844 -> 874;
+           sheets kept their own height; every long screen now HUGS its content so it ends
+           exactly where the content ends rather than at a pinned height.
+Because:   Devansh wants the Figma screens and the coded prototype to be the same device, so
+           the one gap I could not close in code — content 370 wide instead of 358 — closes
+           from the Figma side instead.
+How sure:  saw it — all 87 frames report 402 wide, none left at 390, no child overflows its
+           frame. Jobs card 1 is now 16/188/370/152 in Figma, which is exactly what the code
+           measures.
+Note:      Safe because every V6 screen frame is a VERTICAL auto-layout and 227 of its 235
+           direct children are FILL. The only fixed-width child that needed repair was the
+           Toast on "Referral Request/After Refer/Undo" (358 -> 370).
+Note:      Some long screens got slightly shorter (Check your details 1464 -> 1440, Referral
+           request 1794 -> 1770, Share your link 548 -> 528) because wider lines wrap less.
+           That is the content's true height on this device, not a loss.
+OPEN:      The status bar is still 44pt. A real iPhone 17 is 54pt, which is what the code
+           draws, so a 10px gap at the top remains. StatusBar and AppHeader are shared with
+           V3, V4, V5 and the original flows (58 more instances), so this cannot be fixed
+           without either touching those or forking V6 copies of both components. Asked.
