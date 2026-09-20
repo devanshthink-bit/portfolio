@@ -458,41 +458,39 @@ function AfterRefer({ id }: { id: string }) {
     >
       <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
         <PersonHead name={r.name} role={r.role} tag={<Tag style="success">Referred</Tag>} />
-        <div style={{ display: "flex", justifyContent: "flex-end" }}>
-          <TextButton onClick={() => dispatch({ t: "handle", id: r.id, stage: "sent" })}>Undo refer</TextButton>
-        </div>
 
         <Section label="Add to Flipkart’s portal" icon="arrow.up.right.square" end={<Tag>Job ID {jobId || "184223"}</Tag>}>
-          <Card>
-            {fields.map((f) => (
-              <div key={f.name} style={{ display: "flex", gap: 12, alignItems: "flex-start", padding: "8px 0" }}>
-                <span className="t-label-sm muted" style={{ width: 104, flex: "0 0 auto" }}>
-                  {f.name}
-                </span>
-                <span className="t-label" style={{ flex: 1 }}>
-                  {f.value}
-                </span>
-                <button
-                  className="sd-hit44"
-                  style={{ minHeight: 24 }}
-                  aria-label={f.download ? `Download ${f.name}` : `Copy ${f.name}`}
-                  onClick={() => {
-                    setCopied((c) => (c.includes(f.name) ? c : [...c, f.name]));
-                    dispatch({ t: "toast", v: f.download ? "Resume downloaded" : `${f.name} copied` });
-                    window.setTimeout(() => dispatch({ t: "toast", v: null }), 1400);
-                  }}
-                >
-                  <Icon
-                    name={copied.includes(f.name) ? "checkmark" : f.download ? "square.and.arrow.down" : "doc.on.doc.fill"}
-                    size={18}
-                    style={{ color: copied.includes(f.name) ? "var(--sd-text-success)" : "var(--sd-icon-2)" }}
-                  />
-                </button>
-              </div>
-            ))}
-            <div style={{ height: 8 }} />
-            <Tag>Copy each detail in the order the portal asks</Tag>
-          </Card>
+          {/* Figma's Portal Details frame: the box, then the hint 8 under it and outside the box. */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            <Box>
+              {fields.map((f) => (
+                // Figma stacks the name above the value with 2 between them and puts the copy
+                // mark at the right edge of the row. The code laid them out as two columns.
+                <div key={f.name} style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                  <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 2, minWidth: 0 }}>
+                    <span className="t-label-sm muted">{f.name}</span>
+                    <span className="t-label">{f.value}</span>
+                  </span>
+                  <button
+                    aria-label={f.download ? `Download ${f.name}` : `Copy ${f.name}`}
+                    style={{ display: "flex", flex: "0 0 auto" }}
+                    onClick={() => {
+                      setCopied((c) => (c.includes(f.name) ? c : [...c, f.name]));
+                      dispatch({ t: "toast", v: f.download ? "Resume downloaded" : `${f.name} copied` });
+                      window.setTimeout(() => dispatch({ t: "toast", v: null }), 1400);
+                    }}
+                  >
+                    <Icon
+                      name={copied.includes(f.name) ? "checkmark" : f.download ? "square.and.arrow.down" : "doc.on.doc.fill"}
+                      size={18}
+                      style={{ color: copied.includes(f.name) ? "var(--sd-text-success)" : "var(--sd-icon-2)" }}
+                    />
+                  </button>
+                </div>
+              ))}
+            </Box>
+            <Note>Copy each detail in the order the portal asks</Note>
+          </div>
         </Section>
       </div>
     </Screen>
