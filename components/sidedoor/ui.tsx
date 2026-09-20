@@ -380,58 +380,40 @@ export function Row({
 }
 
 /** Label on the left, value on the right, in a read-only details box. */
-export function DetailField({ name, value, icon }: { name: string; value: ReactNode; icon?: IconName }) {
+/** Figma DetailField: the label sits above the value, 2px apart. Copy=On adds an 18px
+ *  copy mark on the right, 8px clear of the text. The whole field is 38 tall. */
+export function DetailField({ name, value, copy }: { name: string; value: ReactNode; copy?: boolean }) {
+  const text = (
+    <span style={{ display: "flex", flexDirection: "column", gap: 2, flex: "1 1 auto", minWidth: 0 }}>
+      <span className="t-label-sm muted">{name}</span>
+      <span className="t-label">{value}</span>
+    </span>
+  );
+  if (!copy) return <div style={{ display: "flex" }}>{text}</div>;
   return (
-    <div style={{ display: "flex", gap: 12, alignItems: "flex-start", padding: "8px 0" }}>
-      {icon && <Icon name={icon} size={16} style={{ color: "var(--sd-icon-2)", marginTop: 2 }} />}
-      <span className="t-label-sm muted" style={{ width: 104, flex: "0 0 auto" }}>
-        {name}
-      </span>
-      <span className="t-label" style={{ flex: "1 1 auto" }}>
-        {value}
-      </span>
+    <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+      {text}
+      <Icon name="doc.on.doc.fill" size={18} style={{ color: "var(--sd-icon-2)", flex: "0 0 auto" }} />
     </div>
   );
 }
 
-/** One line of the fit report: what matched, and where it came from. */
+/** Figma MatchRow: a 24px mark, 12px clear of a two-line block whose lines are 2px apart.
+ *  Matched draws a filled check in blue and turns its title blue; missing and removed draw
+ *  the empty circle in #d1d3d8 and keep the title in ink. */
 export function MatchRow({ ok, children, source }: { ok: boolean; children: ReactNode; source?: string }) {
   return (
-    <div style={{ display: "flex", gap: 8, alignItems: "flex-start", padding: "6px 0" }}>
-      {ok ? (
-        <span
-          style={{
-            width: 18,
-            height: 18,
-            borderRadius: "50%",
-            background: "var(--sd-link)",
-            display: "grid",
-            placeItems: "center",
-            flex: "0 0 auto",
-            marginTop: 1,
-          }}
-        >
-          <Icon name="checkmark" size={11} style={{ color: "#fff" }} />
+    <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+      <Icon
+        name={ok ? "checkmark.circle.fill" : "circle"}
+        size={24}
+        style={{ color: ok ? "var(--sd-link)" : "var(--sd-border)", flex: "0 0 auto" }}
+      />
+      <span style={{ flex: "1 1 auto", display: "flex", flexDirection: "column", gap: 2, minWidth: 0 }}>
+        <span className="t-h-xs" style={ok ? { color: "var(--sd-link)" } : undefined}>
+          {children}
         </span>
-      ) : (
-        <span
-          style={{
-            width: 18,
-            height: 18,
-            borderRadius: "50%",
-            border: "2px solid var(--sd-border)",
-            flex: "0 0 auto",
-            marginTop: 1,
-          }}
-        />
-      )}
-      <span style={{ flex: "1 1 auto" }}>
-        <span className="t-h-xs">{children}</span>
-        {source && (
-          <span className="t-label-sm muted" style={{ display: "block" }}>
-            {source}
-          </span>
-        )}
+        {source && <span className="t-label-sm muted">{source}</span>}
       </span>
     </div>
   );
@@ -708,35 +690,19 @@ export function RadioOption({
   onClick: () => void;
 }) {
   return (
-    <button
-      onClick={onClick}
-      style={{
-        width: "100%",
-        display: "flex",
-        gap: 12,
-        alignItems: "center",
-        background: "#fff",
-        borderRadius: "var(--sd-r-lg)",
-        padding: 16,
-        textAlign: "left",
-        boxShadow: on ? "inset 0 0 0 2px var(--sd-link)" : "none",
-      }}
-    >
-      <span
-        style={{
-          width: 22,
-          height: 22,
-          borderRadius: "50%",
-          border: on ? "7px solid var(--sd-link)" : "2px solid var(--sd-border)",
-          flex: "0 0 auto",
-        }}
-      />
-      <span style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-        <span className="t-h-sm">{title}</span>
-        {sub && <span className="t-label muted">{sub}</span>}
+    <button className="sd-radio" onClick={onClick} aria-pressed={on}>
+      <span className="sd-radio-txt">
+        <span className="t-h-xs">{title}</span>
+        {sub && <span className="t-label-sm muted">{sub}</span>}
       </span>
+      {on && <Icon name="checkmark" size={20} style={{ color: "var(--sd-link)", flex: "0 0 auto" }} />}
     </button>
   );
+}
+
+/** Figma stacks the options flush inside one white r12 card. */
+export function RadioList({ children }: { children: ReactNode }) {
+  return <div className="sd-radiolist">{children}</div>;
 }
 
 /* ── sheets ─────────────────────────────────────────────────────────────── */

@@ -304,24 +304,29 @@ export function ReferralRequest({ id }: { id: string }) {
           end={<Tag style="primary">{matched} of {skillRows.length} skills · 3 yrs</Tag>}
         >
           <Card>
-            {skills.map((s) =>
-              s.ok && !s.isExperience ? (
-                <button
-                  key={s.name}
-                  onClick={() => dispatch({ t: "removeSkill", v: s.name })}
-                  aria-label={`${s.name} isn’t really there`}
-                  style={{ display: "block", width: "100%", textAlign: "left", minHeight: 44 }}
-                >
-                  <MatchRow ok source={s.source}>
+            {/* Figma: the fit rows sit 20 apart inside the card, each 38 tall, and the 44pt
+                target overlaps the row rather than stretching it. */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+              {skills.map((s) =>
+                s.ok && !s.isExperience ? (
+                  <button
+                    key={s.name}
+                    className="sd-hit44"
+                    onClick={() => dispatch({ t: "removeSkill", v: s.name })}
+                    aria-label={`${s.name} isn’t really there`}
+                    style={{ display: "block", width: "100%", textAlign: "left" }}
+                  >
+                    <MatchRow ok source={s.source}>
+                      {s.name}
+                    </MatchRow>
+                  </button>
+                ) : (
+                  <MatchRow key={s.name} ok={s.ok} source={s.source}>
                     {s.name}
                   </MatchRow>
-                </button>
-              ) : (
-                <MatchRow key={s.name} ok={s.ok} source={s.source}>
-                  {s.name}
-                </MatchRow>
-              )
-            )}
+                )
+              )}
+            </div>
             <div style={{ height: 8 }} />
             <Tag>Tap a skill that isn’t really there</Tag>
           </Card>

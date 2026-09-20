@@ -4,34 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useNav } from "../nav";
 import { STAGE_LABEL, useStore, type Stage } from "../store";
-import { ActionSheet, Avatar, Button, Card, Icon, Note, Sheet, Tag, TextButton, WheelDate } from "../ui";
-
-/** One tappable option in a sheet: a row with a tick when it's chosen. */
-function Option({ label, sub, on, onClick }: { label: string; sub?: string; on?: boolean; onClick: () => void }) {
-  return (
-    <button
-      onClick={onClick}
-      style={{
-        width: "100%",
-        minHeight: 52,
-        background: "#fff",
-        borderRadius: "var(--sd-r-md)",
-        padding: "12px 16px",
-        display: "flex",
-        alignItems: "center",
-        gap: 12,
-        textAlign: "left",
-        boxShadow: on ? "inset 0 0 0 2px var(--sd-link)" : "none",
-      }}
-    >
-      <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 2 }}>
-        <span className="t-label">{label}</span>
-        {sub && <span className="t-label-sm muted">{sub}</span>}
-      </span>
-      {on && <Icon name="checkmark" size={18} style={{ color: "var(--sd-link)" }} />}
-    </button>
-  );
-}
+import { ActionSheet, Avatar, Button, Card, Icon, Note, RadioList, RadioOption, Sheet, Tag, TextButton, WheelDate } from "../ui";
 
 function SheetPerson({ name, role, tag }: { name: string; role: string; tag?: React.ReactNode }) {
   return (
@@ -61,10 +34,12 @@ export function NotMovingSheet({ id, name, role, match, leaving }: { id: string;
       <p className="t-label-sm muted" style={{ marginBottom: 12 }}>
         A reason helps {first} ask better next time. It’s optional.
       </p>
-      <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 16 }}>
-        {reasons.map((r) => (
-          <Option key={r} label={r} on={reason === r} onClick={() => setReason(reason === r ? null : r)} />
-        ))}
+      <div style={{ marginBottom: 16 }}>
+        <RadioList>
+          {reasons.map((r) => (
+            <RadioOption key={r} title={r} on={reason === r} onClick={() => setReason(reason === r ? null : r)} />
+          ))}
+        </RadioList>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
         <Note>{first} sees it straight away.</Note>
@@ -116,11 +91,12 @@ export function SeenItMoveSheet({
           </Note>
         </div>
       )}
-      <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 16 }}>
+      <div style={{ marginBottom: 16 }}>
+        <RadioList>
         {stages.map((s) => (
-          <Option
+          <RadioOption
             key={s}
-            label={STAGE_LABEL[s]}
+            title={STAGE_LABEL[s]}
             sub={s === "submitted" ? since.replace("Submitted ", "") : undefined}
             on={s === "submitted"}
             onClick={() => {
@@ -133,6 +109,7 @@ export function SeenItMoveSheet({
             }}
           />
         ))}
+        </RadioList>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
         <Note>{first} sees it straight away.</Note>

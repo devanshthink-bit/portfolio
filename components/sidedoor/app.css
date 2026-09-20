@@ -334,7 +334,10 @@
 
 /* ── cards, boxes, sections ──────────────────────────────────────────────── */
 .sd-card { background: #fff; border-radius: var(--sd-r-lg); padding: 16px; }
-.sd-box { background: var(--sd-surface-2); border-radius: var(--sd-r-md); padding: 12px 16px; box-shadow: var(--sd-e1); }
+/* Figma: the card that holds DetailFields is white, r8, padding 12/16, its fields 12 apart,
+   and it carries no shadow and no stroke. */
+.sd-box { background: var(--sd-n0); border-radius: var(--sd-r-md); padding: 12px 16px;
+  display: flex; flex-direction: column; gap: 12px; }
 .sd-seclabel { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; line-height: 20px; color: var(--sd-text); }
 .sd-seclabel .sd-sl-end { margin-left: auto; }
 .sd-section + .sd-section { margin-top: 24px; }
@@ -364,6 +367,12 @@
 .sd-tag.buffer { background: var(--sd-warning-50); color: var(--sd-text-warning); }
 .sd-tag.failure { background: var(--sd-error-50); color: var(--sd-text-error); }
 /* Figma Tag/Style=Plain: no fill, padding 2/0, 12/16 label, still 22 tall. */
+.sd-radiolist { background: var(--sd-n0); border-radius: var(--sd-r-lg); overflow: hidden; }
+.sd-radio { width: 100%; display: flex; gap: 12px; align-items: center; padding: 12px 16px; text-align: left; }
+.sd-radio + .sd-radio { box-shadow: inset 0 0.5px 0 var(--sd-border-subtle); }
+.sd-radio-txt { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.sd-radio:active { background: var(--sd-n50); }
+
 .sd-tag.plain { background: none; padding: 2px 0; font-size: 12px; line-height: 16px; color: var(--sd-text); }
 .sd-tag.note { height: auto; align-items: flex-start; padding: 6px 8px; white-space: normal; }
 .sd-tag.note svg { flex: 0 0 auto; margin-top: 1px; }

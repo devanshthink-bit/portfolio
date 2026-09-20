@@ -1916,3 +1916,20 @@ Censused every Button and Tag instance across the V6 flows rather than trusting 
 Note:      The Figma *style library* is stale — it still holds #22c55e/#ef4444/#f59e0b and
            text/secondary #6b7280. The screens themselves use the AA values the code already
            had (#15803d, #b91c1c, #c93400, #636a75), so the screens are the source of truth.
+
+FIX · 2026-09-20 · the four most-used components were built wrong
+Censused every instance across the V6 flows (counts are real usage, not library entries):
+  · DetailField (97) — Figma stacks the label ABOVE the value, 2px apart: label Medium 12/16
+    #636a75, value Medium 14/20 #3b3f46, field 38 tall, no padding. Code had them side by
+    side with a fixed 104px label column and 8px vertical padding. Rewritten. Copy=On adds
+    an 18px copy mark 8px to the right.
+  · The card holding them is white, r8, padding 12/16, fields 12 apart, NO shadow and NO
+    stroke (97 of 97). `.sd-box` was #fafafa with elevation-1.
+  · MatchRow (24) — 24px mark, 12px gap, lines 2px apart, rows 20 apart inside the card.
+    Matched turns its title #2563eb. Code drew an 18px hand-rolled circle at 8px gap with
+    6px padding and an ink title. The marks are now Figma's own circle-check/circle paths.
+  · RadioOption (14) — the options stack FLUSH inside one white r12 card, divided by a 0.5px
+    #f0f1f2 hairline, title Semi Bold 14/20, and the selected one shows a 20px blue
+    checkmark on the right. There is no radio circle in the design at all. Code gave each
+    option its own r8 white card 8px apart with a 2px blue ring. Rewritten as RadioList +
+    RadioOption and adopted in both sheets that use it.
