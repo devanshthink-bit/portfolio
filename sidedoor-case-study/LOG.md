@@ -2150,3 +2150,55 @@ Open:      The uploaded state was rebuilt from the DocUpload component rather th
            because no V6 screen shows it. Its library colour is #22c55e; I used the AA #15803d
            the screens use everywhere else. Worth a look.
 Caveat:    Checked on localhost. The Vercel preview needs a login I will not do.
+
+---
+
+## AUDIT · 2026-09-21 · Screens 2–5 of 80 · full-file sweep begun
+
+Devansh: "audit and fix all screens properly, U must not miss any screen." The V6
+page holds 80 full screens across 11 flows. Working them in flow order with the
+per-screen node diff: dump every Figma node's resolved values, measure every DOM
+element out of the preview scale, diff numerically.
+
+**Screen 2 · Role Selection (5247:18409)** — "You can change this later" was
+centred; Figma runs it full width from the left. The cards hugged; Figma fixes
+each at 310 so the pair fills 636. Second illustration was 114x103, Figma
+109x98.48.
+
+**Screen 3 · Login (5247:18389)** — carousel line was #3b3f46, Figma #636a75.
+Three boxes hugged where Figma runs them full width.
+
+**Screen 4 · Verify Work Email (5247:18418)** — fields 12 apart, Figma 20.
+
+**Screen 5 · Add a job (5247:18430)** — format line hugged; doc mark took its
+intrinsic height instead of 51.1.
+
+**Screen 6 · Check your job post (5247:18441)** — rule rows r12/16-padding/4-gap
+(88 tall) where Figma has r8/12-16/2 (78); switch top-aligned, Figma centres it;
+rule rows 12 apart, Figma 8.
+
+### Shared fixes these exposed, which move many screens at once
+
+- **Input boxes were 48 tall.** Figma's InputField box is a fixed 52. The Field
+  component was overriding the stylesheet inline.
+- **Multiline boxes were 96.** Figma's is a fixed 100, and the textarea was 4
+  rows rather than 2.
+- **Sections sat 48 apart.** The stylesheet added a 24 margin between sections
+  and the screens already set 24 as the column gap. Figma's is 24. Margin removed.
+- **Notes were a grey chip with an info icon at 14/20.** Censused all 220 Tag
+  instances in V6: no note anywhere has a fill. Notes are plain — no fill, no
+  padding, a 12/16 label in a 22-tall row — and only the error and warning ones
+  carry an icon. A note also hugs its text at the left of an Actions frame.
+- **#6b7280 vs #636a75.** 25 uses against 650. All but three are input
+  placeholders, where #6b7280 is the real role colour and the code already agreed.
+  The login footer was the outlier; changed the Figma node to #636a75 so both
+  sides agree and the line stays above 4.5:1. Two "Activity" rows still to check.
+
+### Open
+
+- The Verify screen carries a "the code is 482013" help line Figma has no node
+  for. It is the only way past the screen in the prototype, and it pushes the last
+  two fields 24 down. Left in, flagged.
+
+Verified on localhost, not the Vercel preview — the preview redirects to a Vercel
+login I will not sign into on Devansh's behalf.
