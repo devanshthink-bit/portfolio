@@ -2025,7 +2025,21 @@ Note:      Safe because every V6 screen frame is a VERTICAL auto-layout and 227 
 Note:      Some long screens got slightly shorter (Check your details 1464 -> 1440, Referral
            request 1794 -> 1770, Share your link 548 -> 528) because wider lines wrap less.
            That is the content's true height on this device, not a loss.
-OPEN:      The status bar is still 44pt. A real iPhone 17 is 54pt, which is what the code
-           draws, so a 10px gap at the top remains. StatusBar and AppHeader are shared with
-           V3, V4, V5 and the original flows (58 more instances), so this cannot be fixed
-           without either touching those or forking V6 copies of both components. Asked.
+RESOLVED:  Devansh chose to fork. "StatusBar (V6)" (402x54) and "AppHeader (V6)" (Nav 98,
+           Logo/Title 130, Large 146) now live beside the originals, and all 79 V6 headers
+           plus the Login screen's standalone bar were swapped onto them. V3, V4, V5 and the
+           original flows still point at the untouched originals — checked instance by
+           instance. The clock stays at y16 and the indicators at y18, which is exactly where
+           the coded status bar puts them.
+
+FIX · 2026-09-20 · two traps in the header swap
+  · Type=Nav headers carried a FIXED 88 height override, so swapping in the 98pt component
+    left them at 88. Set 51 header instances to HUG so they take the component's height.
+  · Doing that broke the five Link Page headers the other way: Type=Logo positions its parts
+    absolutely with 14pt insets, so hugging collapsed it from 130 to 102. Those five are back
+    on a fixed 130.
+  · "Candidate/Job Screen" was pinned at 1843 and would have clipped once its header grew;
+    it now hugs, at 1853.
+Verified:  87 screens, all 402 wide, 80 status bars at 54, no child overflowing its frame,
+           and the Jobs card lands at 16/198/370/152 in Figma — the exact numbers the running
+           prototype measures.
