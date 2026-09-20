@@ -702,17 +702,20 @@ function steps(stage: Stage): Step[] {
   return out;
 }
 
+/** The endings that stop the flow: Figma offers "Find more jobs" on each of them. */
+const ENDED: Stage[] = ["notselected", "notmoving", "closed"];
+
 const NOW: Partial<Record<Stage, { line: string; sub: string }>> = {
   sent: { line: "Sent to {who} {when}. No answer yet.", sub: "No answer in 7 days? You can withdraw it and ask someone else." },
   referred: { line: "{who} referred you {when}.", sub: "Next, {who} adds you on {co}’s portal." },
   submitted: { line: "Submitted on {co}’s portal {when}.", sub: "Interviews usually start within 2–3 weeks." },
   interviews: { line: "In interviews at {co}.", sub: "{who} will tell you what they hear." },
-  onhold: { line: "On hold at {co}.", sub: "{who} marked it. Nothing for you to do yet." },
-  selected: { line: "You’re selected at {co}.", sub: "{who} referred you. Congratulations." },
-  notselected: { line: "Not selected at {co}.", sub: "Your details are saved, so the next ask is one tap." },
-  notmoving: { line: "{who} isn’t moving forward.", sub: "Reason given: {reason}" },
+  onhold: { line: "On hold at {co}.", sub: "{who} marked it {when}. Nothing for you to do yet." },
+  selected: { line: "Congratulations, you’re selected at {co}!", sub: "{who} referred you on {since}." },
+  notselected: { line: "Not selected at {co}.", sub: "{who} referred you and it reached interviews." },
+  notmoving: { line: "{who} isn’t moving forward with this one.", sub: "Reason: {reason}" },
   noanswer: { line: "Sent to {who} 7 days ago. No answer.", sub: "Your request is back, so it doesn’t count against this week." },
-  closed: { line: "The role is closed at {co}.", sub: "{co} closed it, so nobody can refer for it now." },
+  closed: { line: "{co} closed this job.", sub: "Reason: Role is closed. Requests for it close too." },
 };
 
 export function TrackDetails({ id, stage }: { id: string; stage?: Stage }) {
@@ -749,7 +752,8 @@ export function TrackDetails({ id, stage }: { id: string; stage?: Stage }) {
       .replace("{who}", r.referrer.split(" ")[0])
       .replace("{co}", r.company)
       .replace("{when}", whenPhrase)
-      .replace("{reason}", r.reason ?? "none given");
+      .replace("{reason}", r.reason ?? "none given")
+      .replace("{since}", r.since ?? r.updated);
   const now = NOW[r.stage] ?? NOW.sent!;
   const canMessage = ["referred", "submitted", "interviews", "onhold", "selected"].includes(r.stage);
 
@@ -773,6 +777,16 @@ export function TrackDetails({ id, stage }: { id: string; stage?: Stage }) {
             <Button onClick={() => nav.pop()}>Ask someone else at {r.company}</Button>
             <TextButton onClick={() => nav.pop()}>Keep waiting for {r.referrer.split(" ")[0]}</TextButton>
           </Actions>
+        ) : r.stage === "selected" ? (
+          // Figma: the ending you want to celebrate offers thanks, not a generic message
+          <Button type="secondary" onClick={() => nav.push("chat", { who: r.referrer })}>
+            Thank {r.referrer.split(" ")[0]}
+          </Button>
+        ) : ENDED.includes(r.stage) ? (
+          // Figma: the three endings that stop the flow send you back to looking
+          <Button type="secondary" onClick={() => nav.reset("tabs", { tab: "jobs" })}>
+            Find more jobs
+          </Button>
         ) : canMessage ? (
           <Button type="secondary" onClick={() => nav.push("chat", { who: r.referrer })}>
             Message {r.referrer.split(" ")[0]}

@@ -58,10 +58,10 @@ export const SCENARIOS: Scenario[] = [
   { id: "reqs.paused", label: "Referral requests · post is paused", group: "Rules and limits", role: "referrer", force: "reqs.paused", tab: "requests" },
 
   /* ── an answer reaches the candidate ─────────────────────────────────── */
-  { id: "track.noanswer", label: "No answer after 7 days", group: "The answer", role: "candidate", tab: "requests", push: [{ key: "trackDetails", props: { id: "flipkart", stage: "noanswer" } }] },
+  { id: "track.noanswer", label: "No answer after 7 days", group: "The answer", role: "candidate", tab: "requests", push: [{ key: "trackDetails", props: { id: "zepto", stage: "noanswer" } }] },
   { id: "track.notmoving", label: "Not moving forward", group: "The answer", role: "candidate", tab: "requests", push: [{ key: "trackDetails", props: { id: "phonepe" } }] },
-  { id: "track.onhold", label: "On hold", group: "The answer", role: "candidate", tab: "requests", push: [{ key: "trackDetails", props: { id: "flipkart", stage: "onhold" } }] },
-  { id: "track.closed", label: "Role closed", group: "The answer", role: "candidate", tab: "requests", push: [{ key: "trackDetails", props: { id: "flipkart", stage: "closed" } }] },
+  { id: "track.onhold", label: "On hold", group: "The answer", role: "candidate", tab: "requests", push: [{ key: "trackDetails", props: { id: "meta", stage: "onhold" } }] },
+  { id: "track.closed", label: "Role closed", group: "The answer", role: "candidate", tab: "requests", push: [{ key: "trackDetails", props: { id: "phonepe", stage: "closed" } }] },
   { id: "track.selected", label: "Selected", group: "The answer", role: "candidate", tab: "requests", push: [{ key: "trackDetails", props: { id: "swiggy" } }] },
 
   /* ── sheets ──────────────────────────────────────────────────────────── */
