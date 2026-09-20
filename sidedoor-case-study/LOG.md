@@ -2265,3 +2265,59 @@ Two temporary clones were made in Figma to export the job banner assets; both we
 deleted and the page has no leftovers.
 
 Verified on localhost, not the Vercel preview.
+
+## AUDIT · 2026-09-21 · Screens 14–31 · Explore, Messaging and Tracking done
+
+Five flows now match Figma: Login, Onboarding, Explore, Messaging, Tracking.
+
+### The two biggest shared findings
+
+**The tab bar.** Censused all 80 screens: 57 carry the BottomNav. The 23 that do
+not are exactly login and onboarding, the two chats, the three edit screens and the
+link page. The code only drew it on the four tab roots, so every pushed screen was
+missing the bottom 88 of the design and anything anchored to the bottom sat 72 too
+low. The bar now lives above the stack.
+
+**Avatars.** Figma leads every card with a round 44 photo. 16 people across 96 card
+instances were showing a company logo or initials instead. All 16 portraits
+exported; Avatar resolves one from the person's name.
+
+### Screens that did not exist at all
+
+- "Not enough to judge" (5247:19007) — a lower-match request whose resume says too
+  little. The code's two lower-match people were invented names.
+- "A referrer suggested you" (5248:29038) — the job page with a Headline block,
+  where the referrer's Invite button was meant to land.
+- "Heard from the company" card on Track details 2 — without it the candidate had
+  no way to say the company had been in touch.
+- Three of the seven track endings had no button; Figma offers "Find more jobs".
+
+### Blocks the code had that Figma does not
+
+- "Who you asked" and "What they got" on Track details — checked all nine track
+  screens, neither appears on any.
+- An "Undo refer" button under the person header on After refer; Figma has it as a
+  toast at the bottom of a separate state.
+- Suggested people on the empty Referral requests screen.
+
+### Content that differed
+
+Both referrer lists (messages and notifications) carried invented people and copy.
+All seven track status lines and their second lines. The referrer's chat had the
+candidate's conversation in it. Joy Sehgal and Abhay Verma were named wrongly,
+which also stopped their photos resolving.
+
+### A regression I caused and fixed
+
+Moving the tab bar above the stack broke tab switching for about six commits: a
+screen animating out renders a second copy of the tab root, and that copy
+overwrote the setter the bar called. The stack now owns the tab state.
+
+### Still open for Devansh
+
+- Watermarked AI portraits ("stablediffusionweb.com") in the exported avatars.
+- The "code is 482013" help line on Verify, which Figma has no node for.
+- Figma dates the on-hold and submitted screens differently for the same Meta
+  request; the prototype carries one date per request.
+
+Verified on localhost, not the Vercel preview.
