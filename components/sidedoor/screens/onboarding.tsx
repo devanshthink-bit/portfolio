@@ -1,7 +1,7 @@
 "use client";
 // Login and both onboarding paths. Copy is taken from the V6 screens, unchanged.
 import Image from "next/image";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { useNav } from "../nav";
 import { useStore } from "../store";
 import {
@@ -144,6 +144,12 @@ export function RoleSelection() {
 }
 
 /* ── shared: the drop-a-file block ──────────────────────────────────────── */
+/**
+ * Figma DocUpload: a white r12 card padded 16, holding a second r12 box with a 1px #d1d3d8
+ * stroke and its own 16 of padding. Before upload the box stacks the 44x51 doc mark, the
+ * prompt, two 44-tall buttons 12 apart and the format line; after upload it swaps the
+ * buttons for the file name in blue and its type and size beneath.
+ */
 function DocUpload({
   what,
   file,
@@ -153,49 +159,56 @@ function DocUpload({
   file: string | null;
   onUpload: () => void;
 }) {
+  const shell = (gap: number, children: ReactNode) => (
+    <div style={{ background: "var(--sd-n0)", borderRadius: "var(--sd-r-lg)", padding: 16 }}>
+      <div
+        style={{
+          border: "1px solid var(--sd-border)",
+          borderRadius: "var(--sd-r-lg)",
+          padding: 16,
+          display: "flex",
+          flexDirection: "column",
+          gap,
+          alignItems: "center",
+        }}
+      >
+        {children}
+      </div>
+    </div>
+  );
+  const mark = (label: ReactNode) => (
+    <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }}>
+      <Image src="/images/sidedoor/doc-icon.png" alt="" width={44} height={51} style={{ width: 44, height: "auto" }} />
+      <span className="t-h-sm">{label}</span>
+    </div>
+  );
   if (file)
-    return (
-      <div style={{ background: "#fff", borderRadius: "var(--sd-r-lg)", padding: 16, display: "flex", gap: 12, alignItems: "center" }}>
-        <Image src="/images/sidedoor/doc-icon.png" alt="" width={36} height={42} style={{ width: 36, height: "auto" }} />
-        <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 2 }}>
-          <span className="t-h-xs" style={{ display: "flex", alignItems: "center", gap: 6 }}>
-            Uploaded
-            <Icon name="checkmark" size={14} style={{ color: "var(--sd-text-success)" }} />
-          </span>
-          <span className="t-label-sm muted">{file} · PDF · 212 KB</span>
-        </span>
-        <TextButton onClick={onUpload}>Replace</TextButton>
-      </div>
+    return shell(
+      12,
+      <>
+        {mark("Uploaded")}
+        <span className="t-h-xs link">{file}</span>
+        <span className="t-label-sm muted">PDF · 212 KB</span>
+      </>
     );
-  return (
-    <div
-      style={{
-        background: "#fff",
-        borderRadius: "var(--sd-r-lg)",
-        padding: 16,
-        display: "flex",
-        flexDirection: "column",
-        gap: 16,
-        alignItems: "center",
-      }}
-    >
-      <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }}>
-        <Image src="/images/sidedoor/doc-icon.png" alt="" width={44} height={51} style={{ width: 44, height: "auto" }} />
-        <span className="t-h-sm">
+  return shell(
+    16,
+    <>
+      {mark(
+        <>
           Drop your <span className="link">{what}</span>
-        </span>
-      </div>
+        </>
+      )}
       <div style={{ display: "flex", gap: 12, width: "100%" }}>
-        {/* side by side, so they need less side padding than a full-width button */}
-        <Button type="secondary" onClick={onUpload} icon={<Icon name="square.and.arrow.down" size={18} />} style={{ padding: "12px 12px", minHeight: 48 }}>
+        <Button type="secondary" onClick={onUpload} icon={<Icon name="square.and.arrow.down" size={18} />} style={{ padding: "12px 12px", minHeight: 44 }}>
           Upload file
         </Button>
-        <Button type="secondary" onClick={onUpload} icon={<Icon name="link" size={18} />} style={{ padding: "12px 12px", minHeight: 48 }}>
+        <Button type="secondary" onClick={onUpload} icon={<Icon name="link" size={18} />} style={{ padding: "12px 12px", minHeight: 44 }}>
           Paste link
         </Button>
       </div>
       <p className="t-label-sm muted">PDF, DOCX or TXT · up to 10 MB</p>
-    </div>
+    </>
   );
 }
 

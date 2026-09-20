@@ -1998,3 +1998,13 @@ FIX · 2026-09-20 · sheets, action sheet, date wheel and the link page
     wordmark CENTRED between two 24px slots. Code had a 56px bar with the mark and wordmark
     left-aligned and the page URL pinned right. In Figma the URL is a centred tag at the top
     of the body, so it moved there. The wordmark now uses the SVG, not the PNG.
+
+FIX · 2026-09-20 · DocUpload and the link page "Sent" card
+  · DocUpload — Figma nests a second r12 box with a 1px #d1d3d8 stroke and its own 16 of
+    padding inside the white card; the code had no inner box at all. Buttons are 44 tall,
+    not 48. After upload the box keeps the same shape and shows the file name in blue with
+    its type and size beneath, instead of the horizontal row with a Replace button.
+  · Link page "Sent" — Figma wraps it in a white r12 card padded 24 with a 40px filled check,
+    a Semi Bold 16/24 title and centred Medium 14/20 body. Code drew a hand-made 56px blue
+    disc with a 20/28 title and 16/24 body on the bare page background, and pushed the body
+    40 from the top instead of 24.

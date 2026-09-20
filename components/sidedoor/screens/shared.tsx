@@ -559,17 +559,34 @@ export function LinkPage() {
         <StatusBar />
         <LogoBar />
         <div className="sd-body">
-          <div className="sd-pad" style={{ paddingTop: 40, display: "flex", flexDirection: "column", gap: 16, alignItems: "center", textAlign: "center" }}>
-            <span style={{ width: 56, height: 56, borderRadius: "50%", background: "var(--sd-link)", display: "grid", placeItems: "center" }}>
-              <Icon name="checkmark" size={30} style={{ color: "#fff" }} />
-            </span>
-            <h2 className="t-h-md">Sent to Nithin</h2>
-            <p className="t-body muted">
-              He has everything Flipkart’s portal asks for. You’ll get an email the moment he acts on it.
-            </p>
-            <div style={{ height: 8 }} />
+          <div className="sd-pad" style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <Tag>sidedoor.app/r/nithin-agarwal</Tag>
+            </div>
+            {/* Figma "Done": a white r12 card padded 24, its parts 12 apart, with a 40px
+                filled check, a Semi Bold 16/24 title and centred 14/20 body copy. */}
+            <div
+              style={{
+                background: "var(--sd-n0)",
+                borderRadius: "var(--sd-r-lg)",
+                padding: 24,
+                display: "flex",
+                flexDirection: "column",
+                gap: 12,
+                alignItems: "center",
+                textAlign: "center",
+              }}
+            >
+              <Icon name="checkmark.circle.fill" size={40} style={{ color: "var(--sd-link)" }} />
+              <h2 className="t-h-sm">Sent to Nithin</h2>
+              <p className="t-label muted">
+                Nithin gets every detail Flipkart’s portal asks for. We’ll email you when there’s news.
+              </p>
+            </div>
             <Button onClick={() => nav.reset("login")}>Get the app to follow it</Button>
-            <TextButton onClick={() => setSent(false)}>Send another</TextButton>
+            <div style={{ textAlign: "center" }}>
+              <TextButton onClick={() => setSent(false)}>Send another</TextButton>
+            </div>
           </div>
         </div>
       </>
