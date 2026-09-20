@@ -579,6 +579,7 @@ export function Field({
   label,
   icon,
   iconNode,
+  boxHeight,
   value,
   onChange,
   placeholder,
@@ -595,6 +596,8 @@ export function Field({
   icon?: IconName;
   /** A field whose mark is a brand logo rather than an SF symbol (the LinkedIn field). */
   iconNode?: ReactNode;
+  /** Figma draws one or two boxes shorter than the standard 52 (the short-note input is 44). */
+  boxHeight?: number;
   value: string;
   onChange?: (v: string) => void;
   placeholder?: string;
@@ -619,7 +622,7 @@ export function Field({
       <div
         className={`sd-input${focus ? " is-focus" : ""}${error ? " is-error" : ""}`}
         onClick={onClick}
-        style={{ alignItems: multiline ? "flex-start" : "center", minHeight: multiline ? 100 : 52 }}
+        style={{ alignItems: multiline ? "flex-start" : "center", minHeight: boxHeight ?? (multiline ? 100 : 52) }}
       >
         {multiline ? (
           <textarea

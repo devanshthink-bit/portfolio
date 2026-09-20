@@ -440,7 +440,8 @@ export function CheckRequest() {
       back
       actions={
         <Actions>
-          <Tag>{requestsLeft} of 5 referral requests left this week</Tag>
+          {/* Figma draws this as a plain 12/16 line, not a filled chip. */}
+          <Note>{requestsLeft} of 5 referral requests left this week</Note>
           {failed && (
             <Note style="failure" icon="xmark.circle.fill">
               Couldn’t send. Nothing was lost — try again.
@@ -461,15 +462,17 @@ export function CheckRequest() {
       <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
         <p className="t-label muted">This is exactly what Nithin will get.</p>
 
-        <div style={{ display: "flex", gap: 12 }}>
+        {/* Figma's Person row is 50 tall with the 44 avatar centred in it. */}
+        <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
           <Avatar name="Nithin Agarwal" />
           <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1 }}>
             <span className="sd-person-name">
               Nithin Agarwal
               <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)" }} />
             </span>
-            <span style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-              <span className="sd-person-sub">Design Manager, Flipkart</span>
+            {/* Figma's "Role And Tag" row fills the width and pushes the tag to the right edge. */}
+            <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <span className="sd-person-sub" style={{ flex: 1 }}>Design Manager, Flipkart</span>
               <Tag>Job ID 184223</Tag>
             </span>
           </div>
@@ -480,7 +483,8 @@ export function CheckRequest() {
           icon="info.circle.fill"
           end={stillNeeded > 0 ? <Tag style="buffer">Still needed · {stillNeeded}</Tag> : <Tag style="success">All in</Tag>}
         >
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          {/* Figma's "Still Needed" frame puts 24 between the line and each field. */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
             <p className="t-label-sm muted">Not on your resume. Asked once, saved for your next request.</p>
             <Field
               label="Date of birth"
@@ -533,11 +537,12 @@ export function CheckRequest() {
         </Section>
 
         <Section label="A short note (optional)" icon="quote.bubble.fill">
+          {/* Figma's note box is a single 44-tall line, not the 100-tall multiline box. */}
           <Field
             value={note}
             onChange={(v) => dispatch({ t: "note", v })}
             placeholder="One line, e.g. what you worked on"
-            multiline
+            boxHeight={44}
           />
         </Section>
       </div>
