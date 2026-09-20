@@ -581,6 +581,9 @@ export function LinkPage() {
       <LogoBar />
       <div className="sd-body">
         <div className="sd-pad" style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <Tag>sidedoor.app/r/nithin-agarwal</Tag>
+          </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
             <h1 className="t-h-md">Ask Nithin for a referral</h1>
             <p className="t-label muted">Check your details, then send.</p>
@@ -672,14 +675,22 @@ function LogoBar() {
   // when it was opened from inside the app there has to be a way back out of it
   const preview = nav.canGoBack;
   return (
+    // Figma AppHeader Type=Logo: 48 tall, padding 12/16, the wordmark centred between two
+    // 24px slots. The page URL is a centred tag in the body, not part of this bar.
     <div className="sd-web-bar">
-      <Image src="/images/sidedoor/sidedoor-mark.png" alt="" width={18} height={23} style={{ width: 18, height: "auto" }} />
-      <Image src="/images/sidedoor/sidedoor-word.png" alt="SideDoor" width={88} height={16} style={{ width: 88, height: "auto" }} />
-      <span style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 8 }}>
-        <Tag>sidedoor.app/r/nithin-agarwal</Tag>
+      <span style={{ width: 24, flex: "0 0 auto" }} />
+      <Image
+        src="/images/sidedoor/sidedoor-word.svg"
+        alt="SideDoor"
+        width={116}
+        height={21}
+        style={{ width: 116, height: 21 }}
+        unoptimized
+      />
+      <span style={{ width: 24, flex: "0 0 auto", display: "flex", justifyContent: "flex-end" }}>
         {preview && (
-          <button className="sd-barbtn" style={{ width: 32 }} onClick={nav.pop} aria-label="Close preview">
-            <Icon name="xmark.circle.fill" size={22} style={{ color: "var(--sd-n400)" }} />
+          <button onClick={nav.pop} aria-label="Close preview" style={{ display: "grid", placeItems: "center" }}>
+            <Icon name="xmark.circle.fill" size={24} style={{ color: "var(--sd-icon-2)" }} />
           </button>
         )}
       </span>

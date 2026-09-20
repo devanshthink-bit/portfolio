@@ -891,7 +891,8 @@ function Wheel({ items, value, onPick }: { items: string[]; value: string; onPic
             onPick(it);
             window.setTimeout(() => (quiet.current = false), 260);
           }}
-          style={{ color: it === value ? "var(--sd-text)" : "var(--sd-text-2)", fontWeight: it === value ? 600 : 400 }}
+          /* Figma: every row is Inter Medium 14/20 — only the colour changes */
+          style={{ color: it === value ? "var(--sd-text)" : "var(--sd-text-2)" }}
         >
           {it}
         </div>

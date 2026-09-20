@@ -471,7 +471,7 @@
   z-index: 55;
   background: var(--sd-page);
   border-radius: var(--sd-r-sheet) var(--sd-r-sheet) 0 0;
-  padding: 8px 16px 40px;
+  padding: 12px 16px 32px;
   max-height: 92%;
   display: flex;
   flex-direction: column;
@@ -483,21 +483,21 @@
 .sd-sheet.is-settling { animation: none; transition: transform 320ms var(--sd-ease); }
 @keyframes sd-sheet-in { from { transform: translateY(100%); } to { transform: translateY(0); } }
 @keyframes sd-sheet-out { from { transform: translateY(0); } to { transform: translateY(100%); } }
-.sd-grab { width: 36px; height: 5px; border-radius: 3px; background: rgba(60, 60, 67, 0.3); margin: 0 auto 8px; flex: 0 0 auto; }
-.sd-sheet-title { font-weight: 600; font-size: 16px; line-height: 24px; }
+.sd-grab { width: 68px; height: 6px; border-radius: 3px; background: var(--sd-border); margin: 0 auto 24px; flex: 0 0 auto; }
+.sd-sheet-title { font-weight: 600; font-size: 16px; line-height: 24px; text-align: center; }
 .sd-sheet-body { overflow-y: auto; scrollbar-width: none; }
 .sd-sheet-body::-webkit-scrollbar { display: none; }
 
 /* action sheet (Log out) */
 .sd-actionsheet { position: absolute; left: 8px; right: 8px; bottom: 8px; z-index: 55; animation: sd-sheet-in 420ms var(--sd-ease) both; }
 .sd-actionsheet.is-out { animation: sd-sheet-out 300ms var(--sd-ease) both; }
-.sd-as-group { border-radius: 14px; overflow: hidden; background: rgba(255, 255, 255, 0.78); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%); }
-.sd-as-msg { padding: 14px 16px; text-align: center; font-weight: 400; font-size: 13px; line-height: 18px; color: var(--sd-text-2); border-bottom: 0.5px solid rgba(60, 60, 67, 0.22); }
-.sd-as-btn { width: 100%; height: 57px; font-weight: 400; font-size: 20px; line-height: 25px; color: var(--sd-link); }
-.sd-as-btn + .sd-as-btn { border-top: 0.5px solid rgba(60, 60, 67, 0.22); }
-.sd-as-btn.is-destructive { color: var(--sd-ios-red); }
+.sd-as-group { border-radius: var(--sd-r-sheet); overflow: hidden; background: var(--sd-n0); }
+.sd-as-msg { padding: 16px; text-align: center; font-weight: 500; font-size: 12px; line-height: 16px; color: var(--sd-text-2); border-bottom: 1px solid var(--sd-border-subtle); }
+.sd-as-btn { width: 100%; height: 57px; font-weight: 500; font-size: 16px; line-height: 24px; color: var(--sd-link); }
+.sd-as-btn + .sd-as-btn { border-top: 1px solid var(--sd-border-subtle); }
+.sd-as-btn.is-destructive { color: var(--sd-text-error); }
 .sd-as-btn:active { background: rgba(0, 0, 0, 0.06); }
-.sd-as-cancel { margin-top: 8px; background: rgba(255, 255, 255, 0.92); border-radius: 14px; font-weight: 600; }
+.sd-as-cancel { margin-top: 8px; background: var(--sd-n0); border-radius: var(--sd-r-sheet); height: 56px; }
 
 /* ── toast · glass, slides down from under the bar ───────────────────────── */
 .sd-toast {
@@ -539,15 +539,19 @@
 .sd-empty { display: flex; flex-direction: column; align-items: stretch; gap: 12px; }
 
 /* ── wheel date picker ──────────────────────────────────────────────────── */
-.sd-wheels { display: flex; height: 216px; position: relative; }
+.sd-wheels { display: flex; height: 180px; position: relative; }
 .sd-wheel { flex: 1 1 0; overflow-y: scroll; scrollbar-width: none; text-align: center; }
 .sd-wheel::-webkit-scrollbar { display: none; }
-.sd-wheel > div:not(.sd-wheel-pad) { height: 36px; font-size: 21px; line-height: 36px; cursor: pointer; }
-.sd-wheel-pad { height: 90px; flex: 0 0 auto; }
-.sd-wheel-sel { position: absolute; left: 0; right: 0; top: 90px; height: 36px; border-radius: var(--sd-r-md); background: var(--sd-fill-3); pointer-events: none; }
+.sd-wheel > div:not(.sd-wheel-pad) { height: 36px; font-weight: 500; font-size: 14px; line-height: 36px; color: var(--sd-text-2); cursor: pointer; }
+.sd-wheel > div.is-on { color: var(--sd-text); }
+.sd-wheel-pad { height: 72px; flex: 0 0 auto; }
+.sd-wheel-sel { position: absolute; left: 0; right: 0; top: 72px; height: 36px; border-radius: var(--sd-r-md); background: var(--sd-n100); pointer-events: none; }
 
 /* ── login splash ───────────────────────────────────────────────────────── */
 .sd-login { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 16px 48px 40px; background: var(--sd-n75); }
 
 /* the link page is a web page, not the app: it keeps a logo bar and has no tab bar */
-.sd-web-bar { height: 56px; flex: 0 0 auto; display: flex; align-items: center; gap: 8px; padding: 0 16px; background: #fff; box-shadow: 0 0.5px 0 rgba(0, 0, 0, 0.1); }
+/* Figma AppHeader Type=Logo: 48 tall, padding 12/16, contents spread with the wordmark
+   centred. */
+.sd-web-bar { height: 48px; flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; padding: 12px 16px; background: var(--sd-n0); }

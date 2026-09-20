@@ -1984,3 +1984,17 @@ Figma number.
 Also: the RequestCard shared-history line ("Both worked at MakeMyTrip") had the same Plain
 tag bug as the job cards — a 16px span where Figma has a 22px tag, making every request card
 126 tall instead of 132.
+
+FIX · 2026-09-20 · sheets, action sheet, date wheel and the link page
+  · Sheet grab handle is 68x6 in #d1d3d8 sitting 12 from the top with 24 clear beneath; code
+    had 36x5 in translucent grey with an 8px gap. Sheet titles are centred. Sheets end 32
+    below the last control, not 40.
+  · Log Out action sheet — solid white groups at r32 (code had r14 and a 78% blur), message
+    Medium 12/16 (code 400 13/18), rows 57 tall in Medium 16/24 (code 400 20/25), #f0f1f2
+    dividers (code translucent), destructive #b91c1c (code iOS red #ff3b30).
+  · Date wheel — five 36px rows, 180 tall, every row Inter Medium 14/20 with only the colour
+    changing. Code had 216 tall, 21px type and a bolder selected row.
+  · Link page — the header is Figma's AppHeader Type=Logo: 48 tall, padding 12/16, with the
+    wordmark CENTRED between two 24px slots. Code had a 56px bar with the mark and wordmark
+    left-aligned and the page URL pinned right. In Figma the URL is a centred tag at the top
+    of the body, so it moved there. The wordmark now uses the SVG, not the PNG.
