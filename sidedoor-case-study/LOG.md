@@ -1865,3 +1865,21 @@ Cause:    a next-server process survived the preview stop and held port 3000, an
           .next/static was never invalidated.
 Fix:      kill whatever holds the port, `rm -rf .next`, restart. Worth knowing before
           trusting what the browser shows.
+
+DECISION · 2026-09-20 · prototype page layout
+Decided:   The state list is a fixed slab on the left (clamp(520px, 48vw, 700px)) with exactly
+           three columns, so the seven groups balance downward and fill the height. The phone
+           takes the remaining width and centres in it, sized to leave ~24px above and below.
+Rejected:  Auto-fitting columns (`columns: 230px`) at full height — on a wide window it made
+           five columns, spread every group across one shallow row and left the bottom half
+           of the page empty.
+Because:   Devansh asked for the last two groups to drop into the empty space and the phone to
+           sit in the middle of what is left, as large as the height allows.
+How sure:  saw it — 1600x1101, 1440x900 and 1280x720, no page or panel scroll at any of them.
+
+FIX · 2026-09-20 · three columns hid two groups on short windows
+Found:     At 1280x720 "Rules and limits" and "Sheets" vanished. A multi-column box that cannot
+           fit its content in the given column count overflows in the INLINE direction, and
+           `overflow-y: auto` cannot reach that — the groups were there, just off the side.
+Fix:       Below 880px window height the list goes back to auto-fitting as many columns as fit
+           (`columns: 185px`, then 170px below 840px), and the phone returns to the right edge.

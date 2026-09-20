@@ -1927,7 +1927,9 @@ body:has(.proto-page) .bottom-dock { display: none !important; }
 /* the list on the left, the phone on the right */
 .proto-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  /* the list takes a fixed slab so it always makes three columns and the groups
+     flow downward into the height; the phone gets everything that is left */
+  grid-template-columns: clamp(520px, 48vw, 700px) minmax(0, 1fr);
   gap: 36px;
   min-height: 0;
   align-items: stretch;
@@ -1946,8 +1948,9 @@ body:has(.proto-page) .bottom-dock { display: none !important; }
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
-  /* as many columns as fit, so every group lands on screen without the panel scrolling */
-  columns: 230px;
+  /* three columns, so the groups balance downward and fill the height instead of
+     spreading into one long row */
+  columns: 3;
   column-gap: 28px;
   padding-right: 4px;
 }
@@ -1990,12 +1993,20 @@ body:has(.proto-page) .bottom-dock { display: none !important; }
 .proto-role.is-candidate { background: #dce8ff; color: #2a4a8a; }
 .proto-role.is-referrer { background: #d7f0e4; color: #16603f; }
 
+/* Short windows: three columns no longer hold 38 states, and the extra column a
+   multi-column box makes would spill sideways where overflow-y can't reach it.
+   So below this the list goes back to auto-fitting as many columns as fit. */
+@media (max-height: 880px) {
+  .proto-layout { grid-template-columns: minmax(0, 1fr) auto; }
+  .proto-groups { columns: 185px; }
+}
+
 /* Short windows: tighten the list so every group still lands on screen. */
 @media (max-height: 840px) {
   .proto-head h1 { font-size: 22px; line-height: 28px; }
   .proto-sub { font-size: 13px; line-height: 19px; }
   .proto-states h2 { font-size: 15px; line-height: 21px; }
-  .proto-groups { columns: 195px; column-gap: 22px; }
+  .proto-groups { columns: 170px; column-gap: 22px; }
   .proto-state-group { margin-bottom: 10px; }
   .proto-state { padding: 3px 8px; margin-inline: -8px; font-size: 12.5px; line-height: 18px; }
   .proto-role { width: 16px; height: 16px; font-size: 9px; }
@@ -2003,16 +2014,21 @@ body:has(.proto-page) .bottom-dock { display: none !important; }
 
 /* The phone is drawn at a fixed size and scaled as one piece, so --n has to be a
    number. Step it by window height rather than calc so it stays predictable. */
-.proto-stage .iphone { --n: 420; }
-@media (max-height: 1020px) { .proto-stage .iphone { --n: 380; } }
-@media (max-height: 940px)  { .proto-stage .iphone { --n: 345; } }
-@media (max-height: 870px)  { .proto-stage .iphone { --n: 310; } }
-@media (max-height: 790px)  { .proto-stage .iphone { --n: 280; } }
-@media (max-height: 720px)  { .proto-stage .iphone { --n: 250; } }
+.proto-stage .iphone { --n: 470; }
+@media (max-height: 1200px) { .proto-stage .iphone { --n: 425; } }
+@media (max-height: 1100px) { .proto-stage .iphone { --n: 387; } }
+@media (max-height: 1020px) { .proto-stage .iphone { --n: 358; } }
+@media (max-height: 960px)  { .proto-stage .iphone { --n: 329; } }
+@media (max-height: 900px)  { .proto-stage .iphone { --n: 320; } }
+@media (max-height: 880px)  { .proto-stage .iphone { --n: 300; } }
+@media (max-height: 840px)  { .proto-stage .iphone { --n: 282; } }
+@media (max-height: 790px)  { .proto-stage .iphone { --n: 248; } }
+@media (max-height: 720px)  { .proto-stage .iphone { --n: 229; } }
+@media (max-height: 680px)  { .proto-stage .iphone { --n: 200; } }
 
-@media (max-width: 1040px) {
-  .proto-groups { columns: 200px; column-gap: 20px; }
-  .proto-layout { gap: 24px; }
+@media (max-width: 1100px) {
+  .proto-layout { grid-template-columns: minmax(0, 1fr) auto; gap: 24px; }
+  .proto-groups { columns: 2; column-gap: 20px; }
 }
 
 /* Below this the two columns stop fitting side by side, so the page goes back to
