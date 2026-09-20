@@ -133,9 +133,9 @@ export function ChatScreen({ who = "Nithin Agarwal" }: { who?: string }) {
   const [msgs, setMsgs] = useState<Msg[]>(
     isReferrer
       ? [
-          { me: false, text: "Thanks for referring me, Nithin!", at: "3:10 pm" },
-          { me: true, text: "Happy to help. I’ve submitted it on our portal.", at: "3:20 pm" },
-          { me: false, text: "Will I know when it moves?", at: "3:28 pm" },
+          { me: false, text: "Thanks for the referral! Anything I should prepare?", at: "2:10 pm" },
+          { me: true, text: "Brush up the checkout case study. They ask about it.", at: "2:18 pm" },
+          { me: false, text: "Sure, can we get on a quick call?", at: "2:30 pm" },
         ]
       : [
           { me: true, text: "Thanks for referring me, Nithin!", at: "3:10 pm" },
