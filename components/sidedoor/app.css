@@ -408,8 +408,29 @@
 .sd-radio:active { background: var(--sd-n50); }
 
 .sd-tag.plain { background: none; padding: 2px 0; font-size: 12px; line-height: 16px; color: var(--sd-text); }
-.sd-tag.note { height: auto; align-items: flex-start; padding: 6px 8px; white-space: normal; }
-.sd-tag.note svg { flex: 0 0 auto; margin-top: 1px; }
+/* A note is not a chip. Across V6 Figma draws every note the same way: no fill, no padding,
+   a 12/16 label in a 22-tall row. Only the colour changes, and only the error and warning
+   notes carry an icon. (Censused 20 Sep 2026: 15 plain notes in --sd-text-2, 10 in --sd-text
+   with an icon, 2 in --sd-text-error with an icon; no note anywhere has a filled chip.) */
+.sd-tag.note {
+  background: none;
+  height: auto;
+  min-height: 22px;
+  align-items: center;
+  padding: 0;
+  white-space: normal;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--sd-text-2);
+}
+.sd-tag.note.primary { color: var(--sd-text-info); }
+.sd-tag.note.success { color: var(--sd-text-success); }
+.sd-tag.note.buffer { color: var(--sd-text-warning); }
+.sd-tag.note.failure { color: var(--sd-text-error); }
+.sd-tag.note svg { flex: 0 0 auto; }
+/* Figma's Actions frame is MIN-aligned, so a note in it hugs its text at the left edge
+   instead of stretching to the column width. */
+.sd-actions > .sd-tag { align-self: flex-start; }
 
 /* ── inputs ──────────────────────────────────────────────────────────────── */
 .sd-field { display: flex; flex-direction: column; gap: 8px; }

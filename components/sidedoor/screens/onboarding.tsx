@@ -455,7 +455,8 @@ export function VerifyEmail() {
         <p className="t-label muted">
           Candidates see your name, role and company. The verified tick shows after we check your work email.
         </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        {/* Figma's Form frame puts 20 between fields, not 12. */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
           <Field label="Your name" icon="person.fill" value="Nithin Agarwal" />
           <Field
             label="Work email"

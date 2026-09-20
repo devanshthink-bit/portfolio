@@ -300,7 +300,7 @@ export function Tag({
 }
 
 /** A note is a Tag, not a coloured box (V2 pattern). Always above the thing it explains. */
-export function Note({ children, style: kind = "neutral", icon = "info.circle.fill" }: { children: ReactNode; style?: TagStyle; icon?: IconName }) {
+export function Note({ children, style: kind = "neutral", icon }: { children: ReactNode; style?: TagStyle; icon?: IconName }) {
   return (
     <Tag style={kind} icon={icon} note>
       {children}
@@ -595,10 +595,11 @@ export function Field({
           {label}
         </label>
       )}
+      {/* Figma's InputField box (Frame 234) is a fixed 52 with its row centred, not 48. */}
       <div
         className={`sd-input${focus ? " is-focus" : ""}${error ? " is-error" : ""}`}
         onClick={onClick}
-        style={{ alignItems: multiline ? "flex-start" : "center", minHeight: multiline ? 96 : 48 }}
+        style={{ alignItems: multiline ? "flex-start" : "center", minHeight: multiline ? 96 : 52 }}
       >
         {multiline ? (
           <textarea
