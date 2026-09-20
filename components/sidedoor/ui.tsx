@@ -804,18 +804,19 @@ export function Skel({ w, h, r = 4, style }: { w?: number | string; h: number; r
   return <span className="sd-skel" style={{ display: "block", width: w ?? "100%", height: h, borderRadius: r, ...style }} />;
 }
 
+/** Figma SkeletonCard: a 56px round block, 12 clear of three bars 140x16, 180x12 and
+ *  110x20, eight apart. The card is 96 tall. */
 export function SkeletonCard() {
   return (
     <Card>
       <div style={{ display: "flex", gap: 12 }}>
-        <Skel w={44} h={44} r={22} />
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 8 }}>
-          <Skel w="70%" h={16} />
-          <Skel w="45%" h={14} />
+        <Skel w={56} h={56} r={9999} />
+        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+          <Skel w={140} h={16} />
+          <Skel w={180} h={12} />
+          <Skel w={110} h={20} />
         </div>
       </div>
-      <div style={{ height: 12 }} />
-      <Skel h={14} />
     </Card>
   );
 }

@@ -1933,3 +1933,20 @@ Censused every instance across the V6 flows (counts are real usage, not library 
     checkmark on the right. There is no radio circle in the design at all. Code gave each
     option its own r8 white card 8px apart with a 2px blue ring. Rewritten as RadioList +
     RadioOption and adopted in both sheets that use it.
+
+FIX · 2026-09-20 · second component pass, all from as-used instance counts
+  · InputField (44) — the box is 52 tall, padding 12/16, white, r8 and carries NO shadow;
+    code had 48, 13/14 padding and elevation-1. Error state is a 1px #b91c1c stroke, not 1.5px.
+  · AppHeader (79) — the header row is padded 16, not 8. The back and bell sit in a white
+    44px circle with effect/glass; code drew them bare.
+  · MenuRow (13) — 50 tall, 8px gap, a 1px #f0f1f2 rule under every row but the last (code
+    had 44, gap 12 and a translucent rule inset 16px), chevron #6b7280 not #9ca3af.
+  · SegmentedControl (3) — r8 track and segments, labels Medium 14/20 in ink on BOTH states,
+    selected white with elevation-1. Code had r9/r7, 13/16 and a bold selected label.
+  · Switch (9) — on #22c55e, off #9ca3af. Code used iOS green #34c759 and a translucent grey.
+  · Toast (1) — a solid white pill (r9999), padding 12/16, gap 12, effect/glass. Code had
+    r16, 72% white, a 24px blur and an inset highlight.
+  · SkeletonCard (12) — 56px round block, then bars 140x16, 180x12, 110x20 eight apart.
+    Code had a 44px block and two bars plus a stray third.
+  · ChatMessage (7) — padding 8/12, radius 16 with a 4px tail corner, Regular 14/20, time 4
+    below. Code had 10/14, a uniform 18px radius, 15px type and a 2px gap.

@@ -179,16 +179,18 @@ export function ChatScreen({ who = "Nithin Agarwal" }: { who?: string }) {
             </div>
           </Card>
           {msgs.map((m, i) => (
-            <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: m.me ? "flex-end" : "flex-start", gap: 2 }}>
+            <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: m.me ? "flex-end" : "flex-start", gap: 4 }}>
+              {/* Figma ChatMessage: padding 8/12, 16px corners with a 4px tail on the side
+                  the bubble comes from, Inter Regular 14/20, 280 max. */}
               <span
                 style={{
                   maxWidth: 280,
-                  padding: "10px 14px",
-                  borderRadius: 18,
-                  background: m.me ? "var(--sd-link)" : "#fff",
+                  padding: "8px 12px",
+                  borderRadius: m.me ? "16px 16px 4px 16px" : "16px 16px 16px 4px",
+                  background: m.me ? "var(--sd-link)" : "var(--sd-n0)",
                   color: m.me ? "#fff" : "var(--sd-text)",
                   fontWeight: 400,
-                  fontSize: 15,
+                  fontSize: 14,
                   lineHeight: "20px",
                 }}
               >
