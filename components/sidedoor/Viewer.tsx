@@ -17,6 +17,7 @@ export default function Viewer() {
           The app runs its own code either way — these only put it where a state shows. Everything
           is reachable by tapping too.
         </p>
+        <div className="proto-scroll">
         <div className="proto-groups">
         {GROUPS.map((g) => {
           const items = SCENARIOS.filter((s) => s.group === g);
@@ -40,6 +41,7 @@ export default function Viewer() {
             </section>
           );
         })}
+        </div>
         </div>
       </aside>
 

@@ -15,8 +15,7 @@ export default function SidedoorPrototypePage() {
         <h1>Working prototype</h1>
         <p className="proto-sub">
           Every V6 screen, in code. Send a request as Abhinav, then <b>Profile → Switch role</b> to become Nithin, refer
-          him, and switch back to watch the same request move. Swipe from the left edge to go back. The work email code
-          is <b>482013</b>.
+          him, and switch back to watch the same request move. Swipe from the left edge to go back.
         </p>
       </header>
       <Viewer />

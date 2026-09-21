@@ -1910,30 +1910,31 @@ body:has(.proto-page) .bottom-dock { display: none !important; }
 }
 .content-wrapper:has(.proto-page) { height: 100%; min-height: 0; gap: 0; }
 
+/* Two columns, two rows. The head and the list stack in the left column; the phone
+   takes the right column across BOTH rows, so it centres against the whole page
+   height and the space above it matches the space below. */
 .proto-page {
   height: 100%;
   min-height: 0;
   display: grid;
+  grid-template-columns: clamp(520px, 48vw, 700px) minmax(0, 1fr);
   grid-template-rows: auto minmax(0, 1fr);
-  gap: 18px;
+  column-gap: 36px;
+  row-gap: 18px;
   overflow: hidden;
 }
+.proto-head { grid-column: 1; grid-row: 1; }
+.proto-states { grid-column: 1; grid-row: 2; }
+.proto-stage { grid-column: 2; grid-row: 1 / -1; }
 
 .proto-head { display: flex; flex-direction: column; gap: 6px; }
 .proto-eyebrow { font: 500 12px/16px var(--font-geist-mono), monospace; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
 .proto-head h1 { font: 600 26px/34px var(--font-manrope), sans-serif; letter-spacing: -0.02em; }
 .proto-sub { max-width: 760px; color: var(--text-secondary); font-size: 14px; line-height: 21px; }
 
-/* the list on the left, the phone on the right */
-.proto-layout {
-  display: grid;
-  /* the list takes a fixed slab so it always makes three columns and the groups
-     flow downward into the height; the phone gets everything that is left */
-  grid-template-columns: clamp(520px, 48vw, 700px) minmax(0, 1fr);
-  gap: 36px;
-  min-height: 0;
-  align-items: stretch;
-}
+/* the list on the left, the phone on the right — the wrapper dissolves so its two
+   children land directly in the .proto-page grid above */
+.proto-layout { display: contents; }
 .proto-stage { display: flex; justify-content: center; align-items: center; min-height: 0; }
 
 .proto-states {
@@ -1943,16 +1944,15 @@ body:has(.proto-page) .bottom-dock { display: none !important; }
   gap: 12px;
 }
 .proto-states h2 { font: 600 17px/24px var(--font-manrope), sans-serif; }
-/* two columns so all 38 states fit without the panel needing to scroll */
+/* The scroller is the wrapper, not the multi-column box: a multicol box with a
+   fixed height pushes what doesn't fit into EXTRA columns off to the side, where
+   overflow-y can't reach them. Given a free height it grows downward instead. */
+.proto-scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding-right: 4px; }
 .proto-groups {
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow-y: auto;
   /* three columns, so the groups balance downward and fill the height instead of
      spreading into one long row */
   columns: 3;
   column-gap: 28px;
-  padding-right: 4px;
 }
 .proto-state-group { break-inside: avoid; display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
 .proto-state-group h3 {
@@ -1993,12 +1993,11 @@ body:has(.proto-page) .bottom-dock { display: none !important; }
 .proto-role.is-candidate { background: #dce8ff; color: #2a4a8a; }
 .proto-role.is-referrer { background: #d7f0e4; color: #16603f; }
 
-/* Short windows: three columns no longer hold 38 states, and the extra column a
-   multi-column box makes would spill sideways where overflow-y can't reach it.
-   So below this the list goes back to auto-fitting as many columns as fit. */
+/* Short windows: the phone takes more width, so the list gets the narrower slab.
+   The column count stays fixed — an auto-fitting count makes an extra column that
+   spills sideways, where overflow-y can't reach it, and lands behind the phone. */
 @media (max-height: 880px) {
-  .proto-layout { grid-template-columns: minmax(0, 1fr) auto; }
-  .proto-groups { columns: 185px; }
+  .proto-page { grid-template-columns: minmax(0, 1fr) auto; }
 }
 
 /* Short windows: tighten the list so every group still lands on screen. */
@@ -2006,7 +2005,7 @@ body:has(.proto-page) .bottom-dock { display: none !important; }
   .proto-head h1 { font-size: 22px; line-height: 28px; }
   .proto-sub { font-size: 13px; line-height: 19px; }
   .proto-states h2 { font-size: 15px; line-height: 21px; }
-  .proto-groups { columns: 170px; column-gap: 22px; }
+  .proto-groups { column-gap: 22px; }
   .proto-state-group { margin-bottom: 10px; }
   .proto-state { padding: 3px 8px; margin-inline: -8px; font-size: 12.5px; line-height: 18px; }
   .proto-role { width: 16px; height: 16px; font-size: 9px; }
@@ -2014,20 +2013,23 @@ body:has(.proto-page) .bottom-dock { display: none !important; }
 
 /* The phone is drawn at a fixed size and scaled as one piece, so --n has to be a
    number. Step it by window height rather than calc so it stays predictable. */
-.proto-stage .iphone { --n: 470; }
-@media (max-height: 1200px) { .proto-stage .iphone { --n: 425; } }
-@media (max-height: 1100px) { .proto-stage .iphone { --n: 387; } }
-@media (max-height: 1020px) { .proto-stage .iphone { --n: 358; } }
-@media (max-height: 960px)  { .proto-stage .iphone { --n: 329; } }
-@media (max-height: 900px)  { .proto-stage .iphone { --n: 320; } }
-@media (max-height: 880px)  { .proto-stage .iphone { --n: 300; } }
-@media (max-height: 840px)  { .proto-stage .iphone { --n: 282; } }
-@media (max-height: 790px)  { .proto-stage .iphone { --n: 248; } }
-@media (max-height: 720px)  { .proto-stage .iphone { --n: 229; } }
-@media (max-height: 680px)  { .proto-stage .iphone { --n: 200; } }
+/* Each step is the largest frame that still fits at the SHORTEST window in its
+   band: the stage is (window height - 40) tall and the frame is n * 902/430. */
+.proto-stage .iphone { --n: 500; }
+@media (max-height: 1200px) { .proto-stage .iphone { --n: 498; } }
+@media (max-height: 1100px) { .proto-stage .iphone { --n: 460; } }
+@media (max-height: 1020px) { .proto-stage .iphone { --n: 431; } }
+@media (max-height: 960px)  { .proto-stage .iphone { --n: 403; } }
+@media (max-height: 900px)  { .proto-stage .iphone { --n: 393; } }
+@media (max-height: 880px)  { .proto-stage .iphone { --n: 374; } }
+@media (max-height: 840px)  { .proto-stage .iphone { --n: 350; } }
+@media (max-height: 790px)  { .proto-stage .iphone { --n: 317; } }
+@media (max-height: 720px)  { .proto-stage .iphone { --n: 298; } }
+@media (max-height: 680px)  { .proto-stage .iphone { --n: 259; } }
+@media (max-height: 600px)  { .proto-stage .iphone { --n: 220; } }
 
 @media (max-width: 1100px) {
-  .proto-layout { grid-template-columns: minmax(0, 1fr) auto; gap: 24px; }
+  .proto-page { grid-template-columns: minmax(0, 1fr) auto; column-gap: 24px; }
   .proto-groups { columns: 2; column-gap: 20px; }
 }
 
@@ -2041,6 +2043,6 @@ body:has(.proto-page) .bottom-dock { display: none !important; }
   .proto-page { height: auto; display: flex; flex-direction: column; gap: 24px; overflow: visible; }
   .proto-layout { display: flex; flex-direction: column; gap: 24px; }
   .proto-stage, .proto-states { height: auto; }
-  .proto-groups { overflow: visible; }
+  .proto-scroll { overflow: visible; }
   .proto-stage .iphone { --n: 300; }
 }

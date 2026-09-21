@@ -2335,3 +2335,24 @@ Because:   Devansh's bar is an exact match with Figma. The line only existed so 
            first-time user could get past the screen; letting any code through
            solves that without adding a node Figma doesn't have.
 How sure:  Verified on localhost, not the Vercel preview.
+
+DECISION · 2026-09-21 · Prototype page: the phone is bigger and centred on the page
+Decided:   .proto-layout now uses display:contents so the list and the phone land
+           straight in the .proto-page grid. The phone spans both rows, so it
+           centres against the whole page height — the space above it equals the
+           space below at every window size. The --n ladder was recomputed against
+           (window height - 40): at 1024x768 the frame went 248 -> 317, at 1440x900
+           -> 393, at 1512x1100 -> 460.
+Also:      The state list now scrolls on a new .proto-scroll wrapper instead of on
+           the multi-column box. A multicol box with a fixed height pushes overflow
+           into EXTRA columns sideways, not downward, so three groups were sitting
+           behind the phone unreachable. That bug predated this change; the wider
+           phone only made it visible.
+Also:      Dropped "The work email code is 482013" from the page intro — stale
+           since the Verify screen takes any 6 digits.
+Because:   Devansh asked for the top gap to match the bottom gap. Centring the
+           phone on the page is what makes that true at any height, not a one-off
+           number.
+How sure:  Measured at 1024x768, 1280x700, 1440x900, 1512x1100 and 375x812 on
+           localhost, not the Vercel preview. Top and bottom gaps read equal at
+           every desktop size; nothing spills off-screen; the page never scrolls.
