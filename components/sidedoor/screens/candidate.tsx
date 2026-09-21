@@ -673,32 +673,45 @@ export function ReferralBar({ r, onClick }: { r: { logo: string; company: string
 function steps(stage: Stage): Step[] {
   const order: Stage[] = ["sent", "referred", "submitted", "interviews"];
 
-  // nobody acted: the request is still sitting with the referrer
-  if (stage === "noanswer")
+  // Figma Track 1 and No Answer: the request sits with the referrer — "Sent" waits in
+  // orange and nothing ahead of it is marked as next.
+  if (stage === "sent" || stage === "noanswer")
     return [
-      { title: "Sent", state: "current" },
+      { title: "Sent", state: "waiting" },
       ...order.slice(1).map((s) => ({ title: STAGE_LABEL[s], state: "pending" as const })),
       { title: "Selected or not", state: "pending" },
     ];
 
-  // the referrer closed it: sent happened, nothing after it will
+  // Figma Not Moving Forward (and Role Closed in States): sent happened, then it ended.
   if (stage === "notmoving" || stage === "closed")
     return [
       { title: "Sent", state: "done" },
-      { title: STAGE_LABEL[stage], state: "current" },
+      { title: STAGE_LABEL[stage], state: "failed" },
     ];
 
+  // Figma Track 4 and 5: every step reached, then the ending in grey or green.
+  if (stage === "selected" || stage === "notselected")
+    return [
+      ...order.map((s) => ({ title: STAGE_LABEL[s], state: "done" as const })),
+      { title: STAGE_LABEL[stage], state: stage === "selected" ? "success" : "failed" },
+    ];
+
+  // Figma On Hold: submitted, then "On hold" waits in orange ahead of interviews.
+  if (stage === "onhold")
+    return [
+      ...order.slice(0, 3).map((s) => ({ title: STAGE_LABEL[s], state: "done" as const })),
+      { title: "On hold", state: "waiting" },
+      { title: STAGE_LABEL.interviews, state: "pending" },
+      { title: "Selected or not", state: "pending" },
+    ];
+
+  // Figma Track 2 and 3: everything up to the stage is done, the step after it is next.
   const cur = order.indexOf(stage);
-  const ended = stage === "selected" || stage === "notselected";
   const out: Step[] = order.map((s, i) => ({
     title: STAGE_LABEL[s],
-    state: stage === s ? "current" : ended || i <= (stage === "onhold" ? 2 : cur) ? "done" : "pending",
+    state: i <= cur ? "done" : i === cur + 1 ? "next" : "pending",
   }));
-  if (stage === "onhold") out.splice(3, 0, { title: "On hold", state: "current" });
-  out.push({
-    title: ended ? STAGE_LABEL[stage] : "Selected or not",
-    state: ended ? "current" : "pending",
-  });
+  out.push({ title: "Selected or not", state: cur === order.length - 1 ? "next" : "pending" });
   return out;
 }
 
@@ -708,7 +721,7 @@ const ENDED: Stage[] = ["notselected", "notmoving", "closed"];
 const NOW: Partial<Record<Stage, { line: string; sub: string }>> = {
   sent: { line: "Sent to {who} {when}. No answer yet.", sub: "No answer in 7 days? You can withdraw it and ask someone else." },
   referred: { line: "{who} referred you {when}.", sub: "Next, {who} adds you on {co}’s portal." },
-  submitted: { line: "Submitted on {co}’s portal {when}.", sub: "Interviews usually start within 2–3 weeks." },
+  submitted: { line: "Submitted on {co}’s portal {on}.", sub: "Interviews usually start within 2–3 weeks." },
   interviews: { line: "In interviews at {co}.", sub: "{who} will tell you what they hear." },
   onhold: { line: "On hold at {co}.", sub: "{who} marked it {when}. Nothing for you to do yet." },
   selected: { line: "Congratulations, you’re selected at {co}!", sub: "{who} referred you on {since}." },
@@ -718,12 +731,13 @@ const NOW: Partial<Record<Stage, { line: string; sub: string }>> = {
   closed: { line: "{co} closed this job.", sub: "Reason: Role is closed. Requests for it close too." },
 };
 
-export function TrackDetails({ id, stage }: { id: string; stage?: Stage }) {
+export function TrackDetails({ id, stage, updated }: { id: string; stage?: Stage; updated?: string }) {
   const nav = useNav();
   const { requests, force, dispatch } = useStore();
   const found = requests.find((x) => x.id === id) ?? requests[0];
   // a stage passed in shows a state the referrer cannot cause from here (no answer, role closed)
-  const r = stage ? { ...found, stage } : found;
+  // `updated` moves the date with it: Figma dates the Meta request 16 Sep once it is on hold
+  const r = { ...found, ...(stage && { stage }), ...(updated && { updated }) };
   const [phase, setPhase] = useState<"loading" | "ok">("loading");
   useEffect(() => {
     if (force === "track.loading") return;
@@ -752,6 +766,7 @@ export function TrackDetails({ id, stage }: { id: string; stage?: Stage }) {
       .replace("{who}", r.referrer.split(" ")[0])
       .replace("{co}", r.company)
       .replace("{when}", whenPhrase)
+      .replace("{on}", r.since ? `on ${r.since}` : whenPhrase)
       .replace("{reason}", r.reason ?? "none given")
       .replace("{since}", r.since ?? r.updated);
   const now = NOW[r.stage] ?? NOW.sent!;
@@ -778,13 +793,14 @@ export function TrackDetails({ id, stage }: { id: string; stage?: Stage }) {
             <TextButton onClick={() => nav.pop()}>Keep waiting for {r.referrer.split(" ")[0]}</TextButton>
           </Actions>
         ) : r.stage === "selected" ? (
-          // Figma: the ending you want to celebrate offers thanks, not a generic message
-          <Button type="secondary" onClick={() => nav.push("chat", { who: r.referrer })}>
+          // Figma: the ending you want to celebrate offers thanks, not a generic message — as
+          // the screen's one primary (blue) button
+          <Button onClick={() => nav.push("chat", { who: r.referrer })}>
             Thank {r.referrer.split(" ")[0]}
           </Button>
         ) : ENDED.includes(r.stage) ? (
-          // Figma: the three endings that stop the flow send you back to looking
-          <Button type="secondary" onClick={() => nav.reset("tabs", { tab: "jobs" })}>
+          // Figma: the three endings that stop the flow send you back to looking, in blue
+          <Button onClick={() => nav.reset("tabs", { tab: "jobs" })}>
             Find more jobs
           </Button>
         ) : canMessage ? (
@@ -823,7 +839,7 @@ export function TrackDetails({ id, stage }: { id: string; stage?: Stage }) {
         </div>
 
         {/* Figma's "Heard From The Company" card sits between "where it is now" and the
-            timeline: a 78-tall white card padded 12/16, two lines left, a link right. */}
+            timeline: a 78-tall white card padded 12/16, two lines left, a small button right. */}
         {r.stage === "referred" && (
           <div
             style={{
@@ -839,7 +855,12 @@ export function TrackDetails({ id, stage }: { id: string; stage?: Stage }) {
               <span className="t-h-xs">Heard from {r.company}?</span>
               <span className="t-label-sm muted">Got an email saying your application was submitted? Mark it.</span>
             </span>
-            <TextButton onClick={() => dispatch({ t: "handle", id: r.id, stage: "submitted" })}>Mark it</TextButton>
+            {/* Figma: a small secondary Button (71x28, 0.5 #d1d3d8 stroke, r8) with a 44 hit area */}
+            <span className="sd-hit44" style={{ flex: "0 0 auto" }}>
+              <Button small type="secondary" onClick={() => dispatch({ t: "handle", id: r.id, stage: "submitted" })}>
+                Mark it
+              </Button>
+            </span>
           </div>
         )}
 
@@ -847,15 +868,6 @@ export function TrackDetails({ id, stage }: { id: string; stage?: Stage }) {
           <Timeline steps={steps(r.stage)} />
         </div>
         </div>
-
-        {r.stage === "noanswer" && (
-          <Card>
-            <p className="t-h-xs">3 others at {r.company} refer for this job</p>
-            <div style={{ height: 4 }} />
-            <p className="t-label-sm muted">Your details are ready. It takes one tap to ask.</p>
-          </Card>
-        )}
-
 
         {/* Figma has no section label over this card, and no "what they got" block at all */}
         <Card>
@@ -874,6 +886,24 @@ export function TrackDetails({ id, stage }: { id: string; stage?: Stage }) {
             </span>
           </div>
         </Card>
+
+        {/* Figma "Others At Zepto": below the person card, a white r12 card padded 12/16 with
+            4 between its two lines (64 tall) — not the 16-padded Card */}
+        {r.stage === "noanswer" && (
+          <div
+            style={{
+              background: "var(--sd-n0)",
+              borderRadius: "var(--sd-r-lg)",
+              padding: "12px 16px",
+              display: "flex",
+              flexDirection: "column",
+              gap: 4,
+            }}
+          >
+            <p className="t-h-xs">3 others at {r.company} refer for this job</p>
+            <p className="t-label-sm muted">Your details are ready. It takes one tap to ask.</p>
+          </div>
+        )}
       </div>
     </Screen>
   );

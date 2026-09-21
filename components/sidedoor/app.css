@@ -519,18 +519,32 @@
 .sd-person-time { margin-left: auto; display: flex; align-items: center; gap: 4px; font-weight: 500; font-size: 12px; line-height: 16px; color: var(--sd-text-2); flex: 0 0 auto; }
 
 /* ── timeline ───────────────────────────────────────────────────────────── */
+/* Figma (V6 Tracking Flow): rows 24 tall, 32 apart. The title's 20px line sits 2 down,
+   centred on the 24 mark. The connector is a 2px Line 37 long starting 22 below the
+   mark's top (21 on a waiting step) — it runs under both marks — and dashed 5/5 when the
+   step ahead is not reached. The 22 matters: it sets where the dashes fall. */
 .sd-timeline { display: flex; flex-direction: column; }
 .sd-tl-step { display: flex; gap: 8px; }
-.sd-tl-rail { width: 24px; display: flex; flex-direction: column; align-items: center; flex: 0 0 auto; }
-/* Figma's connector is 37 long but overlaps the 24 marks at both ends, so consecutive steps
-   sit 56 apart: the 24 mark plus the frame's 32 gap. */
-.sd-tl-line { flex: 1 1 auto; width: 2px; background: var(--sd-link); margin: 0; min-height: 32px; }
-.sd-tl-line.is-dashed { background: none; border-left: 2px dashed var(--sd-border); width: 0; }
-.sd-tl-body { padding-bottom: 32px; flex: 1 1 auto; }
-.sd-tl-step:last-child .sd-tl-body { padding-bottom: 0; }
+.sd-tl-rail { position: relative; width: 24px; flex: 0 0 auto; }
+.sd-tl-mark { position: relative; z-index: 1; display: block; }
+.sd-tl-line { position: absolute; left: 11px; top: 22px; width: 2px; height: 37px; }
+.sd-tl-step.is-waiting .sd-tl-line { top: 21px; }
+.sd-tl-body { padding: 2px 0 34px; flex: 1 1 auto; display: flex; flex-direction: column; }
+.sd-tl-step:last-child .sd-tl-body { padding-bottom: 2px; }
 .sd-tl-title { font-weight: 600; font-size: 14px; line-height: 20px; }
-.sd-tl-title.is-done { color: var(--sd-link); }
 .sd-tl-when { font-weight: 500; font-size: 12px; line-height: 16px; color: var(--sd-text-2); margin-top: 2px; }
+
+.sd-tl-step.is-done .sd-tl-mark, .sd-tl-step.is-done .sd-tl-title,
+.sd-tl-step.is-next .sd-tl-mark { color: var(--sd-link); }
+.sd-tl-step.is-waiting .sd-tl-mark, .sd-tl-step.is-waiting .sd-tl-title { color: var(--sd-text-warning); }
+.sd-tl-step.is-pending .sd-tl-mark { color: var(--sd-border); }
+.sd-tl-step.is-failed .sd-tl-mark { color: var(--sd-icon-2); }
+.sd-tl-step.is-failed .sd-tl-title { color: var(--sd-text-2); }
+.sd-tl-step.is-success .sd-tl-mark, .sd-tl-step.is-success .sd-tl-title { color: var(--sd-text-success); }
+
+.sd-tl-line { background: repeating-linear-gradient(to bottom, var(--sd-border) 0 5px, transparent 5px 10px); }
+.sd-tl-step.is-done .sd-tl-line { background: var(--sd-link); }
+.sd-tl-step.is-waiting .sd-tl-line { background: var(--sd-text-warning); }
 
 /* ── sheets ─────────────────────────────────────────────────────────────── */
 .sd-scrim { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.4); z-index: 50; animation: sd-scrim-in 320ms linear both; }

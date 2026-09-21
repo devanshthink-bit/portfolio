@@ -2356,3 +2356,31 @@ Because:   Devansh asked for the top gap to match the bottom gap. Centring the
 How sure:  Measured at 1024x768, 1280x700, 1440x900, 1512x1100 and 375x812 on
            localhost, not the Vercel preview. Top and bottom gaps read equal at
            every desktop size; nothing spills off-screen; the page never scrolls.
+
+## AUDIT · 2026-09-21 · Tracking re-check (9 screens)
+
+Correction: I told Devansh 5 of 9 Tracking screens were done. The log already listed all
+9 as done; my "5" was bad arithmetic. He asked to redo all 9, node by node.
+
+Fixed:
+- Timeline rebuilt to Figma's six step kinds (done blue check, next blue ring, waiting
+  orange clock, pending grey ring, failed grey x #6b7280, success green check) using
+  Figma's exported glyph paths. Title was 2px high; connector now 37 long from +22
+  (+21 when waiting), dashed 5/5 via gradient so the dashes fall where Figma's do.
+- "Mark it" on Track 2 is a small secondary button (71x28), not a text link.
+- "Find more jobs" and "Thank Joy" are primary (blue), not secondary.
+- No answer: "3 others" card moved below the person card, padded 12/16 gap 4 (64 tall).
+- Data: Swiggy job Product Designer-I, CRED job Product Designer-II, Meta updated 12 Sep
+  with "submitted on 10 Sep", On hold shows 16 Sep.
+
+Verified node by node on localhost: list, Track 1, 2, 3, 4, 5.
+NOT yet verified after the fix: No answer, Not moving forward, On hold (weekly limit).
+
+Open for Devansh:
+- Figma uses Inter 3 (variable); the site loads Inter 4 from Google Fonts. Digit widths
+  differ ("11:11 am" 47 in Figma, 44.2 in the browser), which causes every 1-3px
+  text-width offset. Fix = load Inter 3 for the app; touches every screen.
+- No V6 screen draws the Messages "2" badge or the bell dot; the prototype shows them
+  because its data has 2 unread. Removing them changes every tab screen.
+- Flipkart shows "Sent" on the list (Figma: Submitted) because the live happy path
+  starts there.
