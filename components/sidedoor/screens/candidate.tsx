@@ -118,6 +118,32 @@ export function Jobs() {
             <TextButton onClick={() => nav.openSheet("addResume")}>Add resume</TextButton>
           </div>
         )}
+        {/* Figma drops the section label and the sort row while loading, when empty and on the
+            error — the state is the only thing on the page */}
+        {phase === "loading" ? (
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+          </div>
+        ) : failed ? (
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            <Note style="failure" icon="info.circle.fill">
+              Couldn’t load jobs
+            </Note>
+            <p className="t-label muted" onClick={() => dispatch({ t: "force", v: null })}>
+              Pull down to try again.
+            </p>
+          </div>
+        ) : empty ? (
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            <p className="t-label muted">
+              No one refers for jobs like yours here yet. Tell us the roles you want and we’ll show them as referrers
+              join.
+            </p>
+            <Button onClick={() => nav.push("editDetails")}>Set job preferences</Button>
+          </div>
+        ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <Icon name="briefcase.fill" size={16} style={{ color: "var(--sd-icon-2)" }} />
@@ -132,37 +158,9 @@ export function Jobs() {
           </span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-          {phase === "loading" ? (
-            <>
-              <SkeletonCard />
-              <SkeletonCard />
-              <SkeletonCard />
-            </>
-          ) : failed ? (
-            <Empty
-              icon="xmark.circle.fill"
-              title="Couldn’t load jobs"
-              body="Nothing is lost. Check your connection and try again."
-              action={
-                <Button
-                  onClick={() => {
-                    dispatch({ t: "force", v: null });
-                    setPhase("loading");
-                    window.setTimeout(() => setPhase("ok"), 900);
-                  }}
-                >
-                  Try again
-                </Button>
-              }
-            />
-          ) : empty ? (
-            <Empty
-              icon="briefcase"
-              title="No jobs with a referrer yet"
-              body="We’ll tell you the moment someone at a company you follow posts one."
-            />
-          ) : (
+          {
             JOBS.map((j) => (
+
               <Card
                 key={j.id}
                 onClick={() => (skippedResume ? nav.openSheet("addResume") : nav.push("job", { id: j.id }))}
@@ -203,9 +201,10 @@ export function Jobs() {
                 </div>
               </Card>
             ))
-          )}
+          }
         </div>
         </div>
+        )}
       </div>
     </Screen>
   );
@@ -773,15 +772,18 @@ export function TrackDetails({ id, stage, updated }: { id: string; stage?: Stage
     return () => clearTimeout(t);
   }, [id, force]);
 
+  // Figma "Couldn't load": a red note and one line under it, nothing else
   if (force === "track.error" && phase === "ok")
     return (
       <Screen title="Referral request" back>
-        <Empty
-          icon="xmark.circle.fill"
-          title="Couldn’t load this request"
-          body="Nothing has changed. Try again in a moment."
-          action={<Button onClick={() => dispatch({ t: "force", v: null })}>Try again</Button>}
-        />
+        <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 8 }}>
+          <Note style="failure" icon="info.circle.fill">
+            Couldn’t load this request
+          </Note>
+          <p className="t-label muted" onClick={() => dispatch({ t: "force", v: null })}>
+            Pull down to try again.
+          </p>
+        </div>
       </Screen>
     );
 
@@ -800,15 +802,41 @@ export function TrackDetails({ id, stage, updated }: { id: string; stage?: Stage
   const now = NOW[r.stage] ?? NOW.sent!;
   const canMessage = ["referred", "submitted", "interviews", "onhold", "selected"].includes(r.stage);
 
-  if (phase === "loading")
+  // Figma "Loading": the company row, one line, the timeline card and the person card, all
+  // as grey blocks — not two generic skeleton cards
+  if (phase === "loading") {
+    const bar = (w: number, h: number, round?: boolean) => (
+      <span
+        className="sd-skel"
+        // Figma's loading blocks are the 12% grey fill, not the solid n100
+        style={{ width: w, height: h, borderRadius: round ? 9999 : 4, display: "block", flex: "0 0 auto", background: "var(--sd-fill-3)" }}
+      />
+    );
     return (
       <Screen title="Referral request" back>
-        <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 16 }}>
-          <SkeletonCard />
-          <SkeletonCard />
+        <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+            <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+              {bar(56, 32)}
+              <span style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                {bar(120, 14)}
+                {bar(180, 12)}
+              </span>
+            </div>
+            {bar(300, 12)}
+            <span style={{ height: 300, borderRadius: "var(--sd-r-lg)", background: "var(--sd-n0)" }} />
+          </div>
+          <div className="sd-card" style={{ padding: 16, display: "flex", gap: 12, alignItems: "center" }}>
+            {bar(44, 44, true)}
+            <span style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+              {bar(140, 14)}
+              {bar(100, 12)}
+            </span>
+          </div>
         </div>
       </Screen>
     );
+  }
 
   return (
     <Screen

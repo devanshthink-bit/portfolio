@@ -2567,3 +2567,26 @@ complete, which the code did not:
 someone who refers, and ask in one go."
 
 Verified on localhost, not the Vercel preview.
+
+## AUDIT · 2026-09-22 · States 8–13 of 36
+
+**8 · Track details / Loading (5287:25632)** — Figma's own shapes: a 56x32 block with two
+bars beside it, one 300x12 line, a blank 370x300 card, then the person card (76 tall,
+44 round block and two bars). Was two generic skeleton cards. Blocks use the 12% grey fill.
+
+**9 · Track details / Couldn't load (5287:25777)** — a red note "Couldn't load this
+request" and "Pull down to try again." under it. Was an illustrated block with a button.
+
+**10 · Track details / Role closed (5349:36663)** — the tag and the timeline now read
+"Not moving forward", which is what Figma writes on this screen. Was "Role closed".
+(This was one of the open questions; Figma is the bar, so it now follows Figma.)
+
+**11 · Jobs / Empty (5311:38739)**, **12 · Loading (5311:38885)**, **13 · Couldn't load
+(5311:39037)** — all three drop the "Jobs with someone who refers" label and the sort
+row; the state is the only thing on the page.
+- Empty: "No one refers for jobs like yours here yet…" and a blue "Set job preferences".
+  Was a different line with no button.
+- Loading: three skeleton cards starting at 170.
+- Couldn't load: red note "Couldn't load jobs" and "Pull down to try again.", no button.
+
+Verified on localhost, not the Vercel preview.

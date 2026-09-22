@@ -16,7 +16,8 @@ export const STAGE_LABEL: Record<Stage, string> = {
   notselected: "Not selected",
   notmoving: "Not moving forward",
   noanswer: "No answer",
-  closed: "Role closed",
+  // Figma's Role closed screen labels both the tag and the timeline "Not moving forward"
+  closed: "Not moving forward",
 };
 
 /** Tag colour by meaning, not by mood (DESIGN_LANGUAGE: waiting is neither good nor bad). */
