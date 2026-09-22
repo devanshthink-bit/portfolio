@@ -102,7 +102,7 @@ const SCREENS: Record<string, (p: any) => ReactNode> = {
   tabs: (p) => <Tabs {...p} />,
   job: () => <JobDetails />,
   checkRequest: () => <CheckRequest />,
-  trackDetails: (p) => <TrackDetails id={p.id} stage={p.stage} />,
+  trackDetails: (p) => <TrackDetails id={p.id} stage={p.stage} updated={p.updated} />,
   referralRequest: (p) => <ReferralRequest id={p.id} />,
   yourReferrals: () => <YourReferrals />,
   managePosts: () => <ManagePosts />,

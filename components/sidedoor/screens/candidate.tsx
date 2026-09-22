@@ -726,7 +726,7 @@ const NOW: Partial<Record<Stage, { line: string; sub: string }>> = {
   onhold: { line: "On hold at {co}.", sub: "{who} marked it {when}. Nothing for you to do yet." },
   selected: { line: "Congratulations, you’re selected at {co}!", sub: "{who} referred you on {since}." },
   notselected: { line: "Not selected at {co}.", sub: "{who} referred you and it reached interviews." },
-  notmoving: { line: "{who} isn’t moving forward with this one.", sub: "Reason: {reason}" },
+  notmoving: { line: "{who} isn’t moving forward with this one.", sub: "Reason: {reason}." },
   noanswer: { line: "Sent to {who} 7 days ago. No answer.", sub: "Your request is back, so it doesn’t count against this week." },
   closed: { line: "{co} closed this job.", sub: "Reason: Role is closed. Requests for it close too." },
 };
@@ -804,9 +804,12 @@ export function TrackDetails({ id, stage, updated }: { id: string; stage?: Stage
             Find more jobs
           </Button>
         ) : canMessage ? (
-          <Button type="secondary" onClick={() => nav.push("chat", { who: r.referrer })}>
-            Message {r.referrer.split(" ")[0]}
-          </Button>
+          // Figma: On hold's Frame 329 is 76 tall and bottom-aligned, so 48 sits above the button
+          <div style={{ paddingTop: r.stage === "onhold" ? 24 : 0 }}>
+            <Button type="secondary" onClick={() => nav.push("chat", { who: r.referrer })}>
+              Message {r.referrer.split(" ")[0]}
+            </Button>
+          </div>
         ) : undefined
       }
     >
