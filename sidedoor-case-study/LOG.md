@@ -2668,3 +2668,30 @@ different words.
 into a red "Couldn't update. Try again."; nothing else moves.
 
 Verified on localhost, not the Vercel preview.
+
+## AUDIT · 2026-09-22 · States 32–36 of 36 · States flow finished
+
+**32 · Verify work email / Personal email (5311:37248)** — the error now reads "Use your
+work email. We check it's a company address."
+**33 · Verify work email / Wrong code (5311:37391)** — the seeded code is "482 910", as in
+Figma, and the error reads "That code didn't work. Check it or resend."
+**34 · Add the job / Couldn't read link (5311:37525)** — the drop box goes back to empty
+and the error takes the auto-fill list's place: a red note "Couldn't read this link" with
+"Upload the description, or fill it in yourself." under it. Was one red note up top.
+**35 · Link page / Job closed (5289:29101)** and **36 · Already asked (5289:29210)** —
+both built. The same page with nothing to fill: the headline and its line, the person,
+one note ("Nothing to fill. Your details were not saved." / "One request per job, per
+referrer.") and "Get the SideDoor app" pinned 40 off the bottom.
+
+All 36 States screens now match, so all 84 V6 screens have been diffed node by node.
+
+Still open, and all of it waits on Devansh:
+- Inter 3 vs Inter 4. Every remaining difference is a text width of 1–2px. One of them
+  changes a layout: on Job / Skipped resume the "Add resume to see match" tag is 188 wide
+  in Figma and 186.6 here, so Figma wraps it to its own row and the browser does not.
+- The Messages loading group is 288 tall against Figma's 290 (row dividers).
+- The unread "2" badge and the bell dot, which no V6 screen draws.
+- Flipkart reads "Sent" on the requests list where Figma has "Submitted".
+- The watermarked AI portraits.
+
+Verified on localhost, not the Vercel preview.

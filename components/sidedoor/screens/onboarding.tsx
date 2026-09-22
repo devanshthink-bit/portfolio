@@ -467,12 +467,12 @@ export function Project({ title, skills }: { title: string; skills: string[] }) 
 export function VerifyEmail() {
   const nav = useNav();
   const { force, dispatch } = useStore();
-  const [code, setCode] = useState(force === "verify.wrong-code" ? "482010" : "");
+  const [code, setCode] = useState(force === "verify.wrong-code" ? "482 910" : "");
   const [email, setEmail] = useState(force === "verify.personal" ? "nithin.agarwal@gmail.com" : "nithin.agarwal@flipkart.com");
   const personal = /@(gmail|yahoo|outlook|hotmail)\./i.test(email);
   // Any 6 digits pass. Only the seeded code from the wrong-code scenario fails,
   // so editing a digit clears the error and lets you through.
-  const wrong = code === "482010";
+  const wrong = code === "482 910";
   return (
     <Screen
       title="Where you work"
@@ -481,7 +481,7 @@ export function VerifyEmail() {
         <Actions>
           <Note>We never contact your company or HR</Note>
           <Button
-            disabled={code.length !== 6 || personal || wrong}
+            disabled={code.replace(/\s/g, "").length !== 6 || personal || wrong}
             onClick={() => {
               dispatch({ t: "verify" });
               nav.push("addJob");
@@ -505,15 +505,15 @@ export function VerifyEmail() {
             icon="envelope.fill"
             value={email}
             onChange={setEmail}
-            error={personal ? "Use your work email. A personal one can’t be verified." : undefined}
+            error={personal ? "Use your work email. We check it’s a company address." : undefined}
           />
           <Field
             label="Code from your email"
             icon="lock.fill"
             value={code}
-            onChange={(v) => setCode(v.replace(/\D/g, "").slice(0, 6))}
+            onChange={(v) => setCode(v.replace(/[^\d ]/g, "").slice(0, 7))}
             placeholder="6-digit code"
-            error={wrong ? "That code doesn’t match. Check the email again." : undefined}
+            error={wrong ? "That code didn’t work. Check it or resend." : undefined}
           />
           <Field label="Your role" icon="briefcase.fill" value="Design Manager" />
           <Field label="Where you work from" icon="mappin.and.ellipse" value="Bengaluru, KA" />
@@ -548,21 +548,26 @@ export function AddJob() {
         <p className="t-label muted">
           Paste its link from your careers page, or upload the description. We fill in the rest.
         </p>
-        {failed && (
-          <Note style="failure" icon="xmark.circle.fill">
-            Couldn’t read this file or link. Try another, or fill it in yourself.
-          </Note>
-        )}
         <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
           <DocUpload
             what="job description"
-            file={file}
+            file={failed ? null : file}
             onUpload={() => {
               setFailed(false);
               setFile("Flipkart_IxDesigner_JD.docx");
             }}
           />
-          <AutofillInfo items={["Role and level", "Requirements", "Responsibilities", "Work details"]} />
+          {failed ? (
+            /* Figma: the error takes the auto-fill list's place, under the drop box */
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <Note style="failure" icon="info.circle.fill">
+                Couldn’t read this link
+              </Note>
+              <p className="t-label muted">Upload the description, or fill it in yourself.</p>
+            </div>
+          ) : (
+            <AutofillInfo items={["Role and level", "Requirements", "Responsibilities", "Work details"]} />
+          )}
         </div>
       </div>
     </Screen>

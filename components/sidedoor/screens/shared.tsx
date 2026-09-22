@@ -596,6 +596,7 @@ export function Help() {
 /* ── The web link page. No app, no tab bar, keeps the logo bar. ─────────── */
 export function LinkPage() {
   const nav = useNav();
+  const { force } = useStore();
   const [file, setFile] = useState<string | null>(null);
   const [note, setNote] = useState("");
   const [sent, setSent] = useState(false);
@@ -672,6 +673,27 @@ export function LinkPage() {
         <Button onClick={() => nav.reset("login")}>Get the SideDoor app</Button>
         <TextButton onClick={() => setSent(false)}>Not now</TextButton>
       </Actions>
+    );
+
+  // Figma "Job closed" and "Already asked": the same page with nothing to fill — a headline,
+  // the person, one note, and the app button pinned to the bottom
+  const closed = force === "link.closed";
+  const already = force === "link.asked";
+  if (closed || already)
+    return page(
+      <>
+        <div style={{ display: "flex", flexDirection: "column", gap: 4, textAlign: "center" }}>
+          <h1 className="t-h-sm">{closed ? "This job is closed" : "You’ve already asked for this job"}</h1>
+          <p className="t-label muted">
+            {closed
+              ? "Nithin isn’t taking referral requests for it any more."
+              : "Nithin has your request. You can track it in the app."}
+          </p>
+        </div>
+        {person}
+        <Note>{closed ? "Nothing to fill. Your details were not saved." : "One request per job, per referrer."}</Note>
+      </>,
+      <Button onClick={() => nav.reset("login")}>Get the SideDoor app</Button>
     );
 
   return page(

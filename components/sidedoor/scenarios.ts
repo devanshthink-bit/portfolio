@@ -41,6 +41,8 @@ export const SCENARIOS: Scenario[] = [
   /* ── waiting ─────────────────────────────────────────────────────────── */
   { id: "jobs.loading", label: "Jobs · loading", group: "Waiting", role: "candidate", force: "jobs.loading", tab: "jobs" },
   { id: "profile.reading", label: "Check your details · reading", group: "Waiting", role: "candidate", force: "profile.reading", tab: "jobs", push: [{ key: "uploadResume" }, { key: "checkProfile" }] },
+  { id: "link.closed", label: "Link page · job closed", group: "Rules and limits", role: "referrer", force: "link.closed", tab: "requests", push: [{ key: "linkPage" }] },
+  { id: "link.asked", label: "Link page · already asked", group: "Rules and limits", role: "referrer", force: "link.asked", tab: "requests", push: [{ key: "linkPage" }] },
   { id: "referrals.updated", label: "Your referrals · updated", group: "Happy path", role: "referrer", force: "referrals.updated", tab: "referrals" },
   { id: "referrals.loading", label: "Your referrals · loading", group: "Waiting", role: "referrer", force: "referrals.loading", tab: "referrals" },
   { id: "reqs.fit", label: "Referral requests · fit checked again", group: "Rules and limits", role: "referrer", force: "reqs.fit", tab: "requests" },
