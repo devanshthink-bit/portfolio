@@ -2695,3 +2695,44 @@ Still open, and all of it waits on Devansh:
 - The watermarked AI portraits.
 
 Verified on localhost, not the Vercel preview.
+
+## 23 Sep 2026 — four things Devansh caught in the prototype
+
+**The unread "2" was italic.** The badge was an `<i>` element, so the browser slanted the
+number. It is a `<span>` now.
+
+**The site's circle cursor floated over the app.** The black circle sat on top of whatever
+you were pointing at inside the phone. Inside `.proto-stage` the app now shows real
+cursors — arrow, hand on anything tappable, a beam in a field — and CustomCursor keeps its
+circle out. The rules live in `@layer base`, because an `!important` in an earlier layer
+beats the same `!important` in a later one, and the blanket `cursor: none` is in base.
+
+**Nothing scrolled inside the phone.** Lenis calls preventDefault on every wheel event on
+the page, so a nested scroller only gets the wheel when it carries `data-lenis-prevent`.
+Added to `.sd-body`, `.sd-sheet-body`, the date wheels and the state list. A real mouse
+wheel over the phone now moves `.sd-body` (0 → 500 of 1851 on Job details).
+
+**The logos had backgrounds baked in.** Figma's export renders a node *in context*, so
+every PNG carried the canvas behind it: an opaque `#f5f5f8` box from the "Logo" frame on
+all of them, and an opaque `#1e1e1e` one on the job banner and the rating marks. In Figma
+every `Logo/*` component's own fill is hidden, so the logo is transparent.
+Re-exported each as SVG and dropped exactly the two background rects Figma adds. 18 logos
+are vectors now, so they are also sharp at any size — the banner was a 666px PNG shown at
+222. Swiggy and Groww are placed images in Figma, not vectors, so they keep their original
+transparent uploads as PNG. `logoSrc()` in `ui.tsx` picks the extension in one place.
+Two details read off the nodes: the banner instance overrides the wordmark fill to white
+(the component's own is `#107BD4`, which is right on a white tile), so the banner gets its
+own `flipkart-white.svg`; and Figma's rating marks are a green circle, a blue hexagon and
+a grey circle, which is what they draw now.
+
+**The AI portraits.** Three of the sixteen were Stable Diffusion renders, which the source
+sizes give away — 1024×1024 where every real photo is an odd rectangle: Nithin Agarwal
+(the one with the `stablediffusionweb.com` watermark across the bottom), Abhinav Saxena
+and Advika Singh. All three are replaced with real photographs of South Asian
+professionals from Pexels, whose licence allows commercial use with no attribution:
+Nithin `pexels-photo-33261949`, Abhinav `pexels-photo-11357069`, Advika
+`pexels-photo-7688183`. Each is cropped to the face and written at 264×264, three times
+the 88×88 the old ones were, so the 68px profile photo is no longer soft.
+The other thirteen were already real photographs and are untouched.
+
+Verified on localhost, not the Vercel preview. `npx next build` passes.
