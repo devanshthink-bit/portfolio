@@ -138,6 +138,16 @@
     cursor: none !important;
   }
 
+  /* Inside the prototype phone the site's drawn circle is wrong: it sits on top of the app and
+     hides what you are pointing at. The phone gets real cursors — arrow, hand on anything
+     tappable, a beam in a field — and CustomCursor keeps its circle out of .proto-stage.
+     These live in @layer base because an !important in an earlier layer beats a later one. */
+  .proto-stage, .proto-stage * { cursor: default !important; }
+  .proto-stage a, .proto-stage a *,
+  .proto-stage button, .proto-stage button *,
+  .proto-stage [role="button"], .proto-stage [role="button"] * { cursor: pointer !important; }
+  .proto-stage input, .proto-stage textarea, .proto-stage [contenteditable="true"] { cursor: text !important; }
+
   /* Normal pointer inside the Ask Devansh panel. It has to live in this layer: "cursor: none
      !important" above is a layered important rule, and those beat any unlayered important override. */
   .ask-trigger,
@@ -2046,3 +2056,4 @@ body:has(.proto-page) .bottom-dock { display: none !important; }
   .proto-scroll { overflow: visible; }
   .proto-stage .iphone { --n: 300; }
 }
+

@@ -135,6 +135,8 @@ export function Screen({
       )}
       <div
         className="sd-body"
+        // Lenis owns the page wheel; a nested scroller only gets it when it says so.
+        data-lenis-prevent
         ref={ref}
         onScroll={(e) => {
           const y = (e.target as HTMLDivElement).scrollTop;
@@ -212,7 +214,7 @@ export function TabBar({
           <button key={t.key} className={`sd-tab${on ? " is-on" : ""}`} onClick={() => onPick(t.key)} aria-current={on}>
             <Icon name={on ? t.iconOn : t.icon} size={24} />
             <span>{t.label}</span>
-            {!!t.badge && <i className="sd-tab-badge">{t.badge}</i>}
+            {!!t.badge && <span className="sd-tab-badge">{t.badge}</span>}
           </button>
         );
       })}
@@ -768,7 +770,7 @@ export function Sheet({ title, children, onClose, leaving }: { title?: string; c
             <h2 className="sd-sheet-title" style={{ height: 22 }}>{title}</h2>
           </div>
         )}
-        <div className="sd-sheet-body">{children}</div>
+        <div className="sd-sheet-body" data-lenis-prevent>{children}</div>
       </div>
     </>
   );
@@ -904,6 +906,7 @@ function Wheel({ items, value, onPick }: { items: string[]; value: string; onPic
   return (
     <div
       className="sd-wheel"
+      data-lenis-prevent
       ref={ref}
       onScroll={(e) => {
         if (quiet.current) return;
