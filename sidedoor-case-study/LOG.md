@@ -2544,3 +2544,26 @@ Did not exist; built it. New state "Check your details · reading" under Waiting
   instead of their content. Everything else on the screen is already filled in.
 
 Verified on localhost, not the Vercel preview.
+
+## AUDIT · 2026-09-22 · States 3–7 of 36
+
+**3 · Check your request / Couldn't send (5287:24479)**, **4 · No requests left
+(5287:24696)**, **5 · Sending (5309:40184)** — all three draw a request that is already
+complete, which the code did not:
+- "Flipkart's portal also asks for" is gone once every answer is in, and those four
+  answers move into "Your details" (10 fields, before the resume).
+- Couldn't send: a red note "Couldn't send. Your details are saved." and a blue
+  "Try again". Was "Couldn't send. Nothing was lost — try again." over a dead button.
+- No requests left: a plain grey note "No requests left this week. More on Monday."
+  (was an orange one with different words) and the weekly count line is gone.
+- Sending: the button alone, reading "Sending…". Built as a state ("Send · sending").
+
+**6 · Your referral requests / Just sent (5287:25176)** — built. The green note now reads
+"Sent to Nithin · Interaction Designer, Flipkart" with the info mark (was a tick and
+"You'll be told the moment it moves"), and Flipkart sits at "Sent · Just now".
+
+**7 · Your referral requests / Empty (5311:39180)** — Figma has one muted line and a blue
+"See jobs", not an illustrated empty block. Copy now "No requests yet. Find a job with
+someone who refers, and ask in one go."
+
+Verified on localhost, not the Vercel preview.

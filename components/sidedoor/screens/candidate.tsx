@@ -448,9 +448,16 @@ function Bullets({ items }: { items: string[] }) {
 export function CheckRequest() {
   const nav = useNav();
   const { details, note, stillNeeded, requestsLeft, force, dispatch } = useStore();
-  const [sending, setSending] = useState(false);
+  const [sending, setSending] = useState(force === "send.sending");
   const [failed, setFailed] = useState(force === "send.error");
   const noneLeft = requestsLeft === 0 || force === "send.none-left";
+  // Figma draws the error, the weekly limit and "Sending…" on a request that is already
+  // complete: the portal block is gone and its four answers sit in "Your details".
+  const complete = ["send.error", "send.none-left", "send.sending"].includes(force ?? "");
+  const d = complete
+    ? { dob: "12 Mar 1999", gaps: "None", locations: "Bengaluru, Remote", notice: "30 days" }
+    : details;
+  const missing = complete ? 0 : stillNeeded;
 
   const send = () => {
     setSending(true);
@@ -473,21 +480,23 @@ export function CheckRequest() {
       back
       actions={
         <Actions>
-          {/* Figma draws this as a plain 12/16 line, not a filled chip. */}
-          <Note>{requestsLeft} of 5 referral requests left this week</Note>
+          {/* Figma: while sending there is nothing but the button; the error and the limit
+              each replace the weekly line with their own note. */}
+          {!sending && !failed && !noneLeft && (
+            // Figma draws this as a plain 12/16 line, not a filled chip.
+            <Note>{requestsLeft} of 5 referral requests left this week</Note>
+          )}
           {failed && (
-            <Note style="failure" icon="xmark.circle.fill">
-              Couldn’t send. Nothing was lost — try again.
+            <Note style="failure" icon="info.circle.fill">
+              Couldn’t send. Your details are saved.
             </Note>
           )}
-          {noneLeft && (
-            <Note style="buffer">No requests left this week. You get 5 more on Monday.</Note>
+          {noneLeft && <Note>No requests left this week. More on Monday.</Note>}
+          {!noneLeft && !sending && !failed && missing > 0 && (
+            <p className="t-label-sm muted">Add the {missing} {missing === 1 ? "detail" : "details"} above to send.</p>
           )}
-          {!noneLeft && stillNeeded > 0 && (
-            <p className="t-label-sm muted">Add the {stillNeeded} {stillNeeded === 1 ? "detail" : "details"} above to send.</p>
-          )}
-          <Button disabled={stillNeeded > 0 || sending || noneLeft} onClick={send}>
-            {sending ? "Sending…" : "Send referral request"}
+          <Button disabled={missing > 0 || noneLeft} onClick={send}>
+            {sending ? "Sending…" : failed ? "Try again" : "Send referral request"}
           </Button>
         </Actions>
       }
@@ -511,6 +520,8 @@ export function CheckRequest() {
           </div>
         </div>
 
+        {/* Figma drops this block once every answer is in */}
+        {missing > 0 && (
         <Section
           label="Flipkart’s portal also asks for"
           icon="info.circle.fill"
@@ -522,7 +533,7 @@ export function CheckRequest() {
             <Field
               label="Date of birth"
               icon="calendar"
-              value={details.dob}
+              value={d.dob}
               placeholder="Select date"
               readOnly
               onClick={() => nav.openSheet("dob")}
@@ -531,26 +542,27 @@ export function CheckRequest() {
             <Field
               label="Career gaps"
               icon="briefcase.fill"
-              value={details.gaps}
+              value={d.gaps}
               onChange={(v) => dispatch({ t: "detail", k: "gaps", v })}
               placeholder="None, or when and why"
             />
             <Field
               label="Preferred interview locations"
               icon="mappin.and.ellipse"
-              value={details.locations}
+              value={d.locations}
               onChange={(v) => dispatch({ t: "detail", k: "locations", v })}
               placeholder="e.g. Bengaluru, Remote"
             />
             <Field
               label="Notice period"
               icon="hourglass"
-              value={details.notice}
+              value={d.notice}
               onChange={(v) => dispatch({ t: "detail", k: "notice", v })}
               placeholder="e.g. 30 days"
             />
           </div>
         </Section>
+        )}
 
         <Section label="Your details" icon="person.fill" end={<TextButton>Edit</TextButton>}>
           <Box>
@@ -559,6 +571,15 @@ export function CheckRequest() {
             <DetailField name="Phone" value="+91 98XXX XXX21" />
             <DetailField name="Current city" value="Bengaluru" />
             <DetailField name="Experience" value="3 yrs total · 3 yrs relevant" />
+            {/* Figma: once the portal answers are in, they sit here, before the resume */}
+            {missing === 0 && (
+              <>
+                <DetailField name="Notice period" value={d.notice} />
+                <DetailField name="Career gaps" value={d.gaps} />
+                <DetailField name="Date of birth" value={d.dob} />
+                <DetailField name="Preferred interview locations" value={d.locations} />
+              </>
+            )}
             <DetailField name="Resume" value="Abhinav_Saxena_Resume.pdf" />
           </Box>
         </Section>
@@ -596,24 +617,31 @@ export function RequestList({ justSent }: { justSent?: boolean }) {
   const nav = useNav();
   const { requests, unread, force } = useStore();
   const [filter, setFilter] = useState<string>("All");
-  const all = force === "requests.empty" ? [] : requests;
+  // Figma's "Just sent" is the list right after a send: a green note, and the live request
+  // sitting at "Sent · Just now"
+  const just = justSent || force === "requests.justsent";
+  const all =
+    force === "requests.empty"
+      ? []
+      : just
+        ? requests.map((r) => (r.live ? { ...r, stage: "sent" as Stage, updated: "Just now" } : r))
+        : requests;
   const shown = all.filter((r) => filter === "All" || bucket(r.stage) === filter);
   return (
     <Screen largeTitle="Your referral requests" right={<BellButton unread={unread} />}>
       <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 16 }}>
         <Segmented options={[...FILTERS]} value={filter} onChange={setFilter} />
-        {justSent && (
-          <Note style="success" icon="checkmark">
-            Sent to Nithin. You’ll be told the moment it moves.
+        {just && (
+          <Note style="success" icon="info.circle.fill">
+            Sent to Nithin · Interaction Designer, Flipkart
           </Note>
         )}
         {shown.length === 0 ? (
-          <Empty
-            icon="tray"
-            title="Nothing here yet"
-            body="Requests you send show up here, with where each one got to."
-            action={<Button onClick={() => nav.push("job", { id: "flipkart" })}>See jobs</Button>}
-          />
+          /* Figma's empty list is a line and a button, not an illustrated empty block */
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            <p className="t-label muted">No requests yet. Find a job with someone who refers, and ask in one go.</p>
+            <Button onClick={() => nav.reset("tabs", { tab: "jobs" })}>See jobs</Button>
+          </div>
         ) : (
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {shown.map((r) => (
