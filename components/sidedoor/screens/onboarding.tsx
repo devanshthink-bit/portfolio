@@ -281,13 +281,15 @@ export function UploadResume() {
   const nav = useNav();
   const { resume, force, dispatch } = useStore();
   const [failed, setFailed] = useState(force === "resume.unreadable");
+  // Figma's error state shows an empty drop box: the file that failed was never read
+  const file = failed ? null : resume;
   return (
     <Screen
       title="Your resume"
       back
       actions={
         <Actions>
-          <Button disabled={!resume} onClick={() => nav.push("checkProfile")}>
+          <Button disabled={!file} onClick={() => nav.push("checkProfile")}>
             Next
           </Button>
           <Button type="secondary" onClick={() => nav.push("checkProfile")}>
@@ -306,21 +308,27 @@ export function UploadResume() {
     >
       <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
         <p className="t-label muted">We fill in your details, you check them.</p>
-        {failed && (
-          <Note style="failure" icon="xmark.circle.fill">
-            Couldn’t read this file. Try another, or fill it in yourself.
-          </Note>
-        )}
         <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
           <DocUpload
             what="resume"
-            file={resume}
+            file={file}
             onUpload={() => {
               setFailed(false);
               dispatch({ t: "resume", v: "Abhinav_Saxena_Resume.pdf" });
             }}
           />
-          <AutofillInfo items={["Work details", "Role and level", "Projects and skills", "Education"]} />
+          {failed ? (
+            /* Figma "Upload Error": the red note, then 8 under it the line telling you what
+               to do next — and no auto-fill list, since nothing was read */
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <Note style="failure" icon="info.circle.fill">
+                Couldn’t read this file
+              </Note>
+              <p className="t-label muted">Try a PDF with text you can select, or fill in the details yourself.</p>
+            </div>
+          ) : (
+            <AutofillInfo items={["Work details", "Role and level", "Projects and skills", "Education"]} />
+          )}
         </div>
       </div>
     </Screen>

@@ -2524,3 +2524,14 @@ Before upload (5247:20271), Details filled (5247:20189), Sent (5247:20246). Rebu
   Buttons "Get the SideDoor app" / "Not now" (were "Get the app to follow it" / "Send another").
 
 Verified on localhost, not the Vercel preview.
+
+## AUDIT · 2026-09-22 · States 1/36 · Upload your resume / Couldn't read file (5287:22270)
+
+- The drop box showed an uploaded file. Figma shows it empty: the file that failed was
+  never read. Next is disabled with it.
+- The error sat above the drop box as one red note. Figma puts it under the box, 32 below,
+  as a red note ("Couldn't read this file", info mark) with the line "Try a PDF with text
+  you can select, or fill in the details yourself." 8 under it, 14/20 muted.
+- "What we'll auto fill" is not in this state; the error block takes its place.
+
+Verified on localhost, not the Vercel preview.
