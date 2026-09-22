@@ -97,9 +97,13 @@ export function ReferralRequests() {
         </div>
 
         {paused && (
-          <Note style="buffer">
-            This post is paused, so nobody can ask. Turn it back on in Manage your posts.
-          </Note>
+          // Figma: the orange note, then its own line under it, then the list 8 below
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            <Note style="buffer" icon="info.circle.fill">
+              This post is paused
+            </Note>
+            <p className="t-label muted">Requests that already came in are still here.</p>
+          </div>
         )}
         {phase === "loading" ? (
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -108,22 +112,15 @@ export function ReferralRequests() {
             <SkeletonCard />
           </div>
         ) : failed ? (
-          <Empty
-            icon="xmark.circle.fill"
-            title="Couldn’t load requests"
-            body="Nothing is lost. Check your connection and try again."
-            action={
-              <Button
-                onClick={() => {
-                  dispatch({ t: "force", v: null });
-                  setPhase("loading");
-                  window.setTimeout(() => setPhase("ok"), 900);
-                }}
-              >
-                Try again
-              </Button>
-            }
-          />
+          // Figma: a red note and one line, 24 under the job row, and no suggested people
+          <div style={{ paddingTop: 16, display: "flex", flexDirection: "column", gap: 8 }}>
+            <Note style="failure" icon="info.circle.fill">
+              Couldn’t load requests
+            </Note>
+            <p className="t-label muted" onClick={() => dispatch({ t: "force", v: null })}>
+              Pull down to try again.
+            </p>
+          </div>
         ) : force === "reqs.empty" ? (
           // Figma's empty screen is not the generic Empty block: it is the line, the referrer's
           // link in a 44-tall box, and a Copy link button — and it shows no suggested people.
@@ -152,12 +149,29 @@ export function ReferralRequests() {
             </Actions>
           </div>
         ) : allHandled ? (
-          <Empty
-            icon="checkmark.seal.fill"
-            title="All handled"
-            body="Nothing waiting on you. New requests land here."
-            action={<Button type="secondary" onClick={() => nav.push("yourReferrals")}>See your referrals</Button>}
-          />
+          // Figma "All handled": the line sits under the job row, then the link box and Copy link
+          <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+            <p className="t-label muted">You’re through every request for this job. Share your link to get more.</p>
+            <Section label="Your link" icon="link">
+              <div
+                style={{
+                  background: "var(--sd-n0)",
+                  borderRadius: "var(--sd-r-md)",
+                  padding: "12px 16px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                }}
+              >
+                <span className="t-label" style={{ flex: 1 }}>sidedoor.app/r/nithin-agarwal</span>
+                <Icon name="doc.on.doc.fill" size={20} style={{ color: "var(--sd-icon-2)" }} />
+              </div>
+            </Section>
+            <Actions>
+              <Note>Paste it in the LinkedIn or WhatsApp chat</Note>
+              <Button onClick={() => nav.openSheet("shareLink")}>Copy link</Button>
+            </Actions>
+          </div>
         ) : (
           // Figma's Request List is one 16-gap column: the cards and the "Lower match" row are
           // siblings inside it, which is what puts that row at y618 and ends the list at 650.
@@ -191,7 +205,7 @@ export function ReferralRequests() {
 
         {/* Figma's "Suggested For This Job" frame carries 16 of top padding, and the empty
             screen does not show it at all. */}
-        {phase === "ok" && force !== "reqs.empty" && (
+        {phase === "ok" && !failed && !allHandled && force !== "reqs.empty" && (
           <Section label="Suggested for this job" icon="lightbulb.fill" style={{ paddingTop: 16 }}>
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               <p className="t-label muted">They match this job and chose to be found.</p>

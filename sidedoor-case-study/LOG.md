@@ -2614,3 +2614,21 @@ Note for later runs: with the browser pane hidden, CSS animations freeze, so a s
 measured mid-fade reads ~3% large and offset. Measuring now disables animations first.
 
 Verified on localhost, not the Vercel preview.
+
+## AUDIT · 2026-09-22 · States 19–22 of 36
+
+**19 · Referral requests / Loading (5288:23110)** — already matched (job row, then three
+skeleton cards at 200 / 312 / 424).
+
+**20 · Couldn't load (5288:23219)** — a red note "Couldn't load requests" and "Pull down
+to try again.". Was an illustrated block with a Try again button, and the suggested
+people were still showing under it; Figma shows neither.
+
+**21 · All handled (5288:23320)** — "You're through every request for this job. Share
+your link to get more.", then the "Your link" box and a blue "Copy link". Was an
+illustrated block and a white "See your referrals", with suggested people under it.
+
+**22 · Paused post (5288:23411)** — an orange note "This post is paused" with its own
+line "Requests that already came in are still here." under it. Was one long orange note.
+
+Verified on localhost, not the Vercel preview.
