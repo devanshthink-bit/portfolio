@@ -227,9 +227,10 @@ export function BellButton({ unread }: { unread: number }) {
 /* ── Job details ────────────────────────────────────────────────────────── */
 export function JobDetails() {
   const nav = useNav();
-  const { saved, dispatch, live, force } = useStore();
+  const { saved, dispatch, live, force, skippedResume } = useStore();
   const suggested = force === "job.suggested";
-  const asked = live.stage !== "sent" || live.updated === "Just now";
+  const asked = force === "job.asked" || live.stage !== "sent" || live.updated === "Just now";
+  const noResume = skippedResume || force === "job.skipped";
   const on = saved.includes("flipkart");
   return (
     <Screen title="Job details" back>
@@ -318,7 +319,12 @@ export function JobDetails() {
           </div>
 
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-            <Tag style="primary" icon="checkmark.circle.fill">4 of 7 skills match</Tag>
+            {/* Figma "Skipped resume": the match tag turns into a plain prompt */}
+            {noResume ? (
+              <Tag>Add resume to see match</Tag>
+            ) : (
+              <Tag style="primary" icon="checkmark.circle.fill">4 of 7 skills match</Tag>
+            )}
             <Tag>Remote or hybrid</Tag>
             <Tag>Joining within 30 days</Tag>
           </div>
@@ -387,11 +393,10 @@ export function JobDetails() {
           <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 12 }}>
             {asked ? (
               <>
-                <Note>You already asked Nithin. It’s in Your referral requests.</Note>
+                {/* Figma: a plain 12/16 line above the button, and the button stays blue */}
+                <p className="t-label-sm muted">You asked Nithin today. One request per job, per referrer.</p>
                 <div style={{ padding: "0 2px" }}>
-                  <Button type="secondary" onClick={() => nav.push("trackDetails", { id: "flipkart" })}>
-                    See your request
-                  </Button>
+                  <Button onClick={() => nav.push("trackDetails", { id: "flipkart" })}>View your request</Button>
                 </div>
               </>
             ) : (

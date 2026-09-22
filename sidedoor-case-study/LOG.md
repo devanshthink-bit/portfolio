@@ -2590,3 +2590,27 @@ row; the state is the only thing on the page.
 - Couldn't load: red note "Couldn't load jobs" and "Pull down to try again.", no button.
 
 Verified on localhost, not the Vercel preview.
+
+## AUDIT · 2026-09-22 · States 14–18 of 36
+
+**14 · Job / Already asked (5368:37870)** — built as a state ("Job · already asked").
+A plain 12/16 line "You asked Nithin today. One request per job, per referrer." over a
+blue "View your request". The code had a grey note and a white "See your request".
+
+**15 · Job / Skipped resume (5368:38185)** — built as a state ("Job · resume skipped").
+The match tag becomes a plain "Add resume to see match". Figma wraps it onto its own row
+and the code keeps it beside "Remote or hybrid": the tag is 188 wide in Inter 3 and 186.6
+in Inter 4, and 326 is the width that decides it. Another one the font decision settles.
+
+**16 · Messages / Empty (5311:39626)**, **17 · Loading (5311:39775)**, **18 · Couldn't
+load (5311:39932)** — all three drop the search box.
+- Empty: "No messages yet. A chat opens when a referrer refers you." and a blue
+  "See your requests". The code had an illustrated block and no button.
+- Loading: one white group with three skeleton rows. Built; the group is 288 tall against
+  Figma's 290, which is the row dividers.
+- Couldn't load: red note and "Pull down to try again.". Built.
+
+Note for later runs: with the browser pane hidden, CSS animations freeze, so a screen
+measured mid-fade reads ~3% large and offset. Measuring now disables animations first.
+
+Verified on localhost, not the Vercel preview.

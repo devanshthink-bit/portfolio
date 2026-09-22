@@ -16,6 +16,7 @@ import {
   Field,
   Icon,
   ListGroup,
+  Note,
   LogoTile,
   Row,
   Screen,
@@ -55,6 +56,8 @@ export function Messages() {
   const [q, setQ] = useState("");
   const base = role === "referrer" ? REFERRER_CHATS : CANDIDATE_CHATS;
   const all = force === "messages.empty" ? [] : base;
+  const loading = force === "messages.loading";
+  const failed = force === "messages.error";
   const shown = all.filter((c) => c.name.toLowerCase().includes(q.toLowerCase()));
   // For the candidate this is a tab root with the big title. The referrer reaches it from their
   // profile, and Figma draws that one as a pushed screen: a small centred title and a back
@@ -63,16 +66,42 @@ export function Messages() {
   return (
     <Screen {...(asTab ? { largeTitle: "Messages", right: <BellButton unread={unread} /> } : { title: "Messages", back: true })}>
       <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 16 }}>
-        <div className="sd-search">
-          <Icon name="magnifyingglass" size={22} style={{ color: "var(--sd-placeholder)" }} />
-          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search by name or job…" />
-        </div>
-        {shown.length === 0 ? (
-          <Empty
-            icon="bubble.left"
-            title="No messages"
-            body={q ? "Nothing matches that." : "Chats start once a referrer replies to a request."}
-          />
+        {/* Figma drops the search while loading, when empty and on the error */}
+        {!loading && !failed && shown.length > 0 && (
+          <div className="sd-search">
+            <Icon name="magnifyingglass" size={22} style={{ color: "var(--sd-placeholder)" }} />
+            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search by name or job…" />
+          </div>
+        )}
+        {loading ? (
+          // Figma: one white group holding three skeleton rows, padded 16 left and right
+          <div className="sd-list" style={{ padding: "0 16px" }}>
+            {[0, 1, 2].map((i) => (
+              // Figma's skeleton row is 97 tall: 16 of padding over a 64-tall block
+              <div key={i} className="sd-row sd-chatrow" style={{ padding: "16px 0", gap: 12 }}>
+                <span className="sd-skel" style={{ width: 56, height: 56, borderRadius: 9999, flex: "0 0 auto" }} />
+                <span style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  <span className="sd-skel" style={{ width: 140, height: 16, borderRadius: 4 }} />
+                  <span className="sd-skel" style={{ width: 180, height: 12, borderRadius: 4 }} />
+                  <span className="sd-skel" style={{ width: 110, height: 20, borderRadius: 4 }} />
+                </span>
+              </div>
+            ))}
+          </div>
+        ) : failed ? (
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            <Note style="failure" icon="info.circle.fill">
+              Couldn’t load messages
+            </Note>
+            <p className="t-label muted">Pull down to try again.</p>
+          </div>
+        ) : shown.length === 0 ? (
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            <p className="t-label muted">
+              {q ? "Nothing matches that." : "No messages yet. A chat opens when a referrer refers you."}
+            </p>
+            {!q && <Button onClick={() => nav.reset("tabs", { tab: "requests" })}>See your requests</Button>}
+          </div>
         ) : (
           <ListGroup>
             {shown.map((c) => (

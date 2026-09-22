@@ -41,6 +41,10 @@ export const SCENARIOS: Scenario[] = [
   /* ── waiting ─────────────────────────────────────────────────────────── */
   { id: "jobs.loading", label: "Jobs · loading", group: "Waiting", role: "candidate", force: "jobs.loading", tab: "jobs" },
   { id: "profile.reading", label: "Check your details · reading", group: "Waiting", role: "candidate", force: "profile.reading", tab: "jobs", push: [{ key: "uploadResume" }, { key: "checkProfile" }] },
+  { id: "messages.loading", label: "Messages · loading", group: "Waiting", role: "candidate", force: "messages.loading", tab: "messages" },
+  { id: "messages.error", label: "Messages · couldn’t load", group: "Went wrong", role: "candidate", force: "messages.error", tab: "messages" },
+  { id: "job.asked", label: "Job · already asked", group: "Rules and limits", role: "candidate", force: "job.asked", tab: "jobs", push: [{ key: "job", props: { id: "flipkart" } }] },
+  { id: "job.skipped", label: "Job · resume skipped", group: "Rules and limits", role: "candidate", force: "job.skipped", tab: "jobs", push: [{ key: "job", props: { id: "flipkart" } }] },
   { id: "requests.justsent", label: "Your requests · just sent", group: "Happy path", role: "candidate", force: "requests.justsent", tab: "requests" },
   { id: "send.sending", label: "Send · sending", group: "Waiting", role: "candidate", force: "send.sending", tab: "jobs", push: [{ key: "job", props: { id: "flipkart" } }, { key: "checkRequest" }] },
   { id: "track.loading", label: "Track details · loading", group: "Waiting", role: "candidate", force: "track.loading", tab: "requests", push: [{ key: "trackDetails", props: { id: "flipkart" } }] },
