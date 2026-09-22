@@ -2437,3 +2437,22 @@ Verified on localhost, not the Vercel preview.
 Left: text widths 1–2px off (Inter 3 vs 4, waiting on Devansh).
 
 Verified on localhost, not the Vercel preview.
+
+## AUDIT · 2026-09-22 · Profile flow done (3 of 3)
+
+Referrer profile (5247:19792), Candidate profile (5247:19840), Paused (5247:19884).
+
+- Person header sits on the grey page, 108 tall (20 above and below). Was a white card.
+- Groups follow the header with no gap, 24 between groups, Log out 24 under the last.
+- List rows (shared Row): icon 26 (was 22), label Medium 14/20 (was Regular 16/24),
+  chevron 24 in #6b7280 (was 16 in #9ca3af), divider 0.5 (was 1). Settings and Help
+  use the same Row, so they changed too; Figma has no screen for them.
+- Referrer menu: removed "Manage your posts". Figma has five rows; Posts is its own tab.
+- "Let referrers find me": a 74-tall card with the tag first ("Live" green, or "Paused"
+  orange, each with a 14 filled dot), then the label, the switch at the right. The code
+  hid the tag when paused and used a 7px dot.
+
+Verified on localhost, not the Vercel preview.
+
+Correction to the 2026-09-22 Tracking entry: Devansh confirms Explore and Messaging are
+done, so no re-diff.

@@ -382,7 +382,7 @@
 .sd-section > .sd-seclabel + * { margin-top: 8px; }
 .sd-list { background: #fff; border-radius: var(--sd-r-lg); overflow: hidden; }
 .sd-row { display: flex; align-items: center; gap: 8px; padding: 12px 16px; min-height: 50px; position: relative; }
-.sd-row + .sd-row::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--sd-border-subtle); }
+.sd-row + .sd-row::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 0.5px; background: var(--sd-border-subtle); }
 .sd-row.is-tap:active { background: var(--sd-n100); }
 /* Figma's message rows are 88 tall — a 48 block with 20 above and below — and carry no rule
    between them. */

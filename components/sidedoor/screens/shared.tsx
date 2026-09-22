@@ -297,39 +297,33 @@ export function Profile() {
   const isReferrer = role === "referrer";
   return (
     <Screen largeTitle="Profile" right={<BellButton unread={unread} />}>
-      <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
-        <Card>
-          <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-            <Avatar name={isReferrer ? "Nithin Agarwal" : "Abhinav Saxena"} size={68} />
-            <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4 }}>
-              <span style={{ display: "flex", alignItems: "center", gap: 4 }} className="t-h-md">
-                {isReferrer ? "Nithin Agarwal" : "Abhinav Saxena"}
-                {isReferrer && <Icon name="checkmark.seal.fill" size={20} style={{ color: "var(--sd-text-success)" }} />}
-              </span>
-              <span className="t-label muted">{isReferrer ? "Design Manager, Flipkart" : "Product Designer, Blinkit"}</span>
+      {/* Figma: the person sits on the grey page (108 tall, 20 above and below), then the
+          groups 24 apart, then Log out 24 under the last one */}
+      <div style={{ paddingTop: 24, display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "flex", gap: 12, alignItems: "center", padding: "20px 0" }}>
+          <Avatar name={isReferrer ? "Nithin Agarwal" : "Abhinav Saxena"} size={68} />
+          <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4 }}>
+            <span style={{ display: "flex", alignItems: "center", gap: 4 }} className="t-h-md">
+              {isReferrer ? "Nithin Agarwal" : "Abhinav Saxena"}
+              {isReferrer && <Icon name="checkmark.seal.fill" size={20} style={{ color: "var(--sd-text-success)" }} />}
             </span>
-            <TextButton onClick={() => nav.push(isReferrer ? "editProfileReferrer" : "editDetails")}>Edit</TextButton>
-          </div>
-        </Card>
+            <span className="t-label muted">{isReferrer ? "Design Manager, Flipkart" : "Product Designer, Blinkit"}</span>
+          </span>
+          <TextButton onClick={() => nav.push(isReferrer ? "editProfileReferrer" : "editDetails")}>Edit</TextButton>
+        </div>
 
+        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
         {!isReferrer && (
-          <ListGroup>
-            <Row
-              end={
-                <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  {findable && (
-                    <Tag style="success">
-                      <i style={{ width: 7, height: 7, borderRadius: "50%", background: "var(--sd-text-success)", display: "inline-block" }} />
-                      Live
-                    </Tag>
-                  )}
-                  <Switch on={findable} onChange={(v) => dispatch({ t: "findable", v })} />
-                </span>
-              }
-            >
-              Let referrers find me
-            </Row>
-          </ListGroup>
+          // Figma: a 74-tall card, the state tag first, then the label, the switch at the right
+          <div className="sd-card" style={{ padding: "12px 16px", minHeight: 74, display: "flex", alignItems: "center", gap: 8 }}>
+            <span style={{ flex: 1, display: "flex", alignItems: "center", gap: 8 }}>
+              <Tag style={findable ? "success" : "buffer"} icon="indicator.fill">
+                {findable ? "Live" : "Paused"}
+              </Tag>
+              <span className="t-label" style={{ color: "var(--sd-text)" }}>Let referrers find me</span>
+            </span>
+            <Switch on={findable} onChange={(v) => dispatch({ t: "findable", v })} />
+          </div>
         )}
 
         <ListGroup>
@@ -337,9 +331,6 @@ export function Profile() {
             <>
               <Row icon="square.and.arrow.up.fill" chevron onClick={() => nav.openSheet("shareLink")}>
                 Your links to share
-              </Row>
-              <Row icon="square.grid.2x2.fill" chevron onClick={() => nav.push("managePosts")}>
-                Manage your posts
               </Row>
               <Row icon="bubble.left.fill" chevron onClick={() => nav.push("messages")}>
                 Messages
@@ -368,10 +359,13 @@ export function Profile() {
             Help
           </Row>
         </ListGroup>
+        </div>
 
-        <Button type="destructive" onClick={() => nav.openSheet("logout")}>
-          Log out
-        </Button>
+        <div style={{ paddingTop: 24 }}>
+          <Button type="destructive" onClick={() => nav.openSheet("logout")}>
+            Log out
+          </Button>
+        </div>
       </div>
     </Screen>
   );

@@ -375,14 +375,15 @@ export function Row({
 }) {
   return (
     <div className={`sd-row${onClick ? " is-tap" : ""}`} onClick={onClick} role={onClick ? "button" : undefined}>
-      {icon && <Icon name={icon} size={22} style={{ color: destructive ? "var(--sd-ios-red)" : "var(--sd-icon-2)" }} />}
-      <span className="t-body-lg" style={{ color: destructive ? "var(--sd-ios-red)" : undefined }}>
+      {/* Figma list row: 26 icon, Medium 14/20 label, 24 chevron in the icon grey */}
+      {icon && <Icon name={icon} size={26} style={{ color: destructive ? "var(--sd-ios-red)" : "var(--sd-icon-2)" }} />}
+      <span className="t-label" style={{ color: destructive ? "var(--sd-ios-red)" : "var(--sd-text)" }}>
         {children}
       </span>
       {end && <span style={{ marginLeft: "auto" }}>{end}</span>}
       {chevron && (
         <span className="sd-row-chev" style={{ marginLeft: end ? 6 : "auto" }}>
-          <Icon name="chevron.right" size={16} style={{ color: "var(--sd-n400)" }} />
+          <Icon name="chevron.right" size={24} style={{ color: "var(--sd-icon-2)" }} />
         </span>
       )}
     </div>
