@@ -2736,3 +2736,14 @@ the 88×88 the old ones were, so the 68px profile photo is no longer soft.
 The other thirteen were already real photographs and are untouched.
 
 Verified on localhost, not the Vercel preview. `npx next build` passes.
+
+**Half a screen of dead space at the bottom of every tab screen.** Two mechanisms were
+both adding the same gap. `Screen` rendered a trailing spacer with an inline
+`height: 108`, and `.sd-screen.has-tabs .sd-body` also carried `padding-bottom: 112px`,
+so a screen with no action block ended on 220 instead of Figma's 112 (an 88 tab bar plus
+24). On Job details that was 1851 of scroll where 1743 is right. The spacer is now the one
+place the bottom gap is set — 112 under a tab bar, 40 without one — and the body's
+padding-bottom and its `:has(> .sd-actionblock)` override are gone. Screens that do have
+an action block are untouched: `.sd-actionblock` carries its own 112.
+
+Verified on localhost, not the Vercel preview.

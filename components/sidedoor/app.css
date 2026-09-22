@@ -233,9 +233,11 @@
 /* Figma's BottomNav is 88 tall and the Card Section keeps 24 under its content, so a screen
    with the bar ends 112 above the bottom. */
 .sd-screen.has-tabs .sd-actionblock { padding-bottom: 112px; }
+/* A screen with no action block ends with an empty spacer, and that spacer is the ONLY thing
+   that sets the bottom gap. The body used to carry padding-bottom: 112px as well, so the two
+   stacked and every tab screen ended on 220 of dead space. */
+.sd-body > div:last-child:empty { height: 40px; }
 .sd-screen.has-tabs .sd-body > div:last-child:empty { height: 112px; }
-.sd-screen.has-tabs .sd-body { padding-bottom: 112px; }
-.sd-screen.has-tabs .sd-body:has(> .sd-actionblock) { padding-bottom: 0; }
 
 /* ── liquid glass tab bar ────────────────────────────────────────────────── */
 .sd-tabbar {

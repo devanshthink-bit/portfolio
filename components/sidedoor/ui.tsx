@@ -153,7 +153,9 @@ export function Screen({
         {actions ? (
           <div className="sd-actionblock">{actions}</div>
         ) : (
-          <div style={{ height: 108 }} />
+          // height comes from CSS: 112 under a tab bar, 40 without one. An inline height here
+          // used to stack on top of the body's own padding-bottom and left a dead half-screen.
+          <div />
         )}
       </div>
     </>
