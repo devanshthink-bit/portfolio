@@ -2384,3 +2384,22 @@ Open for Devansh:
   because its data has 2 unread. Removing them changes every tab screen.
 - Flipkart shows "Sent" on the list (Figma: Submitted) because the live happy path
   starts there.
+
+## AUDIT · 2026-09-22 · Tracking re-check finished (9 of 9)
+
+- No answer: re-measured, matches.
+- Not moving forward: reason line was missing its full stop.
+- On hold: the date override (16 Sep) was never passed through App.tsx, so it read
+  12 Sep. Button sat 24 under the person card; Figma's Frame 329 gives 48.
+- Known 1px: Figma's waiting line on On hold is 38 long, No answer's is 37. Both end
+  under the next ring's stroke, so it can't be seen. Left as one value (37).
+
+Screen count, recounted from Figma: 84 screens. Login 1, Onboarding 7, Explore 13,
+Messaging 6, Tracking 9, Update 2, Profile 3, Manage/Edit 2, Edit Profile 2, Link 3,
+States 36. The old "80" missed the four notification/chat screens added later.
+Screens 1–31 in the earlier entries don't cover all 36 of the first five flows, so
+Explore and Messaging need a re-diff too.
+
+Devansh: finish one flow at a time and ask before starting the next.
+
+Verified on localhost, not the Vercel preview.
