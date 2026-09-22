@@ -584,6 +584,7 @@ export function Field({
   error,
   multiline,
   end,
+  lead,
   type = "text",
   readOnly,
   onClick,
@@ -602,6 +603,8 @@ export function Field({
   error?: string;
   multiline?: boolean;
   end?: ReactNode;
+  /** Something inside the box before the text: Figma's Company field leads with the logo. */
+  lead?: ReactNode;
   type?: string;
   readOnly?: boolean;
   onClick?: () => void;
@@ -621,6 +624,7 @@ export function Field({
         onClick={onClick}
         style={{ alignItems: multiline ? "flex-start" : "center", minHeight: boxHeight ?? (multiline ? 100 : 52) }}
       >
+        {lead}
         {multiline ? (
           <textarea
             value={value}

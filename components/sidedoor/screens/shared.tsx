@@ -20,6 +20,7 @@ import {
   Row,
   Screen,
   Section,
+  SectionLabel,
   SkeletonCard,
   StatusBar,
   Switch,
@@ -27,6 +28,7 @@ import {
   TextButton,
 } from "../ui";
 import { BellButton, ReferralBar } from "./candidate";
+import { CompanyRow, Project } from "./onboarding";
 
 /* ── Messages ───────────────────────────────────────────────────────────── */
 type Chat = { name: string; last: string; when: string; unread?: number };
@@ -375,48 +377,79 @@ export function Profile() {
 export function EditDetails() {
   const nav = useNav();
   const { details, dispatch } = useStore();
-  const [name, setName] = useState("Abhinav Saxena");
-  const [email, setEmail] = useState("abhinav.saxena@email.com");
-  const [phone, setPhone] = useState("+91 98XXX XXX21");
-  const [city, setCity] = useState("Bengaluru, KA");
+  const [linkedin, setLinkedin] = useState("linkedin.com/in/abhinav-saxena");
+  const [portfolio, setPortfolio] = useState("dribbble.com/abhinavsaxena");
+  const [roles, setRoles] = useState("Product Designer, Interaction Designer");
+  const [how, setHow] = useState("Full time · Remote or hybrid");
+  // Figma: "Check your details" once it's all filled in — the same resume, experience and
+  // projects blocks, then links, what you want, the details portals ask for, and the resume.
+  // Portal details show Figma's values until you change them.
   return (
     <Screen title="Edit your details" back actions={<Button onClick={() => nav.pop()}>Save changes</Button>}>
       <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
-        {/* a photo, with "Edit photo" as text under it — no pencil badge (LOG, 20 Sep) */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center" }}>
-          <Avatar name={name} size={88} />
-          <TextButton>Edit photo</TextButton>
+        <p className="t-label muted">Every new referral request sends these.</p>
+
+        <Section label="From your resume" icon="person.fill" end={<TextButton>Edit</TextButton>}>
+          <Box>
+            <DetailField name="Full name" value="Abhinav Saxena" />
+            <DetailField name="Email" value="abhinav.saxena@email.com" />
+            <DetailField name="Phone" value="+91 98XXX XXX21" />
+            <DetailField name="Current city" value="Bengaluru, KA" />
+            <DetailField name="Experience" value="3 yrs total · 3 yrs relevant" />
+            <DetailField name="Skills" value="Product strategy, Systems thinking, User research, Interaction design, Figma" />
+          </Box>
+        </Section>
+
+        <Section label="Experience" icon="briefcase.fill" end={<TextButton>Edit</TextButton>}>
+          <Box>
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              <CompanyRow logo="blinkit" role="Product Designer" company="Blinkit" when="Sep 2023–Present" />
+              <CompanyRow logo="makemytrip" role="Associate Product Designer" company="MakeMyTrip" when="Jun 2022–Aug 2023" />
+            </div>
+          </Box>
+        </Section>
+
+        <Section label="Projects" icon="folder.fill" end={<TextButton>Edit</TextButton>}>
+          <Box>
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              <Project title="Blinkit Merchant App UX Revamp" skills={["Product strategy", "Systems design", "Prototyping", "User research", "Figma"]} />
+              <Project title="MakeMyTrip Booking Experience Redesign" skills={["User research", "Interaction design", "Usability testing", "Figma"]} />
+            </div>
+            <TextButton>Show project details</TextButton>
+          </Box>
+        </Section>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          <Field
+            label="LinkedIn profile (optional)"
+            iconNode={<Image src="/images/sidedoor/linkedin.svg" alt="" width={16} height={16} style={{ width: 16, height: 16 }} unoptimized />}
+            value={linkedin}
+            onChange={setLinkedin}
+          />
+          <Field label="Portfolio (optional)" icon="link" value={portfolio} onChange={setPortfolio} />
         </div>
-        <Section label="About you" icon="person.fill">
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <Field label="Full name" icon="person.fill" value={name} onChange={setName} />
-            <Field label="Email" icon="envelope.fill" value={email} onChange={setEmail} />
-            <Field label="Phone" value={phone} onChange={setPhone} />
-            <Field label="Current city" icon="mappin.and.ellipse" value={city} onChange={setCity} />
+
+        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          <Field label="Roles you want (optional)" icon="briefcase.fill" value={roles} onChange={setRoles} />
+          <Field label="How you want to work (optional)" icon="laptopcomputer" value={how} onChange={setHow} />
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            <SectionLabel icon="info.circle.fill">Details portals ask for</SectionLabel>
+            <p className="t-label-sm muted">Not usually on a resume, but referrers’ portals ask for them.</p>
           </div>
-        </Section>
-        <Section label="What portals also ask for" icon="info.circle.fill">
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <Field
-              label="Date of birth"
-              icon="calendar"
-              value={details.dob}
-              placeholder="Select date"
-              readOnly
-              onClick={() => nav.openSheet("dob")}
-              end={<Icon name="calendar" size={18} style={{ color: "var(--sd-icon-2)" }} />}
-            />
-            <Field label="Notice period" icon="hourglass" value={details.notice} onChange={(v) => dispatch({ t: "detail", k: "notice", v })} placeholder="e.g. 30 days" />
-            <Field label="Career gaps" icon="briefcase.fill" value={details.gaps} onChange={(v) => dispatch({ t: "detail", k: "gaps", v })} placeholder="None, or when and why" />
-            <Field
-              label="Preferred interview locations"
-              icon="mappin.and.ellipse"
-              value={details.locations}
-              onChange={(v) => dispatch({ t: "detail", k: "locations", v })}
-              placeholder="e.g. Bengaluru, Remote"
-            />
-          </div>
-        </Section>
+          <Field label="Date of birth" icon="calendar" value={details.dob || "12 Mar 1999"} readOnly onClick={() => nav.openSheet("dob")} />
+          <Field label="Career gaps" icon="briefcase.fill" value={details.gaps || "None"} onChange={(v) => dispatch({ t: "detail", k: "gaps", v })} />
+          <Field
+            label="Preferred interview locations"
+            icon="mappin.and.ellipse"
+            value={details.locations || "Bengaluru, Remote"}
+            onChange={(v) => dispatch({ t: "detail", k: "locations", v })}
+          />
+          <Field label="Notice period" icon="hourglass" value={details.notice || "30 days"} onChange={(v) => dispatch({ t: "detail", k: "notice", v })} />
+        </div>
+
         <Section label="Resume" icon="paperclip">
           <Box>
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -437,31 +470,26 @@ export function EditProfileReferrer() {
   const [role, setRole] = useState("Design Manager");
   const [city, setCity] = useState("Bengaluru, KA");
   return (
-    <Screen title="Edit profile" back actions={<Button onClick={() => nav.pop()}>Save changes</Button>}>
+    <Screen title="Edit your profile" back actions={<Button onClick={() => nav.pop()}>Save changes</Button>}>
+      {/* Figma: intro, then the 68 photo with "Edit" 8 under it, centred, then four fields
+          20 apart. The company field leads with the logo. */}
       <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
+        <p className="t-label muted">Candidates see your name, role and company.</p>
         <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center" }}>
-          <Avatar name="Nithin Agarwal" size={88} />
-          <TextButton>Edit photo</TextButton>
+          <Avatar name="Nithin Agarwal" size={68} />
+          <TextButton>Edit</TextButton>
         </div>
-        <Section label="Where you work" icon="briefcase.fill">
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <Field label="Your name" icon="person.fill" value="Nithin Agarwal" />
-            <Field label="Your role" icon="briefcase.fill" value={role} onChange={setRole} />
-            <Field label="Where you work from" icon="mappin.and.ellipse" value={city} onChange={setCity} />
-          </div>
-        </Section>
-        <Section label="Work email" icon="envelope.fill">
-          <Box>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <span className="t-label" style={{ flex: 1 }}>
-                nithin.agarwal@flipkart.com
-              </span>
-              <Tag style="success" icon="checkmark.seal.fill">
-                Verified
-              </Tag>
-            </div>
-          </Box>
-        </Section>
+        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+          <Field label="Your name" icon="person.fill" value="Nithin Agarwal" />
+          <Field
+            label="Company"
+            icon="building.2.fill"
+            value="Flipkart"
+            lead={<Image src="/images/sidedoor/flipkart-icon.png" alt="" width={22} height={22} style={{ width: 22, height: 22 }} />}
+          />
+          <Field label="Your role" icon="briefcase.fill" value={role} onChange={setRole} />
+          <Field label="Where you work from" icon="mappin.and.ellipse" value={city} onChange={setCity} />
+        </div>
       </div>
     </Screen>
   );

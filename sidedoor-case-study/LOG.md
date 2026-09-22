@@ -2482,3 +2482,24 @@ had picked. The fading copy can no longer pick a tab.
 Also fixed a type error from the Share link change (it would have failed the Vercel build).
 
 Verified on localhost, not the Vercel preview.
+
+## AUDIT · 2026-09-22 · Edit Profile flow done (2 of 2)
+
+**Referrer · Edit your profile (5247:20107)**: rebuilt.
+- Title "Edit your profile" (was "Edit profile"). Intro "Candidates see your name, role
+  and company." was missing.
+- Photo 68 (was 88), "Edit" under it (was "Edit photo").
+- Four fields 20 apart: Your name, Company (with the Flipkart logo inside the box),
+  Your role, Where you work from. The code had no Company field, wrapped the rest in a
+  "Where you work" section 12 apart, and added a Work email block Figma doesn't have.
+- Field gained a `lead` slot for the logo.
+
+**Candidate · Edit your details (5247:20129)**: rebuilt. Figma's screen is "Check your
+details" filled in, plus Roles you want / How you want to work, the four portal
+details (with their "Not usually on a resume…" line), and the resume row. The code had
+an 88 photo, an "About you" group of four editable fields, and "What portals also ask
+for" in a different order. Now uses the Check-your-details parts. Portal details show
+Figma's values (12 Mar 1999, None, Bengaluru Remote, 30 days) until changed; Date of
+birth still opens the picker.
+
+Verified on localhost, not the Vercel preview.
