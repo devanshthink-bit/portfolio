@@ -25,6 +25,7 @@ import {
   Tag,
   Toast,
   TextButton,
+  logoSrc,
 } from "../ui";
 import { BellButton } from "./candidate";
 import { CompanyRow, Project, RuleRow } from "./onboarding";
@@ -253,7 +254,7 @@ function RequestCard({ r, onClick, end }: { r: Req; onClick?: () => void; end?: 
               {r.common && (
                 <span className="sd-tag plain">
                   {r.common.logo && (
-                    <Image src={`/images/sidedoor/${r.common.logo}.png`} alt="" width={14} height={14} style={{ width: 14, height: "auto" }} />
+                    <Image src={logoSrc(r.common.logo)} alt="" width={14} height={14} style={{ width: 14, height: "auto" }} unoptimized />
                   )}
                   {r.common.icon && <Icon name={r.common.icon} size={14} style={{ color: "var(--sd-icon-2)" }} />}
                   <span>{r.common.text}</span>
@@ -393,7 +394,7 @@ export function ReferralRequest({ id }: { id: string }) {
             <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
               <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
                 {r.common.logo && (
-                  <Image src={`/images/sidedoor/${r.common.logo}.png`} alt="" width={16} height={16} style={{ width: 16, height: 16 }} />
+                  <Image src={logoSrc(r.common.logo)} alt="" width={16} height={16} style={{ width: 16, height: 16 }} unoptimized />
                 )}
                 {r.common.icon && <Icon name={r.common.icon} size={16} style={{ color: "var(--sd-icon-2)" }} />}
                 <span className="t-label muted">{r.common.text}</span>

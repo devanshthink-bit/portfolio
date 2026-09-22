@@ -20,6 +20,7 @@ import {
   TextButton,
   Box,
   DetailField,
+  logoSrc,
 } from "../ui";
 
 /** Figma's own Apple vector, not a redraw. */
@@ -438,7 +439,7 @@ export function CompanyRow({ logo, role, company, when }: { logo: string; role: 
   return (
     // Figma Company Row: a 40px logo, 8 clear, role Semi Bold 16/24 over company 12/16
     <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-      <Image src={`/images/sidedoor/${logo}.png`} alt="" width={40} height={40} style={{ width: 40, height: "auto", flex: "0 0 auto" }} />
+      <Image src={logoSrc(logo)} alt="" width={40} height={40} style={{ width: 40, height: "auto", flex: "0 0 auto" }} unoptimized />
       <span style={{ flex: 1, display: "flex", flexDirection: "column" }}>
         <span className="t-h-sm">{role}</span>
         <span className="t-label-sm muted">{company}</span>

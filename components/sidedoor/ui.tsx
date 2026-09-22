@@ -467,6 +467,14 @@ export function Avatar({ name, size = 44, src }: { name: string; size?: number; 
 }
 
 /**
+ * Where a company logo lives. Every Logo/* in Figma is a vector, so the site draws the vector —
+ * the old PNG exports had Figma's own canvas baked in behind them (a grey box, or a black one on
+ * the job banner). Swiggy and Groww are the two Figma places as images, so they stay PNG.
+ */
+const RASTER_LOGOS = new Set(["swiggy", "groww"]);
+export const logoSrc = (logo: string) => `/images/sidedoor/${logo}.${RASTER_LOGOS.has(logo) ? "png" : "svg"}`;
+
+/**
  * A company logo on a white tile. The V6 logos are wordmarks of very different shapes, so the
  * logo is fitted inside the padded box rather than forced to a width: a square mark fills it,
  * a wide wordmark sits centred at full width. 74 with 10 padding is the detail-header size
@@ -477,11 +485,12 @@ export function LogoTile({ logo, alt, size = 74 }: { logo: string; alt: string; 
   return (
     <span className="sd-logotile" style={{ width: size, height: size, padding: pad }}>
       <Image
-        src={`/images/sidedoor/${logo}.png`}
+        src={logoSrc(logo)}
         alt={alt}
         width={size * 4}
         height={size * 4}
         style={{ width: "100%", height: "100%", objectFit: "contain" }}
+        unoptimized
       />
     </span>
   );
@@ -490,7 +499,7 @@ export function LogoTile({ logo, alt, size = 74 }: { logo: string; alt: string; 
 export function LogoSmall({ logo, alt }: { logo: string; alt: string }) {
   return (
     <span className="sd-logo-sm">
-      <Image src={`/images/sidedoor/${logo}.png`} alt={alt} width={28} height={28} style={{ width: 28, height: "auto" }} />
+      <Image src={logoSrc(logo)} alt={alt} width={28} height={28} style={{ width: 28, height: "auto" }} unoptimized />
     </span>
   );
 }

@@ -25,6 +25,7 @@ import {
   TextButton,
   Timeline,
   type Step,
+  logoSrc,
 } from "../ui";
 import { CompanyRow, Project } from "./onboarding";
 
@@ -186,7 +187,7 @@ export function Jobs() {
                         {j.common && (
                           <span className="sd-tag plain">
                             {j.common.logo && (
-                              <Image src={`/images/sidedoor/${j.common.logo}.png`} alt="" width={14} height={14} style={{ width: 14, height: "auto" }} />
+                              <Image src={logoSrc(j.common.logo)} alt="" width={14} height={14} style={{ width: 14, height: "auto" }} unoptimized />
                             )}
                             <span>{j.common.text}</span>
                           </span>
@@ -287,12 +288,15 @@ export function JobDetails() {
               placeItems: "center",
             }}
           >
+            {/* Figma's banner instance overrides the wordmark to white; the default logo (blue
+                wordmark) is the one on white tiles, so the banner gets its own file. */}
             <Image
-              src="/images/sidedoor/flipkart-banner-logo.png"
+              src="/images/sidedoor/flipkart-white.svg"
               alt="Flipkart"
               width={222}
               height={58.53}
               style={{ width: 222, height: 58.53 }}
+              unoptimized
             />
           </div>
 
@@ -308,7 +312,7 @@ export function JobDetails() {
           {/* Figma Frame 174: the pay tag and the three rating marks, 8 apart. */}
           <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
             <Tag icon="info.circle.fill">₹28–40 LPA</Tag>
-            <Image src="/images/sidedoor/rating-logos.png" alt="" width={37} height={16} style={{ width: 37, height: 16 }} />
+            <Image src="/images/sidedoor/rating-logos.svg" alt="" width={37} height={16} style={{ width: 37, height: 16 }} unoptimized />
           </div>
 
           {/* Figma Frame 175 spreads the three across the full width. */}
@@ -382,7 +386,7 @@ export function JobDetails() {
           <Block
             icon="info.circle.fill"
             title="About the employer"
-            end={<Image src="/images/sidedoor/rating-logos.png" alt="" width={30} height={13} style={{ width: 30.06, height: 13 }} />}
+            end={<Image src="/images/sidedoor/rating-logos.svg" alt="" width={30} height={13} style={{ width: 30.06, height: 13 }} unoptimized />}
           >
             Flipkart is one of India’s leading e-commerce platforms, serving millions of customers across categories. The
             company focuses on building scalable, customer-first experiences through technology, design, and innovation.
@@ -670,7 +674,7 @@ export function ReferralBar({ r, onClick }: { r: { logo: string; company: string
         <div style={{ display: "flex", gap: 12, flex: 1, minWidth: 0 }}>
           <span style={{ width: 68, height: 68, flex: "0 0 auto", display: "grid", placeItems: "center" }}>
             <Image
-              src={`/images/sidedoor/${r.logo}.png`}
+              src={logoSrc(r.logo)}
               alt={r.company}
               width={68}
               height={18}
