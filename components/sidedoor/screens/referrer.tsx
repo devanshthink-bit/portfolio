@@ -660,25 +660,42 @@ export function YourReferrals() {
   const all: Referral[] = none
     ? []
     : [
-    ...(abhinav?.stage === "submitted"
+    // Figma draws this screen after Nithin has referred Abhinav and marked it submitted
+    ...(abhinav?.stage === "submitted" || force === "referrals.abhinav"
       ? [{ name: "Abhinav Saxena", role: "Product Designer, Blinkit", stage: "submitted" as Stage, when: "Today" }]
       : []),
     ...REFERRALS.filter((r) => !r.days),
       ];
 
+  // Figma ReferralBar: 100 tall, padded 16. Avatar centred in a 44 column, then 12, then name
+  // over tag (8 apart), top-aligned. On the right the date sits at the top; with an Update
+  // button the column gets 4 on top and 9 between them, right-aligned.
   const bar = (r: Referral, withUpdate: boolean) => (
-    <Card key={r.name} style={{ padding: 12 }}>
-      <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-        <Avatar name={r.name} />
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4 }}>
-          <span className="t-h-sm">{r.name}</span>
-          <span>
-            <Tag style={stageTag(stageOf(r))}>{STAGE_LABEL[stageOf(r)]}</Tag>
+    <Card key={r.name} style={{ padding: 16 }}>
+      <div style={{ display: "flex", gap: 8, alignItems: "flex-start", minHeight: 68 }}>
+        <div style={{ flex: 1, display: "flex", gap: 12, alignSelf: "stretch", minWidth: 0 }}>
+          <span style={{ display: "flex", alignItems: "center" }}>
+            <Avatar name={r.name} />
           </span>
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 8, minWidth: 0 }}>
+            <span className="t-h-sm">{r.name}</span>
+            <span>
+              <Tag style={stageTag(stageOf(r))}>{STAGE_LABEL[stageOf(r)]}</Tag>
+            </span>
+          </div>
         </div>
-        <span style={{ display: "flex", alignItems: "center", gap: 8, flex: "0 0 auto" }}>
+        <span
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-end",
+            gap: withUpdate ? 9 : 8,
+            paddingTop: withUpdate ? 4 : 0,
+            flex: "0 0 auto",
+          }}
+        >
           <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
-            <Icon name="clock" size={14} style={{ color: "var(--sd-icon-2)" }} />
+            <Icon name="clock" size={13} style={{ color: "var(--sd-icon-2)" }} />
             <span className="t-label-sm muted">{r.when}</span>
           </span>
           {withUpdate && (
@@ -705,20 +722,21 @@ export function YourReferrals() {
       <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
         {!none && (
         <Section label="What your referrals reached" icon="flag.fill">
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
               <Tag style="success">1 selected</Tag>
               <Tag style="success">1 in interviews</Tag>
               <Tag style="buffer">1 on hold</Tag>
             </div>
-            <Card>
-              <div style={{ display: "flex", gap: 12 }}>
+            {/* Figma "Thank You": padded 12/16, 12 gap, everything centred; the quote is 12/16 */}
+            <Card style={{ padding: "12px 16px" }}>
+              <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
                 <Avatar name="Himani Kaushik" size={36} />
                 <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 2 }}>
                   <span className="t-h-xs">Himani thanked you</span>
-                  <span className="t-body muted">“You made the referral easy. I start next month!”</span>
+                  <span className="t-label-sm muted">“You made the referral easy. I start next month!”</span>
                 </span>
-                <Icon name="quote.bubble.fill" size={18} style={{ color: "var(--sd-n400)" }} />
+                <Icon name="quote.bubble.fill" size={18} style={{ color: "var(--sd-icon-2)" }} />
               </div>
             </Card>
           </div>
@@ -729,7 +747,7 @@ export function YourReferrals() {
           <Section label={`Waiting on an update (${waiting.length})`} icon="clock.fill">
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               <p className="t-label-sm muted">Submitted over a week ago. Seen them move?</p>
-              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>{waiting.map((r) => bar(r, true))}</div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>{waiting.map((r) => bar(r, true))}</div>
             </div>
           </Section>
         )}
@@ -738,8 +756,9 @@ export function YourReferrals() {
           {all.length === 0 ? (
             <Empty icon="tray" title="No referrals yet" body="People you refer show up here, with where each one got to." />
           ) : (
-            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              {all.map((r) => bar(r, !["selected", "notselected"].includes(stageOf(r))))}
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              {/* Figma: no Update on an ending, nor on one submitted today (nothing to report yet) */}
+              {all.map((r) => bar(r, !["selected", "notselected", "submitted"].includes(stageOf(r))))}
             </div>
           )}
         </Section>

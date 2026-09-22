@@ -758,8 +758,9 @@ export function Sheet({ title, children, onClose, leaving }: { title?: string; c
       >
         <span className="sd-grab" />
         {title && (
-          <div style={{ padding: "8px 0 16px" }}>
-            <h2 className="sd-sheet-title">{title}</h2>
+          // Figma, every sheet: the title sits 24 under the handle in a 22-tall box, 12 above the content
+          <div style={{ paddingBottom: 12 }}>
+            <h2 className="sd-sheet-title" style={{ height: 22 }}>{title}</h2>
           </div>
         )}
         <div className="sd-sheet-body">{children}</div>

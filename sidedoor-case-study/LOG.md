@@ -2403,3 +2403,37 @@ Explore and Messaging need a re-diff too.
 Devansh: finish one flow at a time and ask before starting the next.
 
 Verified on localhost, not the Vercel preview.
+
+## AUDIT · 2026-09-22 · Update flow done (2 of 2)
+
+**Your referrals (5247:19701)**
+- Referral card rebuilt to Figma's ReferralBar: 100 tall, padded 16 (was 74, padded 12).
+  Name over tag 8 apart, top-aligned; date at top right; Update button under it
+  (4 top, 9 between), right-aligned. Clock 13 (was 14). Cards 16 apart (was 12).
+- "Himani thanked you" card: padded 12/16 with everything centred (was 16, top-aligned);
+  quote 12/16 Medium (was 14/20 Regular); icon #6b7280 (was #9ca3af). 8 under the tags (was 12).
+- Abhinav Saxena was missing: Figma draws this screen after Nithin has referred him.
+  The "Referrer · Your referrals" state now shows him. No Update button on a referral
+  submitted today, as in Figma.
+
+**Seen it move sheet (5247:19744)**, and the shared sheet it exposed
+- Every Figma sheet puts the title 24 under the handle in a 22-tall box, 12 above the
+  content. The shared Sheet had 32 and a 16 gap, so every sheet sat 8–14 too low. Fixed
+  once in Sheet.
+- Person card to the next block: 24 (was 16). Question text 14/20 (was 12/16). 24 above
+  the note (was 16).
+- Option rows: Figma's 0.5 separator adds to the row (62.5 / 44.5). Was an inset shadow
+  that added nothing.
+
+**Knock-on fixes to two Explore sheets** (they share the code above):
+- Not moving forward: now 641.5 tall, as in Figma (was 615.5). Tag reads
+  "4 of 7 skills match" (was "4 of 7 skills").
+- Share your link: now 528, as in Figma (was 586). Copy link icon 24, left-aligned at
+  the padding. Message box r8, padded 12/16, text in the body colour. App tiles 60x60 r8,
+  no shadow, logos at Figma's sizes, names 14/20. "More" is three grey dots. Removed
+  "See the page they get": Figma's sheet has only Cancel. The link page is still in the
+  state list.
+
+Left: text widths 1–2px off (Inter 3 vs 4, waiting on Devansh).
+
+Verified on localhost, not the Vercel preview.

@@ -8,7 +8,8 @@ import { ActionSheet, Avatar, Button, Card, Icon, Note, RadioList, RadioOption, 
 
 function SheetPerson({ name, role, tag }: { name: string; role: string; tag?: React.ReactNode }) {
   return (
-    <Card style={{ marginBottom: 16 }}>
+    // Figma: 24 from the person card to what follows, in both sheets that carry one
+    <Card style={{ marginBottom: 24 }}>
       <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
         <Avatar name={name} size={44} />
         <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4, minWidth: 0 }}>
@@ -30,11 +31,12 @@ export function NotMovingSheet({ id, name, role, match, leaving }: { id: string;
   const reasons = ["Experience doesn’t match", "Skills don’t match", "Role is closed", "Can’t refer for this team"];
   return (
     <Sheet title={`Not moving forward with ${first}?`} onClose={nav.closeSheet} leaving={leaving}>
-      <SheetPerson name={name} role={role} tag={<Tag style="primary">{match}</Tag>} />
-      <p className="t-label-sm muted" style={{ marginBottom: 12 }}>
+      {/* Figma: "4 of 7 skills match" — the skills half of the card's match line */}
+      <SheetPerson name={name} role={role} tag={<Tag style="primary">{`${match.split(" · ")[0]} match`}</Tag>} />
+      <p className="t-label muted" style={{ marginBottom: 12 }}>
         A reason helps {first} ask better next time. It’s optional.
       </p>
-      <div style={{ marginBottom: 16 }}>
+      <div style={{ marginBottom: 24 }}>
         <RadioList>
           {reasons.map((r) => (
             <RadioOption key={r} title={r} on={reason === r} onClick={() => setReason(reason === r ? null : r)} />
@@ -81,7 +83,7 @@ export function SeenItMoveSheet({
   return (
     <Sheet title="Seen it move?" onClose={nav.closeSheet} leaving={leaving}>
       <SheetPerson name={name} role={role} tag={<Tag>{since}</Tag>} />
-      <p className="t-label-sm muted" style={{ marginBottom: 12 }}>
+      <p className="t-label muted" style={{ marginBottom: 12 }}>
         Where is it on Flipkart’s portal now? One tap.
       </p>
       {failed && (
@@ -91,7 +93,7 @@ export function SeenItMoveSheet({
           </Note>
         </div>
       )}
-      <div style={{ marginBottom: 16 }}>
+      <div style={{ marginBottom: 24 }}>
         <RadioList>
         {stages.map((s) => (
           <RadioOption
@@ -127,21 +129,23 @@ export function ShareLinkSheet({ leaving }: { leaving?: boolean }) {
   const { dispatch } = useStore();
   const [copied, setCopied] = useState(false);
   const apps = [
-    { name: "WhatsApp", img: "whatsapp" },
-    { name: "Gmail", img: "gmail" },
-    { name: "Drive", img: "gdrive" },
-    { name: "Telegram", img: "telegram" },
+    { name: "WhatsApp", img: "whatsapp", w: 40, h: 40 },
+    { name: "Gmail", img: "gmail", w: 34, h: 25 },
+    { name: "Drive", img: "gdrive", w: 32, h: 28.6 },
+    { name: "Telegram", img: "telegram", w: 33, h: 33 },
   ];
   return (
     <Sheet title="Share your link" onClose={nav.closeSheet} leaving={leaving}>
       <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+        {/* Figma: the icon and label sit at the left padding (32), not centred; a 24 link glyph */}
         <Button
           onClick={() => {
             setCopied(true);
             dispatch({ t: "toast", v: "Link copied" });
             window.setTimeout(() => dispatch({ t: "toast", v: null }), 1600);
           }}
-          icon={<Icon name={copied ? "checkmark" : "link"} size={18} />}
+          icon={<Icon name={copied ? "checkmark" : "link"} size={24} />}
+          style={{ justifyContent: "flex-start" }}
         >
           {copied ? "Copied" : "Copy link"}
         </Button>
@@ -154,47 +158,42 @@ export function ShareLinkSheet({ leaving }: { leaving?: boolean }) {
             </span>
             <TextButton>Edit</TextButton>
           </div>
-          <Card>
-            <p className="t-body muted">
+          {/* Figma "Box": r8, padded 12/16, Regular 14/20 in the body colour */}
+          <div style={{ background: "var(--sd-n0)", borderRadius: 8, padding: "12px 16px" }}>
+            <p className="t-body">
               Happy to look at a referral for Interaction Designer. Send your details here, it has everything our portal
               needs: sidedoor.app/r/nithin-agarwal
             </p>
-          </Card>
+          </div>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <Icon name="arrow.up.right.square" size={16} style={{ color: "var(--sd-icon-2)" }} />
             <span className="t-h-xs">Quick share</span>
           </div>
-          <div style={{ display: "flex", gap: 16, justifyContent: "space-between", paddingTop: 4 }}>
-            {apps.map((a) => (
-              <button key={a.name} onClick={nav.closeSheet} style={{ display: "flex", flexDirection: "column", gap: 6, alignItems: "center" }}>
-                <span style={{ width: 52, height: 52, borderRadius: 14, background: "#fff", display: "grid", placeItems: "center", boxShadow: "var(--sd-e1)" }}>
-                  <Image src={`/images/sidedoor/${a.img}.png`} alt="" width={30} height={30} style={{ width: 30, height: "auto" }} />
+          {/* Figma: five 60x60 white tiles (r8, 8 padding, no shadow) spread edge to edge, the
+              name 8 below in 14/20. "More" holds three grey dots. */}
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            {[...apps, { name: "More", img: "" }].map((a) => (
+              <button key={a.name} onClick={nav.closeSheet} style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center" }}>
+                <span style={{ width: 60, height: 60, borderRadius: 8, background: "var(--sd-n0)", display: "grid", placeItems: "center" }}>
+                  {a.img ? (
+                    <Image src={`/images/sidedoor/${a.img}.png`} alt="" width={a.w} height={a.h} style={{ width: a.w, height: a.h }} />
+                  ) : (
+                    <span style={{ display: "flex", gap: 7.6 }}>
+                      {[0, 1, 2].map((i) => (
+                        <span key={i} style={{ width: 7.9, height: 7.9, borderRadius: "50%", background: "var(--sd-border)", margin: 0.8 }} />
+                      ))}
+                    </span>
+                  )}
                 </span>
-                <span className="t-label-sm muted">{a.name}</span>
+                <span className="t-label muted">{a.name}</span>
               </button>
             ))}
-            <button onClick={nav.closeSheet} style={{ display: "flex", flexDirection: "column", gap: 6, alignItems: "center" }}>
-              <span style={{ width: 52, height: 52, borderRadius: 14, background: "var(--sd-fill-3)", display: "grid", placeItems: "center" }}>
-                <Icon name="square.grid.2x2" size={22} style={{ color: "var(--sd-icon-2)" }} />
-              </span>
-              <span className="t-label-sm muted">More</span>
-            </button>
           </div>
         </div>
 
-        {/* the link is a web page, so you can look at what the other person gets */}
-        <Button
-          type="secondary"
-          onClick={() => {
-            nav.closeSheet();
-            nav.present("linkPage");
-          }}
-        >
-          See the page they get
-        </Button>
         <Button type="secondary" onClick={nav.closeSheet}>
           Cancel
         </Button>

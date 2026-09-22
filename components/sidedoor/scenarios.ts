@@ -25,7 +25,7 @@ export const SCENARIOS: Scenario[] = [
   { id: "cand.track", label: "Candidate · Track a request", group: "Happy path", role: "candidate", tab: "requests", push: [{ key: "trackDetails", props: { id: "flipkart" } }] },
   { id: "ref.reqs", label: "Referrer · Referral requests", group: "Happy path", role: "referrer", tab: "requests" },
   { id: "ref.req", label: "Referrer · One request", group: "Happy path", role: "referrer", tab: "requests", push: [{ key: "referralRequest", props: { id: "abhinav" } }] },
-  { id: "ref.refs", label: "Referrer · Your referrals", group: "Happy path", role: "referrer", tab: "referrals" },
+  { id: "ref.refs", label: "Referrer · Your referrals", group: "Happy path", role: "referrer", force: "referrals.abhinav", tab: "referrals" },
   { id: "ref.posts", label: "Referrer · Manage your posts", group: "Happy path", role: "referrer", tab: "posts" },
   { id: "link.page", label: "The no-install link page", group: "Happy path", role: "referrer", tab: "requests", push: [{ key: "linkPage" }] },
 
@@ -72,7 +72,7 @@ export const SCENARIOS: Scenario[] = [
     role: "referrer",
     tab: "requests",
     push: [{ key: "referralRequest", props: { id: "abhinav" } }],
-    sheet: { key: "notMoving", props: { id: "abhinav", name: "Abhinav Saxena", role: "Product Designer, Blinkit", match: "4 of 7 skills" } },
+    sheet: { key: "notMoving", props: { id: "abhinav", name: "Abhinav Saxena", role: "Product Designer, Blinkit", match: "4 of 7 skills · 3 yrs" } },
   },
   {
     id: "sheet.seen",
