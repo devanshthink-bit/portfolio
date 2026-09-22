@@ -161,7 +161,7 @@ export function RoleSelection() {
  * prompt, two 44-tall buttons 12 apart and the format line; after upload it swaps the
  * buttons for the file name in blue and its type and size beneath.
  */
-function DocUpload({
+export function DocUpload({
   what,
   file,
   onUpload,
@@ -209,10 +209,11 @@ function DocUpload({
             <Icon name="checkmark.circle.fill" size={16} />
           </span>
         )}
-        <span className="t-h-xs link">{file}</span>
+        {/* Figma: the name's box is 18 tall (20 line), and the separator is a middle dot */}
+        <span className="t-h-xs link" style={{ height: 18 }}>{file}</span>
         <span className="t-label-sm muted" style={{ display: "inline-flex", gap: 8 }}>
           <span>PDF</span>
-          <span>•</span>
+          <span>·</span>
           <span>212 KB</span>
         </span>
       </>

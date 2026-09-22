@@ -2503,3 +2503,24 @@ Figma's values (12 Mar 1999, None, Bengaluru Remote, 30 days) until changed; Dat
 birth still opens the picker.
 
 Verified on localhost, not the Vercel preview.
+
+## AUDIT · 2026-09-22 · Link Page flow done (3 of 3)
+
+Before upload (5247:20271), Details filled (5247:20189), Sent (5247:20246). Rebuilt.
+
+- Header: Figma's web header is 130 tall with no fill — 14 above the status bar, the 48
+  logo bar, 14 below. The code had a white bar flush under the status bar, so the page
+  sat 28 high. The in-app "close preview" button is gone: Figma's right slot is empty.
+- Headline: Semi Bold 16/24, centred (was 20/28, left). Before upload it reads "Send a
+  complete request. No app needed."; after, "Check your details, then send."
+- Person: photo centred against the two lines; job ID tag at the right edge.
+- Resume: the onboarding DocUpload (dashed box, Upload file / Paste link), not a card
+  with one button. "We fill in the details…" line under it, 8 below, before upload only.
+  Uploaded state: file name box 18 tall, separator "·" (was "•").
+- Your details: the "Filled from your resume" tag sits in the label row.
+- Short note: only after upload, one-line 52 box (was a 100 multiline, always shown).
+- The button sits 40 off the bottom (pinned before upload; after the note once filled).
+- Sent: added the person row and "Save these details and track this request" block.
+  Buttons "Get the SideDoor app" / "Not now" (were "Get the app to follow it" / "Send another").
+
+Verified on localhost, not the Vercel preview.

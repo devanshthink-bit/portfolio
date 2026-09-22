@@ -2,7 +2,7 @@
 // Screens both roles use, plus the web link page — which is a web page, so it keeps the SideDoor
 // logo bar and has no tab bar.
 import Image from "next/image";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { useNav } from "../nav";
 import { STAGE_LABEL, stageTag, useStore } from "../store";
 import {
@@ -28,7 +28,7 @@ import {
   TextButton,
 } from "../ui";
 import { BellButton, ReferralBar } from "./candidate";
-import { CompanyRow, Project } from "./onboarding";
+import { CompanyRow, DocUpload, Project } from "./onboarding";
 
 /* ── Messages ───────────────────────────────────────────────────────────── */
 type Chat = { name: string; last: string; when: string; unread?: number };
@@ -571,47 +571,11 @@ export function LinkPage() {
   const [note, setNote] = useState("");
   const [sent, setSent] = useState(false);
 
-  if (sent)
-    return (
-      <>
-        <StatusBar />
-        <LogoBar />
-        <div className="sd-body">
-          <div className="sd-pad" style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <Tag>sidedoor.app/r/nithin-agarwal</Tag>
-            </div>
-            {/* Figma "Done": a white r12 card padded 24, its parts 12 apart, with a 40px
-                filled check, a Semi Bold 16/24 title and centred 14/20 body copy. */}
-            <div
-              style={{
-                background: "var(--sd-n0)",
-                borderRadius: "var(--sd-r-lg)",
-                padding: 24,
-                display: "flex",
-                flexDirection: "column",
-                gap: 12,
-                alignItems: "center",
-                textAlign: "center",
-              }}
-            >
-              <Icon name="checkmark.circle.fill" size={40} style={{ color: "var(--sd-link)" }} />
-              <h2 className="t-h-sm">Sent to Nithin</h2>
-              <p className="t-label muted">
-                Nithin gets every detail Flipkart’s portal asks for. We’ll email you when there’s news.
-              </p>
-            </div>
-            <Button onClick={() => nav.reset("login")}>Get the app to follow it</Button>
-            <div style={{ textAlign: "center" }}>
-              <TextButton onClick={() => setSent(false)}>Send another</TextButton>
-            </div>
-          </div>
-        </div>
-      </>
-    );
-
-  return (
+  // Figma: the link page is a web page, so its header is 130 tall with no fill — 14 above
+  // the status bar, the 48 logo bar, 14 below — and the one action sits 40 off the bottom.
+  const page = (body: ReactNode, actions: ReactNode) => (
     <>
+      <div style={{ height: 14, flex: "0 0 auto" }} />
       <StatusBar />
       <LogoBar />
       <div className="sd-body">
@@ -619,99 +583,133 @@ export function LinkPage() {
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Tag>sidedoor.app/r/nithin-agarwal</Tag>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-            <h1 className="t-h-md">Ask Nithin for a referral</h1>
-            <p className="t-label muted">Check your details, then send.</p>
-          </div>
-
-          <div style={{ display: "flex", gap: 12 }}>
-            <Avatar name="Nithin Agarwal" />
-            <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4 }}>
-              <span className="sd-person-name">
-                Nithin Agarwal
-                <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)" }} />
-              </span>
-              <span style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-                <span className="sd-person-sub">Design Manager, Flipkart</span>
-                <Tag>Job ID 184223</Tag>
-              </span>
-            </div>
-          </div>
-
-          <Section label="Your resume" icon="paperclip">
-            {file ? (
-              <Card>
-                <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-                  <Image src="/images/sidedoor/doc-icon.png" alt="" width={32} height={37} style={{ width: 32, height: "auto" }} />
-                  <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 2 }}>
-                    <span className="t-h-xs" style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                      Uploaded
-                      <Icon name="checkmark" size={14} style={{ color: "var(--sd-text-success)" }} />
-                    </span>
-                    <span className="t-label-sm muted">{file} · PDF · 212 KB</span>
-                  </span>
-                  <TextButton onClick={() => setFile(null)}>Replace</TextButton>
-                </div>
-              </Card>
-            ) : (
-              <Card>
-                <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }}>
-                  <Image src="/images/sidedoor/doc-icon.png" alt="" width={44} height={51} style={{ width: 44, height: "auto" }} />
-                  <Button type="secondary" onClick={() => setFile("Arpita_Singh_Resume.pdf")}>
-                    Upload your resume
-                  </Button>
-                  <p className="t-label-sm muted">PDF, DOCX or TXT · up to 10 MB</p>
-                </div>
-              </Card>
-            )}
-          </Section>
-
-          {file && (
-            <Section label="Your details" icon="person.fill" end={<TextButton>Edit</TextButton>}>
-              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                <Tag>Filled from your resume</Tag>
-                <Box>
-                  <DetailField name="Full name" value="Arpita Singh" />
-                  <DetailField name="Email" value="arpita.singh@email.com" />
-                  <DetailField name="Phone" value="+91 97XXX XXX48" />
-                  <DetailField name="Current city" value="Bengaluru" />
-                  <DetailField name="Experience" value="3 yrs total · 3 yrs relevant" />
-                  <DetailField name="Notice period" value="60 days" />
-                  <DetailField name="Career gaps" value="None" />
-                  <DetailField name="Date of birth" value="4 Jul 1998" />
-                  <DetailField name="Preferred interview locations" value="Bengaluru, Remote" />
-                </Box>
-              </div>
-            </Section>
-          )}
-
-          <Section label="A short note (optional)" icon="quote.bubble.fill">
-            <Field value={note} onChange={setNote} placeholder="One line, e.g. what you worked on" multiline />
-          </Section>
-
-          <Actions>
-            <Button disabled={!file} onClick={() => setSent(true)}>
-              Send referral request
-            </Button>
-          </Actions>
-          <div style={{ height: 24 }} />
+          {body}
         </div>
+        <div className="sd-actionblock">{actions}</div>
       </div>
     </>
+  );
+
+  // Figma "Person": the 44 photo centred against the two lines, name 4 above role + job ID
+  const person = (
+    <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+      <Avatar name="Nithin Agarwal" />
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4 }}>
+        <span className="sd-person-name">
+          Nithin Agarwal
+          <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)" }} />
+        </span>
+        <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          {/* Figma: the role fills the row, so the job ID tag sits at the right edge */}
+          <span className="sd-person-sub" style={{ flex: 1 }}>Design Manager, Flipkart</span>
+          <Tag>Job ID 184223</Tag>
+        </span>
+      </div>
+    </div>
+  );
+
+  if (sent)
+    return page(
+      <>
+        {/* Figma "Done": a white r12 card padded 24, its parts 12 apart, with a 40px
+            filled check, a Semi Bold 16/24 title and centred 14/20 body copy. */}
+        <div
+          style={{
+            background: "var(--sd-n0)",
+            borderRadius: "var(--sd-r-lg)",
+            padding: 24,
+            display: "flex",
+            flexDirection: "column",
+            gap: 12,
+            alignItems: "center",
+            textAlign: "center",
+          }}
+        >
+          <Icon name="checkmark.circle.fill" size={40} style={{ color: "var(--sd-link)" }} />
+          <h2 className="t-h-sm">Sent to Nithin</h2>
+          <p className="t-label muted">
+            Nithin gets every detail Flipkart’s portal asks for. We’ll email you when there’s news.
+          </p>
+        </div>
+        {person}
+        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+          <SectionLabel icon="square.and.arrow.down">Save these details and track this request</SectionLabel>
+          <p className="t-label-sm muted">
+            See when Nithin refers you and when it’s submitted. Your details stay filled for your next request.
+          </p>
+        </div>
+      </>,
+      <Actions>
+        <Button onClick={() => nav.reset("login")}>Get the SideDoor app</Button>
+        <TextButton onClick={() => setSent(false)}>Not now</TextButton>
+      </Actions>
+    );
+
+  return page(
+    <>
+      <div style={{ display: "flex", flexDirection: "column", gap: 4, textAlign: "center" }}>
+        <h1 className="t-h-sm">Ask Nithin for a referral</h1>
+        <p className="t-label muted">{file ? "Check your details, then send." : "Send a complete request. No app needed."}</p>
+      </div>
+
+      {person}
+
+      <Section label="Your resume" icon="paperclip">
+        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+          <DocUpload what="resume" file={file} onUpload={() => setFile("Arpita_Singh_Resume.pdf")} />
+          {!file && (
+            <p className="t-label-sm muted">We fill in the details Flipkart’s portal needs. You check them before sending.</p>
+          )}
+        </div>
+      </Section>
+
+      {file && (
+        <>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {/* Figma: the tag sits right after the label, Edit at the far right */}
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <Icon name="person.fill" size={16} style={{ color: "var(--sd-icon-2)" }} />
+              <span className="t-h-xs" style={{ width: 130 }}>Your details</span>
+              <Tag>Filled from your resume</Tag>
+              <span style={{ marginLeft: "auto" }}>
+                <TextButton>Edit</TextButton>
+              </span>
+            </div>
+            <Box>
+              <DetailField name="Full name" value="Arpita Singh" />
+              <DetailField name="Email" value="arpita.singh@email.com" />
+              <DetailField name="Phone" value="+91 97XXX XXX48" />
+              <DetailField name="Current city" value="Bengaluru" />
+              <DetailField name="Experience" value="3 yrs total · 3 yrs relevant" />
+              <DetailField name="Notice period" value="60 days" />
+              <DetailField name="Career gaps" value="None" />
+              <DetailField name="Date of birth" value="4 Jul 1998" />
+              <DetailField name="Preferred interview locations" value="Bengaluru, Remote" />
+            </Box>
+          </div>
+          <Field
+            label="A short note (optional)"
+            icon="quote.bubble.fill"
+            value={note}
+            onChange={setNote}
+            placeholder="One line, e.g. what you worked on"
+          />
+        </>
+      )}
+    </>,
+    <Button disabled={!file} onClick={() => setSent(true)}>
+      Send referral request
+    </Button>
   );
 }
 
 /**
- * The link page keeps SideDoor's logo bar because it is a web page, not the app. When it is
- * opened from inside the app to preview it, the bar also carries a way back out.
+ * The link page keeps SideDoor's logo bar because it is a web page, not the app.
  */
 function LogoBar() {
-  const nav = useNav();
-  // when it was opened from inside the app there has to be a way back out of it
-  const preview = nav.canGoBack;
   return (
-    // Figma AppHeader Type=Logo: 48 tall, padding 12/16, the wordmark centred between two
-    // 24px slots. The page URL is a centred tag in the body, not part of this bar.
+    // Figma AppHeader Type=Logo: 48 tall, padding 12/16, no fill, the wordmark centred
+    // between two empty 24px slots, and 14 below it.
     <div className="sd-web-bar">
       <span style={{ width: 24, flex: "0 0 auto" }} />
       <Image
@@ -722,13 +720,7 @@ function LogoBar() {
         style={{ width: 116, height: 21 }}
         unoptimized
       />
-      <span style={{ width: 24, flex: "0 0 auto", display: "flex", justifyContent: "flex-end" }}>
-        {preview && (
-          <button onClick={nav.pop} aria-label="Close preview" style={{ display: "grid", placeItems: "center" }}>
-            <Icon name="xmark.circle.fill" size={24} style={{ color: "var(--sd-icon-2)" }} />
-          </button>
-        )}
-      </span>
+      <span style={{ width: 24, flex: "0 0 auto" }} />
     </div>
   );
 }
