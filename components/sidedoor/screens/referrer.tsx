@@ -23,6 +23,7 @@ import {
   SmallButton,
   Switch,
   Tag,
+  Toast,
   TextButton,
 } from "../ui";
 import { BellButton } from "./candidate";
@@ -105,6 +106,8 @@ export function ReferralRequests() {
             <p className="t-label muted">Requests that already came in are still here.</p>
           </div>
         )}
+        {/* Figma "Fit checked again": a plain note over the list */}
+        {force === "reqs.fit" && phase === "ok" && <Note>You changed this job. Fit was checked again.</Note>}
         {phase === "loading" ? (
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             <SkeletonCard />
@@ -284,13 +287,17 @@ const SKILLS: { name: string; ok: boolean; source: string; isExperience?: boolea
 
 export function ReferralRequest({ id }: { id: string }) {
   const nav = useNav();
-  const { handled, removedSkills, jobId, dispatch } = useStore();
+  const { handled, removedSkills, jobId, force, dispatch } = useStore();
   const r = REQUESTS.find((x) => x.id === id) ?? REQUESTS[0];
-  const state = handled[r.id];
-  const skills = SKILLS.filter((s) => !removedSkills.includes(s.name));
+  // the two states the switcher jumps straight into
+  const state = force === "refer.undo" ? { stage: "referred" as Stage } : handled[r.id];
+  const removed = force === "req.skill" ? ["Prototyping"] : removedSkills;
+  // Figma "Skill removed" keeps the row and turns it into an undo, so nothing disappears
+  const skills = SKILLS;
   // the tag counts skills only — the experience row is a separate fact, as in V6
   const skillRows = skills.filter((s) => !s.isExperience);
-  const matched = skillRows.filter((s) => s.ok).length;
+  // a removed skill stops counting, which is what drops the tag to "3 of 7"
+  const matched = skillRows.filter((s) => s.ok && !removed.includes(s.name)).length;
 
   if (state?.stage === "referred") return <AfterRefer id={r.id} />;
   if (state?.stage === "submitted") return <MarkedSubmitted id={r.id} />;
@@ -408,6 +415,9 @@ export function ReferralRequest({ id }: { id: string }) {
             <Tag>Remote or hybrid</Tag>
           </div>
 
+        {/* Figma "Profile updated": a plain note above the match block */}
+        {force === "req.updated" && <Note>Profile updated since the 12 Sep fit check</Note>}
+
         <Section
           label="How they match"
           icon="lightbulb.fill"
@@ -426,7 +436,7 @@ export function ReferralRequest({ id }: { id: string }) {
                     aria-label={`${s.name} isn’t really there`}
                     style={{ display: "block", width: "100%", textAlign: "left" }}
                   >
-                    <MatchRow ok source={s.source}>
+                    <MatchRow ok={!removed.includes(s.name)} source={removed.includes(s.name) ? "You removed this. Tap to undo" : s.source}>
                       {s.name}
                     </MatchRow>
                   </button>
@@ -438,7 +448,7 @@ export function ReferralRequest({ id }: { id: string }) {
               )}
             </div>
             {/* Figma draws this hint plain at 12/16, not as a filled chip. */}
-            <Note>Tap a skill that isn’t really there</Note>
+            <Note>{removed.length > 0 ? "Count updated for you only" : "Tap a skill that isn’t really there"}</Note>
           </div>
         </Section>
 
@@ -548,9 +558,16 @@ function portalFields(d: { dob: string; gaps: string; locations: string; notice:
 
 function AfterRefer({ id }: { id: string }) {
   const nav = useNav();
-  const { jobId, details, dispatch } = useStore();
+  const { jobId, details, force, dispatch } = useStore();
   const r = REQUESTS.find((x) => x.id === id) ?? REQUESTS[0];
   const [copied, setCopied] = useState<string[]>([]);
+  // Figma "Undo": for five seconds after referring, a toast offers to take it back
+  const [undo, setUndo] = useState(true);
+  useEffect(() => {
+    if (force === "refer.undo") return;
+    const t = window.setTimeout(() => setUndo(false), 5000);
+    return () => clearTimeout(t);
+  }, [force]);
   const fields = portalFields(details);
   const first = r.name.split(" ")[0];
 
@@ -568,6 +585,11 @@ function AfterRefer({ id }: { id: string }) {
         </Actions>
       }
     >
+      {undo && (
+        <Toast action={<button className="t-label link" onClick={() => { dispatch({ t: "unhandle", id: r.id }); nav.pop(); }}>Undo</button>}>
+          Referred. {first} is told in 5 seconds.
+        </Toast>
+      )}
       <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
         <PersonHead name={r.name} role={r.role} tag={<Tag style="success">Referred</Tag>} />
 

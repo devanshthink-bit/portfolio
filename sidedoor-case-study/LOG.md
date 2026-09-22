@@ -2632,3 +2632,23 @@ illustrated block and a white "See your referrals", with suggested people under 
 line "Requests that already came in are still here." under it. Was one long orange note.
 
 Verified on localhost, not the Vercel preview.
+
+## AUDIT · 2026-09-22 · States 23–26 of 36
+
+**23 · Referral requests / Fit checked again (5288:23613)** — built. A plain note
+"You changed this job. Fit was checked again." over the list.
+
+**24 · Referral request / Skill removed (5288:26427)** — built. A removed skill keeps its
+row: the mark goes grey, the title goes dark, the line under it reads "You removed this.
+Tap to undo", the tag drops to "3 of 7 skills · 3 yrs", and the hint becomes "Count
+updated for you only". The code deleted the row outright.
+
+**25 · Referral request / Profile updated (5288:27189)** — built. A note "Profile updated
+since the 12 Sep fit check" above "How they match".
+
+**26 · After refer / Undo (5309:40416)** — built. A white pill 104 off the bottom holding
+"Referred. Abhinav is told in 5 seconds." with an Undo link at the right, for five
+seconds after referring. Undo puts the request back. Toast is now 48 tall (14 of padding),
+as Figma draws it.
+
+Verified on localhost, not the Vercel preview.

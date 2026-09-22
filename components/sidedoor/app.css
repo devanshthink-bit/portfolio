@@ -590,13 +590,14 @@
 .sd-as-cancel { margin-top: 8px; background: var(--sd-n0); border-radius: var(--sd-r-sheet); height: 56px; }
 
 /* ── toast · glass, slides down from under the bar ───────────────────────── */
+/* Figma puts the toast 16 above the tab bar, so 104 off the bottom. */
 .sd-toast {
   position: absolute;
-  bottom: 100px;
+  bottom: 104px;
   left: 16px;
   right: 16px;
   z-index: 70;
-  padding: 12px 16px;
+  padding: 14px 16px;
   border-radius: var(--sd-r-full);
   background: var(--sd-n0);
   backdrop-filter: blur(7px);

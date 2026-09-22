@@ -41,6 +41,10 @@ export const SCENARIOS: Scenario[] = [
   /* ── waiting ─────────────────────────────────────────────────────────── */
   { id: "jobs.loading", label: "Jobs · loading", group: "Waiting", role: "candidate", force: "jobs.loading", tab: "jobs" },
   { id: "profile.reading", label: "Check your details · reading", group: "Waiting", role: "candidate", force: "profile.reading", tab: "jobs", push: [{ key: "uploadResume" }, { key: "checkProfile" }] },
+  { id: "reqs.fit", label: "Referral requests · fit checked again", group: "Rules and limits", role: "referrer", force: "reqs.fit", tab: "requests" },
+  { id: "req.updated", label: "One request · profile updated", group: "Rules and limits", role: "referrer", force: "req.updated", tab: "requests", push: [{ key: "referralRequest", props: { id: "abhinav" } }] },
+  { id: "req.skill", label: "One request · skill removed", group: "Rules and limits", role: "referrer", force: "req.skill", tab: "requests", push: [{ key: "referralRequest", props: { id: "abhinav" } }] },
+  { id: "refer.undo", label: "After refer · undo", group: "Happy path", role: "referrer", force: "refer.undo", tab: "requests", push: [{ key: "referralRequest", props: { id: "abhinav" } }] },
   { id: "messages.loading", label: "Messages · loading", group: "Waiting", role: "candidate", force: "messages.loading", tab: "messages" },
   { id: "messages.error", label: "Messages · couldn’t load", group: "Went wrong", role: "candidate", force: "messages.error", tab: "messages" },
   { id: "job.asked", label: "Job · already asked", group: "Rules and limits", role: "candidate", force: "job.asked", tab: "jobs", push: [{ key: "job", props: { id: "flipkart" } }] },

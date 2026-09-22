@@ -138,6 +138,7 @@ type Action =
   | { t: "rule"; k: "experience" | "weekly"; v: boolean }
   | { t: "post" }
   | { t: "handle"; id: string; stage: Stage; reason?: string }
+  | { t: "unhandle"; id: string }
   | { t: "invite"; v: string }
   | { t: "removeSkill"; v: string }
   | { t: "toast"; v: string | null }
@@ -179,6 +180,11 @@ function reduce(s: State, a: Action): State {
       return { ...s, rules: { ...s.rules, [a.k]: a.v } };
     case "post":
       return { ...s, posted: true };
+    case "unhandle": {
+      const rest = { ...s.handled };
+      delete rest[a.id];
+      return { ...s, handled: rest };
+    }
     case "handle":
       return {
         ...s,

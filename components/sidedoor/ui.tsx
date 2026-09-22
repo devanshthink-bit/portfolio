@@ -807,11 +807,13 @@ export function ActionSheet({
 }
 
 /* ── toast ──────────────────────────────────────────────────────────────── */
-export function Toast({ children, icon = "checkmark" }: { children: ReactNode; icon?: IconName }) {
+export function Toast({ children, icon = "checkmark", action }: { children: ReactNode; icon?: IconName; action?: ReactNode }) {
   return (
     <div className="sd-toast">
-      <Icon name={icon} size={18} style={{ color: "var(--sd-text-success)" }} />
-      <span>{children}</span>
+      {/* Figma's undo toast carries no mark: the line runs the width and the link sits right */}
+      {!action && <Icon name={icon} size={18} style={{ color: "var(--sd-text-success)" }} />}
+      <span style={{ flex: 1 }}>{children}</span>
+      {action}
     </div>
   );
 }
