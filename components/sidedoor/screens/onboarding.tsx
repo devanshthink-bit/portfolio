@@ -633,7 +633,7 @@ export function CheckPost() {
   );
 }
 
-function RuleRow({ title, sub, on, onChange }: { title: string; sub: string; on: boolean; onChange: (v: boolean) => void }) {
+export function RuleRow({ title, sub, on, onChange }: { title: string; sub: string; on: boolean; onChange: (v: boolean) => void }) {
   return (
     /* Figma's rule Box is r8 with 12/16 of padding, its row centred, and only 2 between
        the two lines — so the box is 78 tall, not 88. */

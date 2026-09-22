@@ -175,7 +175,7 @@ export function ShareLinkSheet({ leaving }: { leaving?: boolean }) {
           {/* Figma: five 60x60 white tiles (r8, 8 padding, no shadow) spread edge to edge, the
               name 8 below in 14/20. "More" holds three grey dots. */}
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            {[...apps, { name: "More", img: "" }].map((a) => (
+            {[...apps, { name: "More", img: "", w: 0, h: 0 }].map((a) => (
               <button key={a.name} onClick={nav.closeSheet} style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center" }}>
                 <span style={{ width: 60, height: 60, borderRadius: 8, background: "var(--sd-n0)", display: "grid", placeItems: "center" }}>
                   {a.img ? (

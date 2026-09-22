@@ -2456,3 +2456,29 @@ Verified on localhost, not the Vercel preview.
 
 Correction to the 2026-09-22 Tracking entry: Devansh confirms Explore and Messaging are
 done, so no re-diff.
+
+## AUDIT · 2026-09-22 · Manage/Edit flow done (2 of 2)
+
+**Manage your posts (5247:19933)**
+- Post cards 8 apart (were 16).
+- Activity line: what is new reads blue ("5 new", "1 still open"), the rest #6b7280;
+  a quiet post ("No new requests · 2 referred") is all #636a75. Was all #636a75.
+- Draft card: just "Finish", at the left. Was right-aligned.
+
+**Edit your job post (5247:20045)**: rebuilt. Figma's screen is "Check your job post"
+with the post already live: Job ID field (with its mark), "From the job description"
+box with all six fields stacked label-over-value, the two rule boxes with their
+second lines, Tips with its mark, and the Job description file row. The code had
+four side-by-side fields, the Job ID below them, rules without their explanations,
+no JD row, and a different intro. Now uses the same parts as Check your job post.
+- Intro: "Saving checks the match again for current requests."
+- Second button: "Pause post" (secondary). Was "Delete this post" (red); Figma has no delete.
+
+**A state-switcher bug, found here and fixed:** every state opened on the tab of the
+state before it (e.g. "Manage your posts" showed Referral requests). The copy of the
+old screen that fades out mounts fresh and re-picked its own tab after the new screen
+had picked. The fading copy can no longer pick a tab.
+
+Also fixed a type error from the Share link change (it would have failed the Vercel build).
+
+Verified on localhost, not the Vercel preview.

@@ -236,7 +236,11 @@ function Stack() {
           data-anim={nav.leaving.anim === "modal" ? "modal-out" : nav.leaving.anim === "fade" ? "fade-out" : "push-out"}
           aria-hidden="true"
         >
-          {SCREENS[nav.leaving.key]?.(nav.leaving.props ?? {}) ?? null}
+          {/* the copy on its way out mounts fresh, so it must not pick a tab: it would run after
+              the new screen and put the bar back on the old tab */}
+          <TabCtx.Provider value={{ tab: (nav.leaving.props?.tab as string) ?? tab, pick: () => {} }}>
+            {SCREENS[nav.leaving.key]?.(nav.leaving.props ?? {}) ?? null}
+          </TabCtx.Provider>
         </div>
       )}
 

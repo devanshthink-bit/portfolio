@@ -11,6 +11,7 @@ import {
   Box,
   Button,
   Card,
+  DetailField,
   Empty,
   Field,
   Icon,
@@ -25,7 +26,7 @@ import {
   TextButton,
 } from "../ui";
 import { BellButton } from "./candidate";
-import { CompanyRow, Project } from "./onboarding";
+import { CompanyRow, Project, RuleRow } from "./onboarding";
 
 type Req = {
   id: string;
@@ -768,12 +769,12 @@ export function YourReferrals() {
 }
 
 /* ── Manage your posts ──────────────────────────────────────────────────── */
-type Post = { title: string; jobId: string; state: "Live" | "Paused" | "Draft"; activity: string };
+type Post = { title: string; jobId: string; state: "Live" | "Paused" | "Draft"; news?: string; activity: string };
 
 const POSTS: Post[] = [
-  { title: "Interaction Designer", jobId: "184223", state: "Live", activity: "5 new · 8 referred" },
+  { title: "Interaction Designer", jobId: "184223", state: "Live", news: "5 new", activity: " · 8 referred" },
   { title: "Product Manager", jobId: "188410", state: "Live", activity: "No new requests · 2 referred" },
-  { title: "Software Engineer-I", jobId: "190552", state: "Paused", activity: "1 still open · 3 referred" },
+  { title: "Software Engineer-I", jobId: "190552", state: "Paused", news: "1 still open", activity: " · 3 referred" },
   { title: "Product Designer-II", jobId: "", state: "Draft", activity: "" },
 ];
 
@@ -804,7 +805,8 @@ export function ManagePosts() {
           />
         ) : (
         <Section label="Flipkart · 4 posts" icon="briefcase.fill">
-          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          {/* Figma: post cards 8 apart */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {POSTS.map((p) => {
               const off = paused.includes(p.title);
               const state = p.state === "Draft" ? "Draft" : off ? "Paused" : "Live";
@@ -827,10 +829,15 @@ export function ManagePosts() {
                   </p>
                   <div style={{ height: 12 }} />
                   {/* Figma PostCard activity row: Inter Medium 14/20, 20 tall */}
+                  {/* Figma: what is new reads blue, the rest #6b7280; a quiet post is all #636a75.
+                      A draft has no activity, just "Finish" at the left. */}
                   <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                    <span className="t-label muted" style={{ flex: 1 }}>
-                      {p.activity}
-                    </span>
+                    {p.state !== "Draft" && (
+                      <span className="t-label" style={{ flex: 1, color: p.news ? "var(--sd-icon-2)" : "var(--sd-text-2)" }}>
+                        {p.news && <span style={{ color: "var(--sd-link)" }}>{p.news}</span>}
+                        {p.activity}
+                      </span>
+                    )}
                     <TextButton onClick={() => nav.push(p.state === "Draft" ? "checkPost" : "editPost", { title: p.title })}>
                       {p.state === "Draft" ? "Finish" : "Edit"}
                     </TextButton>
@@ -849,6 +856,8 @@ export function ManagePosts() {
 export function EditPost({ title }: { title?: string }) {
   const nav = useNav();
   const { jobId, tips, rules, dispatch } = useStore();
+  // Figma "Edit your job post" is "Check your job post" with the post already live: the same
+  // five blocks in the same order, a different intro, and Save changes / Pause post.
   return (
     <Screen
       title="Edit your job post"
@@ -856,65 +865,71 @@ export function EditPost({ title }: { title?: string }) {
       actions={
         <Actions>
           <Button onClick={() => nav.pop()}>Save changes</Button>
-          <Button type="destructive" onClick={() => nav.pop()}>
-            Delete this post
+          <Button type="secondary" onClick={() => nav.pop()}>
+            Pause post
           </Button>
         </Actions>
       }
     >
       <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
-        <p className="t-label muted">Changes show on the job straight away.</p>
-        <Section label="The job" icon="briefcase.fill">
+        <p className="t-label muted">Saving checks the match again for current requests.</p>
+
+        <Section label="Job ID" icon="doc.on.doc.fill">
+          <Field icon="doc.on.doc.fill" value={jobId || "184223"} onChange={(v) => dispatch({ t: "jobId", v })} />
+        </Section>
+
+        <Section label="From the job description" icon="briefcase.fill" end={<TextButton>Edit</TextButton>}>
           <Box>
-            <DetailLine name="Company" value="Flipkart" />
-            <DetailLine name="Job title" value={title ?? "Interaction Designer"} />
-            <DetailLine name="Experience" value="3+ yrs" />
-            <DetailLine name="Location" value="Bengaluru, KA · Remote or hybrid" />
+            <DetailField name="Company" value="Flipkart" />
+            <DetailField name="Job title" value={title ?? "Interaction Designer"} />
+            <DetailField name="Experience" value="3+ yrs" />
+            <DetailField name="Location" value="Bengaluru, KA · Remote or hybrid" />
+            <DetailField
+              name="Skills (7)"
+              value="UX research, Interaction design, Prototyping, AI-assisted design, Design system, Figma, A/B testing"
+            />
+            <DetailField name="Employment" value="Full time · joining within 30 days" />
           </Box>
         </Section>
-        <Field label="Job ID" value={jobId || "184223"} onChange={(v) => dispatch({ t: "jobId", v })} />
+
+        <Section label="Your rules" icon="gearshape.fill">
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            <RuleRow
+              title="Experience must match"
+              sub="Requests under 3 yrs go to Lower match. You can still refer them."
+              on={rules.experience}
+              onChange={(v) => dispatch({ t: "rule", k: "experience", v })}
+            />
+            <RuleRow
+              title="Up to 10 requests a week"
+              sub="When it’s full, candidates see you’re full this week and ask again on Monday."
+              on={rules.weekly}
+              onChange={(v) => dispatch({ t: "rule", k: "weekly", v })}
+            />
+          </div>
+        </Section>
+
         <Field
           label="Tips for candidates (optional)"
+          icon="lightbulb.fill"
           value={tips}
           onChange={(v) => dispatch({ t: "tips", v })}
-          placeholder="e.g. Link a portfolio with end-to-end case studies."
+          placeholder="e.g. Link a portfolio with end-to-end case studies. Shown on the job."
           multiline
         />
-        <Section label="Your rules" icon="gearshape.fill">
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <Card>
-              <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-                <span className="t-h-xs" style={{ flex: 1 }}>
-                  Experience must match
-                </span>
-                <Switch on={rules.experience} onChange={(v) => dispatch({ t: "rule", k: "experience", v })} />
-              </div>
-            </Card>
-            <Card>
-              <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-                <span className="t-h-xs" style={{ flex: 1 }}>
-                  Up to 10 requests a week
-                </span>
-                <Switch on={rules.weekly} onChange={(v) => dispatch({ t: "rule", k: "weekly", v })} />
-              </div>
-            </Card>
-          </div>
+
+        <Section label="Job description" icon="paperclip">
+          <Box>
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <span className="t-label" style={{ flex: 1 }}>
+                Flipkart_IxDesigner_JD.docx
+              </span>
+              <TextButton>Replace</TextButton>
+            </div>
+          </Box>
         </Section>
       </div>
     </Screen>
-  );
-}
-
-function DetailLine({ name, value }: { name: string; value: string }) {
-  return (
-    <div style={{ display: "flex", gap: 12, padding: "8px 0" }}>
-      <span className="t-label-sm muted" style={{ width: 104, flex: "0 0 auto" }}>
-        {name}
-      </span>
-      <span className="t-label" style={{ flex: 1 }}>
-        {value}
-      </span>
-    </div>
   );
 }
 
