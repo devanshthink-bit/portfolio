@@ -20,16 +20,29 @@ type Entry = Route & { id: number; anim: Anim };
 
 export type SheetSpec = { key: string; props?: Record<string, unknown> };
 
+/**
+ * How the top of the stack last changed. A screen's own `anim` says how it ENTERED, so it must
+ * not be replayed every time that screen becomes the top again — going back used to re-run the
+ * revealed screen's entrance while the old one slid away, which read as two screens splitting
+ * apart. `dir` is what tells the two layers to move together instead.
+ */
+type Dir = "push" | "pop" | "replace" | null;
+
 type NavState = {
   stack: Entry[];
   leaving: (Entry & { anim: Anim }) | null;
   sheet: (SheetSpec & { id: number }) | null;
   sheetLeaving: boolean;
+  dir: Dir;
+  /** how the screen that is going away had entered, so the one under it knows what to undo */
+  poppedAnim: Anim | null;
 };
 
 export type NavApi = {
   stack: Entry[];
   leaving: NavState["leaving"];
+  dir: Dir;
+  poppedAnim: Anim | null;
   sheet: NavState["sheet"];
   sheetLeaving: boolean;
   /** The screen on top. */
@@ -60,6 +73,8 @@ export function useNavStack(initial: string): NavApi {
     leaving: null,
     sheet: null,
     sheetLeaving: false,
+    dir: null,
+    poppedAnim: null,
   });
   // one timer per animation, cleared on unmount so a fast tap can't leave a ghost screen
   const timers = useRef<number[]>([]);
@@ -69,19 +84,19 @@ export function useNavStack(initial: string): NavApi {
   };
 
   const push = useCallback((key: string, props?: Record<string, unknown>) => {
-    setState((s) => ({ ...s, stack: [...s.stack, { key, props, id: seq++, anim: "push" }] }));
+    setState((s) => ({ ...s, dir: "push", stack: [...s.stack, { key, props, id: seq++, anim: "push" }] }));
   }, []);
 
   const present = useCallback((key: string, props?: Record<string, unknown>) => {
-    setState((s) => ({ ...s, stack: [...s.stack, { key, props, id: seq++, anim: "modal" }] }));
+    setState((s) => ({ ...s, dir: "push", stack: [...s.stack, { key, props, id: seq++, anim: "modal" }] }));
   }, []);
 
   const pop = useCallback(() => {
     setState((s) => {
       if (s.stack.length < 2) return s;
       const going = s.stack[s.stack.length - 1];
-      later(() => setState((t) => (t.leaving && t.leaving.id === going.id ? { ...t, leaving: null } : t)), 420);
-      return { ...s, stack: s.stack.slice(0, -1), leaving: going };
+      later(() => setState((t) => (t.leaving && t.leaving.id === going.id ? { ...t, leaving: null } : t)), 380);
+      return { ...s, stack: s.stack.slice(0, -1), leaving: going, dir: "pop", poppedAnim: going.anim };
     });
   }, []);
 
@@ -89,7 +104,7 @@ export function useNavStack(initial: string): NavApi {
     setState((s) => {
       const going = s.stack[s.stack.length - 1];
       later(() => setState((t) => ({ ...t, leaving: null })), 420);
-      return { stack: [{ key, props, id: seq++, anim }], leaving: going, sheet: null, sheetLeaving: false };
+      return { stack: [{ key, props, id: seq++, anim }], leaving: going, sheet: null, sheetLeaving: false, dir: "replace", poppedAnim: null };
     });
   }, []);
 

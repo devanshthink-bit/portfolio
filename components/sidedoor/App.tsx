@@ -40,6 +40,9 @@ const SCREENS_WITHOUT_TABS = new Set([
  * a screen on its way out renders a second copy of the tab root — anything kept in the root
  * itself gets clobbered by that copy when it unmounts.
  */
+/** How dark the screen underneath goes during a push. iOS dims it, it does not fade it out. */
+const UNDER_DIM = 0.08;
+
 const TabCtx = createContext<{ tab: string; pick: (k: string) => void }>({ tab: "", pick: () => {} });
 
 /* ── the tabs, per role ─────────────────────────────────────────────────── */
@@ -181,31 +184,61 @@ function Stack() {
     }
   }, [nav]);
 
+  // Where each screen was scrolled to, so the copy that slides away on a pop looks like the
+  // screen you were just on rather than a fresh one scrolled to the top.
+  // Keyed by route name, not by the stack id: the id counter runs on both the server and the
+  // client and they disagree, which put a different number in the HTML on each side.
+  const scrollAt = useRef<Record<string, number>>({});
+  const rememberScroll = useCallback((e: React.UIEvent) => {
+    const el = e.target as HTMLElement;
+    if (!el.classList?.contains("sd-body")) return;
+    const key = el.closest("[data-screen]")?.getAttribute("data-screen");
+    if (key) scrollAt.current[key] = el.scrollTop;
+  }, []);
+  const restoreScroll = useCallback((el: HTMLDivElement | null, key: string) => {
+    if (!el) return;
+    const y = scrollAt.current[key];
+    const body = el.querySelector(".sd-body");
+    if (y && body) body.scrollTop = y;
+  }, []);
+
   const count = nav.stack.length;
 
   return (
     <TabCtx.Provider value={tabCtx.current}>
-    <div className="sd-stack">
+    <div className="sd-stack" onScrollCapture={rememberScroll}>
       {nav.stack.map((s, i) => {
         const isTop = i === count - 1;
         const under = i === count - 2;
-        // the screen you are leaving behind slides and dims; the top one moves with your finger
+        // Going back is not an entrance. A screen's own `anim` says how it first arrived, so the
+        // screen a pop reveals plays `under-out` — the exact reverse of the slide-and-dim it did
+        // on the way in — in step with the one sliding off. Replaying its entrance here is what
+        // made back look like two screens splitting apart.
+        const popping = nav.dir === "pop";
+        const free = drag === null && !settling;
         let anim: string | undefined;
-        if (isTop && s.anim === "push" && drag === null && !settling) anim = "push-in";
-        else if (isTop && s.anim === "modal") anim = "modal-in";
-        else if (isTop && s.anim === "fade") anim = "fade-in";
-        else if (under && nav.top.anim === "push" && drag === null && !settling) anim = "under-in";
+        if (isTop) {
+          if (popping) anim = nav.poppedAnim === "push" && free ? "under-out" : undefined;
+          else if (s.anim === "push" && free) anim = "push-in";
+          else if (s.anim === "modal") anim = "modal-in";
+          else if (s.anim === "fade") anim = "fade-in";
+        } else if (under && !popping && nav.top.anim === "push" && free) {
+          anim = "under-in";
+        }
 
-        const style: React.CSSProperties = {};
+        // the dim is a custom property, which React's CSSProperties does not model
+        const style: React.CSSProperties & Record<"--sd-dim", string | undefined> = {
+          "--sd-dim": undefined,
+        };
         if (isTop && drag !== null) style.transform = `translateX(${drag}px)`;
         if (under && drag !== null) {
           const p = Math.min(1, drag / 402);
-          style.transform = `translateX(${-100 + 100 * p}px)`;
-          style.filter = `brightness(${0.92 + 0.08 * p})`;
+          style.transform = `translateX(${-30 + 30 * p}%)`;
+          style["--sd-dim"] = `${UNDER_DIM * (1 - p)}`;
         }
-        if (under && drag === null && !settling && nav.top.anim === "push" && !anim) {
-          style.transform = "translateX(-100px)";
-          style.filter = "brightness(0.92)";
+        if (under && free && nav.top.anim === "push" && !anim) {
+          style.transform = "translateX(-30%)";
+          style["--sd-dim"] = `${UNDER_DIM}`;
         }
 
         const cls = [
@@ -218,6 +251,7 @@ function Stack() {
         return (
           <div
             key={s.id}
+            data-screen={s.key}
             className={cls + (SCREENS_WITHOUT_TABS.has(s.key) ? "" : " has-tabs")}
             data-anim={anim}
             style={style}
@@ -232,7 +266,10 @@ function Stack() {
       {nav.leaving && (
         <div
           key={`leaving-${nav.leaving.id}`}
-          className="sd-screen"
+          // It mounts fresh, so without this it slid away as a different shape, scrolled back to
+          // the top: no tab padding, and none of the scrolling you had done on it.
+          ref={(el) => restoreScroll(el, nav.leaving!.key)}
+          className={"sd-screen" + (SCREENS_WITHOUT_TABS.has(nav.leaving.key) ? "" : " has-tabs")}
           data-anim={nav.leaving.anim === "modal" ? "modal-out" : nav.leaving.anim === "fade" ? "fade-out" : "push-out"}
           aria-hidden="true"
         >

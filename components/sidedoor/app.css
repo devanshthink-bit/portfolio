@@ -73,6 +73,8 @@
 
   /* iOS motion */
   --sd-ease: cubic-bezier(0.32, 0.72, 0, 1);
+  /* one duration for a push and its matching pop, so the two layers never drift apart */
+  --sd-nav: 350ms;
   --sd-spring: cubic-bezier(0.25, 1.4, 0.4, 1);
 
   position: relative;
@@ -134,31 +136,54 @@
   overflow: hidden;
   will-change: transform;
 }
-/* the card that pushes in from the right */
-.sd-screen[data-anim="push-in"] { animation: sd-push-in 420ms var(--sd-ease) both; box-shadow: -8px 0 24px rgba(0, 0, 0, 0.14); }
-.sd-screen[data-anim="push-out"] { animation: sd-push-out 380ms var(--sd-ease) both; box-shadow: -8px 0 24px rgba(0, 0, 0, 0.14); }
-/* the screen underneath slides a little and dims: iOS parallax */
-.sd-screen[data-anim="under-in"] { animation: sd-under-in 420ms var(--sd-ease) both; }
-.sd-screen[data-anim="under-out"] { animation: sd-under-out 380ms var(--sd-ease) both; }
+/* Both layers of a push run for exactly the same time on the same curve, so they read as one
+   sheet of paper moving, not two screens. UIKit's own push is ~0.35s. */
+.sd-screen[data-anim="push-in"] { animation: sd-push-in var(--sd-nav) var(--sd-ease) both; }
+.sd-screen[data-anim="push-out"] { animation: sd-push-out var(--sd-nav) var(--sd-ease) both; }
+/* the screen underneath slides a third of the way and dims: iOS parallax */
+.sd-screen[data-anim="under-in"] { animation: sd-under-in var(--sd-nav) var(--sd-ease) both; }
+.sd-screen[data-anim="under-out"] { animation: sd-under-out var(--sd-nav) var(--sd-ease) both; }
+/* the incoming card's edge shadow, which iOS fades in rather than switching on */
+.sd-screen[data-anim="push-in"], .sd-screen[data-anim="push-out"] { box-shadow: -8px 0 24px rgba(0, 0, 0, 0.12); }
 /* a full-screen modal comes up from the bottom */
 .sd-screen[data-anim="modal-in"] { animation: sd-modal-in 460ms var(--sd-ease) both; }
 .sd-screen[data-anim="modal-out"] { animation: sd-modal-out 380ms var(--sd-ease) both; }
-/* replacing the root (login → app) cross-fades with a small scale, like iOS hand-off */
-.sd-screen[data-anim="fade-in"] { animation: sd-fade-in 420ms var(--sd-ease) both; }
-.sd-screen[data-anim="fade-out"] { animation: sd-fade-out 160ms linear both; }
+/* replacing the root (login → app) cross-fades: no scale, which read as a pop */
+.sd-screen[data-anim="fade-in"] { animation: sd-fade-in 300ms linear both; }
+.sd-screen[data-anim="fade-out"] { animation: sd-fade-out 300ms linear both; }
 
-@keyframes sd-push-in { from { transform: translateX(402px); } to { transform: translateX(0); } }
-@keyframes sd-push-out { from { transform: translateX(0); } to { transform: translateX(402px); } }
-@keyframes sd-under-in { from { transform: translateX(0); filter: brightness(1); } to { transform: translateX(-100px); filter: brightness(0.92); } }
-@keyframes sd-under-out { from { transform: translateX(-100px); filter: brightness(0.92); } to { transform: translateX(0); filter: brightness(1); } }
-@keyframes sd-modal-in { from { transform: translateY(874px); } to { transform: translateY(0); } }
-@keyframes sd-modal-out { from { transform: translateY(0); } to { transform: translateY(874px); } }
-@keyframes sd-fade-in { from { opacity: 0; transform: scale(1.03); } to { opacity: 1; transform: scale(1); } }
+@keyframes sd-push-in { from { transform: translateX(100%); } to { transform: translateX(0); } }
+@keyframes sd-push-out { from { transform: translateX(0); } to { transform: translateX(100%); } }
+@keyframes sd-under-in { from { transform: translateX(0); } to { transform: translateX(-30%); } }
+@keyframes sd-under-out { from { transform: translateX(-30%); } to { transform: translateX(0); } }
+@keyframes sd-modal-in { from { transform: translateY(100%); } to { transform: translateY(0); } }
+@keyframes sd-modal-out { from { transform: translateY(0); } to { transform: translateY(100%); } }
+@keyframes sd-fade-in { from { opacity: 0; } to { opacity: 1; } }
 @keyframes sd-fade-out { from { opacity: 1; } to { opacity: 0; } }
+
+/* The dim on the screen underneath. It is a black sheet over that screen, the way iOS does it,
+   not a brightness filter: a filter re-rasterises the whole subtree every frame, which is what
+   made the push stutter, and it cannot be driven from a style prop during a drag. */
+/* inherits, or the value set on .sd-screen would never reach its own ::after */
+@property --sd-dim { syntax: "<number>"; inherits: true; initial-value: 0; }
+.sd-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  background: #000;
+  opacity: var(--sd-dim, 0);
+}
+.sd-screen[data-anim="under-in"]::after { animation: sd-dim-in var(--sd-nav) var(--sd-ease) both; }
+.sd-screen[data-anim="under-out"]::after { animation: sd-dim-out var(--sd-nav) var(--sd-ease) both; }
+@keyframes sd-dim-in { from { opacity: 0; } to { opacity: 0.08; } }
+@keyframes sd-dim-out { from { opacity: 0.08; } to { opacity: 0; } }
 
 /* the live drag of an edge-swipe back */
 .sd-screen.is-dragging { animation: none !important; transition: none; }
-.sd-screen.is-settling { animation: none !important; transition: transform 300ms var(--sd-ease), filter 300ms var(--sd-ease); }
+.sd-screen.is-dragging, .sd-screen.is-settling { box-shadow: -8px 0 24px rgba(0, 0, 0, 0.12); }
+.sd-screen.is-settling { animation: none !important; transition: transform var(--sd-nav) var(--sd-ease), --sd-dim var(--sd-nav) var(--sd-ease); }
 
 /* the invisible strip on the left edge that starts a swipe back */
 .sd-edge { position: absolute; left: 0; top: 44px; bottom: 0; width: 24px; z-index: 40; }

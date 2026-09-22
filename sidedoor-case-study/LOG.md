@@ -2747,3 +2747,34 @@ padding-bottom and its `:has(> .sd-actionblock)` override are gone. Screens that
 an action block are untouched: `.sd-actionblock` carries its own 112.
 
 Verified on localhost, not the Vercel preview.
+
+**Going back looked like two screens splitting apart.** A stack entry's `anim` records how that
+screen *entered*, and App.tsx was re-reading it every time the screen became the top again. So a
+pop replayed the revealed screen's entrance — for a tab root that is `fade-in`, a cross-fade with
+a `scale(1.03)` — at the same time as the screen above it slid off to the right. Two unrelated
+motions at once, which is exactly what reads as splitting. Nav now records **why** the top
+changed (`dir`, plus `poppedAnim`), and a pop plays `under-out` on the revealed screen: the exact
+reverse of the slide-and-dim it did on the way in, in step with the one sliding away.
+
+Four more things in the same pass, all of them about the motion being iOS-like rather than merely
+present:
+- **One duration.** `--sd-nav: 350ms` (UIKit's own push) drives both layers of a push and of a
+  pop. They were 420 in and 380 out, so the two screens drifted apart mid-move.
+- **The dim is a black sheet, not a filter.** `filter: brightness(0.92)` re-rasterises the whole
+  subtree every frame, which is what made the push stutter, and it cannot be driven from a style
+  prop during an edge-drag. It is now a `::after` over the under screen whose opacity is
+  `var(--sd-dim)`, registered with `@property` so it also transitions when a drag settles. It has
+  to inherit, or the value set on `.sd-screen` never reaches that screen's own `::after`.
+- **Percentages, not pixels.** The under screen travels `-30%` (iOS parallax) instead of a
+  hard-coded `-100px`, and the pushes use `100%` rather than `402px`/`874px`.
+- **The outgoing copy kept its shape and its place.** It mounts fresh, so it had no `has-tabs`
+  class and was scrolled back to the top: you would scroll down a job, tap back, and watch the
+  *top* of that screen slide away. The stack now remembers each screen's scroll position, keyed
+  by route name — not by the stack id, which counts up on the server and the client separately
+  and put a different number in the HTML on each side.
+
+Also dropped the `scale(1.03)` from the root cross-fade; it read as a pop, not a hand-off.
+
+Verified on localhost, not the Vercel preview: a push is `under-in` + `push-in`, a pop is
+`under-out` + `push-out`, and the leaving copy comes back with `has-tabs` and scrollTop 520 where
+it was left. `npx next build` passes.
