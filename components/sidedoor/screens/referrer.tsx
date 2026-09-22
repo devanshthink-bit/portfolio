@@ -689,9 +689,14 @@ const REFERRALS: Referral[] = [
 export function YourReferrals() {
   const nav = useNav();
   const { handled, unread, force } = useStore();
-  const [moved, setMoved] = useState<Record<string, Stage>>({});
+  // Figma "Updated": Aviral has just been moved on, so he leaves the waiting list
+  const { force: f0 } = useStore();
+  const [moved, setMoved] = useState<Record<string, Stage>>(
+    f0 === "referrals.updated" ? { "Aviral Dixit": "interviews" } : {}
+  );
   const abhinav = handled.abhinav;
   const none = force === "referrals.empty";
+  const loadingRefs = force === "referrals.loading";
   const stageOf = (r: Referral) => moved[r.name] ?? r.stage;
   const waiting = none ? [] : REFERRALS.filter((r) => r.days && stageOf(r) === "submitted");
   const all: Referral[] = none
@@ -757,6 +762,16 @@ export function YourReferrals() {
   return (
     <Screen largeTitle="Your referrals" right={<BellButton unread={unread} />}>
       <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
+        {/* Figma's empty and loading screens carry nothing else: no section labels */}
+        {loadingRefs ? (
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+          </div>
+        ) : none ? (
+          <p className="t-label muted">No referrals yet. When you refer someone, you’ll pass on their stage here.</p>
+        ) : (<>
         {!none && (
         <Section label="What your referrals reached" icon="flag.fill">
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
@@ -780,6 +795,10 @@ export function YourReferrals() {
         </Section>
         )}
 
+        {/* Figma "Updated": the green note sits between the record block and the waiting list */}
+        {force === "referrals.updated" && (
+          <Note style="success" icon="info.circle.fill">Updated. Aviral can see it.</Note>
+        )}
         {waiting.length > 0 && (
           <Section label={`Waiting on an update (${waiting.length})`} icon="clock.fill">
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
@@ -791,7 +810,7 @@ export function YourReferrals() {
 
         <Section label="All referrals · Interaction Designer" icon="briefcase.fill">
           {all.length === 0 ? (
-            <Empty icon="tray" title="No referrals yet" body="People you refer show up here, with where each one got to." />
+            <p className="t-label muted">No referrals yet. When you refer someone, you’ll pass on their stage here.</p>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               {/* Figma: no Update on an ending, nor on one submitted today (nothing to report yet) */}
@@ -799,6 +818,7 @@ export function YourReferrals() {
             </div>
           )}
         </Section>
+        </>)}
       </div>
     </Screen>
   );
@@ -833,12 +853,11 @@ export function ManagePosts() {
     >
       <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
         {none ? (
-          <Empty
-            icon="square.grid.2x2"
-            title="No posts yet"
-            body="Add a job and we fill in the rest from its description."
-            action={<Button onClick={() => nav.push("addJob")}>Add a job</Button>}
-          />
+          // Figma: one line and a blue button, no illustrated block
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            <p className="t-label muted">No posts yet. Post the job you can refer for, then share its link.</p>
+            <Button onClick={() => nav.push("addJob")}>Post a job</Button>
+          </div>
         ) : (
         <Section label="Flipkart · 4 posts" icon="briefcase.fill">
           {/* Figma: post cards 8 apart */}

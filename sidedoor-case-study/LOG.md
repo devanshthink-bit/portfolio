@@ -2652,3 +2652,19 @@ seconds after referring. Undo puts the request back. Toast is now 48 tall (14 of
 as Figma draws it.
 
 Verified on localhost, not the Vercel preview.
+
+## AUDIT · 2026-09-22 · States 27–31 of 36
+
+**27 · Your referrals / Empty (5288:28325)** — one line, no section labels: "No referrals
+yet. When you refer someone, you'll pass on their stage here."
+**28 · Your referrals / Updated (5288:28673)** — built. A green note "Updated. Aviral can
+see it." between the summary block and the waiting list; Aviral leaves the waiting list,
+so it reads (1).
+**29 · Your referrals / Loading (5311:38349)** — built: three skeleton cards, nothing else.
+**30 · Manage posts / Empty (5311:38215)** — "No posts yet. Post the job you can refer
+for, then share its link." over a blue "Post a job". Was an illustrated block with
+different words.
+**31 · Seen it move / Couldn't update (5288:29029)** — built. The reassuring line turns
+into a red "Couldn't update. Try again."; nothing else moves.
+
+Verified on localhost, not the Vercel preview.

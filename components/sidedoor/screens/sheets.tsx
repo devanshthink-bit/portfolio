@@ -77,7 +77,8 @@ export function SeenItMoveSheet({
 }) {
   const nav = useNav();
   const { dispatch } = useStore();
-  const failed = false;
+  const { force } = useStore();
+  const failed = force === "sheet.seen.error";
   const first = name.split(" ")[0];
   const stages: Stage[] = ["submitted", "interviews", "onhold", "selected", "notselected"];
   return (
@@ -86,13 +87,6 @@ export function SeenItMoveSheet({
       <p className="t-label muted" style={{ marginBottom: 12 }}>
         Where is it on Flipkart’s portal now? One tap.
       </p>
-      {failed && (
-        <div style={{ marginBottom: 12 }}>
-          <Note style="failure" icon="xmark.circle.fill">
-            Couldn’t update. Nothing changed — try again.
-          </Note>
-        </div>
-      )}
       <div style={{ marginBottom: 24 }}>
         <RadioList>
         {stages.map((s) => (
@@ -114,7 +108,12 @@ export function SeenItMoveSheet({
         </RadioList>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-        <Note>{first} sees it straight away.</Note>
+        {/* Figma's error swaps the reassuring line for a red one; nothing else changes */}
+        {failed ? (
+          <Note style="failure" icon="info.circle.fill">Couldn’t update. Try again.</Note>
+        ) : (
+          <Note>{first} sees it straight away.</Note>
+        )}
         <Button type="secondary" onClick={nav.closeSheet}>
           No change yet
         </Button>
