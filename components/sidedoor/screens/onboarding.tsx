@@ -338,8 +338,11 @@ export function UploadResume() {
 /* ── Candidate: check your details ──────────────────────────────────────── */
 export function CheckProfile() {
   const nav = useNav();
+  const { force } = useStore();
   const [linkedin, setLinkedin] = useState("");
   const [portfolio, setPortfolio] = useState("");
+  // Figma "Reading": the name block is already in, Experience and Projects are still coming
+  const reading = force === "profile.reading";
   return (
     <Screen
       title="Check your details"
@@ -347,7 +350,11 @@ export function CheckProfile() {
       actions={<Button onClick={() => nav.reset("tabs")}>See jobs</Button>}
     >
       <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
-        <p className="t-label muted">Filled from your resume. Check these before you send anything.</p>
+        <p className="t-label muted">
+          {reading
+            ? "Reading your resume. You can fill the rest while it works."
+            : "Filled from your resume. Check these before you send anything."}
+        </p>
 
         <Section label="From your resume" icon="person.fill" end={<TextButton>Edit</TextButton>}>
           <Box>
@@ -361,6 +368,7 @@ export function CheckProfile() {
         </Section>
 
         <Section label="Experience" icon="briefcase.fill" end={<TextButton>Edit</TextButton>}>
+          {reading ? <ReadingBox /> : (
           <Box>
             {/* Figma's ExperienceBlock is its own frame with a 16 gap, so the rows sit 16 apart
                 inside a box whose own gap is 12. A spacer div made it 12 + 16 + 12. */}
@@ -369,9 +377,11 @@ export function CheckProfile() {
               <CompanyRow logo="makemytrip" role="Associate Product Designer" company="MakeMyTrip" when="Jun 2022–Aug 2023" />
             </div>
           </Box>
+          )}
         </Section>
 
         <Section label="Projects" icon="folder.fill" end={<TextButton>Edit</TextButton>}>
+          {reading ? <ReadingBox /> : (
           <Box>
             {/* Same as Experience: ProjectBlock is a 16-gap frame, and the box's own 12 is what
                 separates it from the link below. */}
@@ -381,6 +391,7 @@ export function CheckProfile() {
             </div>
             <TextButton>Show project details</TextButton>
           </Box>
+          )}
         </Section>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -406,6 +417,20 @@ export function CheckProfile() {
         </Section>
       </div>
     </Screen>
+  );
+}
+
+/** Figma's "Reading" box: three grey bars — 220x16, then 300 and 160 at 12 tall, 12 apart. */
+function ReadingBox() {
+  const bar = (w: number, h: number) => (
+    <span style={{ width: w, height: h, borderRadius: 4, background: "var(--sd-border-subtle)", display: "block" }} />
+  );
+  return (
+    <Box>
+      {bar(220, 16)}
+      {bar(300, 12)}
+      {bar(160, 12)}
+    </Box>
   );
 }
 

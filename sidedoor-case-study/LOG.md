@@ -2535,3 +2535,12 @@ Verified on localhost, not the Vercel preview.
 - "What we'll auto fill" is not in this state; the error block takes its place.
 
 Verified on localhost, not the Vercel preview.
+
+## AUDIT · 2026-09-22 · States 2/36 · Check your details / Reading (5287:22385)
+
+Did not exist; built it. New state "Check your details · reading" under Waiting.
+- Intro reads "Reading your resume. You can fill the rest while it works."
+- Experience and Projects hold Figma's three grey bars (220x16, 300x12, 160x12, 12 apart)
+  instead of their content. Everything else on the screen is already filled in.
+
+Verified on localhost, not the Vercel preview.

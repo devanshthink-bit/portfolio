@@ -40,6 +40,7 @@ export const SCENARIOS: Scenario[] = [
 
   /* ── waiting ─────────────────────────────────────────────────────────── */
   { id: "jobs.loading", label: "Jobs · loading", group: "Waiting", role: "candidate", force: "jobs.loading", tab: "jobs" },
+  { id: "profile.reading", label: "Check your details · reading", group: "Waiting", role: "candidate", force: "profile.reading", tab: "jobs", push: [{ key: "uploadResume" }, { key: "checkProfile" }] },
   { id: "track.loading", label: "Track details · loading", group: "Waiting", role: "candidate", force: "track.loading", tab: "requests", push: [{ key: "trackDetails", props: { id: "flipkart" } }] },
   { id: "reqs.loading", label: "Referral requests · loading", group: "Waiting", role: "referrer", force: "reqs.loading", tab: "requests" },
 
