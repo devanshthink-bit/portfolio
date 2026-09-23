@@ -35,7 +35,7 @@
   --sd-text-dis: #9ca3af;
   --sd-link: #2563eb;
   --sd-text-success: #15803d;    /* successAA */
-  --sd-text-warning: #c93400;    /* warningAA */
+  --sd-text-warning: #8a6100;    /* warningAA: dark gold, 5.5:1 on white, 5.0:1 on the page (was #c93400, read as orange) */
   --sd-text-error: #b91c1c;      /* errorAA */
   --sd-text-info: #1d4eb2;       /* infoAA */
   --sd-placeholder: #6b7280;
@@ -51,7 +51,7 @@
   --sd-action-fg-dis: #5f6671;
   --sd-icon: #3b3f46;
   --sd-icon-2: #6b7280;
-  --sd-icon-warning: #c93400;
+  --sd-icon-warning: #8a6100;
   --sd-apple: #000000;
   --sd-ios-green: #34c759;
   --sd-ios-red: #ff3b30;

@@ -29,7 +29,7 @@ import {
   TextButton,
 } from "../ui";
 import { BellButton, ReferralBar } from "./candidate";
-import { CompanyRow, DocUpload, Project, ReadingBox } from "./onboarding";
+import { CompanyRow, DocUpload, Projects, ReadingBox } from "./onboarding";
 
 /* ── Messages ───────────────────────────────────────────────────────────── */
 type Chat = { name: string; last: string; when: string; unread?: number };
@@ -461,11 +461,7 @@ export function EditDetails() {
 
         <Section label="Projects" icon="folder.fill" end={<TextButton>Edit</TextButton>}>
           <Box>
-            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-              <Project title="Blinkit Merchant App UX Revamp" skills={["Product strategy", "Systems design", "Prototyping", "User research", "Figma"]} />
-              <Project title="MakeMyTrip Booking Experience Redesign" skills={["User research", "Interaction design", "Usability testing", "Figma"]} />
-            </div>
-            <TextButton>Show project details</TextButton>
+            <Projects />
           </Box>
         </Section>
 
@@ -535,7 +531,7 @@ export function EditProfileReferrer() {
             label="Company"
             icon="building.2.fill"
             value="Flipkart"
-            lead={<Image src="/images/sidedoor/flipkart-icon.png" alt="" width={22} height={22} style={{ width: 22, height: 22 }} />}
+            lead={<Image src="/images/sidedoor/flipkart-icon.svg" alt="" width={22} height={22} style={{ width: 22, height: 22 }} unoptimized />}
           />
           <Field label="Your role" icon="briefcase.fill" value={role} onChange={setRole} />
           <Field label="Where you work from" icon="mappin.and.ellipse" value={city} onChange={setCity} />

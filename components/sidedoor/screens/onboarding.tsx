@@ -423,11 +423,7 @@ export function CheckProfile() {
           <Box>
             {/* Same as Experience: ProjectBlock is a 16-gap frame, and the box's own 12 is what
                 separates it from the link below. */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-              <Project title="Blinkit Merchant App UX Revamp" skills={["Product strategy", "Systems design", "Prototyping", "User research", "Figma"]} />
-              <Project title="MakeMyTrip Booking Experience Redesign" skills={["User research", "Interaction design", "Usability testing", "Figma"]} />
-            </div>
-            <TextButton>Show project details</TextButton>
+            <Projects />
           </Box>
           )}
         </Section>
@@ -488,16 +484,45 @@ export function CompanyRow({ logo, role, company, when }: { logo: string; role: 
   );
 }
 
-export function Project({ title, skills }: { title: string; skills: string[] }) {
+export function Project({ title, skills, detail }: { title: string; skills: string[]; detail?: string }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
       <span className="t-h-sm">{title}</span>
+      {detail && <p className="t-body muted">{detail}</p>}
       <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
         {skills.map((s) => (
           <Tag key={s}>{s}</Tag>
         ))}
       </div>
     </div>
+  );
+}
+
+const PROJECTS = [
+  {
+    title: "Blinkit Merchant App UX Revamp",
+    skills: ["Product strategy", "Systems design", "Prototyping", "User research", "Figma"],
+    detail: "Rebuilt order intake for 4,000 dark-store merchants. Cut the time to accept an order from 40s to 12s.",
+  },
+  {
+    title: "MakeMyTrip Booking Experience Redesign",
+    skills: ["User research", "Interaction design", "Usability testing", "Figma"],
+    detail: "Redesigned hotel checkout from five steps to three. Drop-off at payment fell 18% in the A/B test.",
+  },
+];
+
+/** The two projects, and the link under them that opens and closes a line about each. */
+export function Projects() {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+        {PROJECTS.map((p) => (
+          <Project key={p.title} title={p.title} skills={p.skills} detail={open ? p.detail : undefined} />
+        ))}
+      </div>
+      <TextButton onClick={() => setOpen((o) => !o)}>{open ? "Hide project details" : "Show project details"}</TextButton>
+    </>
   );
 }
 

@@ -28,7 +28,7 @@ import {
   logoSrc,
 } from "../ui";
 import { BellButton } from "./candidate";
-import { CompanyRow, Project, RuleRow } from "./onboarding";
+import { CompanyRow, Projects, RuleRow } from "./onboarding";
 
 type Req = {
   id: string;
@@ -474,11 +474,7 @@ export function ReferralRequest({ id }: { id: string }) {
 
         <Section label="Projects" icon="folder.fill">
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-              <Project title="Blinkit Merchant App UX Revamp" skills={["Product strategy", "Systems design", "Prototyping", "User research", "Figma"]} />
-              <Project title="MakeMyTrip Booking Experience Redesign" skills={["User research", "Interaction design", "Usability testing", "Figma"]} />
-            </div>
-            <TextButton>Show project details</TextButton>
+            <Projects />
           </div>
         </Section>
 
@@ -495,7 +491,7 @@ export function ReferralRequest({ id }: { id: string }) {
             {/* Figma's LinkBlock is three 20 marks, 8 apart. */}
             <div style={{ display: "flex", gap: 8 }}>
               {["linkedin", "dribbble", "behance"].map((l) => (
-                <Image key={l} src={`/images/sidedoor/${l}.png`} alt={l} width={20} height={20} style={{ width: 20, height: 20 }} />
+                <Image key={l} src={`/images/sidedoor/${l}.svg`} alt={l} width={20} height={20} style={{ width: 20, height: 20 }} unoptimized />
               ))}
             </div>
           </div>
