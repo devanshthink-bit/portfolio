@@ -1038,7 +1038,7 @@ export function RadioList({ children }: { children: ReactNode }) {
 
 /* ── sheets ─────────────────────────────────────────────────────────────── */
 /** A bottom sheet you can drag down to dismiss, like every iOS sheet. */
-export function Sheet({ title, children, onClose, leaving }: { title?: string; children: ReactNode; onClose: () => void; leaving?: boolean }) {
+export function Sheet({ title, children, onClose, leaving, closeButton }: { title?: string; children: ReactNode; onClose: () => void; leaving?: boolean; closeButton?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const start = useRef<number | null>(null);
   const [dy, setDy] = useState(0);
@@ -1078,6 +1078,14 @@ export function Sheet({ title, children, onClose, leaving }: { title?: string; c
         onPointerCancel={up}
       >
         <span className="sd-grab" />
+        {closeButton && (
+          // the iOS sheet close: a grey disc with an × at the top right, level with the title
+          <button className="sd-sheet-x" aria-label="Close" onClick={onClose}>
+            <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+              <path d="M1.5 1.5l9 9M10.5 1.5l-9 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          </button>
+        )}
         {title && (
           // Figma, every sheet: the title sits 24 under the handle in a 22-tall box, 12 above the content
           <div style={{ paddingBottom: 12 }}>

@@ -95,42 +95,47 @@ export function SeenItMoveSheet({
   const failed = force === "sheet.seen.error";
   const first = name.split(" ")[0];
   const stages: Stage[] = ["submitted", "interviews", "onhold", "selected", "notselected"];
+  // pick first, then Update: nothing changes until they press it (Devansh, 23 Sep).
+  // The failed state is what they see after trying In interviews, so it opens on that pick.
+  const [pick, setPick] = useState<Stage>(failed ? "interviews" : "submitted");
+  const update = () => {
+    // the failed state stays failed: the update didn't go through
+    if (failed || pick === "submitted") return;
+    const s = pick;
+    onPick?.(s);
+    // the candidate's timeline moves from here, not from a separate screen
+    const live = name === "Abhinav Saxena";
+    const before = handled.abhinav;
+    if (live) dispatch({ t: "handle", id: "abhinav", stage: s });
+    decide(
+      `${STAGE_LABEL[s]}. ${first} is told in 5 seconds.`,
+      () => {
+        onUndo?.();
+        if (live && before) dispatch({ t: "handle", id: "abhinav", stage: before.stage, reason: before.reason });
+      },
+      () => {
+        if (live) dispatch({ t: "tell", stage: s });
+      }
+    );
+    nav.closeSheet();
+  };
   return (
-    <Sheet title="Seen it move?" onClose={nav.closeSheet} leaving={leaving}>
+    <Sheet title="Seen it move?" onClose={nav.closeSheet} leaving={leaving} closeButton>
       <SheetPerson name={name} role={role} tag={<Tag>{since}</Tag>} />
       <p className="t-label muted" style={{ marginBottom: 12 }}>
-        Where is it on Flipkart’s portal now? One tap.
+        Where is it on Flipkart’s portal now?
       </p>
       <div style={{ marginBottom: 24 }}>
         <RadioList>
-        {stages.map((s) => (
-          <RadioOption
-            key={s}
-            title={STAGE_LABEL[s]}
-            sub={s === "submitted" ? since.replace("Submitted ", "") : undefined}
-            on={s === "submitted"}
-            onClick={() => {
-              // the failed state stays failed: the tap didn't go through
-              if (failed) return;
-              onPick?.(s);
-              // the candidate's timeline moves from here, not from a separate screen
-              const live = name === "Abhinav Saxena";
-              const before = handled.abhinav;
-              if (live) dispatch({ t: "handle", id: "abhinav", stage: s });
-              decide(
-                `${STAGE_LABEL[s]}. ${first} is told in 5 seconds.`,
-                () => {
-                  onUndo?.();
-                  if (live && before) dispatch({ t: "handle", id: "abhinav", stage: before.stage, reason: before.reason });
-                },
-                () => {
-                  if (live) dispatch({ t: "tell", stage: s });
-                }
-              );
-              nav.closeSheet();
-            }}
-          />
-        ))}
+          {stages.map((s) => (
+            <RadioOption
+              key={s}
+              title={STAGE_LABEL[s]}
+              sub={s === "submitted" ? since.replace("Submitted ", "") : undefined}
+              on={s === pick}
+              onClick={() => setPick(s)}
+            />
+          ))}
         </RadioList>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -140,8 +145,8 @@ export function SeenItMoveSheet({
         ) : (
           <Note>{first} is told in 5 seconds. You can undo.</Note>
         )}
-        <Button type="secondary" onClick={nav.closeSheet}>
-          No change yet
+        <Button onClick={update} disabled={pick === "submitted"}>
+          Update
         </Button>
       </div>
     </Sheet>

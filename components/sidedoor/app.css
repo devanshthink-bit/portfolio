@@ -677,6 +677,12 @@
 @keyframes sd-sheet-in { from { transform: translateY(100%); } to { transform: translateY(0); } }
 @keyframes sd-sheet-out { from { transform: translateY(0); } to { transform: translateY(100%); } }
 .sd-grab { width: 68px; height: 6px; border-radius: 3px; background: var(--sd-border); margin: 0 auto 24px; flex: 0 0 auto; }
+/* close: 30 disc, 44 tap area; centred on the 22-tall title row that starts 42 down */
+.sd-sheet-x {
+  position: absolute; top: 38px; right: 16px; width: 30px; height: 30px; border-radius: 50%;
+  display: grid; place-items: center; background: rgba(118, 118, 128, 0.12); color: var(--sd-icon-2);
+}
+.sd-sheet-x::after { content: ""; position: absolute; inset: -7px; }
 .sd-sheet-title { font-weight: 600; font-size: 16px; line-height: 24px; text-align: center; }
 .sd-sheet-body { overflow-y: auto; scrollbar-width: none; }
 .sd-sheet-body::-webkit-scrollbar { display: none; }

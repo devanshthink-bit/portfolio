@@ -634,7 +634,7 @@ function AfterRefer({ id }: { id: string }) {
                     <Icon
                       name={copied.includes(f.name) ? "checkmark" : f.download ? "square.and.arrow.down" : "doc.on.doc.fill"}
                       size={18}
-                      style={{ color: copied.includes(f.name) ? "var(--sd-text-success)" : "var(--sd-icon-accent)" }}
+                      style={{ color: "var(--sd-icon-accent)" }}
                     />
                   </button>
                 </div>

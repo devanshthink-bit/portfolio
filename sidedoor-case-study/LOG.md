@@ -3039,3 +3039,19 @@ Caveat noted: #fafafa fields on white and white fields on #f2f2f7 both have fain
   - New "Referrer/Referral Requests Screen/Invited" frame: Shreya's button swapped to the Done variant.
   - Invite on the three screens that show it opens the alert as an overlay. Cancel closes it; Invite goes to the Invited screen.
 - Verified on localhost only: Cancel leaves "Invite"; Invite turns it to "Invited".
+
+## 23 Sep 2026 · Seen it move: pick, then Update
+- Devansh: the tick colour was off, and the sheet should update only after they pick and press a button. No "No change yet"; close with an × or by tapping outside.
+- **Tick:** a copied portal detail turned its icon into a green tick. It's now brand blue like every other icon. The sheet's selection tick was already blue. Figma has no "copied" frame, so this is code only.
+- **Sheet (code + Figma):**
+  - Tapping a stage only moves the tick.
+  - New primary **Update** button at the bottom: disabled until they pick a stage other than the current one. Update does what a tap did before (5-second undo toast, then the candidate is told).
+  - "No change yet" removed.
+  - New iOS close at the top right: a 30 grey disc (rgba(118,118,128,.12)) with an × in icon/secondary, level with the title. The tap area is 44.
+  - Tapping the dimmed area still closes it.
+  - "One tap." cut from the question, since it is two taps now.
+- The "couldn't update" state now opens with In interviews picked and Update live, since the error is what you see after pressing it.
+- Figma:
+  - RadioOption got a "Show Detail" boolean, so "12 days ago" stays under Submitted whichever row is selected. Before, the date lived only in the Selected variant.
+  - New frame "Update Sheet/Seen It Move/Picked". Tapping In interviews on the sheet swaps to it; its Update closes the sheet and goes to "Your Referrals Screen/Updated".
+- Verified on localhost only.
