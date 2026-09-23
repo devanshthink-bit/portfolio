@@ -2900,3 +2900,12 @@ Caveat noted: #fafafa fields on white and white fields on #f2f2f7 both have fain
 - Deleted `warning/700` (#8A6100): no variable or node used it after the amber change.
 - Code: `--sd-page` now points to the existing `--sd-n75` instead of repeating the hex.
 - Naming oddity, not changed: neutral/650 (#5F6671) is darker than neutral/700 (#636A75).
+
+## 2026-09-23 · Screens sit on a light brand blue, not grey
+
+- Devansh: the grey #F2F2F7 made the UI feel muted. The screen background is now `brand/blue/25` #EFF3FC, a very light tint of the brand blue. White cards stand out on it about as much as on the grey (similar lightness), so the layout is unchanged.
+- Contrast holds: secondary text #636A75 on the new page is 5.0:1; dark amber #92400E is 6.3:1.
+- Code: new `--sd-blue-25`; `--sd-page` points to it. The header glass and the fixed-button fade used the grey in rgba, now the blue. The login screen uses `--sd-page`.
+- The login illustration (splash.png) had a grey box baked into it. It's now transparent (background and enclosed pockets cleared), in code and in the Figma Illustration/Splash component.
+- Figma: new `color/palette/brand/blue/25`; `color/background/grouped` points to it, so all 165 V6 screens follow. The 8 "Fixed Actions" fades were recoloured by hand (gradients can't take variables). Swatch added to the 🎨 Colors page.
+- Verified on localhost only.
