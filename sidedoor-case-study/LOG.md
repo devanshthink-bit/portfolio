@@ -2927,5 +2927,5 @@ Caveat noted: #fafafa fields on white and white fields on #f2f2f7 both have fain
 - Fields and search: white, 1px `border/default` #D1D3D8 inside, no shadow. Focus: 2px blue. Error: 1px red. Same inside a card or box (the grey Filled fill inside boxes is gone).
 - Cards, lists and boxes keep `effect/card`.
 - Figma: all 9 InputField variants now white + 1px border/default, no effect (error variants keep their red stroke). Loose "Input" frames on V6 screens (4 + 6) lose effect/card and get the border. The Messages search uses InputField, so it follows.
-- Trade-off: #D1D3D8 is about 1.5:1 against the page, under the 3:1 guideline for input edges. The label above every field names it, so the field is still identifiable. A darker edge (e.g. #9CA3AF, 2.5:1) looked heavy.
+- Trade-off: #D1D3D8 is about 1.5:1 against the page, under the 3:1 guideline for input edges. The label above every field names it, so the field is still identifiable.
 - Verified on localhost only.
