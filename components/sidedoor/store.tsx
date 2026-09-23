@@ -109,7 +109,7 @@ const initial: State = {
   // the live request the prototype drives; the rest are history so the list is not a single row.
   requests: [
     { id: "flipkart", referrer: "Nithin Agarwal", referrerRole: "Design Manager, Flipkart", company: "Flipkart", logo: "flipkart", job: "Interaction Designer", jobId: "184223", stage: "sent", updated: "Today", live: true, ...ABHINAV },
-    { id: "swiggy", referrer: "Joy Sehgal", referrerRole: "Design Manager, Swiggy", company: "Swiggy", logo: "swiggy", job: "Product Designer-I", jobId: "170884", stage: "selected", updated: "11:11 am", since: "2 Aug" },
+    { id: "swiggy", referrer: "Joy Sehgal", referrerRole: "Design Manager, Swiggy", company: "Swiggy", logo: "swiggy", job: "Product Designer-I", jobId: "170884", stage: "selected", updated: "11:11 AM", since: "2 Aug" },
     { id: "google", referrer: "Advika Singh", referrerRole: "Product Designer-II, Google", company: "Google", logo: "google", job: "Interaction Designer", jobId: "G-4471", stage: "referred", updated: "Yesterday" },
     { id: "cred", referrer: "Abhay Verma", referrerRole: "Product Designer-I, CRED", company: "CRED", logo: "cred", job: "Product Designer-II", jobId: "CR-220", stage: "notselected", updated: "Thursday" },
     { id: "razorpay", referrer: "Aviral Dixit", referrerRole: "UX Designer, Razorpay", company: "Razorpay", logo: "razorpay", job: "Design Lead", jobId: "RZP-91", stage: "interviews", updated: "Tuesday" },

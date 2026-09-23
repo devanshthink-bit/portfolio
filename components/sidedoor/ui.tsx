@@ -506,7 +506,7 @@ export function Row({
 }) {
   return (
     <div className={`sd-row${onClick ? " is-tap" : ""}`} onClick={onClick} role={onClick ? "button" : undefined}>
-      {/* Figma list row: 26 icon, Medium 14/20 label, 24 chevron in the icon grey */}
+      {/* list row: 26 icon, Medium 14/20 label, a small light-grey chevron as iOS draws it */}
       {icon && <Icon name={icon} size={26} color={destructive ? "var(--sd-ios-red)" : "tone"} />}
       <span className="t-label" style={{ color: destructive ? "var(--sd-ios-red)" : "var(--sd-text)" }}>
         {children}
@@ -514,7 +514,7 @@ export function Row({
       {end && <span style={{ marginLeft: "auto" }}>{end}</span>}
       {chevron && (
         <span className="sd-row-chev" style={{ marginLeft: end ? 6 : "auto" }}>
-          <Icon name="chevron.right" size={24} style={{ color: "var(--sd-icon-2)" }} />
+          <Icon name="chevron.right" size={16} style={{ color: "var(--sd-n400)" }} />
         </span>
       )}
     </div>
@@ -1089,7 +1089,7 @@ export function Sheet({ title, children, onClose, leaving, closeButton }: { titl
         {title && (
           // Figma, every sheet: the title sits 24 under the handle in a 22-tall box, 12 above the content
           <div style={{ paddingBottom: 12 }}>
-            <h2 className="sd-sheet-title" style={{ height: 22 }}>{title}</h2>
+            <h2 className="sd-sheet-title" style={{ height: 22, padding: closeButton ? "0 40px" : undefined }}>{title}</h2>
           </div>
         )}
         <div className="sd-sheet-body" data-lenis-prevent>{children}</div>
@@ -1206,22 +1206,33 @@ export function SkeletonCard() {
  * a full-width primary button 12 below it — no icon disc, no separate heading. `icon` is kept
  * on the signature so call sites read the same, and is not drawn.
  */
+/** The iOS empty and error screen (ContentUnavailableView): a mark, a short title, one line,
+ *  then the action, all centred. Errors get a red mark and a Try again button. */
 export function Empty({
   icon,
   title,
   body,
   action,
+  error,
 }: {
   icon?: IconName;
   title: string;
   body?: string;
   action?: ReactNode;
+  error?: boolean;
 }) {
-  const line = body ? `${title.replace(/\.$/, "")}. ${body}` : title;
   return (
-    <div className="sd-empty">
-      <p className="t-label muted">{line}</p>
-      {action}
+    <div className="sd-empty" role={error ? "alert" : undefined}>
+      <Icon
+        name={error ? "info.circle.fill" : icon ?? "tray.fill"}
+        size={44}
+        style={{ color: error ? "var(--sd-text-error)" : "var(--sd-icon-accent)" }}
+      />
+      <div className="sd-empty-txt">
+        <h2 className="t-h-md">{title}</h2>
+        {body && <p className="t-body muted">{body}</p>}
+      </div>
+      {action && <div className="sd-empty-action">{action}</div>}
     </div>
   );
 }

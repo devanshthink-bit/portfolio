@@ -124,21 +124,17 @@ export function ReferralRequests() {
           </div>
         ) : failed ? (
           // Figma: a red note and one line, 24 under the job row, and no suggested people
-          <div style={{ paddingTop: 16, display: "flex", flexDirection: "column", gap: 8 }}>
-            <Note style="failure" icon="info.circle.fill">
-              Couldn’t load requests
-            </Note>
-            <p className="t-label muted" onClick={() => dispatch({ t: "force", v: null })}>
-              Pull down to try again.
-            </p>
-          </div>
+          <Empty
+            error
+            title="Couldn’t load requests"
+            body="Check your connection and try again."
+            action={<Button type="secondary" onClick={() => dispatch({ t: "force", v: null })}>Try again</Button>}
+          />
         ) : force === "reqs.empty" ? (
           // Figma's empty screen is not the generic Empty block: it is the line, the referrer's
           // link in a 44-tall box, and a Copy link button — and it shows no suggested people.
           <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-            <p className="t-label muted">
-              No referral requests yet. Share your link when someone messages you about this job.
-            </p>
+            <Empty icon="tray.fill" title="No requests yet" body="Share your link when someone messages you about this job." />
             <Section label="Your link" icon="link">
               <div
                 style={{
@@ -163,7 +159,7 @@ export function ReferralRequests() {
         ) : allHandled ? (
           // Figma "All handled": the line sits under the job row, then the link box and Copy link
           <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-            <p className="t-label muted">You’re through every request for this job. Share your link to get more.</p>
+            <Empty icon="checkmark.circle.fill" title="You’re through every request" body="Share your link to get more for this job." />
             <Section label="Your link" icon="link">
               <div
                 style={{
@@ -333,7 +329,7 @@ export function ReferralRequest({ id }: { id: string }) {
     return (
       <Screen title="Referral request" back>
         <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
-          <PersonHead name={r.name} role={r.role} tag={<Tag>Sent {r.when}</Tag>} />
+          <PersonHead name={r.name} role={r.role} when={`Sent ${r.when.toLowerCase()}`} />
           {/* Figma's "Not Enough To Judge": the same Window, but with no shared history, no fit
               rows and no projects — just the facts, one line saying why, and the decision. */}
           <div className="sd-card" style={{ display: "flex", flexDirection: "column", gap: 24 }}>
@@ -395,7 +391,7 @@ export function ReferralRequest({ id }: { id: string }) {
   return (
     <Screen title="Referral request" back>
       <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
-        <PersonHead name={r.name} role={r.role} tag={<Tag>Sent {r.when.toLowerCase()}</Tag>} />
+        <PersonHead name={r.name} role={r.role} when={`Sent ${r.when.toLowerCase()}`} />
 
         {/* Figma holds this whole screen in one white "Window" card, padded 16 with a 24 gap —
             every block below is a plain frame inside it, not a card of its own, and the two
@@ -516,16 +512,19 @@ export function ReferralRequest({ id }: { id: string }) {
   );
 }
 
-function PersonHead({ name, role, tag }: { name: string; role: string; tag: React.ReactNode }) {
-  // Figma's Person row is 50 tall: a 44 avatar centred, a Semi Bold 16/24 name, and the tag
-  // pushed to the right edge of the row rather than packed against the role.
+function PersonHead({ name, role, when, tag }: { name: string; role: string; when?: string; tag?: React.ReactNode }) {
+  // Like the list cards: a 44 avatar, the name with its time in plain grey on the right, the role
+  // under it. A status (Referred, Not moving forward) stays a tag at the end of the role line.
   return (
     <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
       <Avatar name={name} size={44} />
-      <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1, minWidth: 0 }}>
-        <span className="t-h-sm sd-1line">{name}</span>
+      <div style={{ display: "flex", flexDirection: "column", flex: 1, minWidth: 0 }}>
+        <span className="sd-lc-head">
+          <span className="sd-lc-title"><span>{name}</span></span>
+          {when && <span className="sd-lc-when">{when}</span>}
+        </span>
         <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <span className="sd-person-sub sd-2line" style={{ flex: 1 }}>{role}</span>
+          <span className="sd-lc-line" style={{ flex: 1 }}>{role}</span>
           {tag}
         </span>
       </div>
@@ -783,7 +782,7 @@ export function YourReferrals() {
             <SkeletonCard />
           </div>
         ) : none ? (
-          <p className="t-label muted">No referrals yet. When you refer someone, you’ll pass on their stage here.</p>
+          <Empty icon="person.2.fill" title="No referrals yet" body="When you refer someone, you’ll pass on their stage here." />
         ) : (<>
         {!none && (
         <Section label="What your referrals reached" icon="flag.fill">
@@ -868,11 +867,12 @@ export function ManagePosts() {
     >
       <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
         {none ? (
-          // Figma: one line and a blue button, no illustrated block
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <p className="t-label muted">No posts yet. Post the job you can refer for, then share its link.</p>
-            <Button onClick={() => nav.push("addJob")}>Post a job</Button>
-          </div>
+          <Empty
+            icon="briefcase.fill"
+            title="No posts yet"
+            body="Post the job you can refer for, then share its link."
+            action={<Button onClick={() => nav.push("addJob")}>Post a job</Button>}
+          />
         ) : (
         <Section label="Flipkart · 4 posts" icon="briefcase.fill">
           {/* Figma: post cards 8 apart */}

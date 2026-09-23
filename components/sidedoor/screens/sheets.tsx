@@ -31,7 +31,7 @@ export function NotMovingSheet({ id, name, role, match, leaving }: { id: string;
   const first = name.split(" ")[0];
   const reasons = ["Experience doesn’t match", "Skills don’t match", "Role is closed", "Can’t refer for this team"];
   return (
-    <Sheet title={`Not moving forward with ${first}?`} onClose={nav.closeSheet} leaving={leaving}>
+    <Sheet title={`Not moving forward with ${first}?`} onClose={nav.closeSheet} leaving={leaving} closeButton>
       {/* Figma: "4 of 7 skills match" — the skills half of the card's match line */}
       <SheetPerson name={name} role={role} tag={<Tag style="primary">{`${match.split(" · ")[0]} match`}</Tag>} />
       <p className="t-label muted" style={{ marginBottom: 12 }}>
@@ -63,9 +63,6 @@ export function NotMovingSheet({ id, name, role, match, leaving }: { id: string;
           }}
         >
           Not moving forward
-        </Button>
-        <Button type="secondary" onClick={nav.closeSheet}>
-          Cancel
         </Button>
       </div>
     </Sheet>
@@ -174,7 +171,7 @@ export function ShareLinkSheet({ leaving }: { leaving?: boolean }) {
     { name: "WhatsApp", img: "whatsapp-2026", w: 32, h: 32 },
   ];
   return (
-    <Sheet title="Share your link" onClose={nav.closeSheet} leaving={leaving}>
+    <Sheet title="Share your link" onClose={nav.closeSheet} leaving={leaving} closeButton>
       <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
         {/* Figma: the icon and label sit at the left padding (32), not centred; a 24 link glyph */}
         <Button
@@ -235,10 +232,6 @@ export function ShareLinkSheet({ leaving }: { leaving?: boolean }) {
             ))}
           </div>
         </div>
-
-        <Button type="secondary" onClick={nav.closeSheet}>
-          Cancel
-        </Button>
       </div>
     </Sheet>
   );
@@ -250,7 +243,7 @@ export function DobSheet({ leaving }: { leaving?: boolean }) {
   const { dispatch } = useStore();
   const [value, setValue] = useState("14 March 1997");
   return (
-    <Sheet title="Date of birth" onClose={nav.closeSheet} leaving={leaving}>
+    <Sheet title="Date of birth" onClose={nav.closeSheet} leaving={leaving} closeButton>
       <WheelDate onPick={setValue} />
       <div style={{ height: 16 }} />
       <Button
@@ -270,7 +263,7 @@ export function AddResumeSheet({ leaving }: { leaving?: boolean }) {
   const nav = useNav();
   const { dispatch } = useStore();
   return (
-    <Sheet title="Add your resume to ask" onClose={nav.closeSheet} leaving={leaving}>
+    <Sheet title="Add your resume to ask" onClose={nav.closeSheet} leaving={leaving} closeButton>
       <p className="t-body muted" style={{ marginBottom: 16 }}>
         Referrers need it before they can act. It takes one upload, and we fill in the rest.
       </p>
@@ -283,9 +276,6 @@ export function AddResumeSheet({ leaving }: { leaving?: boolean }) {
           }}
         >
           Add resume
-        </Button>
-        <Button type="secondary" onClick={nav.closeSheet}>
-          Not now
         </Button>
       </div>
     </Sheet>

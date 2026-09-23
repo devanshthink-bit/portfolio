@@ -40,15 +40,15 @@ import { DocUpload, ExperienceBlock, FileBox, ProjectsBlock, ReadingBox, ResumeD
 type Chat = { name: string; last: string; when: string; unread?: number };
 
 const CANDIDATE_CHATS: Chat[] = [
-  { name: "Nithin Agarwal", last: "Yeah, you will get notification of every update.", when: "3:31 pm", unread: 1 },
-  { name: "Vanya Kapoor", last: "Can you send your detailed CV?", when: "11:24 am", unread: 3 },
+  { name: "Nithin Agarwal", last: "Yeah, you will get notification of every update.", when: "3:31 PM", unread: 1 },
+  { name: "Vanya Kapoor", last: "Can you send your detailed CV?", when: "11:24 AM", unread: 3 },
   { name: "Avinash Banerjee", last: "We can discuss over call.", when: "Yesterday" },
   { name: "Abhishek Tyagi", last: "Sent your profile to the hiring team.", when: "Monday" },
 ];
 
 const REFERRER_CHATS: Chat[] = [
-  { name: "Abhinav Saxena", last: "Sure, can we get on a quick call?", when: "2:30 pm", unread: 2 },
-  { name: "Aarush Gupta", last: "Thanks, Nithin.", when: "10:17 am", unread: 3 },
+  { name: "Abhinav Saxena", last: "Sure, can we get on a quick call?", when: "2:30 PM", unread: 2 },
+  { name: "Aarush Gupta", last: "Thanks, Nithin.", when: "10:17 AM", unread: 3 },
   { name: "Ayesha Sharma", last: "It was great, will let you know updates.", when: "Yesterday", unread: 1 },
   { name: "Himani Kaushik", last: "Okay, I will ping her.", when: "Tuesday" },
 ];
@@ -57,7 +57,7 @@ const isReferrerRole = (r: string | null) => r === "referrer";
 
 export function Messages() {
   const nav = useNav();
-  const { role, unread, force } = useStore();
+  const { role, unread, force, dispatch } = useStore();
   const [q, setQ] = useState(force === "messages.search" ? "Rahul" : "");
   const base = role === "referrer" ? REFERRER_CHATS : CANDIDATE_CHATS;
   const all = force === "messages.empty" ? [] : base;
@@ -99,27 +99,27 @@ export function Messages() {
             ))}
           </div>
         ) : failed ? (
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            <Note style="failure" icon="info.circle.fill">
-              Couldn’t load messages
-            </Note>
-            <p className="t-label muted">Pull down to try again.</p>
-          </div>
+          <Empty
+            error
+            title="Couldn’t load messages"
+            body="Check your connection and try again."
+            action={<Button type="secondary" onClick={() => dispatch({ t: "force", v: null })}>Try again</Button>}
+          />
         ) : shown.length === 0 ? (
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <p className="t-label muted">
-              {q
-                ? `No chats match “${q}”.`
-                : asTab
-                  ? "No messages yet. A chat opens when a referrer refers you."
-                  : "No messages yet. A chat opens when you refer someone."}
-            </p>
-            {!q && (
-              <Button onClick={() => nav.reset("tabs", { tab: "requests" })}>
-                {asTab ? "See your requests" : "See referral requests"}
-              </Button>
-            )}
-          </div>
+          q ? (
+            <Empty icon="magnifyingglass" title={`No results for “${q}”`} body="Check the spelling or try a new search." />
+          ) : (
+            <Empty
+              icon="bubble.left.fill"
+              title="No messages yet"
+              body={asTab ? "A chat opens when a referrer refers you." : "A chat opens when you refer someone."}
+              action={
+                <Button onClick={() => nav.reset("tabs", { tab: "requests" })}>
+                  {asTab ? "See your requests" : "See referral requests"}
+                </Button>
+              }
+            />
+          )
         ) : (
           <ListGroup>
             {shown.map((c) => (
@@ -144,7 +144,7 @@ export function Messages() {
                   </span>
                 </span>
                 <span style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 8, flex: "0 0 auto" }}>
-                  <span className="t-label-sm muted">{c.when}</span>
+                  <span className="sd-lc-when">{c.when}</span>
                   {c.unread && (
                     <span
                       style={{
@@ -182,15 +182,15 @@ export function ChatScreen({ who = "Nithin Agarwal" }: { who?: string }) {
   const [msgs, setMsgs] = useState<Msg[]>(
     isReferrer
       ? [
-          { me: false, text: "Thanks for the referral! Anything I should prepare?", at: "2:10 pm" },
-          { me: true, text: "Brush up the checkout case study. They ask about it.", at: "2:18 pm" },
-          { me: false, text: "Sure, can we get on a quick call?", at: "2:30 pm" },
+          { me: false, text: "Thanks for the referral! Anything I should prepare?", at: "2:10 PM" },
+          { me: true, text: "Brush up the checkout case study. They ask about it.", at: "2:18 PM" },
+          { me: false, text: "Sure, can we get on a quick call?", at: "2:30 PM" },
         ]
       : [
-          { me: true, text: "Thanks for referring me, Nithin!", at: "3:10 pm" },
-          { me: false, text: "Happy to help. I’ve submitted it on our portal.", at: "3:20 pm" },
-          { me: true, text: "Will I know when it moves?", at: "3:28 pm" },
-          { me: false, text: "Yeah, you will get notification of every update.", at: "3:31 pm" },
+          { me: true, text: "Thanks for referring me, Nithin!", at: "3:10 PM" },
+          { me: false, text: "Happy to help. I’ve submitted it on our portal.", at: "3:20 PM" },
+          { me: true, text: "Will I know when it moves?", at: "3:28 PM" },
+          { me: false, text: "Yeah, you will get notification of every update.", at: "3:31 PM" },
         ]
   );
   const [draft, setDraft] = useState("");
@@ -215,66 +215,66 @@ export function ChatScreen({ who = "Nithin Agarwal" }: { who?: string }) {
       </div>
       <div className="sd-body" data-lenis-prevent>
         <div className="sd-pad" style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 16 }}>
-          {/* the request this chat is about, drawn with the same ReferralBar as the list */}
-          <ReferralBar r={live} />
-          {msgs.map((m, i) => (
-            <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: m.me ? "flex-end" : "flex-start", gap: 4 }}>
-              {/* Figma ChatMessage: padding 8/12, 16px corners with a 4px tail on the side
-                  the bubble comes from, Inter Regular 14/20, 280 max. */}
-              <span
-                style={{
-                  maxWidth: 280,
-                  padding: "8px 12px",
-                  borderRadius: m.me ? "16px 16px 4px 16px" : "16px 16px 16px 4px",
-                  background: m.me ? "var(--sd-link)" : "var(--sd-n0)",
-                  color: m.me ? "#fff" : "var(--sd-text)",
-                  fontWeight: 400,
-                  fontSize: 14,
-                  lineHeight: "20px",
-                }}
-              >
-                {m.text}
-              </span>
-              <span className="t-label-sm muted">{m.at}</span>
-            </div>
-          ))}
+          {/* the request this chat is about, drawn with the same ReferralBar as the list. Nithin says
+              he has submitted it, so the card can't still read Sent or Referred. */}
+          <ReferralBar r={live.stage === "sent" || live.stage === "referred" ? { ...live, stage: "submitted" } : live} />
+          {msgs.map((m, i) => {
+            // iOS Messages: no time under each bubble. A small centred time opens the chat and any
+            // run of messages that starts 15+ minutes after the last one.
+            const prev = msgs[i - 1];
+            const head = !prev || (m.at !== "now" && prev.at !== "now" && mins(m.at) - mins(prev.at) >= 15);
+            return (
+              <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: m.me ? "flex-end" : "flex-start", gap: 8 }}>
+                {head && <span className="sd-chat-time">Today {m.at === "now" ? "" : m.at}</span>}
+                {/* Figma ChatMessage: padding 8/12, 16px corners with a 4px tail on the side
+                    the bubble comes from, Inter Regular 14/20, 280 max. */}
+                <span
+                  style={{
+                    maxWidth: 280,
+                    padding: "8px 12px",
+                    borderRadius: m.me ? "16px 16px 4px 16px" : "16px 16px 16px 4px",
+                    background: m.me ? "var(--sd-link)" : "var(--sd-n0)",
+                    color: m.me ? "#fff" : "var(--sd-text)",
+                    fontWeight: 400,
+                    fontSize: 14,
+                    lineHeight: "20px",
+                  }}
+                >
+                  {m.text}
+                </span>
+              </div>
+            );
+          })}
         </div>
         <div style={{ height: 16 }} />
       </div>
-      {/* Figma ChatComposer: white, a 1px #f0f1f2 rule on top, padding 8/16/40, gap 8,
-          a standard 52px field and a 48px round blue send button with a 24px arrow. */}
+      {/* ChatComposer, as iMessage: a white bar with a hairline on top, a grey capsule field, and a
+          30 blue circle with an up arrow inside its right end. The arrow is grey until there is text. */}
       <div
         style={{
           flex: "0 0 auto",
           padding: "8px 16px 40px",
-          display: "flex",
-          gap: 8,
-          alignItems: "center",
           background: "var(--sd-n0)",
           boxShadow: "inset 0 1px 0 var(--sd-border-subtle)",
         }}
       >
-        <div className="sd-input">
+        <div className="sd-composer">
           <input value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="Message" onKeyDown={(e) => e.key === "Enter" && send()} />
+          <button onClick={send} aria-label="Send" disabled={!draft.trim()} className="sd-send">
+            <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+              <path d="M7 12V2M2.5 6.5L7 2l4.5 4.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
         </div>
-        <button
-          onClick={send}
-          aria-label="Send"
-          style={{
-            width: 48,
-            height: 48,
-            borderRadius: "var(--sd-r-full)",
-            background: draft.trim() ? "var(--sd-link)" : "var(--sd-action-bg-dis)",
-            display: "grid",
-            placeItems: "center",
-            flex: "0 0 auto",
-          }}
-        >
-          <Icon name="arrow.right" size={24} style={{ color: draft.trim() ? "#fff" : "var(--sd-action-fg-dis)" }} />
-        </button>
       </div>
     </>
   );
+}
+
+/** "3:10 PM" → minutes since midnight */
+function mins(t: string) {
+  const [, h, m, ap] = /(\d+):(\d+) (AM|PM)/.exec(t) ?? [, "0", "0", "AM"];
+  return ((Number(h) % 12) + (ap === "PM" ? 12 : 0)) * 60 + Number(m);
 }
 
 function BackChevron() {
@@ -290,15 +290,15 @@ function BackChevron() {
 type Notif = { who: string; text: string; at: string; go: string; unread?: boolean };
 
 const CANDIDATE_NOTIF: Notif[] = [
-  { who: "Joy Sehgal", text: "You’re selected at Swiggy. Joy referred you on 2 Aug.", at: "11:11 am", go: "swiggy", unread: true },
-  { who: "Nithin Agarwal", text: "Submitted on Flipkart’s portal. Nithin marked it.", at: "10:02 am", go: "flipkart", unread: true },
+  { who: "Joy Sehgal", text: "You’re selected at Swiggy. Joy referred you on 2 Aug.", at: "11:11 AM", go: "swiggy", unread: true },
+  { who: "Nithin Agarwal", text: "Submitted on Flipkart’s portal. Nithin marked it.", at: "10:02 AM", go: "flipkart", unread: true },
   { who: "Advika Singh", text: "Advika referred you for Interaction Designer at Google.", at: "Yesterday", go: "google" },
   { who: "Avinash Banerjee", text: "Avinash isn’t moving forward with your PhonePe request.", at: "5 Sep", go: "phonepe" },
 ];
 
 const REFERRER_NOTIF: Notif[] = [
-  { who: "Abhinav Saxena", text: "Abhinav Saxena sent a referral request for Interaction Designer. 4 of 7 skills · 3 yrs.", at: "10:40 am", go: "abhinav", unread: true },
-  { who: "Aviral Dixit", text: "Seen it move? You submitted Aviral Dixit 12 days ago.", at: "9:00 am", go: "aviral", unread: true },
+  { who: "Abhinav Saxena", text: "Abhinav Saxena sent a referral request for Interaction Designer. 4 of 7 skills · 3 yrs.", at: "10:40 AM", go: "abhinav", unread: true },
+  { who: "Aviral Dixit", text: "Seen it move? You submitted Aviral Dixit 12 days ago.", at: "9:00 AM", go: "aviral", unread: true },
   { who: "Arpita Singh", text: "Arpita Singh sent a referral request for Interaction Designer. 4 of 7 skills · 3 yrs.", at: "Yesterday", go: "arpita" },
   { who: "Himani Kaushik", text: "Himani thanked you: “You made the referral easy. I start next month!”", at: "Tuesday", go: "abhinav" },
 ];
@@ -311,11 +311,15 @@ export function Notifications() {
     <Screen title="Notifications" back onBack={() => { dispatch({ t: "readAll" }); nav.pop(); }}>
       <div style={{ paddingTop: 24 }}>
         {list.length === 0 ? (
-          <p className="t-label muted">
-            {role === "referrer"
-              ? "No notifications yet. You’ll see new requests and weekly check-ins here."
-              : "No notifications yet. You’ll see every answer to your requests here."}
-          </p>
+          <Empty
+            icon="bell"
+            title="No notifications yet"
+            body={
+              role === "referrer"
+                ? "You’ll see new requests and weekly check-ins here."
+                : "You’ll see every answer to your requests here."
+            }
+          />
         ) : (
         <ListGroup>
           {list.map((n) => (
@@ -330,14 +334,12 @@ export function Notifications() {
               }}
             >
               <Avatar name={n.who} />
-              <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4, minWidth: 0 }}>
-                <span className="t-body">{n.text}</span>
-                <span className="t-label-sm muted">{n.at}</span>
+              <span className="t-body" style={{ flex: 1, minWidth: 0 }}>{n.text}</span>
+              {/* like Messages: the time top right, the unread mark (an 8px blue dot) under it */}
+              <span style={{ flex: "0 0 auto", display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 6 }}>
+                <span className="sd-lc-when" style={{ lineHeight: "20px" }}>{n.at}</span>
+                {n.unread && <i style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--sd-link)" }} />}
               </span>
-              {/* Figma marks an unread row with an 8px blue dot level with the first line */}
-              {n.unread && (
-                <i style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--sd-link)", flex: "0 0 auto" }} />
-              )}
             </div>
           ))}
         </ListGroup>
@@ -350,7 +352,7 @@ export function Notifications() {
 /* ── Profile ────────────────────────────────────────────────────────────── */
 export function Profile() {
   const nav = useNav();
-  const { role, findable, unread, dispatch } = useStore();
+  const { role, unread, dispatch } = useStore();
   const isReferrer = role === "referrer";
   return (
     <Screen largeTitle="Profile" right={<BellButton unread={unread} />}>
@@ -370,19 +372,6 @@ export function Profile() {
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-        {!isReferrer && (
-          // Figma: a 74-tall card, the state tag first, then the label, the switch at the right
-          <div className="sd-card" style={{ padding: "12px 16px", minHeight: 74, display: "flex", alignItems: "center", gap: 8 }}>
-            <span style={{ flex: 1, display: "flex", alignItems: "center", gap: 8 }}>
-              <Tag style={findable ? "success" : "buffer"} icon="indicator.fill">
-                {findable ? "Live" : "Paused"}
-              </Tag>
-              <span className="t-label" style={{ color: "var(--sd-text)" }}>Let referrers find me</span>
-            </span>
-            <Switch on={findable} onChange={(v) => dispatch({ t: "findable", v })} />
-          </div>
-        )}
-
         <ListGroup>
           {isReferrer ? (
             <>

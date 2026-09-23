@@ -161,22 +161,19 @@ export function Jobs() {
             <SkeletonCard />
           </div>
         ) : failed ? (
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            <Note style="failure" icon="info.circle.fill">
-              Couldn’t load jobs
-            </Note>
-            <p className="t-label muted" onClick={() => dispatch({ t: "force", v: null })}>
-              Pull down to try again.
-            </p>
-          </div>
+          <Empty
+            error
+            title="Couldn’t load jobs"
+            body="Check your connection and try again."
+            action={<Button type="secondary" onClick={() => dispatch({ t: "force", v: null })}>Try again</Button>}
+          />
         ) : empty ? (
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <p className="t-label muted">
-              No one refers for jobs like yours here yet. Tell us the roles you want and we’ll show them as referrers
-              join.
-            </p>
-            <Button onClick={() => nav.push("editDetails")}>Set job preferences</Button>
-          </div>
+          <Empty
+            icon="briefcase.fill"
+            title="No jobs for you yet"
+            body="No one refers for jobs like yours here yet. Tell us the roles you want and we’ll show them as referrers join."
+            action={<Button onClick={() => nav.push("editDetails")}>Set job preferences</Button>}
+          />
         ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -711,11 +708,12 @@ export function RequestList({ justSent }: { justSent?: boolean }) {
           </Note>
         )}
         {shown.length === 0 ? (
-          /* Figma's empty list is a line and a button, not an illustrated empty block */
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <p className="t-label muted">No requests yet. Find a job with someone who refers, and ask in one go.</p>
-            <Button onClick={() => nav.reset("tabs", { tab: "jobs" })}>See jobs</Button>
-          </div>
+          <Empty
+            icon="paperplane.fill"
+            title="No requests yet"
+            body="Find a job with someone who refers, and ask in one go."
+            action={<Button onClick={() => nav.reset("tabs", { tab: "jobs" })}>See jobs</Button>}
+          />
         ) : (
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {shown.map((r) => (
@@ -831,18 +829,16 @@ export function TrackDetails({ id, stage, updated }: { id: string; stage?: Stage
     return () => clearTimeout(t);
   }, [id, force]);
 
-  // Figma "Couldn't load": a red note and one line under it, nothing else
+  // "Couldn't load": the centred error block with Try again
   if (force === "track.error" && phase === "ok")
     return (
       <Screen title="Referral request" back>
-        <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 8 }}>
-          <Note style="failure" icon="info.circle.fill">
-            Couldn’t load this request
-          </Note>
-          <p className="t-label muted" onClick={() => dispatch({ t: "force", v: null })}>
-            Pull down to try again.
-          </p>
-        </div>
+        <Empty
+          error
+          title="Couldn’t load this request"
+          body="Check your connection and try again."
+          action={<Button type="secondary" onClick={() => dispatch({ t: "force", v: null })}>Try again</Button>}
+        />
       </Screen>
     );
 
