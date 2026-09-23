@@ -18,6 +18,7 @@ import {
   HelpArticle,
   ContactSupport,
   ResumePreview,
+  ProfileLink,
   Messages,
   Notifications,
   Profile,
@@ -66,7 +67,7 @@ const REFERRER_TABS = [
 ];
 
 /** The four tab roots. Anything deeper is pushed onto the same stack, as iOS does. */
-function Tabs({ tab: initial, justSent }: { tab?: string; justSent?: boolean }) {
+function Tabs({ tab: initial, justSent }: { tab?: string; justSent?: boolean | string }) {
   const { role } = useStore();
   const tabs = role === "referrer" ? REFERRER_TABS : CANDIDATE_TABS;
   const { tab: picked, pick } = useContext(TabCtx);
@@ -105,11 +106,11 @@ const SCREENS: Record<string, (p: any) => ReactNode> = {
   checkProfile: () => <CheckProfile />,
   verifyEmail: () => <VerifyEmail />,
   addJob: () => <AddJob />,
-  checkPost: () => <CheckPost />,
-  jobLive: () => <JobLive />,
+  checkPost: (p) => <CheckPost title={p.title} />,
+  jobLive: (p) => <JobLive title={p.title} />,
   tabs: (p) => <Tabs {...p} />,
-  job: () => <JobDetails />,
-  checkRequest: () => <CheckRequest />,
+  job: (p) => <JobDetails id={p.id} />,
+  checkRequest: (p) => <CheckRequest id={p.id} />,
   trackDetails: (p) => <TrackDetails id={p.id} stage={p.stage} updated={p.updated} />,
   referralRequest: (p) => <ReferralRequest id={p.id} />,
   yourReferrals: () => <YourReferrals />,
@@ -126,7 +127,8 @@ const SCREENS: Record<string, (p: any) => ReactNode> = {
   linkPage: () => <LinkPage />,
   helpArticle: (p) => <HelpArticle id={p.id} />,
   contactSupport: () => <ContactSupport />,
-  resume: (p) => <ResumePreview file={p.file} />,
+  resume: (p) => <ResumePreview file={p.file} id={p.id} />,
+  profileLink: (p) => <ProfileLink site={p.site} name={p.name} />,
 };
 
 const SHEETS: Record<string, (p: any) => ReactNode> = {
@@ -139,6 +141,64 @@ const SHEETS: Record<string, (p: any) => ReactNode> = {
   invite: (p) => <InviteAlert {...p} />,
 };
 /* eslint-enable @typescript-eslint/no-explicit-any */
+
+/* ── usability-test hint ────────────────────────────────────────────────── */
+/** Anything a tap is meant for. A tap on none of these is a tap on nothing. */
+const TAPPABLE =
+  'button:not(:disabled), a[href], input:not([readonly]), textarea:not([readonly]), select, label, [role="button"], [role="menuitemradio"], .sd-input, .sd-scrim, .sd-edge, .sd-composer';
+
+/**
+ * Where to tap next on the screen in front: empty required fields first (the button waits on
+ * them), then the main button, then the first card that opens something, then any other action.
+ */
+function nextTargets(root: HTMLElement): HTMLElement[] {
+  const scope =
+    root.querySelector<HTMLElement>(".sd-alert, .sd-actionsheet, .sd-sheet:not(.is-out)") ??
+    [...root.querySelectorAll<HTMLElement>(".sd-screen")].filter((el) => el.getAttribute("aria-hidden") !== "true").pop() ??
+    root;
+  const seen = (el: HTMLElement) => el.offsetParent !== null || el.getClientRects().length > 0;
+  const empty = [...scope.querySelectorAll<HTMLElement>(".sd-field")]
+    .filter((f) => f.querySelector(".sd-req"))
+    .map((f) => f.querySelector<HTMLElement>(".sd-input"))
+    .filter((box): box is HTMLElement => !!box && !(box.querySelector("input, textarea") as HTMLInputElement | null)?.value);
+  if (empty.length) return empty;
+  const pick = (sel: string) => [...scope.querySelectorAll<HTMLElement>(sel)].filter(seen)[0];
+  const one =
+    pick(".sd-btn.primary:not(:disabled), .sd-alert-btn.is-default, .sd-as-btn") ??
+    pick('.sd-card[role="button"], .sd-row.is-tap, .sd-chatrow') ??
+    pick(".sd-btn:not(:disabled), .sd-textbtn:not(:disabled)");
+  return one ? [one] : [];
+}
+
+function useHint(ref: React.RefObject<HTMLDivElement | null>) {
+  const down = useRef<{ x: number; y: number } | null>(null);
+  const timer = useRef(0);
+  const onPointerDown = useCallback((e: React.PointerEvent) => {
+    down.current = { x: e.clientX, y: e.clientY };
+  }, []);
+  const onPointerUp = useCallback(
+    (e: React.PointerEvent) => {
+      const d = down.current;
+      down.current = null;
+      // a scroll or a swipe is not a tap
+      if (!d || Math.hypot(e.clientX - d.x, e.clientY - d.y) > 8) return;
+      if ((e.target as HTMLElement).closest(TAPPABLE)) return;
+      const root = ref.current;
+      if (!root) return;
+      root.querySelectorAll(".sd-hint").forEach((el) => el.classList.remove("sd-hint"));
+      const els = nextTargets(root);
+      if (!els.length) return;
+      // restart the animation even if the same thing is ringed twice in a row
+      void root.offsetWidth;
+      els.forEach((el) => el.classList.add("sd-hint"));
+      els[0].scrollIntoView({ block: "nearest", behavior: "smooth" });
+      clearTimeout(timer.current);
+      timer.current = window.setTimeout(() => els.forEach((el) => el.classList.remove("sd-hint")), 2800);
+    },
+    [ref]
+  );
+  return { onPointerDownCapture: onPointerDown, onPointerUpCapture: onPointerUp };
+}
 
 /* ── the stack, with the edge-swipe back gesture ────────────────────────── */
 function Stack() {
@@ -232,10 +292,12 @@ function Stack() {
   }, []);
 
   const count = nav.stack.length;
+  const stackRef = useRef<HTMLDivElement>(null);
+  const hint = useHint(stackRef);
 
   return (
     <TabCtx.Provider value={tabCtx.current}>
-    <div className="sd-stack" onScrollCapture={rememberScroll}>
+    <div className="sd-stack" onScrollCapture={rememberScroll} ref={stackRef} {...hint}>
       {nav.stack.map((s, i) => {
         const isTop = i === count - 1;
         const under = i === count - 2;

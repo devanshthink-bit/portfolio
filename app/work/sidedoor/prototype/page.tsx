@@ -17,6 +17,10 @@ export default function SidedoorPrototypePage() {
           Every V6 screen, in code. Send a request as Abhinav, then <b>Profile → Switch role</b> to become Nithin, refer
           him, and switch back to watch the same request move. Swipe from the left edge to go back.
         </p>
+        <p className="proto-sub">
+          Testing it? You never have to type: tap an empty field and it fills itself. Not sure where to go? Tap
+          any blank spot and the next thing to tap blinks blue.
+        </p>
       </header>
       <Viewer />
     </main>

@@ -4,6 +4,7 @@
 // watch the timeline move. That is what makes this a working prototype and not a click-through.
 import { createContext, useCallback, useContext, useMemo, useReducer, type ReactNode } from "react";
 import { fieldError, type FieldKind } from "./rules";
+import { ABHINAV_PROFILE, firstName, jobById, type Profile } from "./data";
 
 export type Stage = "sent" | "referred" | "submitted" | "interviews" | "onhold" | "selected" | "notselected" | "notmoving" | "noanswer" | "closed";
 
@@ -57,6 +58,9 @@ export type Details = { dob: string; gaps: string; locations: string; notice: st
 /** The rule each portal detail follows. Gaps are stored as years ("0" = none), notice as days. */
 export const DETAIL_KINDS: Record<keyof Details, FieldKind> = { dob: "text", gaps: "years", locations: "cities", notice: "days" };
 
+/** Flipkart's request is the live one both sides share; a request for any other job is new. */
+export const requestIdFor = (job: string) => (job === "flipkart" ? "flipkart" : `ask-${job}`);
+
 type State = {
   role: "candidate" | "referrer" | null;
   /** candidate side */
@@ -66,6 +70,10 @@ type State = {
   note: string;
   requestsLeft: number;
   requests: Request[];
+  /** jobs asked about in this session, so each job says "You asked" once it's sent */
+  sentJobs: string[];
+  /** the candidate's own details: every edit screen and the referrer's view read these */
+  profile: Profile;
   saved: string[];
   findable: boolean;
   /** referrer side */
@@ -78,6 +86,9 @@ type State = {
   /** ids of requests the referrer has dealt with, and how */
   handled: Record<string, { stage: Stage; reason?: string }>;
   invited: string[];
+  /** job posts the referrer has paused, and drafts they have posted */
+  pausedPosts: string[];
+  postedDrafts: string[];
   removedSkills: string[];
   /** transient */
   toast: string | null;
@@ -119,6 +130,8 @@ const initial: State = {
     { id: "phonepe", referrer: "Avinash Banerjee", referrerRole: "Design Lead, PhonePe", company: "PhonePe", logo: "phonepe", job: "Sr. Product Designer", jobId: "PP-1183", stage: "notmoving", updated: "5 Sep", reason: "Experience doesn’t match" },
     { id: "groww", referrer: "Kritika Rao", referrerRole: "PM, Groww", company: "Groww", logo: "groww", job: "Associate PM", jobId: "GRW-64", stage: "notselected", updated: "5 Sep" },
   ],
+  sentJobs: [],
+  profile: ABHINAV_PROFILE,
   saved: [],
   findable: true,
   verified: false,
@@ -128,6 +141,8 @@ const initial: State = {
   rules: { minYears: 3, weekly: 10 },
   handled: {},
   invited: ["Advika Singh"],
+  pausedPosts: ["Software Engineer-I"],
+  postedDrafts: [],
   removedSkills: [],
   toast: null,
   pending: null,
@@ -142,7 +157,10 @@ type Action =
   | { t: "skipResume" }
   | { t: "detail"; k: keyof Details; v: string }
   | { t: "note"; v: string }
-  | { t: "send" }
+  | { t: "send"; job: string }
+  | { t: "profile"; v: Partial<Profile> }
+  | { t: "pausePost"; v: string; on: boolean }
+  | { t: "postDraft"; v: string }
   | { t: "save"; v: string }
   | { t: "findable"; v: boolean }
   | { t: "verify" }
@@ -175,13 +193,31 @@ function reduce(s: State, a: Action): State {
       return { ...s, details: { ...s.details, [a.k]: a.v } };
     case "note":
       return { ...s, note: a.v };
-    case "send":
+    case "send": {
+      // Flipkart is the live request both sides share; any other job starts a new one at the top
+      const j = jobById(a.job);
+      const id = requestIdFor(j.id);
+      const has = s.requests.some((r) => r.id === id);
+      const fresh: Request = {
+        id, referrer: j.referrer.name, referrerRole: j.referrer.role, company: j.company, logo: j.logo,
+        job: j.title, jobId: j.jobId, stage: "sent", updated: "Just now",
+      };
       return {
         ...s,
         requestsLeft: Math.max(0, s.requestsLeft - 1),
-        requests: s.requests.map((r) => (r.live ? { ...r, stage: "sent", updated: "Just now" } : r)),
-        toast: "Request sent to Nithin",
+        sentJobs: s.sentJobs.includes(j.id) ? s.sentJobs : [...s.sentJobs, j.id],
+        requests: has
+          ? s.requests.map((r) => (r.id === id ? { ...r, stage: "sent", updated: "Just now" } : r))
+          : [fresh, ...s.requests],
+        toast: `Request sent to ${firstName(j.referrer.name)}`,
       };
+    }
+    case "profile":
+      return { ...s, profile: { ...s.profile, ...a.v } };
+    case "pausePost":
+      return { ...s, pausedPosts: a.on ? s.pausedPosts.filter((x) => x !== a.v) : [...s.pausedPosts.filter((x) => x !== a.v), a.v] };
+    case "postDraft":
+      return { ...s, postedDrafts: [...s.postedDrafts, a.v] };
     case "save":
       return { ...s, saved: s.saved.includes(a.v) ? s.saved.filter((x) => x !== a.v) : [...s.saved, a.v] };
     case "findable":
@@ -234,7 +270,7 @@ function reduce(s: State, a: Action): State {
       // start from a clean slate so one state can't leak into the next
       return { ...initial, role: a.role, force: a.force, offline: a.force === "offline", resume: "Abhinav_Saxena_Resume.pdf", verified: true, jobId: "184223", posted: true,
         // "Skill removed" starts with Prototyping taken off, and can still be undone
-        removedSkills: a.force === "req.skill" ? ["Prototyping"] : [] };
+        removedSkills: a.force === "req.skill" ? ["abhinav|Prototyping"] : [] };
     case "reset":
       return initial;
     default:

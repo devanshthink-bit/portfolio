@@ -557,12 +557,18 @@ const mask = (spec: EditSpec, v: string) => {
  * becomes "Done". Done stays off until every field passes its rule. `fixed` lines (the resume
  * file) stay as they are.
  */
-export function useEditable(specs: EditSpec[]) {
+export function useEditable(specs: EditSpec[], onDone?: (values: string[]) => void) {
   const [values, setValues] = useState(() => specs.map((f) => f.value));
   const [editing, setEditing] = useState(false);
   const ok = specs.every((f, i) => f.fixed || !fieldError(f.kind, values[i], f.required));
   const button = (
-    <TextButton onClick={() => setEditing((e) => !e)} disabled={editing && !ok}>
+    <TextButton
+      onClick={() => {
+        if (editing) onDone?.(values);
+        setEditing((e) => !e);
+      }}
+      disabled={editing && !ok}
+    >
       {editing ? "Done" : "Edit"}
     </TextButton>
   );
@@ -684,8 +690,11 @@ export function Avatar({ name, size = 44, src }: { name: string; size?: number; 
     .join("");
   const slug = slugOf(name);
   const photo = src ?? (PEOPLE.has(slug) ? `/images/sidedoor/people/${slug}.png` : undefined);
+  // no photo: initials on a soft tint of their own, so a list of new people isn't a wall of grey
+  const hue = [...slug].reduce((h, c) => (h * 31 + c.charCodeAt(0)) % 360, 7);
+  const tint = photo ? undefined : { background: `hsl(${hue} 70% 92%)`, color: `hsl(${hue} 45% 32%)` };
   return (
-    <span className="sd-av" style={{ width: size, height: size, fontSize: Math.round(size * 0.36) }}>
+    <span className="sd-av" style={{ width: size, height: size, fontSize: Math.round(size * 0.36), ...tint }}>
       {photo ? (
         <Image src={photo} alt="" width={size} height={size} style={{ width: size, height: size, objectFit: "cover" }} />
       ) : (
@@ -838,7 +847,10 @@ export function Field({
   onClick,
   kind,
   required,
+  demo,
 }: {
+  /** Test data: a tap on the empty field fills it with this, so testers never have to type. */
+  demo?: string;
   /** what the field holds: sets the keyboard, what typing keeps, and the check on leaving */
   kind?: FieldKind;
   /** marks the label with * and says "Required." when left empty */
@@ -872,6 +884,10 @@ export function Field({
   const blur = () => {
     setFocus(false);
     setLeft(true);
+  };
+  const enter = () => {
+    setFocus(true);
+    if (demo && !value && !readOnly) onChange?.(demo);
   };
   // a field that filters its own typing trims itself; a browser maxLength would cut a paste
   // like "abc2.5" before the letters were dropped
@@ -907,7 +923,7 @@ export function Field({
             value={value}
             placeholder={placeholder}
             onChange={(e) => change(e.target.value)}
-            onFocus={() => setFocus(true)}
+            onFocus={enter}
             onBlur={blur}
             maxLength={max}
             aria-invalid={!!shown}
@@ -919,7 +935,7 @@ export function Field({
             value={value}
             placeholder={placeholder}
             onChange={(e) => change(e.target.value)}
-            onFocus={() => setFocus(true)}
+            onFocus={enter}
             onBlur={blur}
             maxLength={max}
             inputMode={rule?.mode}
@@ -943,6 +959,55 @@ export function Field({
         <span className="sd-field-help" style={{ textAlign: "right" }}>
           {value.length}/{max}
         </span>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Tags you can edit: each chip has an x, a field adds a new one on Return or a comma, and a
+ * row of suggestions adds one with a tap (no typing needed in a test).
+ */
+export function TagInput({ label, value, onChange, ideas = [] }: { label: string; value: string[]; onChange: (v: string[]) => void; ideas?: string[] }) {
+  const [draft, setDraft] = useState("");
+  const add = (t: string) => {
+    const v = t.trim().replace(/,$/, "");
+    if (v && !value.some((x) => x.toLowerCase() === v.toLowerCase())) onChange([...value, v]);
+    setDraft("");
+  };
+  const left = ideas.filter((i) => !value.includes(i));
+  return (
+    <div className="sd-field">
+      <label className="t-h-xs">{label}</label>
+      <div className="sd-input sd-taginput" onClick={(e) => e.currentTarget.querySelector("input")?.focus()}>
+        {value.map((t) => (
+          <span key={t} className="sd-tag neutral sd-tag-x">
+            <span>{t}</span>
+            <button aria-label={`Remove ${t}`} onClick={(e) => { e.stopPropagation(); onChange(value.filter((x) => x !== t)); }}>
+              <Icon name="xmark" size={10} />
+            </button>
+          </span>
+        ))}
+        <input
+          value={draft}
+          placeholder={value.length ? "Add a skill" : "e.g. Figma"}
+          onChange={(e) => (e.target.value.endsWith(",") ? add(e.target.value) : setDraft(e.target.value))}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") add(draft);
+            if (e.key === "Backspace" && !draft && value.length) onChange(value.slice(0, -1));
+          }}
+          onBlur={() => draft && add(draft)}
+        />
+      </div>
+      {left.length > 0 && (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+          {left.slice(0, 4).map((i) => (
+            <button key={i} className="sd-tag plain sd-tag-add" onClick={() => add(i)}>
+              <Icon name="plus" size={10} />
+              <span>{i}</span>
+            </button>
+          ))}
+        </div>
       )}
     </div>
   );

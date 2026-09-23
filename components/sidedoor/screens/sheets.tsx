@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useNav } from "../nav";
 import { STAGE_LABEL, useDecide, useStore, type Stage } from "../store";
 import { DocUpload } from "./onboarding";
+import { firstName, jobById } from "../data";
 import { ActionSheet, Alert, Avatar, Button, Card, Field, Icon, Note, RadioList, RadioOption, Sheet, Tag, TextButton, WheelDate } from "../ui";
 
 function SheetPerson({ name, role, tag }: { name: string; role: string; tag?: React.ReactNode }) {
@@ -260,9 +261,10 @@ export function DobSheet({ leaving }: { leaving?: boolean }) {
 }
 
 /* ── Add resume to ask (skipped-resume route) ───────────────────────────── */
-export function AddResumeSheet({ leaving }: { leaving?: boolean }) {
+export function AddResumeSheet({ leaving, job = "flipkart" }: { leaving?: boolean; job?: string }) {
   const nav = useNav();
   const { dispatch } = useStore();
+  const j = jobById(job);
   // Figma "Add Resume To Ask Sheet": the line, the same upload box as onboarding, and a tag that
   // says it is kept. Choosing a file (either button) uploads it and opens the check screen.
   const upload = () => {
@@ -271,10 +273,10 @@ export function AddResumeSheet({ leaving }: { leaving?: boolean }) {
     nav.push("uploadResume");
   };
   return (
-    <Sheet title="Add your resume to ask Nithin" onClose={nav.closeSheet} leaving={leaving} closeButton>
+    <Sheet title={`Add your resume to ask ${firstName(j.referrer.name)}`} onClose={nav.closeSheet} leaving={leaving} closeButton>
       <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
         <p className="t-body muted">
-          Flipkart’s portal asks for it. We fill in your details from it, and you check them before anything is sent.
+          {j.company}’s portal asks for it. We fill in your details from it, and you check them before anything is sent.
         </p>
         <DocUpload what="resume" file={null} onUpload={upload} />
         <span>

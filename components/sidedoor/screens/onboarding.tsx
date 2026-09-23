@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useState, type ReactNode } from "react";
 import { useNav } from "../nav";
 import { useStore } from "../store";
+import { DEMO, type Proj } from "../data";
 import {
   Actions,
   Button,
@@ -28,6 +29,7 @@ import {
   useFilePick,
   type EditSpec,
   Stepper,
+  TagInput,
 } from "../ui";
 
 /** Figma's own Apple vector, not a redraw. */
@@ -384,9 +386,9 @@ export function UploadResume() {
 /* ── Candidate: check your details ──────────────────────────────────────── */
 export function CheckProfile() {
   const nav = useNav();
-  const { force } = useStore();
-  const [linkedin, setLinkedin] = useState("");
-  const [portfolio, setPortfolio] = useState("");
+  const { force, profile, dispatch } = useStore();
+  const [linkedin, setLinkedin] = useState(profile.linkedin);
+  const [portfolio, setPortfolio] = useState(profile.portfolio);
   // Figma "Reading": the name block is already in, Experience and Projects are still coming
   const reading = force === "profile.reading";
   return (
@@ -395,7 +397,13 @@ export function CheckProfile() {
       back
       actions={
         // optional links may be empty, but a link that is there has to be a real one
-        <Button disabled={!allValid([["linkedin", linkedin], ["url", portfolio]])} onClick={() => nav.reset("tabs")}>
+        <Button
+          disabled={!allValid([["linkedin", linkedin], ["url", portfolio]])}
+          onClick={() => {
+            dispatch({ t: "profile", v: { linkedin, portfolio } });
+            nav.reset("tabs");
+          }}
+        >
           See jobs
         </Button>
       }
@@ -419,8 +427,9 @@ export function CheckProfile() {
             onChange={setLinkedin}
             kind="linkedin"
             placeholder="Paste your profile link. Referrers check it."
+            demo={DEMO.linkedin}
           />
-          <Field label="Portfolio (optional)" icon="link" value={portfolio} onChange={setPortfolio} kind="url" placeholder="Behance, Dribbble or your site" />
+          <Field label="Portfolio (optional)" icon="link" value={portfolio} onChange={setPortfolio} kind="url" placeholder="Behance, Dribbble or your site" demo={DEMO.portfolio} />
         </div>
 
         <FileBox label="Resume" name="Abhinav_Saxena_Resume.pdf" what="resume" />
@@ -430,24 +439,21 @@ export function CheckProfile() {
 }
 
 /* ── blocks that repeat across screens, each with its own Edit or Replace ── */
-const ABHINAV: EditSpec[] = [
-  { name: "Full name", value: "Abhinav Saxena", kind: "name", required: true },
-  { name: "Email", value: "abhinav.saxena@email.com", kind: "email", required: true },
-  { name: "Phone", value: "+91 98765 43221", kind: "phone", required: true },
-  { name: "Current city", value: "Bengaluru, KA", kind: "city", required: true },
-  { name: "Experience", value: "3 yrs total · 3 yrs relevant", kind: "text", required: true },
-];
-const SKILLS: EditSpec = {
-  name: "Skills",
-  value: "Product strategy, Systems thinking, User research, Interaction design, Figma",
-  kind: "text",
-  required: true,
-};
-
-/** "From your resume" / "Your details": the candidate's own lines, editable in place. */
+/** "From your resume" / "Your details": the candidate's own lines, editable in place. Done
+ *  saves them, so every other screen (and the referrer reading the request) sees the change. */
 export function ResumeDetails({ label = "From your resume", skills = true, extra = [], city }: { label?: string; skills?: boolean; extra?: EditSpec[]; city?: string }) {
-  const mine = city ? ABHINAV.map((f) => (f.name === "Current city" ? { ...f, value: city } : f)) : ABHINAV;
-  const ed = useEditable([...mine, ...(skills ? [SKILLS] : []), ...extra]);
+  const { profile, dispatch } = useStore();
+  const mine: EditSpec[] = [
+    { name: "Full name", value: profile.name, kind: "name", required: true },
+    { name: "Email", value: profile.email, kind: "email", required: true },
+    { name: "Phone", value: profile.phone, kind: "phone", required: true },
+    { name: "Current city", value: city ?? profile.city, kind: "city", required: true },
+    { name: "Experience", value: profile.experience, kind: "text", required: true },
+  ];
+  const ed = useEditable(
+    [...mine, ...(skills ? [{ name: "Skills", value: profile.skills, kind: "text" as const, required: true, multiline: true }] : []), ...extra],
+    (v) => dispatch({ t: "profile", v: { name: v[0], email: v[1], phone: v[2], city: v[3], experience: v[4], ...(skills ? { skills: v[5] } : {}) } })
+  );
   return (
     <Section label={label} icon="person.fill" end={ed.button}>
       {ed.body}
@@ -455,28 +461,85 @@ export function ResumeDetails({ label = "From your resume", skills = true, extra
   );
 }
 
-/** Experience: the company rows; Edit turns each role and its dates into fields. */
+/** The logo a typed company name gets, when the app knows the company. */
+const KNOWN = ["blinkit", "makemytrip", "swiggy", "zomato", "zepto", "cred", "razorpay", "phonepe", "groww", "google", "meta", "amazon", "microsoft", "flipkart"];
+const logoFor = (company: string) => {
+  const k = company.toLowerCase().replace(/[^a-z]/g, "");
+  return KNOWN.find((x) => k.startsWith(x)) ?? "";
+};
+
+/** Edit that works on a list: every item's fields, Remove on each, and Add at the foot. */
+function useListEdit<T>(saved: T[], save: (v: T[]) => void, valid: (v: T) => boolean) {
+  const [editing, setEditing] = useState(false);
+  const [rows, setRows] = useState<T[]>(saved);
+  const ok = rows.every(valid);
+  const button = (
+    <TextButton
+      onClick={() => {
+        if (editing) save(rows);
+        else setRows(saved);
+        setEditing(!editing);
+      }}
+      disabled={editing && !ok}
+    >
+      {editing ? "Done" : "Edit"}
+    </TextButton>
+  );
+  const set = (i: number, patch: Partial<T>) => setRows((all) => all.map((r, j) => (j === i ? { ...r, ...patch } : r)));
+  const remove = (i: number) => setRows((all) => all.filter((_, j) => j !== i));
+  const add = (blank: T) => setRows((all) => [...all, blank]);
+  return { editing, button, rows, set, remove, add };
+}
+
+function ItemHead({ title, onRemove }: { title: string; onRemove: () => void }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+      <span className="t-h-xs" style={{ flex: 1 }}>{title}</span>
+      <button className="sd-textbtn" style={{ color: "var(--sd-ios-red)" }} onClick={onRemove}>
+        Remove
+      </button>
+    </div>
+  );
+}
+
+const Rule = () => <div style={{ height: 1, background: "var(--sd-border-subtle)" }} />;
+
+/** Experience: the company rows; Edit turns each into role, company and dates. */
 export function ExperienceBlock({ reading }: { reading?: boolean }) {
-  const ed = useEditable([
-    { name: "Role at Blinkit", value: "Product Designer", kind: "role", required: true },
-    { name: "Dates at Blinkit", value: "Sep 2023–Present", kind: "text", required: true },
-    { name: "Role at MakeMyTrip", value: "Associate Product Designer", kind: "role", required: true },
-    { name: "Dates at MakeMyTrip", value: "Jun 2022–Aug 2023", kind: "text", required: true },
-  ]);
-  const [r1, d1, r2, d2] = ed.values;
+  const { profile, dispatch } = useStore();
+  const ed = useListEdit(
+    profile.jobs,
+    (jobs) => dispatch({ t: "profile", v: { jobs: jobs.map((j) => ({ ...j, logo: logoFor(j.company) })) } }),
+    (j) => !!(j.role.trim() && j.company.trim() && j.when.trim())
+  );
   return (
     <Section label="Experience" icon="briefcase.fill" end={!reading && ed.button}>
       {reading ? (
         <ReadingBox />
       ) : ed.editing ? (
-        ed.body
+        <Box>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            {ed.rows.map((j, i) => (
+              <div key={i} style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                {i > 0 && <Rule />}
+                <ItemHead title={`Role ${i + 1}`} onRemove={() => ed.remove(i)} />
+                <Field label="Job title" value={j.role} onChange={(v) => ed.set(i, { role: v })} kind="role" required demo={DEMO.newJob.role} />
+                <Field label="Company" value={j.company} onChange={(v) => ed.set(i, { company: v })} kind="text" required demo={DEMO.newJob.company} />
+                <Field label="Dates" value={j.when} onChange={(v) => ed.set(i, { when: v })} kind="text" required placeholder="e.g. Jun 2022–Present" demo={DEMO.newJob.when} />
+              </div>
+            ))}
+            <TextButton onClick={() => ed.add({ logo: "", role: "", company: "", when: "" })}>+ Add a role</TextButton>
+          </div>
+        </Box>
       ) : (
         <Box>
           {/* Figma's ExperienceBlock is its own frame with a 16 gap, so the rows sit 16 apart
               inside a box whose own gap is 12. */}
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-            <CompanyRow logo="blinkit" role={r1} company="Blinkit" when={d1} />
-            <CompanyRow logo="makemytrip" role={r2} company="MakeMyTrip" when={d2} />
+            {profile.jobs.map((j, i) => (
+              <CompanyRow key={i} logo={j.logo} role={j.role} company={j.company} when={j.when} />
+            ))}
+            {profile.jobs.length === 0 && <p className="t-label muted">No roles yet. Tap Edit to add one.</p>}
           </div>
         </Box>
       )}
@@ -484,18 +547,44 @@ export function ExperienceBlock({ reading }: { reading?: boolean }) {
   );
 }
 
-/** Projects: Edit turns each project's name into a field. */
+/** Projects: Edit opens each project's name, its skill tags and what you did. */
 export function ProjectsBlock({ reading }: { reading?: boolean }) {
-  const ed = useEditable(PROJECTS.map((p, i) => ({ name: `Project ${i + 1}`, value: p.title, kind: "text" as const, required: true })));
+  const { profile, dispatch } = useStore();
+  const ed = useListEdit(
+    profile.projects,
+    (projects) => dispatch({ t: "profile", v: { projects } }),
+    (p) => !!(p.title.trim() && p.skills.length)
+  );
   return (
     <Section label="Projects" icon="folder.fill" end={!reading && ed.button}>
       {reading ? (
         <ReadingBox />
       ) : ed.editing ? (
-        ed.body
+        <Box>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            {ed.rows.map((p, i) => (
+              <div key={i} style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                {i > 0 && <Rule />}
+                <ItemHead title={`Project ${i + 1}`} onRemove={() => ed.remove(i)} />
+                <Field label="Project name" value={p.title} onChange={(v) => ed.set(i, { title: v })} kind="text" required demo={DEMO.newProject.title} />
+                <TagInput label="Skills" value={p.skills} onChange={(v) => ed.set(i, { skills: v })} ideas={DEMO.skillIdeas} />
+                <Field
+                  label="What you did (optional)"
+                  value={p.detail}
+                  onChange={(v) => ed.set(i, { detail: v })}
+                  kind="tips"
+                  multiline
+                  placeholder="One or two lines, with a number if you have one"
+                  demo={DEMO.newProject.detail}
+                />
+              </div>
+            ))}
+            <TextButton onClick={() => ed.add({ title: "", skills: DEMO.newProject.skills, detail: "" })}>+ Add a project</TextButton>
+          </div>
+        </Box>
       ) : (
         <Box>
-          <Projects titles={ed.values} />
+          <Projects list={profile.projects} />
         </Box>
       )}
     </Section>
@@ -557,7 +646,14 @@ export function CompanyRow({ logo, role, company, when }: { logo: string; role: 
   return (
     // Figma Company Row: a 40px logo, 8 clear, role Semi Bold 16/24 over company 12/16
     <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-      <Image src={logoSrc(logo)} alt="" width={40} height={40} style={{ width: 40, height: "auto", flex: "0 0 auto" }} unoptimized />
+      {logo ? (
+        <Image src={logoSrc(logo)} alt="" width={40} height={40} style={{ width: 40, height: "auto", flex: "0 0 auto" }} unoptimized />
+      ) : (
+        // no logo for this company: Figma's grey r8 placeholder tile with a briefcase
+        <span style={{ width: 40, height: 40, flex: "0 0 auto", borderRadius: "var(--sd-r-md)", background: "var(--sd-n100)", display: "grid", placeItems: "center" }}>
+          <Icon name="briefcase.fill" size={20} color="tone" />
+        </span>
+      )}
       <span style={{ flex: 1, display: "flex", flexDirection: "column" }}>
         <span className="t-h-sm">{role}</span>
         <span className="t-label-sm muted">{company}</span>
@@ -583,30 +679,19 @@ export function Project({ title, skills, detail }: { title: string; skills: stri
   );
 }
 
-const PROJECTS = [
-  {
-    title: "Blinkit Merchant App UX Revamp",
-    skills: ["Product strategy", "Systems design", "Prototyping", "User research", "Figma"],
-    detail: "Rebuilt order intake for 4,000 dark-store merchants. Cut the time to accept an order from 40s to 12s.",
-  },
-  {
-    title: "MakeMyTrip Booking Experience Redesign",
-    skills: ["User research", "Interaction design", "Usability testing", "Figma"],
-    detail: "Redesigned hotel checkout from five steps to three. Drop-off at payment fell 18% in the A/B test.",
-  },
-];
-
-/** The two projects, and the link under them that opens and closes a line about each. */
-export function Projects({ titles }: { titles?: string[] }) {
+/** The projects, and the link under them that opens and closes a line about each. */
+export function Projects({ list }: { list: Proj[] }) {
   const [open, setOpen] = useState(false);
   return (
     <>
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-        {PROJECTS.map((p) => (
-          <Project key={p.title} title={titles?.[PROJECTS.indexOf(p)] ?? p.title} skills={p.skills} detail={open ? p.detail : undefined} />
+        {list.map((p, i) => (
+          <Project key={i} title={p.title} skills={p.skills} detail={open ? p.detail || undefined : undefined} />
         ))}
       </div>
-      <TextButton onClick={() => setOpen((o) => !o)}>{open ? "Hide project details" : "Show project details"}</TextButton>
+      {list.some((p) => p.detail) && (
+        <TextButton onClick={() => setOpen((o) => !o)}>{open ? "Hide project details" : "Show project details"}</TextButton>
+      )}
     </>
   );
 }
@@ -691,6 +776,7 @@ export function VerifyEmail() {
             placeholder="6-digit code"
             kind="code"
             required
+            demo={DEMO.code}
             error={wrong ? "That code didn’t work. Check it or resend." : undefined}
           />
           <Field label="Your role" icon="briefcase.fill" value={role} onChange={setRole} kind="role" required />
@@ -753,9 +839,9 @@ export function AddJob() {
 }
 
 /* ── Referrer: check your job post ──────────────────────────────────────── */
-export function CheckPost() {
+export function CheckPost({ title }: { title?: string }) {
   const nav = useNav();
-  const { jobId, rules, tips, dispatch } = useStore();
+  const { jobId, tips, dispatch } = useStore();
   return (
     <Screen
       title="Check your job post"
@@ -767,7 +853,8 @@ export function CheckPost() {
             disabled={!allValid([["jobId", jobId, true], ["tips", tips]])}
             onClick={() => {
               dispatch({ t: "post" });
-              nav.push("jobLive");
+              if (title) dispatch({ t: "postDraft", v: title });
+              nav.push("jobLive", { title });
             }}
           >
             Post job
@@ -794,11 +881,12 @@ export function CheckPost() {
             kind="jobId"
             required
             placeholder="From the job’s page on your portal"
+            demo={DEMO.jobId}
             help="Not in the description. Candidates send it with every request."
           />
         </Section>
 
-        <JdDetails />
+        <JdDetails title={title} />
 
         <RulesSection />
 
@@ -810,6 +898,7 @@ export function CheckPost() {
           placeholder="e.g. Link a portfolio with end-to-end case studies. Shown on the job."
           multiline
           kind="tips"
+          demo={DEMO.tips}
         />
 
         <FileBox label="Job description" name="Flipkart_IxDesigner_JD.docx" what="file" />
@@ -864,7 +953,7 @@ export function RulesSection() {
 }
 
 /* ── Referrer: your job is live ─────────────────────────────────────────── */
-export function JobLive() {
+export function JobLive({ title = "Interaction Designer" }: { title?: string }) {
   const nav = useNav();
   const { jobId } = useStore();
   return (
@@ -896,7 +985,7 @@ export function JobLive() {
         >
           <Icon name="checkmark.circle.fill" size={40} style={{ color: "var(--sd-link)" }} />
           <h2 className="t-h-sm">Your job is live</h2>
-          <p className="t-label muted">Interaction Designer · Flipkart · Job ID {jobId || "184223"}</p>
+          <p className="t-label muted">{title} · Flipkart · Job ID {jobId || "184223"}</p>
         </div>
         <Section label="Your link for this job" icon="link">
           {/* Figma's "Your Link" frame holds the box and the line beneath it 8 apart, and the

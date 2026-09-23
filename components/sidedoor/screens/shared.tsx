@@ -2,7 +2,7 @@
 // Screens both roles use, plus the web link page — which is a web page, so it keeps the SideDoor
 // logo bar and has no tab bar.
 import Image from "next/image";
-import { useState, type ReactNode } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import { useNav } from "../nav";
 import { STAGE_LABEL, stageTag, useStore } from "../store";
 import {
@@ -34,6 +34,7 @@ import {
   useFilePick,
 } from "../ui";
 import { BellButton, ReferralBar } from "./candidate";
+import { DEMO, JOBS, candidateById, firstName } from "../data";
 import { DocUpload, ExperienceBlock, FileBox, ProjectsBlock, ReadingBox, ResumeDetails } from "./onboarding";
 
 /* ── Messages ───────────────────────────────────────────────────────────── */
@@ -176,29 +177,60 @@ export function Messages() {
 /* ── Chat ───────────────────────────────────────────────────────────────── */
 type Msg = { me: boolean; text: string; at: string };
 
-export function ChatScreen({ who = "Nithin Agarwal" }: { who?: string }) {
-  const { role, live } = useStore();
-  const isReferrer = role === "referrer";
-  const [msgs, setMsgs] = useState<Msg[]>(
-    isReferrer
-      ? [
-          { me: false, text: "Thanks for the referral! Anything I should prepare?", at: "2:10 PM" },
-          { me: true, text: "Brush up the checkout case study. They ask about it.", at: "2:18 PM" },
-          { me: false, text: "Sure, can we get on a quick call?", at: "2:30 PM" },
-        ]
-      : [
-          { me: true, text: "Thanks for referring me, Nithin!", at: "3:10 PM" },
-          { me: false, text: "Happy to help. I’ve submitted it on our portal.", at: "3:20 PM" },
-          { me: true, text: "Will I know when it moves?", at: "3:28 PM" },
-          { me: false, text: "Yeah, you will get notification of every update.", at: "3:31 PM" },
-        ]
-  );
-  const [draft, setDraft] = useState("");
+/** Where each chat starts: the V6 threads for Nithin and Abhinav, and a short one for the rest
+ *  that ends on the line the Messages list shows. */
+function seed(who: string, isReferrer: boolean): Msg[] {
+  if (!isReferrer && who === "Nithin Agarwal")
+    return [
+      { me: true, text: "Thanks for referring me, Nithin!", at: "3:10 PM" },
+      { me: false, text: "Happy to help. I’ve submitted it on our portal.", at: "3:20 PM" },
+      { me: true, text: "Will I know when it moves?", at: "3:28 PM" },
+      { me: false, text: "Yeah, you will get notification of every update.", at: "3:31 PM" },
+    ];
+  if (isReferrer && who === "Abhinav Saxena")
+    return [
+      { me: false, text: "Thanks for the referral! Anything I should prepare?", at: "2:10 PM" },
+      { me: true, text: "Brush up the checkout case study. They ask about it.", at: "2:18 PM" },
+      { me: false, text: "Sure, can we get on a quick call?", at: "2:30 PM" },
+    ];
+  const chat = (isReferrer ? REFERRER_CHATS : CANDIDATE_CHATS).find((c) => c.name === who);
+  if (!chat) return [];
+  return [
+    { me: isReferrer, text: isReferrer ? `Hi ${firstName(who)}, I’ve referred you. Let me know if you hear back.` : `Hi ${firstName(who)}, thanks for looking at my request!`, at: "9:40 AM" },
+    { me: !isReferrer, text: chat.last, at: /AM|PM/.test(chat.when) ? chat.when : "10:02 AM" },
+  ];
+}
 
+/** What a tap on the empty composer types, and what the other person says back. */
+const REPLY_DRAFT = { candidate: "Thanks! I’ll keep an eye on the app for updates.", referrer: "Sure. Does 5 PM today work for a quick call?" };
+const THEIR_REPLY = {
+  candidate: ["Sounds good. I’ll update it here as soon as I hear.", "Great, all the best!", "Will do. Ping me if you have questions."],
+  referrer: ["Yes, 5 PM works. Thank you!", "Perfect, talk then.", "Thanks so much, really appreciate it."],
+};
+
+export function ChatScreen({ who = "Nithin Agarwal" }: { who?: string }) {
+  const { role, live, requests } = useStore();
+  const isReferrer = role === "referrer";
+  const [msgs, setMsgs] = useState<Msg[]>(() => seed(who, isReferrer));
+  const [draft, setDraft] = useState("");
+  const [typing, setTyping] = useState(false);
+  const replies = useRef(0);
+  // the request this chat is about: the candidate's request to this person, or Abhinav's
+  const req = isReferrer ? (who === live.candidate ? live : null) : requests.find((r) => r.referrer === who) ?? null;
+
+  const now = () => new Date().toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
   const send = () => {
     if (!draft.trim()) return;
-    setMsgs((m) => [...m, { me: true, text: draft.trim(), at: "now" }]);
+    setMsgs((m) => [...m, { me: true, text: draft.trim(), at: now() }]);
     setDraft("");
+    // the other side answers a moment later, as a real chat would
+    const pool = THEIR_REPLY[isReferrer ? "referrer" : "candidate"];
+    const text = pool[replies.current++ % pool.length];
+    window.setTimeout(() => setTyping(true), 700);
+    window.setTimeout(() => {
+      setTyping(false);
+      setMsgs((m) => [...m, { me: false, text, at: now() }]);
+    }, 2200);
   };
 
   return (
@@ -217,15 +249,20 @@ export function ChatScreen({ who = "Nithin Agarwal" }: { who?: string }) {
         <div className="sd-pad" style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 16 }}>
           {/* the request this chat is about, drawn with the same ReferralBar as the list. Nithin says
               he has submitted it, so the card can't still read Sent or Referred. */}
-          <ReferralBar r={live.stage === "sent" || live.stage === "referred" ? { ...live, stage: "submitted" } : live} />
+          {req && <ReferralBar r={req.live && (req.stage === "sent" || req.stage === "referred") ? { ...req, stage: "submitted" } : req} />}
+          {msgs.length === 0 && (
+            <p className="t-label muted" style={{ textAlign: "center", paddingTop: 24 }}>
+              Say hello to {firstName(who)}. Keep it about the job.
+            </p>
+          )}
           {msgs.map((m, i) => {
             // iOS Messages: no time under each bubble. A small centred time opens the chat and any
             // run of messages that starts 15+ minutes after the last one.
             const prev = msgs[i - 1];
-            const head = !prev || (m.at !== "now" && prev.at !== "now" && mins(m.at) - mins(prev.at) >= 15);
+            const head = !prev || mins(m.at) - mins(prev.at) >= 15;
             return (
               <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: m.me ? "flex-end" : "flex-start", gap: 8 }}>
-                {head && <span className="sd-chat-time">Today {m.at === "now" ? "" : m.at}</span>}
+                {head && <span className="sd-chat-time">Today {m.at}</span>}
                 {/* Figma ChatMessage: padding 8/12, 16px corners with a 4px tail on the side
                     the bubble comes from, Inter Regular 14/20, 280 max. */}
                 <span
@@ -245,6 +282,11 @@ export function ChatScreen({ who = "Nithin Agarwal" }: { who?: string }) {
               </div>
             );
           })}
+          {typing && (
+            <span className="t-label-sm muted" style={{ paddingLeft: 4 }}>
+              {firstName(who)} is typing…
+            </span>
+          )}
         </div>
         <div style={{ height: 16 }} />
       </div>
@@ -259,7 +301,14 @@ export function ChatScreen({ who = "Nithin Agarwal" }: { who?: string }) {
         }}
       >
         <div className="sd-composer">
-          <input value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="Message" onKeyDown={(e) => e.key === "Enter" && send()} />
+          <input
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
+            // a tap on the empty box writes a reply, so testers don't have to type
+            onFocus={() => !draft && setDraft(REPLY_DRAFT[isReferrer ? "referrer" : "candidate"])}
+            placeholder="Message"
+            onKeyDown={(e) => e.key === "Enter" && send()}
+          />
           <button onClick={send} aria-label="Send" disabled={!draft.trim()} className="sd-send">
             <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
               <path d="M7 12V2M2.5 6.5L7 2l4.5 4.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -352,21 +401,22 @@ export function Notifications() {
 /* ── Profile ────────────────────────────────────────────────────────────── */
 export function Profile() {
   const nav = useNav();
-  const { role, unread, dispatch } = useStore();
+  const { role, unread, profile, dispatch } = useStore();
   const isReferrer = role === "referrer";
+  const me = profile.jobs[0];
   return (
     <Screen largeTitle="Profile" right={<BellButton unread={unread} />}>
       {/* Figma: the person sits on the grey page (108 tall, 20 above and below), then the
           groups 24 apart, then Log out 24 under the last one */}
       <div style={{ paddingTop: 24, display: "flex", flexDirection: "column" }}>
         <div style={{ display: "flex", gap: 12, alignItems: "center", padding: "20px 0" }}>
-          <Avatar name={isReferrer ? "Nithin Agarwal" : "Abhinav Saxena"} size={68} />
+          <Avatar name={isReferrer ? "Nithin Agarwal" : profile.name} src={isReferrer ? undefined : "/images/sidedoor/people/abhinav-saxena.png"} size={68} />
           <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4 }}>
             <span style={{ display: "flex", alignItems: "center", gap: 4 }} className="t-h-md">
-              {isReferrer ? "Nithin Agarwal" : "Abhinav Saxena"}
+              {isReferrer ? "Nithin Agarwal" : profile.name}
               {isReferrer && <Icon name="checkmark.seal.fill" size={20} style={{ color: "var(--sd-text-success)" }} />}
             </span>
-            <span className="t-label muted">{isReferrer ? "Design Manager, Flipkart" : "Product Designer, Blinkit"}</span>
+            <span className="t-label muted">{isReferrer ? "Design Manager, Flipkart" : me ? `${me.role}, ${me.company}` : "Looking for work"}</span>
           </span>
           <TextButton onClick={() => nav.push(isReferrer ? "editProfileReferrer" : "editDetails")}>Edit</TextButton>
         </div>
@@ -420,9 +470,9 @@ export function Profile() {
 /* ── Candidate: edit your details ───────────────────────────────────────── */
 export function EditDetails() {
   const nav = useNav();
-  const { details, dispatch } = useStore();
-  const [linkedin, setLinkedin] = useState("linkedin.com/in/abhinav-saxena");
-  const [portfolio, setPortfolio] = useState("dribbble.com/abhinavsaxena");
+  const { details, profile, dispatch } = useStore();
+  const [linkedin, setLinkedin] = useState(profile.linkedin || DEMO.linkedin);
+  const [portfolio, setPortfolio] = useState(profile.portfolio || DEMO.portfolio);
   const [roles, setRoles] = useState("Product Designer, Interaction Designer");
   const [how, setHow] = useState("Full time · Remote or hybrid");
   // Portal details start from Figma's values when nothing is saved yet. Copies, so a box can be
@@ -443,6 +493,9 @@ export function EditDetails() {
     dispatch({ t: "detail", k: "gaps", v: gaps });
     dispatch({ t: "detail", k: "locations", v: locations });
     dispatch({ t: "detail", k: "notice", v: notice });
+    dispatch({ t: "profile", v: { linkedin, portfolio } });
+    dispatch({ t: "toast", v: "Saved. New requests send these." });
+    window.setTimeout(() => dispatch({ t: "toast", v: null }), 1800);
     nav.pop();
   };
   // Figma: "Check your details" once it's all filled in — the same resume, experience and
@@ -472,8 +525,9 @@ export function EditDetails() {
             value={linkedin}
             onChange={setLinkedin}
             kind="linkedin"
+            demo={DEMO.linkedin}
           />
-          <Field label="Portfolio (optional)" icon="link" value={portfolio} onChange={setPortfolio} kind="url" />
+          <Field label="Portfolio (optional)" icon="link" value={portfolio} onChange={setPortfolio} kind="url" demo={DEMO.portfolio} />
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -487,9 +541,9 @@ export function EditDetails() {
             <p className="t-label-sm muted">Not usually on a resume, but referrers’ portals ask for them.</p>
           </div>
           <Field label="Date of birth" icon="calendar" value={details.dob || "12 Mar 1999"} readOnly required onClick={() => nav.openSheet("dob")} />
-          <Field label="Career gaps, in years" icon="briefcase.fill" value={gaps} onChange={setGaps} kind="years" required placeholder="0 if none, e.g. 1.5" />
-          <Field label="Preferred interview locations" icon="mappin.and.ellipse" value={locations} onChange={setLocations} kind="cities" required />
-          <Field label="Notice period, in days" icon="hourglass" value={notice} onChange={setNotice} kind="days" required placeholder="e.g. 30" />
+          <Field label="Career gaps, in years" icon="briefcase.fill" value={gaps} onChange={setGaps} kind="years" required placeholder="0 if none, e.g. 1.5" demo={DEMO.gaps} />
+          <Field label="Preferred interview locations" icon="mappin.and.ellipse" value={locations} onChange={setLocations} kind="cities" required demo={DEMO.locations} />
+          <Field label="Notice period, in days" icon="hourglass" value={notice} onChange={setNotice} kind="days" required placeholder="e.g. 30" demo={DEMO.notice} />
         </div>
 
         <FileBox label="Resume" name="Abhinav_Saxena_Resume.pdf" what="resume" />
@@ -500,6 +554,7 @@ export function EditDetails() {
 
 export function EditProfileReferrer() {
   const nav = useNav();
+  const { dispatch } = useStore();
   const [role, setRole] = useState("Design Manager");
   const [city, setCity] = useState("Bengaluru, KA");
   const [name, setName] = useState("Nithin Agarwal");
@@ -514,7 +569,14 @@ export function EditProfileReferrer() {
       title="Edit your profile"
       back
       actions={
-        <Button disabled={!ok} onClick={() => nav.pop()}>
+        <Button
+          disabled={!ok}
+          onClick={() => {
+            dispatch({ t: "toast", v: "Profile saved" });
+            window.setTimeout(() => dispatch({ t: "toast", v: null }), 1600);
+            nav.pop();
+          }}
+        >
           Save changes
         </Button>
       }
@@ -557,15 +619,19 @@ export function SavedJobs() {
         {saved.length === 0 ? (
           <Empty icon="bookmark" title="Nothing saved" body="Tap the bookmark on a job to keep it here." />
         ) : (
-          <Card onClick={() => nav.push("job", { id: "flipkart" })}>
-            <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-              <LogoTile logo="flipkart" alt="Flipkart" size={52} />
-              <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4 }}>
-                <span className="t-h-sm">Interaction Designer</span>
-                <span className="t-label-sm muted">Flipkart · Bengaluru</span>
-              </span>
-            </div>
-          </Card>
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            {JOBS.filter((j) => saved.includes(j.id)).map((j) => (
+              <Card key={j.id} onClick={() => nav.push("job", { id: j.id })}>
+                <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+                  <LogoTile logo={j.logo} alt={j.company} size={52} />
+                  <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4 }}>
+                    <span className="t-h-sm">{j.title}</span>
+                    <span className="t-label-sm muted">{j.company} · {j.cityShort}</span>
+                  </span>
+                </div>
+              </Card>
+            ))}
+          </div>
         )}
       </div>
     </Screen>
@@ -784,6 +850,7 @@ export function LinkPage() {
             onChange={setNote}
             placeholder="One line, e.g. what you worked on"
             kind="note"
+            demo="I led the Myntra design system. Happy to share more."
           />
         </>
       )}
@@ -858,8 +925,8 @@ export function HelpArticle({ id }: { id: string }) {
 /** Contact support: a topic, a message and a reply-to address, all checked before Send. */
 export function ContactSupport() {
   const nav = useNav();
-  const { dispatch } = useStore();
-  const [email, setEmail] = useState("abhinav.saxena@email.com");
+  const { dispatch, role, profile } = useStore();
+  const [email, setEmail] = useState(role === "referrer" ? "nithin.agarwal@flipkart.com" : profile.email);
   const [msg, setMsg] = useState("");
   const ok = allValid([
     ["email", email, true],
@@ -885,32 +952,68 @@ export function ContactSupport() {
       <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 20 }}>
         <p className="t-label muted">We read every message and reply by email within a day.</p>
         <Field label="Reply to" icon="envelope.fill" value={email} onChange={setEmail} kind="email" required />
-        <Field label="What’s happening" icon="quote.bubble.fill" value={msg} onChange={setMsg} kind="tips" required multiline placeholder="e.g. My request to Flipkart still says Sent" />
+        <Field label="What’s happening" icon="quote.bubble.fill" value={msg} onChange={setMsg} kind="tips" required multiline placeholder="e.g. My request to Flipkart still says Sent" demo={DEMO.support} />
       </div>
     </Screen>
   );
 }
 
 /** Opening a resume: a full-screen preview, the way iOS Quick Look shows a PDF. */
-export function ResumePreview({ file = "Abhinav_Saxena_Resume.pdf" }: { file?: string }) {
-  const who = file.replace(/_Resume\.pdf$/, "").replace(/_/g, " ");
+export function ResumePreview({ file = "Abhinav_Saxena_Resume.pdf", id = "abhinav" }: { file?: string; id?: string }) {
+  const { profile } = useStore();
+  const c = candidateById(id);
+  const me = c.id === "abhinav";
+  const jobs = me ? profile.jobs : c.jobs;
+  const projects = me ? profile.projects : c.projects;
   return (
     <Screen title={file} back>
       <div style={{ paddingTop: 24 }}>
         <div className="sd-paper">
-          <span className="t-h-md">{who}</span>
-          <span className="t-label-sm muted">Product Designer · Bengaluru, KA</span>
+          <span className="t-h-md">{me ? profile.name : c.name}</span>
+          <span className="t-label-sm muted">{c.title} · {c.city}</span>
+          <span className="t-label-sm muted">{me ? profile.email : c.email}</span>
           <hr />
           <span className="t-h-xs">Experience</span>
-          <p className="t-label-sm">Product Designer, Blinkit · Sep 2023–Present</p>
-          <p className="t-label-sm muted">Merchant app: order intake for 4,000 dark stores.</p>
-          <p className="t-label-sm">Associate Product Designer, MakeMyTrip · Jun 2022–Aug 2023</p>
-          <p className="t-label-sm muted">Hotel checkout, five steps to three.</p>
+          {jobs.map((j) => (
+            <p key={j.role + j.company} className="t-label-sm">{j.role}, {j.company} · {j.when}</p>
+          ))}
+          {projects.length > 0 && <span className="t-h-xs">Projects</span>}
+          {projects.map((p) => (
+            <p key={p.title} className="t-label-sm muted">
+              <b style={{ color: "var(--sd-text)", fontWeight: 600 }}>{p.title}.</b> {p.detail}
+            </p>
+          ))}
           <span className="t-h-xs">Skills</span>
-          <p className="t-label-sm muted">Product strategy, Systems thinking, User research, Interaction design, Figma</p>
+          <p className="t-label-sm muted">{me ? profile.skills : Object.keys(c.has).join(", ") || "Visual design, Illustration"}</p>
           <span className="t-h-xs">Education</span>
-          <p className="t-label-sm muted">B.Des, Interaction Design · NID Ahmedabad · 2022</p>
+          <p className="t-label-sm muted">B.Des, Interaction Design · NID Ahmedabad · {2025 - c.years - 1}</p>
         </div>
+      </div>
+    </Screen>
+  );
+}
+
+/** A candidate's LinkedIn, Dribbble or Behance: in the real app this opens in the browser, so
+ *  the prototype shows a small preview of that page instead of leaving. */
+export function ProfileLink({ site = "LinkedIn", name = "Abhinav Saxena" }: { site?: string; name?: string }) {
+  const slug = name.toLowerCase().replace(/ /g, site === "LinkedIn" ? "-" : "");
+  const url = site === "LinkedIn" ? `linkedin.com/in/${slug}` : `${site.toLowerCase()}.${site === "Behance" ? "net" : "com"}/${slug}`;
+  return (
+    <Screen title={site} back>
+      <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Tag icon="lock.fill">{url}</Tag>
+        </div>
+        <Card>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12, textAlign: "center" }}>
+            <Avatar name={name} size={68} />
+            <span className="t-h-md">{name}</span>
+            <span className="t-label muted">{site === "LinkedIn" ? "Designer · 500+ connections" : `${site} portfolio · 12 shots`}</span>
+          </div>
+        </Card>
+        <p className="t-label-sm muted" style={{ textAlign: "center" }}>
+          In the app this opens {site} in your browser.
+        </p>
       </div>
     </Screen>
   );

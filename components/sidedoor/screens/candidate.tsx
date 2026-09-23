@@ -3,7 +3,8 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useNav } from "../nav";
-import { STAGE_LABEL, stageTag, useStore, type Request, type Stage } from "../store";
+import { STAGE_LABEL, requestIdFor, stageTag, useStore, type Request, type Stage } from "../store";
+import { DEMO, DESIGN, JOBS, firstName, jobById, matchOf, type Job } from "../data";
 import {
   Actions,
   Avatar,
@@ -34,60 +35,9 @@ import {
 import { CompanyRow, Project, ResumeDetails } from "./onboarding";
 
 /* ── Jobs ───────────────────────────────────────────────────────────────── */
-type Job = {
-  id: string;
-  title: string;
-  company: string;
-  logo: string;
-  city: string;
-  pay: string;
-  refers: string;
-  /** Figma's job card leads with the referrer's photo, not the company logo. */
-  person: string;
-  when: string;
-  tag?: { text: string; style: "primary" | "buffer" };
-  common?: { logo?: string; text: string };
-};
-
-const JOBS: Job[] = [
-  {
-    id: "flipkart",
-    title: "Interaction Designer",
-    company: "Flipkart",
-    logo: "flipkart-icon",
-    city: "Bengaluru",
-    pay: "₹28–40 LPA",
-    refers: "Nithin refers",
-    person: "Nithin Agarwal",
-    when: "Thursday",
-    tag: { text: "4 of 7 skills · 3+ yrs", style: "primary" },
-    common: { logo: "makemytrip", text: "Both worked at MakeMyTrip" },
-  },
-  {
-    id: "phonepe",
-    title: "Sr. Product Designer",
-    company: "PhonePe",
-    logo: "phonepe",
-    city: "Pune",
-    pay: "₹40–50 LPA",
-    refers: "Avinash refers",
-    person: "Avinash Banerjee",
-    when: "Wednesday",
-    tag: { text: "Avinash is full this week", style: "buffer" },
-  },
-  {
-    id: "zomato",
-    title: "Member of Technical Staff-I",
-    company: "Zomato",
-    logo: "swiggy",
-    city: "Noida",
-    pay: "₹25–30 LPA",
-    refers: "Vanya refers",
-    person: "Vanya Kapoor",
-    when: "12 Sep",
-    tag: { text: "5 of 7 skills · 4+ yrs", style: "primary" },
-  },
-];
+/** "3+ years" → "3+ yrs", as the job cards write it */
+const yrs = (j: Job) => j.years.replace(" years", " yrs");
+const skillTag = (j: Job) => `${matchOf(j)} of ${j.skills.length} skills · ${yrs(j)}`;
 
 export function Jobs() {
   const nav = useNav();
@@ -102,7 +52,7 @@ export function Jobs() {
   const failed = force === "jobs.error" && phase === "ok";
   const showList = phase !== "loading" && !failed && !empty;
   const [sort, setSort] = useState<Sort>("Newest first");
-  const jobs = sort === "Newest first" ? JOBS : [...JOBS].sort((x, y) => skillsOf(y) - skillsOf(x));
+  const jobs = sort === "Newest first" ? JOBS : [...JOBS].sort((x, y) => (y.full ? -1 : matchOf(y)) - (x.full ? -1 : matchOf(x)));
   const prompt = skippedResume ? (
           // Figma's "Add Resume Prompt": a white r12 card padded 12/16 with the two lines on the
           // left and the link at the right — not a buffer note tucked under the section label.
@@ -182,23 +132,26 @@ export function Jobs() {
 
               <ListCard
                 key={j.id}
-                onClick={() => (skippedResume ? nav.openSheet("addResume") : nav.push("job", { id: j.id }))}
-                lead={<Avatar name={j.person} size={44} />}
+                onClick={() => (skippedResume ? nav.openSheet("addResume", { job: j.id }) : nav.push("job", { id: j.id }))}
+                lead={<Avatar name={j.referrer.name} size={44} />}
                 title={j.title}
                 when={j.when}
-                lines={[`${j.company} · ${j.city}`, `${j.pay} · ${j.refers}`]}
+                lines={[`${j.company} · ${j.cityShort}`, `${j.pay} · ${firstName(j.referrer.name)} refers`]}
                 chips={
                   <>
-                    {j.tag &&
-                      (skippedResume && j.tag.style === "primary" ? (
-                        <Tag>Add resume to see match</Tag>
-                      ) : (
-                        <Tag style={j.tag.style}>{j.tag.text}</Tag>
-                      ))}
+                    {j.full ? (
+                      <Tag style="buffer">{firstName(j.referrer.name)} is full this week</Tag>
+                    ) : skippedResume ? (
+                      <Tag>Add resume to see match</Tag>
+                    ) : (
+                      <Tag style="primary">{skillTag(j)}</Tag>
+                    )}
                     {j.common && (
                       <span className="sd-tag plain">
-                        {j.common.logo && (
+                        {j.common.logo ? (
                           <Image src={logoSrc(j.common.logo)} alt="" width={12} height={12} style={{ width: 12, height: "auto" }} unoptimized />
+                        ) : (
+                          <Icon name="building.2.fill" size={12} color="tone" />
                         )}
                         <span>{j.common.text}</span>
                       </span>
@@ -217,7 +170,6 @@ export function Jobs() {
 }
 
 type Sort = "Newest first" | "Best match";
-const skillsOf = (j: (typeof JOBS)[number]) => Number(j.tag?.text.match(/^(\d+) of/)?.[1] ?? -1);
 
 /** The sort button opens an iOS pull-down menu under it; a tap outside closes it. */
 function SortMenu({ value, onChange }: { value: Sort; onChange: (v: Sort) => void }) {
@@ -273,13 +225,50 @@ export function BellButton({ unread }: { unread: number }) {
 }
 
 /* ── Job details ────────────────────────────────────────────────────────── */
-export function JobDetails() {
+/** Figma Frame 200: a 175-tall panel, r16, padded 24/48, in the company's brand colour with
+ *  its logo on it in white (or in its own colours where the logo carries its own ground). */
+function Banner({ j }: { j: Job }) {
+  const b = j.banner;
+  return (
+    <div
+      style={{
+        background: b.bg,
+        borderRadius: 16,
+        height: 175,
+        padding: "24px 48px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 14,
+      }}
+    >
+      {b.src && (
+        <Image
+          src={b.src}
+          alt={b.word ? "" : j.company}
+          width={b.w}
+          height={b.h}
+          style={{ width: b.w, height: b.h, objectFit: "contain", filter: b.keep ? undefined : "brightness(0) invert(1)" }}
+          unoptimized
+        />
+      )}
+      {b.word && (
+        <span style={{ color: b.wordColor, fontSize: b.src ? 36 : 52, fontWeight: 600, letterSpacing: b.src ? -0.5 : -1.5, lineHeight: 1 }}>{b.word}</span>
+      )}
+    </div>
+  );
+}
+
+export function JobDetails({ id = "flipkart" }: { id?: string }) {
   const nav = useNav();
-  const { saved, dispatch, live, force, skippedResume } = useStore();
+  const { saved, sentJobs, dispatch, live, force, skippedResume } = useStore();
+  const j = jobById(id);
+  const who = firstName(j.referrer.name);
   const suggested = force === "job.suggested";
-  const asked = force === "job.asked" || live.stage !== "sent" || live.updated === "Just now";
+  const asked =
+    force === "job.asked" || sentJobs.includes(j.id) || (j.id === "flipkart" && (live.stage !== "sent" || live.updated === "Just now"));
   const noResume = skippedResume || force === "job.skipped";
-  const on = saved.includes("flipkart");
+  const on = saved.includes(j.id);
   return (
     <Screen
       title="Job details"
@@ -291,11 +280,18 @@ export function JobDetails() {
         asked ? (
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {/* Figma: a plain 12/16 line above the button, and the button stays blue */}
-            <p className="t-label-sm muted">You asked Nithin today. One request per job, per referrer.</p>
-            <Button onClick={() => nav.push("trackDetails", { id: "flipkart" })}>View your request</Button>
+            <p className="t-label-sm muted">You asked {who} today. One request per job, per referrer.</p>
+            <Button onClick={() => nav.push("trackDetails", { id: requestIdFor(j.id) })}>View your request</Button>
+          </div>
+        ) : j.full ? (
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            <Note style="buffer" icon="info.circle.fill">{who} is full this week. Try again on Monday.</Note>
+            <Button disabled>Ask {who} for a referral</Button>
           </div>
         ) : (
-          <Button onClick={() => nav.push("checkRequest")}>Ask Nithin for a referral</Button>
+          <Button onClick={() => (noResume ? nav.openSheet("addResume", { job: j.id }) : nav.push("checkRequest", { id: j.id }))}>
+            Ask {who} for a referral
+          </Button>
         )
       }
     >
@@ -304,7 +300,7 @@ export function JobDetails() {
           // Figma's Headline block, shown when a referrer has put you forward: the line and its
           // explanation 4 apart, 24 above the card.
           <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-            <span className="t-h-sm">Nithin suggests you for this job</span>
+            <span className="t-h-sm">{who} suggests you for this job</span>
             <span className="t-label muted">
               Your details are ready. Sending won’t use one of your 5 requests this week.
             </span>
@@ -323,62 +319,49 @@ export function JobDetails() {
               boxShadow: "inset 0 -1px 0 var(--sd-border)",
             }}
           >
-            <div style={{ display: "flex", gap: 8, flex: 1, alignItems: "center" }}>
-              <Avatar name="Nithin Agarwal" size={36} />
-              <span style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+            <div style={{ display: "flex", gap: 8, flex: 1, alignItems: "center", minWidth: 0 }}>
+              <Avatar name={j.referrer.name} size={36} />
+              <span style={{ display: "flex", flexDirection: "column", gap: 4, minWidth: 0 }}>
                 <span style={{ display: "flex", alignItems: "center", gap: 4 }} className="t-h-xs">
-                  Nithin Agarwal
+                  {j.referrer.name}
                   <Icon name="checkmark.seal.fill" size={14} style={{ color: "var(--sd-text-success)" }} />
                 </span>
-                <span className="t-label-sm muted">Design Manager, Flipkart</span>
+                <span className="t-label-sm muted sd-1line">{j.referrer.role}</span>
               </span>
             </div>
-            <span className="sd-lc-when">Thursday</span>
+            <span className="sd-lc-when">{j.when}</span>
           </div>
 
-          {/* Figma Frame 200: a 175-tall #2563eb panel, r16, padded 24/48, with the company
-              wordmark filling the 242 it leaves. The code drew a small logo on white. */}
-          <div
-            style={{
-              background: "var(--sd-action-bg)",
-              borderRadius: 16,
-              height: 175,
-              padding: "24px 48px",
-              display: "grid",
-              placeItems: "center",
-            }}
-          >
-            {/* Figma's banner instance overrides the wordmark to white; the default logo (blue
-                wordmark) is the one on white tiles, so the banner gets its own file. */}
-            <Image
-              src="/images/sidedoor/flipkart-white.svg"
-              alt="Flipkart"
-              width={242}
-              height={64}
-              style={{ width: 242, height: 64 }}
-              unoptimized
-            />
-          </div>
+          <Banner j={j} />
 
           <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
             <h1 className="t-h-md" style={{ flex: 1 }}>
-              Interaction Designer
+              {j.title}
             </h1>
-            <button className="sd-hit44" onClick={() => dispatch({ t: "save", v: "flipkart" })} aria-label="Save job" style={{ display: "flex" }}>
+            <button
+              className="sd-hit44"
+              onClick={() => {
+                dispatch({ t: "save", v: j.id });
+                dispatch({ t: "toast", v: on ? "Removed from saved jobs" : "Saved. Find it in Profile → Saved jobs" });
+                window.setTimeout(() => dispatch({ t: "toast", v: null }), 1800);
+              }}
+              aria-label={on ? "Remove from saved jobs" : "Save job"}
+              style={{ display: "flex" }}
+            >
               <Icon name={on ? "bookmark.fill" : "bookmark"} size={26} color="tone" />
             </button>
           </div>
 
           {/* Figma Frame 174: the pay tag and the three rating marks, 8 apart. */}
           <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-            <Tag icon="info.circle.fill">₹28–40 LPA</Tag>
+            <Tag icon="info.circle.fill">{j.pay}</Tag>
             <Image src="/images/sidedoor/rating-sources.svg" alt="" width={37} height={16} style={{ width: 37, height: 16 }} unoptimized />
           </div>
 
           {/* Figma Frame 175 spreads the three across the full width. */}
-          <div style={{ display: "flex", justifyContent: "space-between", gap: 24 }}>
-            <Meta icon="mappin.and.ellipse">Bengaluru, KA</Meta>
-            <Meta icon="calendar">3+ years</Meta>
+          <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
+            <Meta icon="mappin.and.ellipse">{j.city}</Meta>
+            <Meta icon="calendar">{j.years}</Meta>
             <Meta icon="briefcase.fill">Full time</Meta>
           </div>
 
@@ -387,17 +370,15 @@ export function JobDetails() {
             {noResume ? (
               <Tag>Add resume to see match</Tag>
             ) : (
-              <Tag style="primary" icon="checkmark.circle.fill">4 of 7 skills match</Tag>
+              <Tag style="primary" icon="checkmark.circle.fill">{matchOf(j)} of {j.skills.length} skills match</Tag>
             )}
-            <Tag>Remote or hybrid</Tag>
-            <Tag>Joining within 30 days</Tag>
+            {j.work.map((w) => (
+              <Tag key={w}>{w}</Tag>
+            ))}
           </div>
 
           <Block icon="info.circle.fill" title="About the role">
-            Design and deliver intuitive checkout and post-purchase experiences used by millions of users. Work closely
-            with product and engineering to simplify complex flows and improve conversion, trust, and usability.
-            Contribute across the full design lifecycle, from interaction modeling to high-fidelity execution and
-            validation.
+            {j.about}
           </Block>
 
           {/* Figma Frame 156 is the one block with a gap of 8 rather than 2. */}
@@ -407,40 +388,19 @@ export function JobDetails() {
               <span className="t-h-xs">What we’re looking for</span>
             </span>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-              {["UX research", "Interaction design", "Prototyping", "AI-assisted design", "Design system", "Figma"].map((s) => (
+              {(j.id === "flipkart" ? DESIGN : j.skills.slice(0, 6)).map((s) => (
                 <Tag key={s}>{s}</Tag>
               ))}
             </div>
-            <Bullets
-              items={[
-                "3+ years of experience designing web or mobile products",
-                "Strong skills in interaction design, user flows, and usability",
-                "Experience creating wireframes, prototypes, and high-fidelity UI",
-                "Ability to collaborate closely with product and engineering teams",
-              ]}
-            />
+            <Bullets items={j.looking} />
           </div>
 
           <Block icon="paperclip" title="Key responsibilities">
-            <Bullets
-              items={[
-                "Own and design high-impact checkout and payment experiences",
-                "Collaborate closely with product and engineering to solve complex user problems",
-                "Create wireframes, interactive prototypes, and polished high-fidelity designs",
-                "Lead and apply user research insights to continuously improve key flows",
-              ]}
-            />
+            <Bullets items={j.resp} />
           </Block>
 
           <Block icon="lightbulb.fill" title="Tips from the referrer">
-            <Bullets
-              items={[
-                "Present a portfolio showcasing your strongest interaction design work, primarily created in Figma",
-                "Clearly articulate your end-to-end design process, from research and exploration to wireframes and prototypes",
-                "Demonstrate measurable impact through metrics such as conversion, engagement, or scale",
-                "Showcase strong collaboration with product managers and engineers across projects",
-              ]}
-            />
+            <Bullets items={j.tips} />
           </Block>
 
           <Block
@@ -448,8 +408,7 @@ export function JobDetails() {
             title="About the employer"
             end={<Image src="/images/sidedoor/rating-sources.svg" alt="" width={30} height={13} style={{ width: 30.06, height: 13 }} unoptimized />}
           >
-            Flipkart is one of India’s leading e-commerce platforms, serving millions of customers across categories. The
-            company focuses on building scalable, customer-first experiences through technology, design, and innovation.
+            {j.employer}
           </Block>
 
         </div>
@@ -496,9 +455,11 @@ function Bullets({ items }: { items: string[] }) {
 }
 
 /* ── Check your request ─────────────────────────────────────────────────── */
-export function CheckRequest() {
+export function CheckRequest({ id = "flipkart" }: { id?: string }) {
   const nav = useNav();
   const { details, note, stillNeeded, requestsLeft, force, offline, dispatch } = useStore();
+  const j = jobById(id);
+  const who = firstName(j.referrer.name);
   const [sending, setSending] = useState(force === "send.sending");
   const [failed, setFailed] = useState(force === "send.error");
   const noneLeft = requestsLeft === 0 || force === "send.none-left";
@@ -525,8 +486,8 @@ export function CheckRequest() {
         setFailed(true);
         return;
       }
-      dispatch({ t: "send" });
-      nav.reset("tabs", { tab: "requests", justSent: true });
+      dispatch({ t: "send", job: j.id });
+      nav.reset("tabs", { tab: "requests", justSent: j.id });
       window.setTimeout(() => dispatch({ t: "toast", v: null }), 2400);
     }, 1400);
   };
@@ -562,20 +523,20 @@ export function CheckRequest() {
       }
     >
       <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
-        <p className="t-label muted">This is exactly what Nithin will get.</p>
+        <p className="t-label muted">This is exactly what {who} will get.</p>
 
         {/* Figma's Person row is 50 tall with the 44 avatar centred in it. */}
         <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-          <Avatar name="Nithin Agarwal" />
-          <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1 }}>
+          <Avatar name={j.referrer.name} />
+          <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1, minWidth: 0 }}>
             <span className="sd-person-name">
-              Nithin Agarwal
+              {j.referrer.name}
               <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)" }} />
             </span>
             {/* Figma's "Role And Tag" row fills the width and pushes the tag to the right edge. */}
             <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <span className="sd-person-sub" style={{ flex: 1 }}>Design Manager, Flipkart</span>
-              <Tag>Job ID 184223</Tag>
+              <span className="sd-person-sub sd-1line" style={{ flex: 1 }}>{j.referrer.role}</span>
+              <Tag>Job ID {j.jobId}</Tag>
             </span>
           </div>
         </div>
@@ -584,7 +545,7 @@ export function CheckRequest() {
             it used to vanish the moment the last box got its first character. */}
         {!complete && (
         <Section
-          label="Flipkart’s portal also asks for"
+          label={`${j.company}’s portal also asks for`}
           icon="info.circle.fill"
           end={stillNeeded > 0 ? <Tag style="buffer">Still needed · {stillNeeded}</Tag> : <Tag style="success">All in</Tag>}
         >
@@ -609,6 +570,7 @@ export function CheckRequest() {
               placeholder="0 if none, e.g. 1.5"
               kind="years"
               required
+              demo={DEMO.gaps}
             />
             <Field
               label="Preferred interview locations"
@@ -618,6 +580,7 @@ export function CheckRequest() {
               placeholder="e.g. Bengaluru, Remote"
               kind="cities"
               required
+              demo={DEMO.locations}
             />
             <Field
               label="Notice period, in days"
@@ -627,6 +590,7 @@ export function CheckRequest() {
               placeholder="e.g. 30"
               kind="days"
               required
+              demo={DEMO.notice}
             />
           </div>
         </Section>
@@ -650,9 +614,9 @@ export function CheckRequest() {
           ]}
         />
 
-        <Section label="How you match" icon="lightbulb.fill" end={<Tag style="primary">4 of 7 skills · 3 yrs</Tag>}>
+        <Section label="How you match" icon="lightbulb.fill" end={<Tag style="primary">{matchOf(j)} of {j.skills.length} skills · 3 yrs</Tag>}>
           <Box>
-            <p className="t-body muted">Not in your resume: AI-assisted design, Design system, A/B testing</p>
+            <p className="t-body muted">Not in your resume: {j.missing.join(", ")}</p>
           </Box>
         </Section>
 
@@ -664,6 +628,7 @@ export function CheckRequest() {
             placeholder="One line, e.g. what you worked on"
             boxHeight={44}
             kind="note"
+            demo={DEMO.note}
           />
         </Section>
       </div>
@@ -680,18 +645,19 @@ function bucket(s: Stage): (typeof FILTERS)[number] {
   return "Closed";
 }
 
-export function RequestList({ justSent }: { justSent?: boolean }) {
+export function RequestList({ justSent }: { justSent?: boolean | string }) {
   const nav = useNav();
   const { requests, unread, force } = useStore();
   const [filter, setFilter] = useState<string>("All");
   // Figma's "Just sent" is the list right after a send: a green note, and the live request
   // sitting at "Sent · Just now"
   const just = justSent || force === "requests.justsent";
+  const sentJob = jobById(typeof justSent === "string" ? justSent : "flipkart");
   const all =
     force === "requests.empty"
       ? []
       : just
-        ? requests.map((r) => (r.live ? { ...r, stage: "sent" as Stage, updated: "Just now" } : r))
+        ? requests.map((r) => (r.id === requestIdFor(sentJob.id) ? { ...r, stage: "sent" as Stage, updated: "Just now" } : r))
         : requests;
   const shown = all.filter((r) => filter === "All" || bucket(r.stage) === filter);
   return (
@@ -704,7 +670,7 @@ export function RequestList({ justSent }: { justSent?: boolean }) {
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
         {just && (
           <Note style="success" icon="info.circle.fill">
-            Sent to Nithin · Interaction Designer, Flipkart
+            Sent to {firstName(sentJob.referrer.name)} · {sentJob.title}, {sentJob.company}
           </Note>
         )}
         {shown.length === 0 ? (
@@ -900,7 +866,7 @@ export function TrackDetails({ id, stage, updated }: { id: string; stage?: Stage
       actions={
         r.stage === "noanswer" ? (
           <Actions>
-            <Button onClick={() => nav.pop()}>Ask someone else at {r.company}</Button>
+            <Button onClick={() => nav.reset("tabs", { tab: "jobs" })}>Ask someone else at {r.company}</Button>
             <TextButton onClick={() => nav.pop()}>Keep waiting for {r.referrer.split(" ")[0]}</TextButton>
           </Actions>
         ) : r.stage === "selected" ? (

@@ -3097,3 +3097,14 @@ DECISION · 2026-09-23 · Two-page check and Paused profile removed
 - Checked all 82 V6 Prototype frames against UI Screens: text, shown/hidden items, components, colours, borders, radius, text styles. Nothing from this chat is missing on UI Screens. Size and spacing can't be compared (402 vs 390 wide).
 - 3 small differences, all with UI Screens ahead: dark back chevron (code matches), AA grey on "12 days ago", text style on the "Saved…" tag.
 - Deleted "Candidate/Profile Screen/Paused" on both pages. Once the "Let referrers find me" card left Profile, it was identical to "Candidate/Profile Screen". Its only Figma link went with it. The code had no matching scenario, so no code change.
+
+DECISION · 2026-09-23 · Prototype made ready for usability tests
+- 12 jobs (Flipkart, PhonePe, Google, Sarvam AI, Meta, Blinkit, CRED, Microsoft, Zepto, Zomato, Groww, Razorpay) and 14 candidates asking Nithin. All in `components/sidedoor/data.ts`. Figma's 3 jobs and 5 candidates keep their V6 content.
+- Each job banner uses the company's brand colour with its logo in white. Flipkart moved from our action blue #2563EB to its brand blue #2874F0, in code and on UI Screens (4 Job Screen banners, instance overrides only; V2–V5 untouched).
+- Logos: Zomato came from Figma's own Logo/Zomato. Microsoft's four squares are drawn in code. Sarvam AI's mark is a stand-in wordmark on a blue-to-orange gradient (their brand page describes that gradient); no official file downloaded.
+- Any job can be asked, sent and tracked. Flipkart stays the one request both sides share.
+- Tap an empty field and it fills with test data. Tap a blank spot and the next thing to tap blinks blue. Testing aids only, not product design, so not drawn in Figma.
+- Edit now works everywhere: details save; Experience and Projects edit each item (name, skill tags with ×, one-tap skill ideas, description), add and remove. Edits reach the referrer's view of Abhinav's request.
+- Also made real: posts pause/resume and drafts post; Save shows a toast; chats per person with a reply; LinkedIn/Dribbble/Behance open a preview; resume preview per candidate; saved jobs list all saved.
+- Still to draw on UI Screens: the Projects "editing" state (not in Figma yet).
+- Verified on localhost (preview needs a login).

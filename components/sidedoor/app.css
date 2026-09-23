@@ -838,3 +838,21 @@
 .sd-lc-chips .sd-tag svg { width: 12px; height: 12px; }
 .sd-lc-chips > .sd-lc-end { margin-left: auto; }
 
+
+/* ── editable tags (Projects → Edit) ─────────────────────────────────────── */
+.sd .sd-taginput { flex-wrap: wrap; gap: 8px; padding-top: 12px; padding-bottom: 12px; height: auto; }
+.sd .sd-taginput input { flex: 1 1 90px; min-width: 90px; }
+.sd .sd-tag-x { padding-right: 4px; }
+.sd .sd-tag-x button { display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; color: var(--sd-text-2); position: relative; }
+.sd .sd-tag-x button::after { content: ""; position: absolute; inset: -8px; }
+.sd .sd-tag-add { color: var(--sd-link); gap: 4px; }
+
+/* ── usability-test hint: a tap on nothing rings what to tap next ─────────── */
+.sd .sd-hint { animation: sd-hint 900ms ease-in-out 3; position: relative; z-index: 2; }
+@keyframes sd-hint {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+  50% { box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.95), 0 0 0 8px rgba(37, 99, 235, 0.18); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sd .sd-hint { animation: none; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.95); }
+}
