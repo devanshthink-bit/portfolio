@@ -26,6 +26,9 @@ import {
   Timeline,
   type Step,
   logoSrc,
+  allValid,
+  showDays,
+  showYears,
 } from "../ui";
 import { CompanyRow, Project } from "./onboarding";
 
@@ -520,7 +523,7 @@ export function CheckRequest() {
   // complete: the portal block is gone and its four answers sit in "Your details".
   const complete = ["send.error", "send.none-left", "send.sending", "offline"].includes(force ?? "");
   const d = complete
-    ? { dob: "12 Mar 1999", gaps: "None", locations: "Bengaluru, Remote", notice: "30 days" }
+    ? { dob: "12 Mar 1999", gaps: "0", locations: "Bengaluru, Remote", notice: "30" }
     : details;
   const missing = complete ? 0 : stillNeeded;
 
@@ -594,8 +597,9 @@ export function CheckRequest() {
           </div>
         </div>
 
-        {/* Figma drops this block once every answer is in */}
-        {missing > 0 && (
+        {/* Figma drops this block once every answer is in. It stays while they are being typed:
+            it used to vanish the moment the last box got its first character. */}
+        {!complete && (
         <Section
           label="Flipkart’s portal also asks for"
           icon="info.circle.fill"
@@ -609,16 +613,19 @@ export function CheckRequest() {
               icon="calendar"
               value={d.dob}
               placeholder="Select date"
+              required
               readOnly
               onClick={() => nav.openSheet("dob")}
               end={<Icon name="calendar" size={18} style={{ color: "var(--sd-icon-2)" }} />}
             />
             <Field
-              label="Career gaps"
+              label="Career gaps, in years"
               icon="briefcase.fill"
               value={d.gaps}
               onChange={(v) => dispatch({ t: "detail", k: "gaps", v })}
-              placeholder="None, or when and why"
+              placeholder="0 if none, e.g. 1.5"
+              kind="years"
+              required
             />
             <Field
               label="Preferred interview locations"
@@ -626,13 +633,17 @@ export function CheckRequest() {
               value={d.locations}
               onChange={(v) => dispatch({ t: "detail", k: "locations", v })}
               placeholder="e.g. Bengaluru, Remote"
+              kind="cities"
+              required
             />
             <Field
-              label="Notice period"
+              label="Notice period, in days"
               icon="hourglass"
               value={d.notice}
               onChange={(v) => dispatch({ t: "detail", k: "notice", v })}
-              placeholder="e.g. 30 days"
+              placeholder="e.g. 30"
+              kind="days"
+              required
             />
           </div>
         </Section>
@@ -646,10 +657,10 @@ export function CheckRequest() {
             <DetailField name="Current city" value="Bengaluru" />
             <DetailField name="Experience" value="3 yrs total · 3 yrs relevant" />
             {/* Figma: once the portal answers are in, they sit here, before the resume */}
-            {missing === 0 && (
+            {complete && (
               <>
-                <DetailField name="Notice period" value={d.notice} />
-                <DetailField name="Career gaps" value={d.gaps} />
+                <DetailField name="Notice period" value={showDays(d.notice)} />
+                <DetailField name="Career gaps" value={showYears(d.gaps)} />
                 <DetailField name="Date of birth" value={d.dob} />
                 <DetailField name="Preferred interview locations" value={d.locations} />
               </>
@@ -671,6 +682,7 @@ export function CheckRequest() {
             onChange={(v) => dispatch({ t: "note", v })}
             placeholder="One line, e.g. what you worked on"
             boxHeight={44}
+            kind="note"
           />
         </Section>
       </div>

@@ -26,6 +26,9 @@ import {
   Toast,
   TextButton,
   logoSrc,
+  allValid,
+  showDays,
+  showYears,
 } from "../ui";
 import { BellButton } from "./candidate";
 import { CompanyRow, Projects, RuleRow } from "./onboarding";
@@ -557,8 +560,8 @@ function portalFields(d: { dob: string; gaps: string; locations: string; notice:
     { name: "Current city", value: "Bengaluru" },
     { name: "Total experience", value: "3 yrs" },
     { name: "Relevant experience", value: "3 yrs" },
-    { name: "Notice period", value: d.notice || "30 days" },
-    { name: "Career gaps", value: d.gaps || "None" },
+    { name: "Notice period", value: showDays(d.notice || "30") },
+    { name: "Career gaps", value: showYears(d.gaps || "0") },
     { name: "Date of birth", value: d.dob || "12 Mar 1999" },
     { name: "Preferred locations", value: d.locations || "Bengaluru, Remote" },
     { name: "Resume", value: "Abhinav_Saxena_Resume.pdf", download: true },
@@ -944,6 +947,8 @@ export function ManagePosts() {
 export function EditPost({ title }: { title?: string }) {
   const nav = useNav();
   const { jobId, tips, rules, dispatch } = useStore();
+  // its own copy, so clearing the box leaves it empty instead of snapping back to 184223
+  const [editId, setEditId] = useState(jobId || "184223");
   // Figma "Edit your job post" is "Check your job post" with the post already live: the same
   // five blocks in the same order, a different intro, and Save changes / Pause post.
   return (
@@ -952,7 +957,9 @@ export function EditPost({ title }: { title?: string }) {
       back
       actions={
         <Actions>
-          <Button onClick={() => nav.pop()}>Save changes</Button>
+          <Button disabled={!allValid([["jobId", editId, true], ["tips", tips]])} onClick={() => nav.pop()}>
+            Save changes
+          </Button>
           <Button type="secondary" onClick={() => nav.pop()}>
             Pause post
           </Button>
@@ -962,8 +969,17 @@ export function EditPost({ title }: { title?: string }) {
       <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
         <p className="t-label muted">Saving checks the match again for current requests.</p>
 
-        <Section label="Job ID" icon="doc.on.doc.fill">
-          <Field icon="doc.on.doc.fill" value={jobId || "184223"} onChange={(v) => dispatch({ t: "jobId", v })} />
+        <Section label="Job ID" icon="doc.on.doc.fill" required>
+          <Field
+            icon="doc.on.doc.fill"
+            value={editId}
+            onChange={(v) => {
+              setEditId(v);
+              dispatch({ t: "jobId", v });
+            }}
+            kind="jobId"
+            required
+          />
         </Section>
 
         <Section label="From the job description" icon="briefcase.fill" end={<TextButton>Edit</TextButton>}>

@@ -3,6 +3,7 @@
 // on, so "Switch role" in Profile lets you send as Abhinav, refer as Nithin, then switch back and
 // watch the timeline move. That is what makes this a working prototype and not a click-through.
 import { createContext, useCallback, useContext, useMemo, useReducer, type ReactNode } from "react";
+import { fieldError, type FieldKind } from "./rules";
 
 export type Stage = "sent" | "referred" | "submitted" | "interviews" | "onhold" | "selected" | "notselected" | "notmoving" | "noanswer" | "closed";
 
@@ -53,6 +54,8 @@ export type Request = {
 };
 
 export type Details = { dob: string; gaps: string; locations: string; notice: string };
+/** The rule each portal detail follows. Gaps are stored as years ("0" = none), notice as days. */
+export const DETAIL_KINDS: Record<keyof Details, FieldKind> = { dob: "text", gaps: "years", locations: "cities", notice: "days" };
 
 type State = {
   role: "candidate" | "referrer" | null;
@@ -246,7 +249,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [s, dispatch] = useReducer(reduce, initial);
   const live = useMemo(() => s.requests.find((r) => r.live)!, [s.requests]);
   const stillNeeded = useMemo(
-    () => (["dob", "gaps", "locations", "notice"] as const).filter((k) => !s.details[k].trim()).length,
+    // a field only counts as in once it passes its rule: letters in the years box don't count
+    () => (Object.entries(DETAIL_KINDS) as [keyof Details, FieldKind][]).filter(([k, kind]) => fieldError(kind, s.details[k], true)).length,
     [s.details]
   );
   const value = useMemo(() => ({ ...s, dispatch, live, stillNeeded }), [s, live, stillNeeded]);

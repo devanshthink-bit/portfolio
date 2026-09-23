@@ -8,6 +8,8 @@ import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type 
 import { Icon, type IconName } from "./Icon";
 import { useNav } from "./nav";
 import { useStore } from "./store";
+import { RULES, fieldError, type FieldKind } from "./rules";
+export { allValid, fieldError, showDays, showYears, type FieldKind } from "./rules";
 
 /* ── status bar ─────────────────────────────────────────────────────────── */
 export function StatusBar({ light }: { light?: boolean }) {
@@ -416,12 +418,17 @@ export function SectionLabel({ icon, children, end }: { icon?: IconName; childre
   );
 }
 
-export function Section({ label, icon, end, children, style }: { label?: string; icon?: IconName; end?: ReactNode; children: ReactNode; style?: CSSProperties }) {
+export function Section({ label, icon, end, children, style, required }: { label?: string; icon?: IconName; end?: ReactNode; children: ReactNode; style?: CSSProperties; required?: boolean }) {
   return (
     <section className="sd-section" style={style}>
       {label && (
         <SectionLabel icon={icon} end={end}>
           {label}
+          {required && (
+            <span className="sd-req" aria-label="required">
+              {" "}*
+            </span>
+          )}
         </SectionLabel>
       )}
       {children}
@@ -673,7 +680,13 @@ export function Field({
   type = "text",
   readOnly,
   onClick,
+  kind,
+  required,
 }: {
+  /** what the field holds: sets the keyboard, what typing keeps, and the check on leaving */
+  kind?: FieldKind;
+  /** marks the label with * and says "Required." when left empty */
+  required?: boolean;
   label?: string;
   /** V6 puts a small icon beside the field's label, not inside the box */
   icon?: IconName;
@@ -695,17 +708,36 @@ export function Field({
   onClick?: () => void;
 }) {
   const [focus, setFocus] = useState(false);
+  // a field is checked once it has been left, and again as it is fixed; not while first typing
+  const [left, setLeft] = useState(false);
+  const rule = kind ? RULES[kind] : undefined;
+  const shown = error ?? (left && !readOnly ? fieldError(kind, value, required) : null) ?? undefined;
+  const change = (v: string) => onChange?.(rule?.keep ? rule.keep(v) : v);
+  const blur = () => {
+    setFocus(false);
+    setLeft(true);
+  };
+  // a field that filters its own typing trims itself; a browser maxLength would cut a paste
+  // like "abc2.5" before the letters were dropped
+  const max = rule?.keep ? undefined : rule?.max;
   return (
     <div className="sd-field">
       {label && (
         <label className="t-h-xs" style={{ display: "flex", alignItems: "center", gap: 8 }}>
           {iconNode ?? (icon && <Icon name={icon} size={16} style={{ color: "var(--sd-icon-2)" }} />)}
-          {label}
+          <span>
+            {label}
+            {required && (
+              <span className="sd-req" aria-label="required">
+                {" "}*
+              </span>
+            )}
+          </span>
         </label>
       )}
       {/* Figma's InputField box (Frame 234) is a fixed 52 with its row centred, not 48. */}
       <div
-        className={`sd-input${focus ? " is-focus" : ""}${error ? " is-error" : ""}`}
+        className={`sd-input${focus ? " is-focus" : ""}${shown ? " is-error" : ""}`}
         // the whole 52 box is the target, not just the 20-tall text inside it
         onClick={(e) => {
           onClick?.();
@@ -718,9 +750,11 @@ export function Field({
           <textarea
             value={value}
             placeholder={placeholder}
-            onChange={(e) => onChange?.(e.target.value)}
+            onChange={(e) => change(e.target.value)}
             onFocus={() => setFocus(true)}
-            onBlur={() => setFocus(false)}
+            onBlur={blur}
+            maxLength={max}
+            aria-invalid={!!shown}
             rows={2}
             readOnly={readOnly}
           />
@@ -728,16 +762,32 @@ export function Field({
           <input
             value={value}
             placeholder={placeholder}
-            onChange={(e) => onChange?.(e.target.value)}
+            onChange={(e) => change(e.target.value)}
             onFocus={() => setFocus(true)}
-            onBlur={() => setFocus(false)}
+            onBlur={blur}
+            maxLength={max}
+            inputMode={rule?.mode}
+            aria-invalid={!!shown}
             type={type}
             readOnly={readOnly}
           />
         )}
         {end}
       </div>
-      {error ? <span className="sd-field-err">{error}</span> : help ? <span className="sd-field-help">{help}</span> : null}
+      {shown ? (
+        <span className="sd-field-err" role="alert">
+          <Icon name="info.circle.fill" size={14} />
+          {shown}
+        </span>
+      ) : help ? (
+        <span className="sd-field-help">{help}</span>
+      ) : null}
+      {/* long free text shows how much room is left once it gets close */}
+      {max && (kind === "note" || kind === "tips") && value.length > max * 0.8 && (
+        <span className="sd-field-help" style={{ textAlign: "right" }}>
+          {value.length}/{max}
+        </span>
+      )}
     </div>
   );
 }

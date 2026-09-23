@@ -21,6 +21,9 @@ import {
   Box,
   DetailField,
   logoSrc,
+  allValid,
+  showDays,
+  showYears,
 } from "../ui";
 
 /** Figma's own Apple vector, not a redraw. */
@@ -385,7 +388,12 @@ export function CheckProfile() {
     <Screen
       title="Check your details"
       back
-      actions={<Button onClick={() => nav.reset("tabs")}>See jobs</Button>}
+      actions={
+        // optional links may be empty, but a link that is there has to be a real one
+        <Button disabled={!allValid([["linkedin", linkedin], ["url", portfolio]])} onClick={() => nav.reset("tabs")}>
+          See jobs
+        </Button>
+      }
     >
       <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
         <p className="t-label muted">
@@ -434,9 +442,10 @@ export function CheckProfile() {
             iconNode={<Image src="/images/sidedoor/linkedin.svg" alt="" width={16} height={16} style={{ width: 16, height: 16 }} unoptimized />}
             value={linkedin}
             onChange={setLinkedin}
+            kind="linkedin"
             placeholder="Paste your profile link. Referrers check it."
           />
-          <Field label="Portfolio (optional)" icon="link" value={portfolio} onChange={setPortfolio} placeholder="Behance, Dribbble or your site" />
+          <Field label="Portfolio (optional)" icon="link" value={portfolio} onChange={setPortfolio} kind="url" placeholder="Behance, Dribbble or your site" />
         </div>
 
         <Section label="Resume" icon="paperclip">
@@ -533,6 +542,9 @@ export function VerifyEmail() {
   const [code, setCode] = useState(force === "verify.wrong-code" ? "482 910" : "");
   const [email, setEmail] = useState(force === "verify.personal" ? "nithin.agarwal@gmail.com" : "nithin.agarwal@flipkart.com");
   const personal = /@(gmail|yahoo|outlook|hotmail)\./i.test(email);
+  const [name, setName] = useState("Nithin Agarwal");
+  const [role, setRole] = useState("Design Manager");
+  const [city, setCity] = useState("Bengaluru, KA");
   // Any 6 digits pass. Only the seeded code from the wrong-code scenario fails,
   // so editing a digit clears the error and lets you through.
   const wrong = code === "482 910";
@@ -551,7 +563,16 @@ export function VerifyEmail() {
         <Actions>
           <Note>We never contact your company or HR</Note>
           <Button
-            disabled={code.replace(/\s/g, "").length !== 6 || personal || wrong}
+            disabled={
+              wrong ||
+              !allValid([
+                ["name", name, true],
+                ["workEmail", email, true],
+                ["code", code, true],
+                ["role", role, true],
+                ["city", city, true],
+              ])
+            }
             onClick={() => {
               dispatch({ t: "verify" });
               nav.push("addJob");
@@ -575,24 +596,29 @@ export function VerifyEmail() {
         </p>
         {/* Figma's Form frame puts 20 between fields, not 12. */}
         <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-          <Field label="Your name" icon="person.fill" value="Nithin Agarwal" />
+          <Field label="Your name" icon="person.fill" value={name} onChange={setName} kind="name" required />
           <Field
             label="Work email"
             icon="envelope.fill"
             value={email}
             onChange={setEmail}
+            kind="workEmail"
+            required
+            // the seeded personal address shows its line at once, as Figma draws it
             error={personal ? "Use your work email. We check it’s a company address." : undefined}
           />
           <Field
             label="Code from your email"
             icon="lock.fill"
             value={code}
-            onChange={(v) => setCode(v.replace(/[^\d ]/g, "").slice(0, 7))}
+            onChange={setCode}
             placeholder="6-digit code"
+            kind="code"
+            required
             error={wrong ? "That code didn’t work. Check it or resend." : undefined}
           />
-          <Field label="Your role" icon="briefcase.fill" value="Design Manager" />
-          <Field label="Where you work from" icon="mappin.and.ellipse" value="Bengaluru, KA" />
+          <Field label="Your role" icon="briefcase.fill" value={role} onChange={setRole} kind="role" required />
+          <Field label="Where you work from" icon="mappin.and.ellipse" value={city} onChange={setCity} kind="city" required />
         </div>
       </div>
     </Screen>
@@ -662,7 +688,7 @@ export function CheckPost() {
         <Actions>
           {!jobId.trim() && <p className="t-label-sm muted">Add the job ID to post.</p>}
           <Button
-            disabled={!jobId.trim()}
+            disabled={!allValid([["jobId", jobId, true], ["tips", tips]])}
             onClick={() => {
               dispatch({ t: "post" });
               nav.push("jobLive");
@@ -682,12 +708,15 @@ export function CheckPost() {
         <Section
           label="Job ID"
           icon="doc.on.doc.fill"
+          required
           end={!jobId.trim() ? <Tag style="buffer">Still needed</Tag> : undefined}
         >
           <Field
             icon="doc.on.doc.fill"
             value={jobId}
             onChange={(v) => dispatch({ t: "jobId", v })}
+            kind="jobId"
+            required
             placeholder="From the job’s page on your portal"
             help="Not in the description. Candidates send it with every request."
           />

@@ -27,6 +27,9 @@ import {
   Switch,
   Tag,
   TextButton,
+  allValid,
+  showDays,
+  showYears,
 } from "../ui";
 import { BellButton, ReferralBar } from "./candidate";
 import { CompanyRow, DocUpload, Projects, ReadingBox } from "./onboarding";
@@ -208,7 +211,7 @@ export function ChatScreen({ who = "Nithin Agarwal" }: { who?: string }) {
           <span className="sd-nav-trail" />
         </div>
       </div>
-      <div className="sd-body">
+      <div className="sd-body" data-lenis-prevent>
         <div className="sd-pad" style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 16 }}>
           {/* the request this chat is about, drawn with the same ReferralBar as the list */}
           <ReferralBar r={live} />
@@ -431,11 +434,39 @@ export function EditDetails() {
   const [portfolio, setPortfolio] = useState("dribbble.com/abhinavsaxena");
   const [roles, setRoles] = useState("Product Designer, Interaction Designer");
   const [how, setHow] = useState("Full time · Remote or hybrid");
+  // Portal details start from Figma's values when nothing is saved yet. Copies, so a box can be
+  // cleared without snapping back; Save writes them to the store.
+  const [gaps, setGaps] = useState(details.gaps || "0");
+  const [locations, setLocations] = useState(details.locations || "Bengaluru, Remote");
+  const [notice, setNotice] = useState(details.notice || "30");
+  const ok = allValid([
+    ["linkedin", linkedin],
+    ["url", portfolio],
+    ["roles", roles],
+    ["text", how],
+    ["years", gaps, true],
+    ["cities", locations, true],
+    ["days", notice, true],
+  ]);
+  const save = () => {
+    dispatch({ t: "detail", k: "gaps", v: gaps });
+    dispatch({ t: "detail", k: "locations", v: locations });
+    dispatch({ t: "detail", k: "notice", v: notice });
+    nav.pop();
+  };
   // Figma: "Check your details" once it's all filled in — the same resume, experience and
   // projects blocks, then links, what you want, the details portals ask for, and the resume.
   // Portal details show Figma's values until you change them.
   return (
-    <Screen title="Edit your details" back actions={<Button onClick={() => nav.pop()}>Save changes</Button>}>
+    <Screen
+      title="Edit your details"
+      back
+      actions={
+        <Button disabled={!ok} onClick={save}>
+          Save changes
+        </Button>
+      }
+    >
       <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
         <p className="t-label muted">Every new referral request sends these.</p>
 
@@ -471,13 +502,14 @@ export function EditDetails() {
             iconNode={<Image src="/images/sidedoor/linkedin.svg" alt="" width={16} height={16} style={{ width: 16, height: 16 }} unoptimized />}
             value={linkedin}
             onChange={setLinkedin}
+            kind="linkedin"
           />
-          <Field label="Portfolio (optional)" icon="link" value={portfolio} onChange={setPortfolio} />
+          <Field label="Portfolio (optional)" icon="link" value={portfolio} onChange={setPortfolio} kind="url" />
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-          <Field label="Roles you want (optional)" icon="briefcase.fill" value={roles} onChange={setRoles} />
-          <Field label="How you want to work (optional)" icon="laptopcomputer" value={how} onChange={setHow} />
+          <Field label="Roles you want (optional)" icon="briefcase.fill" value={roles} onChange={setRoles} kind="roles" />
+          <Field label="How you want to work (optional)" icon="laptopcomputer" value={how} onChange={setHow} kind="text" />
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
@@ -485,15 +517,10 @@ export function EditDetails() {
             <SectionLabel icon="info.circle.fill">Details portals ask for</SectionLabel>
             <p className="t-label-sm muted">Not usually on a resume, but referrers’ portals ask for them.</p>
           </div>
-          <Field label="Date of birth" icon="calendar" value={details.dob || "12 Mar 1999"} readOnly onClick={() => nav.openSheet("dob")} />
-          <Field label="Career gaps" icon="briefcase.fill" value={details.gaps || "None"} onChange={(v) => dispatch({ t: "detail", k: "gaps", v })} />
-          <Field
-            label="Preferred interview locations"
-            icon="mappin.and.ellipse"
-            value={details.locations || "Bengaluru, Remote"}
-            onChange={(v) => dispatch({ t: "detail", k: "locations", v })}
-          />
-          <Field label="Notice period" icon="hourglass" value={details.notice || "30 days"} onChange={(v) => dispatch({ t: "detail", k: "notice", v })} />
+          <Field label="Date of birth" icon="calendar" value={details.dob || "12 Mar 1999"} readOnly required onClick={() => nav.openSheet("dob")} />
+          <Field label="Career gaps, in years" icon="briefcase.fill" value={gaps} onChange={setGaps} kind="years" required placeholder="0 if none, e.g. 1.5" />
+          <Field label="Preferred interview locations" icon="mappin.and.ellipse" value={locations} onChange={setLocations} kind="cities" required />
+          <Field label="Notice period, in days" icon="hourglass" value={notice} onChange={setNotice} kind="days" required placeholder="e.g. 30" />
         </div>
 
         <Section label="Resume" icon="paperclip">
@@ -515,8 +542,22 @@ export function EditProfileReferrer() {
   const nav = useNav();
   const [role, setRole] = useState("Design Manager");
   const [city, setCity] = useState("Bengaluru, KA");
+  const [name, setName] = useState("Nithin Agarwal");
+  const ok = allValid([
+    ["name", name, true],
+    ["role", role, true],
+    ["city", city, true],
+  ]);
   return (
-    <Screen title="Edit your profile" back actions={<Button onClick={() => nav.pop()}>Save changes</Button>}>
+    <Screen
+      title="Edit your profile"
+      back
+      actions={
+        <Button disabled={!ok} onClick={() => nav.pop()}>
+          Save changes
+        </Button>
+      }
+    >
       {/* Figma: intro, then the 68 photo with "Edit" 8 under it, centred, then four fields
           20 apart. The company field leads with the logo. */}
       <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
@@ -526,15 +567,17 @@ export function EditProfileReferrer() {
           <TextButton>Edit</TextButton>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-          <Field label="Your name" icon="person.fill" value="Nithin Agarwal" />
+          <Field label="Your name" icon="person.fill" value={name} onChange={setName} kind="name" required />
+          {/* the company comes from the verified work email, so it can't be typed over */}
           <Field
             label="Company"
+            readOnly
             icon="building.2.fill"
             value="Flipkart"
             lead={<Image src="/images/sidedoor/flipkart-icon.svg" alt="" width={22} height={22} style={{ width: 22, height: 22 }} unoptimized />}
           />
-          <Field label="Your role" icon="briefcase.fill" value={role} onChange={setRole} />
-          <Field label="Where you work from" icon="mappin.and.ellipse" value={city} onChange={setCity} />
+          <Field label="Your role" icon="briefcase.fill" value={role} onChange={setRole} kind="role" required />
+          <Field label="Where you work from" icon="mappin.and.ellipse" value={city} onChange={setCity} kind="city" required />
         </div>
       </div>
     </Screen>
@@ -633,7 +676,7 @@ export function LinkPage() {
       <div style={{ height: 16, flex: "0 0 auto" }} />
       <StatusBar />
       <LogoBar />
-      <div className="sd-body">
+      <div className="sd-body" data-lenis-prevent>
         <div className="sd-pad" style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Tag>sidedoor.app/r/nithin-agarwal</Tag>
@@ -777,6 +820,7 @@ export function LinkPage() {
             value={note}
             onChange={setNote}
             placeholder="One line, e.g. what you worked on"
+            kind="note"
           />
         </>
       )}
