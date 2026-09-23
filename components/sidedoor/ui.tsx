@@ -620,6 +620,8 @@ const PEOPLE = new Set([
   "aarush-gupta", "abhay-verma", "abhinav-saxena", "abhishek-tyagi", "advika-singh", "amit-patel",
   "arpita-singh", "avinash-banerjee", "aviral-dixit", "ayesha-sharma", "himani-kaushik",
   "joy-sehgal", "nithin-agarwal", "shivangi-joshi", "shreya-verma", "vanya-kapoor",
+  // Unsplash (free licence), 23 Sep: Kritika by Vishal Bhutani, Nisha by Arnab De, Rohit by Abhishek Rai
+  "kritika-rao", "nisha-rao", "rohit-menon",
 ]);
 
 const slugOf = (name: string) =>

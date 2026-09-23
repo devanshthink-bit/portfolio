@@ -214,7 +214,7 @@ export function ShareLinkSheet({ leaving }: { leaving?: boolean }) {
               <button key={a.name} onClick={nav.closeSheet} style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center" }}>
                 <span style={{ width: 60, height: 60, borderRadius: 8, background: "var(--sd-n0)", display: "grid", placeItems: "center" }}>
                   {a.img ? (
-                    <Image src={`/images/sidedoor/${a.img}.png`} alt="" width={a.w} height={a.h} style={{ width: a.w, height: a.h }} />
+                    <Image src={`/images/sidedoor/${a.img}.svg`} alt="" width={a.w} height={a.h} style={{ width: a.w, height: a.h }} unoptimized />
                   ) : (
                     <span style={{ display: "flex", gap: 7.6 }}>
                       {[0, 1, 2].map((i) => (

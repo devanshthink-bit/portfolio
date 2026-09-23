@@ -2845,3 +2845,8 @@ Figma:
 Code only, not in Figma yet: sliding pill, carousel, header glass (motion or scroll-only); field error and edit-in-place states; Help articles, Contact support, resume preview; projects details open.
 Waiting on Devansh: photos for Kritika Rao, Nisha Rao, Rohit Menon (code-only people, no photo anywhere; needs a download).
 Checked on localhost, not the Vercel preview (needs a login).
+
+CHANGE · 2026-09-23 · Photos for the last three people, share icons · Source: Devansh ("ok")
+  - Kritika Rao, Nisha Rao, Rohit Menon had initials only. Added free-licence Unsplash portraits by photographers in India (Vishal Bhutani, Arnab De, Abhishek Rai), face-cropped to 88×88 like the other 16. Code-only people, so nothing to change in Figma.
+  - Share sheet: WhatsApp, Gmail, Drive and Telegram pointed at PNGs that don't exist; now the SVGs.
+Checked on localhost: all 65 prototype states opened one by one; no image fails to load and no avatar is left without a photo.
