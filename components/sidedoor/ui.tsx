@@ -910,6 +910,8 @@ export function Field({
       {/* Figma's InputField box (Frame 234) is a fixed 52 with its row centred, not 48. */}
       <div
         className={`sd-input${focus ? " is-focus" : ""}${shown ? " is-error" : ""}`}
+        // the test hint looks for this: an empty required box is the next thing to fill
+        data-required={required || undefined}
         // the whole 52 box is the target, not just the 20-tall text inside it
         onClick={(e) => {
           onClick?.();

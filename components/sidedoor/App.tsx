@@ -157,16 +157,19 @@ function nextTargets(root: HTMLElement): HTMLElement[] {
     [...root.querySelectorAll<HTMLElement>(".sd-screen")].filter((el) => el.getAttribute("aria-hidden") !== "true").pop() ??
     root;
   const seen = (el: HTMLElement) => el.offsetParent !== null || el.getClientRects().length > 0;
-  const empty = [...scope.querySelectorAll<HTMLElement>(".sd-field")]
-    .filter((f) => f.querySelector(".sd-req"))
-    .map((f) => f.querySelector<HTMLElement>(".sd-input"))
-    .filter((box): box is HTMLElement => !!box && !(box.querySelector("input, textarea") as HTMLInputElement | null)?.value);
+  const empty = [...scope.querySelectorAll<HTMLElement>(".sd-input[data-required]")].filter(
+    (box) => !(box.querySelector("input, textarea") as HTMLInputElement | null)?.value
+  );
   if (empty.length) return empty;
   const pick = (sel: string) => [...scope.querySelectorAll<HTMLElement>(sel)].filter(seen)[0];
   const one =
     pick(".sd-btn.primary:not(:disabled), .sd-alert-btn.is-default, .sd-as-btn") ??
     pick('.sd-card[role="button"], .sd-row.is-tap, .sd-chatrow') ??
-    pick(".sd-btn:not(:disabled), .sd-textbtn:not(:disabled)");
+    pick(".sd-btn:not(:disabled)") ??
+    // Edit and Done are optional, so they are never the thing to tap next
+    [...scope.querySelectorAll<HTMLElement>(".sd-textbtn:not(:disabled)")].filter(
+      (el) => seen(el) && !/^(Edit|Done)$/.test(el.textContent?.trim() ?? "")
+    )[0];
   return one ? [one] : [];
 }
 
