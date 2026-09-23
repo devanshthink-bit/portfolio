@@ -3135,3 +3135,10 @@ DECISION · 2026-09-24 · Tester feedback fixed, and three brief ideas built
 - Not built, on purpose: V1 "Share Sidedoor" after thanks (growth, not a pain from the research). T6 3-day nudge (a notification, not a screen).
 - Photos: 19 people still show initials. Figma has no more portraits (all 17 are in use). Waiting on Devansh before downloading any.
 - Verified on localhost (preview needs a login).
+
+DECISION · 2026-09-24 · Photos for everyone
+- Devansh chose stock photos (option B) over AI faces or initials.
+- 19 portraits from Unsplash (free licence, no Unsplash+ images), 176×176, cropped to the face. 9 men, 10 women, matched loosely to each person's role and seniority. Photographers credited in `ui.tsx` beside the PEOPLE list.
+- Aditya first got the same photo Rohit already uses (Abhishek Rai); swapped for a different one.
+- Code only. These people are prototype data, not in Figma.
+- Checked on localhost: every avatar on Jobs and on Referral requests shows a photo, none broken.

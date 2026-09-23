@@ -677,6 +677,15 @@ const PEOPLE = new Set([
   "joy-sehgal", "nithin-agarwal", "shivangi-joshi", "shreya-verma", "vanya-kapoor",
   // Unsplash (free licence), 23 Sep: Kritika by Vishal Bhutani, Nisha by Arnab De, Rohit by Abhishek Rai
   "kritika-rao", "nisha-rao", "rohit-menon",
+  // Unsplash (free licence), 24 Sep, so testers meet faces, not initials (Devansh chose stock photos).
+  // Photographers: Susmit Sam (Aditya), Dinesh Lunked (Varun), Sairaj Gandhe (Ishaan), Ashwini
+  // Chaudhary (Rohan), Krishna Kant Chourasiya (Manav), Tanmay Abhay Mahajan (Karan, Rahul, Meera),
+  // Bhavya Shah (Arjun), Kamal Dharma Teja Dasari (Siddharth), Ashwin Vaswani (Neha), Subhra Jyoti
+  // Paul (Pooja), AJOY DAS (Tanvi, Diya), Sunil Chandra Sharma (Ishita), Clinton Naik (Kavya),
+  // Anurag Jamwal (Sneha), Abhaya Behera (Priya), Asit (Tanya)
+  "aditya-joshi", "varun-bhatia", "ishaan-malhotra", "rohan-iyer", "manav-gupta", "karan-malhotra",
+  "rahul-deshpande", "arjun-menon", "siddharth-rao", "neha-kulkarni", "meera-pillai", "pooja-sharma",
+  "tanvi-iyer", "ishita-nair", "kavya-reddy", "sneha-kapoor", "priya-nair", "tanya-mehta", "diya-sharma",
 ]);
 
 const slugOf = (name: string) =>
