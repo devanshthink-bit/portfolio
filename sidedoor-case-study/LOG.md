@@ -2850,3 +2850,14 @@ CHANGE · 2026-09-23 · Photos for the last three people, share icons · Source:
   - Kritika Rao, Nisha Rao, Rohit Menon had initials only. Added free-licence Unsplash portraits by photographers in India (Vishal Bhutani, Arnab De, Abhishek Rai), face-cropped to 88×88 like the other 16. Code-only people, so nothing to change in Figma.
   - Share sheet: WhatsApp, Gmail, Drive and Telegram pointed at PNGs that don't exist; now the SVGs.
 Checked on localhost: all 65 prototype states opened one by one; no image fails to load and no avatar is left without a photo.
+
+DECISION · 2026-09-23 · Referrer rules are numbers they pick, not switches · Source: Devansh ("why give them a hard limit of 3 years and 10 requests?")
+Decided:  Each rule gets an iOS stepper. Experience 0–15 yrs (0 = "Any experience"), requests 1–50 a week. The title and line under it say the number.
+          The experience rule now drives the list: requests under it move to Lower match (at 4 yrs, Abhinav and Arpita move).
+Rejected: switch + fixed numbers (the referrer can't say what "enough" is for their team); a free number field (a stepper can't be typed wrong).
+
+CHANGE · 2026-09-23 · Stepper rules, Tap to undo · Source: Devansh
+  - Figma: new Stepper component (Components & Icons, color/fill/tertiary); the 4 rule switches on UI Screens and 4 on the prototype page replaced; "Experience must match" → "At least 3 yrs of experience".
+  - Code: Stepper, rules in the store as numbers, Lower match computed from the rule.
+  - "Tap to undo" on a removed skill added it again instead of taking it off; in the "skill removed" state the list was fixed. Now a second tap undoes it and the count goes back.
+Checked on localhost: steppers stop at their ends, text follows the number, 4 yrs moves 2 requests to Lower match, undo restores 4 of 7.

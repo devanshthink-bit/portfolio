@@ -901,6 +901,22 @@ export function Search({ value, onChange, placeholder }: { value: string; onChan
   );
 }
 
+/** iOS stepper: a grey 94×32 pill split into − and +, each half a 44pt target. An end that
+ *  can't go further dims and stops. */
+export function Stepper({ value, min, max, onChange, label }: { value: number; min: number; max: number; onChange: (v: number) => void; label: string }) {
+  return (
+    <span className="sd-stepper" role="group" aria-label={label}>
+      <button onClick={() => onChange(Math.max(min, value - 1))} disabled={value <= min} aria-label={`Fewer: ${label}`}>
+        <Icon name="minus" size={18} />
+      </button>
+      <i aria-hidden />
+      <button onClick={() => onChange(Math.min(max, value + 1))} disabled={value >= max} aria-label={`More: ${label}`}>
+        <Icon name="plus" size={18} />
+      </button>
+    </span>
+  );
+}
+
 export function Switch({ on, onChange }: { on: boolean; onChange: (v: boolean) => void }) {
   return (
     <button className={`sd-switch${on ? " is-on" : ""}`} onClick={() => onChange(!on)} role="switch" aria-checked={on}>

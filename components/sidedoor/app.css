@@ -737,3 +737,11 @@
 .sd-paper { background: #fff; border-radius: 4px; box-shadow: var(--sd-e2); padding: 32px 24px; display: flex; flex-direction: column; gap: 8px; min-height: 520px; }
 .sd-paper > hr { border: 0; border-top: 1px solid var(--sd-border-subtle); margin: 8px 0; }
 .sd-paper > .t-h-xs { margin-top: 8px; }
+
+/* iOS stepper: 94×32, the tertiary fill, a hairline between the halves */
+.sd-stepper { display: inline-flex; align-items: center; height: 32px; border-radius: var(--sd-r-md); background: var(--sd-fill-3); flex: 0 0 auto; }
+.sd-stepper > button { position: relative; width: 47px; height: 32px; display: grid; place-items: center; color: var(--sd-text); }
+.sd-stepper > button::after { content: ""; position: absolute; left: 50%; top: 50%; width: 47px; height: 44px; transform: translate(-50%, -50%); }
+.sd-stepper > button:active:not(:disabled) { background: rgba(0, 0, 0, 0.06); border-radius: var(--sd-r-md); }
+.sd-stepper > button:disabled { color: var(--sd-text-2); opacity: 0.35; }
+.sd-stepper > i { width: 1px; height: 18px; background: rgba(0, 0, 0, 0.12); }

@@ -73,7 +73,8 @@ type State = {
   jobId: string;
   posted: boolean;
   tips: string;
-  rules: { experience: boolean; weekly: boolean };
+  /** the referrer picks the numbers: fewest years of experience (0 = any) and requests a week */
+  rules: { minYears: number; weekly: number };
   /** ids of requests the referrer has dealt with, and how */
   handled: Record<string, { stage: Stage; reason?: string }>;
   invited: string[];
@@ -124,7 +125,7 @@ const initial: State = {
   jobId: "",
   posted: false,
   tips: "",
-  rules: { experience: true, weekly: true },
+  rules: { minYears: 3, weekly: 10 },
   handled: {},
   invited: ["Advika Singh"],
   removedSkills: [],
@@ -147,7 +148,7 @@ type Action =
   | { t: "verify" }
   | { t: "jobId"; v: string }
   | { t: "tips"; v: string }
-  | { t: "rule"; k: "experience" | "weekly"; v: boolean }
+  | { t: "rule"; k: "minYears" | "weekly"; v: number }
   | { t: "post" }
   | { t: "handle"; id: string; stage: Stage; reason?: string }
   | { t: "unhandle"; id: string }
@@ -217,8 +218,12 @@ function reduce(s: State, a: Action): State {
       return { ...s, offline: a.v };
     case "invite":
       return { ...s, invited: [...s.invited, a.v] };
+    // a second tap on a removed skill puts it back ("Tap to undo")
     case "removeSkill":
-      return { ...s, removedSkills: [...s.removedSkills, a.v] };
+      return {
+        ...s,
+        removedSkills: s.removedSkills.includes(a.v) ? s.removedSkills.filter((x) => x !== a.v) : [...s.removedSkills, a.v],
+      };
     case "toast":
       return { ...s, toast: a.v };
     case "readAll":
@@ -227,7 +232,9 @@ function reduce(s: State, a: Action): State {
       return { ...s, force: a.v };
     case "jump":
       // start from a clean slate so one state can't leak into the next
-      return { ...initial, role: a.role, force: a.force, offline: a.force === "offline", resume: "Abhinav_Saxena_Resume.pdf", verified: true, jobId: "184223", posted: true };
+      return { ...initial, role: a.role, force: a.force, offline: a.force === "offline", resume: "Abhinav_Saxena_Resume.pdf", verified: true, jobId: "184223", posted: true,
+        // "Skill removed" starts with Prototyping taken off, and can still be undone
+        removedSkills: a.force === "req.skill" ? ["Prototyping"] : [] };
     case "reset":
       return initial;
     default:

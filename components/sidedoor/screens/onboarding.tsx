@@ -27,6 +27,7 @@ import {
   useEditable,
   useFilePick,
   type EditSpec,
+  Stepper,
 } from "../ui";
 
 /** Figma's own Apple vector, not a redraw. */
@@ -798,22 +799,7 @@ export function CheckPost() {
 
         <JdDetails />
 
-        <Section label="Your rules" icon="gearshape.fill">
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            <RuleRow
-              title="Experience must match"
-              sub="Requests under 3 yrs go to Lower match. You can still refer them."
-              on={rules.experience}
-              onChange={(v) => dispatch({ t: "rule", k: "experience", v })}
-            />
-            <RuleRow
-              title="Up to 10 requests a week"
-              sub="When it’s full, candidates see you’re full this week and ask again on Monday."
-              on={rules.weekly}
-              onChange={(v) => dispatch({ t: "rule", k: "weekly", v })}
-            />
-          </div>
-        </Section>
+        <RulesSection />
 
         <Field
           label="Tips for candidates (optional)"
@@ -831,17 +817,40 @@ export function CheckPost() {
   );
 }
 
-export function RuleRow({ title, sub, on, onChange }: { title: string; sub: string; on: boolean; onChange: (v: boolean) => void }) {
+export function RuleRow({ title, sub, end }: { title: string; sub: string; end: ReactNode }) {
   return (
     /* Figma's rule Box is r8 with 12/16 of padding, its row centred, and only 2 between
-       the two lines — so the box is 78 tall, not 88. */
+       the two lines. */
     <div style={{ background: "#fff", borderRadius: "var(--sd-r-md)", padding: "12px 16px", display: "flex", gap: 12, alignItems: "center" }}>
       <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 2 }}>
         <span className="t-h-xs">{title}</span>
         <span className="t-label-sm muted">{sub}</span>
       </span>
-      <Switch on={on} onChange={onChange} />
+      {end}
     </div>
+  );
+}
+
+/** "Your rules": the referrer sets the numbers, not just on or off (Devansh, 23 Sep). */
+export function RulesSection() {
+  const { rules, dispatch } = useStore();
+  const y = rules.minYears;
+  const yrs = (n: number) => `${n} ${n === 1 ? "yr" : "yrs"}`;
+  return (
+    <Section label="Your rules" icon="gearshape.fill">
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        <RuleRow
+          title={y === 0 ? "Any experience" : `At least ${yrs(y)} of experience`}
+          sub={y === 0 ? "Every request goes to your main list." : `Requests under ${yrs(y)} go to Lower match. You can still refer them.`}
+          end={<Stepper label="Years of experience" value={y} min={0} max={15} onChange={(v) => dispatch({ t: "rule", k: "minYears", v })} />}
+        />
+        <RuleRow
+          title={`Up to ${rules.weekly} ${rules.weekly === 1 ? "request" : "requests"} a week`}
+          sub="When it’s full, candidates see you’re full this week and ask again on Monday."
+          end={<Stepper label="Requests a week" value={rules.weekly} min={1} max={50} onChange={(v) => dispatch({ t: "rule", k: "weekly", v })} />}
+        />
+      </div>
+    </Section>
   );
 }
 

@@ -31,7 +31,7 @@ import {
   showYears,
 } from "../ui";
 import { BellButton } from "./candidate";
-import { CompanyRow, FileBox, JdDetails, Projects, RuleRow } from "./onboarding";
+import { CompanyRow, FileBox, JdDetails, Projects, RulesSection } from "./onboarding";
 
 type Req = {
   id: string;
@@ -72,7 +72,7 @@ const SUGGESTED: Req[] = [
 /* ── Referral requests ──────────────────────────────────────────────────── */
 export function ReferralRequests() {
   const nav = useNav();
-  const { handled, invited, unread, jobId, force, dispatch } = useStore();
+  const { handled, invited, unread, jobId, force, rules, dispatch } = useStore();
   const [phase, setPhase] = useState<"loading" | "ok">("loading");
   const [open, setOpen] = useState(false);
   useEffect(() => {
@@ -84,8 +84,11 @@ export function ReferralRequests() {
   const cleared = force === "reqs.handled" || force === "reqs.empty";
   const paused = force === "reqs.paused";
   const failed = force === "reqs.error" && phase === "ok";
-  const outstanding = cleared ? [] : REQUESTS.filter((r) => !r.lower && !handled[r.id]);
-  const lower = cleared ? [] : REQUESTS.filter((r) => r.lower && !handled[r.id]);
+  // Lower match follows the referrer's own rule: fewer years than they asked for, or a resume
+  // too thin to judge
+  const isLower = (r: Req) => !!r.thin || Number(r.match.match(/(\d+) yrs?$/)?.[1] ?? 99) < rules.minYears;
+  const outstanding = cleared ? [] : REQUESTS.filter((r) => !isLower(r) && !handled[r.id]);
+  const lower = cleared ? [] : REQUESTS.filter((r) => isLower(r) && !handled[r.id]);
   const allHandled = phase === "ok" && outstanding.length === 0 && lower.length === 0;
 
   return (
@@ -308,7 +311,7 @@ export function ReferralRequest({ id }: { id: string }) {
   };
   // the two states the switcher jumps straight into
   const state = force === "refer.undo" ? { stage: "referred" as Stage } : handled[r.id];
-  const removed = force === "req.skill" ? ["Prototyping"] : removedSkills;
+  const removed = removedSkills;
   // Figma "Skill removed" keeps the row and turns it into an undo, so nothing disappears
   const skills = SKILLS;
   // the tag counts skills only — the experience row is a separate fact, as in V6
@@ -985,22 +988,7 @@ export function EditPost({ title }: { title?: string }) {
 
         <JdDetails title={title ?? "Interaction Designer"} />
 
-        <Section label="Your rules" icon="gearshape.fill">
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            <RuleRow
-              title="Experience must match"
-              sub="Requests under 3 yrs go to Lower match. You can still refer them."
-              on={rules.experience}
-              onChange={(v) => dispatch({ t: "rule", k: "experience", v })}
-            />
-            <RuleRow
-              title="Up to 10 requests a week"
-              sub="When it’s full, candidates see you’re full this week and ask again on Monday."
-              on={rules.weekly}
-              onChange={(v) => dispatch({ t: "rule", k: "weekly", v })}
-            />
-          </div>
-        </Section>
+        <RulesSection />
 
         <Field
           label="Tips for candidates (optional)"
