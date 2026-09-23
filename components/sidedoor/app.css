@@ -15,7 +15,7 @@
   --sd-green-500: #10b981;
   --sd-n0: #ffffff;
   --sd-n50: #fafafa;
-  --sd-n75: #f2f2f7;
+  --sd-n75: #f3f3f3;             /* field fill */
   --sd-n100: #f0f1f2;
   --sd-n150: #e6e7eb;
   --sd-n200: #d1d3d8;
@@ -530,8 +530,8 @@
 }
 .sd-input input, .sd-input textarea { flex: 1 1 auto; width: 100%; font-weight: 400; font-size: 14px; line-height: 20px; resize: none; }
 .sd-input input::placeholder, .sd-input textarea::placeholder { color: var(--sd-placeholder); }
-.sd-input, .sd-search { background: var(--sd-surface-3); }
-/* Fields are filled light grey with no border on the white page (Postmates-style). Focus adds
+.sd-input, .sd-search { background: var(--sd-n75); }
+/* Fields are filled #F3F3F3 with no border on the white page (Postmates-style). Focus adds
    a 2px blue ring; an error a 1px red one. Placeholder uses the secondary text colour so it
    stays 4.5:1 on the grey (#6B7280 would be 4.2:1). */
 .sd-input input::placeholder, .sd-input textarea::placeholder, .sd-search input::placeholder { color: var(--sd-text-2); }
@@ -549,7 +549,7 @@
 .sd-search {
   min-height: 52px;
   border-radius: var(--sd-r-md);
-  background: var(--sd-surface-3);
+  background: var(--sd-n75);
   display: flex;
   align-items: center;
   gap: 8px;

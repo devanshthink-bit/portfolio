@@ -2939,3 +2939,4 @@ Caveat noted: #fafafa fields on white and white fields on #f2f2f7 both have fain
 - Cards, lists and boxes keep `effect/card`, so white cards still lift off the white page.
 - Figma: InputField variants (9), field instances in V6 screens (62 UI Screens + 34 prototype), loose Input frames (6 + 4) and the Fixed Actions fades (4 + 4) updated.
 - Verified on localhost only.
+- **Field fill is #F3F3F3** (Devansh). `neutral/75` changed from #F2F2F7 (unused since the page went white) to #F3F3F3; new semantic `color/surface/field` points to it and every field binds to it (9 variants, 96 V6 instances, 10 loose inputs). Code: `--sd-n75: #f3f3f3` on .sd-input and .sd-search. Placeholder #636A75 on it is 5.0:1. Colors page swatch updated. Verified on localhost only.
