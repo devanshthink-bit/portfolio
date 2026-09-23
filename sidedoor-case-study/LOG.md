@@ -3004,3 +3004,15 @@ Caveat noted: #fafafa fields on white and white fields on #f2f2f7 both have fain
 - Verified on localhost only.
 - **Amber tag quieter** (Devansh: "too poppy, make it as subtle as the green and blue tags"). warning/100 #FEF3C7 → #FDF4DE, in code and Figma (variable + swatch). Text #92400E on it is about 7:1. Checked next to the green tags on Your referrals. Verified on localhost only.
 - **Glassdoor circle green didn't match** (Devansh). The V6 Figma screens had it at text/successAA #15803D (the verified tick and success-tag green, darkened in the audit for 3:1), while the CompanyLogos component and the code SVG were still success/500 #22C55E. Now #15803D everywhere; the "g" mark is white (as in Glassdoor's own logo), since the dark mark on the darker green was under 2:1. Code: rating-sources.svg (renamed from rating-logos.svg to drop cached copies). Figma: component + 26 UI Screens + 8 prototype-page instances. Checked the rendered pixel is #15803D. Verified on localhost only.
+
+## 2026-09-23 · List cards: one type rhythm
+
+- Devansh: card text looked cluttered (many sizes, uneven gaps). Measured the job card: sizes went 16 → 14 → 12 → 14 → 12 (the tag jumped back up), every gap was 4px so nothing grouped, and supporting lines mixed Medium weights and two greys.
+- New rule for every list card (`ListCard` in ui.tsx, `.sd-lc` in app.css) — jobs, requests, suggested people, your referrals, the chat's referral bar:
+  - Text block with no internal gaps: title 16/24 SemiBold · detail lines 14/20 Regular #636A75. The time is 13/24 Regular grey, level with the title, no clock icon.
+  - One 12px gap, then a single row of chips that runs the full card width (so two chips fit on one line). Actions like Update sit at the far end of that row.
+  - Shared-history lines ("Both worked at MakeMyTrip") are now a quiet grey chip (#F3F3F3), so the bottom row is chips only.
+- Every tag in the app is now the same chip: 24 tall, 12/16 Medium, r6, 12px mark (was 22 tall, 14/20, r4). Notes are unchanged.
+- Post cards: the "Live · Job ID" line is 14/20 Regular like other detail lines.
+- The clock icon is gone from timestamps on Job details and Track details too, for one timestamp style.
+- Verified on localhost only.

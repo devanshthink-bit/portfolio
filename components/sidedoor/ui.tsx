@@ -373,8 +373,8 @@ export function Tag({
 }) {
   return (
     <span className={`sd-tag ${kind}${note ? " note" : ""}`}>
-      {/* Figma's tag marks are 14, not 16 — the logo, the check and the info symbol all match. */}
-      {icon && <Icon name={icon} size={14} />}
+      {/* chips carry a 12 mark to match their 12px text; notes keep 14 */}
+      {icon && <Icon name={icon} size={note ? 14 : 12} />}
       <span>{children}</span>
     </span>
   );
@@ -400,6 +400,52 @@ export function Card({ children, onClick, style }: { children: ReactNode; onClic
     >
       {children}
     </div>
+  );
+}
+
+/** Every list card uses this: lead (avatar or logo), a head row (title + time or an action),
+ *  supporting lines, then one row of chips. See .sd-lc in app.css. */
+export function ListCard({
+  lead,
+  title,
+  titleMark,
+  when,
+  end,
+  lines = [],
+  chips,
+  onClick,
+}: {
+  lead: ReactNode;
+  title: ReactNode;
+  titleMark?: ReactNode;
+  when?: string;
+  end?: ReactNode;
+  lines?: ReactNode[];
+  chips?: ReactNode;
+  onClick?: () => void;
+}) {
+  return (
+    <Card onClick={onClick}>
+      <div className="sd-lc">
+        {lead}
+        <div className="sd-lc-body">
+          <div className="sd-lc-head">
+            <span className="sd-lc-title">
+              <span>{title}</span>
+              {titleMark}
+            </span>
+            {end ?? (when && <span className="sd-lc-when">{when}</span>)}
+          </div>
+          {lines.map((l, i) => (
+            <span className="sd-lc-line" key={i}>
+              {l}
+            </span>
+          ))}
+        </div>
+      </div>
+      {/* chips run the full card width, so two chips fit on one row */}
+      {chips && <div className="sd-lc-chips">{chips}</div>}
+    </Card>
   );
 }
 

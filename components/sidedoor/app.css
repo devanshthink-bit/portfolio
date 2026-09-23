@@ -488,10 +488,11 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  height: 22px;
-  padding: 2px 8px;
-  border-radius: var(--sd-r-sm);
-  font-weight: 500; font-size: 14px; line-height: 20px;
+  /* one chip everywhere: 24 tall, 12/16 Medium, r6 (Devansh, 23 Sep: consistent, calmer type) */
+  height: 24px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-weight: 500; font-size: 12px; line-height: 16px;
   max-width: 322px;
   white-space: nowrap;
 }
@@ -782,3 +783,21 @@
 .sd-stepper > button:active:not(:disabled) { background: rgba(0, 0, 0, 0.06); }
 .sd-stepper > button:disabled { color: var(--sd-text-dis); }
 .sd-stepper > output { min-width: 48px; text-align: center; font-weight: 600; font-size: 14px; line-height: 20px; font-variant-numeric: tabular-nums; color: var(--sd-text); }
+
+/* ── list cards (jobs, requests, referrals, chats' referral bar) ─────────────────────────────
+   One rhythm for every list card (Devansh, 23 Sep): a tight text block, one 12px gap, then a
+   row of equal chips. Sizes only step down: 16 name/title → 14 details → 12 chips. Supporting
+   lines are Regular (400), so only the title carries weight. */
+.sd-lc { display: flex; gap: 12px; align-items: flex-start; }
+.sd-lc-body { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; }
+.sd-lc-head { display: flex; gap: 8px; align-items: flex-start; min-height: 24px; }
+.sd-lc-title { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: 4px; font-weight: 600; font-size: 16px; line-height: 24px; color: var(--sd-text); }
+.sd-lc-title > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sd-lc-when { flex: 0 0 auto; font-weight: 400; font-size: 13px; line-height: 24px; color: var(--sd-text-2); white-space: nowrap; }
+.sd-lc-line { font-weight: 400; font-size: 14px; line-height: 20px; color: var(--sd-text-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sd-lc-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
+.sd-lc-chips .sd-tag.plain { background: var(--sd-n75); color: var(--sd-text-2); padding: 0 8px; }
+.sd-lc-chips .sd-tag img { width: 12px !important; height: auto !important; }
+.sd-lc-chips .sd-tag svg { width: 12px; height: 12px; }
+.sd-lc-chips > .sd-lc-end { margin-left: auto; }
+

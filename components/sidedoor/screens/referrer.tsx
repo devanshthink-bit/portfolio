@@ -29,6 +29,7 @@ import {
   allValid,
   showDays,
   showYears,
+  ListCard,
 } from "../ui";
 import { BellButton } from "./candidate";
 import { CompanyRow, FileBox, JdDetails, Projects, RulesSection } from "./onboarding";
@@ -247,39 +248,28 @@ export function ReferralRequests() {
 
 function RequestCard({ r, onClick, end }: { r: Req; onClick?: () => void; end?: React.ReactNode }) {
   return (
-    <Card onClick={onClick}>
-      <div style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-        <div style={{ display: "flex", gap: 12, flex: 1, minWidth: 0 }}>
-          <Avatar name={r.name} />
-          <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1, minWidth: 0 }}>
-            <span className="t-h-sm sd-1line">{r.name}</span>
-            {/* Figma's RequestCard role line is Medium 14/20, which is what makes the text
-                column 100 tall and the card 132. */}
-            <span className="t-label muted sd-1line">{r.role}</span>
-            {/* Figma RequestCard Tags frame: 4px gap, and the shared-history line is a
-                Plain tag — 22 tall with a 14px mark, not a bare 16px span. */}
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
-              <Tag style="primary">{r.match}</Tag>
-              {r.common && (
-                <span className="sd-tag plain">
-                  {r.common.logo && (
-                    <Image src={logoSrc(r.common.logo)} alt="" width={14} height={14} style={{ width: 14, height: "auto" }} unoptimized />
-                  )}
-                  {r.common.icon && <Icon name={r.common.icon} size={14} color="tone" />}
-                  <span>{r.common.text}</span>
-                </span>
+    <ListCard
+      onClick={onClick}
+      lead={<Avatar name={r.name} />}
+      title={r.name}
+      when={r.when}
+      end={end}
+      lines={[r.role]}
+      chips={
+        <>
+          <Tag style="primary">{r.match}</Tag>
+          {r.common && (
+            <span className="sd-tag plain">
+              {r.common.logo && (
+                <Image src={logoSrc(r.common.logo)} alt="" width={12} height={12} style={{ width: 12, height: "auto" }} unoptimized />
               )}
-            </div>
-          </div>
-        </div>
-        {end ?? (
-          <span style={{ display: "flex", alignItems: "center", gap: 4, flex: "0 0 auto", whiteSpace: "nowrap" }}>
-            <Icon name="clock" size={13} color="tone" />
-            <span className="t-label-sm muted">{r.when}</span>
-          </span>
-        )}
-      </div>
-    </Card>
+              {r.common.icon && <Icon name={r.common.icon} size={12} color="tone" />}
+              <span>{r.common.text}</span>
+            </span>
+          )}
+        </>
+      }
+    />
   );
 }
 
@@ -739,65 +729,48 @@ export function YourReferrals() {
     ...REFERRALS.filter((r) => !r.days),
       ];
 
-  // Figma ReferralBar: 100 tall, padded 16. Avatar centred in a 44 column, then 12, then name
-  // over tag (8 apart), top-aligned. On the right the date sits at the top; with an Update
-  // button the column gets 4 on top and 9 between them, right-aligned.
+  // Same list-card rhythm as jobs and requests: name and time, role, then the stage chip with
+  // Update at the far end of the chip row.
   const bar = (r: Referral, withUpdate: boolean) => (
-    <Card key={r.name} style={{ padding: 16 }}>
-      <div style={{ display: "flex", gap: 8, alignItems: "flex-start", minHeight: 68 }}>
-        <div style={{ flex: 1, display: "flex", gap: 12, alignSelf: "stretch", minWidth: 0 }}>
-          <span style={{ display: "flex", alignItems: "center" }}>
-            <Avatar name={r.name} />
-          </span>
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 8, minWidth: 0 }}>
-            <span className="t-h-sm sd-1line">{r.name}</span>
-            <span>
-              <Tag style={stageTag(stageOf(r))}>{STAGE_LABEL[stageOf(r)]}</Tag>
-            </span>
-          </div>
-        </div>
-        <span
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-end",
-            gap: 8,
-            paddingTop: withUpdate ? 4 : 0,
-            flex: "0 0 auto",
-          }}
-        >
-          <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
-            <Icon name="clock" size={13} color="tone" />
-            <span className="t-label-sm muted">{r.when}</span>
-          </span>
+    <ListCard
+      key={r.name}
+      lead={<Avatar name={r.name} />}
+      title={r.name}
+      when={r.when}
+      lines={[r.role]}
+      chips={
+        <>
+          <Tag style={stageTag(stageOf(r))}>{STAGE_LABEL[stageOf(r)]}</Tag>
           {withUpdate && (
-            <SmallButton
-              onClick={() =>
-                nav.openSheet("seenItMove", {
-                  name: r.name,
-                  role: r.role,
-                  since: r.days ? `Submitted ${r.days} days ago` : `Submitted ${r.when}`,
-                  onPick: (s: Stage) => {
-                    setMoved((m) => ({ ...m, [r.name]: s }));
-                    setLastMoved(r.name);
-                  },
-                  onUndo: () => {
-                    setLastMoved(null);
-                    setMoved((m) => {
-                      const rest = { ...m };
-                      delete rest[r.name];
-                      return rest;
-                    });
-                  },
-                })
-              }
-            >
-              Update
-            </SmallButton>
+            <span className="sd-lc-end">
+              <SmallButton
+                onClick={() =>
+                  nav.openSheet("seenItMove", {
+                    name: r.name,
+                    role: r.role,
+                    since: r.days ? `Submitted ${r.days} days ago` : `Submitted ${r.when}`,
+                    onPick: (s: Stage) => {
+                      setMoved((m) => ({ ...m, [r.name]: s }));
+                      setLastMoved(r.name);
+                    },
+                    onUndo: () => {
+                      setLastMoved(null);
+                      setMoved((m) => {
+                        const rest = { ...m };
+                        delete rest[r.name];
+                        return rest;
+                      });
+                    },
+                  })
+                }
+              >
+                Update
+              </SmallButton>
+            </span>
           )}
-        </span>
-      </div>
-    </Card>
+        </>
+      }
+    />
   );
 
   return (
@@ -921,8 +894,8 @@ export function ManagePosts() {
                       />
                     )}
                   </div>
-                  <div style={{ height: 4 }} />
-                  <p className="t-label-sm muted">
+                  {/* list-card rhythm: 14/20 Regular detail line tight under the title */}
+                  <p className="sd-lc-line">
                     {state === "Draft" ? "Draft · Add the job ID to post" : `${state} · Job ID ${p.jobId}`}
                   </p>
                   <div style={{ height: 12 }} />

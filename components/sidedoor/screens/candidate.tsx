@@ -29,6 +29,7 @@ import {
   allValid,
   showDays,
   showYears,
+  ListCard,
 } from "../ui";
 import { CompanyRow, Project, ResumeDetails } from "./onboarding";
 
@@ -182,45 +183,32 @@ export function Jobs() {
           {
             jobs.map((j) => (
 
-              <Card
+              <ListCard
                 key={j.id}
                 onClick={() => (skippedResume ? nav.openSheet("addResume") : nav.push("job", { id: j.id }))}
-              >
-                <div style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-                  <div style={{ display: "flex", gap: 12, flex: 1, minWidth: 0 }}>
-                    <Avatar name={j.person} size={44} />
-                    <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1, minWidth: 0 }}>
-                      <span className="t-h-sm">{j.title}</span>
-                      <span className="t-label muted">
-                        {j.company} · {j.city}
-                      </span>
-                      <span className="t-label-sm muted">
-                        {j.pay} · {j.refers}
-                      </span>
-                      <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
-                        {j.tag &&
-                          (skippedResume && j.tag.style === "primary" ? (
-                            <Tag>Add resume to see match</Tag>
-                          ) : (
-                            <Tag style={j.tag.style}>{j.tag.text}</Tag>
-                          ))}
-                        {j.common && (
-                          <span className="sd-tag plain">
-                            {j.common.logo && (
-                              <Image src={logoSrc(j.common.logo)} alt="" width={14} height={14} style={{ width: 14, height: "auto" }} unoptimized />
-                            )}
-                            <span>{j.common.text}</span>
-                          </span>
+                lead={<Avatar name={j.person} size={44} />}
+                title={j.title}
+                when={j.when}
+                lines={[`${j.company} · ${j.city}`, `${j.pay} · ${j.refers}`]}
+                chips={
+                  <>
+                    {j.tag &&
+                      (skippedResume && j.tag.style === "primary" ? (
+                        <Tag>Add resume to see match</Tag>
+                      ) : (
+                        <Tag style={j.tag.style}>{j.tag.text}</Tag>
+                      ))}
+                    {j.common && (
+                      <span className="sd-tag plain">
+                        {j.common.logo && (
+                          <Image src={logoSrc(j.common.logo)} alt="" width={12} height={12} style={{ width: 12, height: "auto" }} unoptimized />
                         )}
-                      </div>
-                    </div>
-                  </div>
-                  <span style={{ display: "flex", alignItems: "center", gap: 4, flex: "0 0 auto", whiteSpace: "nowrap" }}>
-                    <Icon name="clock" size={13} color="tone" />
-                    <span className="t-label-sm muted">{j.when}</span>
-                  </span>
-                </div>
-              </Card>
+                        <span>{j.common.text}</span>
+                      </span>
+                    )}
+                  </>
+                }
+              />
             ))
           }
         </div>
@@ -348,10 +336,7 @@ export function JobDetails() {
                 <span className="t-label-sm muted">Design Manager, Flipkart</span>
               </span>
             </div>
-            <span style={{ display: "flex", alignItems: "center", gap: 4, flex: "0 0 auto" }}>
-              <Icon name="clock" size={14} color="tone" />
-              <span className="t-label-sm muted">Thursday</span>
-            </span>
+            <span className="sd-lc-when">Thursday</span>
           </div>
 
           {/* Figma Frame 200: a 175-tall #2563eb panel, r16, padded 24/48, with the company
@@ -750,34 +735,18 @@ export function RequestList({ justSent }: { justSent?: boolean }) {
  */
 export function ReferralBar({ r, onClick }: { r: { logo: string; company: string; stage: Stage; updated: string }; onClick?: () => void }) {
   return (
-    <Card onClick={onClick}>
-      <div style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-        <div style={{ display: "flex", gap: 12, flex: 1, minWidth: 0 }}>
-          <span style={{ width: 68, height: 68, flex: "0 0 auto", display: "grid", placeItems: "center" }}>
-            <Image
-              src={logoSrc(r.logo)}
-              alt={r.company}
-              width={68}
-              height={18}
-              style={{ width: 68, height: "auto" }}
-            />
-          </span>
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 8, minWidth: 0 }}>
-            <span style={{ display: "flex", alignItems: "center", gap: 2, minWidth: 0 }} className="t-h-sm">
-              <span className="sd-1line">{r.company}</span>
-              <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)" }} />
-            </span>
-            <span>
-              <Tag style={stageTag(r.stage)}>{STAGE_LABEL[r.stage]}</Tag>
-            </span>
-          </div>
-        </div>
-        <span style={{ display: "flex", alignItems: "center", gap: 4, flex: "0 0 auto" }}>
-          <Icon name="clock" size={13} color="tone" />
-          <span className="t-label-sm muted">{r.updated}</span>
+    <ListCard
+      onClick={onClick}
+      lead={
+        <span style={{ width: 44, height: 44, flex: "0 0 auto", display: "grid", placeItems: "center" }}>
+          <Image src={logoSrc(r.logo)} alt={r.company} width={44} height={12} style={{ width: 44, height: "auto" }} />
         </span>
-      </div>
-    </Card>
+      }
+      title={r.company}
+      titleMark={<Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)", flex: "0 0 auto" }} />}
+      when={r.updated}
+      chips={<Tag style={stageTag(r.stage)}>{STAGE_LABEL[r.stage]}</Tag>}
+    />
   );
 }
 
@@ -1030,10 +999,7 @@ export function TrackDetails({ id, stage, updated }: { id: string; stage?: Stage
               </span>
               <span className="sd-person-sub sd-1line">{r.referrerRole}</span>
             </span>
-            <span style={{ display: "flex", alignItems: "center", gap: 2, flex: "0 0 auto" }}>
-              <Icon name="clock" size={14} color="tone" />
-              <span className="t-label-sm muted">{r.updated}</span>
-            </span>
+            <span className="sd-lc-when">{r.updated}</span>
           </div>
         </Card>
 
