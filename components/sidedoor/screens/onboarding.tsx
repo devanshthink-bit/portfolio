@@ -819,34 +819,42 @@ export function CheckPost() {
 
 export function RuleRow({ title, sub, end }: { title: string; sub: string; end: ReactNode }) {
   return (
-    /* Figma's rule Box is r8 with 12/16 of padding, its row centred, and only 2 between
-       the two lines. */
-    <div style={{ background: "#fff", borderRadius: "var(--sd-r-md)", padding: "12px 16px", display: "flex", gap: 12, alignItems: "center" }}>
-      <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 2 }}>
-        <span className="t-h-xs">{title}</span>
-        <span className="t-label-sm muted">{sub}</span>
+    // title and stepper share a line; the explanation runs the full width under them
+    <div style={{ padding: "12px 16px", display: "flex", flexDirection: "column", gap: 4 }}>
+      <span style={{ display: "flex", alignItems: "center", gap: 12, minHeight: 32 }}>
+        <span className="t-h-xs" style={{ flex: 1 }}>{title}</span>
+        {end}
       </span>
-      {end}
+      <span className="t-label-sm muted">{sub}</span>
     </div>
   );
 }
 
-/** "Your rules": the referrer sets the numbers, not just on or off (Devansh, 23 Sep). */
+/** "Your rules": the referrer sets the numbers (Devansh, 23 Sep). The words stay put; only
+ *  the number in the stepper moves. */
 export function RulesSection() {
   const { rules, dispatch } = useStore();
-  const y = rules.minYears;
-  const yrs = (n: number) => `${n} ${n === 1 ? "yr" : "yrs"}`;
   return (
     <Section label="Your rules" icon="gearshape.fill">
-      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      <div style={{ background: "#fff", borderRadius: "var(--sd-r-md)" }}>
         <RuleRow
-          title={y === 0 ? "Any experience" : `At least ${yrs(y)} of experience`}
-          sub={y === 0 ? "Every request goes to your main list." : `Requests under ${yrs(y)} go to Lower match. You can still refer them.`}
-          end={<Stepper label="Years of experience" value={y} min={0} max={15} onChange={(v) => dispatch({ t: "rule", k: "minYears", v })} />}
+          title="Minimum experience"
+          sub="Requests with fewer years go to Lower match. You can still refer them."
+          end={
+            <Stepper
+              label="Minimum years of experience"
+              value={rules.minYears}
+              min={0}
+              max={15}
+              show={(n) => (n === 0 ? "Any" : `${n} ${n === 1 ? "yr" : "yrs"}`)}
+              onChange={(v) => dispatch({ t: "rule", k: "minYears", v })}
+            />
+          }
         />
+        <div style={{ height: 1, background: "var(--sd-border-subtle)", marginLeft: 16 }} />
         <RuleRow
-          title={`Up to ${rules.weekly} ${rules.weekly === 1 ? "request" : "requests"} a week`}
-          sub="When it’s full, candidates see you’re full this week and ask again on Monday."
+          title="Requests a week"
+          sub="When you’re full, candidates are asked to try again on Monday."
           end={<Stepper label="Requests a week" value={rules.weekly} min={1} max={50} onChange={(v) => dispatch({ t: "rule", k: "weekly", v })} />}
         />
       </div>

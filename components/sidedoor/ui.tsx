@@ -725,7 +725,7 @@ export function PersonRow({
 /** Figma's six step kinds (V6 Tracking Flow):
  *  done    — blue circle-check, blue title, solid blue line after it
  *  next    — blue active-radio, the step you are waiting to reach
- *  waiting — orange clock, orange title, solid orange line: it sits with someone else
+ *  waiting — yellow clock with dark hands, yellow line: it sits with someone else
  *  pending — grey ring, the steps further ahead
  *  failed  — grey circle-x, grey title: the request ended short
  *  success — green circle-check, green title: selected */
@@ -749,7 +749,14 @@ export function Timeline({ steps }: { steps: Step[] }) {
         <div className={`sd-tl-step is-${s.state}`} key={s.title}>
           <span className="sd-tl-rail">
             <svg className="sd-tl-mark" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
-              <path d={TL_PATH[s.state]} fill="currentColor" />
+              {s.state === "waiting" ? (
+                <>
+                  <circle cx="12" cy="12" r="9.6" className="sd-tl-disc" />
+                  <path d={TL_PATH.waiting.slice(0, TL_PATH.waiting.indexOf("M", 1))} className="sd-tl-hands" />
+                </>
+              ) : (
+                <path d={TL_PATH[s.state]} fill="currentColor" />
+              )}
             </svg>
             {i < steps.length - 1 && <span className="sd-tl-line" />}
           </span>
@@ -903,15 +910,16 @@ export function Search({ value, onChange, placeholder }: { value: string; onChan
 
 /** iOS stepper: a grey 94×32 pill split into − and +, each half a 44pt target. An end that
  *  can't go further dims and stops. */
-export function Stepper({ value, min, max, onChange, label }: { value: number; min: number; max: number; onChange: (v: number) => void; label: string }) {
+/** The number lives inside the stepper, so the words beside it never change. */
+export function Stepper({ value, min, max, onChange, label, show = String }: { value: number; min: number; max: number; onChange: (v: number) => void; label: string; show?: (v: number) => string }) {
   return (
     <span className="sd-stepper" role="group" aria-label={label}>
       <button onClick={() => onChange(Math.max(min, value - 1))} disabled={value <= min} aria-label={`Fewer: ${label}`}>
-        <Icon name="minus" size={18} />
+        <Icon name="minus" size={16} />
       </button>
-      <i aria-hidden />
+      <output aria-live="polite">{show(value)}</output>
       <button onClick={() => onChange(Math.min(max, value + 1))} disabled={value >= max} aria-label={`More: ${label}`}>
-        <Icon name="plus" size={18} />
+        <Icon name="plus" size={16} />
       </button>
     </span>
   );

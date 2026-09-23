@@ -52,6 +52,8 @@
   --sd-icon: #3b3f46;
   --sd-icon-2: #6b7280;
   --sd-icon-warning: #8a6100;
+  --sd-waiting: #facc15;         /* yellow: "sitting with someone else" */
+  --sd-waiting-ink: #713f12;     /* the clock's hands on that yellow */
   --sd-apple: #000000;
   --sd-ios-green: #34c759;
   --sd-ios-red: #ff3b30;
@@ -605,7 +607,9 @@
 
 .sd-tl-step.is-done .sd-tl-mark, .sd-tl-step.is-done .sd-tl-title,
 .sd-tl-step.is-next .sd-tl-mark { color: var(--sd-link); }
-.sd-tl-step.is-waiting .sd-tl-mark, .sd-tl-step.is-waiting .sd-tl-title { color: var(--sd-text-warning); }
+/* waiting: a yellow clock (the hands carry the contrast, 5.7:1) and a plain title */
+.sd-tl-disc { fill: var(--sd-waiting); }
+.sd-tl-hands { fill: var(--sd-waiting-ink); }
 .sd-tl-step.is-pending .sd-tl-mark { color: var(--sd-border); }
 .sd-tl-step.is-failed .sd-tl-mark { color: var(--sd-icon-2); }
 .sd-tl-step.is-failed .sd-tl-title { color: var(--sd-text-2); }
@@ -613,7 +617,7 @@
 
 .sd-tl-line { background: repeating-linear-gradient(to bottom, var(--sd-border) 0 5px, transparent 5px 10px); }
 .sd-tl-step.is-done .sd-tl-line { background: var(--sd-link); }
-.sd-tl-step.is-waiting .sd-tl-line { background: var(--sd-text-warning); }
+.sd-tl-step.is-waiting .sd-tl-line { background: var(--sd-waiting); }
 
 /* ── sheets ─────────────────────────────────────────────────────────────── */
 .sd-scrim { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.4); z-index: 50; animation: sd-scrim-in 320ms linear both; }
@@ -741,10 +745,11 @@
 .sd-paper > hr { border: 0; border-top: 1px solid var(--sd-border-subtle); margin: 8px 0; }
 .sd-paper > .t-h-xs { margin-top: 8px; }
 
-/* iOS stepper: 94×32, the tertiary fill, a hairline between the halves */
-.sd-stepper { display: inline-flex; align-items: center; height: 32px; border-radius: var(--sd-r-md); background: var(--sd-fill-3); flex: 0 0 auto; }
-.sd-stepper > button { position: relative; width: 47px; height: 32px; display: grid; place-items: center; color: var(--sd-text); }
-.sd-stepper > button::after { content: ""; position: absolute; left: 50%; top: 50%; width: 47px; height: 44px; transform: translate(-50%, -50%); }
-.sd-stepper > button:active:not(:disabled) { background: rgba(0, 0, 0, 0.06); border-radius: var(--sd-r-md); }
-.sd-stepper > button:disabled { color: var(--sd-text-2); opacity: 0.35; }
-.sd-stepper > i { width: 1px; height: 18px; background: rgba(0, 0, 0, 0.12); }
+/* Stepper with its value in the middle: − 3 yrs +. 32 tall, the tertiary fill; each
+   button reaches 44 tall for the finger. */
+.sd-stepper { display: inline-flex; align-items: center; height: 32px; border-radius: 16px; background: var(--sd-fill-3); flex: 0 0 auto; }
+.sd-stepper > button { position: relative; width: 36px; height: 32px; display: grid; place-items: center; color: var(--sd-text); border-radius: 16px; }
+.sd-stepper > button::after { content: ""; position: absolute; left: 50%; top: 50%; width: 44px; height: 44px; transform: translate(-50%, -50%); }
+.sd-stepper > button:active:not(:disabled) { background: rgba(0, 0, 0, 0.06); }
+.sd-stepper > button:disabled { color: var(--sd-text-dis); }
+.sd-stepper > output { min-width: 48px; text-align: center; font-weight: 600; font-size: 14px; line-height: 20px; font-variant-numeric: tabular-nums; color: var(--sd-text); }

@@ -2872,3 +2872,13 @@ Figma, States grid:
 Code follows Figma: a field inside a white box uses surface/secondary (#fafafa), Figma's Filled fill.
 Still code-only, on purpose: the sliding tab pill, the login carousel and the header glass are motion or scroll behaviour; the V6 prototype page swaps whole frames, so they would only crossfade.
 Caveat noted: #fafafa fields on white and white fields on #f2f2f7 both have faint edges (under 3:1). Figma draws them this way; not changed.
+
+## 2026-09-23 · Waiting is yellow; rules show the number, not changing words
+
+- **Timeline "waiting" mark** (Sent, On hold): now a yellow clock (#FACC15) with dark hands (#713F12, 5.7:1 on the yellow), a yellow line, and a plain title. Before it was dark gold (#8A6100) for mark, line and title. Devansh: it didn't read as "waiting". The hands carry the contrast; the word "Sent" carries the meaning, so the disc doesn't need 3:1 on white.
+  - Figma: new variables `color/palette/yellow/400`, `color/palette/yellow/900`, `color/icon/waiting`, `color/icon/waitingInk`. The 3 waiting marks on UI Screens and 3 on the V6 Prototype page are now a "Waiting mark" frame (dark disc behind a yellow clock.fill).
+  - Tags that say "On hold" / "Still needed" keep the dark gold text. Not changed.
+- **Your rules**: the words no longer change with the number. The number sits inside the stepper (− 3 yrs +, "Any" at 0; − 10 +). Both rules are one white card with a hairline between, title and stepper on one line, the explanation full width under them. Devansh: the changing titles looked cluttered.
+  - Copy: "Minimum experience" / "Requests with fewer years go to Lower match. You can still refer them." and "Requests a week" / "When you're full, candidates are asked to try again on Monday."
+  - Figma: Stepper component now has a `Value` text property, no divider, r16, 36-wide buttons, hugs its width. Rule boxes merged into "Rules card" on the 2 UI screens and 2 prototype screens.
+- Verified on localhost only (Vercel preview needs a login).
