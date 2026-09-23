@@ -16,6 +16,7 @@
   --sd-n0: #ffffff;
   --sd-n50: #fafafa;
   --sd-n75: #f3f3f3;             /* field fill */
+  --sd-stone-25: #fbfaf8;        /* warm off-white page: a hair off pure white */
   --sd-n100: #f0f1f2;
   --sd-n150: #e6e7eb;
   --sd-n200: #d1d3d8;
@@ -41,7 +42,7 @@
   --sd-surface: #ffffff;
   --sd-surface-2: #fafafa;
   --sd-surface-3: #f0f1f2;
-  --sd-page: var(--sd-n0);       /* background/grouped: pure white (Postmates-style); fields are filled grey */
+  --sd-page: var(--sd-stone-25);  /* background/grouped: warm off-white; white cards sit on it with a 1px edge */
   --sd-fill-3: rgba(118, 118, 128, 0.12);
   --sd-border: #d1d3d8;
   --sd-border-subtle: #f0f1f2;
@@ -236,7 +237,7 @@
 /* The glass reaches 8 below the bar, so its buttons don't sit on the hairline. It is drawn
    by ::before, so nothing under the bar moves. */
 .sd-nav-wrap::before { content: ""; position: absolute; left: 0; right: 0; top: 0; bottom: -8px; z-index: -1; pointer-events: none; opacity: 0;
-  background: rgba(255, 255, 255, 0.82); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
+  background: rgba(251, 250, 248, 0.82); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
   box-shadow: 0 0.5px 0 rgba(0, 0, 0, 0.16); transition: opacity 200ms linear; }
 .sd-nav-wrap.is-scrolled::before { opacity: 1; }
 .sd-nav-wrap.is-scrolled .sd-nav-title { opacity: 1; }
@@ -282,7 +283,7 @@
 .sd-screen.has-tabs .sd-body > div:last-child:empty { height: 112px; }
 /* an action block pinned to the bottom edge; the content scrolls under a fade into the page */
 .sd-actionblock.is-fixed { position: absolute; left: 0; right: 0; bottom: 0; z-index: 20; margin: 0; padding: 32px 16px 40px;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), var(--sd-page) 32px); }
+  background: linear-gradient(to bottom, rgba(251, 250, 248, 0), var(--sd-page) 32px); }
 .sd-screen.has-tabs .sd-actionblock.is-fixed { padding-bottom: 104px; }
 
 /* ── liquid glass tab bar ────────────────────────────────────────────────── */

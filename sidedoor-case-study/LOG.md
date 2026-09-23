@@ -2949,3 +2949,9 @@ Caveat noted: #fafafa fields on white and white fields on #f2f2f7 both have fain
 - Code: `--sd-e-card` is now `0 0 0 1px var(--sd-n150)` (#E6E7EB), so every card, list, box and radio group gets the same edge. Fields stay filled #F3F3F3 with no edge.
 - Figma: `effect/card` is now one 1px spread shadow bound to neutral/150 (acts as an outside border). The 115 overriding instances were reset to the style.
 - Verified on localhost only.
+
+## 2026-09-23 · Warm off-white page
+
+- Devansh: pure white looks cheap; premium apps use a barely-warm off-white. Page is now `stone/25` #FBFAF8 (new palette colour, swatch on the Colors page). White cards keep their 1px edge and now also sit a hair brighter than the page. Fields stay #F3F3F3.
+- Code: `--sd-stone-25`, `--sd-page` points to it; header glass and bottom fade use it. Figma: `background/grouped` → stone/25; Fixed Actions fades (4 + 4) recoloured.
+- Verified on localhost only.
