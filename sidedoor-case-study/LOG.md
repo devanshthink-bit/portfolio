@@ -3077,3 +3077,18 @@ Devansh asked what still wasn't iOS-like or consistent, then said to fix all of 
 - **Found on the way (b):** the code's "Add your resume" sheet had drifted from Figma (different title, copy and button). The code now matches Figma: "Add your resume to ask Nithin", the portal line, the same upload box as onboarding, and the "Saved for your next requests too" tag. It's added to the prototype's Sheets list.
 - **Slip, fixed:** removing "Not now" in Figma also deleted that tag, because they shared a frame. I rebuilt it.
 - Verified on localhost only.
+
+## 23 Sep 2026 · UI Screens page caught up
+- Devansh: the Profile frames on UI Screens still showed the toggle. **I had edited only the 🔗 V6 Prototype page** and missed 9 changes across ~28 frames on UI Screens (the V6 sections). Component edits had reached both pages; frame-level edits had not.
+- **New rule (Devansh): always change UI Screens.** He shows the prototype in code, not Figma, so UI Screens is the Figma deliverable and Figma click-through wiring isn't needed.
+- Done on UI Screens:
+  1. Profile ×2: the "Let referrers find me" card removed.
+  2. Referral Request ×4: "Sent today" / "Sent 2 days ago" as a plain time on the name line.
+  3. AM/PM in 11 texts.
+  4. Messages list times ×8 at 13 Regular grey.
+  5. Chat ×2: centred "Today 3:10 PM" / "Today 2:10 PM" over the first run.
+  6. Sheets: × on Not moving forward, Share your link, Date of birth and Add your resume; Cancel / Not now removed. The "Saved…" tag got back its grey chip fill (the instance had none; code shows the chip).
+  7. Seen it move ×2: ×, question without "One tap.", Update button (grey / blue), Submitted keeps its date.
+  8. Empty/error ×7 now use the EmptyState component, including Jobs couldn't load and Messages couldn't load, which exist only on UI Screens.
+  9. New States-grid frames (the 3 free cells): Referral Requests + Invite alert, Referral Requests / Invited, Seen It Move / Picked.
+- A re-run of the audit finds nothing left. Remaining Cancels are intended: the Log out action sheet, the Invite alert, and the link page's "Not now".
