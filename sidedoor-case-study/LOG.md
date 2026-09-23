@@ -2861,3 +2861,14 @@ CHANGE · 2026-09-23 · Stepper rules, Tap to undo · Source: Devansh
   - Code: Stepper, rules in the store as numbers, Lower match computed from the rule.
   - "Tap to undo" on a removed skill added it again instead of taking it off; in the "skill removed" state the list was fixed. Now a second tap undoes it and the count goes back.
 Checked on localhost: steppers stop at their ends, text follows the number, 4 yrs moves 2 requests to Lower match, undo restores 4 of 7.
+
+CHANGE · 2026-09-23 · Figma catches up with code-only states · Source: rule (Figma and prototype change together)
+Figma, States grid:
+  - r3 c6 Check request / Field Error (notice "400", "Enter days, 0 to 180.", Still needed · 2)
+  - r3 c7 Your profile from your resume / Editing (six Filled fields with *, Edit → Done)
+  - r3 c8 Your profile from your resume / Project Details (a line per project, "Hide project details")
+  - r3 c9 Referrer / Resume Preview Screen; r4 c7–9 Help, Help / How Referrals Work, Help / Contact Support (new: V6 had no Help screens)
+  - InputField Error variants: the error line now leads with info.circle.fill, as in code.
+Code follows Figma: a field inside a white box uses surface/secondary (#fafafa), Figma's Filled fill.
+Still code-only, on purpose: the sliding tab pill, the login carousel and the header glass are motion or scroll behaviour; the V6 prototype page swaps whole frames, so they would only crossfade.
+Caveat noted: #fafafa fields on white and white fields on #f2f2f7 both have faint edges (under 3:1). Figma draws them this way; not changed.
