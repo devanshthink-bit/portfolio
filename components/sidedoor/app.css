@@ -50,6 +50,7 @@
   --sd-action-fg-dis: #5f6671;
   --sd-icon: #3b3f46;
   --sd-icon-2: #6b7280;
+  --sd-text-warning: #92400e;    /* dark amber: 6.4:1 on the amber tag, 6.3:1 on the page */
   --sd-icon-warning: #f59e0b;    /* amber: waiting / on hold / still needed, always beside a word */
   --sd-waiting: #f59e0b;         /* amber, iOS-style pending: "sitting with someone else" */
   --sd-waiting-ink: #ffffff;     /* white hands, as iOS draws a filled status glyph */
@@ -473,7 +474,7 @@
 .sd-tag.neutral { background: var(--sd-fill-3); color: var(--sd-text-2); }
 .sd-tag.primary { background: var(--sd-blue-50); color: var(--sd-text-info); }
 .sd-tag.success { background: var(--sd-success-50); color: var(--sd-text-success); }
-.sd-tag.buffer { background: var(--sd-warning-100); color: var(--sd-text); }
+.sd-tag.buffer { background: var(--sd-warning-100); color: var(--sd-text-warning); }
 .sd-tag.buffer svg { color: var(--sd-icon-warning); }
 .sd-tag.failure { background: var(--sd-error-50); color: var(--sd-text-error); }
 /* Figma Tag/Style=Plain: no fill, padding 2/0, 12/16 label, still 22 tall. */
@@ -504,7 +505,7 @@
 /* a note sits on the grey page, where #15803d is 4.49:1. Figma's color/text/successOnPage is
    success/800 #166534, 6.39:1 */
 .sd-tag.note.success { color: #166534; }
-.sd-tag.note.buffer { color: var(--sd-text); }
+.sd-tag.note.buffer { color: var(--sd-text-warning); }
 .sd-tag.note.failure { color: var(--sd-text-error); }
 .sd-tag.note svg { flex: 0 0 auto; }
 /* Figma's note frames hug their text at the left edge wherever they sit, rather than

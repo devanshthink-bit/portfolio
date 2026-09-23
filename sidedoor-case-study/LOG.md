@@ -2887,3 +2887,8 @@ Caveat noted: #fafafa fields on white and white fields on #f2f2f7 both have fain
   - Code: `--sd-text-warning` removed; `--sd-warning-50` → `--sd-warning-100`; `--sd-icon-warning` is #F59E0B.
   - Figma: `color/feedback/warning/bg` → new `color/palette/warning/100`; `color/icon/warning` → `warning/500`; the Tag Buffer variant's label is now `color/text/primary`; 17 V6 tag labels on UI Screens and 15 on the prototype page are rebound from warningAA to text/primary. Because the component and variables are shared, V2–V5 tags change too (allowed); their V2–V5 frames themselves were not edited.
   - Verified on localhost only.
+- **Revised again:** Devansh: the dark text on the amber tag looked wrong. Waiting text is now dark amber #92400E (6.4:1 on the #FEF3C7 tag, 6.3:1 on the page), the usual badge pairing. Offline notes use it too.
+  - Code: `--sd-text-warning: #92400e`, used by `.sd-tag.buffer` and `.sd-tag.note.buffer`.
+  - Figma: new `color/palette/warning/900` #92400E; `color/text/warningAA` points to it; the Tag Buffer label and the same 17 + 15 V6 labels are bound to warningAA again.
+  - The timeline titles ("Sent", "On hold") stay plain; only their mark is amber.
+  - Verified on localhost only.
