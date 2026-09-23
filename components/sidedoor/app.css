@@ -530,16 +530,15 @@
 }
 .sd-input input, .sd-input textarea { flex: 1 1 auto; width: 100%; font-weight: 400; font-size: 14px; line-height: 20px; resize: none; }
 .sd-input input::placeholder, .sd-input textarea::placeholder { color: var(--sd-placeholder); }
-.sd-input.is-focus { box-shadow: inset 0 0 0 2px var(--sd-link), var(--sd-e-card); }
-/* a field inside a white box (edit in place) takes Figma's Filled fill, surface/secondary,
-   so its edge still shows */
-.sd-box .sd-input { background: var(--sd-surface-2); }
-.sd-input.is-error { box-shadow: inset 0 0 0 1px var(--sd-text-error), var(--sd-e-card); }
-/* white boxes and fields lift off the page; inside a card they sit flat */
-.sd-box, .sd-input, .sd-search { box-shadow: var(--sd-e-card); }
-.sd-card .sd-box, .sd-box .sd-input, .sd-card .sd-input, .sd-list .sd-input { box-shadow: none; }
-.sd-box .sd-input.is-focus, .sd-card .sd-input.is-focus { box-shadow: inset 0 0 0 2px var(--sd-link); }
-.sd-box .sd-input.is-error, .sd-card .sd-input.is-error { box-shadow: inset 0 0 0 1px var(--sd-text-error); }
+.sd-input, .sd-search { box-shadow: inset 0 0 0 1px var(--sd-border); }
+/* Fields are white with a 1px grey edge, not lifted: on a near-white page a shadowed white
+   box has no crisp edge (Mobbin: Blue Apron, Superpower, Skip, Stake all do it this way).
+   Focus thickens the edge to 2px blue; an error turns it red. Same inside a card or box. */
+.sd-input.is-focus { box-shadow: inset 0 0 0 2px var(--sd-link); }
+.sd-input.is-error { box-shadow: inset 0 0 0 1px var(--sd-text-error); }
+/* white boxes lift off the page; inside a card they sit flat */
+.sd-box { box-shadow: var(--sd-e-card); }
+.sd-card .sd-box { box-shadow: none; }
 .sd-field-err { display: flex; align-items: center; gap: 4px; font-weight: 500; font-size: 12px; line-height: 16px; color: var(--sd-text-error); }
 /* required fields carry a * after the label; optional ones say "(optional)" in the label */
 .sd-req { color: var(--sd-text-error); }

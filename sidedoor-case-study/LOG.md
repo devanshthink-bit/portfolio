@@ -2920,3 +2920,12 @@ Caveat noted: #fafafa fields on white and white fields on #f2f2f7 both have fain
 - This also fixes the earlier caveat: field edges were under 3:1 against the page. The hairline plus shadow now marks each field.
 - Verified on localhost only.
 - **Revised:** Devansh: #F7F9FE still read bluish. Page is now neutral/50 #FAFAFA (already in the palette); the card shadow's blue tint is now neutral ink. `brand/blue/25` and its swatch deleted. Fixed Actions fades updated in Figma (4 + 4 frames). Verified on localhost only.
+
+## 2026-09-23 · Fields: white with a 1px grey edge
+
+- Devansh: white fields on the near-white page had no contrast. Looked at Mobbin sign-up forms: on white or near-white pages, apps either draw a white field with a thin grey border (Blue Apron, Superpower, Skip, Stake) or a tinted field with no border (Quizlet, Snoonu). None use a shadowed white box. Chose the bordered field: the crispest edge, and it keeps the page bright.
+- Fields and search: white, 1px `border/default` #D1D3D8 inside, no shadow. Focus: 2px blue. Error: 1px red. Same inside a card or box (the grey Filled fill inside boxes is gone).
+- Cards, lists and boxes keep `effect/card`.
+- Figma: all 9 InputField variants now white + 1px border/default, no effect (error variants keep their red stroke). Loose "Input" frames on V6 screens (4 + 6) lose effect/card and get the border. The Messages search uses InputField, so it follows.
+- Trade-off: #D1D3D8 is about 1.5:1 against the page, under the 3:1 guideline for input edges. The label above every field names it, so the field is still identifiable. A darker edge (e.g. #9CA3AF, 2.5:1) looked heavy.
+- Verified on localhost only.
