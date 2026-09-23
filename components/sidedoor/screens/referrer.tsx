@@ -36,7 +36,6 @@ import { CompanyRow, FileBox, JdDetails, Projects, RulesSection } from "./onboar
 import { CANDIDATES, DEMO, POST_SKILLS, SUGGESTED, candidateById, firstName, matchLine, roleLine, type Candidate } from "../data";
 
 type Req = Candidate;
-const REQUESTS = CANDIDATES;
 
 /* ── Referral requests ──────────────────────────────────────────────────── */
 export function ReferralRequests() {
@@ -642,7 +641,6 @@ function AfterRefer({ id }: { id: string }) {
 
 function MarkedSubmitted({ id }: { id: string }) {
   const nav = useNav();
-  const { profile } = useStore();
   const r = candidateById(id);
   const name = r.name;
   const first = firstName(name);
