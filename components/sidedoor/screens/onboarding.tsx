@@ -167,6 +167,7 @@ export function RoleSelection() {
       style={{
         background: "#fff",
         borderRadius: "var(--sd-r-lg)",
+        boxShadow: "var(--sd-e-card)",
         padding: 16,
         height: 310,
         display: "flex",
@@ -216,7 +217,7 @@ export function DocUpload({
   onUpload: () => void;
 }) {
   const shell = (gap: number, children: ReactNode) => (
-    <div style={{ background: "var(--sd-n0)", borderRadius: "var(--sd-r-lg)", padding: 16 }}>
+    <div style={{ background: "var(--sd-n0)", borderRadius: "var(--sd-r-lg)", padding: 16, boxShadow: "var(--sd-e-card)" }}>
       {/* Figma Frame 214 is a fixed 218 tall in both states, with its content centred inside —
           not a box that hugs. That 218 is what puts the doc icon at y211.45, not y206. */}
       <div
@@ -836,7 +837,7 @@ export function RulesSection() {
   const { rules, dispatch } = useStore();
   return (
     <Section label="Your rules" icon="gearshape.fill">
-      <div style={{ background: "#fff", borderRadius: "var(--sd-r-md)" }}>
+      <div style={{ background: "#fff", borderRadius: "var(--sd-r-md)", boxShadow: "var(--sd-e-card)" }}>
         <RuleRow
           title="Minimum experience"
           sub="Requests with fewer years go to Lower match. You can still refer them."
@@ -884,6 +885,7 @@ export function JobLive() {
           style={{
             background: "var(--sd-n0)",
             borderRadius: "var(--sd-r-lg)",
+            boxShadow: "var(--sd-e-card)",
             padding: 24,
             display: "flex",
             flexDirection: "column",

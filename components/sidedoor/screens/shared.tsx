@@ -702,6 +702,7 @@ export function LinkPage() {
           style={{
             background: "var(--sd-n0)",
             borderRadius: "var(--sd-r-lg)",
+            boxShadow: "var(--sd-e-card)",
             padding: 24,
             display: "flex",
             flexDirection: "column",
