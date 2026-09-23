@@ -2979,3 +2979,13 @@ Caveat noted: #fafafa fields on white and white fields on #f2f2f7 both have fain
 - Found and fixed a real bug: the CSS build merged each `backdrop-filter` + `-webkit-backdrop-filter` pair into the -webkit- one alone, which Chrome ignores, so no glass in the app (tab bar, header, bar buttons, toast) ever blurred in Chrome. Now only the standard property is written; the build adds the Safari prefix itself. Checked: computed backdrop-filter is blur(22px) saturate(1.8) and content blurs under the bar.
 - Figma: TabBar (V6) capsules (8 variants) fill surface/primary at 52% over the existing Glass effect, 0.5px hairline; the selected pill is the same grey glass. 52 + 68 screen instances had the solid fill as an override; reset.
 - Verified on localhost only.
+
+## 2026-09-23 · Icons coloured by meaning; card edges fixed in Figma
+
+- Devansh: not one blue for every icon — each takes a colour that fits it; and metadata icons were still grey. Replaced the brand-blue rule with tones (iOS Settings-style), all 3:1+ on white:
+  - red #EF4444: location pin, flag · orange #EA580C: calendar, clock, hourglass · brown #B45309: briefcase · amber #D97706: lightbulb · green #16A34A: message bubbles · indigo #4F46E5: building, laptop · blue #2563EB: person, mail, link, document, folder, info, open, bookmark · grey #6B7280: settings, lock, paperclip.
+  - Now includes the clocks by timestamps, the Job details facts and the shared-history icons.
+  - Still not toned: chevrons, status marks, icons inside buttons and tags, tab bar, brand logos.
+  - Code: `TONE` map in Icon.tsx, `color="tone"`; `--sd-tone-*`. Figma: palette orange/600, amber/600, success/600, indigo/600; semantic `color/icon/tone/*`; icons recoloured by component name (prototype page + 326 on UI Screens). `color/icon/accent` marked deprecated.
+- **Some Figma cards showed no edge** (Devansh: "From your resume", Projects). The inner-shadow edge only draws on frames that clip content; those Box frames didn't. Turned clipping on for every effect/card frame (47 UI Screens, 34 prototype page). Code already had the edge on these boxes.
+- Verified on localhost only.

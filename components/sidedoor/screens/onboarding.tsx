@@ -905,7 +905,7 @@ export function JobLive() {
             <Box>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <p className="t-label" style={{ flex: 1 }}>sidedoor.app/r/nithin-agarwal</p>
-                <Icon name="doc.on.doc.fill" size={20} style={{ color: "var(--sd-icon-accent)" }} />
+                <Icon name="doc.on.doc.fill" size={20} color="tone" />
               </div>
             </Box>
             <p className="t-label-sm muted">

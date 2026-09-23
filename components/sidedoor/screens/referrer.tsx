@@ -97,7 +97,7 @@ export function ReferralRequests() {
           list and the suggested block sit close together. */}
       <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 8 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <Icon name="briefcase.fill" size={16} style={{ color: "var(--sd-icon-accent)" }} />
+          <Icon name="briefcase.fill" size={16} color="tone" />
           <span className="t-h-xs" style={{ flex: 1 }}>
             Interaction Designer · Flipkart
           </span>
@@ -151,7 +151,7 @@ export function ReferralRequests() {
                 }}
               >
                 <span className="t-label" style={{ flex: 1 }}>sidedoor.app/r/nithin-agarwal</span>
-                <Icon name="doc.on.doc.fill" size={20} style={{ color: "var(--sd-icon-accent)" }} />
+                <Icon name="doc.on.doc.fill" size={20} color="tone" />
               </div>
             </Section>
             <Actions>
@@ -176,7 +176,7 @@ export function ReferralRequests() {
                 }}
               >
                 <span className="t-label" style={{ flex: 1 }}>sidedoor.app/r/nithin-agarwal</span>
-                <Icon name="doc.on.doc.fill" size={20} style={{ color: "var(--sd-icon-accent)" }} />
+                <Icon name="doc.on.doc.fill" size={20} color="tone" />
               </div>
             </Section>
             <Actions>
@@ -265,7 +265,7 @@ function RequestCard({ r, onClick, end }: { r: Req; onClick?: () => void; end?: 
                   {r.common.logo && (
                     <Image src={logoSrc(r.common.logo)} alt="" width={14} height={14} style={{ width: 14, height: "auto" }} unoptimized />
                   )}
-                  {r.common.icon && <Icon name={r.common.icon} size={14} style={{ color: "var(--sd-icon-2)" }} />}
+                  {r.common.icon && <Icon name={r.common.icon} size={14} color="tone" />}
                   <span>{r.common.text}</span>
                 </span>
               )}
@@ -274,7 +274,7 @@ function RequestCard({ r, onClick, end }: { r: Req; onClick?: () => void; end?: 
         </div>
         {end ?? (
           <span style={{ display: "flex", alignItems: "center", gap: 4, flex: "0 0 auto", whiteSpace: "nowrap" }}>
-            <Icon name="clock" size={13} style={{ color: "var(--sd-icon-2)" }} />
+            <Icon name="clock" size={13} color="tone" />
             <span className="t-label-sm muted">{r.when}</span>
           </span>
         )}
@@ -371,7 +371,7 @@ export function ReferralRequest({ id }: { id: string }) {
                     background: "var(--sd-n100)", display: "grid", placeItems: "center",
                   }}
                 >
-                  <Icon name="briefcase.fill" size={20} style={{ color: "var(--sd-icon-accent)" }} />
+                  <Icon name="briefcase.fill" size={20} color="tone" />
                 </span>
                 <span style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", minWidth: 0 }}>
                   <span className="t-h-sm">{r.thin.role}</span>
@@ -384,7 +384,7 @@ export function ReferralRequest({ id }: { id: string }) {
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <span className="t-label" style={{ flex: 1 }}>{r.thin.resume}</span>
                 <button className="sd-hit44" aria-label="Open resume" style={{ display: "flex" }} onClick={() => nav.push("resume", { file: r.thin?.resume })}>
-                  <Icon name="arrow.up.right.square" size={20} style={{ color: "var(--sd-icon-accent)" }} />
+                  <Icon name="arrow.up.right.square" size={20} color="tone" />
                 </button>
               </div>
             </Section>
@@ -417,7 +417,7 @@ export function ReferralRequest({ id }: { id: string }) {
                 {r.common.logo && (
                   <Image src={logoSrc(r.common.logo)} alt="" width={16} height={16} style={{ width: 16, height: 16 }} unoptimized />
                 )}
-                {r.common.icon && <Icon name={r.common.icon} size={16} style={{ color: "var(--sd-icon-2)" }} />}
+                {r.common.icon && <Icon name={r.common.icon} size={16} color="tone" />}
                 <span className="t-label muted">{r.common.text}</span>
               </div>
               {/* Figma keeps an empty 16 "Icon space" in front of this line so it lines up
@@ -494,7 +494,7 @@ export function ReferralRequest({ id }: { id: string }) {
                 Abhinav_Saxena_Resume.pdf
               </span>
               <button className="sd-hit44" aria-label="Open resume" style={{ display: "flex" }} onClick={() => nav.push("resume", { file: "Abhinav_Saxena_Resume.pdf" })}>
-                <Icon name="arrow.up.right.square" size={20} style={{ color: "var(--sd-icon-accent)" }} />
+                <Icon name="arrow.up.right.square" size={20} color="tone" />
               </button>
             </div>
             {/* Figma's LinkBlock is three 20 marks, 8 apart. */}
@@ -546,7 +546,7 @@ function PersonHead({ name, role, tag }: { name: string; role: string; tag: Reac
 function Fact({ icon, children }: { icon: Parameters<typeof Icon>[0]["name"]; children: React.ReactNode }) {
   return (
     <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
-      <Icon name={icon} size={18} style={{ color: "var(--sd-icon-2)" }} />
+      <Icon name={icon} size={18} color="tone" />
       {/* Figma's Quick Facts labels are Medium 14/20 in --sd-text-2. */}
       <span className="t-label muted">{children}</span>
     </span>
@@ -644,7 +644,7 @@ function AfterRefer({ id }: { id: string }) {
                     <Icon
                       name={copied.includes(f.name) ? "checkmark" : f.download ? "square.and.arrow.down" : "doc.on.doc.fill"}
                       size={18}
-                      style={{ color: copied.includes(f.name) ? "var(--sd-text-success)" : "var(--sd-icon-accent)" }}
+                      style={{ color: copied.includes(f.name) ? "var(--sd-text-success)" : "var(--sd-tone-blue)" }}
                     />
                   </button>
                 </div>
@@ -767,7 +767,7 @@ export function YourReferrals() {
           }}
         >
           <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
-            <Icon name="clock" size={13} style={{ color: "var(--sd-icon-2)" }} />
+            <Icon name="clock" size={13} color="tone" />
             <span className="t-label-sm muted">{r.when}</span>
           </span>
           {withUpdate && (
@@ -829,7 +829,7 @@ export function YourReferrals() {
                   <span className="t-h-xs">Himani thanked you</span>
                   <span className="t-label-sm muted">“You made the referral easy. I start next month!”</span>
                 </span>
-                <Icon name="quote.bubble.fill" size={18} style={{ color: "var(--sd-icon-accent)" }} />
+                <Icon name="quote.bubble.fill" size={18} color="tone" />
               </div>
             </Card>
           </div>

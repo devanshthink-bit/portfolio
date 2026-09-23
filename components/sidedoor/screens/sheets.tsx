@@ -184,7 +184,7 @@ export function ShareLinkSheet({ leaving }: { leaving?: boolean }) {
 
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <Icon name="quote.bubble.fill" size={16} style={{ color: "var(--sd-icon-accent)" }} />
+            <Icon name="quote.bubble.fill" size={16} color="tone" />
             <span className="t-h-xs" style={{ flex: 1 }}>
               Message that goes with it
             </span>
@@ -204,7 +204,7 @@ export function ShareLinkSheet({ leaving }: { leaving?: boolean }) {
 
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <Icon name="arrow.up.right.square" size={16} style={{ color: "var(--sd-icon-accent)" }} />
+            <Icon name="arrow.up.right.square" size={16} color="tone" />
             <span className="t-h-xs">Quick share</span>
           </div>
           {/* Figma: five 60x60 white tiles (r8, 8 padding, no shadow) spread edge to edge, the

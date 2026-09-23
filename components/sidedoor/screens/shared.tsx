@@ -781,7 +781,7 @@ export function LinkPage() {
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {/* Figma: the tag sits right after the label, Edit at the far right */}
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <Icon name="person.fill" size={16} style={{ color: "var(--sd-icon-accent)" }} />
+              <Icon name="person.fill" size={16} color="tone" />
               <span className="t-h-xs" style={{ width: 130 }}>Your details</span>
               <Tag>Filled from your resume</Tag>
               <span style={{ marginLeft: "auto" }}>{ed.button}</span>
