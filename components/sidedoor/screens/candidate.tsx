@@ -96,10 +96,10 @@ export function Jobs() {
   }, [force]);
   const empty = force === "jobs.empty";
   const failed = force === "jobs.error" && phase === "ok";
-  return (
-    <Screen largeTitle="Jobs" right={<BellButton unread={unread} />}>
-      <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
-        {skippedResume && (
+  const showList = phase !== "loading" && !failed && !empty;
+  const [sort, setSort] = useState<Sort>("Newest first");
+  const jobs = sort === "Newest first" ? JOBS : [...JOBS].sort((x, y) => skillsOf(y) - skillsOf(x));
+  const prompt = skippedResume ? (
           // Figma's "Add Resume Prompt": a white r12 card padded 12/16 with the two lines on the
           // left and the link at the right — not a buffer note tucked under the section label.
           <div
@@ -118,7 +118,35 @@ export function Jobs() {
             </span>
             <TextButton onClick={() => nav.openSheet("addResume")}>Add resume</TextButton>
           </div>
-        )}
+        
+  ) : null;
+  // Figma drops the section label and the sort row while loading, when empty and on the error
+  const sortRow = (
+    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+      <Icon name="briefcase.fill" size={16} style={{ color: "var(--sd-icon-2)" }} />
+      <span className="t-h-xs" style={{ flex: 1 }}>
+        Jobs with someone who refers
+      </span>
+      <SortMenu value={sort} onChange={setSort} />
+    </div>
+  );
+  return (
+    <Screen
+      largeTitle="Jobs"
+      right={<BellButton unread={unread} />}
+      // the title, the resume prompt and the sort row stay put; only the jobs scroll (Devansh, 23 Sep)
+      pinned={
+        showList ? (
+          <div style={{ display: "flex", flexDirection: "column", gap: 24, marginBottom: -8 }}>
+            {prompt}
+            {sortRow}
+          </div>
+        ) : (
+          prompt
+        )
+      }
+    >
+      <div style={{ paddingTop: prompt ? 0 : 8, display: "flex", flexDirection: "column", gap: 24 }}>
         {/* Figma drops the section label and the sort row while loading, when empty and on the
             error — the state is the only thing on the page */}
         {phase === "loading" ? (
@@ -146,21 +174,9 @@ export function Jobs() {
           </div>
         ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <Icon name="briefcase.fill" size={16} style={{ color: "var(--sd-icon-2)" }} />
-          <span className="t-h-xs" style={{ flex: 1 }}>
-            Jobs with someone who refers
-          </span>
-          <span className="sd-hit44">
-            <button style={{ display: "flex", alignItems: "center", gap: 4, color: "var(--sd-link)" }}>
-              <span className="t-label">Newest first</span>
-              <Icon name="chevron.up.chevron.down" size={14} />
-            </button>
-          </span>
-        </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           {
-            JOBS.map((j) => (
+            jobs.map((j) => (
 
               <Card
                 key={j.id}
@@ -211,6 +227,48 @@ export function Jobs() {
   );
 }
 
+type Sort = "Newest first" | "Best match";
+const skillsOf = (j: (typeof JOBS)[number]) => Number(j.tag?.text.match(/^(\d+) of/)?.[1] ?? -1);
+
+/** The sort button opens an iOS pull-down menu under it; a tap outside closes it. */
+function SortMenu({ value, onChange }: { value: Sort; onChange: (v: Sort) => void }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <span className="sd-hit44" style={{ position: "relative" }}>
+      <button
+        style={{ display: "flex", alignItems: "center", gap: 4, color: "var(--sd-link)" }}
+        onClick={() => setOpen((o) => !o)}
+        aria-haspopup="menu"
+        aria-expanded={open}
+      >
+        <span className="t-label">{value}</span>
+        <Icon name="chevron.up.chevron.down" size={14} />
+      </button>
+      {open && (
+        <>
+          <span className="sd-menu-scrim" onClick={() => setOpen(false)} />
+          <span className="sd-menu" role="menu">
+            {(["Newest first", "Best match"] as Sort[]).map((o) => (
+              <button
+                key={o}
+                role="menuitemradio"
+                aria-checked={o === value}
+                onClick={() => {
+                  onChange(o);
+                  setOpen(false);
+                }}
+              >
+                <span className="t-body">{o}</span>
+                {o === value && <Icon name="checkmark.circle.fill" size={18} style={{ color: "var(--sd-link)" }} />}
+              </button>
+            ))}
+          </span>
+        </>
+      )}
+    </span>
+  );
+}
+
 export function BellButton({ unread }: { unread: number }) {
   const nav = useNav();
   return (
@@ -234,7 +292,24 @@ export function JobDetails() {
   const noResume = skippedResume || force === "job.skipped";
   const on = saved.includes("flipkart");
   return (
-    <Screen title="Job details" back>
+    <Screen
+      title="Job details"
+      back
+      // The ask stays on the bottom edge from the start (Devansh, 23 Sep), so it can be tapped
+      // without reading to the end; the job scrolls under it.
+      fixedActions
+      actions={
+        asked ? (
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {/* Figma: a plain 12/16 line above the button, and the button stays blue */}
+            <p className="t-label-sm muted">You asked Nithin today. One request per job, per referrer.</p>
+            <Button onClick={() => nav.push("trackDetails", { id: "flipkart" })}>View your request</Button>
+          </div>
+        ) : (
+          <Button onClick={() => nav.push("checkRequest")}>Ask Nithin for a referral</Button>
+        )
+      }
+    >
       <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
         {suggested && (
           // Figma's Headline block, shown when a referrer has put you forward: the line and its
@@ -391,23 +466,6 @@ export function JobDetails() {
             company focuses on building scalable, customer-first experiences through technology, design, and innovation.
           </Block>
 
-          {/* Figma's Actions frame is the last child of the card, not a block pinned to the
-              screen: 8 of top padding, then a 322-wide button inset 2 from the column. */}
-          <div style={{ paddingTop: 8, display: "flex", flexDirection: "column", gap: 12 }}>
-            {asked ? (
-              <>
-                {/* Figma: a plain 12/16 line above the button, and the button stays blue */}
-                <p className="t-label-sm muted">You asked Nithin today. One request per job, per referrer.</p>
-                <div style={{ padding: "0 2px" }}>
-                  <Button onClick={() => nav.push("trackDetails", { id: "flipkart" })}>View your request</Button>
-                </div>
-              </>
-            ) : (
-              <div style={{ padding: "0 2px" }}>
-                <Button onClick={() => nav.push("checkRequest")}>Ask Nithin for a referral</Button>
-              </div>
-            )}
-          </div>
         </div>
       </div>
     </Screen>
@@ -644,9 +702,13 @@ export function RequestList({ justSent }: { justSent?: boolean }) {
         : requests;
   const shown = all.filter((r) => filter === "All" || bucket(r.stage) === filter);
   return (
-    <Screen largeTitle="Your referral requests" right={<BellButton unread={unread} />}>
-      <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 16 }}>
-        <Segmented options={[...FILTERS]} value={filter} onChange={setFilter} />
+    <Screen
+      largeTitle="Your referral requests"
+      right={<BellButton unread={unread} />}
+      // the title and the filter stay put; only the list scrolls (Devansh, 23 Sep)
+      pinned={<Segmented options={[...FILTERS]} value={filter} onChange={setFilter} />}
+    >
+      <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
         {just && (
           <Note style="success" icon="info.circle.fill">
             Sent to Nithin · Interaction Designer, Flipkart

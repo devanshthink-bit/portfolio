@@ -226,8 +226,13 @@
 .sd-nav-trail { justify-self: end; display: flex; align-items: center; gap: 4px; }
 .sd-nav.has-border { border-bottom: 0.5px solid rgba(0, 0, 0, 0.18); }
 /* the bar gets its glass and hairline only once the content scrolls under it */
-.sd-nav-wrap { position: relative; flex: 0 0 auto; z-index: 25; transition: background 200ms linear; }
-.sd-nav-wrap.is-scrolled { background: rgba(242, 242, 247, 0.82); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); box-shadow: 0 0.5px 0 rgba(0, 0, 0, 0.16); }
+.sd-nav-wrap { position: relative; flex: 0 0 auto; z-index: 25; }
+/* The glass reaches 8 below the bar, so its buttons don't sit on the hairline. It is drawn
+   by ::before, so nothing under the bar moves. */
+.sd-nav-wrap::before { content: ""; position: absolute; left: 0; right: 0; top: 0; bottom: -8px; z-index: -1; pointer-events: none; opacity: 0;
+  background: rgba(242, 242, 247, 0.82); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
+  box-shadow: 0 0.5px 0 rgba(0, 0, 0, 0.16); transition: opacity 200ms linear; }
+.sd-nav-wrap.is-scrolled::before { opacity: 1; }
 .sd-nav-wrap.is-scrolled .sd-nav-title { opacity: 1; }
 .sd-nav-wrap.has-large .sd-nav-title { opacity: 0; transition: opacity 180ms linear; }
 
@@ -239,6 +244,12 @@
 
 /* large title (tab roots) */
 .sd-largetitle { padding: 0 16px 8px; font-weight: 600; font-size: 32px; line-height: 40px; color: var(--sd-text); }
+
+/* a large title and its filter or search that stay put; only the list under them scrolls */
+.sd-pinned { flex: 0 0 auto; position: relative; z-index: 20; padding-bottom: 16px; transition: box-shadow 200ms linear; }
+.sd-pinned > .sd-largetitle { padding-bottom: 8px; }
+.sd-pinned > .sd-pad { padding: 24px 16px 0; }
+.sd-pinned.is-scrolled { box-shadow: 0 0.5px 0 rgba(0, 0, 0, 0.16); }
 
 /* ── scrolling body ──────────────────────────────────────────────────────── */
 .sd-body {
@@ -263,6 +274,10 @@
    stacked and every tab screen ended on 220 of dead space. */
 .sd-body > div:last-child:empty { height: 40px; }
 .sd-screen.has-tabs .sd-body > div:last-child:empty { height: 112px; }
+/* an action block pinned to the bottom edge; the content scrolls under a fade into the page */
+.sd-actionblock.is-fixed { position: absolute; left: 0; right: 0; bottom: 0; z-index: 20; margin: 0; padding: 32px 16px 40px;
+  background: linear-gradient(to bottom, rgba(242, 242, 247, 0), var(--sd-page) 32px); }
+.sd-screen.has-tabs .sd-actionblock.is-fixed { padding-bottom: 104px; }
 
 /* ── liquid glass tab bar ────────────────────────────────────────────────── */
 .sd-tabbar {
@@ -296,9 +311,12 @@
   z-index: 1;
 }
 .sd-tab span { font-weight: 500; font-size: 12px; line-height: 16px; }
-.sd-tab.is-on { color: var(--sd-link); background: var(--sd-n100); }
+.sd-tab.is-on { color: var(--sd-link); }
+/* the pill behind the chosen tab or segment; useGlide in ui.tsx slides it */
+.sd-glide { position: absolute; z-index: 0; pointer-events: none; transform: translateX(calc(var(--i) * 100%)); transform-origin: center; }
+.sd-tabbar > .sd-glide { top: 4px; left: 4px; height: 54px; width: calc((100% - 8px) / var(--n)); border-radius: var(--sd-r-full); background: var(--sd-n100); }
 .sd-tab:active { transform: scale(0.92); }
-.sd-tab { transition: transform 140ms var(--sd-spring); }
+.sd-tab { transition: transform 140ms var(--sd-spring), color 200ms var(--sd-ease); }
 .sd-tab-badge {
   /* A 17x17 circle in #b91c1c with a 1px white ring drawn OUTSIDE it, sitting on the top-right
      corner of the tab icon the way iOS does it. Figma screen coords: the Messages icon is 24x24
@@ -531,12 +549,13 @@
 .sd-switch.is-on i { transform: translateX(20px); }
 
 /* segmented control */
-.sd-seg { display: flex; padding: 2px; background: var(--sd-fill-3); border-radius: var(--sd-r-md); height: 32px; }
-.sd-seg button { flex: 1 1 0; border-radius: var(--sd-r-md); font-weight: 500; font-size: 14px; line-height: 20px; color: var(--sd-text); transition: background 200ms var(--sd-ease); }
+.sd-seg { position: relative; display: flex; padding: 2px; background: var(--sd-fill-3); border-radius: var(--sd-r-md); height: 32px; }
+.sd-seg button { flex: 1 1 0; border-radius: var(--sd-r-md); font-weight: 500; font-size: 14px; line-height: 20px; color: var(--sd-text); }
 /* 28 and 20 tall, like Figma, with a 44pt target laid over them (see .sd-hit44) */
 .sd-seg button, .sd-tabs button { position: relative; }
 .sd-seg button::before, .sd-tabs button::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 44px); height: 44px; transform: translate(-50%, -50%); }
-.sd-seg button.is-on { background: var(--sd-n0); box-shadow: var(--sd-e1); }
+.sd-seg button { z-index: 1; }
+.sd-seg > .sd-glide { top: 2px; left: 2px; height: 28px; width: calc((100% - 4px) / var(--n)); border-radius: var(--sd-r-md); background: var(--sd-n0); box-shadow: var(--sd-e1); }
 
 /* underline tabs on lists */
 .sd-tabs { display: flex; gap: 20px; }
@@ -675,7 +694,7 @@
 
 /* ── wheel date picker ──────────────────────────────────────────────────── */
 .sd-wheels { display: flex; height: 180px; position: relative; }
-.sd-wheel { flex: 1 1 0; overflow-y: scroll; scrollbar-width: none; text-align: center; }
+.sd-wheel { position: relative; z-index: 1; flex: 1 1 0; overflow-y: scroll; scrollbar-width: none; text-align: center; }
 .sd-wheel::-webkit-scrollbar { display: none; }
 .sd-wheel > div:not(.sd-wheel-pad) { height: 36px; font-weight: 500; font-size: 14px; line-height: 36px; color: var(--sd-text-2); cursor: pointer; }
 .sd-wheel > div.is-on { color: var(--sd-text); }
@@ -690,3 +709,23 @@
    centred. */
 .sd-web-bar { height: 48px; flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between;
   gap: 12px; padding: 12px 16px; margin-bottom: 16px; }
+
+/* login: the three lines slide by on their own and the blue dot follows (Devansh, 23 Sep) */
+.sd-carousel { width: 100%; overflow: hidden; }
+.sd-carousel-track { display: flex; transition: transform 500ms var(--sd-ease); }
+.sd-carousel-track.is-snap { transition: none; }
+.sd-carousel-track > p { flex: 0 0 100%; text-align: center; }
+.sd-dots { position: relative; display: flex; gap: 8px; }
+.sd-dots > button { width: 10px; height: 10px; border-radius: 50%; background: var(--sd-n200); }
+.sd-dots-on { position: absolute; left: 0; top: 0; z-index: 1; width: 10px; height: 10px; border-radius: 50%; background: var(--sd-link); pointer-events: none; transition: transform 500ms var(--sd-ease); }
+@media (prefers-reduced-motion: reduce) { .sd-carousel-track, .sd-dots-on { transition: none; } }
+
+/* the sort pull-down: a white r12 card 8 under its button, rows 44 tall */
+.sd-menu-scrim { position: fixed; inset: 0; z-index: 40; }
+.sd-menu { position: absolute; right: 0; top: calc(100% + 8px); z-index: 41; width: 200px; display: flex; flex-direction: column;
+  background: var(--sd-n0); border-radius: var(--sd-r-lg); box-shadow: var(--sd-glass-shadow); overflow: hidden;
+  transform-origin: top right; animation: sd-menu-in 220ms var(--sd-ease) both; }
+.sd-menu > button { height: 44px; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; gap: 8px; color: var(--sd-text); text-align: left; }
+.sd-menu > button + button { box-shadow: inset 0 0.5px 0 var(--sd-border-subtle); }
+.sd-menu > button:active { background: var(--sd-n100); }
+@keyframes sd-menu-in { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: none; } }

@@ -147,6 +147,9 @@
   .proto-stage button, .proto-stage button *,
   .proto-stage [role="button"], .proto-stage [role="button"] * { cursor: pointer !important; }
   .proto-stage input, .proto-stage textarea, .proto-stage [contenteditable="true"] { cursor: text !important; }
+  /* The 44pt tap areas are ::before/::after boxes. "*::after { cursor: none }" above hid the cursor
+     over them, so they take their own element's cursor instead. */
+  .proto-stage *::before, .proto-stage *::after { cursor: inherit !important; }
 
   /* Normal pointer inside the Ask Devansh panel. It has to live in this layer: "cursor: none
      !important" above is a layered important rule, and those beat any unlayered important override. */

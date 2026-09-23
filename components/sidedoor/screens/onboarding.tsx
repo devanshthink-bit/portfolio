@@ -34,8 +34,29 @@ function AppleMark() {
 export function Login() {
   const nav = useNav();
   const { force } = useStore();
-  const [page, setPage] = useState(0);
   const lines = ["Get referred by insiders", "Refer someone in minutes", "See where your request got to"];
+  // The lines turn over on their own, every 3 seconds, for ever. The track carries a copy of
+  // the first line at its end: sliding onto it looks like wrapping round, then it jumps back
+  // to the real first line with no animation. A tap on a dot restarts the clock.
+  const [slot, setSlot] = useState(0);
+  const [snap, setSnap] = useState(false);
+  const [tick, setTick] = useState(0);
+  const page = slot % lines.length;
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setSnap(false);
+      setSlot((k) => k + 1);
+    }, 3000);
+    return () => window.clearInterval(id);
+  }, [tick]);
+  useEffect(() => {
+    if (slot < lines.length) return;
+    const id = window.setTimeout(() => {
+      setSnap(true);
+      setSlot(0);
+    }, 520);
+    return () => window.clearTimeout(id);
+  }, [slot, lines.length]);
   return (
     <>
       <StatusBar />
@@ -50,20 +71,29 @@ export function Login() {
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center", width: "100%" }}>
             {/* Figma's PageCarousel label is the full 306 wide and centred, not a hugging line. */}
-            <p className="t-h-sm muted" style={{ width: "100%", textAlign: "center" }}>{lines[page]}</p>
-            <div style={{ display: "flex", gap: 8 }}>
+            <div className="sd-carousel" aria-live="polite">
+              <div className={`sd-carousel-track${snap ? " is-snap" : ""}`} style={{ transform: `translateX(${-slot * 100}%)` }}>
+                {[...lines, lines[0]].map((l, i) => (
+                  <p key={i} className="t-h-sm muted" aria-hidden={i !== slot}>
+                    {l}
+                  </p>
+                ))}
+              </div>
+            </div>
+            <div className="sd-dots">
+              {/* the blue dot is one piece that slides to the page it is on */}
+              <span className="sd-dots-on" style={{ transform: `translateX(${page * 18}px)` }} aria-hidden />
               {lines.map((l, i) => (
                 <button
                   key={l}
                   className="sd-hit44"
-                  onClick={() => setPage(i)}
-                  aria-label={`Page ${i + 1}`}
-                  style={{
-                    width: 10,
-                    height: 10,
-                    borderRadius: "50%",
-                    background: i === page ? "var(--sd-link)" : "var(--sd-n200)",
+                  onClick={() => {
+                    setSnap(false);
+                    setSlot(i);
+                    setTick((t) => t + 1);
                   }}
+                  aria-label={`Page ${i + 1}`}
+                  aria-current={i === page}
                 />
               ))}
             </div>

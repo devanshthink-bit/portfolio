@@ -63,17 +63,21 @@ export function Messages() {
   // profile, and Figma draws that one as a pushed screen: a small centred title and a back
   // chevron, with no bell.
   const asTab = !isReferrerRole(role);
+  // Figma drops the search while loading, when empty and on the error; it is kept while a
+  // search finds nothing, so it can be cleared.
+  const search = !loading && !failed && all.length > 0 && (
+    <div className="sd-search">
+      <Icon name="magnifyingglass" size={22} style={{ color: "var(--sd-placeholder)" }} />
+      <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search by name or job…" />
+    </div>
+  );
   return (
-    <Screen {...(asTab ? { largeTitle: "Messages", right: <BellButton unread={unread} /> } : { title: "Messages", back: true })}>
-      <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 16 }}>
-        {/* Figma drops the search while loading, when empty and on the error */}
-        {/* kept while a search finds nothing, so it can be cleared */}
-        {!loading && !failed && all.length > 0 && (
-          <div className="sd-search">
-            <Icon name="magnifyingglass" size={22} style={{ color: "var(--sd-placeholder)" }} />
-            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search by name or job…" />
-          </div>
-        )}
+    <Screen
+      {...(asTab ? { largeTitle: "Messages", right: <BellButton unread={unread} /> } : { title: "Messages", back: true })}
+      // the title and the search stay put; only the chats scroll (Devansh, 23 Sep)
+      pinned={search || null}
+    >
+      <div style={{ paddingTop: search ? 0 : 8, display: "flex", flexDirection: "column", gap: 16 }}>
         {loading ? (
           // Figma: one white group holding three skeleton rows, padded 16 left and right
           <div className="sd-list" style={{ padding: "0 16px" }}>

@@ -4,7 +4,7 @@
 // Names match the Figma components: AppHeader, SectionLabel, DetailField, MatchRow, PersonRow,
 // RequestCard, PostCard, MenuRow, Tag, Button, InputField, Switch, SegmentedControl, TabBar.
 import Image, { type StaticImageData } from "next/image";
-import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { Icon, type IconName } from "./Icon";
 import { useNav } from "./nav";
 import { useStore } from "./store";
@@ -103,8 +103,14 @@ export function Screen({
   scrollRef,
   onScroll,
   headerAccessory,
+  pinned,
+  fixedActions,
   ownOffline,
 }: {
+  /** Stays put under the large title while only the list below it scrolls: a filter, a search. */
+  pinned?: ReactNode;
+  /** The action block sits on the bottom edge from the start and the content scrolls under it. */
+  fixedActions?: boolean;
   /** the screen says it's offline at its own button, so the top note would repeat it */
   ownOffline?: boolean;
   title?: string;
@@ -126,16 +132,34 @@ export function Screen({
   const { offline } = useStore();
   const ownRef = useRef<HTMLDivElement>(null);
   const ref = scrollRef ?? ownRef;
+  // A fixed action block floats over the end of the content, so the content keeps that much
+  // room at its foot and its last line can still scroll clear of the button.
+  const fixedRef = useRef<HTMLDivElement>(null);
+  const [fixedH, setFixedH] = useState(0);
+  useLayoutEffect(() => {
+    const el = fixedRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => setFixedH(el.offsetHeight));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [fixedActions]);
   return (
     <>
       <StatusBar light={light} />
       {!noBar && (
-        <div className={`sd-nav-wrap${scrolled ? " is-scrolled" : ""}${largeTitle ? " has-large" : ""}`}>
+        <div className={`sd-nav-wrap${scrolled && pinned === undefined ? " is-scrolled" : ""}${largeTitle ? " has-large" : ""}`}>
           <div className="sd-nav">
             <span className="sd-nav-lead">{back && <BackButton onClick={onBack} />}</span>
             <span className="sd-nav-title">{title ?? largeTitle}</span>
             <span className="sd-nav-trail">{right}</span>
           </div>
+        </div>
+      )}
+      {pinned !== undefined && (
+        // the title and the controls under it don't move; a hairline shows once the list is under them
+        <div className={`sd-pinned${scrolled ? " is-scrolled" : ""}`}>
+          {largeTitle && <h1 className="sd-largetitle">{largeTitle}</h1>}
+          {pinned && <div className="sd-pad">{pinned}</div>}
         </div>
       )}
       <div
@@ -145,11 +169,11 @@ export function Screen({
         ref={ref}
         onScroll={(e) => {
           const y = (e.target as HTMLDivElement).scrollTop;
-          setScrolled(y > (largeTitle ? 32 : 4));
+          setScrolled(y > (largeTitle && pinned === undefined ? 32 : 4));
           onScroll?.(y);
         }}
       >
-        {largeTitle && <h1 className="sd-largetitle">{largeTitle}</h1>}
+        {largeTitle && pinned === undefined && <h1 className="sd-largetitle">{largeTitle}</h1>}
         {headerAccessory}
         {/* Figma "Offline": one amber note at the top of whatever the screen shows, which is
             what was last loaded. Actions that need the network say so themselves. */}
@@ -162,14 +186,19 @@ export function Screen({
         {/* The action block scrolls with the content. On a short screen `margin-top: auto`
             pushes it to the bottom; on a long one it follows the content and the page ends
             40 below it (DESIGN_LANGUAGE, "Spacing by role"). */}
-        {actions ? (
+        {actions && !fixedActions ? (
           <div className="sd-actionblock">{actions}</div>
         ) : (
           // height comes from CSS: 112 under a tab bar, 40 without one. An inline height here
           // used to stack on top of the body's own padding-bottom and left a dead half-screen.
-          <div />
+          <div style={fixedH ? { height: fixedH } : undefined} />
         )}
       </div>
+      {actions && fixedActions && (
+        <div className="sd-actionblock is-fixed" ref={fixedRef}>
+          {actions}
+        </div>
+      )}
     </>
   );
 }
@@ -211,6 +240,33 @@ export function FormScreen({
 /* ── tab bar ────────────────────────────────────────────────────────────── */
 export type TabKey = "home" | "requests" | "messages" | "profile";
 
+/**
+ * The selection pill that glides between options, as iOS 26 does in its tab bar and segmented
+ * controls: it slides to the new place and swells a little on the way, like a drop of glass,
+ * then settles. The resting place is plain CSS (--i), so it is right before any script runs.
+ */
+function useGlide(index: number) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const prev = useRef(index);
+  useLayoutEffect(() => {
+    const el = ref.current;
+    const from = prev.current;
+    prev.current = index;
+    if (!el || from === index || !el.animate) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const at = (i: number, sx = 1, sy = 1) => `translateX(${i * 100}%) scale(${sx}, ${sy})`;
+    el.animate(
+      [
+        { transform: at(from) },
+        { transform: at(from + (index - from) * 0.55, 1.16, 1.1), offset: 0.45 },
+        { transform: at(index) },
+      ],
+      { duration: 480, easing: "cubic-bezier(0.32, 0.72, 0, 1)" }
+    );
+  }, [index]);
+  return ref;
+}
+
 export function TabBar({
   tabs,
   active,
@@ -220,8 +276,11 @@ export function TabBar({
   active: string;
   onPick: (key: string) => void;
 }) {
+  const onAt = Math.max(0, tabs.findIndex((t) => t.key === active));
+  const glide = useGlide(onAt);
   return (
-    <nav className="sd-tabbar" aria-label="Tabs">
+    <nav className="sd-tabbar" aria-label="Tabs" style={{ "--n": tabs.length } as CSSProperties}>
+      <span className="sd-glide" ref={glide} style={{ "--i": onAt } as CSSProperties} aria-hidden />
       {tabs.map((t) => {
         const on = t.key === active;
         return (
@@ -701,8 +760,11 @@ export function Switch({ on, onChange }: { on: boolean; onChange: (v: boolean) =
 }
 
 export function Segmented({ options, value, onChange }: { options: string[]; value: string; onChange: (v: string) => void }) {
+  const onAt = Math.max(0, options.indexOf(value));
+  const glide = useGlide(onAt);
   return (
-    <div className="sd-seg">
+    <div className="sd-seg" style={{ "--n": options.length } as CSSProperties}>
+      <span className="sd-glide" ref={glide} style={{ "--i": onAt } as CSSProperties} aria-hidden />
       {options.map((o) => (
         <button key={o} className={o === value ? "is-on" : ""} onClick={() => onChange(o)}>
           {o}
@@ -786,7 +848,8 @@ export function Sheet({ title, children, onClose, leaving }: { title?: string; c
         ref={ref}
         className={`sd-sheet${leaving ? " is-out" : ""}${dy ? " is-dragging" : settling ? " is-settling" : ""}`}
         style={dy ? { transform: `translateY(${dy}px)` } : undefined}
-        onPointerDown={(e) => down(e.clientY)}
+        // a press on a button or in the date wheels is a tap or a spin, never a drag of the sheet
+        onPointerDown={(e) => !(e.target as Element).closest("button, input, .sd-wheels") && down(e.clientY)}
         onPointerMove={(e) => move(e.clientY)}
         onPointerUp={up}
         onPointerCancel={up}
