@@ -233,6 +233,8 @@ function Banner({ j }: { j: Job }) {
     <div
       style={{
         background: b.bg,
+        // a white banner needs the card edge, or it melts into the page
+        ...(b.bg === "#FFFFFF" && { outline: "var(--sd-edge)", outlineOffset: -1 }),
         borderRadius: 16,
         height: 175,
         padding: "24px 48px",
@@ -261,12 +263,24 @@ function Banner({ j }: { j: Job }) {
 
 export function JobDetails({ id = "flipkart" }: { id?: string }) {
   const nav = useNav();
-  const { saved, sentJobs, dispatch, live, force, skippedResume } = useStore();
+  const { saved, sentJobs, dispatch, live, force, skippedResume, requests, requestsLeft } = useStore();
   const j = jobById(id);
   const who = firstName(j.referrer.name);
   const suggested = force === "job.suggested";
   const asked =
-    force === "job.asked" || sentJobs.includes(j.id) || (j.id === "flipkart" && (live.stage !== "sent" || live.updated === "Just now"));
+    force === "job.asked" ||
+    sentJobs.includes(j.id) ||
+    (j.id === "flipkart" && live.stage !== "withdrawn" && (live.stage !== "sent" || live.updated === "Just now"));
+  // Riya (n74): a person referred in the last six months can't apply again, and nobody remembers
+  // when they can. Sidedoor knows, so it says so before a referrer spends effort on it.
+  const before = requests.find((r) => r.company === j.company && r.id !== requestIdFor(j.id));
+  const REFERRED: Stage[] = ["referred", "submitted", "interviews", "onhold", "selected", "notselected"];
+  const history = before && REFERRED.includes(before.stage)
+    ? `You were referred at ${j.company} this month. Most portals wait 6 months before another referral, so this may not go through before March.`
+    : before?.stage === "sent"
+      ? `You’re already waiting on ${firstName(before.referrer)} at ${j.company}. If both say yes, you may be referred twice.`
+      : null;
+  const noneLeft = requestsLeft === 0;
   const noResume = skippedResume || force === "job.skipped";
   const on = saved.includes(j.id);
   return (
@@ -288,10 +302,20 @@ export function JobDetails({ id = "flipkart" }: { id?: string }) {
             <Note style="buffer" icon="info.circle.fill">{who} is full this week. Try again on Monday.</Note>
             <Button disabled>Ask {who} for a referral</Button>
           </div>
+        ) : noneLeft ? (
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            <Note style="buffer" icon="info.circle.fill">You’ve used this week’s 5 requests. They come back on Monday.</Note>
+            <Button disabled>Ask {who} for a referral</Button>
+          </div>
         ) : (
-          <Button onClick={() => (noResume ? nav.openSheet("addResume", { job: j.id }) : nav.push("checkRequest", { id: j.id }))}>
-            Ask {who} for a referral
-          </Button>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {history && <Note style="buffer" icon="info.circle.fill">{history}</Note>}
+            {/* Idea 3: the limit is shown before the ask, so a request feels worth spending */}
+            <p className="t-label-sm muted">Uses 1 of your {requestsLeft} requests left this week.</p>
+            <Button onClick={() => (noResume ? nav.openSheet("addResume", { job: j.id }) : nav.push("checkRequest", { id: j.id }))}>
+              Ask {who} for a referral
+            </Button>
+          </div>
         )
       }
     >
@@ -693,24 +717,43 @@ export function RequestList({ justSent }: { justSent?: boolean | string }) {
 }
 
 /**
- * Figma's ReferralBar, used on this list and at the top of a chat: a 100-tall white card padded
- * 16, the company logo in a 68 square, the name at 16/24 with its seal, the stage tag 8 under it,
- * and the time at the top right.
+ * Figma's ReferralBar (V6 layout, 24 Sep): the logo in a 44 square, centred against a column of
+ * the company with its seal and the time, the job and who was asked, and the stage tag 8 under
+ * them. The tag lives in the text column, so it lines up with the name instead of the logo.
  */
-export function ReferralBar({ r, onClick }: { r: { logo: string; company: string; stage: Stage; updated: string }; onClick?: () => void }) {
+export function ReferralBar({
+  r,
+  onClick,
+}: {
+  r: { logo: string; company: string; stage: Stage; updated: string; job?: string; referrer?: string };
+  onClick?: () => void;
+}) {
   return (
-    <ListCard
-      onClick={onClick}
-      lead={
+    <Card onClick={onClick}>
+      <div className="sd-lc" style={{ alignItems: "center" }}>
         <span style={{ width: 44, height: 44, flex: "0 0 auto", display: "grid", placeItems: "center" }}>
           <Image src={logoSrc(r.logo)} alt={r.company} width={44} height={12} style={{ width: 44, height: "auto" }} />
         </span>
-      }
-      title={r.company}
-      titleMark={<Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)", flex: "0 0 auto" }} />}
-      when={r.updated}
-      chips={<Tag style={stageTag(r.stage)}>{STAGE_LABEL[r.stage]}</Tag>}
-    />
+        <div className="sd-lc-body">
+          <div className="sd-lc-head">
+            <span className="sd-lc-title">
+              <span>{r.company}</span>
+              <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)", flex: "0 0 auto" }} />
+            </span>
+            <span className="sd-lc-when">{r.updated}</span>
+          </div>
+          {r.job && (
+            <span className="sd-lc-line">
+              {r.job}
+              {r.referrer && ` · ${firstName(r.referrer)}`}
+            </span>
+          )}
+          <span style={{ display: "flex", marginTop: 8 }}>
+            <Tag style={stageTag(r.stage)}>{STAGE_LABEL[r.stage]}</Tag>
+          </span>
+        </div>
+      </div>
+    </Card>
   );
 }
 
@@ -733,7 +776,7 @@ function steps(stage: Stage): Step[] {
     ];
 
   // Figma Not Moving Forward (and Role Closed in States): sent happened, then it ended.
-  if (stage === "notmoving" || stage === "closed")
+  if (stage === "notmoving" || stage === "closed" || stage === "withdrawn")
     return [
       { title: "Sent", state: "done" },
       { title: STAGE_LABEL[stage], state: "failed" },
@@ -766,10 +809,10 @@ function steps(stage: Stage): Step[] {
 }
 
 /** The endings that stop the flow: Figma offers "Find more jobs" on each of them. */
-const ENDED: Stage[] = ["notselected", "notmoving", "closed"];
+const ENDED: Stage[] = ["notselected", "notmoving", "closed", "withdrawn"];
 
 const NOW: Partial<Record<Stage, { line: string; sub: string }>> = {
-  sent: { line: "Sent to {who} {when}. No answer yet.", sub: "No answer in 7 days? You can withdraw it and ask someone else." },
+  sent: { line: "Sent to {who} {when}. No answer yet.", sub: "Changed your mind? Withdraw it and you get the request back." },
   referred: { line: "{who} referred you {when}.", sub: "Next, {who} adds you on {co}’s portal." },
   submitted: { line: "Submitted on {co}’s portal {on}.", sub: "Interviews usually start within 2–3 weeks." },
   interviews: { line: "In interviews at {co}.", sub: "{who} will tell you what they hear." },
@@ -779,6 +822,7 @@ const NOW: Partial<Record<Stage, { line: string; sub: string }>> = {
   notmoving: { line: "{who} isn’t moving forward with this one.", sub: "Reason: {reason}." },
   noanswer: { line: "Sent to {who} 7 days ago. No answer.", sub: "Your request is back, so it doesn’t count against this week." },
   closed: { line: "{co} closed this job.", sub: "Reason: Role is closed. Requests for it close too." },
+  withdrawn: { line: "You withdrew this request {when}.", sub: "{who} won’t see it, and it doesn’t count against this week." },
 };
 
 export function TrackDetails({ id, stage, updated }: { id: string; stage?: Stage; updated?: string }) {
@@ -879,6 +923,11 @@ export function TrackDetails({ id, stage, updated }: { id: string; stage?: Stage
           // Figma: the three endings that stop the flow send you back to looking, in blue
           <Button onClick={() => nav.reset("tabs", { tab: "jobs" })}>
             Find more jobs
+          </Button>
+        ) : r.stage === "sent" ? (
+          // BRIEF, Other routes: a request with no answer can be withdrawn, and the request comes back
+          <Button type="secondary" onClick={() => nav.openSheet("withdraw", { id: r.id })}>
+            Withdraw request
           </Button>
         ) : canMessage ? (
           // Figma: On hold's Frame 329 is 76 tall and bottom-aligned, so 48 sits above the button

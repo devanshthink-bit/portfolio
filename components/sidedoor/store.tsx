@@ -6,7 +6,7 @@ import { createContext, useCallback, useContext, useMemo, useReducer, type React
 import { fieldError, type FieldKind } from "./rules";
 import { ABHINAV_PROFILE, firstName, jobById, type Profile } from "./data";
 
-export type Stage = "sent" | "referred" | "submitted" | "interviews" | "onhold" | "selected" | "notselected" | "notmoving" | "noanswer" | "closed";
+export type Stage = "sent" | "referred" | "submitted" | "interviews" | "onhold" | "selected" | "notselected" | "notmoving" | "noanswer" | "closed" | "withdrawn";
 
 export const STAGE_LABEL: Record<Stage, string> = {
   sent: "Sent",
@@ -20,6 +20,7 @@ export const STAGE_LABEL: Record<Stage, string> = {
   noanswer: "No answer",
   // Figma's Role closed screen labels both the tag and the timeline "Not moving forward"
   closed: "Not moving forward",
+  withdrawn: "Withdrawn",
 };
 
 /** Tag colour by meaning, not by mood (DESIGN_LANGUAGE: waiting is neither good nor bad). */
@@ -159,6 +160,7 @@ type Action =
   | { t: "detail"; k: keyof Details; v: string }
   | { t: "note"; v: string }
   | { t: "send"; job: string }
+  | { t: "withdraw"; id: string }
   | { t: "profile"; v: Partial<Profile> }
   | { t: "pausePost"; v: string; on: boolean }
   | { t: "postDraft"; v: string }
@@ -211,6 +213,17 @@ function reduce(s: State, a: Action): State {
           ? s.requests.map((r) => (r.id === id ? { ...r, stage: "sent", updated: "Just now" } : r))
           : [fresh, ...s.requests],
         toast: `Request sent to ${firstName(j.referrer.name)}`,
+      };
+    }
+    case "withdraw": {
+      // BRIEF, Other routes: "A withdrawn request gives the request back"
+      const r = s.requests.find((x) => x.id === a.id);
+      const job = r && (r.live ? "flipkart" : r.id.replace(/^ask-/, ""));
+      return {
+        ...s,
+        requestsLeft: Math.min(5, s.requestsLeft + 1),
+        sentJobs: s.sentJobs.filter((x) => x !== job),
+        requests: s.requests.map((x) => (x.id === a.id ? { ...x, stage: "withdrawn", updated: "Just now" } : x)),
       };
     }
     case "profile":

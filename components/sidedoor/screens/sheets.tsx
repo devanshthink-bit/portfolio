@@ -178,9 +178,12 @@ export function ShareLinkSheet({ leaving }: { leaving?: boolean }) {
         {/* Figma: the icon and label sit at the left padding (32), not centred; a 24 link glyph */}
         <Button
           onClick={() => {
+            // copies the message with the link in it, then gets out of the way: the job is done
+            navigator.clipboard?.writeText(msg).catch(() => {});
             setCopied(true);
-            dispatch({ t: "toast", v: "Link copied" });
-            window.setTimeout(() => dispatch({ t: "toast", v: null }), 1600);
+            dispatch({ t: "toast", v: "Link and message copied. Paste it in your chat." });
+            window.setTimeout(() => dispatch({ t: "toast", v: null }), 2200);
+            window.setTimeout(nav.closeSheet, 450);
           }}
           icon={<Icon name={copied ? "checkmark" : "link"} size={24} />}
           style={{ justifyContent: "flex-start" }}
@@ -217,7 +220,14 @@ export function ShareLinkSheet({ leaving }: { leaving?: boolean }) {
               name 8 below in 14/20. "More" holds three grey dots. */}
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             {[...apps, { name: "More", img: "", w: 0, h: 0 }].map((a) => (
-              <button key={a.name} onClick={nav.closeSheet} style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center" }}>
+              <button
+                key={a.name}
+                onClick={() => {
+                  navigator.clipboard?.writeText(msg).catch(() => {});
+                  dispatch({ t: "toast", v: a.name === "More" ? "Message copied. Share it anywhere." : `Opening ${a.name} with your message` });
+                  window.setTimeout(() => dispatch({ t: "toast", v: null }), 2200);
+                  nav.closeSheet();
+                }} style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center" }}>
                 <span style={{ width: 60, height: 60, borderRadius: 8, background: "var(--sd-n0)", outline: "var(--sd-edge)", outlineOffset: -1, display: "grid", placeItems: "center" }}>
                   {a.img ? (
                     <Image src={`/images/sidedoor/${a.img}.svg`} alt="" width={a.w} height={a.h} style={{ width: a.w, height: a.h }} unoptimized />
@@ -324,6 +334,60 @@ export function InviteAlert({ name, leaving }: { name: string; leaving?: boolean
       onConfirm={() => {
         dispatch({ t: "invite", v: name });
         nav.closeSheet();
+      }}
+      onCancel={nav.closeSheet}
+      leaving={leaving}
+    />
+  );
+}
+
+/* ── Switch role ────────────────────────────────────────────────────────── */
+// One account can ask and refer. Switching says what the other side is for before it moves you,
+// and in this test names who you become, so the swap from Abhinav to Nithin isn't a surprise.
+export function SwitchRoleAlert({ leaving }: { leaving?: boolean }) {
+  const nav = useNav();
+  const { role, dispatch } = useStore();
+  const toReferrer = role !== "referrer";
+  return (
+    <Alert
+      title={toReferrer ? "Switch to referring?" : "Switch to asking?"}
+      message={
+        toReferrer
+          ? "You’ll see referral requests for jobs at your company, and refer from there. In this test you refer as Nithin Agarwal at Flipkart, so you can watch your own request arrive."
+          : "You’ll see jobs you can ask for, and where each of your requests stands. In this test you ask as Abhinav Saxena."
+      }
+      confirm="Switch"
+      onConfirm={() => {
+        dispatch({ t: "role", v: toReferrer ? "referrer" : "candidate" });
+        nav.closeSheet();
+        nav.reset("tabs");
+        dispatch({ t: "toast", v: toReferrer ? "You’re referring now" : "You’re asking now" });
+        window.setTimeout(() => dispatch({ t: "toast", v: null }), 2200);
+      }}
+      onCancel={nav.closeSheet}
+      leaving={leaving}
+    />
+  );
+}
+
+/* ── Withdraw ───────────────────────────────────────────────────────────── */
+// Withdrawing gives the request back (BRIEF, Other routes), so asking someone who never answers
+// doesn't cost the candidate a week
+export function WithdrawAlert({ id, leaving }: { id: string; leaving?: boolean }) {
+  const nav = useNav();
+  const { requests, requestsLeft, dispatch } = useStore();
+  const r = requests.find((x) => x.id === id);
+  const who = r ? r.referrer.split(" ")[0] : "They";
+  return (
+    <Alert
+      title="Withdraw this request?"
+      message={`${who} won’t see it any more. You get the request back, so you can ask someone else this week.`}
+      confirm="Withdraw"
+      onConfirm={() => {
+        dispatch({ t: "withdraw", id });
+        nav.closeSheet();
+        dispatch({ t: "toast", v: `Withdrawn. ${Math.min(5, requestsLeft + 1)} of 5 requests left this week.` });
+        window.setTimeout(() => dispatch({ t: "toast", v: null }), 2400);
       }}
       onCancel={nav.closeSheet}
       leaving={leaving}

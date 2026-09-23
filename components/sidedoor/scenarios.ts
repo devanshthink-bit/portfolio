@@ -86,6 +86,8 @@ export const SCENARIOS: Scenario[] = [
   { id: "track.onhold", label: "On hold", group: "The answer", role: "candidate", tab: "requests", push: [{ key: "trackDetails", props: { id: "meta", stage: "onhold", updated: "16 Sep" } }] },
   { id: "track.closed", label: "Role closed", group: "The answer", role: "candidate", tab: "requests", push: [{ key: "trackDetails", props: { id: "phonepe", stage: "closed" } }] },
   { id: "track.selected", label: "Selected", group: "The answer", role: "candidate", tab: "requests", push: [{ key: "trackDetails", props: { id: "swiggy" } }] },
+  { id: "track.withdrawn", label: "Withdrawn by you", group: "The answer", role: "candidate", tab: "requests", push: [{ key: "trackDetails", props: { id: "phonepe", stage: "withdrawn", updated: "Just now" } }] },
+  { id: "job.before", label: "Job · already referred at this company", group: "Rules and limits", role: "candidate", tab: "jobs", push: [{ key: "job", props: { id: "google" } }] },
 
   /* ── sheets ──────────────────────────────────────────────────────────── */
   {
@@ -117,6 +119,8 @@ export const SCENARIOS: Scenario[] = [
   { id: "sheet.share", label: "Share your link sheet", group: "Sheets", role: "referrer", tab: "requests", sheet: { key: "shareLink" } },
   { id: "sheet.dob", label: "Date of birth picker", group: "Sheets", role: "candidate", tab: "jobs", push: [{ key: "job", props: { id: "flipkart" } }, { key: "checkRequest" }], sheet: { key: "dob" } },
   { id: "sheet.logout", label: "Log out action sheet", group: "Sheets", role: "candidate", tab: "profile", sheet: { key: "logout" } },
+  { id: "sheet.withdraw", label: "Withdraw request alert", group: "Sheets", role: "candidate", tab: "requests", push: [{ key: "trackDetails", props: { id: "zepto" } }], sheet: { key: "withdraw", props: { id: "zepto" } } },
+  { id: "sheet.switch", label: "Switch role alert", group: "Sheets", role: "candidate", tab: "profile", sheet: { key: "switchRole" } },
   { id: "sheet.resume", label: "Add your resume sheet", group: "Sheets", role: "candidate", force: "job.skipped", tab: "jobs", sheet: { key: "addResume" } },
 ];
 

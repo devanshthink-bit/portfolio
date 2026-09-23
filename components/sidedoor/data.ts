@@ -116,7 +116,8 @@ export const JOBS: Job[] = [
     title: "UX Designer, Google Pay",
     company: "Google",
     logo: "google",
-    banner: { bg: "#4285F4", src: "/images/sidedoor/google.svg", w: 190, h: 64 },
+    // the real four-colour wordmark on white, its own ground; turned white on blue it stopped reading as Google (Devansh, 24 Sep)
+    banner: { bg: "#FFFFFF", src: "/images/sidedoor/google.svg", w: 190, h: 64, keep: true },
     city: "Bengaluru, KA",
     cityShort: "Bengaluru",
     pay: "₹45–60 LPA",

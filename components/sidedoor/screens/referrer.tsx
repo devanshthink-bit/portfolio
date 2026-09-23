@@ -41,9 +41,11 @@ const REQUESTS = CANDIDATES;
 /* ── Referral requests ──────────────────────────────────────────────────── */
 export function ReferralRequests() {
   const nav = useNav();
-  const { handled, invited, unread, jobId, force, rules, dispatch } = useStore();
+  const { handled, invited, unread, jobId, force, rules, live, dispatch } = useStore();
   const [phase, setPhase] = useState<"loading" | "ok">("loading");
   const [open, setOpen] = useState(false);
+  // a request the candidate withdrew leaves the referrer's list
+  const REQUESTS = CANDIDATES.filter((c) => !(c.id === "abhinav" && live.stage === "withdrawn"));
   useEffect(() => {
     if (force === "reqs.loading") return;
     const t = window.setTimeout(() => setPhase("ok"), 900);

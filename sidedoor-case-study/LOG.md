@@ -3119,3 +3119,19 @@ DECISION · 2026-09-23 · Test hint no longer points at Edit/Done
 - On "Check your job post" a tap on a blank spot kept ringing Edit, then Done. The Job ID's "*" sits on its section title, not the field, so the hint missed the empty required box and fell back to Edit/Done.
 - Required boxes now carry their own marker, so the hint finds them wherever the "*" is. Edit and Done are optional and are never ringed.
 - Checked: blank tap rings the empty Job ID (also while editing), a tap fills 184223, the next blank tap rings Post job. Verified on localhost.
+
+DECISION · 2026-09-24 · Tester feedback fixed, and three brief ideas built
+- Copy link: it copied nothing and the sheet stayed open, so the hint kept pointing back at it. It now copies the message with the link, says so, and closes. Quick share tiles copy too.
+- Blue hint: it drew outside the element, so scrolling lists and rounded groups cut it off. It now draws inside the box. On a blue button it is a dark edge with a white line.
+- Request cards (Your referral requests, chat top): the tag sat under the logo, with a gap under the name. Now the logo is centred on the left, and the text column holds the company and time, "job · who you asked", and the tag. Code and UI Screens: new component "ReferralBar V6" (5717:830); the 22 V6 Logo cards swapped to it. The old ReferralBar still serves V2–V5 (112 instances), so those are untouched.
+- Google banner: the real four-colour wordmark on white, not a white wordmark on blue. Code only; Figma has no Google job screen.
+- Switch role: it swapped sides with no warning. It now asks first, says what the other side is for, and says who you become in this test (Abhinav ↔ Nithin).
+- Built from BRIEF.md, Other routes, and n74:
+  1. **Withdraw.** A Sent request has "Withdraw request". Withdrawing gives the request back and removes it from Nithin's list. New "Withdrawn" stage (grey).
+  2. **The limit, before the ask.** Job details says "Uses 1 of your N requests left this week". At 0, Ask is off: "They come back on Monday." (Idea 3; before this it only showed on Check your request.)
+  3. **Already referred at this company.** Riya: people can't reapply for 6 months and don't know when they can (n74). If you were referred there this month, the job says so and names March. If a request there is still waiting, it says you may be referred twice. A warning, not a block, because the rule differs by company.
+- UI Screens: Track Details Screen/1 has the Withdraw button and the new line. The Job Screen and Skipped Resume state have the requests-left line. 4 new States frames: Track/Withdraw Alert, Track/Withdrawn, Profile/Switch Role Alert, Job Screen/Referred Before.
+- Checked, already built, left as is: request limit on Send, "Heard from the company? Mark it", Not moving forward reasons, Seen it move?, Undo, No answer after 7 days, Lower match collapsed, referrer's rules, "full this week", Suggested for this job, link page, Himani's thank-you.
+- Not built, on purpose: V1 "Share Sidedoor" after thanks (growth, not a pain from the research). T6 3-day nudge (a notification, not a screen).
+- Photos: 19 people still show initials. Figma has no more portraits (all 17 are in use). Waiting on Devansh before downloading any.
+- Verified on localhost (preview needs a login).

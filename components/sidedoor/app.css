@@ -848,11 +848,18 @@
 .sd .sd-tag-add { color: var(--sd-link); gap: 4px; }
 
 /* ── usability-test hint: a tap on nothing rings what to tap next ─────────── */
+/* drawn inside the element (inset), so a scrolling list or a rounded group can never clip it */
 .sd .sd-hint { animation: sd-hint 900ms ease-in-out 3; position: relative; z-index: 2; }
 @keyframes sd-hint {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
-  50% { box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.95), 0 0 0 8px rgba(37, 99, 235, 0.18); }
+  0%, 100% { box-shadow: inset 0 0 0 0 rgba(37, 99, 235, 0); }
+  50% { box-shadow: inset 0 0 0 2.5px rgba(37, 99, 235, 0.95), inset 0 0 0 7px rgba(37, 99, 235, 0.14); }
+}
+/* on a blue button a blue ring would vanish: a white line inside the dark blue edge */
+.sd .sd-btn.primary.sd-hint { animation-name: sd-hint-on-blue; }
+@keyframes sd-hint-on-blue {
+  0%, 100% { box-shadow: inset 0 0 0 0 rgba(255, 255, 255, 0); }
+  50% { box-shadow: inset 0 0 0 2.5px #1e3a8a, inset 0 0 0 5px rgba(255, 255, 255, 0.95); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .sd .sd-hint { animation: none; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.95); }
+  .sd .sd-hint { animation: none; box-shadow: inset 0 0 0 2.5px rgba(37, 99, 235, 0.95); }
 }

@@ -25,7 +25,7 @@ import {
   SavedJobs,
   Settings,
 } from "./screens/shared";
-import { AddResumeSheet, DobSheet, InviteAlert, LogoutSheet, NotMovingSheet, SeenItMoveSheet, ShareLinkSheet } from "./screens/sheets";
+import { AddResumeSheet, DobSheet, InviteAlert, LogoutSheet, NotMovingSheet, SeenItMoveSheet, ShareLinkSheet, SwitchRoleAlert, WithdrawAlert } from "./screens/sheets";
 import { SCENARIOS } from "./scenarios";
 
 /**
@@ -139,6 +139,8 @@ const SHEETS: Record<string, (p: any) => ReactNode> = {
   addResume: (p) => <AddResumeSheet {...p} />,
   logout: () => <LogoutSheet />,
   invite: (p) => <InviteAlert {...p} />,
+  switchRole: (p) => <SwitchRoleAlert {...p} />,
+  withdraw: (p) => <WithdrawAlert {...p} />,
 };
 /* eslint-enable @typescript-eslint/no-explicit-any */
 

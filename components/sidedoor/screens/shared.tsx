@@ -401,7 +401,7 @@ export function Notifications() {
 /* ── Profile ────────────────────────────────────────────────────────────── */
 export function Profile() {
   const nav = useNav();
-  const { role, unread, profile, dispatch } = useStore();
+  const { role, unread, profile } = useStore();
   const isReferrer = role === "referrer";
   const me = profile.jobs[0];
   return (
@@ -440,11 +440,8 @@ export function Profile() {
           <Row
             icon="arrow.left.arrow.right.square.fill"
             chevron
-            onClick={() => {
-              // switching sides is how you see both happy paths meet
-              dispatch({ t: "role", v: isReferrer ? "candidate" : "referrer" });
-              nav.reset("tabs");
-            }}
+            // switching sides is how you see both happy paths meet; it asks first and says what changes
+            onClick={() => nav.openSheet("switchRole")}
           >
             Switch role
           </Row>
