@@ -31,7 +31,7 @@ import {
   showYears,
 } from "../ui";
 import { BellButton } from "./candidate";
-import { CompanyRow, Projects, RuleRow } from "./onboarding";
+import { CompanyRow, FileBox, JdDetails, Projects, RuleRow } from "./onboarding";
 
 type Req = {
   id: string;
@@ -225,7 +225,8 @@ export function ReferralRequests() {
                       invited.includes(r.name) ? (
                         <Tag>Invited</Tag>
                       ) : (
-                        <TextButton onClick={() => dispatch({ t: "invite", v: r.name })}>Invite</TextButton>
+                        // a row action, so the same small outlined button as Update (Devansh, 23 Sep)
+                        <SmallButton onClick={() => dispatch({ t: "invite", v: r.name })}>Invite</SmallButton>
                       )
                     }
                   />
@@ -377,7 +378,7 @@ export function ReferralRequest({ id }: { id: string }) {
             <Section label="Resume" icon="paperclip">
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <span className="t-label" style={{ flex: 1 }}>{r.thin.resume}</span>
-                <button className="sd-hit44" aria-label="Open resume" style={{ display: "flex" }}>
+                <button className="sd-hit44" aria-label="Open resume" style={{ display: "flex" }} onClick={() => nav.push("resume", { file: r.thin?.resume })}>
                   <Icon name="arrow.up.right.square" size={20} style={{ color: "var(--sd-icon-2)" }} />
                 </button>
               </div>
@@ -487,7 +488,7 @@ export function ReferralRequest({ id }: { id: string }) {
               <span className="t-label" style={{ flex: 1 }}>
                 Abhinav_Saxena_Resume.pdf
               </span>
-              <button className="sd-hit44" aria-label="Open resume" style={{ display: "flex" }}>
+              <button className="sd-hit44" aria-label="Open resume" style={{ display: "flex" }} onClick={() => nav.push("resume", { file: "Abhinav_Saxena_Resume.pdf" })}>
                 <Icon name="arrow.up.right.square" size={20} style={{ color: "var(--sd-icon-2)" }} />
               </button>
             </div>
@@ -982,19 +983,7 @@ export function EditPost({ title }: { title?: string }) {
           />
         </Section>
 
-        <Section label="From the job description" icon="briefcase.fill" end={<TextButton>Edit</TextButton>}>
-          <Box>
-            <DetailField name="Company" value="Flipkart" />
-            <DetailField name="Job title" value={title ?? "Interaction Designer"} />
-            <DetailField name="Experience" value="3+ yrs" />
-            <DetailField name="Location" value="Bengaluru, KA · Remote or hybrid" />
-            <DetailField
-              name="Skills (7)"
-              value="UX research, Interaction design, Prototyping, AI-assisted design, Design system, Figma, A/B testing"
-            />
-            <DetailField name="Employment" value="Full time · joining within 30 days" />
-          </Box>
-        </Section>
+        <JdDetails title={title ?? "Interaction Designer"} />
 
         <Section label="Your rules" icon="gearshape.fill">
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
@@ -1022,16 +1011,7 @@ export function EditPost({ title }: { title?: string }) {
           multiline
         />
 
-        <Section label="Job description" icon="paperclip">
-          <Box>
-            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              <span className="t-label" style={{ flex: 1 }}>
-                Flipkart_IxDesigner_JD.docx
-              </span>
-              <TextButton>Replace</TextButton>
-            </div>
-          </Box>
-        </Section>
+        <FileBox label="Job description" name="Flipkart_IxDesigner_JD.docx" what="file" />
       </div>
     </Screen>
   );

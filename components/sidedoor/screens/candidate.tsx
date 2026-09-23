@@ -30,7 +30,7 @@ import {
   showDays,
   showYears,
 } from "../ui";
-import { CompanyRow, Project } from "./onboarding";
+import { CompanyRow, Project, ResumeDetails } from "./onboarding";
 
 /* ── Jobs ───────────────────────────────────────────────────────────────── */
 type Job = {
@@ -649,25 +649,23 @@ export function CheckRequest() {
         </Section>
         )}
 
-        <Section label="Your details" icon="person.fill" end={<TextButton>Edit</TextButton>}>
-          <Box>
-            <DetailField name="Full name" value="Abhinav Saxena" />
-            <DetailField name="Email" value="abhinav.saxena@email.com" />
-            <DetailField name="Phone" value="+91 98XXX XXX21" />
-            <DetailField name="Current city" value="Bengaluru" />
-            <DetailField name="Experience" value="3 yrs total · 3 yrs relevant" />
-            {/* Figma: once the portal answers are in, they sit here, before the resume */}
-            {complete && (
-              <>
-                <DetailField name="Notice period" value={showDays(d.notice)} />
-                <DetailField name="Career gaps" value={showYears(d.gaps)} />
-                <DetailField name="Date of birth" value={d.dob} />
-                <DetailField name="Preferred interview locations" value={d.locations} />
-              </>
-            )}
-            <DetailField name="Resume" value="Abhinav_Saxena_Resume.pdf" />
-          </Box>
-        </Section>
+        {/* Figma: once the portal answers are in, they sit here, before the resume */}
+        <ResumeDetails
+          label="Your details"
+          skills={false}
+          city="Bengaluru"
+          extra={[
+            ...(complete
+              ? [
+                  { name: "Notice period", value: showDays(d.notice), fixed: true },
+                  { name: "Career gaps", value: showYears(d.gaps), fixed: true },
+                  { name: "Date of birth", value: d.dob, fixed: true },
+                  { name: "Preferred interview locations", value: d.locations, fixed: true },
+                ]
+              : []),
+            { name: "Resume", value: "Abhinav_Saxena_Resume.pdf", fixed: true },
+          ]}
+        />
 
         <Section label="How you match" icon="lightbulb.fill" end={<Tag style="primary">4 of 7 skills · 3 yrs</Tag>}>
           <Box>

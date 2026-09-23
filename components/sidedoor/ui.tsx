@@ -8,7 +8,7 @@ import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type 
 import { Icon, type IconName } from "./Icon";
 import { useNav } from "./nav";
 import { useStore } from "./store";
-import { RULES, fieldError, type FieldKind } from "./rules";
+import { RULES, fieldError, showDays, showYears, type FieldKind } from "./rules";
 export { allValid, fieldError, showDays, showYears, type FieldKind } from "./rules";
 
 /* ── status bar ─────────────────────────────────────────────────────────── */
@@ -342,9 +342,9 @@ export function SmallButton({ children, onClick }: { children: ReactNode; onClic
   );
 }
 
-export function TextButton({ children, onClick }: { children: ReactNode; onClick?: () => void }) {
+export function TextButton({ children, onClick, disabled }: { children: ReactNode; onClick?: () => void; disabled?: boolean }) {
   return (
-    <button className="sd-textbtn" onClick={onClick}>
+    <button className="sd-textbtn" onClick={onClick} disabled={disabled}>
       {children}
     </button>
   );
@@ -489,6 +489,104 @@ export function DetailField({ name, value, copy }: { name: string; value: ReactN
       <Icon name="doc.on.doc.fill" size={18} style={{ color: "var(--sd-icon-2)", flex: "0 0 auto" }} />
     </div>
   );
+}
+
+/* ── edit in place ──────────────────────────────────────────────────────── */
+export type EditSpec = { name: string; value: string; kind?: FieldKind; required?: boolean; multiline?: boolean; placeholder?: string; fixed?: boolean };
+
+/** A phone number reads masked, as Figma draws it: +91 98XXX XXX21. */
+const mask = (spec: EditSpec, v: string) => {
+  if (spec.kind === "days") return showDays(v);
+  if (spec.kind === "years") return showYears(v);
+  if (spec.kind !== "phone") return v;
+  const d = v.replace(/\D/g, "").slice(-10);
+  return d.length === 10 ? `+91 ${d.slice(0, 2)}XXX XXX${d.slice(-2)}` : v;
+};
+
+/**
+ * The iOS way to change a block of details: "Edit" turns each line into a field in place and
+ * becomes "Done". Done stays off until every field passes its rule. `fixed` lines (the resume
+ * file) stay as they are.
+ */
+export function useEditable(specs: EditSpec[]) {
+  const [values, setValues] = useState(() => specs.map((f) => f.value));
+  const [editing, setEditing] = useState(false);
+  const ok = specs.every((f, i) => f.fixed || !fieldError(f.kind, values[i], f.required));
+  const button = (
+    <TextButton onClick={() => setEditing((e) => !e)} disabled={editing && !ok}>
+      {editing ? "Done" : "Edit"}
+    </TextButton>
+  );
+  const body = editing ? (
+    <Box>
+      <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+        {specs.map((f, i) =>
+          f.fixed ? (
+            <DetailField key={f.name} name={f.name} value={values[i]} />
+          ) : (
+            <Field
+              key={f.name}
+              label={f.name}
+              value={values[i]}
+              onChange={(v) => setValues((all) => all.map((x, j) => (j === i ? v : x)))}
+              kind={f.kind}
+              required={f.required}
+              multiline={f.multiline}
+              placeholder={f.placeholder}
+            />
+          )
+        )}
+      </div>
+    </Box>
+  ) : (
+    <Box>
+      {specs.map((f, i) => (
+        <DetailField key={f.name} name={f.name} value={mask(f, values[i])} />
+      ))}
+    </Box>
+  );
+  return { editing, button, body, values, ok };
+}
+
+/**
+ * "Replace" and photo "Edit": opens the system file picker and checks what comes back — the
+ * file type and a size limit — before it takes the new file's name.
+ */
+export function useFilePick({ name, accept, maxMB, what }: { name: string; accept: string; maxMB: number; what: string }) {
+  const input = useRef<HTMLInputElement>(null);
+  const [file, setFile] = useState(name);
+  const [url, setUrl] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const exts = accept.split(",").map((e) => e.trim().toLowerCase());
+  const pick = (f: File | undefined) => {
+    if (!f) return;
+    const ext = "." + (f.name.split(".").pop() ?? "").toLowerCase();
+    if (!exts.includes(ext)) return setError(`Use a ${exts.map((e) => e.slice(1).toUpperCase()).join(", ")} file.`);
+    if (f.size > maxMB * 1024 * 1024) return setError(`That ${what} is over ${maxMB} MB. Use a smaller one.`);
+    setError(null);
+    setFile(f.name);
+    if (f.type.startsWith("image/")) setUrl(URL.createObjectURL(f));
+  };
+  const picker = (
+    <input
+      ref={input}
+      type="file"
+      accept={accept}
+      hidden
+      onChange={(e) => {
+        pick(e.target.files?.[0]);
+        e.target.value = "";
+      }}
+    />
+  );
+  const open = () => input.current?.click();
+  const errorLine = error && (
+    <span className="sd-field-err" role="alert">
+      <Icon name="info.circle.fill" size={14} />
+      {error}
+    </span>
+  );
+  return { file, url, open, picker, errorLine };
 }
 
 /** Figma MatchRow: a 24px mark, 12px clear of a two-line block whose lines are 2px apart.

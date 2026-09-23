@@ -15,6 +15,9 @@ import {
   EditProfileReferrer,
   Help,
   LinkPage,
+  HelpArticle,
+  ContactSupport,
+  ResumePreview,
   Messages,
   Notifications,
   Profile,
@@ -119,6 +122,9 @@ const SCREENS: Record<string, (p: any) => ReactNode> = {
   settings: () => <Settings />,
   help: () => <Help />,
   linkPage: () => <LinkPage />,
+  helpArticle: (p) => <HelpArticle id={p.id} />,
+  contactSupport: () => <ContactSupport />,
+  resume: (p) => <ResumePreview file={p.file} />,
 };
 
 const SHEETS: Record<string, (p: any) => ReactNode> = {

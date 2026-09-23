@@ -24,6 +24,9 @@ import {
   allValid,
   showDays,
   showYears,
+  useEditable,
+  useFilePick,
+  type EditSpec,
 } from "../ui";
 
 /** Figma's own Apple vector, not a redraw. */
@@ -402,39 +405,9 @@ export function CheckProfile() {
             : "Filled from your resume. Check these before you send anything."}
         </p>
 
-        <Section label="From your resume" icon="person.fill" end={<TextButton>Edit</TextButton>}>
-          <Box>
-            <DetailField name="Full name" value="Abhinav Saxena" />
-            <DetailField name="Email" value="abhinav.saxena@email.com" />
-            <DetailField name="Phone" value="+91 98XXX XXX21" />
-            <DetailField name="Current city" value="Bengaluru, KA" />
-            <DetailField name="Experience" value="3 yrs total · 3 yrs relevant" />
-            <DetailField name="Skills" value="Product strategy, Systems thinking, User research, Interaction design, Figma" />
-          </Box>
-        </Section>
-
-        <Section label="Experience" icon="briefcase.fill" end={<TextButton>Edit</TextButton>}>
-          {reading ? <ReadingBox /> : (
-          <Box>
-            {/* Figma's ExperienceBlock is its own frame with a 16 gap, so the rows sit 16 apart
-                inside a box whose own gap is 12. A spacer div made it 12 + 16 + 12. */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-              <CompanyRow logo="blinkit" role="Product Designer" company="Blinkit" when="Sep 2023–Present" />
-              <CompanyRow logo="makemytrip" role="Associate Product Designer" company="MakeMyTrip" when="Jun 2022–Aug 2023" />
-            </div>
-          </Box>
-          )}
-        </Section>
-
-        <Section label="Projects" icon="folder.fill" end={<TextButton>Edit</TextButton>}>
-          {reading ? <ReadingBox /> : (
-          <Box>
-            {/* Same as Experience: ProjectBlock is a 16-gap frame, and the box's own 12 is what
-                separates it from the link below. */}
-            <Projects />
-          </Box>
-          )}
-        </Section>
+        <ResumeDetails />
+        <ExperienceBlock reading={reading} />
+        <ProjectsBlock reading={reading} />
 
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           <Field
@@ -448,18 +421,119 @@ export function CheckProfile() {
           <Field label="Portfolio (optional)" icon="link" value={portfolio} onChange={setPortfolio} kind="url" placeholder="Behance, Dribbble or your site" />
         </div>
 
-        <Section label="Resume" icon="paperclip">
-          <Box>
-            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              <span className="t-label" style={{ flex: 1 }}>
-                Abhinav_Saxena_Resume.pdf
-              </span>
-              <TextButton>Replace</TextButton>
-            </div>
-          </Box>
-        </Section>
+        <FileBox label="Resume" name="Abhinav_Saxena_Resume.pdf" what="resume" />
       </div>
     </Screen>
+  );
+}
+
+/* ── blocks that repeat across screens, each with its own Edit or Replace ── */
+const ABHINAV: EditSpec[] = [
+  { name: "Full name", value: "Abhinav Saxena", kind: "name", required: true },
+  { name: "Email", value: "abhinav.saxena@email.com", kind: "email", required: true },
+  { name: "Phone", value: "+91 98765 43221", kind: "phone", required: true },
+  { name: "Current city", value: "Bengaluru, KA", kind: "city", required: true },
+  { name: "Experience", value: "3 yrs total · 3 yrs relevant", kind: "text", required: true },
+];
+const SKILLS: EditSpec = {
+  name: "Skills",
+  value: "Product strategy, Systems thinking, User research, Interaction design, Figma",
+  kind: "text",
+  required: true,
+};
+
+/** "From your resume" / "Your details": the candidate's own lines, editable in place. */
+export function ResumeDetails({ label = "From your resume", skills = true, extra = [], city }: { label?: string; skills?: boolean; extra?: EditSpec[]; city?: string }) {
+  const mine = city ? ABHINAV.map((f) => (f.name === "Current city" ? { ...f, value: city } : f)) : ABHINAV;
+  const ed = useEditable([...mine, ...(skills ? [SKILLS] : []), ...extra]);
+  return (
+    <Section label={label} icon="person.fill" end={ed.button}>
+      {ed.body}
+    </Section>
+  );
+}
+
+/** Experience: the company rows; Edit turns each role and its dates into fields. */
+export function ExperienceBlock({ reading }: { reading?: boolean }) {
+  const ed = useEditable([
+    { name: "Role at Blinkit", value: "Product Designer", kind: "role", required: true },
+    { name: "Dates at Blinkit", value: "Sep 2023–Present", kind: "text", required: true },
+    { name: "Role at MakeMyTrip", value: "Associate Product Designer", kind: "role", required: true },
+    { name: "Dates at MakeMyTrip", value: "Jun 2022–Aug 2023", kind: "text", required: true },
+  ]);
+  const [r1, d1, r2, d2] = ed.values;
+  return (
+    <Section label="Experience" icon="briefcase.fill" end={!reading && ed.button}>
+      {reading ? (
+        <ReadingBox />
+      ) : ed.editing ? (
+        ed.body
+      ) : (
+        <Box>
+          {/* Figma's ExperienceBlock is its own frame with a 16 gap, so the rows sit 16 apart
+              inside a box whose own gap is 12. */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            <CompanyRow logo="blinkit" role={r1} company="Blinkit" when={d1} />
+            <CompanyRow logo="makemytrip" role={r2} company="MakeMyTrip" when={d2} />
+          </div>
+        </Box>
+      )}
+    </Section>
+  );
+}
+
+/** Projects: Edit turns each project's name into a field. */
+export function ProjectsBlock({ reading }: { reading?: boolean }) {
+  const ed = useEditable(PROJECTS.map((p, i) => ({ name: `Project ${i + 1}`, value: p.title, kind: "text" as const, required: true })));
+  return (
+    <Section label="Projects" icon="folder.fill" end={!reading && ed.button}>
+      {reading ? (
+        <ReadingBox />
+      ) : ed.editing ? (
+        ed.body
+      ) : (
+        <Box>
+          <Projects titles={ed.values} />
+        </Box>
+      )}
+    </Section>
+  );
+}
+
+/** A file line with Replace: the resume or the job description. */
+export function FileBox({ label, name, what }: { label: string; name: string; what: string }) {
+  const f = useFilePick({ name, accept: ".pdf,.doc,.docx", maxMB: 5, what });
+  return (
+    <Section label={label} icon="paperclip">
+      <Box>
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <span className="t-label sd-1line" style={{ flex: 1, minWidth: 0 }}>
+            {f.file}
+          </span>
+          <TextButton onClick={f.open}>Replace</TextButton>
+          {f.picker}
+        </div>
+        {f.errorLine}
+      </Box>
+    </Section>
+  );
+}
+
+/** "From the job description": what the referrer's JD said, editable in place. The company
+ *  comes from their verified work email, so it can't be changed here. */
+export function JdDetails({ title = "Interaction Designer" }: { title?: string }) {
+  const ed = useEditable([
+    { name: "Company", value: "Flipkart", fixed: true },
+    { name: "Job title", value: title, kind: "role", required: true },
+    { name: "Experience", value: "3+ yrs", kind: "text", required: true },
+    { name: "Location", value: "Bengaluru, KA · Remote or hybrid", kind: "text", required: true },
+    { name: "Skills (7)", value: "UX research, Interaction design, Prototyping, AI-assisted design, Design system, Figma, A/B testing", kind: "text", required: true, multiline: true },
+    { name: "Employment", value: "Full time · joining within 30 days", kind: "text", required: true },
+  ]);
+  return (
+    <Section label="From the job description" icon="briefcase.fill" end={ed.button}>
+      {ed.body}
+    </Section>
   );
 }
 
@@ -521,13 +595,13 @@ const PROJECTS = [
 ];
 
 /** The two projects, and the link under them that opens and closes a line about each. */
-export function Projects() {
+export function Projects({ titles }: { titles?: string[] }) {
   const [open, setOpen] = useState(false);
   return (
     <>
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
         {PROJECTS.map((p) => (
-          <Project key={p.title} title={p.title} skills={p.skills} detail={open ? p.detail : undefined} />
+          <Project key={p.title} title={titles?.[PROJECTS.indexOf(p)] ?? p.title} skills={p.skills} detail={open ? p.detail : undefined} />
         ))}
       </div>
       <TextButton onClick={() => setOpen((o) => !o)}>{open ? "Hide project details" : "Show project details"}</TextButton>
@@ -722,19 +796,7 @@ export function CheckPost() {
           />
         </Section>
 
-        <Section label="From the job description" icon="briefcase.fill" end={<TextButton>Edit</TextButton>}>
-          <Box>
-            <DetailField name="Company" value="Flipkart" />
-            <DetailField name="Job title" value="Interaction Designer" />
-            <DetailField name="Experience" value="3+ yrs" />
-            <DetailField name="Location" value="Bengaluru, KA · Remote or hybrid" />
-            <DetailField
-              name="Skills (7)"
-              value="UX research, Interaction design, Prototyping, AI-assisted design, Design system, Figma, A/B testing"
-            />
-            <DetailField name="Employment" value="Full time · joining within 30 days" />
-          </Box>
-        </Section>
+        <JdDetails />
 
         <Section label="Your rules" icon="gearshape.fill">
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
@@ -760,18 +822,10 @@ export function CheckPost() {
           onChange={(v) => dispatch({ t: "tips", v })}
           placeholder="e.g. Link a portfolio with end-to-end case studies. Shown on the job."
           multiline
+          kind="tips"
         />
 
-        <Section label="Job description" icon="paperclip">
-          <Box>
-            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              <span className="t-label" style={{ flex: 1 }}>
-                Flipkart_IxDesigner_JD.docx
-              </span>
-              <TextButton>Replace</TextButton>
-            </div>
-          </Box>
-        </Section>
+        <FileBox label="Job description" name="Flipkart_IxDesigner_JD.docx" what="file" />
       </div>
     </Screen>
   );

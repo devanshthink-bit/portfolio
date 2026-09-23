@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useNav } from "../nav";
 import { STAGE_LABEL, useDecide, useStore, type Stage } from "../store";
-import { ActionSheet, Avatar, Button, Card, Icon, Note, RadioList, RadioOption, Sheet, Tag, TextButton, WheelDate } from "../ui";
+import { ActionSheet, Avatar, Button, Card, Field, Icon, Note, RadioList, RadioOption, Sheet, Tag, TextButton, WheelDate } from "../ui";
 
 function SheetPerson({ name, role, tag }: { name: string; role: string; tag?: React.ReactNode }) {
   return (
@@ -153,6 +153,13 @@ export function ShareLinkSheet({ leaving }: { leaving?: boolean }) {
   const nav = useNav();
   const { dispatch } = useStore();
   const [copied, setCopied] = useState(false);
+  const LINK = "sidedoor.app/r/nithin-agarwal";
+  const [msg, setMsg] = useState(
+    `Happy to look at a referral for Interaction Designer. Send your details here, it has everything our portal needs: ${LINK}`
+  );
+  const [editing, setEditing] = useState(false);
+  // the message is what goes out with the link, so the link can't be edited out of it
+  const msgError = !msg.trim() ? "Required." : !msg.includes(LINK) ? "Keep your link in the message." : null;
   const apps = [
     { name: "WhatsApp", img: "whatsapp", w: 40, h: 40 },
     { name: "Gmail", img: "gmail", w: 34, h: 25 },
@@ -181,15 +188,18 @@ export function ShareLinkSheet({ leaving }: { leaving?: boolean }) {
             <span className="t-h-xs" style={{ flex: 1 }}>
               Message that goes with it
             </span>
-            <TextButton>Edit</TextButton>
+            <TextButton onClick={() => setEditing((e) => !e)} disabled={editing && !!msgError}>
+              {editing ? "Done" : "Edit"}
+            </TextButton>
           </div>
-          {/* Figma "Box": r8, padded 12/16, Regular 14/20 in the body colour */}
-          <div style={{ background: "var(--sd-n0)", borderRadius: 8, padding: "12px 16px" }}>
-            <p className="t-body">
-              Happy to look at a referral for Interaction Designer. Send your details here, it has everything our portal
-              needs: sidedoor.app/r/nithin-agarwal
-            </p>
-          </div>
+          {editing ? (
+            <Field value={msg} onChange={setMsg} multiline kind="tips" required error={msgError ?? undefined} />
+          ) : (
+            // Figma "Box": r8, padded 12/16, Regular 14/20 in the body colour
+            <div style={{ background: "var(--sd-n0)", borderRadius: 8, padding: "12px 16px" }}>
+              <p className="t-body">{msg}</p>
+            </div>
+          )}
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>

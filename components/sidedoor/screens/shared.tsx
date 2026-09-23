@@ -30,9 +30,11 @@ import {
   allValid,
   showDays,
   showYears,
+  useEditable,
+  useFilePick,
 } from "../ui";
 import { BellButton, ReferralBar } from "./candidate";
-import { CompanyRow, DocUpload, Projects, ReadingBox } from "./onboarding";
+import { DocUpload, ExperienceBlock, FileBox, ProjectsBlock, ReadingBox, ResumeDetails } from "./onboarding";
 
 /* ── Messages ───────────────────────────────────────────────────────────── */
 type Chat = { name: string; last: string; when: string; unread?: number };
@@ -470,31 +472,9 @@ export function EditDetails() {
       <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
         <p className="t-label muted">Every new referral request sends these.</p>
 
-        <Section label="From your resume" icon="person.fill" end={<TextButton>Edit</TextButton>}>
-          <Box>
-            <DetailField name="Full name" value="Abhinav Saxena" />
-            <DetailField name="Email" value="abhinav.saxena@email.com" />
-            <DetailField name="Phone" value="+91 98XXX XXX21" />
-            <DetailField name="Current city" value="Bengaluru, KA" />
-            <DetailField name="Experience" value="3 yrs total · 3 yrs relevant" />
-            <DetailField name="Skills" value="Product strategy, Systems thinking, User research, Interaction design, Figma" />
-          </Box>
-        </Section>
-
-        <Section label="Experience" icon="briefcase.fill" end={<TextButton>Edit</TextButton>}>
-          <Box>
-            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-              <CompanyRow logo="blinkit" role="Product Designer" company="Blinkit" when="Sep 2023–Present" />
-              <CompanyRow logo="makemytrip" role="Associate Product Designer" company="MakeMyTrip" when="Jun 2022–Aug 2023" />
-            </div>
-          </Box>
-        </Section>
-
-        <Section label="Projects" icon="folder.fill" end={<TextButton>Edit</TextButton>}>
-          <Box>
-            <Projects />
-          </Box>
-        </Section>
+        <ResumeDetails />
+        <ExperienceBlock />
+        <ProjectsBlock />
 
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           <Field
@@ -523,16 +503,7 @@ export function EditDetails() {
           <Field label="Notice period, in days" icon="hourglass" value={notice} onChange={setNotice} kind="days" required placeholder="e.g. 30" />
         </div>
 
-        <Section label="Resume" icon="paperclip">
-          <Box>
-            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              <span className="t-label" style={{ flex: 1 }}>
-                Abhinav_Saxena_Resume.pdf
-              </span>
-              <TextButton>Replace</TextButton>
-            </div>
-          </Box>
-        </Section>
+        <FileBox label="Resume" name="Abhinav_Saxena_Resume.pdf" what="resume" />
       </div>
     </Screen>
   );
@@ -543,6 +514,7 @@ export function EditProfileReferrer() {
   const [role, setRole] = useState("Design Manager");
   const [city, setCity] = useState("Bengaluru, KA");
   const [name, setName] = useState("Nithin Agarwal");
+  const photo = useFilePick({ name: "", accept: ".jpg,.jpeg,.png,.heic,.webp", maxMB: 5, what: "photo" });
   const ok = allValid([
     ["name", name, true],
     ["role", role, true],
@@ -563,8 +535,10 @@ export function EditProfileReferrer() {
       <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
         <p className="t-label muted">Candidates see your name, role and company.</p>
         <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center" }}>
-          <Avatar name="Nithin Agarwal" size={68} />
-          <TextButton>Edit</TextButton>
+          <Avatar name="Nithin Agarwal" size={68} src={photo.url ?? undefined} />
+          <TextButton onClick={photo.open}>Edit</TextButton>
+          {photo.picker}
+          {photo.errorLine}
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
           <Field label="Your name" icon="person.fill" value={name} onChange={setName} kind="name" required />
@@ -634,17 +608,18 @@ export function Settings() {
 }
 
 export function Help() {
+  const nav = useNav();
   return (
     <Screen title="Help" back>
       <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
         <ListGroup>
-          <Row icon="lightbulb.fill" chevron>
+          <Row icon="lightbulb.fill" chevron onClick={() => nav.push("helpArticle", { id: "how" })}>
             How referrals work here
           </Row>
-          <Row icon="lock.fill" chevron>
+          <Row icon="lock.fill" chevron onClick={() => nav.push("helpArticle", { id: "see" })}>
             What referrers can see
           </Row>
-          <Row icon="envelope.fill" chevron>
+          <Row icon="envelope.fill" chevron onClick={() => nav.push("contactSupport")}>
             Contact support
           </Row>
         </ListGroup>
@@ -663,6 +638,18 @@ export function LinkPage() {
   // Figma "Link Page/Reading": a phone on a slow connection sees the resume being read before
   // the details appear, and Send waits for them
   const [reading, setReading] = useState(force === "link.reading");
+  // Arpita's details as read from her resume; Edit lets her fix any line before sending
+  const ed = useEditable([
+    { name: "Full name", value: "Arpita Singh", kind: "name", required: true },
+    { name: "Email", value: "arpita.singh@email.com", kind: "email", required: true },
+    { name: "Phone", value: "+91 97654 32148", kind: "phone", required: true },
+    { name: "Current city", value: "Bengaluru", kind: "city", required: true },
+    { name: "Experience", value: "3 yrs total · 3 yrs relevant", kind: "text", required: true },
+    { name: "Notice period, in days", value: "60", kind: "days", required: true },
+    { name: "Career gaps, in years", value: "0", kind: "years", required: true },
+    { name: "Date of birth", value: "4 Jul 1998", fixed: true },
+    { name: "Preferred interview locations", value: "Bengaluru, Remote", kind: "cities", required: true },
+  ]);
   const upload = () => {
     setFile("Arpita_Singh_Resume.pdf");
     setReading(true);
@@ -796,23 +783,9 @@ export function LinkPage() {
               <Icon name="person.fill" size={16} style={{ color: "var(--sd-icon-2)" }} />
               <span className="t-h-xs" style={{ width: 130 }}>Your details</span>
               <Tag>Filled from your resume</Tag>
-              <span style={{ marginLeft: "auto" }}>
-                <TextButton>Edit</TextButton>
-              </span>
+              <span style={{ marginLeft: "auto" }}>{ed.button}</span>
             </div>
-            {reading ? <ReadingBox /> : (
-            <Box>
-              <DetailField name="Full name" value="Arpita Singh" />
-              <DetailField name="Email" value="arpita.singh@email.com" />
-              <DetailField name="Phone" value="+91 97XXX XXX48" />
-              <DetailField name="Current city" value="Bengaluru" />
-              <DetailField name="Experience" value="3 yrs total · 3 yrs relevant" />
-              <DetailField name="Notice period" value="60 days" />
-              <DetailField name="Career gaps" value="None" />
-              <DetailField name="Date of birth" value="4 Jul 1998" />
-              <DetailField name="Preferred interview locations" value="Bengaluru, Remote" />
-            </Box>
-            )}
+            {reading ? <ReadingBox /> : ed.body}
           </div>
           <Field
             label="A short note (optional)"
@@ -825,7 +798,7 @@ export function LinkPage() {
         </>
       )}
     </>,
-    <Button disabled={!file || reading} onClick={() => setSent(true)}>
+    <Button disabled={!file || reading || ed.editing} onClick={() => setSent(true)}>
       Send referral request
     </Button>
   );
@@ -854,3 +827,101 @@ function LogoBar() {
 }
 
 export { SkeletonCard };
+
+/* ── Help articles and support ──────────────────────────────────────────── */
+const ARTICLES: Record<string, { title: string; parts: { h: string; p: string }[] }> = {
+  how: {
+    title: "How referrals work here",
+    parts: [
+      { h: "You ask once", p: "Pick a job with someone who refers, check your details, and send. Your resume and the answers portals ask for go with it." },
+      { h: "They decide", p: "The referrer sees how you match and refers you, or says they aren’t moving forward. Either way, you hear back." },
+      { h: "You see it move", p: "Once you’re submitted on their portal, the referrer passes on each stage, so your request never goes quiet." },
+      { h: "Five a week", p: "You can send five requests a week. It keeps each one worth a referrer’s time." },
+    ],
+  },
+  see: {
+    title: "What referrers can see",
+    parts: [
+      { h: "What you send", p: "Your name, contact details, experience, projects, resume and the portal answers on your request." },
+      { h: "How you match", p: "Which of the job’s skills your resume shows, and your years of experience." },
+      { h: "What they can’t see", p: "Your other requests, who else you asked, or anything you haven’t sent them." },
+    ],
+  },
+};
+
+export function HelpArticle({ id }: { id: string }) {
+  const a = ARTICLES[id] ?? ARTICLES.how;
+  return (
+    <Screen title={a.title} back>
+      <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
+        {a.parts.map((x) => (
+          <div key={x.h} style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+            <span className="t-h-sm">{x.h}</span>
+            <p className="t-body muted">{x.p}</p>
+          </div>
+        ))}
+      </div>
+    </Screen>
+  );
+}
+
+/** Contact support: a topic, a message and a reply-to address, all checked before Send. */
+export function ContactSupport() {
+  const nav = useNav();
+  const { dispatch } = useStore();
+  const [email, setEmail] = useState("abhinav.saxena@email.com");
+  const [msg, setMsg] = useState("");
+  const ok = allValid([
+    ["email", email, true],
+    ["tips", msg, true],
+  ]);
+  return (
+    <Screen
+      title="Contact support"
+      back
+      actions={
+        <Button
+          disabled={!ok}
+          onClick={() => {
+            nav.pop();
+            dispatch({ t: "toast", v: "Sent. We reply within a day." });
+            window.setTimeout(() => dispatch({ t: "toast", v: null }), 2400);
+          }}
+        >
+          Send
+        </Button>
+      }
+    >
+      <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 20 }}>
+        <p className="t-label muted">We read every message and reply by email within a day.</p>
+        <Field label="Reply to" icon="envelope.fill" value={email} onChange={setEmail} kind="email" required />
+        <Field label="What’s happening" icon="quote.bubble.fill" value={msg} onChange={setMsg} kind="tips" required multiline placeholder="e.g. My request to Flipkart still says Sent" />
+      </div>
+    </Screen>
+  );
+}
+
+/** Opening a resume: a full-screen preview, the way iOS Quick Look shows a PDF. */
+export function ResumePreview({ file = "Abhinav_Saxena_Resume.pdf" }: { file?: string }) {
+  const who = file.replace(/_Resume\.pdf$/, "").replace(/_/g, " ");
+  return (
+    <Screen title={file} back>
+      <div style={{ paddingTop: 24 }}>
+        <div className="sd-paper">
+          <span className="t-h-md">{who}</span>
+          <span className="t-label-sm muted">Product Designer · Bengaluru, KA</span>
+          <hr />
+          <span className="t-h-xs">Experience</span>
+          <p className="t-label-sm">Product Designer, Blinkit · Sep 2023–Present</p>
+          <p className="t-label-sm muted">Merchant app: order intake for 4,000 dark stores.</p>
+          <p className="t-label-sm">Associate Product Designer, MakeMyTrip · Jun 2022–Aug 2023</p>
+          <p className="t-label-sm muted">Hotel checkout, five steps to three.</p>
+          <span className="t-h-xs">Skills</span>
+          <p className="t-label-sm muted">Product strategy, Systems thinking, User research, Interaction design, Figma</p>
+          <span className="t-h-xs">Education</span>
+          <p className="t-label-sm muted">B.Des, Interaction Design · NID Ahmedabad · 2022</p>
+        </div>
+      </div>
+    </Screen>
+  );
+}

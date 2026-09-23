@@ -417,6 +417,7 @@
 .sd-textbtn { color: var(--sd-link); font-weight: 500; font-size: 14px; line-height: 20px; display: inline-flex; align-items: center; justify-content: center; position: relative; }
 .sd-textbtn::after { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 44px); height: max(100%, 44px); transform: translate(-50%, -50%); }
 .sd-textbtn:active { opacity: 0.45; }
+.sd-textbtn:disabled { color: var(--sd-text-2); opacity: 0.6; }
 .sd-actions { display: flex; flex-direction: column; gap: 12px; }
 /* Figma wraps a trailing text button in an "Other Ways" frame with 4 of top padding, so it
    sits 16 below the button above it, not 12. */
@@ -731,3 +732,8 @@
 .sd-menu > button + button { box-shadow: inset 0 0.5px 0 var(--sd-border-subtle); }
 .sd-menu > button:active { background: var(--sd-n100); }
 @keyframes sd-menu-in { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: none; } }
+
+/* a resume opened full screen: a white page with a soft edge, as Quick Look shows a PDF */
+.sd-paper { background: #fff; border-radius: 4px; box-shadow: var(--sd-e2); padding: 32px 24px; display: flex; flex-direction: column; gap: 8px; min-height: 520px; }
+.sd-paper > hr { border: 0; border-top: 1px solid var(--sd-border-subtle); margin: 8px 0; }
+.sd-paper > .t-h-xs { margin-top: 8px; }
