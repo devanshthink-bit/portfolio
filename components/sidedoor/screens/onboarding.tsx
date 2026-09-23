@@ -105,7 +105,7 @@ export function Login() {
               ))}
             </div>
           </div>
-          <Image src="/images/sidedoor/splash-illustration.png" alt="" width={908} height={1024} style={{ width: 227, height: 256 }} priority />
+          <Image src="/images/sidedoor/login-illustration.png" alt="" width={1183} height={1330} style={{ width: 227, height: 256 }} priority />
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 12, width: "100%", alignItems: "center" }}>
           {/* Figma "Login/Cancelled": backing out of LinkedIn lands here with one plain line —
