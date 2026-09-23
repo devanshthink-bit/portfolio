@@ -479,8 +479,9 @@
   color: var(--sd-text-2);
 }
 .sd-tag.note.primary { color: var(--sd-text-info); }
-/* a note sits on the grey page, where #15803d is 4.49:1; #157a3b is 4.85:1 (Figma matches) */
-.sd-tag.note.success { color: #157a3b; }
+/* a note sits on the grey page, where #15803d is 4.49:1. Figma's color/text/successOnPage is
+   success/800 #166534, 6.39:1 */
+.sd-tag.note.success { color: #166534; }
 .sd-tag.note.buffer { color: var(--sd-text-warning); }
 .sd-tag.note.failure { color: var(--sd-text-error); }
 .sd-tag.note svg { flex: 0 0 auto; }

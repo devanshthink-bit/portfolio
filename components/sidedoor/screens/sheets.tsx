@@ -51,10 +51,15 @@ export function NotMovingSheet({ id, name, role, match, leaving }: { id: string;
             dispatch({ t: "handle", id, stage: "notmoving", reason: reason ?? undefined });
             decide(
               `Not moving forward. ${first} is told in 5 seconds.`,
-              () => dispatch({ t: "unhandle", id }),
+              () => {
+                dispatch({ t: "unhandle", id });
+                nav.push("referralRequest", { id });
+              },
               () => dispatch({ t: "tell", stage: "notmoving", reason: reason ?? undefined })
             );
+            // Figma: the sheet goes back to the list, where this request is no longer waiting
             nav.closeSheet();
+            nav.pop();
           }}
         >
           Not moving forward

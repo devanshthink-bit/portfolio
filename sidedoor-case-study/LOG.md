@@ -2790,8 +2790,18 @@ Majors:
   - Tap targets under 44 in the prototype, worst: 11 Copy icons at 18×18 on After refer.
 Minors: long names wrap in code but end in "…" in Figma; green note 4.49:1; off-scale paddings copied from Figma; Resend code does nothing in code; referrer empty messages/notifications; LinkedIn cancelled; link upload progress.
 Fixed since 19 Sep: tag contrast (AA colours), all long-text collisions.
-Action:    waiting on Devansh's yes for the five.
+Action:    fixed 23 Sep, all five and the minors (Devansh: "yes fix all"). See CHANGE below and ATTACK.md "Final attack fixes built".
 
 DECISION · 2026-09-23 · Rule: Figma and prototype change together · Source: Devansh ("if you fix something in figma make sure u also fix it in the prototype. make it a rule always")
 Decided:  Every V6 Figma fix also goes into the coded prototype in the same piece of work, and the other way round.
 Because:  The prototype was matched node by node; one-sided fixes make them drift.
+
+CHANGE · 2026-09-23 · molades-build · Final attack fixes, Figma and code together · Source: Devansh ("yes fix all")
+Built in both, per the new rule. Detail in ATTACK.md, "Final attack fixes built".
+  - Send once (ref guard). Undo that reaches the candidate. One undo toast for all four decisions that tell the candidate. 44pt targets. Offline.
+  - Minors: one-line names in code, successOnPage token (#166534), resend countdown, empty referrer messages and notifications, search no-match, LinkedIn cancelled, link page reading.
+  - Figma: 11 new V6 states in the States grid, 3 Undo copies wired on the prototype page (5 s timeout to the done screen), 2 new variables, hit areas on DetailField and link copy.
+  - Code follows Figma on Not moving forward: back to the list, not a done screen.
+Found while fixing: the wrapper-based 44pt overlays on "Update" and "Mark it" never clicked the button; the Messages search box vanished on no match.
+Not done, with reasons: Figma bookmark hit area (shared V2–V5 Job card), off-scale paddings (shared Card component), wiring non-Undo states on the Figma prototype page (a click-through can't trigger them).
+Checked on localhost, not the Vercel preview (needs a login): send 3 taps → 1 request; Refer/NMF/Submitted/Seen-it-move undo on both sides; tap probe; long names; offline; every new switcher state. next build passes.

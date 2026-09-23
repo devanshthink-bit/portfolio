@@ -34,7 +34,7 @@ export const SCENARIOS: Scenario[] = [
   { id: "requests.empty", label: "Your requests · empty", group: "Nothing yet", role: "candidate", force: "requests.empty", tab: "requests" },
   { id: "messages.empty", label: "Messages · empty", group: "Nothing yet", role: "candidate", force: "messages.empty", tab: "messages" },
   { id: "messages.search", label: "Messages · search finds nothing", group: "Nothing yet", role: "candidate", force: "messages.search", tab: "messages" },
-  { id: "ref.messages.empty", label: "Referrer messages · empty", group: "Nothing yet", role: "referrer", force: "messages.empty", tab: "requests", push: [{ key: "messages" }] },
+  { id: "ref.messages.empty", label: "Referrer messages · empty", group: "Nothing yet", role: "referrer", force: "messages.empty", tab: "profile", push: [{ key: "messages" }] },
   { id: "notifs.empty", label: "Notifications · empty", group: "Nothing yet", role: "candidate", force: "notifs.empty", tab: "jobs", push: [{ key: "notifications" }] },
   { id: "ref.notifs.empty", label: "Referrer notifications · empty", group: "Nothing yet", role: "referrer", force: "notifs.empty", tab: "requests", push: [{ key: "notifications" }] },
   { id: "reqs.empty", label: "Referral requests · none yet", group: "Nothing yet", role: "referrer", force: "reqs.empty", tab: "requests" },

@@ -688,7 +688,7 @@ function MarkedSubmitted({ id }: { id: string }) {
         >
           <Icon name="checkmark.circle.fill" size={40} style={{ color: "var(--sd-link)" }} />
           <h2 className="t-h-sm">Marked as submitted</h2>
-          <p className="t-label muted">{first} has been told. Once a week we’ll ask if you’ve seen it move.</p>
+          <p className="t-label muted">{first} will see it. Once a week we’ll ask if you’ve seen it move.</p>
         </div>
       </div>
     </Screen>
@@ -710,7 +710,9 @@ const REFERRALS: Referral[] = [
 
 export function YourReferrals() {
   const nav = useNav();
-  const { handled, unread, force } = useStore();
+  const { handled, unread, force, pending } = useStore();
+  // who was just moved on; Figma "Updated" shows its note once the 5 seconds to undo are over
+  const [lastMoved, setLastMoved] = useState<string | null>(null);
   // Figma "Updated": Aviral has just been moved on, so he leaves the waiting list
   const { force: f0 } = useStore();
   const [moved, setMoved] = useState<Record<string, Stage>>(
@@ -769,13 +771,18 @@ export function YourReferrals() {
                   name: r.name,
                   role: r.role,
                   since: r.days ? `Submitted ${r.days} days ago` : `Submitted ${r.when}`,
-                  onPick: (s: Stage) => setMoved((m) => ({ ...m, [r.name]: s })),
-                  onUndo: () =>
+                  onPick: (s: Stage) => {
+                    setMoved((m) => ({ ...m, [r.name]: s }));
+                    setLastMoved(r.name);
+                  },
+                  onUndo: () => {
+                    setLastMoved(null);
                     setMoved((m) => {
                       const rest = { ...m };
                       delete rest[r.name];
                       return rest;
-                    }),
+                    });
+                  },
                 })
               }
             >
@@ -824,8 +831,10 @@ export function YourReferrals() {
         )}
 
         {/* Figma "Updated": the green note sits between the record block and the waiting list */}
-        {force === "referrals.updated" && (
-          <Note style="success" icon="info.circle.fill">Updated. Aviral can see it.</Note>
+        {(force === "referrals.updated" || (lastMoved && !pending)) && (
+          <Note style="success" icon="info.circle.fill">
+            Updated. {(lastMoved ?? "Aviral Dixit").split(" ")[0]} can see it.
+          </Note>
         )}
         {waiting.length > 0 && (
           <Section label={`Waiting on an update (${waiting.length})`} icon="clock.fill">

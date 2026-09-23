@@ -74,7 +74,7 @@ export function Login() {
           {/* Figma "Login/Cancelled": backing out of LinkedIn lands here with one plain line —
               not an error, since they chose to leave */}
           {force === "login.cancelled" && (
-            <Note icon="info.circle.fill">LinkedIn sign-in was cancelled. Try again or pick another way.</Note>
+            <Note icon="info.circle.fill">LinkedIn sign-in was cancelled.</Note>
           )}
           {/* order and the 8 gap are decisions in LOG.md: LinkedIn, Google, Apple */}
           <div style={{ display: "flex", flexDirection: "column", gap: 8, width: "100%" }}>

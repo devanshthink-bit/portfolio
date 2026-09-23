@@ -333,3 +333,36 @@ Measured on all 57 prototype states by script.
 | Emphasis, alignment, rhythm | not re-run | Checked 19 Sep; no layout changes since besides the audit to Figma |
 
 **Couldn't check:** screen-reader output, focus order, reduced motion, text at 200%.
+
+## Final attack fixes built · 23 Sep
+
+Devansh: "yes fix all". Every fix below is in Figma (V6 on 🖼️ UI Screens, and 🔗 V6 Prototype where the screen exists there) **and** in the coded prototype.
+
+**The five:**
+1. **Send once.** Code: a ref guard, because fast taps land before React re-renders. Retest: 3 taps, requests left 2 → 1. Figma was already right (the Loading button).
+2. **Undo reaches the candidate.** Code: a decision changes the referrer's side at once, and the candidate's timeline only after 5 s. Undo cancels both. Retest: Refer → Undo leaves the candidate on "Sent". Waiting 5 s moves them to "Referred".
+3. **Undo on every decision that tells the candidate.** Refer, Not moving forward, Mark as submitted and each Seen-it-move stage now share one toast: "[What]. Abhinav is told in 5 seconds. Undo".
+   - The sheets say "Abhinav is told in 5 seconds. You can undo." (was "sees it straight away").
+   - The Marked as submitted card says "Abhinav will see it." (was "has been told", which was untrue during the 5 s).
+   - New Figma states: Marked As Submitted/Undo, Referral Requests/Not Moving Forward Undo, Your Referrals/Updated/Undo. Each is wired on the prototype page, and moves on to its done screen after 5 s.
+   - Code follows Figma: Not moving forward returns to the list, and the Updated note shows once the 5 s are over.
+4. **44pt tap targets.**
+   - Figma: a Hit area 44 on the DetailField copy icon (a V6-only component; 22 copy rows) and on the link Copy icon (3 screens, both pages).
+   - Code: 44pt overlays on copy/download, Open resume, Save job, text buttons, segmented and filter tabs, switches and page dots. The whole 52pt field box focuses its input.
+   - Caught while testing: the old overlays on "Update" and "Mark it" sat on a wrapper, so tapping the overlay clicked nothing. Moved onto the button.
+   - Probe retest: every control hit at ±21pt from its centre, except the login page dots. Those are 18 apart, so their areas overlap, as iOS page dots do.
+5. **Offline.** Code: the browser's own online/offline events. An amber note, "You’re offline. Showing what was saved.", sits at the top of each screen. Check your request says "You’re offline. Send when you’re back." and Send is off. Figma: Jobs Screen/Offline, Check Your Referral Request Screen/Offline.
+
+**The minors, also done:**
+- Long names and roles end in "…" on one line in code, as Figma already did. Retested with `Krishnamurthy Venkataraghavan Subramanian`.
+- Green note on the grey page: new token color/text/successOnPage (success/800 #166534, 6.39:1, was 4.49:1). Used only by notes that sit on the page, in both.
+- Resend code: code now counts down "Resend code in 0:28", like Figma's Wrong Code state.
+- Seen it move · couldn't update: tapping a stage there no longer says it worked (code).
+- New Figma states, with the same states in code: Messages Screen/No Matches, Referrer/Messages Screen/Empty, Candidate and Referrer Notifications Screen/Empty, SideDoor Login Screen/Cancelled ("LinkedIn sign-in was cancelled."), Link Page/Reading.
+- Caught in code: a search that matched nothing hid the search box, so it couldn't be cleared.
+
+**Left on purpose:**
+- **Save job bookmark in Figma.** It sits inside the Job card component that V2–V5 share, so adding a hit area would edit old versions (rule: never). The code has the 44pt area.
+- **Off-scale paddings (22, 14, 10).** These are Figma's own values. Card padding 22 is in the shared Card component, so changing it moves V2–V5 too. Button padding 14 still makes a 52pt button. No reader-facing effect.
+- **The new Undo toasts wrap to two lines** on the longer messages ("Marked as submitted. Abhinav is told in 5 seconds."). Kept, because the name and the 5 seconds are the point.
+- **New non-Undo states are not wired on the Figma prototype page.** A click-through can't go offline or type a search. They are in the States grid, and all of them are reachable in the coded prototype's switcher.
