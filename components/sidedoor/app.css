@@ -26,7 +26,7 @@
   --sd-n700: #636a75;
   --sd-n800: #3b3f46;
   --sd-n900: #1a1a1a;
-  --sd-success-50: #ecfdf5;
+  --sd-success-100: #dcfce7;     /* green tag fill: visible on the off-white page; #15803d on it is 4.6:1 */
   --sd-warning-100: #fef3c7;     /* pale amber behind waiting tags */
   --sd-error-50: #fef2f2;
 
@@ -478,7 +478,7 @@
 }
 .sd-tag.neutral { background: var(--sd-fill-3); color: var(--sd-text-2); }
 .sd-tag.primary { background: var(--sd-blue-50); color: var(--sd-text-info); }
-.sd-tag.success { background: var(--sd-success-50); color: var(--sd-text-success); }
+.sd-tag.success { background: var(--sd-success-100); color: var(--sd-text-success); }
 .sd-tag.buffer { background: var(--sd-warning-100); color: var(--sd-text-warning); }
 .sd-tag.buffer svg { color: var(--sd-icon-warning); }
 .sd-tag.failure { background: var(--sd-error-50); color: var(--sd-text-error); }
