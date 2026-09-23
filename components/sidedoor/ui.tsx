@@ -332,10 +332,13 @@ export function Button({
 }
 
 /** A small action inside a card row. 28pt tall, 44pt tap area (Apple's rule). */
-export function SmallButton({ children, onClick }: { children: ReactNode; onClick?: () => void }) {
+/** A small outlined row action. `done` keeps the same box but greys it and adds a check
+ *  (Invite → Invited), so the two states match in size and shape. */
+export function SmallButton({ children, onClick, done }: { children: ReactNode; onClick?: () => void; done?: boolean }) {
   return (
     <span className="sd-hit44">
-      <button className="sd-btn small" onClick={onClick}>
+      <button className={`sd-btn small${done ? " is-done" : ""}`} onClick={onClick} disabled={done}>
+        {done && <Icon name="checkmark" size={14} />}
         {children}
       </button>
     </span>

@@ -227,10 +227,10 @@ export function ReferralRequests() {
                     key={r.id}
                     r={r}
                     end={
+                      // one small outlined button in both states, so Invite and Invited match (Devansh, 23 Sep)
                       invited.includes(r.name) ? (
-                        <Tag>Invited</Tag>
+                        <SmallButton done>Invited</SmallButton>
                       ) : (
-                        // a row action, so the same small outlined button as Update (Devansh, 23 Sep)
                         <SmallButton onClick={() => dispatch({ t: "invite", v: r.name })}>Invite</SmallButton>
                       )
                     }

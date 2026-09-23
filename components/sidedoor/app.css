@@ -407,6 +407,8 @@
   box-shadow: inset 0 0 0 0.5px var(--sd-border);
   border-radius: var(--sd-r-md);
 }
+/* the done state of a small button: same box and edge, grey label and a check */
+.sd-btn.small.is-done { background: #fff; color: var(--sd-text-2); box-shadow: inset 0 0 0 0.5px var(--sd-border); gap: 4px; }
 /* small controls keep a 44pt tap area without growing (Apple's rule). Figma draws this as a
    "Hit area 44" frame that overlaps its row rather than stretching it, so the target has to be
    an overlay here too — as min-height it pushed every row it sat in from 20px to 44px. */
