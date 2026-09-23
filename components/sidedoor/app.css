@@ -52,8 +52,8 @@
   --sd-icon: #3b3f46;
   --sd-icon-2: #6b7280;
   --sd-icon-warning: #8a6100;
-  --sd-waiting: #facc15;         /* yellow: "sitting with someone else" */
-  --sd-waiting-ink: #713f12;     /* the clock's hands on that yellow */
+  --sd-waiting: #f59e0b;         /* amber, iOS-style pending: "sitting with someone else" */
+  --sd-waiting-ink: #ffffff;     /* white hands, as iOS draws a filled status glyph */
   --sd-apple: #000000;
   --sd-ios-green: #34c759;
   --sd-ios-red: #ff3b30;
@@ -607,7 +607,7 @@
 
 .sd-tl-step.is-done .sd-tl-mark, .sd-tl-step.is-done .sd-tl-title,
 .sd-tl-step.is-next .sd-tl-mark { color: var(--sd-link); }
-/* waiting: a yellow clock (the hands carry the contrast, 5.7:1) and a plain title */
+/* waiting: an amber clock with white hands and a plain title; the word carries the meaning */
 .sd-tl-disc { fill: var(--sd-waiting); }
 .sd-tl-hands { fill: var(--sd-waiting-ink); }
 .sd-tl-step.is-pending .sd-tl-mark { color: var(--sd-border); }

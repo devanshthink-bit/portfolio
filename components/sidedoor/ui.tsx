@@ -725,7 +725,7 @@ export function PersonRow({
 /** Figma's six step kinds (V6 Tracking Flow):
  *  done    — blue circle-check, blue title, solid blue line after it
  *  next    — blue active-radio, the step you are waiting to reach
- *  waiting — yellow clock with dark hands, yellow line: it sits with someone else
+ *  waiting — amber clock with white hands, amber line: it sits with someone else
  *  pending — grey ring, the steps further ahead
  *  failed  — grey circle-x, grey title: the request ended short
  *  success — green circle-check, green title: selected */
