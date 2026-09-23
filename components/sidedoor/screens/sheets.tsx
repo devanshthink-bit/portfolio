@@ -161,10 +161,11 @@ export function ShareLinkSheet({ leaving }: { leaving?: boolean }) {
   // the message is what goes out with the link, so the link can't be edited out of it
   const msgError = !msg.trim() ? "Required." : !msg.includes(LINK) ? "Keep your link in the message." : null;
   const apps = [
-    { name: "WhatsApp", img: "whatsapp", w: 40, h: 40 },
-    { name: "Gmail", img: "gmail", w: 34, h: 25 },
-    { name: "Drive", img: "gdrive", w: 32, h: 28.6 },
-    { name: "Telegram", img: "telegram", w: 33, h: 33 },
+    // 2026 marks from Wikimedia Commons: Gmail and Drive's gradient icons, WhatsApp's flat green
+    { name: "WhatsApp", img: "whatsapp-2026", w: 36, h: 36 },
+    { name: "Gmail", img: "gmail-2026", w: 34, h: 27 },
+    { name: "Drive", img: "gdrive-2026", w: 32, h: 29.6 },
+    { name: "Telegram", img: "telegram-2026", w: 36, h: 36 },
   ];
   return (
     <Sheet title="Share your link" onClose={nav.closeSheet} leaving={leaving}>

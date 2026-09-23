@@ -2991,3 +2991,10 @@ Caveat noted: #fafafa fields on white and white fields on #f2f2f7 both have fain
 - Verified on localhost only.
 - **Revised: every decorative icon is brand blue** (Devansh, after seeing the per-meaning tones and four options side by side: grey, blue, soft tones, tinted tiles). Blue #2563EB now covers label and heading icons, facts, timestamps and actions. Unchanged: chevrons, status marks, icons inside buttons and tags, the tab bar, brand logos. Code: Icon `color="tone"` → `--sd-icon-accent`; the TONE map and `--sd-tone-*` are gone. Figma: `color/icon/accent` and all `color/icon/tone/*` now alias brand/blue/500, so every recoloured icon follows. Verified on localhost only.
 - **Login illustration synced from Figma** (Devansh updated it in the Illustration/Splash component). Pulled the component's source image (1183×1330, transparent) into the prototype as login-illustration.png (new name so browsers don't show the cached old one); the old splash-illustration.png is removed. Verified on localhost only.
+
+## 2026-09-23 · Share sheet: 2026 app marks
+
+- Devansh approved downloading. From Wikimedia Commons: `Gmail icon (2026).svg` and `Google Drive icon (2026).svg` (Google's May 2026 gradient icons), `WhatsApp Logo green.svg` (the flat green mark), `Telegram logo.svg` (no 2026 change found). Scanned: plain SVG, no scripts or external links. Trademarks of their owners; used only as share targets in a concept prototype.
+- Code: share sheet uses whatsapp-2026, gmail-2026, gdrive-2026, telegram-2026 (.svg), sized 36/34×27/32×29.6/36.
+- Figma: the four Logo/* components now hold the new marks, resized to the size their instances use (40, 34×25, 32×29, 33). Drive's SVG mask didn't import into Figma (the artwork vanished), so Drive is a 256px PNG rendered from the same SVG. Checked the share row in both.
+- Verified on localhost only.
