@@ -262,7 +262,7 @@ function SortMenu({ value, onChange }: { value: Sort; onChange: (v: Sort) => voi
                 }}
               >
                 <span className="t-body">{o}</span>
-                {o === value && <Icon name="checkmark.circle.fill" size={18} style={{ color: "var(--sd-link)" }} />}
+                {o === value && <Icon name="checkmark" size={18} style={{ color: "var(--sd-link)" }} />}
               </button>
             ))}
           </span>

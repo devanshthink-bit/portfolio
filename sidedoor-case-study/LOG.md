@@ -2814,3 +2814,34 @@ CHANGE · 2026-09-23 · Bookmark hit area and spacing on the scale · Source: De
   - Figma + code: Job details card fills its frame (16), banner 24/48 with a 242×64 wordmark, logo tiles padded 12 with 50 logos, referral row gap 8, login 32/16, link page header 16/16 (component 134 tall).
   - Code only (Figma already on scale): button fixed 52 instead of 14 padding, toast 12, timeline gap 32.
 Checked on localhost: rescan finds no off-scale spacing except icon drawing in the share sheet's "More" dots; timeline pitch unchanged (56/74); build passes.
+
+CRITIQUE · 2026-09-23 · Devansh clicking through the prototype · Source: Devansh
+Finding:   Many things looked tappable but weren't, or lost the cursor: Newest first, Show project details, 16 Edit/Replace links, 3 Help rows, Open resume (no action at all); every 44pt tap area hid the cursor; the date wheel hid the chosen row; the link page and chat didn't scroll with a mouse wheel; no field checked its input; the warning colour read as orange-red; two icons pointed at missing files; Invite and Update looked different.
+Severity:  major (the prototype is what recruiters click)
+Action:    fixed 23 Sep, see CHANGE below.
+
+DECISION · 2026-09-23 · How a real app would behave · Source: Devansh ("like a real app")
+Decided:
+  - Tab bar and segmented control: one pill that slides and swells on the way (iOS 26), not a jump.
+  - Tab roots with a filter or search (Jobs, Your referral requests, Messages): title and control stay put, only the list scrolls.
+  - Job details: the ask button sits on the bottom edge from the start.
+  - Scrolled header glass reaches 8 below the bar so back/bell don't sit on the hairline.
+  - Login lines rotate every 3 s in a loop; the dot slides.
+  - Fields: required get a red *, optional keep "(optional)"; typing drops what can't belong; leaving a field shows one line with an icon; the main button waits until every field passes. Career gaps is a number of years (0 = none), notice a number of days.
+  - Edit = iOS edit in place (lines become fields, link becomes Done, off while invalid). Replace = file picker, PDF/DOC/DOCX up to 5 MB.
+  - Warning colour #C93400 → #8A6100 (dark gold): 5.5:1 on white, 5.0:1 on the page.
+  - Invite = the same small outlined button as Update. Invited stays a grey tag because it is a status, not an action.
+Rejected: a separate edit screen per block (more screens, same job); keeping free-text career gaps (Devansh wants years only).
+
+CHANGE · 2026-09-23 · Real-app behaviour, Figma and code · Source: Devansh
+Code: all of the above, plus a sort pull-down (Newest first / Best match), Help articles, Contact support, a resume preview, and one shared block per repeated section.
+Figma:
+  - InputField got a "Required" switch (red * bound to color/text/error). Switched on for 28 required fields on UI Screens and 18 on the prototype page. Career gaps/Notice labels, placeholders and values changed to years/days.
+  - color/palette/warning/700 → #8A6100 (every warning use was bound to it).
+  - RequestCard: Invite is now a Secondary Small button (was blue text).
+  - Job Screen (4 V6 screens): the button moved out of the card into a bottom "Fixed Actions" bar above the tab bar. Prototype copies: bar and tab bar pinned to the viewport bottom.
+  - Prototype page: Jobs, Requests (and Just Sent) and both Messages lists scroll inside a fixed frame.
+  - New state "Candidate/Jobs Screen/Sort Menu" (States grid r3 c5) and a prototype copy wired from Newest first.
+Code only, not in Figma yet: sliding pill, carousel, header glass (motion or scroll-only); field error and edit-in-place states; Help articles, Contact support, resume preview; projects details open.
+Waiting on Devansh: photos for Kritika Rao, Nisha Rao, Rohit Menon (code-only people, no photo anywhere; needs a download).
+Checked on localhost, not the Vercel preview (needs a login).
