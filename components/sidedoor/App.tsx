@@ -134,7 +134,27 @@ const SHEETS: Record<string, (p: any) => ReactNode> = {
 /* ── the stack, with the edge-swipe back gesture ────────────────────────── */
 function Stack() {
   const nav = useNav();
-  const { toast, role, unread } = useStore();
+  const { toast, role, unread, pending, dispatch } = useStore();
+  // a decision waits 5 seconds before the candidate is told; Undo in the toast takes it back
+  useEffect(() => {
+    if (!pending) return;
+    const t = window.setTimeout(() => {
+      pending.commit();
+      dispatch({ t: "pend", v: null });
+    }, 5000);
+    return () => clearTimeout(t);
+  }, [pending, dispatch]);
+  // the phone's own connection: the browser says when it goes and comes back
+  useEffect(() => {
+    const on = () => dispatch({ t: "offline", v: false });
+    const off = () => dispatch({ t: "offline", v: true });
+    window.addEventListener("online", on);
+    window.addEventListener("offline", off);
+    return () => {
+      window.removeEventListener("online", on);
+      window.removeEventListener("offline", off);
+    };
+  }, [dispatch]);
   const [tab, setTab] = useState("");
   const tabCtx = useRef({ tab: "", pick: (k: string) => setTab(k) });
   // a plain object so the provider value never changes identity; the tab is read through it
@@ -309,7 +329,25 @@ function Stack() {
         />
       )}
 
-      {toast && <Toast>{toast}</Toast>}
+      {pending ? (
+        <Toast
+          action={
+            <button
+              className="t-label link sd-hit44"
+              onClick={() => {
+                pending.undo();
+                dispatch({ t: "pend", v: null });
+              }}
+            >
+              Undo
+            </button>
+          }
+        >
+          {pending.msg}
+        </Toast>
+      ) : (
+        toast && <Toast>{toast}</Toast>
+      )}
       <HomeIndicator />
     </div>
     </TabCtx.Provider>
@@ -329,8 +367,9 @@ function Jump({ spec }: { spec?: { id: string; n: number } }) {
     last.current = spec.n;
     const sc = SCENARIOS.find((s) => s.id === spec.id);
     if (!sc) return;
-    if (sc.id === "start") {
+    if (sc.id === "start" || sc.id === "login.cancelled") {
       dispatch({ t: "reset" });
+      if (sc.force) dispatch({ t: "force", v: sc.force });
       nav.reset("login");
       return;
     }

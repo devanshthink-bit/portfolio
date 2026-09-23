@@ -1,7 +1,7 @@
 "use client";
 // The candidate's side: find a job, send a request a stranger can act on, then see what happened.
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNav } from "../nav";
 import { STAGE_LABEL, stageTag, useStore, type Request, type Stage } from "../store";
 import {
@@ -304,7 +304,7 @@ export function JobDetails() {
             <h1 className="t-h-md" style={{ flex: 1 }}>
               Interaction Designer
             </h1>
-            <button onClick={() => dispatch({ t: "save", v: "flipkart" })} aria-label="Save job" style={{ display: "flex" }}>
+            <button className="sd-hit44" onClick={() => dispatch({ t: "save", v: "flipkart" })} aria-label="Save job" style={{ display: "flex" }}>
               <Icon name={on ? "bookmark.fill" : "bookmark"} size={26} style={{ color: "var(--sd-icon-2)" }} />
             </button>
           </div>
@@ -455,23 +455,29 @@ function Bullets({ items }: { items: string[] }) {
 /* ── Check your request ─────────────────────────────────────────────────── */
 export function CheckRequest() {
   const nav = useNav();
-  const { details, note, stillNeeded, requestsLeft, force, dispatch } = useStore();
+  const { details, note, stillNeeded, requestsLeft, force, offline, dispatch } = useStore();
   const [sending, setSending] = useState(force === "send.sending");
   const [failed, setFailed] = useState(force === "send.error");
   const noneLeft = requestsLeft === 0 || force === "send.none-left";
   // Figma draws the error, the weekly limit and "Sending…" on a request that is already
   // complete: the portal block is gone and its four answers sit in "Your details".
-  const complete = ["send.error", "send.none-left", "send.sending"].includes(force ?? "");
+  const complete = ["send.error", "send.none-left", "send.sending", "offline"].includes(force ?? "");
   const d = complete
     ? { dob: "12 Mar 1999", gaps: "None", locations: "Bengaluru, Remote", notice: "30 days" }
     : details;
   const missing = complete ? 0 : stillNeeded;
 
+  // Figma's Loading button keeps its colour, so it isn't disabled — a second tap just does
+  // nothing. A ref, not the state: taps can land before React has re-rendered.
+  const inFlight = useRef(false);
   const send = () => {
+    if (inFlight.current) return;
+    inFlight.current = true;
     setSending(true);
     setFailed(false);
     window.setTimeout(() => {
       setSending(false);
+      inFlight.current = false;
       if (force === "send.error") {
         setFailed(true);
         return;
@@ -486,24 +492,27 @@ export function CheckRequest() {
     <Screen
       title="Check your request"
       back
+      ownOffline
       actions={
         <Actions>
           {/* Figma: while sending there is nothing but the button; the error and the limit
               each replace the weekly line with their own note. */}
-          {!sending && !failed && !noneLeft && (
+          {!sending && !failed && !noneLeft && !offline && (
             // Figma draws this as a plain 12/16 line, not a filled chip.
             <Note>{requestsLeft} of 5 referral requests left this week</Note>
           )}
+          {/* Figma "Offline": the weekly line becomes the reason Send is off */}
+          {offline && !noneLeft && <Note style="buffer" icon="info.circle.fill">You’re offline. Send when you’re back.</Note>}
           {failed && (
             <Note style="failure" icon="info.circle.fill">
               Couldn’t send. Your details are saved.
             </Note>
           )}
           {noneLeft && <Note>No requests left this week. More on Monday.</Note>}
-          {!noneLeft && !sending && !failed && missing > 0 && (
+          {!noneLeft && !sending && !failed && !offline && missing > 0 && (
             <p className="t-label-sm muted">Add the {missing} {missing === 1 ? "detail" : "details"} above to send.</p>
           )}
-          <Button disabled={missing > 0 || noneLeft} onClick={send}>
+          <Button disabled={missing > 0 || noneLeft || offline} onClick={send}>
             {sending ? "Sending…" : failed ? "Try again" : "Send referral request"}
           </Button>
         </Actions>
@@ -682,8 +691,8 @@ export function ReferralBar({ r, onClick }: { r: { logo: string; company: string
             />
           </span>
           <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 8, minWidth: 0 }}>
-            <span style={{ display: "flex", alignItems: "center", gap: 2 }} className="t-h-sm">
-              {r.company}
+            <span style={{ display: "flex", alignItems: "center", gap: 2, minWidth: 0 }} className="t-h-sm">
+              <span className="sd-1line">{r.company}</span>
               <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)" }} />
             </span>
             <span>
@@ -885,9 +894,9 @@ export function TrackDetails({ id, stage, updated }: { id: string; stage?: Stage
         {/* the company the request is about sits on the grey page, never in a card (20 Sep rule) */}
         <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
           <LogoTile logo={r.logo} alt={r.company} />
-          <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1 }}>
-            <span style={{ display: "flex", alignItems: "center", gap: 2 }} className="t-h-sm">
-              {r.company}
+          <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1, minWidth: 0 }}>
+            <span style={{ display: "flex", alignItems: "center", gap: 2, minWidth: 0 }} className="t-h-sm">
+              <span className="sd-1line">{r.company}</span>
               <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)" }} />
             </span>
             <span className="t-label muted">{r.job}</span>
@@ -925,7 +934,7 @@ export function TrackDetails({ id, stage, updated }: { id: string; stage?: Stage
             </span>
             {/* Figma: a small secondary Button (71x28, 0.5 #d1d3d8 stroke, r8) with a 44 hit area */}
             <span className="sd-hit44" style={{ flex: "0 0 auto" }}>
-              <Button small type="secondary" onClick={() => dispatch({ t: "handle", id: r.id, stage: "submitted" })}>
+              <Button small type="secondary" onClick={() => dispatch({ t: "tell", stage: "submitted" })}>
                 Mark it
               </Button>
             </span>
@@ -943,10 +952,10 @@ export function TrackDetails({ id, stage, updated }: { id: string; stage?: Stage
             <Avatar name={r.referrer} />
             <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4, minWidth: 0 }}>
               <span className="sd-person-name">
-                {r.referrer}
+                <span className="sd-1line">{r.referrer}</span>
                 <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)" }} />
               </span>
-              <span className="sd-person-sub">{r.referrerRole}</span>
+              <span className="sd-person-sub sd-1line">{r.referrerRole}</span>
             </span>
             <span style={{ display: "flex", alignItems: "center", gap: 2, flex: "0 0 auto" }}>
               <Icon name="clock" size={14} style={{ color: "var(--sd-icon-2)" }} />

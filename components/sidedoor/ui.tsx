@@ -7,6 +7,7 @@ import Image, { type StaticImageData } from "next/image";
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { Icon, type IconName } from "./Icon";
 import { useNav } from "./nav";
+import { useStore } from "./store";
 
 /* ── status bar ─────────────────────────────────────────────────────────── */
 export function StatusBar({ light }: { light?: boolean }) {
@@ -102,7 +103,10 @@ export function Screen({
   scrollRef,
   onScroll,
   headerAccessory,
+  ownOffline,
 }: {
+  /** the screen says it's offline at its own button, so the top note would repeat it */
+  ownOffline?: boolean;
   title?: string;
   largeTitle?: string;
   back?: boolean;
@@ -119,6 +123,7 @@ export function Screen({
   headerAccessory?: ReactNode;
 }) {
   const [scrolled, setScrolled] = useState(false);
+  const { offline } = useStore();
   const ownRef = useRef<HTMLDivElement>(null);
   const ref = scrollRef ?? ownRef;
   return (
@@ -146,6 +151,13 @@ export function Screen({
       >
         {largeTitle && <h1 className="sd-largetitle">{largeTitle}</h1>}
         {headerAccessory}
+        {/* Figma "Offline": one amber note at the top of whatever the screen shows, which is
+            what was last loaded. Actions that need the network say so themselves. */}
+        {offline && !ownOffline && (
+          <div className="sd-pad" style={{ paddingTop: 24 }}>
+            <Note style="buffer" icon="info.circle.fill">You’re offline. Showing what was saved.</Note>
+          </div>
+        )}
         <div className={pad ? "sd-pad" : undefined}>{children}</div>
         {/* The action block scrolls with the content. On a short screen `margin-top: auto`
             pushes it to the bottom; on a long one it follows the content and the page ends
@@ -524,9 +536,9 @@ export function PersonRow({
   return (
     <div className="sd-person">
       <Avatar name={name} size={avatarSize} />
-      <div style={{ flex: "1 1 auto", display: "flex", flexDirection: "column", gap: 4 }}>
+      <div style={{ flex: "1 1 auto", display: "flex", flexDirection: "column", gap: 4, minWidth: 0 }}>
         <span className="sd-person-name">
-          {name}
+          <span className="sd-1line">{name}</span>
           {verified && <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)" }} />}
         </span>
         {sub && <span className="sd-person-sub">{sub}</span>}
@@ -634,7 +646,11 @@ export function Field({
       {/* Figma's InputField box (Frame 234) is a fixed 52 with its row centred, not 48. */}
       <div
         className={`sd-input${focus ? " is-focus" : ""}${error ? " is-error" : ""}`}
-        onClick={onClick}
+        // the whole 52 box is the target, not just the 20-tall text inside it
+        onClick={(e) => {
+          onClick?.();
+          if (e.target === e.currentTarget) e.currentTarget.querySelector<HTMLElement>("input, textarea")?.focus();
+        }}
         style={{ alignItems: multiline ? "flex-start" : "center", minHeight: boxHeight ?? (multiline ? 100 : 52) }}
       >
         {lead}

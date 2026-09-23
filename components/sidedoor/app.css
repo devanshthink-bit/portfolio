@@ -385,11 +385,18 @@
    "Hit area 44" frame that overlaps its row rather than stretching it, so the target has to be
    an overlay here too — as min-height it pushed every row it sat in from 20px to 44px. */
 .sd-hit44 { position: relative; display: inline-flex; align-items: center; justify-content: center; }
-.sd-hit44::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 44px; transform: translateY(-50%); }
+.sd-hit44::after { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 44px); height: max(100%, 44px); transform: translate(-50%, -50%); }
+/* a wrapper's overlay would catch the tap itself and the button inside would never hear it,
+   so when the wrapper holds a button, the overlay belongs to the button */
+.sd-hit44:has(> button)::after { content: none; }
+.sd-hit44 > button { position: relative; }
+.sd-hit44 > button::after { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 44px); height: max(100%, 44px); transform: translate(-50%, -50%); }
+/* the iOS switch is 51x31; its 44 target sits over it the same way */
+.sd-switch::after { content: ""; position: absolute; left: 50%; top: 50%; width: 100%; height: 44px; transform: translate(-50%, -50%); }
 /* Figma draws these inline actions as plain 20px text with an overlapping 44pt target, so
    min-height would stretch every row they sit in (see .sd-hit44). */
 .sd-textbtn { color: var(--sd-link); font-weight: 500; font-size: 14px; line-height: 20px; display: inline-flex; align-items: center; justify-content: center; position: relative; }
-.sd-textbtn::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 44px; transform: translateY(-50%); }
+.sd-textbtn::after { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 44px); height: max(100%, 44px); transform: translate(-50%, -50%); }
 .sd-textbtn:active { opacity: 0.45; }
 .sd-actions { display: flex; flex-direction: column; gap: 12px; }
 /* Figma wraps a trailing text button in an "Other Ways" frame with 4 of top padding, so it
@@ -472,7 +479,8 @@
   color: var(--sd-text-2);
 }
 .sd-tag.note.primary { color: var(--sd-text-info); }
-.sd-tag.note.success { color: var(--sd-text-success); }
+/* a note sits on the grey page, where #15803d is 4.49:1; #157a3b is 4.85:1 (Figma matches) */
+.sd-tag.note.success { color: #157a3b; }
 .sd-tag.note.buffer { color: var(--sd-text-warning); }
 .sd-tag.note.failure { color: var(--sd-text-error); }
 .sd-tag.note svg { flex: 0 0 auto; }
@@ -523,6 +531,9 @@
 /* segmented control */
 .sd-seg { display: flex; padding: 2px; background: var(--sd-fill-3); border-radius: var(--sd-r-md); height: 32px; }
 .sd-seg button { flex: 1 1 0; border-radius: var(--sd-r-md); font-weight: 500; font-size: 14px; line-height: 20px; color: var(--sd-text); transition: background 200ms var(--sd-ease); }
+/* 28 and 20 tall, like Figma, with a 44pt target laid over them (see .sd-hit44) */
+.sd-seg button, .sd-tabs button { position: relative; }
+.sd-seg button::before, .sd-tabs button::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 44px); height: 44px; transform: translate(-50%, -50%); }
 .sd-seg button.is-on { background: var(--sd-n0); box-shadow: var(--sd-e1); }
 
 /* underline tabs on lists */
@@ -542,7 +553,10 @@
 /* ── person row ─────────────────────────────────────────────────────────── */
 .sd-person { display: flex; gap: 12px; align-items: center; }
 .sd-person .sd-av { width: 44px; height: 44px; }
-.sd-person-name { display: flex; align-items: center; gap: 2px; font-weight: 600; font-size: 16px; line-height: 24px; }
+/* Figma caps names at one line and ends them in "…"; roles in detail rows get two lines */
+.sd-1line { display: block; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sd-2line { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+.sd-person-name { display: flex; align-items: center; gap: 2px; min-width: 0; font-weight: 600; font-size: 16px; line-height: 24px; }
 .sd-person-sub { font-weight: 500; font-size: 14px; line-height: 20px; color: var(--sd-text-2); }
 .sd-person-time { margin-left: auto; display: flex; align-items: center; gap: 4px; font-weight: 500; font-size: 12px; line-height: 16px; color: var(--sd-text-2); flex: 0 0 auto; }
 

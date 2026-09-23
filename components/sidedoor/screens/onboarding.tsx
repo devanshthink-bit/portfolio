@@ -1,7 +1,7 @@
 "use client";
 // Login and both onboarding paths. Copy is taken from the V6 screens, unchanged.
 import Image from "next/image";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useNav } from "../nav";
 import { useStore } from "../store";
 import {
@@ -33,6 +33,7 @@ function AppleMark() {
 /* ── Login ──────────────────────────────────────────────────────────────── */
 export function Login() {
   const nav = useNav();
+  const { force } = useStore();
   const [page, setPage] = useState(0);
   const lines = ["Get referred by insiders", "Refer someone in minutes", "See where your request got to"];
   return (
@@ -54,6 +55,7 @@ export function Login() {
               {lines.map((l, i) => (
                 <button
                   key={l}
+                  className="sd-hit44"
                   onClick={() => setPage(i)}
                   aria-label={`Page ${i + 1}`}
                   style={{
@@ -69,6 +71,11 @@ export function Login() {
           <Image src="/images/sidedoor/splash.png" alt="" width={908} height={1024} style={{ width: 227, height: 256 }} priority />
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 12, width: "100%", alignItems: "center" }}>
+          {/* Figma "Login/Cancelled": backing out of LinkedIn lands here with one plain line —
+              not an error, since they chose to leave */}
+          {force === "login.cancelled" && (
+            <Note icon="info.circle.fill">LinkedIn sign-in was cancelled. Try again or pick another way.</Note>
+          )}
           {/* order and the 8 gap are decisions in LOG.md: LinkedIn, Google, Apple */}
           <div style={{ display: "flex", flexDirection: "column", gap: 8, width: "100%" }}>
             <Button
@@ -94,7 +101,7 @@ export function Login() {
           </div>
           <p className="t-label muted" style={{ textAlign: "center", width: "100%" }}>
             Already have an account?{" "}
-            <button className="link" style={{ textDecoration: "underline" }} onClick={() => nav.reset("role")}>
+            <button className="link sd-hit44" style={{ textDecoration: "underline" }} onClick={() => nav.reset("role")}>
               Log in
             </button>
           </p>
@@ -422,7 +429,7 @@ export function CheckProfile() {
 }
 
 /** Figma's "Reading" box: three grey bars — 220x16, then 300 and 160 at 12 tall, 12 apart. */
-function ReadingBox() {
+export function ReadingBox() {
   const bar = (w: number, h: number) => (
     <span style={{ width: w, height: h, borderRadius: 4, background: "var(--sd-border-subtle)", display: "block" }} />
   );
@@ -474,6 +481,13 @@ export function VerifyEmail() {
   // Any 6 digits pass. Only the seeded code from the wrong-code scenario fails,
   // so editing a digit clears the error and lets you through.
   const wrong = code === "482 910";
+  // Figma "Wrong Code": after a send, "Resend code in 0:28" in grey until it can go again
+  const [wait, setWait] = useState(force === "verify.wrong-code" ? 28 : 0);
+  useEffect(() => {
+    if (!wait) return;
+    const t = window.setTimeout(() => setWait((w) => w - 1), 1000);
+    return () => clearTimeout(t);
+  }, [wait]);
   return (
     <Screen
       title="Where you work"
@@ -490,7 +504,13 @@ export function VerifyEmail() {
           >
             Verify
           </Button>
-          <TextButton>Resend code</TextButton>
+          {wait ? (
+            <p className="t-label muted" style={{ textAlign: "center", paddingTop: 4 }}>
+              Resend code in 0:{String(wait).padStart(2, "0")}
+            </p>
+          ) : (
+            <TextButton onClick={() => setWait(30)}>Resend code</TextButton>
+          )}
         </Actions>
       }
     >

@@ -77,6 +77,13 @@ type State = {
   removedSkills: string[];
   /** transient */
   toast: string | null;
+  /**
+   * A decision the candidate hasn't been told about yet. The referrer's side changes at once;
+   * the candidate's only when the 5 seconds run out, so Undo takes it back for both.
+   */
+  pending: { msg: string; undo: () => void; commit: () => void } | null;
+  /** the phone has no connection (the browser's own offline event, or the Offline state) */
+  offline: boolean;
   unread: number;
   /**
    * A state the prototype has been put into on purpose, so the V6 state screens are reachable
@@ -119,6 +126,8 @@ const initial: State = {
   invited: ["Advika Singh"],
   removedSkills: [],
   toast: null,
+  pending: null,
+  offline: false,
   unread: 2,
   force: null,
 };
@@ -139,6 +148,9 @@ type Action =
   | { t: "post" }
   | { t: "handle"; id: string; stage: Stage; reason?: string }
   | { t: "unhandle"; id: string }
+  | { t: "tell"; stage: Stage; reason?: string }
+  | { t: "pend"; v: State["pending"] }
+  | { t: "offline"; v: boolean }
   | { t: "invite"; v: string }
   | { t: "removeSkill"; v: string }
   | { t: "toast"; v: string | null }
@@ -186,14 +198,20 @@ function reduce(s: State, a: Action): State {
       return { ...s, handled: rest };
     }
     case "handle":
+      // the referrer's side only; "tell" moves the candidate's timeline once undo has run out
+      return { ...s, handled: { ...s.handled, [a.id]: { stage: a.stage, reason: a.reason } } };
+    case "tell":
+      // the same change reaches the candidate's timeline, which is the whole point of J2
       return {
         ...s,
-        handled: { ...s.handled, [a.id]: { stage: a.stage, reason: a.reason } },
-        // the same change reaches the candidate's timeline, which is the whole point of J2
         requests: s.requests.map((r) =>
           r.live ? { ...r, stage: a.stage, reason: a.reason, updated: "Just now", waitingDays: a.stage === "submitted" ? 0 : r.waitingDays } : r
         ),
       };
+    case "pend":
+      return { ...s, pending: a.v };
+    case "offline":
+      return { ...s, offline: a.v };
     case "invite":
       return { ...s, invited: [...s.invited, a.v] };
     case "removeSkill":
@@ -206,7 +224,7 @@ function reduce(s: State, a: Action): State {
       return { ...s, force: a.v };
     case "jump":
       // start from a clean slate so one state can't leak into the next
-      return { ...initial, role: a.role, force: a.force, resume: "Abhinav_Saxena_Resume.pdf", verified: true, jobId: "184223", posted: true };
+      return { ...initial, role: a.role, force: a.force, offline: a.force === "offline", resume: "Abhinav_Saxena_Resume.pdf", verified: true, jobId: "184223", posted: true };
     case "reset":
       return initial;
     default:
@@ -250,5 +268,21 @@ export function useToast() {
       window.setTimeout(() => dispatch({ t: "toast", v: null }), 2200);
     },
     [dispatch]
+  );
+}
+
+/**
+ * A decision that tells the candidate: the referrer's side has already changed, and `commit`
+ * tells the candidate after 5 seconds unless Undo runs `undo` first. A second decision inside
+ * the window commits the first one straight away, so nothing is lost.
+ */
+export function useDecide() {
+  const { pending, dispatch } = useStore();
+  return useCallback(
+    (msg: string, undo: () => void, commit: () => void) => {
+      pending?.commit();
+      dispatch({ t: "pend", v: { msg, undo, commit } });
+    },
+    [pending, dispatch]
   );
 }

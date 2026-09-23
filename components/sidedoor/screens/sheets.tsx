@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { useNav } from "../nav";
-import { STAGE_LABEL, useStore, type Stage } from "../store";
+import { STAGE_LABEL, useDecide, useStore, type Stage } from "../store";
 import { ActionSheet, Avatar, Button, Card, Icon, Note, RadioList, RadioOption, Sheet, Tag, TextButton, WheelDate } from "../ui";
 
 function SheetPerson({ name, role, tag }: { name: string; role: string; tag?: React.ReactNode }) {
@@ -13,8 +13,8 @@ function SheetPerson({ name, role, tag }: { name: string; role: string; tag?: Re
       <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
         <Avatar name={name} size={44} />
         <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4, minWidth: 0 }}>
-          <span className="t-h-sm">{name}</span>
-          <span className="t-label muted">{role}</span>
+          <span className="t-h-sm sd-1line">{name}</span>
+          <span className="t-label muted sd-1line">{role}</span>
           {tag && <span>{tag}</span>}
         </span>
       </div>
@@ -26,6 +26,7 @@ function SheetPerson({ name, role, tag }: { name: string; role: string; tag?: Re
 export function NotMovingSheet({ id, name, role, match, leaving }: { id: string; name: string; role: string; match: string; leaving?: boolean }) {
   const nav = useNav();
   const { dispatch } = useStore();
+  const decide = useDecide();
   const [reason, setReason] = useState<string | null>(null);
   const first = name.split(" ")[0];
   const reasons = ["Experience doesn’t match", "Skills don’t match", "Role is closed", "Can’t refer for this team"];
@@ -44,10 +45,15 @@ export function NotMovingSheet({ id, name, role, match, leaving }: { id: string;
         </RadioList>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-        <Note>{first} sees it straight away.</Note>
+        <Note>{first} is told in 5 seconds. You can undo.</Note>
         <Button
           onClick={() => {
             dispatch({ t: "handle", id, stage: "notmoving", reason: reason ?? undefined });
+            decide(
+              `Not moving forward. ${first} is told in 5 seconds.`,
+              () => dispatch({ t: "unhandle", id }),
+              () => dispatch({ t: "tell", stage: "notmoving", reason: reason ?? undefined })
+            );
             nav.closeSheet();
           }}
         >
@@ -67,16 +73,19 @@ export function SeenItMoveSheet({
   role,
   since,
   onPick,
+  onUndo,
   leaving,
 }: {
   name: string;
   role: string;
   since: string;
   onPick?: (s: Stage) => void;
+  onUndo?: () => void;
   leaving?: boolean;
 }) {
   const nav = useNav();
-  const { dispatch } = useStore();
+  const { dispatch, handled } = useStore();
+  const decide = useDecide();
   const { force } = useStore();
   const failed = force === "sheet.seen.error";
   const first = name.split(" ")[0];
@@ -96,11 +105,23 @@ export function SeenItMoveSheet({
             sub={s === "submitted" ? since.replace("Submitted ", "") : undefined}
             on={s === "submitted"}
             onClick={() => {
+              // the failed state stays failed: the tap didn't go through
+              if (failed) return;
               onPick?.(s);
               // the candidate's timeline moves from here, not from a separate screen
-              if (name === "Abhinav Saxena") dispatch({ t: "handle", id: "abhinav", stage: s });
-              dispatch({ t: "toast", v: `${first} has been told` });
-              window.setTimeout(() => dispatch({ t: "toast", v: null }), 1800);
+              const live = name === "Abhinav Saxena";
+              const before = handled.abhinav;
+              if (live) dispatch({ t: "handle", id: "abhinav", stage: s });
+              decide(
+                `${STAGE_LABEL[s]}. ${first} is told in 5 seconds.`,
+                () => {
+                  onUndo?.();
+                  if (live && before) dispatch({ t: "handle", id: "abhinav", stage: before.stage, reason: before.reason });
+                },
+                () => {
+                  if (live) dispatch({ t: "tell", stage: s });
+                }
+              );
               nav.closeSheet();
             }}
           />
@@ -112,7 +133,7 @@ export function SeenItMoveSheet({
         {failed ? (
           <Note style="failure" icon="info.circle.fill">Couldn’t update. Try again.</Note>
         ) : (
-          <Note>{first} sees it straight away.</Note>
+          <Note>{first} is told in 5 seconds. You can undo.</Note>
         )}
         <Button type="secondary" onClick={nav.closeSheet}>
           No change yet

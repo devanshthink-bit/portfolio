@@ -4,7 +4,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useNav } from "../nav";
-import { STAGE_LABEL, stageTag, useStore, type Stage } from "../store";
+import { STAGE_LABEL, stageTag, useDecide, useStore, type Stage } from "../store";
 import {
   Actions,
   Avatar,
@@ -242,11 +242,11 @@ function RequestCard({ r, onClick, end }: { r: Req; onClick?: () => void; end?: 
       <div style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
         <div style={{ display: "flex", gap: 12, flex: 1, minWidth: 0 }}>
           <Avatar name={r.name} />
-          <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1 }}>
-            <span className="t-h-sm">{r.name}</span>
+          <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1, minWidth: 0 }}>
+            <span className="t-h-sm sd-1line">{r.name}</span>
             {/* Figma's RequestCard role line is Medium 14/20, which is what makes the text
                 column 100 tall and the card 132. */}
-            <span className="t-label muted">{r.role}</span>
+            <span className="t-label muted sd-1line">{r.role}</span>
             {/* Figma RequestCard Tags frame: 4px gap, and the shared-history line is a
                 Plain tag — 22 tall with a 14px mark, not a bare 16px span. */}
             <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
@@ -289,7 +289,19 @@ const SKILLS: { name: string; ok: boolean; source: string; isExperience?: boolea
 export function ReferralRequest({ id }: { id: string }) {
   const nav = useNav();
   const { handled, removedSkills, jobId, force, dispatch } = useStore();
+  const decide = useDecide();
   const r = REQUESTS.find((x) => x.id === id) ?? REQUESTS[0];
+  const refer = () => {
+    dispatch({ t: "handle", id: r.id, stage: "referred" });
+    decide(
+      `Referred. ${r.name.split(" ")[0]} is told in 5 seconds.`,
+      () => {
+        dispatch({ t: "unhandle", id: r.id });
+        nav.pop();
+      },
+      () => dispatch({ t: "tell", stage: "referred" })
+    );
+  };
   // the two states the switcher jumps straight into
   const state = force === "refer.undo" ? { stage: "referred" as Stage } : handled[r.id];
   const removed = force === "req.skill" ? ["Prototyping"] : removedSkills;
@@ -362,13 +374,13 @@ export function ReferralRequest({ id }: { id: string }) {
             <Section label="Resume" icon="paperclip">
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <span className="t-label" style={{ flex: 1 }}>{r.thin.resume}</span>
-                <button aria-label="Open resume" style={{ display: "flex" }}>
+                <button className="sd-hit44" aria-label="Open resume" style={{ display: "flex" }}>
                   <Icon name="arrow.up.right.square" size={20} style={{ color: "var(--sd-icon-2)" }} />
                 </button>
               </div>
             </Section>
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              <Button onClick={() => dispatch({ t: "handle", id: r.id, stage: "referred" })}>Refer</Button>
+              <Button onClick={refer}>Refer</Button>
               <Button
                 type="secondary"
                 onClick={() => nav.openSheet("notMoving", { id: r.id, name: r.name, role: r.role, match: r.match })}
@@ -476,7 +488,7 @@ export function ReferralRequest({ id }: { id: string }) {
               <span className="t-label" style={{ flex: 1 }}>
                 Abhinav_Saxena_Resume.pdf
               </span>
-              <button aria-label="Open resume" style={{ display: "flex" }}>
+              <button className="sd-hit44" aria-label="Open resume" style={{ display: "flex" }}>
                 <Icon name="arrow.up.right.square" size={20} style={{ color: "var(--sd-icon-2)" }} />
               </button>
             </div>
@@ -495,7 +507,7 @@ export function ReferralRequest({ id }: { id: string }) {
 
           {/* Figma's Decision frame is the Window's last block: two full-width buttons 12 apart. */}
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <Button onClick={() => dispatch({ t: "handle", id: r.id, stage: "referred" })}>Refer</Button>
+            <Button onClick={refer}>Refer</Button>
             <Button
               type="secondary"
               onClick={() => nav.openSheet("notMoving", { id: r.id, name: r.name, role: r.role, match: r.match })}
@@ -515,10 +527,10 @@ function PersonHead({ name, role, tag }: { name: string; role: string; tag: Reac
   return (
     <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
       <Avatar name={name} size={44} />
-      <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1 }}>
-        <span className="t-h-sm">{name}</span>
+      <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1, minWidth: 0 }}>
+        <span className="t-h-sm sd-1line">{name}</span>
         <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <span className="sd-person-sub" style={{ flex: 1 }}>{role}</span>
+          <span className="sd-person-sub sd-2line" style={{ flex: 1 }}>{role}</span>
           {tag}
         </span>
       </div>
@@ -562,13 +574,10 @@ function AfterRefer({ id }: { id: string }) {
   const { jobId, details, force, dispatch } = useStore();
   const r = REQUESTS.find((x) => x.id === id) ?? REQUESTS[0];
   const [copied, setCopied] = useState<string[]>([]);
-  // Figma "Undo": for five seconds after referring, a toast offers to take it back
-  const [undo, setUndo] = useState(true);
-  useEffect(() => {
-    if (force === "refer.undo") return;
-    const t = window.setTimeout(() => setUndo(false), 5000);
-    return () => clearTimeout(t);
-  }, [force]);
+  const decide = useDecide();
+  // Figma "Undo": the app's undo toast does this after a real Refer; the switcher's frozen
+  // Undo state draws the same toast here so it stays on screen
+  const undo = force === "refer.undo";
   const fields = portalFields(details);
   const first = r.name.split(" ")[0];
 
@@ -579,7 +588,18 @@ function AfterRefer({ id }: { id: string }) {
       actions={
         <Actions>
           <p className="t-label-sm muted">Tap once it’s in the portal. {first} will be told.</p>
-          <Button onClick={() => dispatch({ t: "handle", id: r.id, stage: "submitted" })}>Mark as submitted</Button>
+          <Button
+            onClick={() => {
+              dispatch({ t: "handle", id: r.id, stage: "submitted" });
+              decide(
+                `Marked as submitted. ${first} is told in 5 seconds.`,
+                () => dispatch({ t: "handle", id: r.id, stage: "referred" }),
+                () => dispatch({ t: "tell", stage: "submitted" })
+              );
+            }}
+          >
+            Mark as submitted
+          </Button>
           <Button type="secondary" onClick={() => nav.push("chat", { who: r.name })}>
             Message {first}
           </Button>
@@ -587,7 +607,7 @@ function AfterRefer({ id }: { id: string }) {
       }
     >
       {undo && (
-        <Toast action={<button className="t-label link" onClick={() => { dispatch({ t: "unhandle", id: r.id }); nav.pop(); }}>Undo</button>}>
+        <Toast action={<button className="t-label link sd-hit44" onClick={() => { dispatch({ t: "unhandle", id: r.id }); nav.pop(); }}>Undo</button>}>
           Referred. {first} is told in 5 seconds.
         </Toast>
       )}
@@ -607,6 +627,7 @@ function AfterRefer({ id }: { id: string }) {
                     <span className="t-label">{f.value}</span>
                   </span>
                   <button
+                    className="sd-hit44"
                     aria-label={f.download ? `Download ${f.name}` : `Copy ${f.name}`}
                     style={{ display: "flex", flex: "0 0 auto" }}
                     onClick={() => {
@@ -721,7 +742,7 @@ export function YourReferrals() {
             <Avatar name={r.name} />
           </span>
           <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 8, minWidth: 0 }}>
-            <span className="t-h-sm">{r.name}</span>
+            <span className="t-h-sm sd-1line">{r.name}</span>
             <span>
               <Tag style={stageTag(stageOf(r))}>{STAGE_LABEL[stageOf(r)]}</Tag>
             </span>
@@ -749,6 +770,12 @@ export function YourReferrals() {
                   role: r.role,
                   since: r.days ? `Submitted ${r.days} days ago` : `Submitted ${r.when}`,
                   onPick: (s: Stage) => setMoved((m) => ({ ...m, [r.name]: s })),
+                  onUndo: () =>
+                    setMoved((m) => {
+                      const rest = { ...m };
+                      delete rest[r.name];
+                      return rest;
+                    }),
                 })
               }
             >

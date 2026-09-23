@@ -29,7 +29,7 @@ import {
   TextButton,
 } from "../ui";
 import { BellButton, ReferralBar } from "./candidate";
-import { CompanyRow, DocUpload, Project } from "./onboarding";
+import { CompanyRow, DocUpload, Project, ReadingBox } from "./onboarding";
 
 /* ── Messages ───────────────────────────────────────────────────────────── */
 type Chat = { name: string; last: string; when: string; unread?: number };
@@ -53,7 +53,7 @@ const isReferrerRole = (r: string | null) => r === "referrer";
 export function Messages() {
   const nav = useNav();
   const { role, unread, force } = useStore();
-  const [q, setQ] = useState("");
+  const [q, setQ] = useState(force === "messages.search" ? "Rahul" : "");
   const base = role === "referrer" ? REFERRER_CHATS : CANDIDATE_CHATS;
   const all = force === "messages.empty" ? [] : base;
   const loading = force === "messages.loading";
@@ -67,7 +67,8 @@ export function Messages() {
     <Screen {...(asTab ? { largeTitle: "Messages", right: <BellButton unread={unread} /> } : { title: "Messages", back: true })}>
       <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 16 }}>
         {/* Figma drops the search while loading, when empty and on the error */}
-        {!loading && !failed && shown.length > 0 && (
+        {/* kept while a search finds nothing, so it can be cleared */}
+        {!loading && !failed && all.length > 0 && (
           <div className="sd-search">
             <Icon name="magnifyingglass" size={22} style={{ color: "var(--sd-placeholder)" }} />
             <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search by name or job…" />
@@ -98,9 +99,17 @@ export function Messages() {
         ) : shown.length === 0 ? (
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             <p className="t-label muted">
-              {q ? "Nothing matches that." : "No messages yet. A chat opens when a referrer refers you."}
+              {q
+                ? `No chats match “${q}”.`
+                : asTab
+                  ? "No messages yet. A chat opens when a referrer refers you."
+                  : "No messages yet. A chat opens when you refer someone."}
             </p>
-            {!q && <Button onClick={() => nav.reset("tabs", { tab: "requests" })}>See your requests</Button>}
+            {!q && (
+              <Button onClick={() => nav.reset("tabs", { tab: "requests" })}>
+                {asTab ? "See your requests" : "See referral requests"}
+              </Button>
+            )}
           </div>
         ) : (
           <ListGroup>
@@ -113,8 +122,8 @@ export function Messages() {
               >
                 <Avatar name={c.name} />
                 <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4, minWidth: 0 }}>
-                  <span style={{ display: "flex", alignItems: "center", gap: 2 }} className="t-h-sm">
-                    {c.name}
+                  <span style={{ display: "flex", alignItems: "center", gap: 2, minWidth: 0 }} className="t-h-sm">
+                    <span className="sd-1line">{c.name}</span>
                     <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)" }} />
                   </span>
                   {/* Figma paints an unread preview in the dark text colour and a read one grey */}
@@ -287,11 +296,18 @@ const REFERRER_NOTIF: Notif[] = [
 
 export function Notifications() {
   const nav = useNav();
-  const { role, dispatch } = useStore();
-  const list = role === "referrer" ? REFERRER_NOTIF : CANDIDATE_NOTIF;
+  const { role, force, dispatch } = useStore();
+  const list = force === "notifs.empty" ? [] : role === "referrer" ? REFERRER_NOTIF : CANDIDATE_NOTIF;
   return (
     <Screen title="Notifications" back onBack={() => { dispatch({ t: "readAll" }); nav.pop(); }}>
       <div style={{ paddingTop: 24 }}>
+        {list.length === 0 ? (
+          <p className="t-label muted">
+            {role === "referrer"
+              ? "No notifications yet. You’ll see new requests and weekly check-ins here."
+              : "No notifications yet. You’ll see every answer to your requests here."}
+          </p>
+        ) : (
         <ListGroup>
           {list.map((n) => (
             <div
@@ -316,6 +332,7 @@ export function Notifications() {
             </div>
           ))}
         </ListGroup>
+        )}
       </div>
     </Screen>
   );
@@ -597,9 +614,17 @@ export function Help() {
 export function LinkPage() {
   const nav = useNav();
   const { force } = useStore();
-  const [file, setFile] = useState<string | null>(null);
+  const [file, setFile] = useState<string | null>(force === "link.reading" ? "Arpita_Singh_Resume.pdf" : null);
   const [note, setNote] = useState("");
   const [sent, setSent] = useState(false);
+  // Figma "Link Page/Reading": a phone on a slow connection sees the resume being read before
+  // the details appear, and Send waits for them
+  const [reading, setReading] = useState(force === "link.reading");
+  const upload = () => {
+    setFile("Arpita_Singh_Resume.pdf");
+    setReading(true);
+    window.setTimeout(() => setReading(false), 1600);
+  };
 
   // Figma: the link page is a web page, so its header is 130 tall with no fill — 14 above
   // the status bar, the 48 logo bar, 14 below — and the one action sits 40 off the bottom.
@@ -700,14 +725,20 @@ export function LinkPage() {
     <>
       <div style={{ display: "flex", flexDirection: "column", gap: 4, textAlign: "center" }}>
         <h1 className="t-h-sm">Ask Nithin for a referral</h1>
-        <p className="t-label muted">{file ? "Check your details, then send." : "Send a complete request. No app needed."}</p>
+        <p className="t-label muted">
+          {reading
+            ? "Reading your resume. It takes a few seconds."
+            : file
+              ? "Check your details, then send."
+              : "Send a complete request. No app needed."}
+        </p>
       </div>
 
       {person}
 
       <Section label="Your resume" icon="paperclip">
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-          <DocUpload what="resume" file={file} onUpload={() => setFile("Arpita_Singh_Resume.pdf")} />
+          <DocUpload what="resume" file={file} onUpload={upload} />
           {!file && (
             <p className="t-label-sm muted">We fill in the details Flipkart’s portal needs. You check them before sending.</p>
           )}
@@ -726,6 +757,7 @@ export function LinkPage() {
                 <TextButton>Edit</TextButton>
               </span>
             </div>
+            {reading ? <ReadingBox /> : (
             <Box>
               <DetailField name="Full name" value="Arpita Singh" />
               <DetailField name="Email" value="arpita.singh@email.com" />
@@ -737,6 +769,7 @@ export function LinkPage() {
               <DetailField name="Date of birth" value="4 Jul 1998" />
               <DetailField name="Preferred interview locations" value="Bengaluru, Remote" />
             </Box>
+            )}
           </div>
           <Field
             label="A short note (optional)"
@@ -748,7 +781,7 @@ export function LinkPage() {
         </>
       )}
     </>,
-    <Button disabled={!file} onClick={() => setSent(true)}>
+    <Button disabled={!file || reading} onClick={() => setSent(true)}>
       Send referral request
     </Button>
   );

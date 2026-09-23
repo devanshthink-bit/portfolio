@@ -33,6 +33,10 @@ export const SCENARIOS: Scenario[] = [
   { id: "jobs.empty", label: "Jobs · nothing to show", group: "Nothing yet", role: "candidate", force: "jobs.empty", tab: "jobs" },
   { id: "requests.empty", label: "Your requests · empty", group: "Nothing yet", role: "candidate", force: "requests.empty", tab: "requests" },
   { id: "messages.empty", label: "Messages · empty", group: "Nothing yet", role: "candidate", force: "messages.empty", tab: "messages" },
+  { id: "messages.search", label: "Messages · search finds nothing", group: "Nothing yet", role: "candidate", force: "messages.search", tab: "messages" },
+  { id: "ref.messages.empty", label: "Referrer messages · empty", group: "Nothing yet", role: "referrer", force: "messages.empty", tab: "requests", push: [{ key: "messages" }] },
+  { id: "notifs.empty", label: "Notifications · empty", group: "Nothing yet", role: "candidate", force: "notifs.empty", tab: "jobs", push: [{ key: "notifications" }] },
+  { id: "ref.notifs.empty", label: "Referrer notifications · empty", group: "Nothing yet", role: "referrer", force: "notifs.empty", tab: "requests", push: [{ key: "notifications" }] },
   { id: "reqs.empty", label: "Referral requests · none yet", group: "Nothing yet", role: "referrer", force: "reqs.empty", tab: "requests" },
   { id: "reqs.handled", label: "Referral requests · all handled", group: "Nothing yet", role: "referrer", force: "reqs.handled", tab: "requests" },
   { id: "referrals.empty", label: "Your referrals · empty", group: "Nothing yet", role: "referrer", force: "referrals.empty", tab: "referrals" },
@@ -40,6 +44,7 @@ export const SCENARIOS: Scenario[] = [
 
   /* ── waiting ─────────────────────────────────────────────────────────── */
   { id: "jobs.loading", label: "Jobs · loading", group: "Waiting", role: "candidate", force: "jobs.loading", tab: "jobs" },
+  { id: "link.reading", label: "Link page · reading the resume", group: "Waiting", role: "referrer", force: "link.reading", tab: "requests", push: [{ key: "linkPage" }] },
   { id: "profile.reading", label: "Check your details · reading", group: "Waiting", role: "candidate", force: "profile.reading", tab: "jobs", push: [{ key: "uploadResume" }, { key: "checkProfile" }] },
   { id: "link.closed", label: "Link page · job closed", group: "Rules and limits", role: "referrer", force: "link.closed", tab: "requests", push: [{ key: "linkPage" }] },
   { id: "link.asked", label: "Link page · already asked", group: "Rules and limits", role: "referrer", force: "link.asked", tab: "requests", push: [{ key: "linkPage" }] },
@@ -57,8 +62,11 @@ export const SCENARIOS: Scenario[] = [
   { id: "send.sending", label: "Send · sending", group: "Waiting", role: "candidate", force: "send.sending", tab: "jobs", push: [{ key: "job", props: { id: "flipkart" } }, { key: "checkRequest" }] },
   { id: "track.loading", label: "Track details · loading", group: "Waiting", role: "candidate", force: "track.loading", tab: "requests", push: [{ key: "trackDetails", props: { id: "flipkart" } }] },
   { id: "reqs.loading", label: "Referral requests · loading", group: "Waiting", role: "referrer", force: "reqs.loading", tab: "requests" },
+  { id: "offline.jobs", label: "Offline · Jobs", group: "Waiting", role: "candidate", force: "offline", tab: "jobs" },
+  { id: "offline.send", label: "Offline · Check your request", group: "Waiting", role: "candidate", force: "offline", tab: "jobs", push: [{ key: "job", props: { id: "flipkart" } }, { key: "checkRequest" }] },
 
   /* ── it went wrong ───────────────────────────────────────────────────── */
+  { id: "login.cancelled", label: "Login · LinkedIn cancelled", group: "Went wrong", role: "candidate", force: "login.cancelled" },
   { id: "jobs.error", label: "Jobs · couldn’t load", group: "Went wrong", role: "candidate", force: "jobs.error", tab: "jobs" },
   { id: "track.error", label: "Track details · couldn’t load", group: "Went wrong", role: "candidate", force: "track.error", tab: "requests", push: [{ key: "trackDetails", props: { id: "flipkart" } }] },
   { id: "send.error", label: "Send · couldn’t send", group: "Went wrong", role: "candidate", force: "send.error", tab: "jobs", push: [{ key: "job", props: { id: "flipkart" } }, { key: "checkRequest" }] },
