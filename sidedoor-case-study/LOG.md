@@ -2941,3 +2941,11 @@ Caveat noted: #fafafa fields on white and white fields on #f2f2f7 both have fain
 - Verified on localhost only.
 - **Field fill is #F3F3F3** (Devansh). `neutral/75` changed from #F2F2F7 (unused since the page went white) to #F3F3F3; new semantic `color/surface/field` points to it and every field binds to it (9 variants, 96 V6 instances, 10 loose inputs). Code: `--sd-n75: #f3f3f3` on .sd-input and .sd-search. Placeholder #636A75 on it is 5.0:1. Colors page swatch updated. Verified on localhost only.
 - **Logo mark had the old grey baked in** (Devansh). sidedoor-mark.png carried a #F2F2F7 box that showed on the white page. Made its background transparent (edges and enclosed pockets), in code and in the Figma Logo/SideDoor Mark component. Renamed to sidedoor-logo.png and splash-illustration.png so browsers drop their cached grey copies. Checked the other PNGs: doc-icon and the two role pictures have white or near-white corners but sit on white cards, so they don't show; google-icon.png and sidedoor-word.png aren't used (the app uses the SVGs). Verified on localhost only.
+
+## 2026-09-23 · Cards: a 1px edge, not a shadow
+
+- Devansh: some cards blended into the white page and some had shadows. Cause: they all had the same soft shadow, but its 6% hairline vanished on large cards (role cards, the upload box), while the small Jobs cards showed it. In Figma, 115 card instances (RequestCard, MenuRow, OnboardingCard, DocUpload, SkeletonCard, SheetPersonCard, PostCard) still carried their old elevation-1 shadow as a local override, so Figma and code didn't match either.
+- Mobbin on pure white pages: either flat rows with dividers (Glassdoor, LinkedIn, Handshake) or white cards with a thin light-grey border and no shadow (Redfin, Coursera). Chose the border: keeps our card layout, reads the same at every size.
+- Code: `--sd-e-card` is now `0 0 0 1px var(--sd-n150)` (#E6E7EB), so every card, list, box and radio group gets the same edge. Fields stay filled #F3F3F3 with no edge.
+- Figma: `effect/card` is now one 1px spread shadow bound to neutral/150 (acts as an outside border). The 115 overriding instances were reset to the style.
+- Verified on localhost only.
