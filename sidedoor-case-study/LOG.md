@@ -2971,3 +2971,11 @@ Caveat noted: #fafafa fields on white and white fields on #f2f2f7 both have fain
   - Tab bar: the selected tab is already blue; unselected stay grey so the current tab is findable.
   - Brand logos (LinkedIn, Google, Apple, companies, share apps) keep their own colours.
 - Code: 23 icons switched. Figma: SectionLabel and MenuRow components, plus label icons on V6 screens (173 UI Screens, 138 prototype page). Verified on localhost only.
+
+## 2026-09-23 · Liquid Glass tab bar
+
+- Devansh: make the dock iOS Liquid Glass (Mobbin: Luma, Flighty, Crouton). The bar was solid white, so its blur never showed.
+- Code: capsule is white at 52% with `backdrop-filter: blur(22px) saturate(180%)`, a bright top rim and soft bottom rim (inset highlights), a 0.5px ink hairline, a 10/30 float shadow, and a top-half specular sheen (::before). The selected lens is rgba(118,118,128,.14) with its own highlight.
+- Found and fixed a real bug: the CSS build merged each `backdrop-filter` + `-webkit-backdrop-filter` pair into the -webkit- one alone, which Chrome ignores, so no glass in the app (tab bar, header, bar buttons, toast) ever blurred in Chrome. Now only the standard property is written; the build adds the Safari prefix itself. Checked: computed backdrop-filter is blur(22px) saturate(1.8) and content blurs under the bar.
+- Figma: TabBar (V6) capsules (8 variants) fill surface/primary at 52% over the existing Glass effect, 0.5px hairline; the selected pill is the same grey glass. 52 + 68 screen instances had the solid fill as an override; reset.
+- Verified on localhost only.

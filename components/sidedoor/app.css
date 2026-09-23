@@ -240,8 +240,7 @@
 /* The glass reaches 8 below the bar, so its buttons don't sit on the hairline. It is drawn
    by ::before, so nothing under the bar moves. */
 .sd-nav-wrap::before { content: ""; position: absolute; left: 0; right: 0; top: 0; bottom: -8px; z-index: -1; pointer-events: none; opacity: 0;
-  background: rgba(251, 250, 248, 0.82); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px);
-  box-shadow: 0 0.5px 0 rgba(0, 0, 0, 0.16); transition: opacity 200ms linear; }
+  background: rgba(251, 250, 248, 0.82); backdrop-filter: saturate(180%) blur(20px);  box-shadow: 0 0.5px 0 rgba(0, 0, 0, 0.16); transition: opacity 200ms linear; }
 .sd-nav-wrap.is-scrolled::before { opacity: 1; }
 .sd-nav-wrap.is-scrolled .sd-nav-title { opacity: 1; }
 .sd-nav-wrap.has-large .sd-nav-title { opacity: 0; transition: opacity 180ms linear; }
@@ -249,7 +248,7 @@
 /* a bar button: 44pt tap area, glass only when it floats over content */
 .sd-barbtn { width: 44px; height: 44px; display: grid; place-items: center; color: var(--sd-text);
   border-radius: var(--sd-r-full); background: var(--sd-n0);
-  backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px); box-shadow: var(--sd-glass-shadow); }
+  backdrop-filter: blur(7px); box-shadow: var(--sd-glass-shadow); }
 .sd-barbtn:active { opacity: 0.4; }
 
 /* large title (tab roots) */
@@ -302,10 +301,22 @@
   justify-content: space-around;
   border-radius: var(--sd-r-full);
   padding: 4px;
-  background: var(--sd-n0);
-  backdrop-filter: blur(7px);
-  -webkit-backdrop-filter: blur(7px);
-  box-shadow: var(--sd-glass-shadow);
+  /* iOS 26 Liquid Glass (Mobbin: Flighty, Crouton, Luma): a see-through capsule that blurs and
+     saturates what scrolls under it, a bright rim on top, a hairline edge and a soft float. */
+  background: rgba(255, 255, 255, 0.52);
+  /* only the standard property: the CSS build folds a -webkit- twin into the prefixed form alone,
+     which Chrome ignores (so no glass blurred there). The build adds the prefix for Safari. */
+  backdrop-filter: blur(22px) saturate(180%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.35),
+    0 0 0 0.5px rgba(16, 24, 40, 0.08),
+    0 10px 30px rgba(16, 24, 40, 0.12);
+}
+/* the specular sheen: light catching the top half of the glass */
+.sd-tabbar::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 55%);
 }
 .sd-tab {
   flex: 1 1 0;
@@ -324,7 +335,9 @@
 .sd-tab.is-on { color: var(--sd-link); }
 /* the pill behind the chosen tab or segment; useGlide in ui.tsx slides it */
 .sd-glide { position: absolute; z-index: 0; pointer-events: none; transform: translateX(calc(var(--i) * 100%)); transform-origin: center; }
-.sd-tabbar > .sd-glide { top: 4px; left: 4px; height: 54px; width: calc((100% - 8px) / var(--n)); border-radius: var(--sd-r-full); background: var(--sd-n100); }
+.sd-tabbar > .sd-glide { top: 4px; left: 4px; height: 54px; width: calc((100% - 8px) / var(--n)); border-radius: var(--sd-r-full);
+  /* the selected lens: a denser drop of glass inside the bar */
+  background: rgba(118, 118, 128, 0.14); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), inset 0 0 0 0.5px rgba(255, 255, 255, 0.4); }
 .sd-tab:active { transform: scale(0.92); }
 .sd-tab { transition: transform 140ms var(--sd-spring), color 200ms var(--sd-ease); }
 .sd-tab-badge {
@@ -690,7 +703,6 @@
   border-radius: var(--sd-r-full);
   background: var(--sd-n0);
   backdrop-filter: blur(7px);
-  -webkit-backdrop-filter: blur(7px);
   box-shadow: var(--sd-glass-shadow);
   display: flex;
   align-items: center;
