@@ -27,7 +27,7 @@
   --sd-n800: #3b3f46;
   --sd-n900: #1a1a1a;
   --sd-success-100: #dcfce7;     /* green tag fill: visible on the off-white page; #15803d on it is 4.6:1 */
-  --sd-warning-100: #fef3c7;     /* pale amber behind waiting tags */
+  --sd-warning-100: #fdf4de;     /* pale amber behind waiting tags, as quiet as the green and blue tags */
   --sd-error-50: #fef2f2;
 
   /* semantic */

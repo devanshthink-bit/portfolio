@@ -3002,3 +3002,4 @@ Caveat noted: #fafafa fields on white and white fields on #f2f2f7 both have fain
 - **Order is now LinkedIn, Gmail, Drive, WhatsApp, More; Telegram removed** (Devansh). LinkedIn uses our own logo file with colours swapped for the app-icon look (#0A66C2 square, white "in"), as linkedin-app.svg. Figma: new Logo/LinkedIn component; the two V6 share rows (prototype page, UI Screens V6) reordered with the Telegram tile turned into LinkedIn. The V2/V4/V5 rows were left as history; Logo/Telegram stays for them.
 - **Verified tick vs "Selected" tag** (Devansh asked): same colour, `text/successAA` #15803D, in code and Figma.
 - Verified on localhost only.
+- **Amber tag quieter** (Devansh: "too poppy, make it as subtle as the green and blue tags"). warning/100 #FEF3C7 → #FDF4DE, in code and Figma (variable + swatch). Text #92400E on it is about 7:1. Checked next to the green tags on Your referrals. Verified on localhost only.
