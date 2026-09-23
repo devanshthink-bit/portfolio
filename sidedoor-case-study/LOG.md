@@ -3092,3 +3092,8 @@ Devansh asked what still wasn't iOS-like or consistent, then said to fix all of 
   8. Empty/error ×7 now use the EmptyState component, including Jobs couldn't load and Messages couldn't load, which exist only on UI Screens.
   9. New States-grid frames (the 3 free cells): Referral Requests + Invite alert, Referral Requests / Invited, Seen It Move / Picked.
 - A re-run of the audit finds nothing left. Remaining Cancels are intended: the Log out action sheet, the Invite alert, and the link page's "Not now".
+
+DECISION · 2026-09-23 · Two-page check and Paused profile removed
+- Checked all 82 V6 Prototype frames against UI Screens: text, shown/hidden items, components, colours, borders, radius, text styles. Nothing from this chat is missing on UI Screens. Size and spacing can't be compared (402 vs 390 wide).
+- 3 small differences, all with UI Screens ahead: dark back chevron (code matches), AA grey on "12 days ago", text style on the "Saved…" tag.
+- Deleted "Candidate/Profile Screen/Paused" on both pages. Once the "Let referrers find me" card left Profile, it was identical to "Candidate/Profile Screen". Its only Figma link went with it. The code had no matching scenario, so no code change.
