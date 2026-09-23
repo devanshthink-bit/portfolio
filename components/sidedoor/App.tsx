@@ -24,7 +24,7 @@ import {
   SavedJobs,
   Settings,
 } from "./screens/shared";
-import { AddResumeSheet, DobSheet, LogoutSheet, NotMovingSheet, SeenItMoveSheet, ShareLinkSheet } from "./screens/sheets";
+import { AddResumeSheet, DobSheet, InviteAlert, LogoutSheet, NotMovingSheet, SeenItMoveSheet, ShareLinkSheet } from "./screens/sheets";
 import { SCENARIOS } from "./scenarios";
 
 /**
@@ -134,6 +134,7 @@ const SHEETS: Record<string, (p: any) => ReactNode> = {
   dob: (p) => <DobSheet {...p} />,
   addResume: (p) => <AddResumeSheet {...p} />,
   logout: () => <LogoutSheet />,
+  invite: (p) => <InviteAlert {...p} />,
 };
 /* eslint-enable @typescript-eslint/no-explicit-any */
 

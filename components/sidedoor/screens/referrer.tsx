@@ -232,7 +232,7 @@ export function ReferralRequests() {
                       invited.includes(r.name) ? (
                         <SmallButton done>Invited</SmallButton>
                       ) : (
-                        <SmallButton onClick={() => dispatch({ t: "invite", v: r.name })}>Invite</SmallButton>
+                        <SmallButton onClick={() => nav.openSheet("invite", { name: r.name })}>Invite</SmallButton>
                       )
                     }
                   />

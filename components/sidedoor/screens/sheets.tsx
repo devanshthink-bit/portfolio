@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useNav } from "../nav";
 import { STAGE_LABEL, useDecide, useStore, type Stage } from "../store";
-import { ActionSheet, Avatar, Button, Card, Field, Icon, Note, RadioList, RadioOption, Sheet, Tag, TextButton, WheelDate } from "../ui";
+import { ActionSheet, Alert, Avatar, Button, Card, Field, Icon, Note, RadioList, RadioOption, Sheet, Tag, TextButton, WheelDate } from "../ui";
 
 function SheetPerson({ name, role, tag }: { name: string; role: string; tag?: React.ReactNode }) {
   return (
@@ -306,6 +306,27 @@ export function LogoutSheet() {
         },
       ]}
       onCancel={nav.closeSheet}
+    />
+  );
+}
+
+/* ── Invite ─────────────────────────────────────────────────────────────── */
+// an invite can't be taken back, so it asks first, the way iOS asks before a step like this
+export function InviteAlert({ name, leaving }: { name: string; leaving?: boolean }) {
+  const nav = useNav();
+  const { dispatch } = useStore();
+  const first = name.split(" ")[0];
+  return (
+    <Alert
+      title={`Invite ${first}?`}
+      message={`${first} will be asked to send you a referral request for this job. You can’t undo an invite.`}
+      confirm="Invite"
+      onConfirm={() => {
+        dispatch({ t: "invite", v: name });
+        nav.closeSheet();
+      }}
+      onCancel={nav.closeSheet}
+      leaving={leaving}
     />
   );
 }

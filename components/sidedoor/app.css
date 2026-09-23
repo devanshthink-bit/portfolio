@@ -692,6 +692,25 @@
 .sd-as-btn:active { background: rgba(0, 0, 0, 0.06); }
 .sd-as-cancel { margin-top: 8px; background: var(--sd-n0); border-radius: var(--sd-r-sheet); height: 56px; }
 
+/* alert (Invite): the iOS centred alert, 270 wide, title and message over two side-by-side buttons */
+.sd-alert {
+  position: absolute; left: 50%; top: 50%; z-index: 55; width: 270px;
+  transform: translate(-50%, -50%);
+  background: var(--sd-n0); border-radius: 16px; overflow: hidden; text-align: center;
+  animation: sd-alert-in 280ms var(--sd-ease) both;
+}
+.sd-alert.is-out { animation: sd-alert-out 200ms linear both; }
+@keyframes sd-alert-in { from { opacity: 0; transform: translate(-50%, -50%) scale(1.12); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+@keyframes sd-alert-out { from { opacity: 1; } to { opacity: 0; } }
+.sd-alert-text { padding: 20px 16px; display: flex; flex-direction: column; gap: 4px; }
+.sd-alert-title { font-weight: 600; font-size: 16px; line-height: 24px; color: var(--sd-text); }
+.sd-alert-msg { font-weight: 400; font-size: 14px; line-height: 20px; color: var(--sd-text-2); }
+.sd-alert-btns { display: flex; border-top: 1px solid var(--sd-border-subtle); }
+.sd-alert-btn { flex: 1 1 0; height: 44px; font-weight: 400; font-size: 16px; line-height: 24px; color: var(--sd-link); }
+.sd-alert-btn + .sd-alert-btn { border-left: 1px solid var(--sd-border-subtle); }
+.sd-alert-btn.is-default { font-weight: 600; }
+.sd-alert-btn:active { background: rgba(0, 0, 0, 0.06); }
+
 /* ── toast · glass, slides down from under the bar ───────────────────────── */
 /* Figma puts the toast 16 above the tab bar, so 104 off the bottom. */
 .sd-toast {

@@ -1122,6 +1122,43 @@ export function ActionSheet({
   );
 }
 
+/** The iOS alert: a short question in the middle of the screen, for a step that can't be taken back. */
+export function Alert({
+  title,
+  message,
+  confirm,
+  onConfirm,
+  onCancel,
+  leaving,
+}: {
+  title: string;
+  message?: string;
+  confirm: string;
+  onConfirm: () => void;
+  onCancel: () => void;
+  leaving?: boolean;
+}) {
+  return (
+    <>
+      <div className={`sd-scrim${leaving ? " is-out" : ""}`} />
+      <div className={`sd-alert${leaving ? " is-out" : ""}`} role="alertdialog" aria-labelledby="sd-alert-title">
+        <div className="sd-alert-text">
+          <h2 id="sd-alert-title" className="sd-alert-title">{title}</h2>
+          {message && <p className="sd-alert-msg">{message}</p>}
+        </div>
+        <div className="sd-alert-btns">
+          <button className="sd-alert-btn" onClick={onCancel}>
+            Cancel
+          </button>
+          <button className="sd-alert-btn is-default" onClick={onConfirm}>
+            {confirm}
+          </button>
+        </div>
+      </div>
+    </>
+  );
+}
+
 /* ── toast ──────────────────────────────────────────────────────────────── */
 export function Toast({ children, icon = "checkmark", action }: { children: ReactNode; icon?: IconName; action?: ReactNode }) {
   return (

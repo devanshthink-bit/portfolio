@@ -3025,3 +3025,17 @@ Caveat noted: #fafafa fields on white and white fields on #f2f2f7 both have fain
 - Chip gap is 6 in both (was 8 in code): Figma draws text a few px wider than the browser, so at 8 the first job card's two chips wrapped in Figma but not in code.
 - Code: removed the role line I had added to "Your referrals" cards; Figma never had it, and the ask was to change layout, not content.
 - Verified on localhost only.
+
+## 23 Sep 2026 · Invite asks first
+- Devansh: inviting a candidate can't be undone, so ask first, the way an iOS app would.
+- **Chose the iOS centred alert, not an action sheet.** It asks one yes/no question about something the person just tapped. The action sheet stays for Log out.
+  - Title "Invite Shreya?". Message: "Shreya will be asked to send you a referral request for this job. You can't undo an invite."
+  - Buttons: Cancel, then Invite (bold, on the right, as iOS does for the default action).
+  - 270 wide, r16 (`radius/16`), white. 20/16 padding, title 16/24 SemiBold, message 14/20 grey, 44-tall buttons, subtle dividers. 40% scrim.
+  - Tapping the scrim does nothing. You must pick a button, as on iOS.
+- Code: new `Alert` in ui.tsx and an `invite` entry in the sheet registry. Invite opens it; only the Invite button in the alert marks the person invited.
+- Figma (V6 page):
+  - New "Referrer/Invite Alert" frame: a 390×844 scrim with the alert in the middle. It's a frame because the API can't set an overlay's dim background.
+  - New "Referrer/Referral Requests Screen/Invited" frame: Shreya's button swapped to the Done variant.
+  - Invite on the three screens that show it opens the alert as an overlay. Cancel closes it; Invite goes to the Invited screen.
+- Verified on localhost only: Cancel leaves "Invite"; Invite turns it to "Invited".
