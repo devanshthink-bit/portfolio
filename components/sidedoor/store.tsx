@@ -115,7 +115,8 @@ const initial: State = {
   skippedResume: false,
   details: { dob: "", gaps: "", locations: "", notice: "" },
   note: "",
-  requestsLeft: 2,
+  // Figma draws "2 of 5"; testers start with all 5 so they can send to several jobs (Devansh, 23 Sep). The state list still opens on Figma's 2.
+  requestsLeft: 5,
   // The list on "Your referral requests", exactly as the V6 screen shows it. The Flipkart one is
   // the live request the prototype drives; the rest are history so the list is not a single row.
   requests: [
@@ -268,7 +269,7 @@ function reduce(s: State, a: Action): State {
       return { ...s, force: a.v };
     case "jump":
       // start from a clean slate so one state can't leak into the next
-      return { ...initial, role: a.role, force: a.force, offline: a.force === "offline", resume: "Abhinav_Saxena_Resume.pdf", verified: true, jobId: "184223", posted: true,
+      return { ...initial, requestsLeft: 2, role: a.role, force: a.force, offline: a.force === "offline", resume: "Abhinav_Saxena_Resume.pdf", verified: true, jobId: "184223", posted: true,
         // "Skill removed" starts with Prototyping taken off, and can still be undone
         removedSkills: a.force === "req.skill" ? ["abhinav|Prototyping"] : [] };
     case "reset":

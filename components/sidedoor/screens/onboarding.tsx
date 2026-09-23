@@ -495,7 +495,7 @@ function ItemHead({ title, onRemove }: { title: string; onRemove: () => void }) 
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
       <span className="t-h-xs" style={{ flex: 1 }}>{title}</span>
-      <button className="sd-textbtn" style={{ color: "var(--sd-ios-red)" }} onClick={onRemove}>
+      <button className="sd-textbtn" style={{ color: "var(--sd-text-error)" }} onClick={onRemove}>
         Remove
       </button>
     </div>

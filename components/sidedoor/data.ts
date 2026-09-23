@@ -150,7 +150,7 @@ export const JOBS: Job[] = [
     title: "Founding Product Designer",
     company: "Sarvam AI",
     logo: "sarvam",
-    banner: { bg: "linear-gradient(120deg, #1D4ED8 0%, #6D5BD0 45%, #F97316 100%)", w: 0, h: 0, word: "sarvam", wordColor: "#fff" },
+    banner: { bg: "linear-gradient(120deg, #1D4ED8 0%, #6D5BD0 45%, #F97316 100%)", src: "/images/sidedoor/sarvam-white.svg", w: 220, h: 35, keep: true },
     city: "Bengaluru, KA",
     cityShort: "Bengaluru",
     pay: "₹40–60 LPA",

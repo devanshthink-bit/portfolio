@@ -927,7 +927,7 @@ export function Field({
             onBlur={blur}
             maxLength={max}
             aria-invalid={!!shown}
-            rows={2}
+            rows={3}
             readOnly={readOnly}
           />
         ) : (
@@ -984,7 +984,7 @@ export function TagInput({ label, value, onChange, ideas = [] }: { label: string
           <span key={t} className="sd-tag neutral sd-tag-x">
             <span>{t}</span>
             <button aria-label={`Remove ${t}`} onClick={(e) => { e.stopPropagation(); onChange(value.filter((x) => x !== t)); }}>
-              <Icon name="xmark" size={10} />
+              <Icon name="xmark.circle.fill" size={14} />
             </button>
           </span>
         ))}

@@ -3108,3 +3108,9 @@ DECISION · 2026-09-23 · Prototype made ready for usability tests
 - Also made real: posts pause/resume and drafts post; Save shows a toast; chats per person with a reply; LinkedIn/Dribbble/Behance open a preview; resume preview per candidate; saved jobs list all saved.
 - Still to draw on UI Screens: the Projects "editing" state (not in Figma yet).
 - Verified on localhost (preview needs a login).
+
+DECISION · 2026-09-23 · Follow-ups Devansh approved
+- Sarvam AI: its official white and black wordmarks (sarvam.ai/brand, 3 KB SVGs each) replace the stand-in. White sits on the blue-to-orange banner; black is the tile logo.
+- Testers start with 5 of 5 requests, so they can send to several jobs. Figma draws "2 of 5", and the state list still opens on 2.
+- New UI Screens frame: "Candidate/Your Profile From Your Resume Screen/Projects Editing" (5711:30311, V6 · States Flow). Each project shows Remove, name, skill tags with the library's xmark.circle.fill, one-tap skill ideas, and a 100-tall description; "+ Add a project" at the foot. Code now matches it: xmark.circle.fill on chips, Remove in text/error, 3-line description box.
+- Verified on localhost (preview needs a login).
