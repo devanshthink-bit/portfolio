@@ -1,5 +1,5 @@
-<svg width="800" height="741.3696" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
-  <mask id="a" width="168" height="154" x="12" y="18" maskUnits="userSpaceOnUse">
+<svg width="824" height="765.3696" viewBox="-12 -12 824 765.3696" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+  <mask id="a" width="200" height="200" x="0" y="0" maskUnits="userSpaceOnUse">
     <path fill="#fff" d="M63.09 37c14.626-25.333 51.193-25.334 65.819 0l45.033 78c14.626 25.334-3.657 57.001-32.91 57.001H50.967c-29.253 0-47.536-31.667-32.91-57.001Z"/>
   </mask>
   <g mask="url(#a)" transform="matrix(4.8140532,0,0,4.8140532,-62.146701,-86.652356)">

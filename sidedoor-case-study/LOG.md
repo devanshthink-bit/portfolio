@@ -2998,3 +2998,7 @@ Caveat noted: #fafafa fields on white and white fields on #f2f2f7 both have fain
 - Code: share sheet uses whatsapp-2026, gmail-2026, gdrive-2026, telegram-2026 (.svg), sized 36/34×27/32×29.6/36.
 - Figma: the four Logo/* components now hold the new marks, resized to the size their instances use (40, 34×25, 32×29, 33). Drive's SVG mask didn't import into Figma (the artwork vanished), so Drive is a 256px PNG rendered from the same SVG. Checked the share row in both.
 - Verified on localhost only.
+- **Share row fixes** (Devansh): Drive was clipped at its bottom corners and WhatsApp looked larger. The Commons Drive SVG's mask box was a hair narrower than its rounded triangle; widened the mask and added a small viewBox margin (renamed google-drive-2026.svg to drop the cached copy). WhatsApp mark 36 → 32. Figma: Drive PNG re-rendered from the fixed SVG; WhatsApp mark 32.
+- **Order is now LinkedIn, Gmail, Drive, WhatsApp, More; Telegram removed** (Devansh). LinkedIn uses our own logo file with colours swapped for the app-icon look (#0A66C2 square, white "in"), as linkedin-app.svg. Figma: new Logo/LinkedIn component; the two V6 share rows (prototype page, UI Screens V6) reordered with the Telegram tile turned into LinkedIn. The V2/V4/V5 rows were left as history; Logo/Telegram stays for them.
+- **Verified tick vs "Selected" tag** (Devansh asked): same colour, `text/successAA` #15803D, in code and Figma.
+- Verified on localhost only.
