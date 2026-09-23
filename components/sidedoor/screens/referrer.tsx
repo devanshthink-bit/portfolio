@@ -755,7 +755,7 @@ export function YourReferrals() {
             display: "flex",
             flexDirection: "column",
             alignItems: "flex-end",
-            gap: withUpdate ? 9 : 8,
+            gap: 8,
             paddingTop: withUpdate ? 4 : 0,
             flex: "0 0 auto",
           }}

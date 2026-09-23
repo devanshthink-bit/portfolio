@@ -495,7 +495,8 @@ export const logoSrc = (logo: string) => `/images/sidedoor/${logo}.${RASTER_LOGO
  * from DESIGN_LANGUAGE; 44 is the leading slot in a list card.
  */
 export function LogoTile({ logo, alt, size = 74 }: { logo: string; alt: string; size?: number }) {
-  const pad = size >= 74 ? 10 : Math.round(size * 0.16);
+  // Figma Frame 310: a 74 tile padded 12 (spacing scale), the logo fills the 50 inside
+  const pad = size >= 74 ? 12 : Math.round(size * 0.16);
   return (
     <span className="sd-logotile" style={{ width: size, height: size, padding: pad }}>
       <Image

@@ -246,10 +246,9 @@ export function JobDetails() {
             </span>
           </div>
         )}
-        {/* Figma nests a 358-wide Card inside a 370-wide Window, so the content column is 326
-            starting at x38 — a 22 horizontal padding on one card gives the same thing. The
-            column's own gap is a uniform 16 between every block. */}
-        <div className="sd-card" style={{ padding: "16px 22px", display: "flex", flexDirection: "column", gap: 16 }}>
+        {/* Figma's Job card fills its 370 Window and is padded 16; the column's own gap is a
+            uniform 16 between every block. */}
+        <div className="sd-card" style={{ padding: 16, display: "flex", flexDirection: "column", gap: 16 }}>
           {/* CompanyRow is 56 tall: a 40 row, 16 of padding under it, and a 1px rule on the bottom. */}
           <div
             style={{
@@ -276,14 +275,14 @@ export function JobDetails() {
             </span>
           </div>
 
-          {/* Figma Frame 200: a 175-tall #2563eb panel, r16, padded 24/52, with the company
-              wordmark centred in the 222x127 it leaves. The code drew a small logo on white. */}
+          {/* Figma Frame 200: a 175-tall #2563eb panel, r16, padded 24/48, with the company
+              wordmark filling the 242 it leaves. The code drew a small logo on white. */}
           <div
             style={{
               background: "var(--sd-action-bg)",
               borderRadius: 16,
               height: 175,
-              padding: "24px 52px",
+              padding: "24px 48px",
               display: "grid",
               placeItems: "center",
             }}
@@ -293,9 +292,9 @@ export function JobDetails() {
             <Image
               src="/images/sidedoor/flipkart-white.svg"
               alt="Flipkart"
-              width={222}
-              height={58.53}
-              style={{ width: 222, height: 58.53 }}
+              width={242}
+              height={64}
+              style={{ width: 242, height: 64 }}
               unoptimized
             />
           </div>

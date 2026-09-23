@@ -41,7 +41,7 @@ export function Login() {
       <StatusBar />
       <div className="sd-login">
         {/* Figma Frame 181 runs the full 306 wide; its rows are centred inside it, not hugged. */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 36, alignItems: "center", paddingTop: 18, width: "100%" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 32, alignItems: "center", paddingTop: 16, width: "100%" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "center", width: "100%" }}>
             {/* the mark is a bitmap in Figma (exported at 4x); the wordmark is a vector, so it is
                 the same SVG Figma draws, not a flattened PNG */}

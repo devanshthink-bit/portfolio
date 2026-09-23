@@ -361,8 +361,19 @@ Devansh: "yes fix all". Every fix below is in Figma (V6 on 🖼️ UI Screens, a
 - New Figma states, with the same states in code: Messages Screen/No Matches, Referrer/Messages Screen/Empty, Candidate and Referrer Notifications Screen/Empty, SideDoor Login Screen/Cancelled ("LinkedIn sign-in was cancelled."), Link Page/Reading.
 - Caught in code: a search that matched nothing hid the search box, so it couldn't be cleared.
 
-**Left on purpose:**
-- **Save job bookmark in Figma.** It sits inside the Job card component that V2–V5 share, so adding a hit area would edit old versions (rule: never). The code has the 44pt area.
-- **Off-scale paddings (22, 14, 10).** These are Figma's own values. Card padding 22 is in the shared Card component, so changing it moves V2–V5 too. Button padding 14 still makes a 52pt button. No reader-facing effect.
+**Follow-up, 23 Sep (Devansh: "its ok v2-v5 can change along with v6. fix these"):**
+- **Save job bookmark:** a Hit area 44 in the shared Job card component (Card Type=Job, 587:1969). It's invisible, so V2–V5 look the same.
+- **Spacing on the scale**, in Figma and code:
+  - Job details card fills its frame: inset 16, was 16 + 6 (code had 22). The Flipkart banner padding is 24/48, was 24/52, and the wordmark is now 242×64.
+  - Logo tile padding 12, was 10. The logo is 50, was 54.
+  - Referral row time → Update gap 8, was 9.
+  - Login carousel gap 32 and top 16, were 36 and 18.
+  - Link page header 16 above and below, was 14. The header component is now 134 tall.
+  - Code only, where Figma was already on the scale: buttons are a fixed 52 (was 14 padding), toast padding 12 (was 14), timeline steps 32 apart as a gap (was 34 of padding, same spacing on screen).
+  - Rescan of all 69 states: nothing off the scale except the "More" dots in the share sheet. Those are icon drawing (7.9 dots), not spacing.
+
+**Left on purpose (superseded where marked):**
+- ~~**Save job bookmark in Figma.** It sits inside the Job card component that V2–V5 share, so adding a hit area would edit old versions (rule: never). The code has the 44pt area.~~ Done above.
+- ~~**Off-scale paddings (22, 14, 10).** These are Figma's own values. Card padding 22 is in the shared Card component, so changing it moves V2–V5 too. Button padding 14 still makes a 52pt button. No reader-facing effect.~~ Done above.
 - **The new Undo toasts wrap to two lines** on the longer messages ("Marked as submitted. Abhinav is told in 5 seconds."). Kept, because the name and the 5 seconds are the point.
 - **New non-Undo states are not wired on the Figma prototype page.** A click-through can't go offline or type a search. They are in the States grid, and all of them are reachable in the coded prototype's switcher.

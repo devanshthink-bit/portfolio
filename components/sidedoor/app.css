@@ -346,7 +346,8 @@
   justify-content: center;
   gap: 8px;
   font-weight: 500; font-size: 16px; line-height: 24px;
-  padding: 14px 32px;
+  /* Figma's Button is a fixed 52 with its label centred: the height sets it, not padding */
+  padding: 0 32px;
   transition: transform 120ms var(--sd-ease), opacity 120ms linear, background 120ms linear;
 }
 .sd-btn:active { transform: scale(0.975); }
@@ -546,7 +547,7 @@
 /* ── avatars, logos ─────────────────────────────────────────────────────── */
 .sd-av { border-radius: 50%; overflow: hidden; flex: 0 0 auto; background: var(--sd-n100); display: grid; place-items: center; font-weight: 600; font-size: 16px; line-height: 1; color: var(--sd-n600); box-shadow: var(--sd-e1); }
 /* Figma's logo tile is r12, padded 10, and carries no shadow. */
-.sd-logotile { width: 74px; height: 74px; flex: 0 0 auto; background: #fff; border-radius: var(--sd-r-lg); display: grid; place-items: center; padding: 10px; }
+.sd-logotile { width: 74px; height: 74px; flex: 0 0 auto; background: #fff; border-radius: var(--sd-r-lg); display: grid; place-items: center; padding: 12px; }
 .sd-logotile img { display: block; }
 .sd-logo-sm { width: 40px; height: 40px; flex: 0 0 auto; background: #fff; border-radius: var(--sd-r-md); box-shadow: var(--sd-e1); display: grid; place-items: center; padding: 6px; }
 .sd-logo-sm img { width: 28px; height: auto; display: block; }
@@ -566,14 +567,14 @@
    centred on the 24 mark. The connector is a 2px Line 37 long starting 22 below the
    mark's top (21 on a waiting step) — it runs under both marks — and dashed 5/5 when the
    step ahead is not reached. The 22 matters: it sets where the dashes fall. */
-.sd-timeline { display: flex; flex-direction: column; }
+/* Figma Frame 315: steps 32 apart */
+.sd-timeline { display: flex; flex-direction: column; gap: 32px; }
 .sd-tl-step { display: flex; gap: 8px; }
 .sd-tl-rail { position: relative; width: 24px; flex: 0 0 auto; }
 .sd-tl-mark { position: relative; z-index: 1; display: block; }
 .sd-tl-line { position: absolute; left: 11px; top: 22px; width: 2px; height: 37px; }
 .sd-tl-step.is-waiting .sd-tl-line { top: 21px; }
-.sd-tl-body { padding: 2px 0 34px; flex: 1 1 auto; display: flex; flex-direction: column; }
-.sd-tl-step:last-child .sd-tl-body { padding-bottom: 2px; }
+.sd-tl-body { padding: 2px 0; flex: 1 1 auto; display: flex; flex-direction: column; }
 .sd-tl-title { font-weight: 600; font-size: 14px; line-height: 20px; }
 .sd-tl-when { font-weight: 500; font-size: 12px; line-height: 16px; color: var(--sd-text-2); margin-top: 2px; }
 
@@ -639,7 +640,8 @@
   left: 16px;
   right: 16px;
   z-index: 70;
-  padding: 14px 16px;
+  padding: 12px 16px;
+  min-height: 48px;
   border-radius: var(--sd-r-full);
   background: var(--sd-n0);
   backdrop-filter: blur(7px);
@@ -687,4 +689,4 @@
 /* Figma AppHeader Type=Logo: 48 tall, padding 12/16, contents spread with the wordmark
    centred. */
 .sd-web-bar { height: 48px; flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between;
-  gap: 12px; padding: 12px 16px; margin-bottom: 14px; }
+  gap: 12px; padding: 12px 16px; margin-bottom: 16px; }

@@ -2805,3 +2805,12 @@ Built in both, per the new rule. Detail in ATTACK.md, "Final attack fixes built"
 Found while fixing: the wrapper-based 44pt overlays on "Update" and "Mark it" never clicked the button; the Messages search box vanished on no match.
 Not done, with reasons: Figma bookmark hit area (shared V2–V5 Job card), off-scale paddings (shared Card component), wiring non-Undo states on the Figma prototype page (a click-through can't trigger them).
 Checked on localhost, not the Vercel preview (needs a login): send 3 taps → 1 request; Refer/NMF/Submitted/Seen-it-move undo on both sides; tap probe; long names; offline; every new switcher state. next build passes.
+
+DECISION · 2026-09-23 · Shared components may change V2–V5 · Source: Devansh ("its ok v2-v5 can change along with v6. fix these")
+Decided:  Fixing a shared component is fine even though V2–V5 instances change with it. V2–V5 screen frames are still not edited directly.
+
+CHANGE · 2026-09-23 · Bookmark hit area and spacing on the scale · Source: Devansh
+  - Job card component: invisible Hit area 44 over the bookmark (shows in every version, changes nothing visible).
+  - Figma + code: Job details card fills its frame (16), banner 24/48 with a 242×64 wordmark, logo tiles padded 12 with 50 logos, referral row gap 8, login 32/16, link page header 16/16 (component 134 tall).
+  - Code only (Figma already on scale): button fixed 52 instead of 14 padding, toast 12, timeline gap 32.
+Checked on localhost: rescan finds no off-scale spacing except icon drawing in the share sheet's "More" dots; timeline pitch unchanged (56/74); build passes.

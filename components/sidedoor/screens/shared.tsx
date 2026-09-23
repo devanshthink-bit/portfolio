@@ -626,11 +626,11 @@ export function LinkPage() {
     window.setTimeout(() => setReading(false), 1600);
   };
 
-  // Figma: the link page is a web page, so its header is 130 tall with no fill — 14 above
-  // the status bar, the 48 logo bar, 14 below — and the one action sits 40 off the bottom.
+  // Figma: the link page is a web page, so its header is 134 tall with no fill — 16 above
+  // the status bar, the 48 logo bar, 16 below — and the one action sits 40 off the bottom.
   const page = (body: ReactNode, actions: ReactNode) => (
     <>
-      <div style={{ height: 14, flex: "0 0 auto" }} />
+      <div style={{ height: 16, flex: "0 0 auto" }} />
       <StatusBar />
       <LogoBar />
       <div className="sd-body">
@@ -793,7 +793,7 @@ export function LinkPage() {
 function LogoBar() {
   return (
     // Figma AppHeader Type=Logo: 48 tall, padding 12/16, no fill, the wordmark centred
-    // between two empty 24px slots, and 14 below it.
+    // between two empty 24px slots, and 16 below it.
     <div className="sd-web-bar">
       <span style={{ width: 24, flex: "0 0 auto" }} />
       <Image
