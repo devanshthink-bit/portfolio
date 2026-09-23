@@ -2909,3 +2909,13 @@ Caveat noted: #fafafa fields on white and white fields on #f2f2f7 both have fain
 - The login illustration (splash.png) had a grey box baked into it. It's now transparent (background and enclosed pockets cleared), in code and in the Figma Illustration/Splash component.
 - Figma: new `color/palette/brand/blue/25`; `color/background/grouped` points to it, so all 165 V6 screens follow. The 8 "Fixed Actions" fades were recoloured by hand (gradients can't take variables). Swatch added to the 🎨 Colors page.
 - Verified on localhost only.
+
+## 2026-09-23 · Near-white page; cards lift with a soft shadow
+
+- Devansh: the light blue still looked dark; they want the UI bright. Page is now `brand/blue/25` = #F7F9FE (near white, a hint of brand blue).
+- On near-white, white cards lose their edge, so every white card, list, box and field gets a soft iOS-style lift: a 0.5px hairline (6% ink), a 1px/2px shadow (4%), and a 4/14 shadow tinted brand blue (7%). Nested boxes and fields inside a card stay flat. Focus and error rings keep the lift.
+  - Code: `--sd-e-card` on .sd-card, .sd-list, .sd-radiolist, .sd-box, .sd-input, .sd-search, .sd-logotile and the inline white cards (14).
+  - Figma: new effect style `effect/card`, same three shadows. Applied to the card components (PostCard ×3, SkeletonCard, RequestCard, MenuRow, SheetPersonCard, OnboardingCard, DocUpload ×2), the 9 InputField boxes, and the loose white cards on V6 screens (129 on UI Screens, 109 on the prototype page). Those had `effect/elevation-1` or nothing before, so the code and Figma didn't match; now they do.
+  - Not lifted: buttons, switches, the tab bar (glass), chat bubbles, action sheets.
+- This also fixes the earlier caveat: field edges were under 3:1 against the page. The hairline plus shadow now marks each field.
+- Verified on localhost only.
