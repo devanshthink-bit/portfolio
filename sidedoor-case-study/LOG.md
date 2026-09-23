@@ -2919,3 +2919,4 @@ Caveat noted: #fafafa fields on white and white fields on #f2f2f7 both have fain
   - Not lifted: buttons, switches, the tab bar (glass), chat bubbles, action sheets.
 - This also fixes the earlier caveat: field edges were under 3:1 against the page. The hairline plus shadow now marks each field.
 - Verified on localhost only.
+- **Revised:** Devansh: #F7F9FE still read bluish. Page is now neutral/50 #FAFAFA (already in the palette); the card shadow's blue tint is now neutral ink. `brand/blue/25` and its swatch deleted. Fixed Actions fades updated in Figma (4 + 4 frames). Verified on localhost only.
