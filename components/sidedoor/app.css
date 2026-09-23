@@ -72,10 +72,10 @@
   --sd-e1: 0 1px 4px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
   --sd-e2: 0 6px 16px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.08);
   --sd-e3: 0 12px 32px rgba(0, 0, 0, 0.14), 0 4px 12px rgba(0, 0, 0, 0.1);
-  /* White cards on the white page: a 1px neutral/150 edge, no shadow (Mobbin: Redfin,
-     Coursera). A shadow faded into the white on large cards; an edge reads the same on every
-     card. Drawn as a spread shadow so it adds no layout size. */
-  --sd-e-card: 0 0 0 1px var(--sd-n150);
+  /* Cards on the page: a 1px neutral/150 edge, no shadow (Mobbin: Redfin, Coursera). Drawn as
+     an outline pulled 1px inside, so a parent that clips (a sheet, a scroller) can't cut it and
+     rows inside the card can't paint over it. */
+  --sd-edge: 1px solid var(--sd-n150);
   --sd-glass-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
 
   /* iOS motion */
@@ -431,7 +431,7 @@
 .sd-actions > .sd-textbtn { padding-top: 4px; }
 
 /* ── cards, boxes, sections ──────────────────────────────────────────────── */
-.sd-card { background: #fff; border-radius: var(--sd-r-lg); padding: 16px; box-shadow: var(--sd-e-card); }
+.sd-card { background: #fff; border-radius: var(--sd-r-lg); padding: 16px; outline: var(--sd-edge); outline-offset: -1px; }
 /* Figma: the card that holds DetailFields is white, r8, padding 12/16, its fields 12 apart,
    and it carries no shadow and no stroke. */
 .sd-box { background: var(--sd-n0); border-radius: var(--sd-r-md); padding: 12px 16px;
@@ -441,7 +441,7 @@
 /* Figma's Frame 235 puts 24 between blocks and the screens set that as the column's gap,
    so a margin here was adding a second 24 and every section sat 48 apart. */
 .sd-section > .sd-seclabel + * { margin-top: 8px; }
-.sd-list { background: #fff; border-radius: var(--sd-r-lg); overflow: hidden; box-shadow: var(--sd-e-card); }
+.sd-list { background: #fff; border-radius: var(--sd-r-lg); overflow: hidden; outline: var(--sd-edge); outline-offset: -1px; }
 .sd-row { display: flex; align-items: center; gap: 8px; padding: 12px 16px; min-height: 50px; position: relative; }
 .sd-row + .sd-row::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 0.5px; background: var(--sd-border-subtle); }
 .sd-row.is-tap:active { background: var(--sd-n100); }
@@ -483,7 +483,7 @@
 .sd-tag.buffer svg { color: var(--sd-icon-warning); }
 .sd-tag.failure { background: var(--sd-error-50); color: var(--sd-text-error); }
 /* Figma Tag/Style=Plain: no fill, padding 2/0, 12/16 label, still 22 tall. */
-.sd-radiolist { background: var(--sd-n0); border-radius: var(--sd-r-lg); overflow: hidden; box-shadow: var(--sd-e-card); }
+.sd-radiolist { background: var(--sd-n0); border-radius: var(--sd-r-lg); overflow: hidden; outline: var(--sd-edge); outline-offset: -1px; }
 .sd-radio { width: 100%; display: flex; gap: 12px; align-items: center; padding: 12px 16px; text-align: left; }
 /* Figma: a 0.5 #f0f1f2 stroke between options that adds to the row height (62.5 / 44.5) */
 .sd-radio + .sd-radio { border-top: 0.5px solid var(--sd-border-subtle); }
@@ -541,8 +541,8 @@
 .sd-input.is-focus { box-shadow: inset 0 0 0 2px var(--sd-link); }
 .sd-input.is-error { box-shadow: inset 0 0 0 1px var(--sd-text-error); }
 /* white boxes get the card edge; inside a card they sit flat */
-.sd-box { box-shadow: var(--sd-e-card); }
-.sd-card .sd-box { box-shadow: none; }
+.sd-box { outline: var(--sd-edge); outline-offset: -1px; }
+.sd-card .sd-box { outline: none; }
 .sd-field-err { display: flex; align-items: center; gap: 4px; font-weight: 500; font-size: 12px; line-height: 16px; color: var(--sd-text-error); }
 /* required fields carry a * after the label; optional ones say "(optional)" in the label */
 .sd-req { color: var(--sd-text-error); }
@@ -585,7 +585,7 @@
 /* ── avatars, logos ─────────────────────────────────────────────────────── */
 .sd-av { border-radius: 50%; overflow: hidden; flex: 0 0 auto; background: var(--sd-n100); display: grid; place-items: center; font-weight: 600; font-size: 16px; line-height: 1; color: var(--sd-n600); box-shadow: var(--sd-e1); }
 /* Figma's logo tile is r12, padded 10, and carries no shadow. */
-.sd-logotile { width: 74px; height: 74px; flex: 0 0 auto; background: #fff; box-shadow: var(--sd-e-card); border-radius: var(--sd-r-lg); display: grid; place-items: center; padding: 12px; }
+.sd-logotile { width: 74px; height: 74px; flex: 0 0 auto; background: #fff; outline: var(--sd-edge); outline-offset: -1px; border-radius: var(--sd-r-lg); display: grid; place-items: center; padding: 12px; }
 .sd-logotile img { display: block; }
 .sd-logo-sm { width: 40px; height: 40px; flex: 0 0 auto; background: #fff; border-radius: var(--sd-r-md); box-shadow: var(--sd-e1); display: grid; place-items: center; padding: 6px; }
 .sd-logo-sm img { width: 28px; height: auto; display: block; }

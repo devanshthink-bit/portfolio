@@ -143,7 +143,7 @@ export function ReferralRequests() {
                 style={{
                   background: "var(--sd-n0)",
                   borderRadius: "var(--sd-r-md)",
-                  boxShadow: "var(--sd-e-card)",
+                  outline: "var(--sd-edge)", outlineOffset: -1,
                   padding: "12px 16px",
                   display: "flex",
                   alignItems: "center",
@@ -168,7 +168,7 @@ export function ReferralRequests() {
                 style={{
                   background: "var(--sd-n0)",
                   borderRadius: "var(--sd-r-md)",
-                  boxShadow: "var(--sd-e-card)",
+                  outline: "var(--sd-edge)", outlineOffset: -1,
                   padding: "12px 16px",
                   display: "flex",
                   alignItems: "center",
@@ -683,7 +683,7 @@ function MarkedSubmitted({ id }: { id: string }) {
           style={{
             background: "var(--sd-n0)",
             borderRadius: "var(--sd-r-lg)",
-            boxShadow: "var(--sd-e-card)",
+            outline: "var(--sd-edge)", outlineOffset: -1,
             padding: 24,
             display: "flex",
             flexDirection: "column",

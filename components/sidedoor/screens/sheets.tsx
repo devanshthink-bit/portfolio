@@ -196,7 +196,7 @@ export function ShareLinkSheet({ leaving }: { leaving?: boolean }) {
             <Field value={msg} onChange={setMsg} multiline kind="tips" required error={msgError ?? undefined} />
           ) : (
             // Figma "Box": r8, padded 12/16, Regular 14/20 in the body colour
-            <div style={{ background: "var(--sd-n0)", borderRadius: 8, padding: "12px 16px", boxShadow: "var(--sd-e-card)" }}>
+            <div style={{ background: "var(--sd-n0)", borderRadius: 8, padding: "12px 16px", outline: "var(--sd-edge)", outlineOffset: -1 }}>
               <p className="t-body">{msg}</p>
             </div>
           )}
@@ -212,7 +212,7 @@ export function ShareLinkSheet({ leaving }: { leaving?: boolean }) {
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             {[...apps, { name: "More", img: "", w: 0, h: 0 }].map((a) => (
               <button key={a.name} onClick={nav.closeSheet} style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center" }}>
-                <span style={{ width: 60, height: 60, borderRadius: 8, background: "var(--sd-n0)", boxShadow: "var(--sd-e-card)", display: "grid", placeItems: "center" }}>
+                <span style={{ width: 60, height: 60, borderRadius: 8, background: "var(--sd-n0)", outline: "var(--sd-edge)", outlineOffset: -1, display: "grid", placeItems: "center" }}>
                   {a.img ? (
                     <Image src={`/images/sidedoor/${a.img}.svg`} alt="" width={a.w} height={a.h} style={{ width: a.w, height: a.h }} unoptimized />
                   ) : (

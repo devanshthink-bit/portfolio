@@ -109,7 +109,7 @@ export function Jobs() {
             style={{
               background: "var(--sd-n0)",
               borderRadius: "var(--sd-r-lg)",
-              boxShadow: "var(--sd-e-card)",
+              outline: "var(--sd-edge)", outlineOffset: -1,
               padding: "12px 16px",
               display: "flex",
               gap: 12,
@@ -914,7 +914,7 @@ export function TrackDetails({ id, stage, updated }: { id: string; stage?: Stage
               </span>
             </div>
             {bar(300, 12)}
-            <span style={{ height: 300, borderRadius: "var(--sd-r-lg)", background: "var(--sd-n0)", boxShadow: "var(--sd-e-card)" }} />
+            <span style={{ height: 300, borderRadius: "var(--sd-r-lg)", background: "var(--sd-n0)", outline: "var(--sd-edge)", outlineOffset: -1 }} />
           </div>
           <div className="sd-card" style={{ padding: 16, display: "flex", gap: 12, alignItems: "center" }}>
             {bar(44, 44, true)}
@@ -994,7 +994,7 @@ export function TrackDetails({ id, stage, updated }: { id: string; stage?: Stage
             style={{
               background: "var(--sd-n0)",
               borderRadius: "var(--sd-r-lg)",
-              boxShadow: "var(--sd-e-card)",
+              outline: "var(--sd-edge)", outlineOffset: -1,
               padding: "12px 16px",
               display: "flex",
               gap: 12,
@@ -1044,7 +1044,7 @@ export function TrackDetails({ id, stage, updated }: { id: string; stage?: Stage
             style={{
               background: "var(--sd-n0)",
               borderRadius: "var(--sd-r-lg)",
-              boxShadow: "var(--sd-e-card)",
+              outline: "var(--sd-edge)", outlineOffset: -1,
               padding: "12px 16px",
               display: "flex",
               flexDirection: "column",
