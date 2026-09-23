@@ -2892,3 +2892,11 @@ Caveat noted: #fafafa fields on white and white fields on #f2f2f7 both have fain
   - Figma: new `color/palette/warning/900` #92400E; `color/text/warningAA` points to it; the Tag Buffer label and the same 17 + 15 V6 labels are bound to warningAA again.
   - The timeline titles ("Sent", "On hold") stay plain; only their mark is amber.
   - Verified on localhost only.
+
+## 2026-09-23 · Colors page caught up with the variables
+
+- Devansh asked where the screen background (#F2F2F7) sits in the palette. It was the variable `neutral/75`, but the 🎨 Colors page never showed it.
+- Added 8 missing swatches, each bound to its variable: neutral/75, 150, 650, 700, black, success/800, warning/100, warning/900. The neutral and status rows now wrap.
+- Deleted `warning/700` (#8A6100): no variable or node used it after the amber change.
+- Code: added `--sd-n75`; `--sd-page` now points to it instead of repeating the hex.
+- Naming oddity, not changed: neutral/650 (#5F6671) is darker than neutral/700 (#636A75).

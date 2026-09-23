@@ -17,6 +17,7 @@
   --sd-n50: #fafafa;
   --sd-n75: #f2f2f7;
   --sd-n100: #f0f1f2;
+  --sd-n75: #f2f2f7;             /* iOS grouped background */
   --sd-n150: #e6e7eb;
   --sd-n200: #d1d3d8;
   --sd-n400: #9ca3af;
@@ -41,7 +42,7 @@
   --sd-surface: #ffffff;
   --sd-surface-2: #fafafa;
   --sd-surface-3: #f0f1f2;
-  --sd-page: #f2f2f7;            /* background/grouped */
+  --sd-page: var(--sd-n75);      /* background/grouped */
   --sd-fill-3: rgba(118, 118, 128, 0.12);
   --sd-border: #d1d3d8;
   --sd-border-subtle: #f0f1f2;
