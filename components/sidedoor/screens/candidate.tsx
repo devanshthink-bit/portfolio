@@ -390,7 +390,7 @@ export function JobDetails() {
           {/* Figma Frame 174: the pay tag and the three rating marks, 8 apart. */}
           <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
             <Tag icon="info.circle.fill">₹28–40 LPA</Tag>
-            <Image src="/images/sidedoor/rating-logos.svg" alt="" width={37} height={16} style={{ width: 37, height: 16 }} unoptimized />
+            <Image src="/images/sidedoor/rating-sources.svg" alt="" width={37} height={16} style={{ width: 37, height: 16 }} unoptimized />
           </div>
 
           {/* Figma Frame 175 spreads the three across the full width. */}
@@ -464,7 +464,7 @@ export function JobDetails() {
           <Block
             icon="info.circle.fill"
             title="About the employer"
-            end={<Image src="/images/sidedoor/rating-logos.svg" alt="" width={30} height={13} style={{ width: 30.06, height: 13 }} unoptimized />}
+            end={<Image src="/images/sidedoor/rating-sources.svg" alt="" width={30} height={13} style={{ width: 30.06, height: 13 }} unoptimized />}
           >
             Flipkart is one of India’s leading e-commerce platforms, serving millions of customers across categories. The
             company focuses on building scalable, customer-first experiences through technology, design, and innovation.
