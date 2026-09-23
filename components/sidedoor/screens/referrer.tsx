@@ -513,18 +513,19 @@ export function ReferralRequest({ id }: { id: string }) {
 }
 
 function PersonHead({ name, role, when, tag }: { name: string; role: string; when?: string; tag?: React.ReactNode }) {
-  // Like the list cards: a 44 avatar, the name with its time in plain grey on the right, the role
-  // under it. A status (Referred, Not moving forward) stays a tag at the end of the role line.
+  // Figma's Person row is 50 tall: a 44 avatar centred, a Semi Bold 16/24 name, the role under it.
+  // A time sits on the name line in plain grey, as on the list cards; a status (Referred, Not moving
+  // forward) stays a tag at the end of the role line.
   return (
     <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
       <Avatar name={name} size={44} />
-      <div style={{ display: "flex", flexDirection: "column", flex: 1, minWidth: 0 }}>
-        <span className="sd-lc-head">
-          <span className="sd-lc-title"><span>{name}</span></span>
+      <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1, minWidth: 0 }}>
+        <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span className="t-h-sm sd-1line" style={{ flex: 1 }}>{name}</span>
           {when && <span className="sd-lc-when">{when}</span>}
         </span>
         <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <span className="sd-lc-line" style={{ flex: 1 }}>{role}</span>
+          <span className="sd-person-sub sd-2line" style={{ flex: 1 }}>{role}</span>
           {tag}
         </span>
       </div>

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useNav } from "../nav";
 import { STAGE_LABEL, useDecide, useStore, type Stage } from "../store";
+import { DocUpload } from "./onboarding";
 import { ActionSheet, Alert, Avatar, Button, Card, Field, Icon, Note, RadioList, RadioOption, Sheet, Tag, TextButton, WheelDate } from "../ui";
 
 function SheetPerson({ name, role, tag }: { name: string; role: string; tag?: React.ReactNode }) {
@@ -262,21 +263,23 @@ export function DobSheet({ leaving }: { leaving?: boolean }) {
 export function AddResumeSheet({ leaving }: { leaving?: boolean }) {
   const nav = useNav();
   const { dispatch } = useStore();
+  // Figma "Add Resume To Ask Sheet": the line, the same upload box as onboarding, and a tag that
+  // says it is kept. Choosing a file (either button) uploads it and opens the check screen.
+  const upload = () => {
+    dispatch({ t: "resume", v: "Abhinav_Saxena_Resume.pdf" });
+    nav.closeSheet();
+    nav.push("uploadResume");
+  };
   return (
-    <Sheet title="Add your resume to ask" onClose={nav.closeSheet} leaving={leaving} closeButton>
-      <p className="t-body muted" style={{ marginBottom: 16 }}>
-        Referrers need it before they can act. It takes one upload, and we fill in the rest.
-      </p>
-      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-        <Button
-          onClick={() => {
-            dispatch({ t: "resume", v: "Abhinav_Saxena_Resume.pdf" });
-            nav.closeSheet();
-            nav.push("uploadResume");
-          }}
-        >
-          Add resume
-        </Button>
+    <Sheet title="Add your resume to ask Nithin" onClose={nav.closeSheet} leaving={leaving} closeButton>
+      <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+        <p className="t-body muted">
+          Flipkart’s portal asks for it. We fill in your details from it, and you check them before anything is sent.
+        </p>
+        <DocUpload what="resume" file={null} onUpload={upload} />
+        <span>
+          <Tag>Saved for your next requests too</Tag>
+        </span>
       </div>
     </Sheet>
   );

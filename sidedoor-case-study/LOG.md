@@ -3055,3 +3055,25 @@ Caveat noted: #fafafa fields on white and white fields on #f2f2f7 both have fain
   - RadioOption got a "Show Detail" boolean, so "12 days ago" stays under Submitted whichever row is selected. Before, the date lived only in the Selected variant.
   - New frame "Update Sheet/Seen It Move/Picked". Tapping In interviews on the sheet swaps to it; its Update closes the sheet and goes to "Your Referrals Screen/Updated".
 - Verified on localhost only.
+
+## 23 Sep 2026 · iOS consistency pass (11 fixes + 2 found on the way)
+Devansh asked what still wasn't iOS-like or consistent, then said to fix all of it and keep "Let referrers find me" in Settings only.
+1. **Closing a sheet:** every sheet now has the grey × at the top right. Not moving forward, Share your link, Date of birth and Add your resume lost their Cancel / Not now buttons. Titles get 40 on each side so the × never touches them. Tapping the dim still closes.
+2. **Header time:** "Sent today" on the Referral request header was a grey tag. It's now plain grey text on the name line (13, text/secondaryAA), like the list cards. Figma PersonRow got a "Show time" + "Time" property. Status tags (Referred, Not moving forward) stay tags.
+3. **Time placement:** in Notifications the time moved from under the text to the top right, with the unread dot under it, as in Messages. This is the NotificationRow component.
+4. **Time style:** Messages list times now use the same 13 Regular grey as the cards (they were 12 Medium).
+5. **"Let referrers find me"** is only in Settings. The Profile card with the Live tag is gone, in code and in both Figma Profile frames. "Profile Screen/Paused" now looks the same as "Profile Screen".
+6. **Chat card:** in code it said Sent while Nithin writes "I've submitted it". It now shows at least Submitted. Figma already said Submitted.
+7. **AM/PM:** "3:31 pm" → "3:31 PM" everywhere, in code and Figma.
+8. **Errors and empty screens** now use one iOS ContentUnavailableView-style block, centred:
+   - A 44 mark (icon/accent; errors use a red info mark), then 16, a title at 20/28, then 4, one line at 14/20 grey, then 24 to the action.
+   - Errors say "Check your connection and try again." with a secondary **Try again** button instead of "Pull down to try again."
+   - New titles were added; the old sentences became the body line.
+   - Figma: a new EmptyState component (Patterns V6) and a new SF/checkmark.circle.fill, used in the 5 V6 frames that exist: Track couldn't load, Requests couldn't load, Requests empty, All handled, Your referrals empty. The other empty screens exist in code only; Figma has no frames for them.
+9. **Chevrons:** list-row › is now 16 and light grey (neutral/400), as iOS draws it. It was 24 and dark. This covers the MenuRow component and the three Profile frames.
+10. **Chat times:** no time under every bubble. A small centred "Today 3:10 PM" opens the chat and any run of messages 15+ minutes after the last. ChatMessage lost its Time property.
+11. **Composer:** iMessage style. A grey capsule field with a 30 circle send button inside its right end and an up arrow. The button is grey until there is text, then blue. The ChatComposer component was rebuilt.
+- **Found on the way (a):** the tab bar icons differed. Code had Jobs = briefcase, Requests = tray, Posts = grid; Figma has Jobs = grid, Requests = paper plane, Posts = briefcase. Code now follows Figma (Figma is the source of truth).
+- **Found on the way (b):** the code's "Add your resume" sheet had drifted from Figma (different title, copy and button). The code now matches Figma: "Add your resume to ask Nithin", the portal line, the same upload box as onboarding, and the "Saved for your next requests too" tag. It's added to the prototype's Sheets list.
+- **Slip, fixed:** removing "Not now" in Figma also deleted that tag, because they shared a frame. I rebuilt it.
+- Verified on localhost only.

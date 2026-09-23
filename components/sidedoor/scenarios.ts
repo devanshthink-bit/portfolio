@@ -117,6 +117,7 @@ export const SCENARIOS: Scenario[] = [
   { id: "sheet.share", label: "Share your link sheet", group: "Sheets", role: "referrer", tab: "requests", sheet: { key: "shareLink" } },
   { id: "sheet.dob", label: "Date of birth picker", group: "Sheets", role: "candidate", tab: "jobs", push: [{ key: "job", props: { id: "flipkart" } }, { key: "checkRequest" }], sheet: { key: "dob" } },
   { id: "sheet.logout", label: "Log out action sheet", group: "Sheets", role: "candidate", tab: "profile", sheet: { key: "logout" } },
+  { id: "sheet.resume", label: "Add your resume sheet", group: "Sheets", role: "candidate", force: "job.skipped", tab: "jobs", sheet: { key: "addResume" } },
 ];
 
 export const GROUPS = ["Happy path", "The answer", "Nothing yet", "Waiting", "Went wrong", "Rules and limits", "Sheets"];

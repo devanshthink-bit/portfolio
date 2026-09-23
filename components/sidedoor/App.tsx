@@ -50,8 +50,9 @@ const TabCtx = createContext<{ tab: string; pick: (k: string) => void }>({ tab: 
 
 /* ── the tabs, per role ─────────────────────────────────────────────────── */
 const CANDIDATE_TABS = [
-  { key: "jobs", label: "Jobs", icon: "briefcase" as const, iconOn: "briefcase.fill" as const },
-  { key: "requests", label: "Requests", icon: "tray" as const, iconOn: "tray.fill" as const },
+  // Figma's TabBar (V6): Jobs is the grid, Requests the paper plane (the requests you sent)
+  { key: "jobs", label: "Jobs", icon: "square.grid.2x2" as const, iconOn: "square.grid.2x2.fill" as const },
+  { key: "requests", label: "Requests", icon: "paperplane" as const, iconOn: "paperplane.fill" as const },
   { key: "messages", label: "Messages", icon: "bubble.left" as const, iconOn: "bubble.left.fill" as const },
   { key: "profile", label: "Profile", icon: "person" as const, iconOn: "person.fill" as const },
 ];
@@ -59,7 +60,8 @@ const CANDIDATE_TABS = [
 const REFERRER_TABS = [
   { key: "requests", label: "Requests", icon: "tray" as const, iconOn: "tray.fill" as const },
   { key: "referrals", label: "Referrals", icon: "person.2" as const, iconOn: "person.2.fill" as const },
-  { key: "posts", label: "Posts", icon: "square.grid.2x2" as const, iconOn: "square.grid.2x2.fill" as const },
+  // Figma: Posts is the briefcase (job posts); Requests stays the tray (an inbox)
+  { key: "posts", label: "Posts", icon: "briefcase" as const, iconOn: "briefcase.fill" as const },
   { key: "profile", label: "Profile", icon: "person" as const, iconOn: "person.fill" as const },
 ];
 
