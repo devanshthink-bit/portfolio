@@ -127,41 +127,6 @@ const PATHS = {
     "M1 17.2C1 17.0 1.0 16.8 1.2 16.6C1.4 16.4 1.6 16.3 1.9 16.3H3.5V7.5C3.5 6.9 3.6 6.5 4.0 6.2C4.3 5.9 4.7 5.7 5.3 5.7H18.6C19.2 5.7 19.7 5.9 20.0 6.2C20.3 6.5 20.4 6.9 20.4 7.5V16.3H22.0C22.3 16.3 22.5 16.4 22.7 16.6C22.9 16.8 23 17.0 23 17.2C23 17.5 22.9 17.7 22.7 17.9C22.5 18.1 22.3 18.2 22.0 18.2H1.9C1.6 18.2 1.4 18.1 1.2 17.9C1.0 17.7 1 17.5 1 17.2ZM4.9 16.3H19.0V7.9C19.0 7.6 18.9 7.5 18.8 7.3C18.7 7.2 18.5 7.2 18.3 7.2H5.6C5.4 7.2 5.2 7.2 5.1 7.3C5.0 7.5 4.9 7.6 4.9 7.9V16.3Z",
 } as const;
 
-/** Each decorative icon takes the colour of what it means (iOS Settings-style), not one brand
- *  colour. All pass 3:1 on white. Pass color="tone" to use it. Chevrons, status marks and
- *  icons inside buttons don't use tones. */
-export const TONE: Partial<Record<IconName, string>> = {
-  "mappin.and.ellipse": "var(--sd-tone-red)",
-  "flag.fill": "var(--sd-tone-red)",
-  calendar: "var(--sd-tone-orange)",
-  clock: "var(--sd-tone-orange)",
-  "clock.fill": "var(--sd-tone-orange)",
-  hourglass: "var(--sd-tone-orange)",
-  "briefcase.fill": "var(--sd-tone-brown)",
-  briefcase: "var(--sd-tone-brown)",
-  "lightbulb.fill": "var(--sd-tone-amber)",
-  "quote.bubble.fill": "var(--sd-tone-green)",
-  "bubble.left.fill": "var(--sd-tone-green)",
-  "building.2.fill": "var(--sd-tone-indigo)",
-  laptopcomputer: "var(--sd-tone-indigo)",
-  headphones: "var(--sd-tone-indigo)",
-  "person.fill": "var(--sd-tone-blue)",
-  person: "var(--sd-tone-blue)",
-  "envelope.fill": "var(--sd-tone-blue)",
-  link: "var(--sd-tone-blue)",
-  "link.line": "var(--sd-tone-blue)",
-  "doc.on.doc.fill": "var(--sd-tone-blue)",
-  "folder.fill": "var(--sd-tone-blue)",
-  "info.circle.fill": "var(--sd-tone-blue)",
-  "arrow.up.right.square": "var(--sd-tone-blue)",
-  "square.and.arrow.down": "var(--sd-tone-blue)",
-  bookmark: "var(--sd-tone-blue)",
-  "bookmark.fill": "var(--sd-tone-blue)",
-  "gearshape.fill": "var(--sd-tone-grey)",
-  "lock.fill": "var(--sd-tone-grey)",
-  paperclip: "var(--sd-tone-grey)",
-};
-
 export function Icon({
   name,
   size = 24,
@@ -180,7 +145,7 @@ export function Icon({
       viewBox="0 0 24 24"
       fill="none"
       aria-hidden="true"
-      style={{ display: "block", flex: "0 0 auto", color: color === "tone" ? TONE[name] ?? "var(--sd-icon-2)" : color, ...style }}
+      style={{ display: "block", flex: "0 0 auto", color: color === "tone" ? "var(--sd-icon-accent)" : color, ...style }}
     >
       <path d={PATHS[name]} fill="currentColor" />
     </svg>

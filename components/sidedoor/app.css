@@ -51,16 +51,10 @@
   --sd-action-fg-dis: #5f6671;
   --sd-icon: #3b3f46;
   --sd-icon-2: #6b7280;
-  /* icon tones: each decorative icon takes the colour of its meaning (Icon.tsx TONE). All pass
-     3:1 on white for non-text contrast. */
-  --sd-tone-blue: #2563eb;
-  --sd-tone-red: #ef4444;
-  --sd-tone-orange: #ea580c;
-  --sd-tone-amber: #d97706;
-  --sd-tone-brown: #b45309;
-  --sd-tone-green: #16a34a;
-  --sd-tone-indigo: #4f46e5;
-  --sd-tone-grey: #6b7280;
+  /* every decorative icon (labels, headings, facts, timestamps, actions) is brand blue
+     (Devansh). Chevrons, status marks, icons inside buttons and tags, the tab bar and brand
+     logos keep their own colours. Icons pass color="tone" to get it. */
+  --sd-icon-accent: var(--sd-link);
   --sd-text-warning: #92400e;    /* dark amber: 6.4:1 on the amber tag, 6.3:1 on the page */
   --sd-icon-warning: #f59e0b;    /* amber: waiting / on hold / still needed, always beside a word */
   --sd-waiting: #f59e0b;         /* amber, iOS-style pending: "sitting with someone else" */
