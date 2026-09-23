@@ -97,7 +97,7 @@ export function ReferralRequests() {
           list and the suggested block sit close together. */}
       <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 8 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <Icon name="briefcase.fill" size={16} style={{ color: "var(--sd-icon-2)" }} />
+          <Icon name="briefcase.fill" size={16} style={{ color: "var(--sd-icon-accent)" }} />
           <span className="t-h-xs" style={{ flex: 1 }}>
             Interaction Designer · Flipkart
           </span>
@@ -151,7 +151,7 @@ export function ReferralRequests() {
                 }}
               >
                 <span className="t-label" style={{ flex: 1 }}>sidedoor.app/r/nithin-agarwal</span>
-                <Icon name="doc.on.doc.fill" size={20} style={{ color: "var(--sd-icon-2)" }} />
+                <Icon name="doc.on.doc.fill" size={20} style={{ color: "var(--sd-icon-accent)" }} />
               </div>
             </Section>
             <Actions>
@@ -176,7 +176,7 @@ export function ReferralRequests() {
                 }}
               >
                 <span className="t-label" style={{ flex: 1 }}>sidedoor.app/r/nithin-agarwal</span>
-                <Icon name="doc.on.doc.fill" size={20} style={{ color: "var(--sd-icon-2)" }} />
+                <Icon name="doc.on.doc.fill" size={20} style={{ color: "var(--sd-icon-accent)" }} />
               </div>
             </Section>
             <Actions>
@@ -371,7 +371,7 @@ export function ReferralRequest({ id }: { id: string }) {
                     background: "var(--sd-n100)", display: "grid", placeItems: "center",
                   }}
                 >
-                  <Icon name="briefcase.fill" size={20} style={{ color: "var(--sd-icon-2)" }} />
+                  <Icon name="briefcase.fill" size={20} style={{ color: "var(--sd-icon-accent)" }} />
                 </span>
                 <span style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", minWidth: 0 }}>
                   <span className="t-h-sm">{r.thin.role}</span>
@@ -384,7 +384,7 @@ export function ReferralRequest({ id }: { id: string }) {
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <span className="t-label" style={{ flex: 1 }}>{r.thin.resume}</span>
                 <button className="sd-hit44" aria-label="Open resume" style={{ display: "flex" }} onClick={() => nav.push("resume", { file: r.thin?.resume })}>
-                  <Icon name="arrow.up.right.square" size={20} style={{ color: "var(--sd-icon-2)" }} />
+                  <Icon name="arrow.up.right.square" size={20} style={{ color: "var(--sd-icon-accent)" }} />
                 </button>
               </div>
             </Section>
@@ -494,7 +494,7 @@ export function ReferralRequest({ id }: { id: string }) {
                 Abhinav_Saxena_Resume.pdf
               </span>
               <button className="sd-hit44" aria-label="Open resume" style={{ display: "flex" }} onClick={() => nav.push("resume", { file: "Abhinav_Saxena_Resume.pdf" })}>
-                <Icon name="arrow.up.right.square" size={20} style={{ color: "var(--sd-icon-2)" }} />
+                <Icon name="arrow.up.right.square" size={20} style={{ color: "var(--sd-icon-accent)" }} />
               </button>
             </div>
             {/* Figma's LinkBlock is three 20 marks, 8 apart. */}
@@ -644,7 +644,7 @@ function AfterRefer({ id }: { id: string }) {
                     <Icon
                       name={copied.includes(f.name) ? "checkmark" : f.download ? "square.and.arrow.down" : "doc.on.doc.fill"}
                       size={18}
-                      style={{ color: copied.includes(f.name) ? "var(--sd-text-success)" : "var(--sd-icon-2)" }}
+                      style={{ color: copied.includes(f.name) ? "var(--sd-text-success)" : "var(--sd-icon-accent)" }}
                     />
                   </button>
                 </div>
@@ -829,7 +829,7 @@ export function YourReferrals() {
                   <span className="t-h-xs">Himani thanked you</span>
                   <span className="t-label-sm muted">“You made the referral easy. I start next month!”</span>
                 </span>
-                <Icon name="quote.bubble.fill" size={18} style={{ color: "var(--sd-icon-2)" }} />
+                <Icon name="quote.bubble.fill" size={18} style={{ color: "var(--sd-icon-accent)" }} />
               </div>
             </Card>
           </div>

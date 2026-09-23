@@ -51,6 +51,9 @@
   --sd-action-fg-dis: #5f6671;
   --sd-icon: #3b3f46;
   --sd-icon-2: #6b7280;
+  /* brand blue for icons beside a heading or label, and icons that are actions. Icons beside grey
+     supporting text (times, facts), chevrons, status marks and icons inside buttons stay as they are. */
+  --sd-icon-accent: var(--sd-link);
   --sd-text-warning: #92400e;    /* dark amber: 6.4:1 on the amber tag, 6.3:1 on the page */
   --sd-icon-warning: #f59e0b;    /* amber: waiting / on hold / still needed, always beside a word */
   --sd-waiting: #f59e0b;         /* amber, iOS-style pending: "sitting with someone else" */

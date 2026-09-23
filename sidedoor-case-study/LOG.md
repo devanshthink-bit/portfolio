@@ -2958,3 +2958,16 @@ Caveat noted: #fafafa fields on white and white fields on #f2f2f7 both have fain
 - **Edge broke at the sides of the reason list** (Devansh). The 1px edge was drawn outside the card; the sheet's scroll area (code) and the clipping "Stages" frame (Figma) cut off anything outside their bounds. Now drawn inside: code uses `outline: var(--sd-edge); outline-offset: -1px` (`--sd-edge: 1px solid neutral/150`) on every card, list, box and radio group; Figma's `effect/card` is a 1px inner shadow bound to neutral/150. Checked the Not moving forward sheet and role cards in both. Verified on localhost only.
 - **Green tags blended into the page** (Devansh). Fill moved from success/50 #ECFDF5 to new success/100 #DCFCE7, matching the amber tag's step (warning/100). Text #15803D on it is 4.6:1. Code `--sd-success-100`; Figma `feedback/success/bg` → success/100 (no screen had its own override). Verified on localhost only.
 - **Invite and Invited didn't match** (Devansh): Invite was a small outlined button, Invited a grey tag (different height, radius, fill). Now both are the same small outlined button; Invited is its done state: grey label (#636A75), a 14px check, disabled. Code: `SmallButton done` + `.sd-btn.small.is-done`. Figma: new Button variant `Type=Secondary Small, State=Done`; RequestCard's Invited is that button (cloned from Invite so it keeps the 28 height), still driven by `Show invited`. Checked both states in code and on the prototype page. Verified on localhost only.
+
+## 2026-09-23 · Brand-blue icons
+
+- Devansh: use brand blue for icons, and say first where it shouldn't go.
+- Rule: blue (#2563EB, new `--sd-icon-accent` / Figma `color/icon/accent` → brand/blue/500) for icons beside a heading or field label (section labels, field labels, "Your rules", "Tips", "Job description"…), menu-row icons, and icons that are actions (open resume, bookmark, copy, the date field's calendar).
+- Left as they were, pending Devansh:
+  - Icons beside grey supporting text: the clocks by timestamps, the shared-history icons in cards, the location/years/type facts on Job details. A blue icon next to grey text reads as a link and outshouts the text.
+  - Chevrons: iOS keeps disclosure chevrons grey.
+  - Status marks (error red, waiting amber, success green, the timeline) — colour carries meaning.
+  - Icons inside buttons follow the button's label (white on blue, dark on white, grey when disabled).
+  - Tab bar: the selected tab is already blue; unselected stay grey so the current tab is findable.
+  - Brand logos (LinkedIn, Google, Apple, companies, share apps) keep their own colours.
+- Code: 23 icons switched. Figma: SectionLabel and MenuRow components, plus label icons on V6 screens (173 UI Screens, 138 prototype page). Verified on localhost only.

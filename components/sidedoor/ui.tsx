@@ -414,7 +414,7 @@ export function Box({ children, style }: { children: ReactNode; style?: CSSPrope
 export function SectionLabel({ icon, children, end }: { icon?: IconName; children: ReactNode; end?: ReactNode }) {
   return (
     <div className="sd-seclabel">
-      {icon && <Icon name={icon} size={16} style={{ color: "var(--sd-icon-2)" }} />}
+      {icon && <Icon name={icon} size={16} style={{ color: "var(--sd-icon-accent)" }} />}
       <span>{children}</span>
       {end && <span className="sd-sl-end">{end}</span>}
     </div>
@@ -461,7 +461,7 @@ export function Row({
   return (
     <div className={`sd-row${onClick ? " is-tap" : ""}`} onClick={onClick} role={onClick ? "button" : undefined}>
       {/* Figma list row: 26 icon, Medium 14/20 label, 24 chevron in the icon grey */}
-      {icon && <Icon name={icon} size={26} style={{ color: destructive ? "var(--sd-ios-red)" : "var(--sd-icon-2)" }} />}
+      {icon && <Icon name={icon} size={26} style={{ color: destructive ? "var(--sd-ios-red)" : "var(--sd-icon-accent)" }} />}
       <span className="t-label" style={{ color: destructive ? "var(--sd-ios-red)" : "var(--sd-text)" }}>
         {children}
       </span>
@@ -489,7 +489,7 @@ export function DetailField({ name, value, copy }: { name: string; value: ReactN
   return (
     <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
       {text}
-      <Icon name="doc.on.doc.fill" size={18} style={{ color: "var(--sd-icon-2)", flex: "0 0 auto" }} />
+      <Icon name="doc.on.doc.fill" size={18} style={{ color: "var(--sd-icon-accent)", flex: "0 0 auto" }} />
     </div>
   );
 }
@@ -834,7 +834,7 @@ export function Field({
     <div className="sd-field">
       {label && (
         <label className="t-h-xs" style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          {iconNode ?? (icon && <Icon name={icon} size={16} style={{ color: "var(--sd-icon-2)" }} />)}
+          {iconNode ?? (icon && <Icon name={icon} size={16} style={{ color: "var(--sd-icon-accent)" }} />)}
           <span>
             {label}
             {required && (

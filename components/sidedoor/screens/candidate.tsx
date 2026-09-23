@@ -127,7 +127,7 @@ export function Jobs() {
   // Figma drops the section label and the sort row while loading, when empty and on the error
   const sortRow = (
     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-      <Icon name="briefcase.fill" size={16} style={{ color: "var(--sd-icon-2)" }} />
+      <Icon name="briefcase.fill" size={16} style={{ color: "var(--sd-icon-accent)" }} />
       <span className="t-h-xs" style={{ flex: 1 }}>
         Jobs with someone who refers
       </span>
@@ -383,7 +383,7 @@ export function JobDetails() {
               Interaction Designer
             </h1>
             <button className="sd-hit44" onClick={() => dispatch({ t: "save", v: "flipkart" })} aria-label="Save job" style={{ display: "flex" }}>
-              <Icon name={on ? "bookmark.fill" : "bookmark"} size={26} style={{ color: "var(--sd-icon-2)" }} />
+              <Icon name={on ? "bookmark.fill" : "bookmark"} size={26} style={{ color: "var(--sd-icon-accent)" }} />
             </button>
           </div>
 
@@ -421,7 +421,7 @@ export function JobDetails() {
           {/* Figma Frame 156 is the one block with a gap of 8 rather than 2. */}
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             <span style={{ display: "flex", gap: 8, alignItems: "center" }}>
-              <Icon name="briefcase.fill" size={16} style={{ color: "var(--sd-icon-2)" }} />
+              <Icon name="briefcase.fill" size={16} style={{ color: "var(--sd-icon-accent)" }} />
               <span className="t-h-xs">What we’re looking for</span>
             </span>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
@@ -491,7 +491,7 @@ function Block({ icon, title, children, end }: { icon: Parameters<typeof Icon>[0
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
       <span style={{ display: "flex", gap: 8, alignItems: "center" }}>
-        <Icon name={icon} size={16} style={{ color: "var(--sd-icon-2)" }} />
+        <Icon name={icon} size={16} style={{ color: "var(--sd-icon-accent)" }} />
         {/* Figma fills the title across the row, except where a mark follows it — there the
             title hugs so the mark sits right after the words. */}
         <span className="t-h-xs" style={{ flex: end ? "0 0 auto" : 1 }}>{title}</span>
@@ -617,7 +617,7 @@ export function CheckRequest() {
               required
               readOnly
               onClick={() => nav.openSheet("dob")}
-              end={<Icon name="calendar" size={18} style={{ color: "var(--sd-icon-2)" }} />}
+              end={<Icon name="calendar" size={18} style={{ color: "var(--sd-icon-accent)" }} />}
             />
             <Field
               label="Career gaps, in years"
@@ -981,7 +981,7 @@ export function TrackDetails({ id, stage, updated }: { id: string; stage?: Stage
         {/* Figma keeps "where it is now" on the grey page and puts only the timeline in a card */}
         <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
           <span style={{ display: "flex", gap: 8, alignItems: "center" }}>
-            <Icon name="info.circle.fill" size={16} style={{ color: "var(--sd-icon-2)" }} />
+            <Icon name="info.circle.fill" size={16} style={{ color: "var(--sd-icon-accent)" }} />
             <span className="t-h-xs">{fill(now.line)}</span>
           </span>
           <p className="t-label-sm muted">{fill(now.sub)}</p>
