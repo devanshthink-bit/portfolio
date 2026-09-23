@@ -3016,3 +3016,12 @@ Caveat noted: #fafafa fields on white and white fields on #f2f2f7 both have fain
 - Post cards: the "Live · Job ID" line is 14/20 Regular like other detail lines.
 - The clock icon is gone from timestamps on Job details and Track details too, for one timestamp style.
 - Verified on localhost only.
+- **Figma synced for the list-card rhythm.**
+  - Tag component: every style 24 tall, 12/16 Medium (bound to label/sm), padding 4/8, `radius/component/tag` 4 → 6; the Plain style is now the grey #F3F3F3 chip.
+  - RequestCard and ReferralBar (both variants) rebuilt: top row (lead 44 · head with title and time · detail lines, no gaps) → 12 → full-width chip row; Update sits at the end of the chip row. Screen overrides (names, logos, tags) carried over.
+  - Loose job cards on V6 Jobs screens rebuilt the same way (9 prototype page, 12 UI Screens); the shared-history tag switched to the Plain chip.
+  - Timestamps: clock icon removed and time set to 13/24 Regular grey (13 + 13 places).
+  - PostCard: detail line 14/20 Regular, tight under the title, 12 before the activity row.
+- Chip gap is 6 in both (was 8 in code): Figma draws text a few px wider than the browser, so at 8 the first job card's two chips wrapped in Figma but not in code.
+- Code: removed the role line I had added to "Your referrals" cards; Figma never had it, and the ask was to change layout, not content.
+- Verified on localhost only.

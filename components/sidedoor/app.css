@@ -795,7 +795,7 @@
 .sd-lc-title > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sd-lc-when { flex: 0 0 auto; font-weight: 400; font-size: 13px; line-height: 24px; color: var(--sd-text-2); white-space: nowrap; }
 .sd-lc-line { font-weight: 400; font-size: 14px; line-height: 20px; color: var(--sd-text-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.sd-lc-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
+.sd-lc-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 12px; }
 .sd-lc-chips .sd-tag.plain { background: var(--sd-n75); color: var(--sd-text-2); padding: 0 8px; }
 .sd-lc-chips .sd-tag img { width: 12px !important; height: auto !important; }
 .sd-lc-chips .sd-tag svg { width: 12px; height: 12px; }

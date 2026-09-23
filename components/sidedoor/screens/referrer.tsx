@@ -729,15 +729,14 @@ export function YourReferrals() {
     ...REFERRALS.filter((r) => !r.days),
       ];
 
-  // Same list-card rhythm as jobs and requests: name and time, role, then the stage chip with
-  // Update at the far end of the chip row.
+  // Same list-card rhythm as jobs and requests: name and time, then the stage chip with Update
+  // at the far end of the chip row.
   const bar = (r: Referral, withUpdate: boolean) => (
     <ListCard
       key={r.name}
       lead={<Avatar name={r.name} />}
       title={r.name}
       when={r.when}
-      lines={[r.role]}
       chips={
         <>
           <Tag style={stageTag(stageOf(r))}>{STAGE_LABEL[stageOf(r)]}</Tag>
