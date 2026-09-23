@@ -2778,3 +2778,20 @@ Also dropped the `scale(1.03)` from the root cross-fade; it read as a pop, not a
 Verified on localhost, not the Vercel preview: a push is `under-in` + `push-in`, a pop is
 `under-out` + `push-out`, and the leaving copy comes back with `has-tabs` and scrollTop 520 where
 it was left. `npx next build` passes.
+
+CRITIQUE · 2026-09-23 · molades-attack (final V6) · Source: self
+Finding:   Run on the final 84 Figma screens and the prototype, tested in the prototype on localhost. Full tables in ATTACK.md, "Final V6 attack".
+Prediction: Devansh predicted all four kinds. Wrong and waiting broke; too much held everywhere.
+Majors:
+  - Send stays tappable while "Sending…": 3 taps used 2 requests (tested).
+  - Undo after Refer doesn't reach the candidate; they already see "Referred" (tested).
+  - No undo on Not moving forward, Seen-it-move stages, Mark as submitted.
+  - Offline not designed.
+  - Tap targets under 44 in the prototype, worst: 11 Copy icons at 18×18 on After refer.
+Minors: long names wrap in code but end in "…" in Figma; green note 4.49:1; off-scale paddings copied from Figma; Resend code does nothing in code; referrer empty messages/notifications; LinkedIn cancelled; link upload progress.
+Fixed since 19 Sep: tag contrast (AA colours), all long-text collisions.
+Action:    waiting on Devansh's yes for the five.
+
+DECISION · 2026-09-23 · Rule: Figma and prototype change together · Source: Devansh ("if you fix something in figma make sure u also fix it in the prototype. make it a rule always")
+Decided:  Every V6 Figma fix also goes into the coded prototype in the same piece of work, and the other way round.
+Because:  The prototype was matched node by node; one-sided fixes make them drift.

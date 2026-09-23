@@ -269,3 +269,67 @@ Covered in the first pass: long names and skills, Undo after Refer. **Open:** S6
 5. **Job link can't be read (M):** "Add The Job/Couldn't Read Link", the same pattern as the candidate's upload error.
 
 All 12 new screens are in "V6 · States Flow" (rows 4–5). A script check found 0 unstyled texts and 0 unlinked spacing values.
+
+---
+
+# Final V6 attack · 23 Sep
+
+Run on the final V6: the 84 Figma screens, plus the coded prototype (57 states). The prototype is a
+real build, so this time most results were **tested, not guessed**. Taps, double taps and long strings
+were run in it on localhost.
+
+**The job:** a candidate sends a request a stranger can act on, and learns what happened. A referrer
+acts on it in one sitting.
+
+**Devansh predicted:** all four kinds break (no specific cases). **Result:** wrong and waiting broke
+(4 majors). Too much held everywhere. Nothing only has small gaps left.
+
+## Stress pass
+
+| Kind | Throw | Expected | Actual (how known) | |
+|---|---|---|---|---|
+| Waiting | Tap "Send referral request" 3 times fast | One request sent, button blocked while "Sending…" | Button says "Sending…" but stays tappable. Requests left went 2 → 0, not 2 → 1 (tested, prototype) | **M** |
+| Wrong | Refer, then Undo within 5 s | Candidate never sees "Referred" | Referrer's side goes back. Candidate's timeline still says "Referred · Just now" (tested). Toast says "told in 5 seconds", but the candidate is told at once | **M** |
+| Wrong | Tap "Not moving forward" or a Seen-it-move stage ("Not selected") by mistake | Undo, like Refer | Sent to the candidate at once, no undo (Figma and prototype) | **M** |
+| Wrong | Tap "Mark as submitted" before really submitting | Undo | No undo (open since 19 Sep) | m |
+| Waiting | Offline anywhere | "You're offline" banner; actions wait | Not designed (open since 19 Sep) | **M** |
+| Waiting | Link page upload on a slow phone | Progress, then fields | Fills in at once; no progress state (open since 19 Sep) | m |
+| Wrong | LinkedIn sign-in cancelled | Back on Login with a line | Not designed (open since 19 Sep) | m |
+| Waiting | "Resend code" | 30 s countdown | Prototype: does nothing. Figma: Wrong Code state has a countdown | m |
+| Wrong | Seen it move · couldn't update, then tap a stage | Stays failed | Prototype says "Aviral has been told" (scenario only) | m |
+| Nothing | Referrer: no messages, no notifications | Empty text | Not designed | m |
+| Nothing | Messages search "Rahul" | "No matches" | Prototype: "Nothing matches that." Figma: no screen | m (Figma only) |
+| Too much | Name `Krishnamurthy Venkataraghavan Subramanian`, company `Tata Consultancy Services Digital`, title `Senior Staff Product Designer, Payments Platform & Merchant Experience` on Jobs, Job, Check request, Track details, Referral requests, Referral request, Your referrals, Posts, Link page, Messages | Nothing collides or is cut | Nothing collides or is cut (tested, script + screenshots) | ✓ |
+| Too much | Same long name | Figma: one line, "…" | Prototype wraps to 3 lines. Readable, but it doesn't match Figma | m (drift) |
+| Too much | 150-character message preview | Ends in "…" | One line, "…" | ✓ |
+| Waiting | Tap Refer twice | One referral | One (tested) | ✓ |
+| Wrong | Date of birth 31/02/1999 | Can't be entered | Picker only, so it can't happen | ✓ |
+| Nothing / Waiting / Wrong | Jobs, Requests, Messages, Referral requests, Your referrals, Posts, Track details | Empty, loading, couldn't load | All built | ✓ |
+
+**Fixing (5):**
+1. **Send is blocked while sending.** Prototype only; Figma's Loading button is already right.
+2. **Undo after Refer reaches the candidate too.** The candidate's timeline changes after 5 s, not at once. Prototype only.
+3. **Undo on every one-tap decision that tells the candidate:** Not moving forward, each Seen-it-move stage, Mark as submitted. The same toast as Refer. Figma states + prototype.
+4. **Tap targets in the prototype** (see craft pass). Figma already has 44 hit areas on most. Where Figma is missing them (Copy icons), both.
+5. **Offline:** one banner pattern. Figma state + prototype.
+
+**Deliberately not now:** LinkedIn cancelled, link page upload progress, resend countdown, the referrer's empty messages and notifications, and the Figma "no matches" screen. All are minor and rare, or need a platform decision first.
+The long-name drift is a one-line CSS change; it can go with fix 4 if Devansh wants.
+
+## Craft pass
+
+**Rulers (BRIEF.md Constraints, unchanged):** spacing 2–64 scale · type 12/14/16/20/24/32 · weights 400/500/600 · one primary per view · 44×44 · 4.5:1.
+Measured on all 57 prototype states by script.
+
+| Check | Verdict | Detail |
+|---|---|---|
+| Type count | PASS | 12, 14, 16, 20, 32. Plus 17 only in the iOS status bar (system) |
+| Weights | PASS | 400, 500, 600 |
+| Spacing scale | minor FAIL | Off scale, all copied from Figma: card padding 22, button padding 14 (height still 52), logo tile 10, timeline 34, gaps 36/9 |
+| Text contrast | minor FAIL | Green note #15803D on #F2F2F7 = 4.49:1 (needs 4.5). Tags now use the AA colours (#15803D, #B91C1C, #C93400, #1D4EB2), so the 19 Sep C1 failure is gone |
+| Target size | **FAIL** | Copy icons on After refer 18×18 (×11, the referrer's main task), Download 18×18, Open resume 20×20, Save job 26×26, Edit 25×20, Undo 36×20, Log in 41×20, Finish 40×20, request filter chips 92×28, Update 72×28, login page dots 10×10, text links 20–24 tall. Show project details and the skill rows are 20/38 tall in code though Figma has 44 hit areas |
+| Inputs | PASS by design | Every field has a label above it; the input box is 20 tall inside a 52 field that isn't all tappable (can't tell without a device) |
+| Colour alone | PASS | Every tag and note carries a word |
+| Emphasis, alignment, rhythm | not re-run | Checked 19 Sep; no layout changes since besides the audit to Figma |
+
+**Couldn't check:** screen-reader output, focus order, reduced motion, text at 200%.
