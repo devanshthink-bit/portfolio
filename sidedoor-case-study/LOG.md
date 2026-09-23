@@ -2929,3 +2929,13 @@ Caveat noted: #fafafa fields on white and white fields on #f2f2f7 both have fain
 - Figma: all 9 InputField variants now white + 1px border/default, no effect (error variants keep their red stroke). Loose "Input" frames on V6 screens (4 + 6) lose effect/card and get the border. The Messages search uses InputField, so it follows.
 - Trade-off: #D1D3D8 is about 1.5:1 against the page, under the 3:1 guideline for input edges. The label above every field names it, so the field is still identifiable.
 - Verified on localhost only.
+
+## 2026-09-23 · Pure white page, filled grey fields (Postmates-style)
+
+- Devansh pointed to Postmates (Mobbin): pure white page, fields filled light grey, no borders, no shadows. Adopted it; replaces the bordered-field step above.
+- Page: `background/grouped` → neutral/0 #FFFFFF (code `--sd-page: var(--sd-n0)`). Header glass and bottom fades are white.
+- Fields and search: `surface/tertiary` #F0F1F2 fill, no border, no shadow. Focus keeps a 2px blue ring; error keeps a 1px red ring (states need a visible change).
+- Placeholder moved to `text/secondaryAA` #636A75: 4.9:1 on the grey fill. The old #6B7280 would be 4.2:1.
+- Cards, lists and boxes keep `effect/card`, so white cards still lift off the white page.
+- Figma: InputField variants (9), field instances in V6 screens (62 UI Screens + 34 prototype), loose Input frames (6 + 4) and the Fixed Actions fades (4 + 4) updated.
+- Verified on localhost only.
