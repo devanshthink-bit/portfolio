@@ -73,7 +73,7 @@ export function Login() {
           <div style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "center", width: "100%" }}>
             {/* the mark is a bitmap in Figma (exported at 4x); the wordmark is a vector, so it is
                 the same SVG Figma draws, not a flattened PNG */}
-            <Image src="/images/sidedoor/sidedoor-mark.png" alt="" width={216} height={276} style={{ width: 54, height: 69 }} priority />
+            <Image src="/images/sidedoor/sidedoor-logo.png" alt="" width={216} height={276} style={{ width: 54, height: 69 }} priority />
             <Image src="/images/sidedoor/sidedoor-word.svg" alt="SideDoor" width={132} height={24} style={{ width: 132, height: 24 }} unoptimized priority />
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center", width: "100%" }}>
@@ -105,7 +105,7 @@ export function Login() {
               ))}
             </div>
           </div>
-          <Image src="/images/sidedoor/splash.png" alt="" width={908} height={1024} style={{ width: 227, height: 256 }} priority />
+          <Image src="/images/sidedoor/splash-illustration.png" alt="" width={908} height={1024} style={{ width: 227, height: 256 }} priority />
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 12, width: "100%", alignItems: "center" }}>
           {/* Figma "Login/Cancelled": backing out of LinkedIn lands here with one plain line —
