@@ -14,8 +14,8 @@ export default function SidedoorPrototypePage() {
         <p className="proto-eyebrow">Sidedoor · V6</p>
         <h1>Working prototype</h1>
         <p className="proto-sub">
-          Every V6 screen, in code. Send a request as Abhinav, then <b>Profile → Switch role</b> to become Nithin, refer
-          him, and switch back to watch the same request move. Swipe from the left edge to go back.
+          Every V6 screen, in code. Start as a candidate and you are Abhinav; start as a referrer and you are Nithin.{" "}
+          <b>Profile → Switch role</b> keeps you the same person on the other side. Swipe from the left edge to go back.
         </p>
         <p className="proto-sub">
           Testing it? You never have to type: tap an empty field and it fills itself. Not sure where to go? Tap

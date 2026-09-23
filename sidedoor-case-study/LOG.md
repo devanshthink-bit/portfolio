@@ -3142,3 +3142,14 @@ DECISION · 2026-09-24 · Photos for everyone
 - Aditya first got the same photo Rohit already uses (Abhishek Rai); swapped for a different one.
 - Code only. These people are prototype data, not in Figma.
 - Checked on localhost: every avatar on Jobs and on Referral requests shows a photo, none broken.
+
+DECISION · 2026-09-24 · Switching role keeps the same person
+- Devansh: "person won't change, only role will change", so the person who refers can ask for referrals and the other way round.
+- Before, Switch role swapped people (Abhinav ↔ Nithin) so one tester could send a request and then refer it. That demo is gone on purpose: real people don't become someone else.
+- Now the first side you pick decides who you are: candidate = Abhinav (Product Designer, Blinkit), referrer = Nithin (Design Manager, Flipkart). Switching keeps you.
+- Each side follows you: name, photo, company, post (Abhinav posts "Product Designer · Blinkit", BLK-802), link (sidedoor.app/r/abhinav-saxena), share message, portal name, work email, resume, and the note that autofills. Nithin got his own candidate profile (Flipkart, MakeMyTrip, two projects).
+- You never see yourself: no request from you in your referrer list, and no chat or notification with yourself. Jobs and requests at your own company are hidden, because you don't ask for a referral where you already work. (This also removed the Blinkit job from Abhinav's list, which was a bug.)
+- The other side counts as set up when you switch: the resume is read, the work email checked, the post live.
+- Figma: the Switch Role Alert frame now says "You'll see referral requests for jobs at Blinkit… Your requests stay as they are." No other frame changes. Figma draws the referrer as Nithin and the candidate as Abhinav, which is still what you get if you start on that side.
+- Prototype page intro updated.
+- Checked on localhost, both ways: Nithin → candidate (no Flipkart job or request, no self-chat, his profile); Abhinav → referrer (Blinkit post, no request from himself, his link in the share sheet).

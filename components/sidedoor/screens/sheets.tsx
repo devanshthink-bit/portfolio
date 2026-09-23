@@ -88,7 +88,7 @@ export function SeenItMoveSheet({
   leaving?: boolean;
 }) {
   const nav = useNav();
-  const { dispatch, handled } = useStore();
+  const { dispatch, handled, you } = useStore();
   const decide = useDecide();
   const { force } = useStore();
   const failed = force === "sheet.seen.error";
@@ -122,7 +122,7 @@ export function SeenItMoveSheet({
     <Sheet title="Seen it move?" onClose={nav.closeSheet} leaving={leaving} closeButton>
       <SheetPerson name={name} role={role} tag={<Tag>{since}</Tag>} />
       <p className="t-label muted" style={{ marginBottom: 12 }}>
-        Where is it on Flipkart’s portal now?
+        Where is it on {you.company}’s portal now?
       </p>
       <div style={{ marginBottom: 24 }}>
         <RadioList>
@@ -155,11 +155,11 @@ export function SeenItMoveSheet({
 /* ── Share your link ────────────────────────────────────────────────────── */
 export function ShareLinkSheet({ leaving }: { leaving?: boolean }) {
   const nav = useNav();
-  const { dispatch } = useStore();
+  const { dispatch, you } = useStore();
   const [copied, setCopied] = useState(false);
-  const LINK = "sidedoor.app/r/nithin-agarwal";
+  const LINK = `sidedoor.app/r/${you.slug}`;
   const [msg, setMsg] = useState(
-    `Happy to look at a referral for Interaction Designer. Send your details here, it has everything our portal needs: ${LINK}`
+    `Happy to look at a referral for ${you.post.title}. Send your details here, it has everything our portal needs: ${LINK}`
   );
   const [editing, setEditing] = useState(false);
   // the message is what goes out with the link, so the link can't be edited out of it
@@ -273,12 +273,12 @@ export function DobSheet({ leaving }: { leaving?: boolean }) {
 /* ── Add resume to ask (skipped-resume route) ───────────────────────────── */
 export function AddResumeSheet({ leaving, job = "flipkart" }: { leaving?: boolean; job?: string }) {
   const nav = useNav();
-  const { dispatch } = useStore();
+  const { dispatch, you } = useStore();
   const j = jobById(job);
   // Figma "Add Resume To Ask Sheet": the line, the same upload box as onboarding, and a tag that
   // says it is kept. Choosing a file (either button) uploads it and opens the check screen.
   const upload = () => {
-    dispatch({ t: "resume", v: "Abhinav_Saxena_Resume.pdf" });
+    dispatch({ t: "resume", v: you.resume });
     nav.closeSheet();
     nav.push("uploadResume");
   };
@@ -342,19 +342,19 @@ export function InviteAlert({ name, leaving }: { name: string; leaving?: boolean
 }
 
 /* ── Switch role ────────────────────────────────────────────────────────── */
-// One account can ask and refer. Switching says what the other side is for before it moves you,
-// and in this test names who you become, so the swap from Abhinav to Nithin isn't a surprise.
+// One account can ask and refer, and switching never changes who you are (Devansh, 24 Sep). It says
+// what the other side is for before it moves you.
 export function SwitchRoleAlert({ leaving }: { leaving?: boolean }) {
   const nav = useNav();
-  const { role, dispatch } = useStore();
+  const { role, you, dispatch } = useStore();
   const toReferrer = role !== "referrer";
   return (
     <Alert
       title={toReferrer ? "Switch to referring?" : "Switch to asking?"}
       message={
         toReferrer
-          ? "You’ll see referral requests for jobs at your company, and refer from there. In this test you refer as Nithin Agarwal at Flipkart, so you can watch your own request arrive."
-          : "You’ll see jobs you can ask for, and where each of your requests stands. In this test you ask as Abhinav Saxena."
+          ? `You’ll see referral requests for jobs at ${you.company}, and refer from there. Your requests stay as they are.`
+          : `You’ll see jobs you can ask for at other companies, and where each of your requests stands. Your posts stay live.`
       }
       confirm="Switch"
       onConfirm={() => {

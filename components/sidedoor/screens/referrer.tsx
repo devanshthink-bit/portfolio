@@ -41,11 +41,11 @@ const REQUESTS = CANDIDATES;
 /* ── Referral requests ──────────────────────────────────────────────────── */
 export function ReferralRequests() {
   const nav = useNav();
-  const { handled, invited, unread, jobId, force, rules, live, dispatch } = useStore();
+  const { handled, invited, unread, jobId, force, rules, live, you, dispatch } = useStore();
   const [phase, setPhase] = useState<"loading" | "ok">("loading");
   const [open, setOpen] = useState(false);
-  // a request the candidate withdrew leaves the referrer's list
-  const REQUESTS = CANDIDATES.filter((c) => !(c.id === "abhinav" && live.stage === "withdrawn"));
+  // a request the candidate withdrew leaves the referrer's list, and you never see a request from yourself
+  const REQUESTS = CANDIDATES.filter((c) => !(c.id === "abhinav" && live.stage === "withdrawn") && c.name !== you.name);
   useEffect(() => {
     if (force === "reqs.loading") return;
     const t = window.setTimeout(() => setPhase("ok"), 900);
@@ -70,9 +70,9 @@ export function ReferralRequests() {
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <Icon name="briefcase.fill" size={16} color="tone" />
           <span className="t-h-xs" style={{ flex: 1 }}>
-            Interaction Designer · Flipkart
+            {you.post.title} · {you.company}
           </span>
-          <Tag>Job ID {jobId || "184223"}</Tag>
+          <Tag>Job ID {jobId || you.post.jobId}</Tag>
         </div>
 
         {paused && (
@@ -117,7 +117,7 @@ export function ReferralRequests() {
                   gap: 8,
                 }}
               >
-                <span className="t-label" style={{ flex: 1 }}>sidedoor.app/r/nithin-agarwal</span>
+                <span className="t-label" style={{ flex: 1 }}>sidedoor.app/r/{you.slug}</span>
                 <Icon name="doc.on.doc.fill" size={20} color="tone" />
               </div>
             </Section>
@@ -142,7 +142,7 @@ export function ReferralRequests() {
                   gap: 8,
                 }}
               >
-                <span className="t-label" style={{ flex: 1 }}>sidedoor.app/r/nithin-agarwal</span>
+                <span className="t-label" style={{ flex: 1 }}>sidedoor.app/r/{you.slug}</span>
                 <Icon name="doc.on.doc.fill" size={20} color="tone" />
               </div>
             </Section>
@@ -257,8 +257,8 @@ export function ReferralRequest({ id }: { id: string }) {
   const { handled, removedSkills, profile, note, rules, force, dispatch } = useStore();
   const decide = useDecide();
   const c = candidateById(id);
-  // Abhinav is the candidate this prototype plays: his request carries what he typed and edited
-  const r: Candidate = c.id === "abhinav" ? { ...c, name: profile.name, jobs: profile.jobs, projects: profile.projects, note: note || c.note } : c;
+  // a request from you would carry what you typed and edited (you never see your own, but the rule holds)
+  const r: Candidate = c.name === profile.name ? { ...c, name: profile.name, jobs: profile.jobs, projects: profile.projects, note: note || c.note } : c;
   const first = firstName(r.name);
   const refer = () => {
     dispatch({ t: "handle", id: r.id, stage: "referred" });
@@ -530,7 +530,8 @@ function Fact({ icon, children }: { icon: Parameters<typeof Icon>[0]["name"]; ch
  * point of asking once. The rest come from the resume.
  */
 function portalFields(c: Candidate, d: { dob: string; gaps: string; locations: string; notice: string }, p: { name: string; email: string; phone: string; city: string }) {
-  const me = c.id === "abhinav";
+  // only your own request carries what you typed; everyone else's comes from their resume
+  const me = c.name === p.name;
   const phone = me ? p.phone.replace(/^(\+91 ?\d{2})\d{3} ?\d{3}(\d{2})$/, "$1XXX XXX$2") : c.phone;
   return [
     { name: "Full name", value: me ? p.name : c.name },
@@ -549,7 +550,7 @@ function portalFields(c: Candidate, d: { dob: string; gaps: string; locations: s
 
 function AfterRefer({ id }: { id: string }) {
   const nav = useNav();
-  const { jobId, details, profile, force, dispatch } = useStore();
+  const { jobId, details, profile, force, you, dispatch } = useStore();
   const r = candidateById(id);
   const [copied, setCopied] = useState<string[]>([]);
   const decide = useDecide();
@@ -557,7 +558,7 @@ function AfterRefer({ id }: { id: string }) {
   // Undo state draws the same toast here so it stays on screen
   const undo = force === "refer.undo";
   const fields = portalFields(r, details, profile);
-  const name = r.id === "abhinav" ? profile.name : r.name;
+  const name = r.name;
   const first = firstName(name);
 
   return (
@@ -595,7 +596,7 @@ function AfterRefer({ id }: { id: string }) {
       <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
         <PersonHead name={name} role={roleLine(r)} tag={<Tag style="success">Referred</Tag>} />
 
-        <Section label="Add to Flipkart’s portal" icon="arrow.up.right.square" end={<Tag>Job ID {jobId || "184223"}</Tag>}>
+        <Section label={`Add to ${you.company}’s portal`} icon="arrow.up.right.square" end={<Tag>Job ID {jobId || you.post.jobId}</Tag>}>
           {/* Figma's Portal Details frame: the box, then the hint 8 under it and outside the box. */}
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             <Box>
@@ -643,7 +644,7 @@ function MarkedSubmitted({ id }: { id: string }) {
   const nav = useNav();
   const { profile } = useStore();
   const r = candidateById(id);
-  const name = r.id === "abhinav" ? profile.name : r.name;
+  const name = r.name;
   const first = firstName(name);
   return (
     <Screen
@@ -699,7 +700,7 @@ const REFERRALS: Referral[] = [
 
 export function YourReferrals() {
   const nav = useNav();
-  const { handled, unread, force, pending } = useStore();
+  const { handled, unread, force, pending, you } = useStore();
   // who was just moved on; Figma "Updated" shows its note once the 5 seconds to undo are over
   const [lastMoved, setLastMoved] = useState<string | null>(null);
   // Figma "Updated": Aviral has just been moved on, so he leaves the waiting list
@@ -823,7 +824,7 @@ export function YourReferrals() {
           </Section>
         )}
 
-        <Section label="All referrals · Interaction Designer" icon="briefcase.fill">
+        <Section label={`All referrals · ${you.post.title}`} icon="briefcase.fill">
           {all.length === 0 ? (
             <p className="t-label muted">No referrals yet. When you refer someone, you’ll pass on their stage here.</p>
           ) : (
@@ -842,7 +843,7 @@ export function YourReferrals() {
 /* ── Manage your posts ──────────────────────────────────────────────────── */
 type Post = { title: string; jobId: string; state: "Live" | "Paused" | "Draft"; news?: string; activity: string };
 
-const POSTS: Post[] = [
+const POSTS_BASE: Post[] = [
   { title: "Interaction Designer", jobId: "184223", state: "Live", news: "5 new", activity: " · 8 referred" },
   { title: "Product Manager", jobId: "188410", state: "Live", activity: "No new requests · 2 referred" },
   { title: "Software Engineer-I", jobId: "190552", state: "Paused", news: "1 still open", activity: " · 3 referred" },
@@ -851,7 +852,9 @@ const POSTS: Post[] = [
 
 export function ManagePosts() {
   const nav = useNav();
-  const { unread, force, pausedPosts: paused, postedDrafts, dispatch } = useStore();
+  const { unread, force, pausedPosts: paused, postedDrafts, you, dispatch } = useStore();
+  // your first post is the one requests come in for; the other three are the same at any company
+  const POSTS: Post[] = [{ ...POSTS_BASE[0], title: you.post.title, jobId: you.post.jobId }, ...POSTS_BASE.slice(1)];
   const none = force === "posts.empty";
   return (
     <Screen
@@ -874,7 +877,7 @@ export function ManagePosts() {
             action={<Button onClick={() => nav.push("addJob")}>Post a job</Button>}
           />
         ) : (
-        <Section label="Flipkart · 4 posts" icon="briefcase.fill">
+        <Section label={`${you.company} · 4 posts`} icon="briefcase.fill">
           {/* Figma: post cards 8 apart */}
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {POSTS.map((p) => {
@@ -921,8 +924,8 @@ export function ManagePosts() {
 
 export function EditPost({ title }: { title?: string }) {
   const nav = useNav();
-  const { jobId, tips, pausedPosts, dispatch } = useStore();
-  const name = title ?? "Interaction Designer";
+  const { jobId, tips, pausedPosts, you, dispatch } = useStore();
+  const name = title ?? you.post.title;
   const paused = pausedPosts.includes(name);
   const done = (msg: string) => {
     dispatch({ t: "toast", v: msg });
@@ -930,7 +933,7 @@ export function EditPost({ title }: { title?: string }) {
     nav.pop();
   };
   // its own copy, so clearing the box leaves it empty instead of snapping back to 184223
-  const [editId, setEditId] = useState(jobId || "184223");
+  const [editId, setEditId] = useState(jobId || you.post.jobId);
   // Figma "Edit your job post" is "Check your job post" with the post already live: the same
   // five blocks in the same order, a different intro, and Save changes / Pause post.
   return (
@@ -970,7 +973,7 @@ export function EditPost({ title }: { title?: string }) {
           />
         </Section>
 
-        <JdDetails title={title ?? "Interaction Designer"} />
+        <JdDetails title={title ?? you.post.title} />
 
         <RulesSection />
 
@@ -985,7 +988,7 @@ export function EditPost({ title }: { title?: string }) {
           demo={DEMO.tips}
         />
 
-        <FileBox label="Job description" name="Flipkart_IxDesigner_JD.docx" what="file" />
+        <FileBox label="Job description" name={you.post.jd} what="file" />
       </div>
     </Screen>
   );

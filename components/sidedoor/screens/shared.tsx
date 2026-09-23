@@ -6,6 +6,7 @@ import { useRef, useState, type ReactNode } from "react";
 import { useNav } from "../nav";
 import { STAGE_LABEL, stageTag, useStore } from "../store";
 import {
+  logoSrc,
   Actions,
   Avatar,
   Box,
@@ -58,9 +59,12 @@ const isReferrerRole = (r: string | null) => r === "referrer";
 
 export function Messages() {
   const nav = useNav();
-  const { role, unread, force, dispatch } = useStore();
+  const { role, unread, force, you, dispatch } = useStore();
   const [q, setQ] = useState(force === "messages.search" ? "Rahul" : "");
-  const base = role === "referrer" ? REFERRER_CHATS : CANDIDATE_CHATS;
+  // you never have a chat with yourself, and people thank you by your own name
+  const base = (role === "referrer" ? REFERRER_CHATS : CANDIDATE_CHATS)
+    .filter((c) => c.name !== you.name)
+    .map((c) => ({ ...c, last: c.last.replace("Nithin", firstName(you.name)) }));
   const all = force === "messages.empty" ? [] : base;
   const loading = force === "messages.loading";
   const failed = force === "messages.error";
@@ -354,8 +358,10 @@ const REFERRER_NOTIF: Notif[] = [
 
 export function Notifications() {
   const nav = useNav();
-  const { role, force, dispatch } = useStore();
-  const list = force === "notifs.empty" ? [] : role === "referrer" ? REFERRER_NOTIF : CANDIDATE_NOTIF;
+  const { role, force, you, dispatch } = useStore();
+  const list = (force === "notifs.empty" ? [] : role === "referrer" ? REFERRER_NOTIF : CANDIDATE_NOTIF)
+    .filter((n) => n.who !== you.name)
+    .map((n) => (role === "referrer" ? { ...n, text: n.text.replace("Interaction Designer", you.post.title) } : n));
   return (
     <Screen title="Notifications" back onBack={() => { dispatch({ t: "readAll" }); nav.pop(); }}>
       <div style={{ paddingTop: 24 }}>
@@ -401,7 +407,7 @@ export function Notifications() {
 /* ── Profile ────────────────────────────────────────────────────────────── */
 export function Profile() {
   const nav = useNav();
-  const { role, unread, profile } = useStore();
+  const { role, unread, profile, you } = useStore();
   const isReferrer = role === "referrer";
   const me = profile.jobs[0];
   return (
@@ -410,13 +416,14 @@ export function Profile() {
           groups 24 apart, then Log out 24 under the last one */}
       <div style={{ paddingTop: 24, display: "flex", flexDirection: "column" }}>
         <div style={{ display: "flex", gap: 12, alignItems: "center", padding: "20px 0" }}>
-          <Avatar name={isReferrer ? "Nithin Agarwal" : profile.name} src={isReferrer ? undefined : "/images/sidedoor/people/abhinav-saxena.png"} size={68} />
+          {/* one person on both sides: the same name and photo whichever role you're in */}
+          <Avatar name={you.name} size={68} />
           <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4 }}>
             <span style={{ display: "flex", alignItems: "center", gap: 4 }} className="t-h-md">
-              {isReferrer ? "Nithin Agarwal" : profile.name}
+              {isReferrer ? you.name : profile.name}
               {isReferrer && <Icon name="checkmark.seal.fill" size={20} style={{ color: "var(--sd-text-success)" }} />}
             </span>
-            <span className="t-label muted">{isReferrer ? "Design Manager, Flipkart" : me ? `${me.role}, ${me.company}` : "Looking for work"}</span>
+            <span className="t-label muted">{isReferrer ? `${you.title}, ${you.company}` : me ? `${me.role}, ${me.company}` : "Looking for work"}</span>
           </span>
           <TextButton onClick={() => nav.push(isReferrer ? "editProfileReferrer" : "editDetails")}>Edit</TextButton>
         </div>
@@ -467,7 +474,7 @@ export function Profile() {
 /* ── Candidate: edit your details ───────────────────────────────────────── */
 export function EditDetails() {
   const nav = useNav();
-  const { details, profile, dispatch } = useStore();
+  const { details, profile, you, dispatch } = useStore();
   const [linkedin, setLinkedin] = useState(profile.linkedin || DEMO.linkedin);
   const [portfolio, setPortfolio] = useState(profile.portfolio || DEMO.portfolio);
   const [roles, setRoles] = useState("Product Designer, Interaction Designer");
@@ -543,7 +550,7 @@ export function EditDetails() {
           <Field label="Notice period, in days" icon="hourglass" value={notice} onChange={setNotice} kind="days" required placeholder="e.g. 30" demo={DEMO.notice} />
         </div>
 
-        <FileBox label="Resume" name="Abhinav_Saxena_Resume.pdf" what="resume" />
+        <FileBox label="Resume" name={you.resume} what="resume" />
       </div>
     </Screen>
   );
@@ -551,10 +558,10 @@ export function EditDetails() {
 
 export function EditProfileReferrer() {
   const nav = useNav();
-  const { dispatch } = useStore();
-  const [role, setRole] = useState("Design Manager");
+  const { dispatch, you } = useStore();
+  const [role, setRole] = useState(you.title);
   const [city, setCity] = useState("Bengaluru, KA");
-  const [name, setName] = useState("Nithin Agarwal");
+  const [name, setName] = useState(you.name);
   const photo = useFilePick({ name: "", accept: ".jpg,.jpeg,.png,.heic,.webp", maxMB: 5, what: "photo" });
   const ok = allValid([
     ["name", name, true],
@@ -583,7 +590,7 @@ export function EditProfileReferrer() {
       <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
         <p className="t-label muted">Candidates see your name, role and company.</p>
         <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center" }}>
-          <Avatar name="Nithin Agarwal" size={68} src={photo.url ?? undefined} />
+          <Avatar name={you.name} size={68} src={photo.url ?? undefined} />
           <TextButton onClick={photo.open}>Edit</TextButton>
           {photo.picker}
           {photo.errorLine}
@@ -595,8 +602,14 @@ export function EditProfileReferrer() {
             label="Company"
             readOnly
             icon="building.2.fill"
-            value="Flipkart"
-            lead={<Image src="/images/sidedoor/flipkart-icon.svg" alt="" width={22} height={22} style={{ width: 22, height: 22 }} unoptimized />}
+            value={you.company}
+            lead={
+              you.logo === "flipkart" ? (
+                <Image src="/images/sidedoor/flipkart-icon.svg" alt="" width={22} height={22} style={{ width: 22, height: 22 }} unoptimized />
+              ) : (
+                <Image src={logoSrc(you.logo)} alt="" width={22} height={22} style={{ width: 22, height: 22 }} unoptimized />
+              )
+            }
           />
           <Field label="Your role" icon="briefcase.fill" value={role} onChange={setRole} kind="role" required />
           <Field label="Where you work from" icon="mappin.and.ellipse" value={city} onChange={setCity} kind="city" required />
@@ -683,7 +696,8 @@ export function Help() {
 /* ── The web link page. No app, no tab bar, keeps the logo bar. ─────────── */
 export function LinkPage() {
   const nav = useNav();
-  const { force } = useStore();
+  const { force, you } = useStore();
+  const who = firstName(you.name);
   const [file, setFile] = useState<string | null>(force === "link.reading" ? "Arpita_Singh_Resume.pdf" : null);
   const [note, setNote] = useState("");
   const [sent, setSent] = useState(false);
@@ -718,7 +732,7 @@ export function LinkPage() {
       <div className="sd-body" data-lenis-prevent>
         <div className="sd-pad" style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <Tag>sidedoor.app/r/nithin-agarwal</Tag>
+            <Tag>sidedoor.app/r/{you.slug}</Tag>
           </div>
           {body}
         </div>
@@ -730,16 +744,16 @@ export function LinkPage() {
   // Figma "Person": the 44 photo centred against the two lines, name 4 above role + job ID
   const person = (
     <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-      <Avatar name="Nithin Agarwal" />
+      <Avatar name={you.name} />
       <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4 }}>
         <span className="sd-person-name">
-          Nithin Agarwal
+          {you.name}
           <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)" }} />
         </span>
         <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
           {/* Figma: the role fills the row, so the job ID tag sits at the right edge */}
-          <span className="sd-person-sub" style={{ flex: 1 }}>Design Manager, Flipkart</span>
-          <Tag>Job ID 184223</Tag>
+          <span className="sd-person-sub" style={{ flex: 1 }}>{you.title}, {you.company}</span>
+          <Tag>Job ID {you.post.jobId}</Tag>
         </span>
       </div>
     </div>
@@ -764,16 +778,16 @@ export function LinkPage() {
           }}
         >
           <Icon name="checkmark.circle.fill" size={40} style={{ color: "var(--sd-link)" }} />
-          <h2 className="t-h-sm">Sent to Nithin</h2>
+          <h2 className="t-h-sm">Sent to {who}</h2>
           <p className="t-label muted">
-            Nithin gets every detail Flipkart’s portal asks for. We’ll email you when there’s news.
+            {who} gets every detail {you.company}’s portal asks for. We’ll email you when there’s news.
           </p>
         </div>
         {person}
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           <SectionLabel icon="square.and.arrow.down">Save these details and track this request</SectionLabel>
           <p className="t-label-sm muted">
-            See when Nithin refers you and when it’s submitted. Your details stay filled for your next request.
+            See when {who} refers you and when it’s submitted. Your details stay filled for your next request.
           </p>
         </div>
       </>,
@@ -794,8 +808,8 @@ export function LinkPage() {
           <h1 className="t-h-sm">{closed ? "This job is closed" : "You’ve already asked for this job"}</h1>
           <p className="t-label muted">
             {closed
-              ? "Nithin isn’t taking referral requests for it any more."
-              : "Nithin has your request. You can track it in the app."}
+              ? `${who} isn’t taking referral requests for it any more.`
+              : `${who} has your request. You can track it in the app.`}
           </p>
         </div>
         {person}
@@ -807,7 +821,7 @@ export function LinkPage() {
   return page(
     <>
       <div style={{ display: "flex", flexDirection: "column", gap: 4, textAlign: "center" }}>
-        <h1 className="t-h-sm">Ask Nithin for a referral</h1>
+        <h1 className="t-h-sm">Ask {who} for a referral</h1>
         <p className="t-label muted">
           {reading
             ? "Reading your resume. It takes a few seconds."
@@ -823,7 +837,7 @@ export function LinkPage() {
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           <DocUpload what="resume" file={file} onUpload={upload} />
           {!file && (
-            <p className="t-label-sm muted">We fill in the details Flipkart’s portal needs. You check them before sending.</p>
+            <p className="t-label-sm muted">We fill in the details {you.company}’s portal needs. You check them before sending.</p>
           )}
         </div>
       </Section>
@@ -922,8 +936,8 @@ export function HelpArticle({ id }: { id: string }) {
 /** Contact support: a topic, a message and a reply-to address, all checked before Send. */
 export function ContactSupport() {
   const nav = useNav();
-  const { dispatch, role, profile } = useStore();
-  const [email, setEmail] = useState(role === "referrer" ? "nithin.agarwal@flipkart.com" : profile.email);
+  const { dispatch, role, profile, you } = useStore();
+  const [email, setEmail] = useState(role === "referrer" ? you.workEmail : profile.email);
   const [msg, setMsg] = useState("");
   const ok = allValid([
     ["email", email, true],

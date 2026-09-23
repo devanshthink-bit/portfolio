@@ -612,10 +612,11 @@ export function FileBox({ label, name, what }: { label: string; name: string; wh
 
 /** "From the job description": what the referrer's JD said, editable in place. The company
  *  comes from their verified work email, so it can't be changed here. */
-export function JdDetails({ title = "Interaction Designer" }: { title?: string }) {
+export function JdDetails({ title }: { title?: string }) {
+  const { you } = useStore();
   const ed = useEditable([
-    { name: "Company", value: "Flipkart", fixed: true },
-    { name: "Job title", value: title, kind: "role", required: true },
+    { name: "Company", value: you.company, fixed: true },
+    { name: "Job title", value: title ?? you.post.title, kind: "role", required: true },
     { name: "Experience", value: "3+ yrs", kind: "text", required: true },
     { name: "Location", value: "Bengaluru, KA · Remote or hybrid", kind: "text", required: true },
     { name: "Skills (7)", value: "UX research, Interaction design, Prototyping, AI-assisted design, Design system, Figma, A/B testing", kind: "text", required: true, multiline: true },
@@ -790,7 +791,7 @@ export function VerifyEmail() {
 /* ── Referrer: add a job ────────────────────────────────────────────────── */
 export function AddJob() {
   const nav = useNav();
-  const { force } = useStore();
+  const { force, you } = useStore();
   const [file, setFile] = useState<string | null>(null);
   const [failed, setFailed] = useState(force === "job.unreadable");
   return (
@@ -818,7 +819,7 @@ export function AddJob() {
             file={failed ? null : file}
             onUpload={() => {
               setFailed(false);
-              setFile("Flipkart_IxDesigner_JD.docx");
+              setFile(you.post.jd);
             }}
           />
           {failed ? (
@@ -841,7 +842,7 @@ export function AddJob() {
 /* ── Referrer: check your job post ──────────────────────────────────────── */
 export function CheckPost({ title }: { title?: string }) {
   const nav = useNav();
-  const { jobId, tips, dispatch } = useStore();
+  const { jobId, tips, you, dispatch } = useStore();
   return (
     <Screen
       title="Check your job post"
@@ -866,7 +867,7 @@ export function CheckPost({ title }: { title?: string }) {
       }
     >
       <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
-        <p className="t-label muted">Filled from Flipkart_IxDesigner_JD.docx. Check it before you post.</p>
+        <p className="t-label muted">Filled from {you.post.jd}. Check it before you post.</p>
 
         <Section
           label="Job ID"
@@ -901,7 +902,7 @@ export function CheckPost({ title }: { title?: string }) {
           demo={DEMO.tips}
         />
 
-        <FileBox label="Job description" name="Flipkart_IxDesigner_JD.docx" what="file" />
+        <FileBox label="Job description" name={you.post.jd} what="file" />
       </div>
     </Screen>
   );
@@ -953,9 +954,9 @@ export function RulesSection() {
 }
 
 /* ── Referrer: your job is live ─────────────────────────────────────────── */
-export function JobLive({ title = "Interaction Designer" }: { title?: string }) {
+export function JobLive({ title }: { title?: string }) {
   const nav = useNav();
-  const { jobId } = useStore();
+  const { jobId, you } = useStore();
   return (
     <Screen
       title="Job posted"
@@ -985,7 +986,7 @@ export function JobLive({ title = "Interaction Designer" }: { title?: string }) 
         >
           <Icon name="checkmark.circle.fill" size={40} style={{ color: "var(--sd-link)" }} />
           <h2 className="t-h-sm">Your job is live</h2>
-          <p className="t-label muted">{title} · Flipkart · Job ID {jobId || "184223"}</p>
+          <p className="t-label muted">{title ?? you.post.title} · {you.company} · Job ID {jobId || you.post.jobId}</p>
         </div>
         <Section label="Your link for this job" icon="link">
           {/* Figma's "Your Link" frame holds the box and the line beneath it 8 apart, and the
@@ -993,7 +994,7 @@ export function JobLive({ title = "Interaction Designer" }: { title?: string }) 
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             <Box>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <p className="t-label" style={{ flex: 1 }}>sidedoor.app/r/nithin-agarwal</p>
+                <p className="t-label" style={{ flex: 1 }}>sidedoor.app/r/{you.slug}</p>
                 <Icon name="doc.on.doc.fill" size={20} color="tone" />
               </div>
             </Box>

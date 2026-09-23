@@ -41,7 +41,7 @@ const skillTag = (j: Job) => `${matchOf(j)} of ${j.skills.length} skills · ${yr
 
 export function Jobs() {
   const nav = useNav();
-  const { skippedResume, unread, force, dispatch } = useStore();
+  const { skippedResume, unread, force, you, dispatch } = useStore();
   const [phase, setPhase] = useState<"loading" | "ok">("loading");
   useEffect(() => {
     if (force === "jobs.loading") return;
@@ -52,7 +52,9 @@ export function Jobs() {
   const failed = force === "jobs.error" && phase === "ok";
   const showList = phase !== "loading" && !failed && !empty;
   const [sort, setSort] = useState<Sort>("Newest first");
-  const jobs = sort === "Newest first" ? JOBS : [...JOBS].sort((x, y) => (y.full ? -1 : matchOf(y)) - (x.full ? -1 : matchOf(x)));
+  // you ask for referrals at other companies, never your own
+  const open = JOBS.filter((j) => j.company !== you.company);
+  const jobs = sort === "Newest first" ? open : [...open].sort((x, y) => (y.full ? -1 : matchOf(y)) - (x.full ? -1 : matchOf(x)));
   const prompt = skippedResume ? (
           // Figma's "Add Resume Prompt": a white r12 card padded 12/16 with the two lines on the
           // left and the link at the right — not a buffer note tucked under the section label.
@@ -481,7 +483,7 @@ function Bullets({ items }: { items: string[] }) {
 /* ── Check your request ─────────────────────────────────────────────────── */
 export function CheckRequest({ id = "flipkart" }: { id?: string }) {
   const nav = useNav();
-  const { details, note, stillNeeded, requestsLeft, force, offline, dispatch } = useStore();
+  const { details, note, stillNeeded, requestsLeft, force, offline, you, dispatch } = useStore();
   const j = jobById(id);
   const who = firstName(j.referrer.name);
   const [sending, setSending] = useState(force === "send.sending");
@@ -634,7 +636,7 @@ export function CheckRequest({ id = "flipkart" }: { id?: string }) {
                   { name: "Preferred interview locations", value: d.locations, fixed: true },
                 ]
               : []),
-            { name: "Resume", value: "Abhinav_Saxena_Resume.pdf", fixed: true },
+            { name: "Resume", value: you.resume, fixed: true },
           ]}
         />
 
@@ -652,7 +654,7 @@ export function CheckRequest({ id = "flipkart" }: { id?: string }) {
             placeholder="One line, e.g. what you worked on"
             boxHeight={44}
             kind="note"
-            demo={DEMO.note}
+            demo={you.note}
           />
         </Section>
       </div>
@@ -671,7 +673,8 @@ function bucket(s: Stage): (typeof FILTERS)[number] {
 
 export function RequestList({ justSent }: { justSent?: boolean | string }) {
   const nav = useNav();
-  const { requests, unread, force } = useStore();
+  const { requests: mine, unread, force, you } = useStore();
+  const requests = mine.filter((r) => r.company !== you.company);
   const [filter, setFilter] = useState<string>("All");
   // Figma's "Just sent" is the list right after a send: a green note, and the live request
   // sitting at "Sent · Just now"

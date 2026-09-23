@@ -406,6 +406,67 @@ export const ABHINAV_PROFILE = {
 };
 export type Profile = typeof ABHINAV_PROFILE;
 
+/** Nithin's own details, for when he switches to asking. Same shape as Abhinav's. */
+export const NITHIN_PROFILE: Profile = {
+  name: "Nithin Agarwal",
+  email: "nithin.agarwal@email.com",
+  phone: "+91 98450 21876",
+  city: "Bengaluru, KA",
+  experience: "9 yrs total · 9 yrs relevant",
+  skills: "Design leadership, Interaction design, Design system, Product strategy, Figma",
+  jobs: [
+    { logo: "flipkart", role: "Design Manager", company: "Flipkart", when: "Mar 2021–Present" },
+    { logo: "makemytrip", role: "Senior Product Designer", company: "MakeMyTrip", when: "Jul 2017–Feb 2021" },
+  ],
+  projects: [
+    {
+      title: "Flipkart Checkout Redesign",
+      skills: ["Interaction design", "Design system", "A/B testing", "Figma"],
+      detail: "Led a team of six on one-page checkout. Checkout completion rose 9% across 40M monthly buyers.",
+    },
+    {
+      title: "MakeMyTrip Flights Search",
+      skills: ["User research", "Interaction design", "Prototyping"],
+      detail: "Rebuilt fare search and filters. Time to first booking fell from 6 minutes to under 3.",
+    },
+  ],
+  linkedin: "linkedin.com/in/nithin-agarwal",
+  portfolio: "nithinagarwal.design",
+};
+
+/**
+ * Who "you" are. One person, both sides: start as a candidate and you are Abhinav, start as a
+ * referrer and you are Nithin, and switching role keeps you (Devansh, 24 Sep). Each person refers
+ * at their own company, for their own post.
+ */
+export const PEOPLE_ME = {
+  abhinav: {
+    id: "abhinav" as const,
+    name: "Abhinav Saxena",
+    title: "Product Designer",
+    company: "Blinkit",
+    logo: "blinkit",
+    slug: "abhinav-saxena",
+    workEmail: "abhinav.saxena@blinkit.com",
+    resume: "Abhinav_Saxena_Resume.pdf",
+    note: "I led the merchant app redesign at Blinkit. Happy to share more.",
+    post: { title: "Product Designer", jobId: "BLK-802", jd: "Blinkit_ProductDesigner_JD.docx" },
+  },
+  nithin: {
+    id: "nithin" as const,
+    name: "Nithin Agarwal",
+    title: "Design Manager",
+    company: "Flipkart",
+    logo: "flipkart",
+    slug: "nithin-agarwal",
+    workEmail: "nithin.agarwal@flipkart.com",
+    resume: "Nithin_Agarwal_Resume.pdf",
+    note: "I lead checkout design at Flipkart and want to go deeper on one product. Happy to share more.",
+    post: { title: "Interaction Designer", jobId: "184223", jd: "Flipkart_IxDesigner_JD.docx" },
+  },
+};
+export type Me = (typeof PEOPLE_ME)["abhinav"] | (typeof PEOPLE_ME)["nithin"];
+
 /** What a blank field fills itself with on a tap, so testers never have to type. */
 export const DEMO = {
   linkedin: "linkedin.com/in/abhinav-saxena",

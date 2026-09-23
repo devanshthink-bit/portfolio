@@ -1,10 +1,10 @@
 "use client";
-// One store for both sides. The request the candidate sends is the same object the referrer acts
-// on, so "Switch role" in Profile lets you send as Abhinav, refer as Nithin, then switch back and
-// watch the timeline move. That is what makes this a working prototype and not a click-through.
+// One store for both sides. You are one person: start as a candidate and you are Abhinav, start as
+// a referrer and you are Nithin. "Switch role" in Profile changes what you're doing, never who you
+// are (Devansh, 24 Sep), so each side reads your name, company and post from `me`.
 import { createContext, useCallback, useContext, useMemo, useReducer, type ReactNode } from "react";
 import { fieldError, type FieldKind } from "./rules";
-import { ABHINAV_PROFILE, firstName, jobById, type Profile } from "./data";
+import { ABHINAV_PROFILE, NITHIN_PROFILE, PEOPLE_ME, firstName, jobById, type Me, type Profile } from "./data";
 
 export type Stage = "sent" | "referred" | "submitted" | "interviews" | "onhold" | "selected" | "notselected" | "notmoving" | "noanswer" | "closed" | "withdrawn";
 
@@ -64,6 +64,8 @@ export const requestIdFor = (job: string) => (job === "flipkart" ? "flipkart" : 
 
 type State = {
   role: "candidate" | "referrer" | null;
+  /** who you are, set by the first side you choose and kept when you switch */
+  me: Me["id"] | null;
   /** candidate side */
   resume: string | null;
   skippedResume: boolean;
@@ -112,6 +114,7 @@ const ABHINAV = { candidate: "Abhinav Saxena", candidateRole: "Product Designer,
 
 const initial: State = {
   role: null,
+  me: null,
   resume: null,
   skippedResume: false,
   details: { dob: "", gaps: "", locations: "", notice: "" },
@@ -186,8 +189,17 @@ type Action =
 
 function reduce(s: State, a: Action): State {
   switch (a.t) {
-    case "role":
-      return { ...s, role: a.v };
+    case "role": {
+      // the first side you choose decides who you are; switching later keeps you
+      // Switching into a side you haven't set up: the prototype treats it as done (your resume
+      // read, your work email checked, your post live), so the switch lands somewhere useful.
+      if (s.me)
+        return a.v === "candidate"
+          ? { ...s, role: a.v, resume: s.resume ?? PEOPLE_ME[s.me].resume }
+          : { ...s, role: a.v, verified: true, posted: true };
+      const me = a.v === "referrer" ? "nithin" : "abhinav";
+      return { ...s, role: a.v, me, profile: me === "nithin" ? NITHIN_PROFILE : ABHINAV_PROFILE };
+    }
     case "resume":
       return { ...s, resume: a.v, skippedResume: false };
     case "skipResume":
@@ -282,7 +294,8 @@ function reduce(s: State, a: Action): State {
       return { ...s, force: a.v };
     case "jump":
       // start from a clean slate so one state can't leak into the next
-      return { ...initial, requestsLeft: 2, role: a.role, force: a.force, offline: a.force === "offline", resume: "Abhinav_Saxena_Resume.pdf", verified: true, jobId: "184223", posted: true,
+      return { ...initial, requestsLeft: 2, role: a.role, me: a.role === "referrer" ? "nithin" : "abhinav",
+        profile: a.role === "referrer" ? NITHIN_PROFILE : ABHINAV_PROFILE, force: a.force, offline: a.force === "offline", resume: "Abhinav_Saxena_Resume.pdf", verified: true, jobId: "184223", posted: true,
         // "Skill removed" starts with Prototyping taken off, and can still be undone
         removedSkills: a.force === "req.skill" ? ["abhinav|Prototyping"] : [] };
     case "reset":
@@ -298,6 +311,8 @@ type Api = State & {
   live: Request;
   /** the 4 details the portal also asks for; Send waits on these */
   stillNeeded: number;
+  /** you: name, company, post and link, the same on both sides */
+  you: Me;
 };
 
 const Ctx = createContext<Api | null>(null);
@@ -310,7 +325,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     () => (Object.entries(DETAIL_KINDS) as [keyof Details, FieldKind][]).filter(([k, kind]) => fieldError(kind, s.details[k], true)).length,
     [s.details]
   );
-  const value = useMemo(() => ({ ...s, dispatch, live, stillNeeded }), [s, live, stillNeeded]);
+  const you = PEOPLE_ME[s.me ?? (s.role === "referrer" ? "nithin" : "abhinav")];
+  const value = useMemo(() => ({ ...s, dispatch, live, stillNeeded, you }), [s, live, stillNeeded, you]);
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
 
