@@ -56,7 +56,6 @@ export const SCENARIOS: Scenario[] = [
   { id: "req.updated", label: "One request · profile updated", group: "Rules and limits", role: "referrer", force: "req.updated", tab: "requests", push: [{ key: "referralRequest", props: { id: "abhinav" } }] },
   { id: "req.sixmonths", label: "One request · referred here in 6 months", group: "Rules and limits", role: "referrer", force: "req.sixmonths", tab: "requests", push: [{ key: "referralRequest", props: { id: "abhinav" } }] },
   { id: "req.recent", label: "One request · may have been referred here", group: "Rules and limits", role: "referrer", force: "req.recent", tab: "requests", push: [{ key: "referralRequest", props: { id: "abhinav" } }] },
-  { id: "req.skill", label: "One request · skill removed", group: "Rules and limits", role: "referrer", force: "req.skill", tab: "requests", push: [{ key: "referralRequest", props: { id: "abhinav" } }] },
   { id: "refer.undo", label: "After refer · undo", group: "Happy path", role: "referrer", force: "refer.undo", tab: "requests", push: [{ key: "referralRequest", props: { id: "abhinav" } }] },
   { id: "messages.loading", label: "Messages · loading", group: "Waiting", role: "candidate", force: "messages.loading", tab: "messages" },
   { id: "messages.error", label: "Messages · couldn’t load", group: "Went wrong", role: "candidate", force: "messages.error", tab: "messages" },

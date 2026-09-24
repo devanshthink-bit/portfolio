@@ -104,7 +104,12 @@ type State = {
   /** job posts the referrer has paused, and drafts they have posted */
   pausedPosts: string[];
   postedDrafts: string[];
-  removedSkills: string[];
+  /** the referrer's one question on their post; null until edited, which means their post's own */
+  question: string | null;
+  /** the candidate's answers to referrers' questions, by job id */
+  answers: Record<string, string>;
+  /** the candidate proved where they work with a code sent to their work email */
+  workVerified: boolean;
   /** transient */
   toast: string | null;
   /**
@@ -164,7 +169,9 @@ const initial: State = {
   invited: ["Advika Singh"],
   pausedPosts: ["Software Engineer-I"],
   postedDrafts: [],
-  removedSkills: [],
+  question: null,
+  answers: {},
+  workVerified: false,
   toast: null,
   pending: null,
   offline: false,
@@ -199,7 +206,9 @@ type Action =
   | { t: "pend"; v: State["pending"] }
   | { t: "offline"; v: boolean }
   | { t: "invite"; v: string }
-  | { t: "removeSkill"; v: string }
+  | { t: "question"; v: string }
+  | { t: "answer"; job: string; v: string }
+  | { t: "workVerified" }
   | { t: "toast"; v: string | null }
   | { t: "readAll" }
   | { t: "force"; v: string | null }
@@ -314,12 +323,12 @@ function reduce(s: State, a: Action): State {
       return { ...s, offline: a.v };
     case "invite":
       return { ...s, invited: [...s.invited, a.v] };
-    // a second tap on a removed skill puts it back ("Tap to undo")
-    case "removeSkill":
-      return {
-        ...s,
-        removedSkills: s.removedSkills.includes(a.v) ? s.removedSkills.filter((x) => x !== a.v) : [...s.removedSkills, a.v],
-      };
+    case "question":
+      return { ...s, question: a.v };
+    case "answer":
+      return { ...s, answers: { ...s.answers, [a.job]: a.v } };
+    case "workVerified":
+      return { ...s, workVerified: true };
     case "toast":
       return { ...s, toast: a.v };
     case "readAll":
@@ -329,9 +338,7 @@ function reduce(s: State, a: Action): State {
     case "jump":
       // start from a clean slate so one state can't leak into the next
       return { ...initial, role: a.role, me: a.role === "referrer" ? "nithin" : "abhinav",
-        profile: a.role === "referrer" ? NITHIN_PROFILE : ABHINAV_PROFILE, force: a.force, offline: a.force === "offline", resume: "Abhinav_Saxena_Resume.pdf", verified: true, jobId: "184223", posted: true,
-        // "Skill removed" starts with Prototyping taken off, and can still be undone
-        removedSkills: a.force === "req.skill" ? ["abhinav|Prototyping"] : [] };
+        profile: a.role === "referrer" ? NITHIN_PROFILE : ABHINAV_PROFILE, force: a.force, offline: a.force === "offline", resume: "Abhinav_Saxena_Resume.pdf", verified: true, jobId: "184223", posted: true };
     case "reset":
       return initial;
     default:

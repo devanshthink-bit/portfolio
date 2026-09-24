@@ -31,6 +31,8 @@ export type Job = {
   looking: string[];
   resp: string[];
   tips: string[];
+  /** the referrer's one question; the candidate answers it with the request */
+  question?: string;
   employer: string;
 };
 
@@ -74,6 +76,7 @@ export const JOBS: Job[] = [
       "Demonstrate measurable impact through metrics such as conversion, engagement, or scale",
       "Showcase strong collaboration with product managers and engineers across projects",
     ],
+    question: "Tell us about a trade-off you made in a checkout or payment flow.",
     employer:
       "Flipkart is one of India’s leading e-commerce platforms, serving millions of customers across categories. The company focuses on building scalable, customer-first experiences through technology, design, and innovation.",
   },
@@ -385,7 +388,7 @@ export const ABHINAV_PROFILE = {
   phone: "+91 98765 43221",
   city: "Bengaluru, KA",
   experience: "3 yrs total · 3 yrs relevant",
-  skills: "Product strategy, Systems thinking, User research, Interaction design, Figma",
+  skills: "Product strategy, Systems thinking, User research, Interaction design, Figma, AI-assisted design",
   jobs: [
     { logo: "blinkit", role: "Product Designer", company: "Blinkit", when: "Sep 2023–Present" },
     { logo: "makemytrip", role: "Associate Product Designer", company: "MakeMyTrip", when: "Jun 2022–Aug 2023" },
@@ -393,13 +396,13 @@ export const ABHINAV_PROFILE = {
   projects: [
     {
       title: "Blinkit Merchant App UX Revamp",
-      link: "behance.net/abhinavsaxena/blinkit-merchant-app",
+      link: "blinkit-merchant-revamp.vercel.app",
       skills: ["Product strategy", "Systems design", "Prototyping", "User research", "Figma"],
       detail: "Rebuilt order intake for 4,000 dark-store merchants. Cut the time to accept an order from 40s to 12s.",
     },
     {
       title: "MakeMyTrip Booking Experience Redesign",
-      link: "behance.net/abhinavsaxena/mmt-booking",
+      link: "mmt-hotel-checkout.vercel.app",
       skills: ["User research", "Interaction design", "Usability testing", "Figma"],
       detail: "Redesigned hotel checkout from five steps to three. Drop-off at payment fell 18% in the A/B test.",
     },
@@ -419,6 +422,10 @@ export const ABHINAV_NEAR: Record<string, string> = {
 };
 /** the job's missing skills that Abhinav's resume shows in a nearby form */
 export const nearOf = (j: Job) => j.missing.filter((k) => ABHINAV_NEAR[k]);
+/** Skills Abhinav lists that no job or project of his shows. They are shown as "Claimed" and never
+ *  counted, so typing a skill in can't raise a match (Devansh, 24 Sep: "skill matching can be bypassed"). */
+export const ABHINAV_CLAIMED = ["AI-assisted design"];
+export const claimedOf = (j: Job) => j.missing.filter((k) => ABHINAV_CLAIMED.includes(k) && !ABHINAV_NEAR[k]);
 
 /** Nithin's own details, for when he switches to asking. Same shape as Abhinav's. */
 export const NITHIN_PROFILE: Profile = {
@@ -435,13 +442,13 @@ export const NITHIN_PROFILE: Profile = {
   projects: [
     {
       title: "Flipkart Checkout Redesign",
-      link: "nithinagarwal.design/flipkart-checkout",
+      link: "flipkart-checkout-study.vercel.app",
       skills: ["Interaction design", "Design system", "A/B testing", "Figma"],
       detail: "Led a team of six on one-page checkout. Checkout completion rose 9% across 40M monthly buyers.",
     },
     {
       title: "MakeMyTrip Flights Search",
-      link: "nithinagarwal.design/mmt-flights",
+      link: "mmt-flights-search.vercel.app",
       skills: ["User research", "Interaction design", "Prototyping"],
       detail: "Rebuilt fare search and filters. Time to first booking fell from 6 minutes to under 3.",
     },
@@ -466,7 +473,7 @@ export const PEOPLE_ME = {
     workEmail: "abhinav.saxena@blinkit.com",
     resume: "Abhinav_Saxena_Resume.pdf",
     note: "I led the merchant app redesign at Blinkit. Happy to share more.",
-    post: { title: "Product Designer", jobId: "BLK-802", jd: "Blinkit_ProductDesigner_JD.docx" },
+    post: { title: "Product Designer", jobId: "BLK-802", jd: "Blinkit_ProductDesigner_JD.docx", question: "Tell us about a tool you made simpler for people at work." },
   },
   nithin: {
     id: "nithin" as const,
@@ -478,13 +485,16 @@ export const PEOPLE_ME = {
     workEmail: "nithin.agarwal@flipkart.com",
     resume: "Nithin_Agarwal_Resume.pdf",
     note: "I lead checkout design at Flipkart and want to go deeper on one product. Happy to share more.",
-    post: { title: "Interaction Designer", jobId: "184223", jd: "Flipkart_IxDesigner_JD.docx" },
+    post: { title: "Interaction Designer", jobId: "184223", jd: "Flipkart_IxDesigner_JD.docx", question: "Tell us about a trade-off you made in a checkout or payment flow." },
   },
 };
 export type Me = (typeof PEOPLE_ME)["abhinav"] | (typeof PEOPLE_ME)["nithin"];
 
 /** What a blank field fills itself with on a tap, so testers never have to type. */
 export const DEMO = {
+  answer: "On MakeMyTrip hotel checkout I moved guest details after payment. Fewer fields up front, but a risk of wrong names on bookings, so we added a 10-minute edit window. Drop-off at payment fell 18%.",
+  question: "Tell us about a trade-off you made in a checkout or payment flow.",
+  workEmail: "abhinav.saxena@blinkit.com",
   linkedin: "linkedin.com/in/abhinav-saxena",
   portfolio: "dribbble.com/abhinavsaxena",
   note: "I led the merchant app redesign at Blinkit. Happy to share more.",
@@ -495,7 +505,7 @@ export const DEMO = {
   jobId: "184223",
   tips: "Link a portfolio with two end-to-end case studies. Show the problem, your choice and the result.",
   support: "My request to Flipkart still says Sent after a week.",
-  newProject: { title: "Swiggy Instamart Search Redesign", link: "behance.net/abhinavsaxena/instamart-search", skills: ["Interaction design", "A/B testing"], detail: "Made search results load in under a second and cut empty searches by 30%." },
+  newProject: { title: "Swiggy Instamart Search Redesign", link: "instamart-search-redesign.vercel.app", skills: ["Interaction design", "A/B testing"], detail: "Made search results load in under a second and cut empty searches by 30%." },
   newJob: { logo: "swiggy", role: "Design Intern", company: "Swiggy", when: "Jan 2022–May 2022" },
   skillIdeas: ["AI-assisted design", "Design system", "A/B testing", "Motion design", "Accessibility"],
 };
@@ -521,6 +531,14 @@ export type Candidate = {
   referredHere?: { on: string; until: string };
   /** their own answer to the 6-month question; everyone in the demo says No */
   recent?: Recent;
+  /** skills they list that no job or project shows: shown, never counted */
+  claimed?: string[];
+  /** they proved where they work with a code sent to their work email */
+  verified?: boolean;
+  /** what happened to their past Sidedoor referrals, from referrers' own status updates */
+  record?: { referred: number; interviews: number };
+  /** their answer to the referrer's one question on the post */
+  answer?: string;
   /** skills their resume shows only in a nearby form, and where */
   near?: Record<string, string>;
   when: string;
@@ -545,6 +563,10 @@ const from = (co: string) => `From resume · ${co}`;
 export const CANDIDATES: Candidate[] = [
   {
     id: "abhinav",
+    verified: true,
+    record: { referred: 2, interviews: 1 },
+    claimed: ["AI-assisted design"],
+    answer: "On MakeMyTrip hotel checkout I moved guest details after payment. Fewer fields up front, but a risk of wrong names on bookings, so we added a 10-minute edit window. Drop-off at payment fell 18%.",
     name: "Abhinav Saxena",
     title: "Product Designer",
     company: "Blinkit",
@@ -568,6 +590,9 @@ export const CANDIDATES: Candidate[] = [
   },
   {
     id: "kavya",
+    verified: true,
+    record: { referred: 3, interviews: 2 },
+    answer: "On Instamart we removed the address confirm screen to save a tap. Wrong-address orders rose 2%, so we brought back a one-line check inside checkout instead of a full screen.",
     name: "Kavya Reddy",
     title: "Product Designer",
     company: "Swiggy",
@@ -584,7 +609,7 @@ export const CANDIDATES: Candidate[] = [
       { logo: "razorpay", role: "UX Designer", company: "Razorpay", when: "Jul 2020–Feb 2022" },
     ],
     projects: [
-      { title: "Swiggy Instamart Checkout", link: "dribbble.com/kavyareddy/swiggy-instamart-checkout", skills: ["Interaction design", "A/B testing", "Figma"], detail: "Cut checkout from four steps to two. Orders completed rose 9%." },
+      { title: "Swiggy Instamart Checkout", link: "swiggy-instamart-checkout.vercel.app", skills: ["Interaction design", "A/B testing", "Figma"], detail: "Cut checkout from four steps to two. Orders completed rose 9%." },
       { title: "Razorpay Payment Links", skills: ["User research", "Prototyping"], detail: "Redesigned links for small sellers. Support tickets fell by a third." },
     ],
     note: "I’ve shipped checkout at Swiggy for 2 years. Would love to do it at Flipkart’s scale.",
@@ -596,6 +621,10 @@ export const CANDIDATES: Candidate[] = [
   },
   {
     id: "rohan",
+    verified: true,
+    record: { referred: 1, interviews: 0 },
+    claimed: ["User research"],
+    answer: "For bill payments I chose one flow for 40 billers over custom ones. Some billers lost special fields, so each can add one optional field.",
     name: "Rohan Iyer",
     title: "Interaction Designer",
     company: "PhonePe",
@@ -611,7 +640,7 @@ export const CANDIDATES: Candidate[] = [
       { logo: "zomato", role: "Design Intern", company: "Zomato", when: "Jan 2022–Jul 2022" },
     ],
     projects: [
-      { title: "PhonePe Bill Payments", link: "behance.net/rohaniyer/phonepe-bill-payments", skills: ["Interaction design", "Design system"], detail: "Built one bill-pay flow for 40 billers. Failed payments fell 12%." },
+      { title: "PhonePe Bill Payments", link: "phonepe-bill-payments.vercel.app", skills: ["Interaction design", "Design system"], detail: "Built one bill-pay flow for 40 billers. Failed payments fell 12%." },
       { title: "Zomato Table Booking", skills: ["Prototyping", "Figma"], detail: "Prototyped booking for dine-out. Shipped to 5 cities." },
     ],
     note: "Payments are my thing. Checkout at Flipkart is the next step.",
@@ -623,6 +652,8 @@ export const CANDIDATES: Candidate[] = [
   },
   {
     id: "arpita",
+    verified: true,
+    answer: "For Try & Buy we asked for size before address. A longer first step, but size returns fell 14%.",
     name: "Arpita Singh",
     title: "Product Designer",
     company: "Myntra",
@@ -635,7 +666,7 @@ export const CANDIDATES: Candidate[] = [
     work: ["Full time", "Hybrid"],
     jobs: [{ role: "Product Designer", company: "Myntra", when: "Jul 2021–Present", logo: "" }],
     projects: [
-      { title: "Myntra Try & Buy", link: "dribbble.com/arpitasingh/myntra-try-buy", skills: ["User research", "Interaction design"], detail: "Designed try-at-home for fashion. Returns fell 14%." },
+      { title: "Myntra Try & Buy", link: "myntra-try-buy.vercel.app", skills: ["User research", "Interaction design"], detail: "Designed try-at-home for fashion. Returns fell 14%." },
       { title: "Myntra Design System", skills: ["Design system", "Figma"], detail: "Built 60 components used by 25 designers." },
     ],
     note: "Myntra checkout taught me a lot about fashion buyers. Happy to share.",
@@ -647,6 +678,9 @@ export const CANDIDATES: Candidate[] = [
   },
   {
     id: "sneha",
+    verified: true,
+    record: { referred: 4, interviews: 3 },
+    answer: "The Gold upsell raised sign-ups but slowed checkout, so we showed it only to repeat buyers and kept 80% of the lift.",
     name: "Sneha Kapoor",
     title: "Senior UX Designer",
     company: "Zomato",
@@ -669,7 +703,7 @@ export const CANDIDATES: Candidate[] = [
       { logo: "makemytrip", role: "UX Designer", company: "MakeMyTrip", when: "Jun 2019–Mar 2021" },
     ],
     projects: [
-      { title: "Zomato AI Menu Search", link: "behance.net/snehakapoor/zomato-ai-menu-search", skills: ["AI-assisted design", "Interaction design"], detail: "Search by craving, not dish name. Used in 1 in 5 searches." },
+      { title: "Zomato AI Menu Search", link: "zomato-ai-menu-search.vercel.app", skills: ["AI-assisted design", "Interaction design"], detail: "Search by craving, not dish name. Used in 1 in 5 searches." },
       { title: "Zomato Gold Checkout", skills: ["A/B testing", "Figma"], detail: "Ran 11 tests on the Gold upsell. Sign-ups up 22%." },
     ],
     note: "Five years in food delivery. Keen to move to commerce checkout.",
@@ -681,6 +715,9 @@ export const CANDIDATES: Candidate[] = [
   },
   {
     id: "aditya",
+    verified: true,
+    record: { referred: 2, interviews: 1 },
+    answer: "Pay at Stores skips the confirm screen under ₹500. Faster, but a few wrong taps, so we added a 5-second undo.",
     name: "Aditya Joshi",
     title: "Product Designer",
     company: "CRED",
@@ -693,7 +730,7 @@ export const CANDIDATES: Candidate[] = [
     work: ["Full time", "On-site"],
     jobs: [{ logo: "cred", role: "Product Designer", company: "CRED", when: "Jan 2022–Present" }],
     projects: [
-      { title: "CRED Pay at Stores", link: "dribbble.com/adityajoshi/cred-pay-at-stores", skills: ["Interaction design", "Prototyping"], detail: "Tap-to-pay for offline stores. Live in 3,000 shops." },
+      { title: "CRED Pay at Stores", link: "cred-pay-at-stores.vercel.app", skills: ["Interaction design", "Prototyping"], detail: "Tap-to-pay for offline stores. Live in 3,000 shops." },
       { title: "NeoPOP Components", link: "github.com/CRED-CLUB/neopop-web", skills: ["Design system", "Figma"], detail: "Added 18 components to CRED’s open design system." },
     ],
     note: "I care about details in payments. Here’s my Dribbble too.",
@@ -705,6 +742,9 @@ export const CANDIDATES: Candidate[] = [
   },
   {
     id: "aviral",
+    verified: true,
+    record: { referred: 1, interviews: 1 },
+    answer: "One checkout for cards, UPI and EMI meant EMI lost space on the first screen. We kept it one tap away. Success rate rose 4 points.",
     name: "Aviral Dixit",
     title: "UX Designer",
     company: "Razorpay",
@@ -720,7 +760,7 @@ export const CANDIDATES: Candidate[] = [
       { logo: "groww", role: "Associate UX Designer", company: "Groww", when: "Jun 2020–Apr 2021" },
     ],
     projects: [
-      { title: "Razorpay Checkout Revamp", link: "behance.net/aviraldixit/razorpay-checkout-revamp", skills: ["Interaction design", "User research"], detail: "One checkout for cards, UPI and EMI. Success rate up 4 points." },
+      { title: "Razorpay Checkout Revamp", link: "razorpay-checkout-revamp.vercel.app", skills: ["Interaction design", "User research"], detail: "One checkout for cards, UPI and EMI. Success rate up 4 points." },
       { title: "Groww SIP Setup", skills: ["Figma"], detail: "Made starting an SIP a 3-tap flow." },
     ],
     note: "I’ve spent four years on checkout. Happy to walk you through it.",
@@ -732,6 +772,9 @@ export const CANDIDATES: Candidate[] = [
   },
   {
     id: "priya",
+    verified: true,
+    record: { referred: 2, interviews: 2 },
+    answer: "To ship cafe ordering in 8 weeks we launched with no customisation, then added it only for the top 20 items.",
     name: "Priya Nair",
     title: "Senior Product Designer",
     company: "Zepto",
@@ -753,7 +796,7 @@ export const CANDIDATES: Candidate[] = [
       { logo: "amazon", role: "UX Designer", company: "Amazon", when: "Jul 2019–Jan 2023" },
     ],
     projects: [
-      { title: "Zepto Cafe Ordering", link: "dribbble.com/priyanair/zepto-cafe-ordering", skills: ["Interaction design", "Prototyping"], detail: "Launched hot food inside the grocery app in 8 weeks." },
+      { title: "Zepto Cafe Ordering", link: "zepto-cafe-ordering.vercel.app", skills: ["Interaction design", "Prototyping"], detail: "Launched hot food inside the grocery app in 8 weeks." },
       { title: "Amazon Pay Later", skills: ["User research", "Design system"], detail: "Designed credit onboarding for first-time borrowers." },
     ],
     note: "I’d move to Bengaluru for this role.",
@@ -765,6 +808,9 @@ export const CANDIDATES: Candidate[] = [
   },
   {
     id: "varun",
+    verified: true,
+    claimed: ["Design system"],
+    answer: "Fewer bill reminders, sent at the right time, instead of daily ones. Opens dropped, but late payments fell 17%.",
     name: "Varun Bhatia",
     title: "UX Designer",
     company: "Google",
@@ -777,7 +823,7 @@ export const CANDIDATES: Candidate[] = [
     work: ["Full time", "Hybrid"],
     jobs: [{ logo: "google", role: "UX Designer", company: "Google", when: "Aug 2022–Present" }],
     projects: [
-      { title: "Google Pay Bill Reminders", link: "behance.net/varunbhatia/google-pay-bill-reminders", skills: ["Interaction design", "User research"], detail: "Reminders that users trust. Late payments fell 17%." },
+      { title: "Google Pay Bill Reminders", link: "google-pay-bill-reminders.vercel.app", skills: ["Interaction design", "User research"], detail: "Reminders that users trust. Late payments fell 17%." },
       { title: "Maps Offline Areas", skills: ["Prototyping"], detail: "Prototyped offline downloads for low-storage phones." },
     ],
     note: "Looking for a faster team. Checkout would be great.",
@@ -789,6 +835,9 @@ export const CANDIDATES: Candidate[] = [
   },
   {
     id: "tanya",
+    verified: true,
+    record: { referred: 1, interviews: 0 },
+    answer: "We capped shop catalogues at 30 items to keep chats light. Big shops pushed back, so we added collections.",
     name: "Tanya Mehta",
     title: "Product Designer",
     company: "Meta",
@@ -804,7 +853,7 @@ export const CANDIDATES: Candidate[] = [
       { logo: "phonepe", role: "Visual Designer", company: "PhonePe", when: "Jun 2020–Sep 2021" },
     ],
     projects: [
-      { title: "WhatsApp Catalogue", link: "dribbble.com/tanyamehta/whatsapp-catalogue", skills: ["Interaction design", "A/B testing"], detail: "Let shops share catalogues in chat. Used by 2M businesses." },
+      { title: "WhatsApp Catalogue", link: "whatsapp-catalogue.vercel.app", skills: ["Interaction design", "A/B testing"], detail: "Let shops share catalogues in chat. Used by 2M businesses." },
       { title: "PhonePe Rewards", skills: ["Figma", "Prototyping"], detail: "Redesigned scratch cards and rewards." },
     ],
     note: "Would love to talk about commerce in chat.",
@@ -816,6 +865,7 @@ export const CANDIDATES: Candidate[] = [
   },
   {
     id: "amit",
+    answer: "I haven’t designed a checkout yet. In freelance work I cut a booking form from 12 fields to 6.",
     name: "Amit Patel",
     title: "Visual Designer",
     company: "Freelance",
@@ -837,6 +887,8 @@ export const CANDIDATES: Candidate[] = [
   },
   {
     id: "nisha",
+    verified: true,
+    answer: "Showing fewer slots made booking faster, but people thought we were full, so we added “More times” at the end.",
     name: "Nisha Rao",
     title: "UI Designer",
     company: "Urban Company",
@@ -847,7 +899,7 @@ export const CANDIDATES: Candidate[] = [
     notice: "30 days",
     work: ["Full time", "Hybrid"],
     jobs: [{ logo: "", role: "UI Designer", company: "Urban Company", when: "Jul 2023–Present" }],
-    projects: [{ title: "Urban Company Booking", link: "dribbble.com/nisharao/urban-company-booking", skills: ["Figma"], detail: "Redesigned slot booking for home services." }],
+    projects: [{ title: "Urban Company Booking", link: "urban-company-booking.vercel.app", skills: ["Figma"], detail: "Redesigned slot booking for home services." }],
     note: "Early in my career but I learn fast.",
     email: "nisha.rao@email.com",
     phone: "+91 96XXX XXX52",
@@ -857,6 +909,8 @@ export const CANDIDATES: Candidate[] = [
   },
   {
     id: "ishaan",
+    record: { referred: 1, interviews: 0 },
+    answer: "We capped stock alerts at 3 a day. Some users wanted more, but opt-outs fell by half.",
     name: "Ishaan Malhotra",
     title: "Product Designer",
     company: "Groww",
@@ -868,7 +922,7 @@ export const CANDIDATES: Candidate[] = [
     notice: "30 days",
     work: ["Full time", "Remote or hybrid"],
     jobs: [{ logo: "groww", role: "Product Designer", company: "Groww", when: "Jun 2023–Present" }],
-    projects: [{ title: "Groww Stock Alerts", link: "behance.net/ishaanmalhotra/groww-stock-alerts", skills: ["Interaction design", "User research"], detail: "Price alerts that don’t spam. Opt-outs fell by half." }],
+    projects: [{ title: "Groww Stock Alerts", link: "groww-stock-alerts.vercel.app", skills: ["Interaction design", "User research"], detail: "Price alerts that don’t spam. Opt-outs fell by half." }],
     note: "I’ve applied twice on the portal with no reply. A referral would help.",
     email: "ishaan.malhotra@email.com",
     phone: "+91 98XXX XXX26",
@@ -878,6 +932,8 @@ export const CANDIDATES: Candidate[] = [
   },
   {
     id: "diya",
+    verified: true,
+    answer: "Recap cards show a short summary, not full notes. Less detail, so each card links to the transcript.",
     name: "Diya Sharma",
     title: "UX Designer",
     company: "Microsoft",
@@ -889,7 +945,7 @@ export const CANDIDATES: Candidate[] = [
     notice: "60 days",
     work: ["Full time", "Hybrid"],
     jobs: [{ logo: "microsoft", role: "UX Designer", company: "Microsoft", when: "Jul 2024–Present" }],
-    projects: [{ title: "Teams Meeting Recap", link: "dribbble.com/diyasharma/teams-meeting-recap", skills: ["Figma", "Prototyping"], detail: "Designed AI recap cards for missed meetings." }],
+    projects: [{ title: "Teams Meeting Recap", link: "teams-meeting-recap.vercel.app", skills: ["Figma", "Prototyping"], detail: "Designed AI recap cards for missed meetings." }],
     note: "First job after IIT Bombay IDC. Keen to grow in consumer products.",
     email: "diya.sharma@email.com",
     phone: "+91 91XXX XXX38",
@@ -903,6 +959,8 @@ export const SUGGESTED: Candidate[] = [
   {
     ...CANDIDATES[4],
     id: "shreya",
+    answer: undefined,
+    record: undefined,
     name: "Shreya Verma",
     title: "UX Designer",
     company: "CRED",

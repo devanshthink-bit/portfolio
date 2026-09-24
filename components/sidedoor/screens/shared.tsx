@@ -407,7 +407,7 @@ export function Notifications() {
 /* ── Profile ────────────────────────────────────────────────────────────── */
 export function Profile() {
   const nav = useNav();
-  const { role, unread, profile, you } = useStore();
+  const { role, unread, profile, you, workVerified } = useStore();
   const isReferrer = role === "referrer";
   const me = profile.jobs[0];
   return (
@@ -421,7 +421,7 @@ export function Profile() {
           <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4 }}>
             <span style={{ display: "flex", alignItems: "center", gap: 4 }} className="t-h-md">
               {isReferrer ? you.name : profile.name}
-              {isReferrer && <Icon name="checkmark.seal.fill" size={20} style={{ color: "var(--sd-text-success)" }} />}
+              {(isReferrer || workVerified) && <Icon name="checkmark.seal.fill" size={20} style={{ color: "var(--sd-text-success)" }} />}
             </span>
             <span className="t-label muted">{isReferrer ? `${you.title}, ${you.company}` : me ? `${me.role}, ${me.company}` : "Looking for work"}</span>
           </span>
@@ -440,9 +440,20 @@ export function Profile() {
               </Row>
             </>
           ) : (
-            <Row icon="bookmark.fill" chevron onClick={() => nav.push("saved")}>
-              Saved jobs
-            </Row>
+            <>
+              <Row icon="bookmark.fill" chevron onClick={() => nav.push("saved")}>
+                Saved jobs
+              </Row>
+              {/* a checked employer is the one trust signal a candidate can't just type in */}
+              <Row
+                icon="checkmark.seal.fill"
+                chevron
+                end={<span className="t-label muted">{workVerified ? "Verified" : "Not verified"}</span>}
+                onClick={() => nav.push("verifyWork")}
+              >
+                Where you work
+              </Row>
+            </>
           )}
           <Row
             icon="arrow.left.arrow.right.square.fill"
@@ -466,6 +477,63 @@ export function Profile() {
             Log out
           </Button>
         </div>
+      </div>
+    </Screen>
+  );
+}
+
+/* ── Candidate: prove where you work ─────────────────────────────────── */
+/** The same check referrers pass: a code sent to a work email. Referrers see "Work email verified at
+ *  Blinkit" and a seal by the name. Anyone between jobs or freelance just stays "not verified". */
+export function VerifyWork() {
+  const nav = useNav();
+  const { profile, workVerified, dispatch } = useStore();
+  const company = profile.jobs[0]?.company ?? "your company";
+  const [email, setEmail] = useState(workVerified ? DEMO.workEmail : "");
+  const [code, setCode] = useState("");
+  const [sent, setSent] = useState(false);
+  return (
+    <Screen
+      title="Where you work"
+      back
+      actions={
+        workVerified ? undefined : (
+          <Actions>
+            <Note>We never contact your company or HR</Note>
+            {sent ? (
+              <Button
+                disabled={!allValid([["code", code, true]])}
+                onClick={() => {
+                  dispatch({ t: "workVerified" });
+                  dispatch({ t: "toast", v: `Verified at ${company}` });
+                  nav.pop();
+                }}
+              >
+                Verify
+              </Button>
+            ) : (
+              <Button disabled={!allValid([["workEmail", email, true]])} onClick={() => setSent(true)}>
+                Send code
+              </Button>
+            )}
+          </Actions>
+        )
+      }
+    >
+      <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
+        {workVerified ? (
+          <Note style="success" icon="checkmark.seal.fill">{`Verified at ${company} · ${email}`}</Note>
+        ) : (
+          <p className="t-label muted">
+            Referrers see a verified tick and “Work email verified at {company}”. Skills can be typed in; this can’t.
+          </p>
+        )}
+        {!workVerified && (
+          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+            <Field label="Work email" icon="envelope.fill" value={email} onChange={setEmail} kind="workEmail" required demo={DEMO.workEmail} placeholder={`you@${company.toLowerCase().replace(/\s/g, "")}.com`} />
+            {sent && <Field label="Code from your email" icon="lock.fill" value={code} onChange={setCode} placeholder="6-digit code" kind="code" required demo={DEMO.code} />}
+          </div>
+        )}
       </div>
     </Screen>
   );

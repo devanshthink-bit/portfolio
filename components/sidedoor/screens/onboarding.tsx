@@ -684,11 +684,13 @@ export function Project({ title, skills, detail, link }: { title: string; skills
         )}
       </span>
       {detail && <p className="t-body muted">{detail}</p>}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-        {skills.map((s) => (
-          <Tag key={s}>{s}</Tag>
-        ))}
-      </div>
+      {skills.length > 0 && (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+          {skills.map((s) => (
+            <Tag key={s}>{s}</Tag>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -855,7 +857,7 @@ export function AddJob() {
 /* ── Referrer: check your job post ──────────────────────────────────────── */
 export function CheckPost({ title }: { title?: string }) {
   const nav = useNav();
-  const { jobId, tips, you, dispatch } = useStore();
+  const { jobId, tips, question, you, dispatch } = useStore();
   return (
     <Screen
       title="Check your job post"
@@ -913,6 +915,20 @@ export function CheckPost({ title }: { title?: string }) {
           multiline
           kind="tips"
           demo={DEMO.tips}
+        />
+
+        {/* One question every candidate answers with the request. A specific answer shows real
+            experience in a way an AI-polished resume or note can't (Devansh, 24 Sep). */}
+        <Field
+          label="One question for candidates (optional)"
+          icon="bubble.left.fill"
+          value={question ?? you.post.question}
+          onChange={(v) => dispatch({ t: "question", v })}
+          placeholder="e.g. Tell us about a trade-off you made in a checkout flow."
+          multiline
+          kind="tips"
+          demo={DEMO.question}
+          help="Candidates answer it in two or three lines. You see it on each request."
         />
 
         <FileBox label="Job description" name={you.post.jd} what="file" />

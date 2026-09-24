@@ -19,6 +19,7 @@ import {
   ContactSupport,
   ResumePreview,
   ProfileLink,
+  VerifyWork,
   Messages,
   Notifications,
   Profile,
@@ -129,6 +130,7 @@ const SCREENS: Record<string, (p: any) => ReactNode> = {
   contactSupport: () => <ContactSupport />,
   resume: (p) => <ResumePreview file={p.file} id={p.id} />,
   profileLink: (p) => <ProfileLink site={p.site} name={p.name} url={p.url} />,
+  verifyWork: () => <VerifyWork />,
 };
 
 const SHEETS: Record<string, (p: any) => ReactNode> = {

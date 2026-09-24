@@ -15,7 +15,6 @@ import {
   Empty,
   Field,
   Icon,
-  MatchRow,
   Note,
   Screen,
   Section,
@@ -33,7 +32,7 @@ import {
   WelcomeCard,
 } from "../ui";
 import { BellButton } from "./candidate";
-import { CompanyRow, FileBox, JdDetails, Projects, RulesSection } from "./onboarding";
+import { CompanyRow, FileBox, JdDetails, Project, RulesSection } from "./onboarding";
 import { CANDIDATES, DEMO, POST_SKILLS, SUGGESTED, candidateById, firstName, matchLine, roleLine, type Candidate } from "../data";
 
 type Req = Candidate;
@@ -262,15 +261,24 @@ function RequestCard({ r, onClick, end }: { r: Req; onClick?: () => void; end?: 
 }
 
 /* ── One referral request ───────────────────────────────────────────────── */
-/** The post's skills against what this person's resume shows: matches first, then their years
- *  against the referrer's own rule, then related skills (shown near, not counted), then what's missing. */
-function fitRows(c: Candidate, minYears: number) {
+/** The post's skills against what this person can show, in plain groups instead of icons. Only a
+ *  skill a job or project shows counts. One that is only typed into a profile is "Claimed": shown,
+ *  never counted, so adding skills can't raise a match (Devansh, 24 Sep). */
+function fitGroups(c: Candidate) {
   const near = c.near ?? {};
-  const ok = POST_SKILLS.filter((k) => c.has[k]).map((k) => ({ name: k, ok: true, source: c.has[k] }));
-  const rel = POST_SKILLS.filter((k) => !c.has[k] && near[k]).map((k) => ({ name: k, ok: "near", source: near[k] }));
-  const no = POST_SKILLS.filter((k) => !c.has[k] && !near[k]).map((k) => ({ name: k, ok: false, source: "Not in their resume" }));
-  const exp = { name: `${c.years} ${c.years === 1 ? "yr" : "yrs"} experience`, ok: c.years >= minYears, source: `You need ${minYears}+`, isExperience: true };
-  return [...ok, exp, ...rel, ...no] as { name: string; ok: boolean | "near"; source: string; isExperience?: boolean }[];
+  const claimed = c.claimed ?? [];
+  const at = (src: string) => src.replace("From resume · ", "");
+  const cap = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
+  const groups = [
+    { label: "Shown in their work", rows: POST_SKILLS.filter((k) => c.has[k]).map((k) => ({ name: k, source: at(c.has[k]) })) },
+    { label: "Related", rows: POST_SKILLS.filter((k) => !c.has[k] && near[k]).map((k) => ({ name: k, source: cap(near[k].replace("Related · ", "")) })) },
+    {
+      label: "Claimed, no proof",
+      rows: POST_SKILLS.filter((k) => !c.has[k] && !near[k] && claimed.includes(k)).map((k) => ({ name: k, source: "Listed, but no job or project shows it" })),
+    },
+    { label: "Missing", rows: POST_SKILLS.filter((k) => !c.has[k] && !near[k] && !claimed.includes(k)).map((k) => ({ name: k, source: "" })) },
+  ];
+  return groups.filter((g) => g.rows.length > 0);
 }
 
 const resumeOf = (name: string) => `${name.replace(/ /g, "_")}_Resume.pdf`;
@@ -278,7 +286,7 @@ const yearsFact = (n: number) => (n === 1 ? "1 year" : `${n}+ years`);
 
 export function ReferralRequest({ id }: { id: string }) {
   const nav = useNav();
-  const { handled, removedSkills, profile, note, rules, force, you, dispatch } = useStore();
+  const { handled, profile, note, rules, force, you, question, dispatch } = useStore();
   const decide = useDecide();
   const c = candidateById(id);
   // a request from you would carry what you typed and edited (you never see your own, but the rule holds)
@@ -300,16 +308,11 @@ export function ReferralRequest({ id }: { id: string }) {
   const notMoving = () => nav.openSheet("notMoving", { id: r.id, name: r.name, role: roleLine(r), match: matchLine(r) });
   // the two states the switcher jumps straight into
   const state = force === "refer.undo" ? { stage: "referred" as Stage } : handled[r.id];
-  const key = (skill: string) => `${r.id}|${skill}`;
-  const removed = (skill: string) => removedSkills.includes(key(skill));
-  // Figma "Skill removed" keeps the row and turns it into an undo, so nothing disappears
-  const skills = fitRows(r, rules.minYears);
-  // the tag counts skills only — the experience row is a separate fact, as in V6
-  const skillRows = skills.filter((s) => !s.isExperience);
-  // a removed skill stops counting, which is what drops the tag to "3 of 7"
-  const matched = skillRows.filter((s) => s.ok === true && !removed(s.name)).length;
-  const anyRemoved = skillRows.some((s) => removed(s.name));
+  const groups = fitGroups(r);
+  const matched = Object.keys(r.has).length;
   const resume = resumeOf(r.name);
+  const asked = question ?? you.post.question;
+  const six = force === "req.sixmonths" ? { ...r, referredHere: { on: "12 May", until: "12 Nov" } } : force === "req.recent" ? { ...r, recent: "Not sure" as const } : r;
 
   if (state?.stage === "referred") return <AfterRefer id={r.id} />;
   if (state?.stage && state.stage !== "notmoving") return <MarkedSubmitted id={r.id} />;
@@ -342,7 +345,7 @@ export function ReferralRequest({ id }: { id: string }) {
               <Fact icon="calendar">{r.years} years</Fact>
               <Fact icon="hourglass">{r.notice}</Fact>
             </div>
-            <SixMonths r={force === "req.sixmonths" ? { ...r, referredHere: { on: "12 May", until: "12 Nov" } } : force === "req.recent" ? { ...r, recent: "Not sure" } : r} company={you.company} />
+            <SixMonths r={six} company={you.company} />
             <div style={{ display: "flex", gap: 8 }}>
               {r.work.map((w) => (
                 <Tag key={w}>{w}</Tag>
@@ -377,136 +380,150 @@ export function ReferralRequest({ id }: { id: string }) {
       </Screen>
     );
 
+  // The order is the order a referrer decides in (Devansh, 24 Sep): who they are, what would stop it,
+  // fit for the role, your question, proof of work, history, trust, then their own words.
   return (
     <Screen title="Referral request" back>
       <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
-        <PersonHead name={r.name} role={roleLine(r)} when={`Sent ${r.when.toLowerCase()}`} />
+        <PersonHead name={r.name} role={roleLine(r)} when={`Sent ${r.when.toLowerCase()}`} verified={r.verified} />
 
-        {/* Figma holds this whole screen in one white "Window" card, padded 16 with a 24 gap —
-            every block below is a plain frame inside it, not a card of its own, and the two
-            decision buttons are the card's last block rather than a bar pinned to the screen. */}
+        {/* One white Window card, padded 16 with a 24 gap; the decision is its last block. */}
         <div className="sd-card" style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-          {r.common && (
-            <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-              <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
-                {r.common.logo && (
-                  <Image src={logoSrc(r.common.logo)} alt="" width={16} height={16} style={{ width: 16, height: 16 }} unoptimized />
-                )}
-                {r.common.icon && <Icon name={r.common.icon} size={16} color="tone" />}
-                <span className="t-label muted">{r.common.text}</span>
-              </div>
-              {/* Figma keeps an empty 16 "Icon space" in front of this line so it lines up
-                  under the words above, not under the mark. */}
-              {r.common.years && (
-                <p className="t-label-sm muted" style={{ paddingLeft: 20 }}>
-                  {r.common.years}
-                </p>
-              )}
-            </div>
-          )}
-          <div style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
-            <Fact icon="mappin.and.ellipse">{r.city}</Fact>
-            <Fact icon="calendar">{yearsFact(r.years)}</Fact>
-            <Fact icon="hourglass">{r.notice}</Fact>
-          </div>
-          <SixMonths r={force === "req.sixmonths" ? { ...r, referredHere: { on: "12 May", until: "12 Nov" } } : force === "req.recent" ? { ...r, recent: "Not sure" } : r} company={you.company} />
-          <div style={{ display: "flex", gap: 8 }}>
-            {r.work.map((w) => (
-              <Tag key={w}>{w}</Tag>
-            ))}
-          </div>
-
-        {/* Figma "Profile updated": a plain note above the match block */}
-        {force === "req.updated" && <Note>Profile updated since the 12 Sep fit check</Note>}
-
-        <Section
-          label="How they match"
-          icon="lightbulb.fill"
-          end={<Tag style="primary">{matched} of {skillRows.length} skills · {r.years} {r.years === 1 ? "yr" : "yrs"}</Tag>}
-        >
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            {/* Figma: the fit rows sit 20 apart, each 38 tall, and the 44pt target overlaps the
-                row rather than stretching it. */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-              {skills.map((s) =>
-                s.ok === true && !s.isExperience ? (
-                  <button
-                    key={s.name}
-                    className="sd-hit44"
-                    onClick={() => dispatch({ t: "removeSkill", v: key(s.name) })}
-                    aria-label={`${s.name} isn’t really there`}
-                    style={{ display: "block", width: "100%", textAlign: "left" }}
-                  >
-                    <MatchRow ok={!removed(s.name)} source={removed(s.name) ? "You removed this. Tap to undo" : s.source}>
-                      {s.name}
-                    </MatchRow>
-                  </button>
-                ) : (
-                  <MatchRow key={s.name} ok={s.ok} source={s.source}>
-                    {s.name}
-                  </MatchRow>
-                )
-              )}
-            </div>
-            {/* Figma draws this hint plain at 12/16, not as a filled chip. */}
-            <Note>{anyRemoved ? "Count updated for you only" : "Tap a skill that isn’t really there"}</Note>
-          </div>
-        </Section>
-
-        <Section label="Experience" icon="briefcase.fill">
-          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-            {r.jobs.map((j, i) => (
-              <CompanyRow key={i} logo={j.logo} role={j.role} company={j.company} when={j.when} />
-            ))}
-          </div>
-        </Section>
-
-        {r.projects.length > 0 && (
-          <Section label="Projects" icon="folder.fill">
-            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              <Projects list={r.projects} />
-            </div>
-          </Section>
-        )}
-
-        <Section label="Resume and links" icon="paperclip">
+          {/* 1 · what would stop it: place, years, notice, and the 6-month rule */}
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <span className="t-label" style={{ flex: 1 }}>
-                {resume}
-              </span>
-              <button className="sd-hit44" aria-label="Open resume" style={{ display: "flex" }} onClick={() => nav.push("resume", { file: resume, id: r.id })}>
-                <Icon name="arrow.up.right.square" size={20} color="tone" />
-              </button>
+            <div style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
+              <Fact icon="mappin.and.ellipse">{r.city}</Fact>
+              <Fact icon="calendar">{yearsFact(r.years)}</Fact>
+              <Fact icon="hourglass">{r.notice}</Fact>
             </div>
-            {/* Figma's LinkBlock is three 20 marks, 8 apart. Each opens that profile. */}
-            <div style={{ display: "flex", gap: 8 }}>
-              {[
-                ["linkedin", "LinkedIn"],
-                ["dribbble", "Dribbble"],
-                ["behance", "Behance"],
-              ].map(([l, label]) => (
-                <button
-                  key={l}
-                  className="sd-hit44"
-                  aria-label={`Open ${first}’s ${label}`}
-                  style={{ display: "flex" }}
-                  onClick={() => nav.push("profileLink", { site: label, name: r.name })}
-                >
-                  <Image src={`/images/sidedoor/${l}.svg`} alt="" width={20} height={20} style={{ width: 20, height: 20 }} unoptimized />
-                </button>
+            <SixMonths r={six} company={you.company} />
+          </div>
+
+          {force === "req.updated" && <Note>Profile updated since the 12 Sep fit check</Note>}
+
+          {/* 2 · fit: only skills their work shows count */}
+          <Section
+            label={`Fit for ${you.post.title}`}
+            icon="checkmark.circle.fill"
+            end={<Tag style="primary">{matched} of {POST_SKILLS.length} skills · {r.years} {r.years === 1 ? "yr" : "yrs"}</Tag>}
+          >
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              <p className="t-body muted">
+                {r.years} {r.years === 1 ? "year" : "years"} of experience. You asked for {rules.minYears}+.
+              </p>
+              {groups.map((g) => (
+                <div key={g.label} style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  <span className="t-label muted">
+                    {g.label} · {g.rows.length}
+                  </span>
+                  {g.label === "Missing" ? (
+                    <p className="t-h-xs">{g.rows.map((x) => x.name).join(", ")}</p>
+                  ) : g.label === "Shown in their work" ? (
+                    // one line each: the skill, and where their work shows it
+                    g.rows.map((x) => (
+                      <div key={x.name} style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
+                        <span className="t-h-xs">{x.name}</span>
+                        <span className="t-label-sm muted" style={{ paddingTop: 2 }}>{x.source}</span>
+                      </div>
+                    ))
+                  ) : (
+                    g.rows.map((x) => (
+                      <div key={x.name} style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                        <span className="t-h-xs">{x.name}</span>
+                        <span className="t-label-sm muted">{x.source}</span>
+                      </div>
+                    ))
+                  )}
+                </div>
               ))}
             </div>
-          </div>
-        </Section>
-
-        {r.note && (
-          <Section label="Their note" icon="quote.bubble.fill">
-            <p className="t-body muted">{r.note}</p>
           </Section>
-        )}
 
-          {/* Figma's Decision frame is the Window's last block: two full-width buttons 12 apart. */}
+          {/* 3 · your one question, answered in their words */}
+          {r.answer && (
+            <Section label="Your question" icon="bubble.left.fill">
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                <p className="t-label-sm muted">{asked}</p>
+                <p className="t-body">{r.answer}</p>
+              </div>
+            </Section>
+          )}
+
+          {/* 4 · proof of work: what they did, the result, and a link to see it */}
+          {r.projects.length > 0 && (
+            <Section label="Projects" icon="folder.fill">
+              <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                {r.projects.map((p) => (
+                  <Project key={p.title} title={p.title} link={p.link} detail={p.detail} skills={[]} />
+                ))}
+              </div>
+            </Section>
+          )}
+
+          <Section label="Experience" icon="briefcase.fill">
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              {r.jobs.map((j, i) => (
+                <CompanyRow key={i} logo={j.logo} role={j.role} company={j.company} when={j.when} />
+              ))}
+            </div>
+          </Section>
+
+          <Section label="Resume and links" icon="paperclip">
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span className="t-label" style={{ flex: 1 }}>
+                  {resume}
+                </span>
+                <button className="sd-hit44" aria-label="Open resume" style={{ display: "flex" }} onClick={() => nav.push("resume", { file: resume, id: r.id })}>
+                  <Icon name="arrow.up.right.square" size={20} color="tone" />
+                </button>
+              </div>
+              <div style={{ display: "flex", gap: 8 }}>
+                {[
+                  ["linkedin", "LinkedIn"],
+                  ["dribbble", "Dribbble"],
+                  ["behance", "Behance"],
+                ].map(([l, label]) => (
+                  <button
+                    key={l}
+                    className="sd-hit44"
+                    aria-label={`Open ${first}’s ${label}`}
+                    style={{ display: "flex" }}
+                    onClick={() => nav.push("profileLink", { site: label, name: r.name })}
+                  >
+                    <Image src={`/images/sidedoor/${l}.svg`} alt="" width={20} height={20} style={{ width: 20, height: 20 }} unoptimized />
+                  </button>
+                ))}
+              </div>
+            </div>
+          </Section>
+
+          {/* 5 · trust: checked facts, not a score */}
+          <Section label="Trust" icon="lock.fill">
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              <TrustRow icon={r.verified ? "checkmark.seal.fill" : "info.circle.fill"} tone={r.verified ? "var(--sd-text-success)" : undefined}>
+                {r.verified ? `Work email verified at ${r.company}` : "Work email not verified"}
+              </TrustRow>
+              <TrustRow icon="person.2.fill">
+                {r.record
+                  ? `Referred ${r.record.referred} ${r.record.referred === 1 ? "time" : "times"} on Sidedoor · ${r.record.interviews} reached interviews`
+                  : "No referrals on Sidedoor yet"}
+              </TrustRow>
+              {r.common && (
+                <TrustRow icon={r.common.icon ?? "building.2.fill"} logo={r.common.logo}>
+                  {r.common.text}
+                  {r.common.years && <span className="t-label-sm muted" style={{ display: "block" }}>{r.common.years}</span>}
+                </TrustRow>
+              )}
+            </div>
+          </Section>
+
+          {r.note && (
+            <Section label="Their note" icon="quote.bubble.fill">
+              <p className="t-body muted">{r.note}</p>
+            </Section>
+          )}
+
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             <Button onClick={refer}>Refer</Button>
             <Button type="secondary" onClick={notMoving}>
@@ -519,7 +536,20 @@ export function ReferralRequest({ id }: { id: string }) {
   );
 }
 
-function PersonHead({ name, role, when, tag }: { name: string; role: string; when?: string; tag?: React.ReactNode }) {
+function TrustRow({ icon, logo, tone, children }: { icon: Parameters<typeof Icon>[0]["name"]; logo?: string; tone?: string; children: React.ReactNode }) {
+  return (
+    <div style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+      {logo ? (
+        <Image src={logoSrc(logo)} alt="" width={18} height={18} style={{ width: 18, height: 18, marginTop: 1 }} unoptimized />
+      ) : (
+        <Icon name={icon} size={18} color={tone ?? "tone"} style={{ marginTop: 1 }} />
+      )}
+      <span className="t-label muted" style={{ flex: 1 }}>{children}</span>
+    </div>
+  );
+}
+
+function PersonHead({ name, role, when, tag, verified }: { name: string; role: string; when?: string; tag?: React.ReactNode; verified?: boolean }) {
   // Figma's Person row is 50 tall: a 44 avatar centred, a Semi Bold 16/24 name, the role under it.
   // A time sits on the name line in plain grey, as on the list cards; a status (Referred, Not moving
   // forward) stays a tag at the end of the role line.
@@ -528,7 +558,11 @@ function PersonHead({ name, role, when, tag }: { name: string; role: string; whe
       <Avatar name={name} size={44} />
       <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1, minWidth: 0 }}>
         <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <span className="t-h-sm sd-1line" style={{ flex: 1 }}>{name}</span>
+          <span style={{ flex: 1, display: "flex", alignItems: "center", gap: 4, minWidth: 0 }}>
+            <span className="t-h-sm sd-1line">{name}</span>
+            {/* work email checked: the same seal referrers carry */}
+            {verified && <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)", flex: "0 0 auto" }} />}
+          </span>
           {when && <span className="sd-lc-when">{when}</span>}
         </span>
         <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -556,7 +590,7 @@ function SixMonths({ r, company }: { r: Candidate; company: string }) {
         {`May have been referred to ${company} recently. Check with them first.`}
       </Note>
     );
-  return <Fact icon="checkmark.circle.fill">{`Says no ${company} referral in 6 months`}</Fact>;
+  return <Fact icon="clock.fill">{`Says no ${company} referral in 6 months`}</Fact>;
 }
 
 function Fact({ icon, children }: { icon: Parameters<typeof Icon>[0]["name"]; children: React.ReactNode }) {

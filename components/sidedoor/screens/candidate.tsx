@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useNav } from "../nav";
 import { STAGE_LABEL, WEEKLY_REQUESTS, requestIdFor, stageTag, useStore, type Request, type Stage } from "../store";
-import { DEMO, DESIGN, JOBS, firstName, jobById, matchOf, nearOf, type Job, type Recent } from "../data";
+import { DEMO, DESIGN, JOBS, claimedOf, firstName, jobById, matchOf, nearOf, type Job, type Recent } from "../data";
 import {
   Actions,
   Avatar,
@@ -485,25 +485,40 @@ function Block({ icon, title, children, end }: { icon: Parameters<typeof Icon>[0
   );
 }
 
-function FitSummary({ j }: { j: Job }) {
+/** Your skills against the job, in the groups the referrer sees. Only skills a job or project of
+ *  yours shows count; one you only listed is "Claimed" and says how to make it count. */
+function fitRows(j: Job, withShown = true): [string, string[]][] {
   const near = nearOf(j);
-  const rows: [string, string[]][] = [
-    ["In your resume", j.skills.filter((k) => !j.missing.includes(k))],
-    ["Related", near],
-    ["Missing", j.missing.filter((k) => !near.includes(k))],
-  ];
+  const claimed = claimedOf(j);
+  return (
+    [
+      ...(withShown ? [["Shown in your work", j.skills.filter((k) => !j.missing.includes(k))] as [string, string[]]] : []),
+      ["Related", near],
+      ["Claimed, no proof", claimed],
+      ["Missing", j.missing.filter((k) => !near.includes(k) && !claimed.includes(k))],
+    ] as [string, string[]][]
+  ).filter(([, list]) => list.length > 0);
+}
+
+function FitLines({ rows }: { rows: [string, string[]][] }) {
+  return (
+    <>
+      {rows.map(([label, list]) => (
+        <p key={label} className="t-body muted">
+          <span className="t-h-xs" style={{ color: "var(--sd-text)" }}>{label}: </span>
+          {list.join(", ")}
+        </p>
+      ))}
+    </>
+  );
+}
+
+function FitSummary({ j }: { j: Job }) {
   return (
     <Block icon="checkmark.circle.fill" title="How you match">
       <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingTop: 4 }}>
-        {rows
-          .filter(([, list]) => list.length > 0)
-          .map(([label, list]) => (
-            <p key={label} className="t-body muted">
-              <span className="t-h-xs" style={{ color: "var(--sd-text)" }}>{label}: </span>
-              {list.join(", ")}
-            </p>
-          ))}
-        {near.length > 0 && <Note>Say where you used related skills in your note</Note>}
+        <FitLines rows={fitRows(j)} />
+        {claimedOf(j).length > 0 && <Note>A claimed skill counts once a job or project shows it</Note>}
       </div>
     </Block>
   );
@@ -523,7 +538,7 @@ function Bullets({ items }: { items: string[] }) {
 /* ── Check your request ─────────────────────────────────────────────────── */
 export function CheckRequest({ id = "flipkart" }: { id?: string }) {
   const nav = useNav();
-  const { details, recent, note, stillNeeded, requestsLeft, requestsCap, force, offline, you, dispatch } = useStore();
+  const { details, recent, answers, note, stillNeeded, requestsLeft, requestsCap, force, offline, you, dispatch } = useStore();
   const j = jobById(id);
   const who = firstName(j.referrer.name);
   const [sending, setSending] = useState(force === "send.sending");
@@ -537,7 +552,10 @@ export function CheckRequest({ id = "flipkart" }: { id?: string }) {
     : details;
   // the 6-month answer is per company, so it is asked on every request and counts as one more detail
   const recentAnswer = complete ? "No" : recent[j.company];
-  const missing = complete ? 0 : stillNeeded + (recentAnswer ? 0 : 1);
+  // the referrer's one question is answered per job, like the 6-month one
+  const answer = complete ? DEMO.answer : answers[j.id] ?? "";
+  const unanswered = j.question && !answer.trim() ? 1 : 0;
+  const missing = complete ? 0 : stillNeeded + (recentAnswer ? 0 : 1) + unanswered;
 
   // Figma's Loading button keeps its colour, so it isn't disabled — a second tap just does
   // nothing. A ref, not the state: taps can land before React has re-rendered.
@@ -702,22 +720,26 @@ export function CheckRequest({ id = "flipkart" }: { id?: string }) {
         <Section label="How you match" icon="checkmark.circle.fill" end={<Tag style="primary">{matchOf(j)} of {j.skills.length} skills · 3 yrs</Tag>}>
           <Box>
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              {(
-                [
-                  ["Related", nearOf(j)],
-                  ["Missing", j.missing.filter((k) => !nearOf(j).includes(k))],
-                ] as [string, string[]][]
-              )
-                .filter(([, list]) => list.length > 0)
-                .map(([label, list]) => (
-                  <p key={label} className="t-body muted">
-                    <span className="t-h-xs" style={{ color: "var(--sd-text)" }}>{label}: </span>
-                    {list.join(", ")}
-                  </p>
-                ))}
+              <FitLines rows={fitRows(j, false)} />
             </div>
           </Box>
         </Section>
+
+        {j.question && (
+          <Section label={`${who}’s question`} icon="bubble.left.fill">
+            <Field
+              value={answer}
+              onChange={(v) => dispatch({ t: "answer", job: j.id, v })}
+              label={j.question}
+              placeholder="Two or three lines about something you did"
+              multiline
+              kind="tips"
+              required
+              demo={DEMO.answer}
+              help={`${who} asks everyone this. A real example beats a polished one.`}
+            />
+          </Section>
+        )}
 
         <Section label="A short note (optional)" icon="quote.bubble.fill">
           {/* Figma's note box is a single 44-tall line, not the 100-tall multiline box. */}
