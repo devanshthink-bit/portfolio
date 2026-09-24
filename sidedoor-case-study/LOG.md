@@ -3431,3 +3431,10 @@ Built:     One page in the app's design language (Inter, #FBFAF8 page, white car
 Left out: the AI-generated transcripts (Devansh, 24 Sep), n92 (remembered, never quoted), every desk-research figure (no sources yet).
 Linked:    case study hero pill "See the research board" and a caption under "The other side", as RedBus does.
 Checked:   localhost, desktop 1440 (headless Chrome screenshots) and 375 wide (no sideways scroll); filters and tracker work.
+
+CHANGE · 2026-09-24 · research board redesign
+Why:      Devansh: the board looked like AI slop and cluttered (shadow cards, pills, coloured borders, dots, yellow callout).
+What:     Same words, calmer page. One reading column, thin rules instead of cards, no shadows. How-sure tags are coloured words.
+          Notes read as a plain two-column list with a small cluster dot. Insight statements split into Who / Struggle / Because / Means rows
+          instead of four highlight colours. Chain is a table; loops are a line of steps; versions are rows, not a sideways rail.
+          Contents list replaces the status-timeline tracker. Checked: all 91 notes, filters, no overflow at 1440 and 375.
