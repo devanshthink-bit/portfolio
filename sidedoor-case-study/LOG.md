@@ -3309,7 +3309,7 @@ DECISION · 2026-09-24 · 14 requests a week, and a no gives it back
 - Checked on localhost (Vercel preview needs a login).
 
 ## 2026-09-24 · Portal details: Email to me and Copy all
-- Devansh: moving the details from the app into the referral portal is the pain point everyone named. Referrers fill the portal on a laptop.
+- Devansh: moving the details from the app into the referral portal is the pain point everyone named. Evidence: both referrers said it — n60 (Samarth: chasing extra details, copying skills from the resume into the portal by hand) and n71 (Riya: needs the candidate on a call because the portal asks for details a resume doesn't have). Referrers fill the portal on a laptop (assumption, not asked in interviews).
 - Options offered: email to work inbox, copy all, open on laptop (link/QR), autofill extension. Devansh chose the first two. Open on laptop overlaps with the email; autofill is a big build and every portal is different, so it's for "What's next".
 - "Email to me" sends the list to the referrer's verified work email (where the portal is), in the portal's order, with the resume attached. The button becomes "Emailed" and a note says "Sent to nithin.agarwal@flipkart.com with the resume".
 - "Copy all" puts every detail on the clipboard as "Name: value" lines and ticks every row. Per-field copy stays.
