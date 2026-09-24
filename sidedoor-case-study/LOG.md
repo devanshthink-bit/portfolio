@@ -3390,3 +3390,10 @@ DECISION · 2026-09-24 · 14 requests a week, and a no gives it back
 ## 2026-09-24 · Log cleaned up
 - Devansh asked whether the log records every important decision with its reasoning. Mostly yes, but the status at the top was from 17 Sep, recent entries often lacked research note numbers and what was turned down, long Figma change lists buried the decisions, and dates used two formats.
 - Fixed: "Where things stand" rewritten; new "Key decisions" tables at the top (decision, why, evidence, turned down; "mine" where no research backs it); every heading now uses YYYY-MM-DD; the portal entry cites n60 and n71.
+
+## 2026-09-24 · Usability test plan
+- Devansh will test the prototype with Samarth and Riya, the two people interviewed, each as candidate and as referrer.
+- Plan in TEST_PLAN.md: 45 minutes each, candidate tasks first, then referrer tasks (a reload between, so they start as Nithin). 10 tasks, each tied to a key decision; a notes sheet per person.
+- Why these tasks: each one checks a bet in "Key decisions" (proof rule, just-in-time details, status back, the link, portal details, Mark as submitted, question suggestions).
+- Turned down: asking "would you use this?" (people predict yes); telling them about the blue hint (it would lead them).
+- Known limits: both people shaped the app and know Devansh, so they'll be kind; 2 people can show where the flows break, not whether referrers submit more. The kill conditions still need the 8-referrer test.

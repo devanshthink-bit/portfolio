@@ -24,7 +24,7 @@ Updated 2026-09-24. Key decisions with reasons: LOG.md, top.
 - [x] **Kill conditions** · numbered, for the next test (SCOPE.md, 19 Sep)
 - [x] **molades-attack** · run on V6 (19 Sep, whole app) and again on final V6 (23 Sep)
 - [x] **molades-build (again)** · attack findings fixed; coded prototype of every V6 screen and state
-- [ ] **molades-test** · no real tests planned. Write the test script anyway and say plainly it wasn't run
+- [ ] **molades-test** · TEST_PLAN.md written (2026-09-24): Samarth and Riya, 10 tasks. Not run yet
 - [ ] **molades-case** · rewrite the live case study page + interview Q&A
 
 ## Build: screens in V3 (Figma)
