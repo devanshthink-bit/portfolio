@@ -10,6 +10,8 @@ written on **2026-09-24**, against:
 - **The case study itself:** commit `ec55cc0`
 - **Research and decisions:** LOG.md up to the entry "Usability test plan" (2026-09-24).
 
+**Format (24 Sep, later):** the page is one story like Ishita Sharma's EDGE case study (components/story.tsx). "Scene N" below is the Nth scene of "A little story"; Act 3 is "Reaching this point wasn't easy"; Act 1's research is in "The grind behind it"; Act 4 is "What's next".
+
 Anything that changes after this point has to be checked against the table below, and the beats it
 touches updated.
 

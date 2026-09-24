@@ -1,11 +1,14 @@
 // Written against the Sidedoor design as of commit 18d4738 on the sidedoor branch (24 Sep 2026):
 // Figma V6 on UI Screens, and the coded prototype at /work/sidedoor/prototype.
 // What changed since then, and which sections it touches: sidedoor-case-study/CASE_STUDY_VERSION.md.
+// Told as one story, in the order of Ishita Sharma's EDGE case study: hook, a persona through the
+// screens, the turns behind them, the grind, what's next. Parts: components/story.tsx.
 import type { Metadata } from "next";
 import RubberBackButton from "../../../components/RubberBackButton";
 import SidedoorTOCClient from "../../../components/SidedoorTOCClient";
 import SidedoorEmbed from "../../../components/SidedoorEmbed";
-import { T, SectionLabel, Beat, Card, Chip, Numbered, Pill, MetaStrip, Act, InShort, BeforeAfter, Rows, MoSCoW, Closing } from "../../../components/caseStudy";
+import { T, SectionLabel, Pill, MoSCoW, Closing } from "../../../components/caseStudy";
+import { Hook, P, H2, H3, List, Dots, Ask, Outcome, Voice, Fig } from "../../../components/story";
 import { PhoneRow } from "../../../components/IPhone";
 import PhoneShot from "../../../components/PhoneShot";
 
@@ -18,88 +21,6 @@ export const metadata: Metadata = {
 const scr = (f: string) => `/images/sidedoor/screens/${f}.webp`;
 const PROTO_FULL = "/work/sidedoor/prototype";
 
-// ── Visuals built in code ────────────────────────────────────────────────────
-function Quotes({ items }: { items: { q: string; who: string }[] }) {
-  return (
-    <div className="cs-grid-2">
-      {items.map((x) => (
-        <Card key={x.q}>
-          <p style={T.quote}>&quot;{x.q}&quot;</p>
-          <p style={{ ...T.small, marginTop: 8 }}>{x.who}</p>
-        </Card>
-      ))}
-    </div>
-  );
-}
-
-function Limits() {
-  const rows = [
-    "Nobody outside a company can read its referral portal. Not LinkedIn, not me.",
-    "Signing in with LinkedIn gives a name, an email and a photo. No work history.",
-    "Two people, each seen from both sides. Anything only one of them said is marked as one.",
-  ];
-  return (
-    <Card>
-      <p style={{ ...T.eyebrow, marginBottom: 10 }}>What I had to work around</p>
-      <ul className="cs-list">{rows.map((r) => <li key={r}>{r}</li>)}</ul>
-    </Card>
-  );
-}
-
-function Link() {
-  return (
-    <div className="cs-grid-2">
-      <Card>
-        <p style={T.quote}>&quot;a link is sent to the candidate to fill out their own personal details, which would cut the referrer&apos;s effort by 50%&quot;</p>
-        <p style={{ ...T.small, marginTop: 8 }}>Samarth, as a referrer. The link page is their idea.</p>
-      </Card>
-      <Card warn>
-        <p style={{ ...T.cardH, color: "#A45729" }}>The risk I kept</p>
-        <p style={{ ...T.body, marginTop: 4 }}>Both of them ask for referrals on LinkedIn today. If referrers won&apos;t send the link there, this whole bet fails.</p>
-      </Card>
-    </div>
-  );
-}
-
-function AttackStats() {
-  const stats = [
-    { n: "1 of 13", l: "breaks I predicted on the first two screens" },
-    { n: "2", l: "blockers across the app, both on work-email checks" },
-    { n: "18", l: "major breaks across the whole app" },
-    { n: "65", l: "states you can open in the prototype" },
-  ];
-  return (
-    <div className="cs-stats">
-      {stats.map((s) => (
-        <div key={s.l} style={{ background: "var(--bg)", padding: "20px 22px" }}>
-          <div style={{ ...T.figure, marginBottom: 2 }}>{s.n}</div>
-          <div style={T.small}>{s.l}</div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function Watch() {
-  const rows = [
-    { h: "Referrals submitted per active referrer, each month", b: "The number this should move", tone: "green" as const, t: "Goal" },
-    { h: "Referrers who turn requests off", b: "Must not go up", tone: "red" as const, t: "Limit" },
-    { h: "Requests with no answer after 7 days", b: "Silence is the problem, so watch it", tone: "amber" as const, t: "Risk" },
-  ];
-  return (
-    <div className="cs-swatches">
-      {rows.map((r) => (
-        <Card key={r.h}>
-          <div style={{ marginBottom: 10 }}><Chip tone={r.tone}>{r.t}</Chip></div>
-          <p style={T.cardH}>{r.h}</p>
-          <p style={{ ...T.body, marginTop: 4 }}>{r.b}</p>
-        </Card>
-      ))}
-    </div>
-  );
-}
-
-// ── Page ─────────────────────────────────────────────────────────────────────
 export default function SidedoorCaseStudy() {
   return (
     <main className="cs-page is-sidedoor" style={{ padding: "40px 0 96px" }}>
@@ -122,267 +43,221 @@ export default function SidedoorCaseStudy() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/images/sidedoor/sidedoor-word.svg" alt="SideDoor" width={132} height={24} style={{ height: "0.74em", width: "auto", display: "inline-block", verticalAlign: "-0.02em" }} />: a referral request a stranger can say yes to
       </h1>
-      <p style={T.lede}>Ask a stranger at a company to refer you and you&apos;ll usually hear nothing. The two people I interviewed have been on both sides of that, and they told me why: the request hands the referrer the candidate&apos;s paperwork. SideDoor makes the request arrive complete, shows fit with proof, and sends the answer back.</p>
+      <p className="story-byline">Devansh Somvanshi · Solo and self-initiated · iOS app and a web page · Figma, FigJam, Claude Code · Sep 2026</p>
 
-      <MetaStrip items={[
-        { label: "Role", value: "Product designer, solo, self-initiated" },
-        { label: "Timeline", value: "An early version, then a full redo in Sep 2026" },
-        { label: "Platform", value: "iOS app, plus a web page for strangers" },
-        { label: "Tools", value: "Figma, FigJam, Claude Code" },
+      {/* ── The hook ── */}
+      <Hook>Ever asked a stranger at a company for a referral and heard nothing back?</Hook>
+      <P>The two people I interviewed have been on both sides of it. As candidates they send a resume and a polite note, and hear nothing. As referrers they get the same notes, and most of the time they leave them.</P>
+      <P>I designed SideDoor, an app that changes what the referrer receives.</P>
+      <P><strong>How does it do that?</strong></P>
+      <List items={[
+        "The request arrives with everything the company's referral portal asks for, so the referrer has nothing to chase.",
+        "Fit is shown skill by skill, with the line in the candidate's work that proves it.",
+        "The referrer passes the status back in one tap, so the candidate isn't left guessing.",
       ]} />
-      <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 24 }}>
-        <Pill href="#toc-try" primary icon="down">Try the prototype</Pill>
+      <P>Referrers are the scarce side of this marketplace. The number I&apos;d judge SideDoor by is how many referrals each active referrer submits in a month.</P>
+
+      <H2 id="toc-try">Short on time? Try it first.</H2>
+      <P>This is the working prototype, built in code from the Figma file. Pick a side on the first screen. Tap any empty field and it fills itself, so you never have to type.</P>
+      <Fig wide caption={<>Every screen and state has its own shortcut on <a className="inline-link" href={PROTO_FULL} target="_blank" rel="noopener noreferrer">the full prototype page</a>.</>}>
+        <SidedoorEmbed />
+      </Fig>
+      <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
         <Pill href={PROTO_FULL} external>Open every screen and state</Pill>
       </div>
 
-      <section className="cs-inshort-wrap">
-        <InShort rows={[
-          { k: "The problem", v: "A referrer asked by a stranger has to chase the job ID, the date of birth and the career gaps before they can refer. Most don't bother, and the candidate never finds out." },
-          { k: "What I designed", v: "A request that carries everything the company's portal asks for, fit shown skill by skill with the line that proves it, and a status the referrer passes back in one tap." },
-          { k: "Why it matters", v: "Referrers are the scarce side of this marketplace. If each request takes them minutes, more get submitted, and that is the number I'd judge it by." },
-        ]} />
-      </section>
+      {/* ── The story ── */}
+      <H2 id="toc-story">A little story, for context</H2>
+      <P>Meet Abhinav. He&apos;s a product designer at Blinkit, and he wants the Interaction Designer job at Flipkart. Nithin is a design manager at Flipkart who refers people for it. Both are sample people. Every screen below is from the Figma file.</P>
 
-      {/* ── ACT 1 ── */}
-      <Act id="toc-problem" n="Act 1 · The problem" title="Ever asked a stranger for a referral and heard nothing?"
-        sub={'Samarth has. For a role at Razorpay they messaged two or three people on LinkedIn, with a formal note and a resume. "My message was not even read."'} />
+      <Dots />
+      <P>Abhinav has sent referral requests on LinkedIn before. Most were never read. This time he opens SideDoor.</P>
+      <Ask>How does a candidate know which ask is worth making?</Ask>
+      <P>Every job on SideDoor has someone who refers for it. Each card says who that is, how many of the job&apos;s skills Abhinav has, and whether the referrer is full this week.</P>
+      <Outcome>Before asking anyone, he sees he has 4 of the 7 skills on the Flipkart card.</Outcome>
+      <Fig><PhoneRow className="bare" phones={[{ src: scr("jobs"), alt: "Jobs: three jobs, each with the person who refers, a skills match and a shared background tag." }]} /></Fig>
 
-      <Beat label="The other side" title="Referrers skip strangers because of the admin."
-        sub="Riya refers people at Accenture, and Samarth at Infosys. Neither worried about a stranger turning out badly. What they described was chasing details: a job ID, a date of birth, the gaps in someone's career, then typing it all into the company portal by hand.">
-        <Quotes items={[
-          { q: "they don't share the job ID, which irritates me a lot... I will not take the pain and go and check for it", who: "Riya, as a referrer" },
-          { q: "having to constantly ask candidates for additional details, as many assume that just sending a resume and phone number is enough", who: "Samarth, as a referrer" },
-        ]} />
-      </Beat>
+      <Dots />
+      <P>He opens the job. He gets 14 requests a week, so he wants to know whether this one is worth spending.</P>
+      <Ask>How can a candidate tell a good fit from a hopeful one?</Ask>
+      <P>How you match splits his skills three ways: found in his work, related, and listed only. A skill counts only when his work or his resume shows it.</P>
+      <Outcome>He can see where he stands, and that asking uses 1 of his 14 this week.</Outcome>
+      <Fig><PhoneRow className="bare" phones={[{ src: scr("job"), alt: "Job details: How you match, with skills found in his work, related skills and one listed only." }]} /></Fig>
 
-      <Beat label="The candidate" title="And the candidate reads silence as a no."
-        sub="Nothing comes back, so they guess. The same two people, asking for referrals themselves, described it from the other end.">
-        <Quotes items={[
-          { q: "You can say 80% of the time they don't reply.", who: "Riya, as a candidate" },
-          { q: "I would never know what actually happened. If they ever applied in reality or not I'm not sure.", who: "Riya again" },
-        ]} />
-      </Beat>
+      <Dots />
+      <P>He taps to ask. Flipkart&apos;s portal wants four things his resume doesn&apos;t have: his date of birth, career gaps, preferred interview locations and notice period.</P>
+      <Ask>How does a request arrive complete?</Ask>
+      <P>It won&apos;t send until it is. He fills in the four once, and SideDoor saves them for his next request. He also says whether he was referred to Flipkart in the last six months, because most portals refuse a second referral.</P>
+      <Outcome>The request goes to Nithin with nothing missing.</Outcome>
+      <Fig><PhoneRow className="bare" phones={[{ src: scr("check"), alt: "Check your request: the four details Flipkart's portal asks for, then the six month question." }]} /></Fig>
 
-      {/* WHY IT MATTERS: a beat with the market numbers (referral hire rates, time to hire) goes here
-          once Devansh sends the original sources. Until then no unsourced figure is on this page.
-          See CASE_STUDY_VERSION.md, "Pending". */}
+      <Dots />
+      <P>Nithin looks at his requests on a work break.</P>
+      <Ask>How does a referrer decide in the few minutes he has?</Ask>
+      <P>Requests are ordered by fit, and each card gives the reason. Weaker matches are folded away, one tap from view, because Samarth, one of the people I interviewed, refers borderline candidates on purpose.</P>
+      <Outcome>Nithin opens the best fit first.</Outcome>
+      <Fig><PhoneRow className="bare" phones={[{ src: scr("requests"), alt: "Referral requests for one job, ordered by fit, with Lower match folded and Suggested for this job below." }]} /></Fig>
 
-      <Beat label="The limits" title="I can't see inside a company's portal, and neither can LinkedIn."
-        sub="So the status has to come from the referrer, and the request has to carry what the portal will ask for before anyone opens it.">
-        <Limits />
-      </Beat>
+      <Dots />
+      <P>The request opens with whatever could stop it: Abhinav&apos;s city, years and notice period, and whether he was referred to Flipkart recently. Below that is every skill the job asks for, with where it was found.</P>
+      <Ask>Why should Nithin trust a skill tag?</Ask>
+      <P>He doesn&apos;t have to. He taps Interaction design and reads the line SideDoor found on Abhinav&apos;s project page, with a link to the page itself.</P>
+      <Outcome>Nithin checks the proof and taps Refer.</Outcome>
+      <Fig><PhoneRow className="bare" phones={[
+        { src: scr("request"), label: "The request", caption: "What could stop it, then the fit", alt: "The request: city, years, notice and the six month line, then fit grouped by where each skill was found." },
+        { src: scr("proof"), label: "One skill", caption: "The line, and where it came from", alt: "A sheet over the request: Interaction design, found on his project page, with the line quoted and a link to it." },
+      ]} /></Fig>
 
-      {/* ── ACT 2 ── */}
-      <Act id="toc-design" n="Act 2 · The design" title="A request that arrives ready"
-        sub="Abhinav, a product designer at Blinkit, wants a job at Flipkart. Nithin, a design manager there, refers for it. They're sample people. Every screen is from the Figma file." />
+      <Dots />
+      <P>Next comes the part both referrers I spoke to complained about: typing everything into the company&apos;s portal.</P>
+      <Ask>How does the data get into the portal without chasing anyone?</Ask>
+      <P>Every detail is laid out in the order the portal asks for it, with a copy button on each. Nithin can copy everything at once, or email it all to his work inbox with the resume attached and fill the portal in from his laptop.</P>
+      <Outcome>He has nothing to ask Abhinav for.</Outcome>
+      <Fig><PhoneRow className="bare" phones={[{ src: scr("emailed"), alt: "After Refer: Emailed and Copy all, then every detail in the portal's order." }]} /></Fig>
 
-      <Beat label="Scene 1 · Finding a job" title="He only sees jobs where someone will refer him."
-        sub="How does a candidate know which ask is worth making? Each card says who refers, how well he fits, and whether that person is full this week.">
-        <PhoneShot src={scr("jobs")} alt="Jobs: three jobs, each with the person who refers, a skills match and a shared background tag."
-          notes={[
-            { box: [3, 18.5, 94, 4.5], title: "Jobs with someone who refers", sub: "no cold DMs to guess at" },
-            { box: [7, 32.2, 84, 4.4], title: "4 of 7 skills, before he asks", sub: "and what he shares with Nithin" },
-            { box: [7, 49, 40, 4.2], title: "Full this week", sub: "said up front, not left to silence" },
-          ]} />
-      </Beat>
-
-      <Beat label="Scene 2 · Before asking" title="He sees how he matches, and what asking costs him."
-        sub="Why spend a request on a bad fit? A skill counts only when his work or resume shows it. He gets 14 requests a week, so each one is a choice.">
-        <PhoneShot src={scr("job")} alt="Job details: How you match, with skills found in his work, related skills and one listed only."
-          notes={[
-            { box: [6.5, 32, 88, 19.5], title: "How you match", sub: "found in your work, related, listed only" },
-            { box: [3.5, 76.3, 93, 4.8], title: "Uses 1 of your 14 this week", sub: "referrers answer because each one is chosen" },
-          ]} />
-      </Beat>
-
-      <Beat label="Scene 3 · Asking" title="Flipkart's portal needs four things his resume doesn't have. He adds them once."
-        sub="How does the request arrive complete? It won't send until it is. The details the portal asks for are saved for his next request, and he says whether he was referred to Flipkart in the last six months.">
-        <PhoneShot src={scr("check")} alt="Check your request: the four details Flipkart's portal asks for, then the six month question."
-          notes={[
-            { box: [3, 28, 94, 6.3], title: "Still needed · 4", sub: "asked once, saved after" },
-            { box: [3, 83.5, 94, 6.5], title: "Referred here in 6 months?", sub: "most portals refuse a second one" },
-          ]} />
-      </Beat>
-
-      <Beat label="Scene 4 · The referrer's list" title="Nithin sees the best fit first, with the reason on the card."
-        sub="How does a referrer decide on a work break? Requests are ordered by fit. The weaker ones are folded away but still there, because Samarth refers borderline people on purpose.">
-        <PhoneShot src={scr("requests")} alt="Referral requests for one job, ordered by fit, with Lower match folded and Suggested for this job below."
-          notes={[
-            { box: [7, 31, 86, 4.3], title: "Fit and common ground", sub: "on the card, before he opens it" },
-            { box: [3, 67.5, 94, 4], title: "Lower match, folded", sub: "one tap away" },
-            { box: [3, 73.5, 94, 5.8], title: "Suggested for this job", sub: "people who chose to be found" },
-          ]} />
-      </Beat>
-
-      <Beat label="Scene 5 · One request" title="What would stop it comes first, then the fit."
-        sub="What does a referrer check, in order? City, years and notice period, then whether he was referred to Flipkart recently. Then every skill the job asks for, with where it was found.">
-        <PhoneShot src={scr("request")} alt="The request: city, years, notice and the six month line, then fit grouped by where each skill was found."
-          notes={[
-            { box: [3.5, 23, 93, 7.5], title: "The blockers", sub: "the six month line names its source" },
-            { box: [3.5, 36.5, 93, 22.5], title: "Found in their work", sub: "each skill says where" },
-            { box: [3.5, 75, 93, 6.5], title: "Listed only", sub: "shown, never counted" },
-          ]} />
-      </Beat>
-
-      <Beat label="Scene 6 · Checking a skill" title="He taps a skill and reads the line SideDoor found."
-        sub="Why should he trust a tag? He doesn't have to. The line comes from Abhinav's own project page, and the link is right there.">
-        <PhoneShot src={scr("proof")} alt="A sheet over the request: Interaction design, found on his project page, with the line quoted and a link to it."
-          notes={[
-            { box: [3.5, 76, 93, 16], title: "The line, and where it came from", sub: "open the page to check" },
-          ]} />
-      </Beat>
-
-      <Beat label="Scene 7 · Referring" title="He refers, and the portal form is already filled in."
-        sub="How does the data get into the portal? Every detail is there in the portal's order, with a copy button each. Or he emails it all to his work inbox, resume attached, and fills the portal in from his laptop.">
-        <PhoneShot src={scr("emailed")} alt="After Refer: Emailed and Copy all, then every detail in the portal's order."
-          notes={[
-            { box: [3.5, 25.8, 93, 8.8], title: "Email to me, or Copy all", sub: "resume attached" },
-            { box: [3.5, 35.8, 93, 52], title: "In the order the portal asks", sub: "the answers Abhinav gave once" },
-          ]} />
-      </Beat>
-
-      <Beat label="Scene 8 · Done" title="One more tap, and Abhinav knows it's in."
-        sub="Marking it submitted is the last step of referring, while the portal is still open. The candidate sees the stage and what usually comes next."
-        caption="The candidate's screen is one of Abhinav's other requests, at Meta.">
-        <PhoneRow phones={[
+      <Dots />
+      <P>The last step of referring is Mark as submitted, while the portal is still open in front of him.</P>
+      <Ask>How does the candidate find out what happened?</Ask>
+      <P>The stage passes back to the candidate, along with what usually happens next.</P>
+      <Outcome>Abhinav sees Submitted, and that interviews usually start in 2 to 3 weeks.</Outcome>
+      <Fig caption="The candidate's screen is one of Abhinav's other requests, at Meta.">
+        <PhoneRow className="bare" phones={[
           { src: scr("marked"), label: "Nithin", caption: "Marked as submitted", alt: "Marked as submitted: Abhinav will see it." },
-          { src: scr("track"), label: "Abhinav", caption: "Submitted, and interviews usually start in 2 to 3 weeks", alt: "Track details: submitted on Meta's portal." },
+          { src: scr("track"), label: "Abhinav", caption: "Submitted on the portal", alt: "Track details: submitted on Meta's portal." },
         ]} />
-      </Beat>
+      </Fig>
 
-      <Beat label="Scene 9 · No app yet" title="Strangers don't need the app to ask."
-        sub="Nithin pastes one link into a LinkedIn reply. A stranger drops a resume, checks the details, and sends a complete request without installing anything.">
-        <PhoneRow phones={[
-          { src: scr("link_before"), label: "The link", caption: "Drop your resume", alt: "The link page: ask Nithin for a referral, drop your resume." },
-          { src: scr("link_sent"), label: "Sent", caption: "Nithin gets every detail Flipkart's portal asks for", alt: "Sent to Nithin, with an option to get the app." },
-        ]} />
-      </Beat>
+      <Dots />
+      <P>Nithin still gets referral DMs on LinkedIn from people who have never heard of SideDoor. He replies with his link.</P>
+      <Ask>How can a stranger ask without installing anything?</Ask>
+      <P>The link opens a web page. The stranger drops a resume, checks the details, and sends a complete request.</P>
+      <Outcome>Nithin gets every detail Flipkart&apos;s portal asks for, from someone who never installed the app.</Outcome>
+      <Fig><PhoneRow className="bare" phones={[
+        { src: scr("link_before"), label: "The link", caption: "Drop your resume", alt: "The link page: ask Nithin for a referral, drop your resume." },
+        { src: scr("link_sent"), label: "Sent", caption: "A complete request", alt: "Sent to Nithin, with an option to get the app." },
+      ]} /></Fig>
 
-      <Beat label="Scene 10 · When it breaks" title="When something goes wrong, it says what's still safe."
-        sub="There are 65 states in the prototype. Three of them: nobody answered, the request didn't send, and the phone is offline.">
-        <PhoneRow phones={[
-          { src: scr("st_noanswer"), label: "No answer", caption: "The request comes back, and others at Zepto refer", alt: "No answer after 7 days, with Ask someone else at Zepto." },
-          { src: scr("st_cantsend"), label: "Error", caption: "\"Couldn't send. Your details are saved.\"", alt: "Couldn't send, with Try again." },
-          { src: scr("st_offline"), label: "Offline", caption: "Shows what was saved", alt: "Jobs while offline, with a note at the top." },
-        ]} />
-      </Beat>
+      <Dots />
+      <P>Not every request goes this smoothly.</P>
+      <Ask>What does the app say when something goes wrong?</Ask>
+      <P>It says what&apos;s still safe. If nobody answers in 7 days, the request comes back and others at the company are suggested. If a send fails, the details are saved. Offline, it shows what was saved. The prototype has 65 states like these, and you can open every one.</P>
+      <Fig wide><PhoneRow className="bare" phones={[
+        { src: scr("st_noanswer"), label: "No answer", caption: "The request comes back", alt: "No answer after 7 days, with Ask someone else at Zepto." },
+        { src: scr("st_cantsend"), label: "Error", caption: "\"Couldn't send. Your details are saved.\"", alt: "Couldn't send, with Try again." },
+        { src: scr("st_offline"), label: "Offline", caption: "Shows what was saved", alt: "Jobs while offline, with a note at the top." },
+      ]} /></Fig>
 
-      <Beat id="toc-try" label="Try it" title="Now try it yourself."
-        sub="This is the working prototype, built in code from the Figma file. Pick a side on the first screen. Tap an empty field and it fills itself, so you never have to type."
-        caption={<>Every screen and state has its own shortcut on <a className="inline-link" href={PROTO_FULL} target="_blank" rel="noopener noreferrer">the full prototype page</a>.</>}>
-        <SidedoorEmbed />
-      </Beat>
+      {/* ── The turns behind it ── */}
+      <H2 id="toc-behind">Reaching this point wasn&apos;t easy</H2>
+      <P>SideDoor is on its sixth version, after a lot of back and forth. I won&apos;t walk you through all of it. These are the turns that changed the design most.</P>
 
-      {/* ── ACT 3 ── */}
-      <Act id="toc-behind" n="Act 3 · Behind the scenes" title="The first version was built on the wrong idea"
-        sub="These are the moments that changed the design, roughly in the order they hit me." />
+      <H3>How I found out referrers weren&apos;t worried about strangers</H3>
+      <P>The first SideDoor was built on trust. I assumed referrers ignored strangers because they couldn&apos;t judge them, so I gave them a match score, graded recommendations and spam limits.</P>
+      <P>Then I talked to Samarth, who refers at Infosys, and Riya, who refers at Accenture. Neither was worried about a stranger turning out badly. Samarth said a bad hire after interviews &quot;should not fall on the referrer&quot;. What they both described was admin.</P>
+      <Voice q="they don't share the job ID, which irritates me a lot... I will not take the pain and go and check for it" who="Riya, as a referrer" />
+      <Voice q="having to constantly ask candidates for additional details, as many assume that just sending a resume and phone number is enough" who="Samarth, as a referrer" />
+      <P>The referral bonus doesn&apos;t make up for it. Riya called it &quot;very low&quot;. That made my score screen, the ranked inbox and the swipe cards worthless.</P>
+      <P>Version 2 was a swipe app with a 9.4 Strong Fit badge. A decimal looks precise, and nobody can check it. In version 6, fit is a count, and every skill says where it came from.</P>
+      <Fig><PhoneRow phones={[
+        { src: scr("v2_swipe"), label: "Version 2", caption: "Swipe, and a 9.4 you can't check", alt: "Version 2: a swipe card with a green quote banner and a 9.4 Strong Fit tag." },
+        { src: scr("request"), label: "Version 6", caption: "A count, and where each skill was found", alt: "Version 6: the request with fit grouped by where each skill was found." },
+      ]} /></Fig>
 
-      <Beat label="The bet that died" title="I thought referrers didn't trust strangers. Both said the problem was work."
-        sub={<>The old SideDoor was built on trust: a match score, graded recommendations, spam limits. Samarth said a bad hire after interviews &quot;should not fall on the referrer&quot;. Riya&apos;s rule is just the job ID. And the bonus doesn&apos;t make up for it. Riya called it &quot;very low&quot;.</>}
-        caption="That made the score screen, the ranked inbox and the swipe cards worthless.">
-        <BeforeAfter beforeLabel="What I believed" afterLabel="What they told me"
-          before="Referrers can't judge strangers, so they need scores"
-          after="The request makes them do the candidate's work" />
-      </Beat>
+      <H3>How I stopped asking referrers to come back later</H3>
+      <P>My first plan had the referrer return to mark each referral as submitted. Version 2 even had six stages to update by hand, for people they&apos;d never met.</P>
+      <P>Then I asked myself why they&apos;d bother. The whole status loop depended on unpaid work from the side that&apos;s hardest to get. So Mark as submitted became the last tap of referring, done while the portal is still open. If the referrer never taps it, the candidate can mark it from the company&apos;s email.</P>
+      <Fig><PhoneRow phones={[
+        { src: scr("v2_update"), label: "Version 2", caption: "A list of people to update, stage by stage", alt: "Version 2: Update Referrals, a list with an Update button on each person." },
+        { src: scr("marked"), label: "Version 6", caption: "One tap, while the portal is still open", alt: "Version 6: Marked as submitted." },
+      ]} /></Fig>
 
-      <Beat label="Before and after" title="Version 2 sold a score. Version 6 shows the evidence."
-        sub="Version 2 was a swipe app with a 9.4 Strong Fit badge. A decimal looks precise, and nobody can check it. Now fit is a count, and every skill says where it came from.">
-        <PhoneRow phones={[
-          { src: scr("v2_swipe"), label: "Version 2", caption: "Swipe, and a 9.4 you can't check", alt: "Version 2: a swipe card with a green quote banner and a 9.4 Strong Fit tag." },
-          { src: scr("request"), label: "Version 6", caption: "A count, and where each skill was found", alt: "Version 6: the request with fit grouped by where each skill was found." },
-        ]} />
-      </Beat>
+      <H3>How I made a skill tag something you can check</H3>
+      <P>A candidate could tag any skill on their own project and push their match up. So SideDoor reads the linked work and the resume, and a skill counts only when it&apos;s found there. Everything else is still shown, sorted by how sure it is:</P>
+      <List items={[
+        <><strong>Found in their work</strong> counts towards the match.</>,
+        <><strong>Related</strong> is a nearby skill, and the referrer decides.</>,
+        <><strong>Listed only</strong> is shown, never counted.</>,
+        <><strong>Missing</strong> means it isn&apos;t in their work or resume.</>,
+      ]} />
+      <P>This makes faking harder, though it can&apos;t stop it. The interview is still the last check. The reading rule is my own call. What the interviews told me is that referrers check the resume against the skills.</P>
+      <Fig>
+        <PhoneShot src={scr("proof")} alt="A sheet over the request: Interaction design, found on his project page, with the line quoted and a link to it."
+          notes={[{ box: [3.5, 76, 93, 16], title: "The line, and where it came from", sub: "open the page to check" }]} />
+      </Fig>
 
-      <Beat label="Pushing back" title="My mentor said to make it a LinkedIn feature. I didn't."
-        sub="The argument was fair: why would a referrer join a new app? I kept SideDoor separate because the work sits between LinkedIn and the company's portal, and neither owns it. A referrer also gets something on day one, from a link they send to a stranger."
-        caption="That's reasoning. It hasn't been tested.">
-        <Link />
-      </Beat>
-
-      <Beat label="My mistake" title="I asked referrers to come back later and update a stranger."
-        sub="My first plan had the referrer return to mark each referral as submitted. Then I asked why they'd bother. Version 2 even had six stages to update by hand. Now Mark as submitted is the last tap of referring, and the candidate can mark it from the company's email if the referrer never does.">
-        <PhoneRow phones={[
-          { src: scr("v2_update"), label: "Version 2", caption: "A list of people to update, stage by stage", alt: "Version 2: Update Referrals, a list with an Update button on each person." },
-          { src: scr("marked"), label: "Version 6", caption: "One tap, while the portal is still open", alt: "Version 6: Marked as submitted." },
-        ]} />
-      </Beat>
-
-      <Beat label="Proof" title="A skill you only typed doesn't count."
-        sub="A candidate could tag any skill on their own project and push their match up. So SideDoor reads the linked work and the resume, and a skill counts only when it finds it there. That makes faking harder, though it can't stop it. The interview is still the last check."
-        caption="The reading rule is my call. The interviews only tell me referrers check the resume against the skills.">
-        <Rows rows={[
-          { s: "Counts", tone: "green", rule: "Found in their work" },
-          { s: "Shown", tone: "amber", rule: "Related: a nearby skill, the referrer decides" },
-          { s: "Shown", tone: "grey", rule: "Listed only" },
-          { s: "Missing", tone: "red", rule: "Not in their work or resume" },
-        ]} />
-      </Beat>
-
-      <Beat label="The question" title="Nithin's one question shut out most people who'd apply."
-        sub={<>A referrer can ask every candidate one question. Mine asked about a checkout trade-off, but Nithin can&apos;t know who will apply, and most designers have never worked on checkout. Now it asks about a skill, and SideDoor suggests one question per skill from the job description.</>}>
+      <H3>How one question shut out most of the people who&apos;d apply</H3>
+      <P>A referrer can ask every candidate one question. The one I wrote for Nithin asked about a checkout trade-off. But Nithin can&apos;t know who will apply, and most designers have never worked on checkout.</P>
+      <P>So the question now asks about a skill, and SideDoor suggests one question per skill from the job description. Nithin taps one, or writes his own.</P>
+      <Fig>
         <PhoneShot src={scr("post")} alt="Check your job post: one question for candidates, with three suggested from the job description."
           notes={[
             { box: [3.5, 29.5, 93, 15], title: "Ask about a skill, not a product", sub: "every candidate can answer" },
             { box: [3.5, 50, 93, 33.5], title: "Suggested from the job description", sub: "one per skill, tap to use" },
           ]} />
-      </Beat>
+      </Fig>
 
-      <Beat label="Seven rounds" title="I spent seven rounds on a green banner. Then I deleted it."
-        sub="The request used to open on a brand green card. I tried a photo on it, a name, a cover image, a match line. White on that green is 2.54 to 1, well under the 4.5 text needs, and every round pushed the evidence further down."
-        caption="Deleting it moved the evidence up by a banner's height. If a pattern needs seven rounds, I now ask whether it should exist.">
-        <Rows rows={[
-          { s: "Rounds 1 to 4", tone: "grey", rule: "Photo, name and role on green" },
-          { s: "Round 5", tone: "grey", rule: "A cover photo, dropped because it invites bias" },
-          { s: "Round 6", tone: "red", rule: "\"4 of 7 skills match\" in white, at 2.54 to 1" },
-          { s: "Round 7", tone: "green", rule: "No banner at all" },
-        ]} />
-      </Beat>
+      <H3>How I spent seven rounds on a green banner, then deleted it</H3>
+      <P>The request used to open on a brand green card. Over four rounds I tried a photo, a name and a role on it. In round five I added a cover photo, and dropped it because it invites bias. In round six I put &quot;4 of 7 skills match&quot; on it in white, which is 2.54 to 1 on that green, well under the 4.5 that text needs.</P>
+      <P>Every round pushed the evidence further down the screen. In round seven I removed the banner, and the evidence moved up by its height. When a pattern needs seven rounds to look right, I now ask whether it should be there at all.</P>
 
-      <Beat id="toc-testing" label="Attacking it" title="I tried to break my own screens. I guessed 1 break out of 13."
-        sub="I threw empty lists, long names, bad input and slow networks at it, and wrote down what I expected first. The ones I missed were empty screens, wrong input and waiting. On the last pass, three quick taps on Send took his requests left from 2 to 0. That's fixed now."
-        caption="No real user has broken it yet. That comes next.">
-        <AttackStats />
-      </Beat>
+      <H3>How I answered my mentor&apos;s &quot;make it a LinkedIn feature&quot;</H3>
+      <P>My mentor&apos;s argument was fair: why would a referrer join a new app? I kept SideDoor separate because the work sits between LinkedIn and the company&apos;s portal, and neither of them owns it. A referrer also gets something on day one, from a link they send to a stranger. That link was Samarth&apos;s idea.</P>
+      <Voice q="a link is sent to the candidate to fill out their own personal details, which would cut the referrer's effort by 50%" who="Samarth, as a referrer" />
+      <P>This is reasoning, and it hasn&apos;t been tested. Both people I interviewed ask for referrals on LinkedIn today. If referrers won&apos;t send the link there, the whole bet fails.</P>
 
-      <Beat id="toc-choices" label="What made the cut" title="Two sides, one designer. Most of the arguments were about what to leave out."
-        sub="Sorted must, should, could and won't. The last column is where the old SideDoor went.">
+      {/* ── The grind ── */}
+      <H2 id="toc-grind">The grind behind it</H2>
+      <P>Here&apos;s the part that doesn&apos;t show in the screens.</P>
+
+      <H3>Talking to both sides</H3>
+      <P>I interviewed two people, Samarth and Riya, each twice: once as a candidate and once as a referrer. Two people is a thin sample, so when only one of them said something, I say so.</P>
+      <P>As candidates, they described the other end of the same silence. For a role at Razorpay, Samarth messaged two or three people on LinkedIn with a formal note and a resume.</P>
+      <Voice q="My message was not even read." who="Samarth, as a candidate" />
+      <Voice q="You can say 80% of the time they don't reply." who="Riya, as a candidate" />
+      <P>Riya also said she would never know whether anyone had actually applied for her. That line is why the status goes back to the candidate.</P>
+      {/* WHY IT MATTERS: the market numbers (referral hire rates, time to hire) go here once Devansh
+          sends the original sources. Until then no unsourced figure is on this page.
+          See CASE_STUDY_VERSION.md, "Pending". */}
+
+      <H3>What I had to work around</H3>
+      <List items={[
+        "Nobody outside a company can read its referral portal. Not LinkedIn, and not me. So the status has to come from the referrer.",
+        "Signing in with LinkedIn gives a name, an email and a photo, with no work history. So fit has to come from the resume and linked work.",
+      ]} />
+
+      <H3>Trying to break my own screens</H3>
+      <P>I threw empty lists, long names, bad input and slow networks at the first two screens, and wrote down what I expected to break before I looked. I guessed <strong>1 of 13</strong>. The ones I missed were empty screens, wrong input and waiting.</P>
+      <P>Across the whole app I found <strong>2 blockers</strong>, both on the work-email check, and <strong>18 major</strong> breaks. On the last pass, three quick taps on Send took Abhinav&apos;s requests left from 2 to 0. That&apos;s fixed now. The prototype has <strong>65 states</strong>, and every one of them can be opened.</P>
+
+      <H3>Deciding what to leave out</H3>
+      <P>With two sides and one designer, most of my arguments were about what to cut. I sorted everything into must, should, could and won&apos;t. The won&apos;t column is where the old SideDoor went.</P>
+      <Fig wide>
         <MoSCoW cols={[
           { h: "Must", tone: "red", items: ["No send until the request is complete", "Fit with proof", "Mark as submitted inside Refer", "Every state, including the broken ones"] },
           { h: "Should", tone: "green", items: ["Email to me and Copy all", "Suggested candidates", "The six month check"] },
           { h: "Could", tone: "amber", items: ["A browser extension that fills the portal", "\"Usually answers in 2 days\""] },
           { h: "Won't", tone: "grey", items: ["Charging candidates to reach referrers", "Points and badges", "Swipe", "Reading the company's portal"] },
         ]} />
-      </Beat>
+      </Fig>
 
-      {/* ── ACT 4 ── */}
-      <Act id="toc-next" n="Act 4 · What's next" title="Nobody has used this yet"
-        sub="No real person has tested it, so there are no results. Here's what I'd watch, and what would prove me wrong." />
+      {/* ── What's next ── */}
+      <H2 id="toc-next">What&apos;s next</H2>
+      <P>Nobody has used SideDoor yet, so there are no results to show. Samarth and Riya try it next, in two sessions of ten tasks each, first as a candidate and then as a referrer. I&apos;ll change the design, and this page, based on what breaks.</P>
+      <P>After that, these are the numbers I&apos;d watch:</P>
+      <List items={[
+        <><strong>Referrals submitted per active referrer, each month.</strong> This is the one it should move.</>,
+        <><strong>Referrers who turn requests off.</strong> This must not go up.</>,
+        <><strong>Requests with no answer after 7 days.</strong> Silence is the problem, so I&apos;d watch it closely.</>,
+      ]} />
+      <P>I also wrote down what would prove me wrong. The next real test is eight referrers in tech using their link for two weeks. The idea is dead if fewer than 1 in 5 complete requests from strangers get submitted, or if fewer than 3 of the 8 referrers send their link at all. The 1 in 5 comes from Riya&apos;s &quot;80% of the time they don&apos;t reply&quot;. A complete request has to beat that.</P>
+      <P>Referrers are the scarce side, so they never pay and are never sold to candidates. Both sides are free at first. Companies already pay referral bonuses, so they&apos;re the likely payer later.</P>
 
-      <Beat label="What I'd watch" title="One number to move, one to protect."
-        sub="Referrers are the scarce side, so they never pay and are never sold to candidates. Both sides are free at first. Companies already pay referral bonuses, so they're the likely payer later.">
-        <Watch />
-      </Beat>
-
-      <Beat label="What kills it" title="I wrote down what would prove me wrong."
-        sub="The next test is eight referrers in tech using their link for two weeks. If either of these happens, the idea is dead."
-        caption={<>1 in 5 comes from Riya: &quot;80% of the time they don&apos;t reply.&quot; A complete request has to beat that.</>}>
-        <Rows rows={[
-          { s: "Dead if", tone: "red", rule: "Fewer than 1 in 5 complete requests from strangers get submitted" },
-          { s: "Dead if", tone: "red", rule: "Fewer than 3 of 8 referrers send their link in two weeks" },
-        ]} />
-      </Beat>
-
-      <Beat label="Next" title="Samarth and Riya try it next."
-        sub="Two sessions, each of them as a candidate and then as a referrer, ten tasks. I'll change the design, and this page, based on what breaks." />
-
-      <Beat label="Keeping" title="What I'm taking to the next project."
-        sub="Most of it I learned by getting it wrong first.">
-        <Numbered items={[
-          "Check where the research came from before building on it.",
-          "A cut needs a reason, as much as an addition does.",
-          "If a pattern takes seven rounds to look right, ask whether it should be there.",
-        ]} />
-      </Beat>
+      <H3>What I&apos;m taking to the next project</H3>
+      <List items={[
+        "A cut needs a reason, just as much as an addition does.",
+        "If a pattern takes seven rounds to look right, ask whether it should be there.",
+        "Write down what will break before testing. I guessed 1 of 13.",
+      ]} />
 
       <Closing />
     </main>

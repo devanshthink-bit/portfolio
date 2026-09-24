@@ -3417,3 +3417,9 @@ Asked:     Devansh: login screen in the middle of the card ("since its playful")
 Changed:   Card phones Job · Login · Referral request (login exported from Figma 5247:18389). Logo keeps its colours instead of turning white; the name is the SideDoor wordmark SVG (white on the blue panel), not Manrope text. Case study title uses the logo plus the coloured wordmark. Removed the "Six of my ten interviews" beat, the Act 3 title that hinted at it, the word "real" in Limits, and the matching CASE_QA row.
 Rejected:  Wordmark in its own blue and green on the card: the blue part sits on a mid-blue panel and gets hard to read.
 Because:   The page now says what is true without the backstory: two people, each seen from both sides. Nothing on it claims more interviews than that.
+
+DECISION · 2026-09-24 · Case study · Told as one story, like Ishita's EDGE case study
+Asked:     Devansh: "every section looks same" as RedBus; wanted the storytelling format of Ishita Sharma's Medium case study.
+Changed:   The page is one reading column: a hook question, how it solves it, the live prototype up front ("Short on time? Try it first"), then "A little story" (Abhinav and Nithin, ten scenes split by three dots, each with a question, the answer and an outcome line, then the screen), "Reaching this point wasn't easy" (six "How I..." turns told as prose with quotes and before/after screens), "The grind behind it" (research, limits, breaking it, what was cut) and "What's next". Quotes are set in Instrument Serif. The label + heading + visual block repeated on RedBus is gone from this page. New parts in components/story.tsx; styles .story-*.
+Rejected:  Emoji markers like Ishita's (the humanizer rules ban them); drawn arrow and tick markers do the same job.
+Kept:      Every fact and quote from the earlier version. Dropped one learning ("check where the research came from") because it pointed at the AI interviews; added "write down what will break before testing".

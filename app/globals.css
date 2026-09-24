@@ -2081,3 +2081,158 @@ body:has(.proto-page) .bottom-dock { display: none !important; }
   .proto-stage .iphone { --n: 300; }
 }
 
+
+/* ── Story case study (Sidedoor, 24 Sep 2026): one reading column told as a story, like Ishita
+   Sharma's EDGE case study on Medium. Text stays in a narrow column; screens use the full width. ── */
+.story-hook,
+.story-p,
+.story-h2,
+.story-h3,
+.story-list,
+.story-ask,
+.story-outcome,
+.story-voice { max-width: 660px; }
+
+.story-byline {
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--fs-14);
+  color: var(--text-muted);
+  letter-spacing: -0.011em;
+  line-height: 1.6;
+  margin: 0 0 56px;
+}
+
+.story-hook {
+  font-family: var(--font-manrope), sans-serif;
+  font-size: var(--fs-24);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+  color: var(--text-primary);
+  margin: 0 0 20px;
+  text-wrap: balance;
+}
+
+.story-p {
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--fs-18);
+  line-height: 1.7;
+  letter-spacing: -0.011em;
+  color: var(--text-secondary);
+  margin: 0 0 20px;
+}
+.story-p strong { color: var(--text-primary); font-weight: 600; }
+
+.story-h2 {
+  font-family: var(--font-manrope), sans-serif;
+  font-size: var(--fs-28);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  color: var(--text-primary);
+  margin: 112px 0 20px;
+  scroll-margin-top: 48px;
+}
+
+.story-h3 {
+  font-family: var(--font-manrope), sans-serif;
+  font-size: var(--fs-20);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.35;
+  color: var(--text-primary);
+  margin: 72px 0 16px;
+}
+
+.story-list {
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--fs-18);
+  line-height: 1.7;
+  letter-spacing: -0.011em;
+  color: var(--text-secondary);
+  margin: 0 0 20px;
+  padding-left: 22px;
+  list-style: disc;
+}
+.story-list li { margin-bottom: 8px; padding-left: 4px; }
+.story-list li::marker { color: var(--cs-accent); }
+
+.story-dots {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+  letter-spacing: 1.2em;
+  margin: 80px 0;
+  max-width: 660px;
+}
+
+.story-ask {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-family: var(--font-manrope), sans-serif;
+  font-size: var(--fs-18);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.45;
+  color: var(--text-primary);
+  margin: 32px 0 12px;
+}
+.story-ask svg { flex: 0 0 auto; margin-top: 3px; color: var(--cs-accent); }
+
+.story-outcome {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--fs-17);
+  font-weight: 500;
+  line-height: 1.55;
+  letter-spacing: -0.011em;
+  color: var(--text-primary);
+  background: rgba(var(--cs-accent-rgb), 0.07);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin: 8px 0 36px;
+}
+.story-outcome svg { flex: 0 0 auto; margin-top: 2px; color: var(--cs-accent); }
+html.nerd-mode .story-outcome { background: rgba(var(--cs-accent-rgb), 0.14); }
+
+.story-voice {
+  margin: 32px 0;
+  padding: 2px 0 2px 22px;
+  border-left: 2px solid var(--cs-accent);
+}
+.story-voice p {
+  font-family: var(--font-instrument), serif;
+  font-style: italic;
+  font-size: 26px;
+  line-height: 1.35;
+  color: var(--text-primary);
+  margin: 0 0 10px;
+  text-wrap: pretty;
+}
+.story-voice cite {
+  font-family: var(--font-inter), sans-serif;
+  font-style: normal;
+  font-size: var(--fs-14);
+  color: var(--text-muted);
+}
+
+.story-fig { margin: 36px 0 44px; max-width: 660px; }
+.story-fig.is-wide { max-width: none; }
+.story-fig figcaption {
+  font-family: var(--font-inter), sans-serif;
+  font-size: var(--fs-14);
+  color: var(--text-muted);
+  line-height: 1.5;
+  text-align: center;
+  margin-top: 14px;
+}
+
+@media (max-width: 640px) {
+  .story-h2 { margin-top: 80px; }
+  .story-h3 { margin-top: 56px; }
+  .story-voice p { font-size: 22px; }
+  .story-dots { margin: 56px 0; }
+}
