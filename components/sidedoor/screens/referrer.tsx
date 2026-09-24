@@ -30,6 +30,7 @@ import {
   showDays,
   showYears,
   ListCard,
+  WelcomeCard,
 } from "../ui";
 import { BellButton } from "./candidate";
 import { CompanyRow, FileBox, JdDetails, Projects, RulesSection } from "./onboarding";
@@ -40,7 +41,7 @@ type Req = Candidate;
 /* ── Referral requests ──────────────────────────────────────────────────── */
 export function ReferralRequests() {
   const nav = useNav();
-  const { handled, invited, unread, jobId, force, rules, live, you, dispatch } = useStore();
+  const { handled, invited, unread, jobId, force, rules, live, you, welcome, dispatch } = useStore();
   const [phase, setPhase] = useState<"loading" | "ok">("loading");
   const [open, setOpen] = useState(false);
   // a request the candidate withdrew leaves the referrer's list, and you never see a request from yourself
@@ -73,6 +74,14 @@ export function ReferralRequests() {
           </span>
           <Tag>Job ID {jobId || you.post.jobId}</Tag>
         </div>
+
+        {welcome && phase === "ok" && (
+          <WelcomeCard
+            title={`Your job is live, ${firstName(you.name)}`}
+            body={`Requests for ${you.post.title} land here, best match first. Your link is in Profile any time.`}
+            onClose={() => dispatch({ t: "welcome", v: false })}
+          />
+        )}
 
         {paused && (
           // Figma: the orange note, then its own line under it, then the list 8 below
@@ -155,7 +164,7 @@ export function ReferralRequests() {
           // siblings inside it, which is what puts that row at y618 and ends the list at 650.
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {outstanding.map((r) => (
-              <RequestCard key={r.id} r={r} onClick={() => nav.push("referralRequest", { id: r.id })} />
+              <RequestCard key={r.id} r={r} onClick={() => { dispatch({ t: "welcome", v: false }); nav.push("referralRequest", { id: r.id }); }} />
             ))}
             {lower.length > 0 && (
               <>
@@ -174,7 +183,7 @@ export function ReferralRequests() {
                 </button>
                 {open &&
                   lower.map((r) => (
-                    <RequestCard key={r.id} r={r} onClick={() => nav.push("referralRequest", { id: r.id })} />
+                    <RequestCard key={r.id} r={r} onClick={() => { dispatch({ t: "welcome", v: false }); nav.push("referralRequest", { id: r.id }); }} />
                   ))}
               </>
             )}

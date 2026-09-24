@@ -14,7 +14,7 @@ import {
 
 export type Route = { key: string; props?: Record<string, unknown> };
 
-type Anim = "push" | "modal" | "fade" | "none";
+type Anim = "push" | "modal" | "fade" | "welcome" | "none";
 
 type Entry = Route & { id: number; anim: Anim };
 

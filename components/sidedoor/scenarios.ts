@@ -22,6 +22,8 @@ export const SCENARIOS: Scenario[] = [
   { id: "cand.job", label: "Candidate · Job details", group: "Happy path", role: "candidate", tab: "jobs", push: [{ key: "job", props: { id: "flipkart" } }] },
   { id: "cand.job.suggested", label: "Candidate · Job a referrer suggested", group: "Happy path", role: "candidate", force: "job.suggested", tab: "jobs", push: [{ key: "job", props: { id: "flipkart" } }] },
   { id: "cand.check", label: "Candidate · Check your request", group: "Happy path", role: "candidate", tab: "jobs", push: [{ key: "job", props: { id: "flipkart" } }, { key: "checkRequest" }] },
+  { id: "cand.done", label: "Candidate · end of sign-up", group: "Happy path", role: "candidate", tab: "jobs", push: [{ key: "uploadResume" }, { key: "checkProfile" }] },
+  { id: "ref.live", label: "Referrer · job posted", group: "Happy path", role: "referrer", tab: "requests", push: [{ key: "jobLive" }] },
   { id: "cand.track", label: "Candidate · Track a request", group: "Happy path", role: "candidate", tab: "requests", push: [{ key: "trackDetails", props: { id: "flipkart" } }] },
   { id: "ref.reqs", label: "Referrer · Referral requests", group: "Happy path", role: "referrer", tab: "requests" },
   { id: "ref.req", label: "Referrer · One request", group: "Happy path", role: "referrer", tab: "requests", push: [{ key: "referralRequest", props: { id: "abhinav" } }] },

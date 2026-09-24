@@ -31,6 +31,7 @@ import {
   showDays,
   showYears,
   ListCard,
+  WelcomeCard,
 } from "../ui";
 import { CompanyRow, Project, ResumeDetails } from "./onboarding";
 
@@ -41,7 +42,7 @@ const skillTag = (j: Job) => `${matchOf(j)} of ${j.skills.length} skills · ${yr
 
 export function Jobs() {
   const nav = useNav();
-  const { skippedResume, unread, force, you, dispatch } = useStore();
+  const { skippedResume, unread, force, you, welcome, profile, dispatch } = useStore();
   const [phase, setPhase] = useState<"loading" | "ok">("loading");
   useEffect(() => {
     if (force === "jobs.loading") return;
@@ -95,6 +96,13 @@ export function Jobs() {
       pinned={
         showList ? (
           <div style={{ display: "flex", flexDirection: "column", gap: 24, marginBottom: -8 }}>
+            {welcome && (
+              <WelcomeCard
+                title={`You’re all set, ${firstName(profile.name)}`}
+                body="Your details are ready, and every referral request uses them. Pick a job to ask."
+                onClose={() => dispatch({ t: "welcome", v: false })}
+              />
+            )}
             {prompt}
             {sortRow}
           </div>
@@ -134,7 +142,11 @@ export function Jobs() {
 
               <ListCard
                 key={j.id}
-                onClick={() => (skippedResume ? nav.openSheet("addResume", { job: j.id }) : nav.push("job", { id: j.id }))}
+                onClick={() => {
+                  dispatch({ t: "welcome", v: false });
+                  if (skippedResume) nav.openSheet("addResume", { job: j.id });
+                  else nav.push("job", { id: j.id });
+                }}
                 lead={<Avatar name={j.referrer.name} size={44} />}
                 title={j.title}
                 when={j.when}

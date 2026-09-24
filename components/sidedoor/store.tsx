@@ -64,6 +64,8 @@ export const requestIdFor = (job: string) => (job === "flipkart" ? "flipkart" : 
 
 type State = {
   role: "candidate" | "referrer" | null;
+  /** onboarding just finished: the first tab says "You're all set" once */
+  welcome: boolean;
   /** who you are, set by the first side you choose and kept when you switch */
   me: Me["id"] | null;
   /** candidate side */
@@ -114,6 +116,7 @@ const ABHINAV = { candidate: "Abhinav Saxena", candidateRole: "Product Designer,
 
 const initial: State = {
   role: null,
+  welcome: false,
   me: null,
   resume: null,
   skippedResume: false,
@@ -164,6 +167,7 @@ type Action =
   | { t: "note"; v: string }
   | { t: "send"; job: string }
   | { t: "withdraw"; id: string }
+  | { t: "welcome"; v: boolean }
   | { t: "profile"; v: Partial<Profile> }
   | { t: "pausePost"; v: string; on: boolean }
   | { t: "postDraft"; v: string }
@@ -227,6 +231,8 @@ function reduce(s: State, a: Action): State {
         toast: `Request sent to ${firstName(j.referrer.name)}`,
       };
     }
+    case "welcome":
+      return { ...s, welcome: a.v };
     case "withdraw": {
       // BRIEF, Other routes: "A withdrawn request gives the request back"
       const r = s.requests.find((x) => x.id === a.id);

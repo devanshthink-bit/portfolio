@@ -401,7 +401,9 @@ export function CheckProfile() {
           disabled={!allValid([["linkedin", linkedin], ["url", portfolio]])}
           onClick={() => {
             dispatch({ t: "profile", v: { linkedin, portfolio } });
-            nav.reset("tabs");
+            // onboarding is done: step into the app, not cut to it
+            dispatch({ t: "welcome", v: true });
+            nav.reset("tabs", { tab: "jobs" }, "welcome");
           }}
         >
           See jobs
@@ -956,15 +958,23 @@ export function RulesSection() {
 /* ── Referrer: your job is live ─────────────────────────────────────────── */
 export function JobLive({ title }: { title?: string }) {
   const nav = useNav();
-  const { jobId, you } = useStore();
+  const { jobId, you, dispatch } = useStore();
   return (
     <Screen
       title="Job posted"
       back
       actions={
         <Actions>
-          <Button onClick={() => nav.openSheet("shareLink")}>Share your link</Button>
-          <TextButton onClick={() => nav.reset("tabs")}>Share later</TextButton>
+          {/* sharing is the last step of setting up, so sharing (or skipping it) takes you in */}
+          <Button onClick={() => nav.openSheet("shareLink", { enter: true })}>Share your link</Button>
+          <TextButton
+            onClick={() => {
+              dispatch({ t: "welcome", v: true });
+              nav.reset("tabs", { tab: "requests" }, "welcome");
+            }}
+          >
+            Share later
+          </TextButton>
         </Actions>
       }
     >

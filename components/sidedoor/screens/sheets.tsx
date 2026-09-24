@@ -153,11 +153,21 @@ export function SeenItMoveSheet({
 }
 
 /* ── Share your link ────────────────────────────────────────────────────── */
-export function ShareLinkSheet({ leaving }: { leaving?: boolean }) {
+export function ShareLinkSheet({ leaving, enter }: { leaving?: boolean; enter?: boolean }) {
   const nav = useNav();
   const { dispatch, you } = useStore();
   const [copied, setCopied] = useState(false);
   const LINK = `sidedoor.app/r/${you.slug}`;
+  // shared from "Job posted": that was the last step of setting up, so the sheet takes you in
+  const done = () => {
+    nav.closeSheet();
+    if (!enter) return;
+    // the sheet slides away first, then the app rises in
+    window.setTimeout(() => {
+      dispatch({ t: "welcome", v: true });
+      nav.reset("tabs", { tab: "requests" }, "welcome");
+    }, 320);
+  };
   const [msg, setMsg] = useState(
     `Happy to look at a referral for ${you.post.title}. Send your details here, it has everything our portal needs: ${LINK}`
   );
@@ -183,7 +193,7 @@ export function ShareLinkSheet({ leaving }: { leaving?: boolean }) {
             setCopied(true);
             dispatch({ t: "toast", v: "Link and message copied. Paste it in your chat." });
             window.setTimeout(() => dispatch({ t: "toast", v: null }), 2200);
-            window.setTimeout(nav.closeSheet, 450);
+            window.setTimeout(done, 450);
           }}
           icon={<Icon name={copied ? "checkmark" : "link"} size={24} />}
           style={{ justifyContent: "flex-start" }}
@@ -226,7 +236,7 @@ export function ShareLinkSheet({ leaving }: { leaving?: boolean }) {
                   navigator.clipboard?.writeText(msg).catch(() => {});
                   dispatch({ t: "toast", v: a.name === "More" ? "Message copied. Share it anywhere." : `Opening ${a.name} with your message` });
                   window.setTimeout(() => dispatch({ t: "toast", v: null }), 2200);
-                  nav.closeSheet();
+                  done();
                 }} style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "center" }}>
                 <span style={{ width: 60, height: 60, borderRadius: 8, background: "var(--sd-n0)", outline: "var(--sd-edge)", outlineOffset: -1, display: "grid", placeItems: "center" }}>
                   {a.img ? (

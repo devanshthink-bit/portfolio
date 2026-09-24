@@ -318,6 +318,7 @@ function Stack() {
           else if (s.anim === "push" && free) anim = "push-in";
           else if (s.anim === "modal") anim = "modal-in";
           else if (s.anim === "fade") anim = "fade-in";
+          else if (s.anim === "welcome") anim = "welcome-in";
         } else if (under && !popping && nav.top.anim === "push" && free) {
           anim = "under-in";
         }
@@ -366,7 +367,8 @@ function Stack() {
           // the top: no tab padding, and none of the scrolling you had done on it.
           ref={(el) => restoreScroll(el, nav.leaving!.key)}
           className={"sd-screen" + (SCREENS_WITHOUT_TABS.has(nav.leaving.key) ? "" : " has-tabs")}
-          data-anim={nav.leaving.anim === "modal" ? "modal-out" : nav.leaving.anim === "fade" ? "fade-out" : "push-out"}
+          // stepping into the app from onboarding is forward, not back: the last onboarding screen fades
+          data-anim={nav.dir === "replace" && nav.top.anim === "welcome" ? "fade-out" : nav.leaving.anim === "modal" ? "modal-out" : nav.leaving.anim === "fade" ? "fade-out" : "push-out"}
           aria-hidden="true"
         >
           {/* the copy on its way out mounts fresh, so it must not pick a tab: it would run after
@@ -393,6 +395,8 @@ function Stack() {
       {/* the bar sits above the whole stack, so it stays put while a screen pushes over */}
       {!SCREENS_WITHOUT_TABS.has(nav.top.key) && (
         <TabBar
+          // only on the way in from onboarding, not when coming back from a pushed screen
+          arriving={nav.top.anim === "welcome" && nav.dir !== "pop"}
           tabs={(role === "referrer" ? REFERRER_TABS : CANDIDATE_TABS).map((t) =>
             t.key === "messages" && unread ? { ...t, badge: unread } : t
           )}

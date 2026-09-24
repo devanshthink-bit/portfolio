@@ -273,15 +273,18 @@ export function TabBar({
   tabs,
   active,
   onPick,
+  arriving,
 }: {
   tabs: { key: string; label: string; icon: IconName; iconOn: IconName; badge?: number }[];
+  /** onboarding just finished: the bar rises in after the app, so arriving feels like arriving */
+  arriving?: boolean;
   active: string;
   onPick: (key: string) => void;
 }) {
   const onAt = Math.max(0, tabs.findIndex((t) => t.key === active));
   const glide = useGlide(onAt);
   return (
-    <nav className="sd-tabbar" aria-label="Tabs" style={{ "--n": tabs.length } as CSSProperties}>
+    <nav className={`sd-tabbar${arriving ? " is-arriving" : ""}`} aria-label="Tabs" style={{ "--n": tabs.length } as CSSProperties}>
       <span className="sd-glide" ref={glide} style={{ "--i": onAt } as CSSProperties} aria-hidden />
       {tabs.map((t) => {
         const on = t.key === active;
@@ -342,6 +345,24 @@ export function SmallButton({ children, onClick, done }: { children: ReactNode; 
         {children}
       </button>
     </span>
+  );
+}
+
+/** The first thing inside the app after onboarding: what's done and what to do next, once. */
+export function WelcomeCard({ title, body, onClose }: { title: string; body: string; onClose: () => void }) {
+  return (
+    <div className="sd-welcome" role="status">
+      <Icon name="checkmark.circle.fill" size={24} style={{ color: "var(--sd-link)", flex: "0 0 auto" }} />
+      <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 2, minWidth: 0 }}>
+        <span className="t-h-xs">{title}</span>
+        <span className="t-label-sm muted">{body}</span>
+      </span>
+      <button className="sd-welcome-x" aria-label="Close" onClick={onClose}>
+        <svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true">
+          <path d="M1.5 1.5l9 9M10.5 1.5l-9 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        </svg>
+      </button>
+    </div>
   );
 }
 

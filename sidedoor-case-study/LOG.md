@@ -3153,3 +3153,16 @@ DECISION · 2026-09-24 · Switching role keeps the same person
 - Figma: the Switch Role Alert frame now says "You'll see referral requests for jobs at Blinkit… Your requests stay as they are." No other frame changes. Figma draws the referrer as Nithin and the candidate as Abhinav, which is still what you get if you start on that side.
 - Prototype page intro updated.
 - Checked on localhost, both ways: Nithin → candidate (no Flipkart job or request, no self-chat, his profile); Abhinav → referrer (Blinkit post, no request from himself, his link in the share sheet).
+
+DECISION · 2026-09-24 · Finishing onboarding feels like arriving
+- Devansh: after "See jobs" the next screen came in abruptly, and on the referrer side sharing the link left you stuck on "Job posted" (only "Share later" took you in).
+- New transition, used only for onboarding → app: the last onboarding screen fades, the app rises into place (560 ms), and the tab bar follows 260 ms later. Coming back from a pushed screen doesn't replay it. Reduced motion turns it off.
+- New one-time card on your first tab, fading in once the screen lands:
+  - Candidate, Jobs: "You're all set, Abhinav. Your details are ready, and every referral request uses them. Pick a job to ask."
+  - Referrer, Referral requests: "Your job is live, Nithin. Requests for Interaction Designer land here, best match first. Your link is in Profile any time."
+  - It goes away when you close it or open a job or request.
+  - Not a separate "done" screen, which PRODUCT_REVIEW C3 cut as a tap with no value.
+- Referrer: sharing from "Job posted" (Copy link or any share tile) now closes the sheet and takes you in. "Share later" does the same.
+- Two new jumps in the state list: "Candidate · end of sign-up" and "Referrer · job posted".
+- Figma, V6 · States Flow: new frames "Candidate/Jobs Screen/Welcome" and "Referrer/Referral Requests Screen/Welcome", with the card built from the "Heard From The Company" card style and the library's checkmark.circle.fill. The motion is code only.
+- Checked on localhost: both paths show the app rising in, the old screen fading and the bar rising; the card appears; after Copy link the referrer lands on Referral requests.
