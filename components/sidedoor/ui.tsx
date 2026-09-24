@@ -1086,7 +1086,8 @@ export function Segmented({ options, value, onChange }: { options: string[]; val
   const glide = useGlide(onAt);
   return (
     <div className="sd-seg" style={{ "--n": options.length } as CSSProperties}>
-      <span className="sd-glide" ref={glide} style={{ "--i": onAt } as CSSProperties} aria-hidden />
+      {/* nothing picked yet (a question not answered): no highlight, rather than a false "first option" */}
+      <span className="sd-glide" ref={glide} style={{ "--i": onAt, opacity: options.includes(value) ? 1 : 0 } as CSSProperties} aria-hidden />
       {options.map((o) => (
         <button key={o} className={o === value ? "is-on" : ""} onClick={() => onChange(o)}>
           {o}

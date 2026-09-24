@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useNav } from "../nav";
 import { STAGE_LABEL, WEEKLY_REQUESTS, requestIdFor, stageTag, useStore, type Request, type Stage } from "../store";
-import { DEMO, DESIGN, JOBS, firstName, jobById, matchOf, nearOf, type Job } from "../data";
+import { DEMO, DESIGN, JOBS, firstName, jobById, matchOf, nearOf, type Job, type Recent } from "../data";
 import {
   Actions,
   Avatar,
@@ -523,7 +523,7 @@ function Bullets({ items }: { items: string[] }) {
 /* ── Check your request ─────────────────────────────────────────────────── */
 export function CheckRequest({ id = "flipkart" }: { id?: string }) {
   const nav = useNav();
-  const { details, note, stillNeeded, requestsLeft, requestsCap, force, offline, you, dispatch } = useStore();
+  const { details, recent, note, stillNeeded, requestsLeft, requestsCap, force, offline, you, dispatch } = useStore();
   const j = jobById(id);
   const who = firstName(j.referrer.name);
   const [sending, setSending] = useState(force === "send.sending");
@@ -535,7 +535,9 @@ export function CheckRequest({ id = "flipkart" }: { id?: string }) {
   const d = complete
     ? { dob: "12 Mar 1999", gaps: "0", locations: "Bengaluru, Remote", notice: "30" }
     : details;
-  const missing = complete ? 0 : stillNeeded;
+  // the 6-month answer is per company, so it is asked on every request and counts as one more detail
+  const recentAnswer = complete ? "No" : recent[j.company];
+  const missing = complete ? 0 : stillNeeded + (recentAnswer ? 0 : 1);
 
   // Figma's Loading button keeps its colour, so it isn't disabled — a second tap just does
   // nothing. A ref, not the state: taps can land before React has re-rendered.
@@ -662,6 +664,22 @@ export function CheckRequest({ id = "flipkart" }: { id?: string }) {
         </Section>
         )}
 
+        {/* Riya (n74): portals refuse a second referral within 6 months, and people forget when
+            theirs was. Asked here, per company, so the referrer doesn't spend a referral on it. */}
+        <div className="sd-field">
+          <label className="t-h-xs" style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <Icon name="clock.fill" size={16} color="tone" />
+            <span>
+              Referred to or applied at {j.company} in the last 6 months?
+              <span className="sd-req" aria-label="required">
+                {" "}*
+              </span>
+            </span>
+          </label>
+          <Segmented options={["No", "Yes", "Not sure"]} value={recentAnswer ?? ""} onChange={(v) => dispatch({ t: "recent", company: j.company, v: v as Recent })} />
+          <p className="t-label-sm muted">Most portals won’t take a second referral within 6 months. {who} sees your answer.</p>
+        </div>
+
         {/* Figma: once the portal answers are in, they sit here, before the resume */}
         <ResumeDetails
           label="Your details"
@@ -680,9 +698,24 @@ export function CheckRequest({ id = "flipkart" }: { id?: string }) {
           ]}
         />
 
-        <Section label="How you match" icon="lightbulb.fill" end={<Tag style="primary">{matchOf(j)} of {j.skills.length} skills · 3 yrs</Tag>}>
+        {/* same icon and groups as Job details' "How you match" */}
+        <Section label="How you match" icon="checkmark.circle.fill" end={<Tag style="primary">{matchOf(j)} of {j.skills.length} skills · 3 yrs</Tag>}>
           <Box>
-            <p className="t-body muted">Not in your resume: {j.missing.join(", ")}</p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              {(
+                [
+                  ["Related", nearOf(j)],
+                  ["Missing", j.missing.filter((k) => !nearOf(j).includes(k))],
+                ] as [string, string[]][]
+              )
+                .filter(([, list]) => list.length > 0)
+                .map(([label, list]) => (
+                  <p key={label} className="t-body muted">
+                    <span className="t-h-xs" style={{ color: "var(--sd-text)" }}>{label}: </span>
+                    {list.join(", ")}
+                  </p>
+                ))}
+            </div>
           </Box>
         </Section>
 

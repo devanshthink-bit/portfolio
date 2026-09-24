@@ -342,7 +342,7 @@ export function ReferralRequest({ id }: { id: string }) {
               <Fact icon="calendar">{r.years} years</Fact>
               <Fact icon="hourglass">{r.notice}</Fact>
             </div>
-            <SixMonths r={force === "req.sixmonths" ? { ...r, referredHere: { on: "12 May", until: "12 Nov" } } : r} company={you.company} />
+            <SixMonths r={force === "req.sixmonths" ? { ...r, referredHere: { on: "12 May", until: "12 Nov" } } : force === "req.recent" ? { ...r, recent: "Not sure" } : r} company={you.company} />
             <div style={{ display: "flex", gap: 8 }}>
               {r.work.map((w) => (
                 <Tag key={w}>{w}</Tag>
@@ -409,7 +409,7 @@ export function ReferralRequest({ id }: { id: string }) {
             <Fact icon="calendar">{yearsFact(r.years)}</Fact>
             <Fact icon="hourglass">{r.notice}</Fact>
           </div>
-          <SixMonths r={force === "req.sixmonths" ? { ...r, referredHere: { on: "12 May", until: "12 Nov" } } : r} company={you.company} />
+          <SixMonths r={force === "req.sixmonths" ? { ...r, referredHere: { on: "12 May", until: "12 Nov" } } : force === "req.recent" ? { ...r, recent: "Not sure" } : r} company={you.company} />
           <div style={{ display: "flex", gap: 8 }}>
             {r.work.map((w) => (
               <Tag key={w}>{w}</Tag>
@@ -540,16 +540,23 @@ function PersonHead({ name, role, when, tag }: { name: string; role: string; whe
   );
 }
 
-/** Most portals refuse a second referral within 6 months. Sidedoor knows its own referrals, so it says so
- *  before the referrer spends one (Riya, n74). */
+/** Most portals refuse a second referral within 6 months (Riya, n74). Two sources, and the line
+ *  always says which: Sidedoor's own referrals win; otherwise the candidate's answer. Sidedoor
+ *  can't see portal referrals or applications, so it never claims "none" on its own. */
 function SixMonths({ r, company }: { r: Candidate; company: string }) {
-  return r.referredHere ? (
-    <Note style="buffer" icon="info.circle.fill">
-      {`Referred to ${company} on ${r.referredHere.on}. Most portals won’t take another referral until ${r.referredHere.until}.`}
-    </Note>
-  ) : (
-    <Fact icon="checkmark.circle.fill">{`No ${company} referral in the last 6 months`}</Fact>
-  );
+  if (r.referredHere)
+    return (
+      <Note style="buffer" icon="info.circle.fill">
+        {`Referred to ${company} on ${r.referredHere.on}. Most portals won’t take another referral until ${r.referredHere.until}.`}
+      </Note>
+    );
+  if ((r.recent ?? "No") !== "No")
+    return (
+      <Note style="buffer" icon="info.circle.fill">
+        {`May have been referred to ${company} recently. Check with them first.`}
+      </Note>
+    );
+  return <Fact icon="checkmark.circle.fill">{`Says no ${company} referral in 6 months`}</Fact>;
 }
 
 function Fact({ icon, children }: { icon: Parameters<typeof Icon>[0]["name"]; children: React.ReactNode }) {
@@ -576,6 +583,7 @@ function portalFields(c: Candidate, d: { dob: string; gaps: string; locations: s
     { name: "Email", value: me ? p.email : c.email },
     { name: "Phone", value: phone },
     { name: "Current city", value: (me ? p.city : c.city).replace(/, [A-Z]{2}$/, "") },
+    { name: "Referred in the last 6 months", value: c.referredHere ? "Yes" : c.recent ?? "No" },
     { name: "Total experience", value: `${c.years} ${c.years === 1 ? "yr" : "yrs"}` },
     { name: "Relevant experience", value: `${c.years} ${c.years === 1 ? "yr" : "yrs"}` },
     { name: "Notice period", value: me ? showDays(d.notice || "30") : c.notice },

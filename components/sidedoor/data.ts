@@ -504,6 +504,9 @@ export const DEMO = {
 /** The seven skills Nithin's Interaction Designer post asks for. */
 export const POST_SKILLS = ["Interaction design", "Figma", "User research", "Prototyping", "AI-assisted design", "Design system", "A/B testing"];
 
+/** the candidate's answer to "Referred to or applied at X in the last 6 months?" */
+export type Recent = "No" | "Yes" | "Not sure";
+
 export type Candidate = {
   id: string;
   name: string;
@@ -516,6 +519,8 @@ export type Candidate = {
   /** when someone last referred them to this company through Sidedoor (Riya, n74: portals wait
    *  6 months, and nobody remembers when that was) */
   referredHere?: { on: string; until: string };
+  /** their own answer to the 6-month question; everyone in the demo says No */
+  recent?: Recent;
   /** skills their resume shows only in a nearby form, and where */
   near?: Record<string, string>;
   when: string;

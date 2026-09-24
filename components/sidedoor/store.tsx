@@ -4,7 +4,7 @@
 // are (Devansh, 24 Sep), so each side reads your name, company and post from `me`.
 import { createContext, useCallback, useContext, useMemo, useReducer, type ReactNode } from "react";
 import { fieldError, type FieldKind } from "./rules";
-import { ABHINAV_PROFILE, NITHIN_PROFILE, PEOPLE_ME, firstName, jobById, type Me, type Profile } from "./data";
+import { ABHINAV_PROFILE, NITHIN_PROFILE, PEOPLE_ME, firstName, jobById, type Me, type Profile, type Recent } from "./data";
 
 export type Stage = "sent" | "referred" | "submitted" | "interviews" | "onhold" | "selected" | "notselected" | "notmoving" | "noanswer" | "closed" | "withdrawn";
 
@@ -77,6 +77,9 @@ type State = {
   resume: string | null;
   skippedResume: boolean;
   details: Details;
+  /** "Referred to or applied at X in the last 6 months?", answered per company: the portal
+   *  wait is per company, so unlike the details it isn't saved for the next request */
+  recent: Record<string, Recent>;
   note: string;
   requestsLeft: number;
   /** extra requests this week, one for each time someone referred you */
@@ -129,6 +132,7 @@ const initial: State = {
   resume: null,
   skippedResume: false,
   details: { dob: "", gaps: "", locations: "", notice: "" },
+  recent: {},
   note: "",
   // testers start with the full week; the state list opens on Figma's "2 of 14"
   requestsLeft: WEEKLY_REQUESTS,
@@ -173,6 +177,7 @@ type Action =
   | { t: "resume"; v: string }
   | { t: "skipResume" }
   | { t: "detail"; k: keyof Details; v: string }
+  | { t: "recent"; company: string; v: Recent }
   | { t: "note"; v: string }
   | { t: "send"; job: string }
   | { t: "withdraw"; id: string }
@@ -220,6 +225,8 @@ function reduce(s: State, a: Action): State {
       return { ...s, skippedResume: true };
     case "detail":
       return { ...s, details: { ...s.details, [a.k]: a.v } };
+    case "recent":
+      return { ...s, recent: { ...s.recent, [a.company]: a.v } };
     case "note":
       return { ...s, note: a.v };
     case "send": {
