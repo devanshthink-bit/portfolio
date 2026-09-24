@@ -3210,3 +3210,10 @@ DECISION · 2026-09-24 · 14 requests a week, and a no gives it back
   2. Referral request: under the city, years and notice line, "No Flipkart referral in the last 6 months" (from Sidedoor's own referrals, Riya n74). When there was one, a warning note replaces it: "Referred to Flipkart on 12 May. Most portals won't take another referral until 12 Nov." The state list has "One request · referred here in 6 months" (forced on Abhinav, so it matches the Figma frame).
 - Figma, V6: a new ProjectRow V6 component (5733:31272, with Link and Has link properties). The old ProjectRow is shared with V5, so only the 12 V6 copies were swapped. Project Details got the link line, and Projects Editing got the link field. The 3 request screens got the 6-month line. New States frame "Referrer/Referral Request Screen/Referred Here Before" (5733:43591). The How you match icon was swapped on the 4 Job screens.
 - Checked on localhost (Vercel preview needs a login): the links open the project page and sit left-aligned, both 6-month states render, and the icon is blue.
+
+## 24 Sep 2026 · Fix: check icon and 6-month line in Figma
+
+- Devansh caught two Figma bugs I had missed ("why are u not checking things properly"):
+  1. The SF/checkmark.circle.fill component has a 1px black stroke, and on the Job screens I had given it a grey colour variable. It showed as a grey circle with a dark outline. The same broken icon was on the 3 "You're all set" welcome cards from earlier. All 10 now use Progress/Step Filled Primary, the blue check the match rows already use (no stroke).
+  2. On the request screens, the "No Flipkart referral in the last 6 months" text was cloned with FILL width and centred, so it sat far from its icon. Now it hugs and is left-aligned, gap 4, like the other facts.
+- Checked by numbers, not screenshots: all 10 icons are blue with 0 strokes, and the icon-to-text gaps match the code (8 block header, 4 fact, 12 welcome). Link rows, the Related icon and the warning note were checked the same way. Figma only; the code was already right.
