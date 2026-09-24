@@ -26,7 +26,7 @@ import {
   SavedJobs,
   Settings,
 } from "./screens/shared";
-import { AddResumeSheet, DobSheet, InviteAlert, LogoutSheet, NotMovingSheet, SeenItMoveSheet, ShareLinkSheet, SwitchRoleAlert, WithdrawAlert } from "./screens/sheets";
+import { AddResumeSheet, DobSheet, InviteAlert, LogoutSheet, NotMovingSheet, ProofSheet, SeenItMoveSheet, ShareLinkSheet, SwitchRoleAlert, WithdrawAlert } from "./screens/sheets";
 import { SCENARIOS } from "./scenarios";
 
 /**
@@ -135,6 +135,7 @@ const SCREENS: Record<string, (p: any) => ReactNode> = {
 
 const SHEETS: Record<string, (p: any) => ReactNode> = {
   notMoving: (p) => <NotMovingSheet {...p} />,
+  proof: (p) => <ProofSheet {...p} />,
   seenItMove: (p) => <SeenItMoveSheet {...p} />,
   shareLink: (p) => <ShareLinkSheet {...p} />,
   dob: (p) => <DobSheet {...p} />,

@@ -33,7 +33,7 @@ import {
 } from "../ui";
 import { BellButton } from "./candidate";
 import { CompanyRow, FileBox, JdDetails, Project, RulesSection } from "./onboarding";
-import { CANDIDATES, DEMO, POST_SKILLS, SUGGESTED, candidateById, firstName, matchLine, roleLine, type Candidate } from "../data";
+import { CANDIDATES, DEMO, POST_SKILLS, SUGGESTED, candidateById, firstName, matchLine, proofOf, roleLine, type Candidate } from "../data";
 
 type Req = Candidate;
 
@@ -261,22 +261,18 @@ function RequestCard({ r, onClick, end }: { r: Req; onClick?: () => void; end?: 
 }
 
 /* ── One referral request ───────────────────────────────────────────────── */
-/** The post's skills against what this person can show, in plain groups instead of icons. Only a
- *  skill a job or project shows counts. One that is only typed into a profile is "Claimed": shown,
- *  never counted, so adding skills can't raise a match (Devansh, 24 Sep). */
+/** The post's skills against what this person can show, as one plain list. A skill counts only
+ *  when Sidedoor finds it in their linked work or resume; a skill they only typed in is "Listed
+ *  only": shown, never counted (Devansh, 24 Sep: tags alone can be gamed). */
 function fitGroups(c: Candidate) {
   const near = c.near ?? {};
   const claimed = c.claimed ?? [];
   const at = (src: string) => src.replace("From resume · ", "");
-  const cap = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
   const groups = [
-    { label: "Shown in their work", rows: POST_SKILLS.filter((k) => c.has[k]).map((k) => ({ name: k, source: at(c.has[k]) })) },
-    { label: "Related", rows: POST_SKILLS.filter((k) => !c.has[k] && near[k]).map((k) => ({ name: k, source: cap(near[k].replace("Related · ", "")) })) },
-    {
-      label: "Claimed, no proof",
-      rows: POST_SKILLS.filter((k) => !c.has[k] && !near[k] && claimed.includes(k)).map((k) => ({ name: k, source: "Listed, but no job or project shows it" })),
-    },
-    { label: "Missing", rows: POST_SKILLS.filter((k) => !c.has[k] && !near[k] && !claimed.includes(k)).map((k) => ({ name: k, source: "" })) },
+    { label: "Found in their work", rows: POST_SKILLS.filter((k) => c.has[k]).map((k) => ({ name: k, source: at(c.has[k]), proof: true })) },
+    { label: "Related", rows: POST_SKILLS.filter((k) => !c.has[k] && near[k]).map((k) => ({ name: k, source: proofOf(c, k).where.split(" ")[0], proof: true })) },
+    { label: "Listed only", rows: POST_SKILLS.filter((k) => !c.has[k] && !near[k] && claimed.includes(k)).map((k) => ({ name: k, source: "", proof: false })) },
+    { label: "Missing", rows: POST_SKILLS.filter((k) => !c.has[k] && !near[k] && !claimed.includes(k)).map((k) => ({ name: k, source: "", proof: false })) },
   ];
   return groups.filter((g) => g.rows.length > 0);
 }
@@ -309,7 +305,6 @@ export function ReferralRequest({ id }: { id: string }) {
   // the two states the switcher jumps straight into
   const state = force === "refer.undo" ? { stage: "referred" as Stage } : handled[r.id];
   const groups = fitGroups(r);
-  const matched = Object.keys(r.has).length;
   const resume = resumeOf(r.name);
   const asked = question ?? you.post.question;
   const six = force === "req.sixmonths" ? { ...r, referredHere: { on: "12 May", until: "12 Nov" } } : force === "req.recent" ? { ...r, recent: "Not sure" as const } : r;
@@ -395,53 +390,45 @@ export function ReferralRequest({ id }: { id: string }) {
               <Fact icon="hourglass">{r.notice}</Fact>
             </div>
             <SixMonths r={six} company={you.company} />
+            {r.years < rules.minYears && (
+              <Note style="buffer" icon="info.circle.fill">{`${r.years} ${r.years === 1 ? "year" : "years"} of experience. You asked for ${rules.minYears}+.`}</Note>
+            )}
           </div>
 
           {force === "req.updated" && <Note>Profile updated since the 12 Sep fit check</Note>}
 
-          {/* 2 · fit: only skills their work shows count */}
-          <Section
-            label={`Fit for ${you.post.title}`}
-            icon="checkmark.circle.fill"
-            end={<Tag style="primary">{matched} of {POST_SKILLS.length} skills · {r.years} {r.years === 1 ? "yr" : "yrs"}</Tag>}
-          >
-            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-              <p className="t-body muted">
-                {r.years} {r.years === 1 ? "year" : "years"} of experience. You asked for {rules.minYears}+.
-              </p>
+          {/* 2 · fit: one list, grouped; a row with proof opens the line Sidedoor found */}
+          <Section label={`Fit for ${you.post.title}`} icon="checkmark.circle.fill" end={<Tag style="primary">{matchLine(r)}</Tag>}>
+            <div className="sd-fit">
               {groups.map((g) => (
-                <div key={g.label} style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                  <span className="t-label muted">
+                <div key={g.label} className="sd-fit-group">
+                  <span className="sd-fit-head">
                     {g.label} · {g.rows.length}
                   </span>
-                  {g.label === "Missing" ? (
-                    <p className="t-h-xs">{g.rows.map((x) => x.name).join(", ")}</p>
-                  ) : g.label === "Shown in their work" ? (
-                    // one line each: the skill, and where their work shows it
-                    g.rows.map((x) => (
-                      <div key={x.name} style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
+                  {g.rows.map((x) =>
+                    x.proof ? (
+                      <button key={x.name} className="sd-fit-row is-tap" onClick={() => nav.openSheet("proof", { id: r.id, skill: x.name })}>
                         <span className="t-h-xs">{x.name}</span>
-                        <span className="t-label-sm muted" style={{ paddingTop: 2 }}>{x.source}</span>
-                      </div>
-                    ))
-                  ) : (
-                    g.rows.map((x) => (
-                      <div key={x.name} style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                        <span className="t-label muted">{x.source}</span>
+                        <Icon name="chevron.right" size={16} style={{ color: "var(--sd-n400)", flex: "0 0 auto" }} />
+                      </button>
+                    ) : (
+                      <div key={x.name} className="sd-fit-row">
                         <span className="t-h-xs">{x.name}</span>
-                        <span className="t-label-sm muted">{x.source}</span>
                       </div>
-                    ))
+                    )
                   )}
                 </div>
               ))}
+              <p className="t-label-sm muted">A skill counts only when their linked work or resume shows it.</p>
             </div>
           </Section>
 
           {/* 3 · your one question, answered in their words */}
           {r.answer && (
             <Section label="Your question" icon="bubble.left.fill">
-              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                <p className="t-label-sm muted">{asked}</p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                <p className="t-label muted">{asked}</p>
                 <p className="t-body">{r.answer}</p>
               </div>
             </Section>
@@ -496,10 +483,10 @@ export function ReferralRequest({ id }: { id: string }) {
             </div>
           </Section>
 
-          {/* 5 · trust: checked facts, not a score */}
-          <Section label="Trust" icon="lock.fill">
+          {/* 5 · what Sidedoor itself checked: facts, not a score */}
+          <Section label="Checked by Sidedoor" icon="checkmark.seal.fill">
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              <TrustRow icon={r.verified ? "checkmark.seal.fill" : "info.circle.fill"} tone={r.verified ? "var(--sd-text-success)" : undefined}>
+              <TrustRow icon={r.verified ? "envelope.fill" : "info.circle.fill"}>
                 {r.verified ? `Work email verified at ${r.company}` : "Work email not verified"}
               </TrustRow>
               <TrustRow icon="person.2.fill">
@@ -518,7 +505,7 @@ export function ReferralRequest({ id }: { id: string }) {
 
           {r.note && (
             <Section label="Their note" icon="quote.bubble.fill">
-              <p className="t-body muted">{r.note}</p>
+              <p className="t-body">{r.note}</p>
             </Section>
           )}
 

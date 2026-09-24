@@ -3275,3 +3275,17 @@ DECISION · 2026-09-24 · 14 requests a week, and a no gives it back
 - Replaced: "Refer someone in minutes" (referrer-side, off the candidate pitch) and "See where your request got to" (a feature, not the promise).
 - Avoided "AI" in the copy: the matching is the proof rule, and "AI-curated" would promise a black box the product deliberately isn't.
 - All three fit one line at 306 wide (checked on localhost). Figma's login frames show only line 1, so no Figma change.
+
+## 24 Sep 2026 · Proof you can't type in, and one type rule on the request
+
+- Devansh: tagging skills on your own projects is still a claim, so it can be gamed. Chosen: **Sidedoor reads the link**. A skill counts only when their linked project page or resume shows it; the referrer taps the skill and sees the line Sidedoor read, with the link to check it.
+- Honest limit: this raises the cost of faking (you need real, specific work behind each skill), it doesn't make faking impossible. The interview is still the last check. The prototype's found lines are written by hand (`FOUND` in data.ts).
+- Groups renamed: "Found in their work", "Related", "Listed only" (was "Claimed, no proof"), "Missing". Candidate side says "Found in your work" and "A listed skill counts once your linked work or resume shows it". The project link field says "Sidedoor reads it to check the skills you tagged."
+- Fit section rebuilt as an iOS list inside the card: 12/500 grey uppercase group headers, 44-tall rows (skill 14/600, where 14/500 grey, chevron), hairlines, one grey footer line. Was: four different row styles and two-line rows.
+- New sheet: the skill, "Found on their project page" or "Found in their resume", the project or job, the line in quotes, the link.
+- Years below the ask moved to the blockers as an amber note. The years sentence is gone from Fit.
+- "Trust" was an odd heading. Now "Checked by Sidedoor" (seal icon); the work-email row uses an envelope in the same blue as every other row icon.
+- Type rule on the request: 16/600 for things (people, projects, jobs), 14/600 for section labels and skills, 14/500 grey for every secondary line, 14/400 dark for the candidate's own words (answer, note, project detail), 12/500 grey only for dates, group headers and footers. Fixes: question prompt 12 → 14/500; note and project detail grey → dark; company under a job 12 → 14/500 (the role table says subtitles are label/md).
+- Login line 3 lost its full stop: "Fewer asks. Real answers".
+- Referrer's question: set on Create post / Edit post ("One question for candidates"); the candidate answers it when sending. No change.
+- Checked on localhost (Vercel preview needs a login): the list, both sheets (found and related), the link opening the project page, the lower sections, candidate "How you match" wording.

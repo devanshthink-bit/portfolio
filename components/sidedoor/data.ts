@@ -422,7 +422,7 @@ export const ABHINAV_NEAR: Record<string, string> = {
 };
 /** the job's missing skills that Abhinav's resume shows in a nearby form */
 export const nearOf = (j: Job) => j.missing.filter((k) => ABHINAV_NEAR[k]);
-/** Skills Abhinav lists that no job or project of his shows. They are shown as "Claimed" and never
+/** Skills Abhinav lists that no job or project of his shows. They are shown as "Listed only" and never
  *  counted, so typing a skill in can't raise a match (Devansh, 24 Sep: "skill matching can be bypassed"). */
 export const ABHINAV_CLAIMED = ["AI-assisted design"];
 export const claimedOf = (j: Job) => j.missing.filter((k) => ABHINAV_CLAIMED.includes(k) && !ABHINAV_NEAR[k]);
@@ -559,6 +559,108 @@ export type Candidate = {
 };
 
 const from = (co: string) => `From resume · ${co}`;
+
+/** What Sidedoor read, for each skill it counts: a line from their linked project page, or from
+ *  their resume when no linked project shows the skill. A tag the candidate types is only a claim;
+ *  a skill counts when their work says it (Devansh, 24 Sep: "he can game it"). */
+export const FOUND: Record<string, Record<string, string>> = {
+  abhinav: {
+    "Interaction design": "Redesigned hotel checkout from five steps to three.",
+    Figma: "Built the new order screens and their states in Figma.",
+    "User research": "Interviewed 14 dark-store merchants before the redesign.",
+    Prototyping: "Tested a clickable prototype with merchants in two stores.",
+    "Design system": "Made one set of order cards for all 4,000 merchants.",
+    "A/B testing": "Drop-off at payment fell 18% in the A/B test.",
+  },
+  kavya: {
+    "Interaction design": "Cut checkout from four steps to two.",
+    Figma: "Checkout flows and specs handed off in Figma.",
+    "User research": "Ran research with small sellers on payment links.",
+    Prototyping: "Prototyped the new payment link for seller interviews.",
+    "A/B testing": "Orders completed rose 9% in a two-week A/B test.",
+  },
+  rohan: {
+    "Interaction design": "Built one bill-pay flow for 40 billers.",
+    Figma: "Designed booking screens in Figma for dine-out.",
+    Prototyping: "Prototyped booking for dine-out before it shipped.",
+    "Design system": "Made shared bill-pay components used across 40 billers.",
+  },
+  arpita: {
+    "Interaction design": "Designed the try-at-home flow for fashion.",
+    Figma: "Built 60 components in Figma.",
+    "User research": "Spoke to 20 shoppers who returned orders.",
+    "Design system": "Built 60 components used by 25 designers.",
+  },
+  sneha: {
+    "Interaction design": "Search by craving, not dish name.",
+    Figma: "Gold upsell screens designed in Figma.",
+    "User research": "Led diary studies with 30 diners.",
+    Prototyping: "Prototyped Gold checkout for testing.",
+    "AI-assisted design": "Designed search that uses AI to match cravings to dishes.",
+    "A/B testing": "Ran 11 tests on the Gold upsell.",
+  },
+  aditya: {
+    "Interaction design": "Tap-to-pay for offline stores.",
+    Figma: "Component library maintained in Figma.",
+    Prototyping: "Prototyped tap-to-pay with 20 shop owners.",
+    "Design system": "Added 18 components to CRED’s open design system.",
+  },
+  aviral: {
+    "Interaction design": "One checkout for cards, UPI and EMI.",
+    "User research": "Researched checkout with 12 merchants.",
+    Figma: "Designed the SIP setup flow in Figma.",
+  },
+  priya: {
+    "Interaction design": "Launched hot food inside the grocery app.",
+    Figma: "Owns the Zepto app’s Figma library.",
+    "User research": "Researched credit onboarding with first-time borrowers.",
+    Prototyping: "Prototyped cafe ordering in 8 weeks.",
+    "Design system": "Led the Zepto design system.",
+  },
+  varun: {
+    "Interaction design": "Designed bill reminders in Google Pay.",
+    "User research": "Studied why users paid bills late.",
+    Prototyping: "Prototyped offline downloads for low-storage phones.",
+  },
+  tanya: {
+    "Interaction design": "Let shops share catalogues in chat.",
+    Figma: "Rewards screens designed in Figma.",
+    Prototyping: "Prototyped scratch cards for testing.",
+    "A/B testing": "Tested catalogue sharing with 2M businesses.",
+  },
+  nisha: {
+    Figma: "Redesigned slot booking in Figma.",
+    "Interaction design": "Designed the home-services booking flow.",
+  },
+  ishaan: {
+    "Interaction design": "Price alerts that don’t spam.",
+    Figma: "Designed Groww screens in Figma.",
+    "User research": "Talked to 15 investors about alert fatigue.",
+  },
+  diya: {
+    Figma: "Designed AI recap cards in Figma.",
+    Prototyping: "Prototyped recap cards for missed meetings.",
+  },
+  shreya: {
+    "Interaction design": "Designed CRED’s rewards flow.",
+    Figma: "Owns CRED screens in Figma.",
+    "User research": "Researched rewards with 25 members.",
+    Prototyping: "Prototyped the rewards flow.",
+    "Design system": "Contributed to CRED’s NeoPOP system.",
+  },
+};
+
+/** Where Sidedoor found a skill: the first linked project that shows it, else their resume. */
+export function proofOf(c: Candidate, k: string) {
+  const quote = FOUND[c.id]?.[k];
+  // a related skill: the project its line names ("…on the Blinkit merchant app")
+  const near = !c.has[k] && c.near?.[k];
+  const p = near ? c.projects.find((x) => x.link && near.includes(x.title.split(" ")[0])) : c.projects.find((x) => x.link && x.skills.includes(k));
+  if (p) return { from: "Found on their project page", where: p.title, quote: quote ?? p.detail, link: p.link };
+  const co = (c.has[k] ?? "").replace("From resume · ", "");
+  const j = c.jobs.find((x) => x.company === co) ?? c.jobs[0];
+  return { from: "Found in their resume", where: j ? `${j.role}, ${j.company}` : "Resume", quote: quote ?? "", link: undefined };
+}
 
 export const CANDIDATES: Candidate[] = [
   {

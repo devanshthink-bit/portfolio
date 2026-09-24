@@ -486,15 +486,15 @@ function Block({ icon, title, children, end }: { icon: Parameters<typeof Icon>[0
 }
 
 /** Your skills against the job, in the groups the referrer sees. Only skills a job or project of
- *  yours shows count; one you only listed is "Claimed" and says how to make it count. */
+ *  yours shows count; one you only listed is "Listed only" and says how to make it count. */
 function fitRows(j: Job, withShown = true): [string, string[]][] {
   const near = nearOf(j);
   const claimed = claimedOf(j);
   return (
     [
-      ...(withShown ? [["Shown in your work", j.skills.filter((k) => !j.missing.includes(k))] as [string, string[]]] : []),
+      ...(withShown ? [["Found in your work", j.skills.filter((k) => !j.missing.includes(k))] as [string, string[]]] : []),
       ["Related", near],
-      ["Claimed, no proof", claimed],
+      ["Listed only", claimed],
       ["Missing", j.missing.filter((k) => !near.includes(k) && !claimed.includes(k))],
     ] as [string, string[]][]
   ).filter(([, list]) => list.length > 0);
@@ -518,7 +518,7 @@ function FitSummary({ j }: { j: Job }) {
     <Block icon="checkmark.circle.fill" title="How you match">
       <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingTop: 4 }}>
         <FitLines rows={fitRows(j)} />
-        {claimedOf(j).length > 0 && <Note>A claimed skill counts once a job or project shows it</Note>}
+        {claimedOf(j).length > 0 && <Note>A listed skill counts once your linked work or resume shows it</Note>}
       </div>
     </Block>
   );

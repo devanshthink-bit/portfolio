@@ -485,6 +485,15 @@
   overflow: hidden;
 }
 .sd-list:has(> .sd-notifrow) { padding: 0 16px; }
+/* Fit on a referral request: one flat list inside the card. A 12/500 grey header per group,
+   44-tall rows (skill, where, chevron) with hairlines between them, a grey footer line. */
+.sd-fit { display: flex; flex-direction: column; gap: 16px; padding-top: 4px; }
+.sd-fit-group { display: flex; flex-direction: column; }
+.sd-fit-head { font-weight: 500; font-size: 12px; line-height: 16px; color: var(--sd-text-2); text-transform: uppercase; padding-bottom: 4px; }
+.sd-fit-row { display: flex; align-items: center; gap: 8px; min-height: 44px; position: relative; width: 100%; text-align: left; }
+.sd-fit-row > .t-h-xs { flex: 1; min-width: 0; }
+.sd-fit-row + .sd-fit-row::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 0.5px; background: var(--sd-border-subtle); }
+.sd-fit-row.is-tap:active { background: var(--sd-n100); }
 .sd-row-chev { margin-left: auto; display: flex; color: var(--sd-n400); }
 .sd-divider { height: 0.5px; background: rgba(60, 60, 67, 0.2); margin-left: 16px; }
 

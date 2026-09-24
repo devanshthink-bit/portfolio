@@ -45,7 +45,7 @@ export function Login() {
   const { force } = useStore();
   // who you reach, why they trust it (fit shown by work, not typed-in skills), and why you ask less
   // but hear back: the product in three lines (Devansh, 24 Sep)
-  const lines = ["Get referred by insiders", "Matched on proof, not keywords", "Fewer asks. Real answers."];
+  const lines = ["Get referred by insiders", "Matched on proof, not keywords", "Fewer asks. Real answers"];
   // The lines turn over on their own, every 3 seconds, for ever. The track carries a copy of
   // the first line at its end: sliding onto it looks like wrapping round, then it jumps back
   // to the real first line with no animation. A tap on a dot restarts the clock.
@@ -572,7 +572,7 @@ export function ProjectsBlock({ reading }: { reading?: boolean }) {
                 <ItemHead title={`Project ${i + 1}`} onRemove={() => ed.remove(i)} />
                 <Field label="Project name" value={p.title} onChange={(v) => ed.set(i, { title: v })} kind="text" required demo={DEMO.newProject.title} />
                 <TagInput label="Skills" value={p.skills} onChange={(v) => ed.set(i, { skills: v })} ideas={DEMO.skillIdeas} />
-                <Field label="Link to the work (optional)" value={p.link ?? ""} onChange={(v) => ed.set(i, { link: v })} kind="url" placeholder="Case study, repo or live product" demo={DEMO.newProject.link} />
+                <Field label="Link to the work (optional)" value={p.link ?? ""} onChange={(v) => ed.set(i, { link: v })} kind="url" placeholder="Case study, repo or live product" demo={DEMO.newProject.link} help="Sidedoor reads it to check the skills you tagged." />
                 <Field
                   label="What you did (optional)"
                   value={p.detail}
@@ -650,7 +650,7 @@ export function ReadingBox() {
 
 export function CompanyRow({ logo, role, company, when }: { logo: string; role: string; company: string; when: string }) {
   return (
-    // Figma Company Row: a 40px logo, 8 clear, role Semi Bold 16/24 over company 12/16
+    // Figma Company Row: a 40px logo, 8 clear, role Semi Bold 16/24 over company 14/500 (a subtitle)
     <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
       {logo ? (
         <Image src={logoSrc(logo)} alt="" width={40} height={40} style={{ width: 40, height: "auto", flex: "0 0 auto" }} unoptimized />
@@ -662,7 +662,7 @@ export function CompanyRow({ logo, role, company, when }: { logo: string; role: 
       )}
       <span style={{ flex: 1, display: "flex", flexDirection: "column" }}>
         <span className="t-h-sm">{role}</span>
-        <span className="t-label-sm muted">{company}</span>
+        <span className="t-label muted">{company}</span>
       </span>
       <span className="t-label-sm muted" style={{ flex: "0 0 auto" }}>
         {when}
@@ -685,7 +685,8 @@ export function Project({ title, skills, detail, link }: { title: string; skills
           </button>
         )}
       </span>
-      {detail && <p className="t-body muted">{detail}</p>}
+      {/* their own words read dark; Sidedoor's words are grey */}
+      {detail && <p className="t-body">{detail}</p>}
       {skills.length > 0 && (
         <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
           {skills.map((s) => (

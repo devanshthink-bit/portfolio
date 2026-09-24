@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useNav } from "../nav";
 import { STAGE_LABEL, useDecide, useStore, type Stage } from "../store";
 import { DocUpload } from "./onboarding";
-import { firstName, jobById } from "../data";
+import { candidateById, firstName, jobById, proofOf } from "../data";
 import { ActionSheet, Alert, Avatar, Button, Card, Field, Icon, Note, RadioList, RadioOption, Sheet, Tag, TextButton, WheelDate } from "../ui";
 
 function SheetPerson({ name, role, tag }: { name: string; role: string; tag?: React.ReactNode }) {
@@ -402,5 +402,39 @@ export function WithdrawAlert({ id, leaving }: { id: string; leaving?: boolean }
       onCancel={nav.closeSheet}
       leaving={leaving}
     />
+  );
+}
+
+/* ── Where a skill was found ────────────────────────────────────────────── */
+/** Opened from a skill on a referral request: the line Sidedoor read, and where, so the referrer
+ *  can check it without trusting a tag (Devansh, 24 Sep: "AI reads the link"). */
+export function ProofSheet({ id, skill, leaving }: { id: string; skill: string; leaving?: boolean }) {
+  const nav = useNav();
+  const c = candidateById(id);
+  const p = proofOf(c, skill);
+  const related = !c.has[skill];
+  const open = () => {
+    nav.closeSheet();
+    window.setTimeout(() => nav.push("profileLink", { site: "Project", name: p.where, url: p.link }), 320);
+  };
+  return (
+    <Sheet title={skill} onClose={nav.closeSheet} leaving={leaving} closeButton>
+      <Card>
+        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+          <span className="t-label-sm muted">{related ? `Related skill · ${p.from}` : p.from}</span>
+          <span className="t-h-sm">{p.where}</span>
+          {p.quote && <p className="t-body">“{p.quote}”</p>}
+          {p.link && (
+            <button className="sd-hit44" style={{ display: "flex", alignItems: "center", justifyContent: "flex-start", gap: 4, textAlign: "left", minWidth: 0, width: "100%" }} onClick={open}>
+              <Icon name="link.line" size={16} color="var(--sd-link)" />
+              <span className="t-label link sd-1line">{p.link}</span>
+            </button>
+          )}
+        </div>
+      </Card>
+      <p className="t-label-sm muted" style={{ marginTop: 12 }}>
+        {p.link ? "Sidedoor read this on their page. Open it to check." : "Sidedoor read this in their resume."}
+      </p>
+    </Sheet>
   );
 }
