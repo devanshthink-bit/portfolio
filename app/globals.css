@@ -1485,6 +1485,14 @@
   .work-card:hover .work-card-phones .iphone:nth-child(2) { transform: translateY(-10px); }
   .work-card:hover .work-card-phones .iphone:nth-child(3) { transform: translate(-14px, 46px) rotate(11deg); }
 
+  /* Sidedoor's card: a pair, not RedBus's fan. The candidate's side sits lower on the left, the
+     referrer's raised on the right and in front, both upright. Hover draws them apart a little. */
+  .work-card-phones.is-pair { justify-content: flex-end; padding-right: 9%; margin-top: -48px; }
+  .work-card-phones.is-pair .iphone:nth-child(1) { --n: 248; z-index: 1; transform: translate(40px, 72px); }
+  .work-card-phones.is-pair .iphone:nth-child(2) { --n: 248; z-index: 2; }
+  .work-card:hover .work-card-phones.is-pair .iphone:nth-child(1) { transform: translate(28px, 64px); }
+  .work-card:hover .work-card-phones.is-pair .iphone:nth-child(2) { transform: translateY(-10px); }
+
   /* Warning ink, redBus's amber. Lighter on the dark theme so it keeps its contrast. */
   .cs-warn {
     color: #A45729;
@@ -1771,6 +1779,9 @@
   .work-card-panel-text.is-brand-only { visibility: hidden; }
   .work-card-panel-text.is-brand-only .work-card-brand { font-size: 24px; }
   .work-card-phones .iphone:nth-child(2) { --n: 190; }
+  .work-card-phones.is-pair { justify-content: center; padding-right: 0; margin-top: 0; }
+  .work-card-phones.is-pair .iphone:nth-child(2),
+  .work-card:hover .work-card-phones.is-pair .iphone:nth-child(2) { --n: 190; transform: none; }
   .phone-row.hero { padding-bottom: 0; }
   .phone-row.hero .phone-fig:nth-child(2) .iphone { --n: 272; }
 }

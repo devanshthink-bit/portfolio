@@ -42,8 +42,10 @@ const recentWork = [
     gradient: "radial-gradient(110% 130% at 0% 0%, #d4e2ff 0%, rgba(212,226,255,0.72) 22%, rgba(212,226,255,0.38) 45%, rgba(212,226,255,0.12) 68%, rgba(212,226,255,0) 88%), radial-gradient(110% 130% at 100% 100%, #b0caff 0%, rgba(176,202,255,0.72) 22%, rgba(176,202,255,0.38) 45%, rgba(176,202,255,0.12) 68%, rgba(176,202,255,0) 88%), #7aa5fb",
     tooltipBg: "#1d1d1d",
     slug: "sidedoor",
-    // The same card as RedBus: V6 screens from Figma (Job details, the login in the middle, the referrer's request).
-    phones: ["job", "login", "request"],
+    // Unlike RedBus's fanned trio: the two sides, upright and staggered. The candidate's Job details
+    // on the left, the referrer's request raised on the right (V6 screens from Figma).
+    phones: ["job", "request"],
+    phonesLayout: "pair",
     screens: "/images/sidedoor/screens",
     logo: "/images/sidedoor/sidedoor-logo.png",
     logoRaw: true,
@@ -123,7 +125,7 @@ function StatCounter({ value, unit, label, active, countTo, suffix, startFrom }:
 
 type Work = {
   title: string; desc: string; tag: string; gradient: string; tooltipBg: string; slug: string | null; image?: string;
-  phones?: string[]; screens?: string; logo?: string; logoRaw?: boolean; wordmark?: string; brand?: string; brandColor?: string; did?: string; tags?: string[]; year?: string; blurb?: string; impact?: string;
+  phones?: string[]; phonesLayout?: "pair"; screens?: string; logo?: string; logoRaw?: boolean; wordmark?: string; brand?: string; brandColor?: string; did?: string; tags?: string[]; year?: string; blurb?: string; impact?: string;
 };
 
 function WorkCard({ item }: { item: Work }) {
@@ -165,7 +167,7 @@ function WorkCard({ item }: { item: Work }) {
               </p>
             </div>
             {item.phones && (
-              <div className="work-card-phones">
+              <div className={`work-card-phones${item.phonesLayout ? ` is-${item.phonesLayout}` : ""}`}>
                 {item.phones.map((f) => <IPhone key={f} src={`${item.screens}/${f}.webp`} />)}
               </div>
             )}
