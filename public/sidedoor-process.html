@@ -1,0 +1,901 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SideDoor, Research to Design</title>
+<meta name="description" content="Every artefact behind SideDoor, from the business lens to the tests, in the order it was made.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* SideDoor's own design language (sidedoor-case-study/DESIGN_LANGUAGE.md): Inter, page #FBFAF8, white cards with a soft
+   shadow and no border, radius 12, tags radius 4, blue #2563EB only for things you act on, brand green #10B981 for the
+   logo, status colours by meaning. The process is laid out like the app's own request tracker. */
+:root{
+  --page:#FBFAF8; --card:#FFFFFF; --raised:#F0F1F2; --ink:#3B3F46; --muted:#6B7280; --line:#ECEDEF;
+  --blue:#2563EB; --blue-bg:#E9EFFD; --blue-ink:#1D4ED8; --green:#10B981;
+  --ok:#047857; --ok-bg:#ECFDF5; --warn:#B45309; --warn-bg:#FFFBEB; --bad:#B91C1C; --bad-bg:#FEF2F2;
+  --e1:0 1px 4px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06);
+  --e2:0 6px 16px rgba(0,0,0,.10),0 2px 6px rgba(0,0,0,.08);
+  --c1:#2563EB; --c2:#7C3AED; --c3:#0E7490; --c4:#B45309; --c5:#BE185D;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--page);color:var(--ink);
+  -webkit-font-smoothing:antialiased;font-size:15px;line-height:1.55}
+::selection{background:rgba(37,99,235,.16)}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+b,strong{font-weight:600;color:#23262B}
+
+/* ── App bar ── */
+.appbar{position:sticky;top:0;z-index:40;background:rgba(251,250,248,.86);backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);box-shadow:0 .5px 0 rgba(0,0,0,.14)}
+.appbar-in{max-width:1240px;margin:0 auto;height:56px;display:flex;align-items:center;gap:12px;padding:0 24px}
+.brand{display:flex;align-items:center;gap:8px}
+.brand img:first-child{height:26px;width:auto}
+.brand img:last-child{height:15px;width:auto}
+.appbar-sep{width:1px;height:18px;background:#D1D3D8}
+.appbar-t{font-size:14px;font-weight:500;color:var(--muted)}
+.prog{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.prog-bar{width:120px;height:4px;border-radius:4px;background:var(--raised);overflow:hidden}
+.prog-bar i{display:block;height:100%;width:0;background:var(--blue);border-radius:4px;transition:width .25s ease}
+
+/* ── Layout ── */
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px 120px;display:grid;grid-template-columns:260px minmax(0,1fr);gap:48px}
+.hero{grid-column:1/-1;padding:56px 0 24px}
+.hero-k{font-size:13px;font-weight:500;color:var(--muted)}
+.hero h1{font-size:40px;line-height:1.12;font-weight:700;letter-spacing:-.025em;color:#23262B;margin:10px 0 14px;max-width:820px}
+.hero p{font-size:17px;color:var(--muted);max-width:760px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--card);box-shadow:var(--e1);border-radius:8px;padding:8px 12px;font-size:13.5px;font-weight:500}
+.chip b{font-size:15px;font-variant-numeric:tabular-nums}
+.honest{margin-top:22px;max-width:820px;background:var(--warn-bg);border-radius:12px;padding:14px 16px;font-size:14px;color:#5B4318}
+.honest b{color:var(--warn)}
+
+/* ── Tracker (left): the app's status timeline ── */
+.tracker{position:sticky;top:80px;align-self:start;max-height:calc(100vh - 100px);overflow:auto;padding:4px 4px 24px;scrollbar-width:none}
+.tracker::-webkit-scrollbar{display:none}
+.tk-h{font-size:12px;font-weight:500;color:var(--muted);margin:0 0 12px 2px}
+.tk{list-style:none;position:relative}
+.tk li{position:relative;padding:0 0 4px 30px}
+.tk li::before{content:"";position:absolute;left:9px;top:22px;bottom:-4px;width:2px;background:#E3E4E7}
+.tk li:last-child::before{display:none}
+.tk li.done::before{background:var(--blue)}
+.tk a{display:block;padding:6px 8px;border-radius:8px;color:var(--muted);font-size:14px;line-height:1.35;text-decoration:none}
+.tk a:hover{background:var(--raised);color:var(--ink)}
+.tk .dot{position:absolute;left:2px;top:8px;width:16px;height:16px;border-radius:50%;background:var(--page);border:2px solid #C9CBD0;display:grid;place-items:center;transition:all .2s}
+.tk li.done .dot{background:var(--blue);border-color:var(--blue)}
+.tk li.done .dot::after{content:"";width:6px;height:3px;border:solid #fff;border-width:0 0 2px 2px;transform:rotate(-45deg) translate(1px,-1px)}
+.tk li.now .dot{border-color:var(--blue);box-shadow:0 0 0 4px rgba(37,99,235,.14)}
+.tk li.now a{color:#23262B;font-weight:600;background:var(--card);box-shadow:var(--e1)}
+.tk small{display:block;font-size:12px;color:#8A8F98;font-weight:400;margin-top:1px}
+
+/* ── Stages ── */
+main{min-width:0}
+.stage{scroll-margin-top:80px;margin:0 0 72px}
+.st-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:18px}
+.st-n{flex:0 0 auto;min-width:34px;height:34px;padding:0 8px;border-radius:17px;background:var(--blue-bg);color:var(--blue-ink);font-size:13px;font-weight:600;display:grid;place-items:center;font-variant-numeric:tabular-nums;margin-top:2px}
+.st-k{font-size:13px;color:var(--muted);font-weight:500}
+.st-head h2{font-size:26px;line-height:1.2;font-weight:700;letter-spacing:-.02em;color:#23262B;margin:2px 0 6px}
+.st-head p{font-size:15.5px;color:var(--muted);max-width:760px}
+.card{background:var(--card);border-radius:12px;box-shadow:var(--e1);padding:20px 22px}
+.card + .card,.grid + .card,.card + .grid,.grid + .grid,.card + .sub,.grid + .sub,.sub + .grid{margin-top:16px}
+.grid > .card,.grid > .card + .card,.loops > .card{margin-top:0}
+.sub{font-size:13px;font-weight:600;color:var(--ink);margin:28px 0 12px;display:flex;align-items:center;gap:8px}
+.sub::after{content:"";flex:1;height:1px;background:var(--line)}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.lab{font-size:12.5px;font-weight:500;color:var(--muted);margin-bottom:4px}
+.card h3{font-size:17px;font-weight:600;letter-spacing:-.01em;color:#23262B;margin-bottom:6px;line-height:1.35}
+.card p + p{margin-top:8px}
+ul.list{padding-left:18px}
+ul.list li{margin:4px 0}
+ul.list li::marker{color:#A6ABB3}
+
+/* tags, as in the app: word first, colour second */
+.tag{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:500;line-height:1;padding:5px 7px;border-radius:4px;background:var(--raised);color:#4B5563;white-space:nowrap;vertical-align:middle}
+.tag.ok{background:var(--ok-bg);color:var(--ok)} .tag.warn{background:var(--warn-bg);color:var(--warn)}
+.tag.bad{background:var(--bad-bg);color:var(--bad)} .tag.blue{background:var(--blue-bg);color:var(--blue-ink)}
+
+/* key-value rows, like the portal details list */
+.kv{display:grid;grid-template-columns:190px minmax(0,1fr);gap:0}
+.kv > div{padding:12px 0;border-top:1px solid var(--line)}
+.kv > div:nth-child(-n+2){border-top:0;padding-top:0}
+.kv .k{font-size:13px;font-weight:500;color:var(--muted);padding-right:16px}
+
+/* quotes */
+.q{border-left:2px solid var(--blue);padding:2px 0 2px 14px;margin:12px 0 0}
+.q p{font-size:15.5px;color:#23262B}
+.q span{display:block;font-size:12.5px;color:var(--muted);margin-top:4px}
+
+/* notes wall */
+.seg{display:inline-flex;background:var(--raised);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+.seg button{all:unset;cursor:pointer;font-size:13.5px;font-weight:500;color:var(--muted);padding:7px 12px;border-radius:8px}
+.seg button[aria-pressed="true"]{background:var(--card);color:#23262B;box-shadow:var(--e1)}
+.seg button:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
+.wallbar{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:14px}
+.wallcount{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.clearf{all:unset;cursor:pointer;font-size:13px;color:var(--blue);font-weight:500;display:none}
+.clearf.on{display:inline}
+.wall{columns:3 250px;column-gap:12px}
+.note{break-inside:avoid;background:var(--card);border-radius:12px;box-shadow:var(--e1);padding:12px 14px 12px;margin:0 0 12px;position:relative;border-top:3px solid var(--nc,#C9CBD0);transition:opacity .2s}
+.note p{font-size:14px;line-height:1.5;color:var(--ink)}
+.note .nm{display:flex;align-items:center;gap:6px;margin-top:10px;font-size:12px;color:var(--muted)}
+.note .nid{margin-left:auto;font-variant-numeric:tabular-nums;color:#8A8F98}
+.av{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:10.5px;font-weight:600;color:#fff;flex:0 0 auto}
+.av.s{background:#0E7490}.av.r{background:#7C3AED}
+.note[hidden]{display:none}
+.wallwrap.clip{max-height:820px;overflow:hidden;-webkit-mask-image:linear-gradient(180deg,#000 75%,transparent);mask-image:linear-gradient(180deg,#000 75%,transparent)}
+.more{all:unset;cursor:pointer;display:none;margin:4px auto 0;font-size:14px;font-weight:500;color:#fff;background:var(--blue);border-radius:8px;padding:12px 18px}
+.more.on{display:table}
+.more:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+
+/* clusters */
+.cl{border-top:3px solid var(--cc)}
+.cl .top{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.cl .cid{font-size:12px;font-weight:600;color:var(--cc)}
+.cl .row{margin-top:10px}
+.cl .row .lab{margin-bottom:2px}
+.jtbd{margin-top:14px;background:var(--page);border-radius:8px;padding:12px 14px;font-size:14.5px}
+.jtbd .lab{color:var(--blue-ink)}
+.shown{all:unset;cursor:pointer;margin-top:14px;display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:500;color:var(--blue)}
+.shown:hover{text-decoration:underline}
+
+/* merge diagram */
+.merge{display:grid;grid-template-columns:1fr 40px 1.3fr;gap:12px;align-items:stretch}
+.merge .from{display:grid;gap:8px;align-content:center}
+.mfrom{background:var(--card);box-shadow:var(--e1);border-radius:10px;padding:10px 12px;font-size:13.5px;border-left:3px solid var(--cc)}
+.mfrom b{color:var(--cc)}
+.marw{display:grid;place-items:center;color:#A6ABB3}
+.mto{background:var(--card);box-shadow:var(--e1);border-radius:12px;padding:14px 16px}
+.mto h4{font-size:15px;font-weight:600;color:#23262B;margin-bottom:4px}
+.mto p{font-size:14px}
+.mrow + .mrow{margin-top:14px}
+
+/* insight statement */
+.ins p{font-size:17px;line-height:1.7;color:#23262B}
+.ins p.lab{font-size:12.5px;line-height:1.4;color:var(--muted);font-weight:600}
+.ins p.ids{font-size:12px;line-height:1.5;color:#8A8F98}
+.hl{border-radius:4px;padding:1px 4px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.hl.seg-{background:#EDE9FE}.hl.pr{background:#FEE2E2}.hl.rc{background:#FEF3C7}.hl.im{background:#D1FAE5}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:12.5px;color:var(--muted);margin-top:14px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.ids{font-size:12px;color:#8A8F98;margin-top:10px;word-spacing:2px}
+
+/* problem statement, as a request that arrives complete */
+.ps{background:var(--card);border-radius:16px;box-shadow:var(--e2);overflow:hidden}
+.ps-top{padding:22px 24px 18px;border-bottom:1px solid var(--line)}
+.ps-top h3{font-size:22px;line-height:1.35;font-weight:700;letter-spacing:-.015em;color:#23262B}
+.ps-body{padding:18px 24px 22px}
+.ps-body p{font-size:15.5px}
+.ps-body p + p{margin-top:10px}
+.ps-foot{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:1px solid var(--line)}
+.ps-foot > div{padding:14px 18px;border-left:1px solid var(--line);font-size:13.5px}
+.ps-foot > div:first-child{border-left:0}
+.rej{opacity:.9}
+.rej h3{text-decoration:line-through;text-decoration-color:#C9CBD0;color:var(--muted)!important}
+
+/* chain walk */
+.walk{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:13.5px}
+.walk .w{background:var(--card);box-shadow:var(--e1);border-radius:8px;padding:8px 10px}
+.walk .a{color:#A6ABB3}
+
+/* landscape matrix */
+.tbl{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border-radius:12px;box-shadow:var(--e1);overflow:hidden;font-size:13.5px}
+.tbl th{font-size:12.5px;font-weight:500;color:var(--muted);text-align:left;padding:12px 14px;background:#FAFAFA;border-bottom:1px solid var(--line)}
+.tbl td{padding:12px 14px;border-top:1px solid var(--line);vertical-align:top}
+.tbl tr:first-child td{border-top:0}
+.tbl td:first-child{font-weight:600;color:#23262B;white-space:nowrap}
+.tbl .me td{background:#F5F8FE}
+.tscroll{overflow-x:auto;border-radius:12px}
+
+/* rings */
+.nsm{display:grid;grid-template-columns:400px minmax(0,1fr);gap:24px;align-items:center}
+.rings{width:100%;height:auto;display:block}
+.rings text{font-family:Inter,sans-serif}
+.nsm .tbl td:first-child{white-space:normal}
+@media (max-width:1200px){.nsm{grid-template-columns:minmax(0,1fr)}.nsm .rings{max-width:400px;margin:0 auto}}
+
+/* chain */
+.chains{display:grid;grid-template-columns:1fr 24px 1fr 24px 1fr 24px 1fr;gap:10px 6px;align-items:stretch}
+.chains .cn .lab{display:none}
+.chains .cn.ns{grid-column:7;grid-row:1 / span 4;display:flex;flex-direction:column;justify-content:center;font-size:16px;padding:18px}
+.chains .cn.ns .lab{display:block;font-size:12px}
+.cn{background:var(--card);box-shadow:var(--e1);border-radius:10px;padding:12px 13px;font-size:13.5px;line-height:1.45}
+.cn .lab{font-size:11.5px}
+.cn.ns{background:var(--blue);color:#fff}.cn.ns .lab{color:rgba(255,255,255,.8)}.cn.ns b{color:#fff}
+.carw{display:grid;place-items:center;color:#A6ABB3}
+.chain-h{display:grid;grid-template-columns:1fr 24px 1fr 24px 1fr 24px 1fr;gap:6px;margin-bottom:8px}
+.chain-h span{font-size:12px;font-weight:500;color:var(--muted)}
+
+/* loops */
+.loops{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.loop svg{width:100%;height:auto;display:block;margin:6px 0 10px}
+.loop .lm{display:inline-block;margin-top:8px;font-size:12.5px;font-weight:500;color:var(--ok);background:var(--ok-bg);border-radius:4px;padding:4px 7px}
+
+/* versions rail */
+.rail{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 4px 16px;margin:0 -4px}
+.ver{flex:0 0 300px;scroll-snap-align:start;background:var(--card);border-radius:14px;box-shadow:var(--e1);overflow:hidden;display:flex;flex-direction:column}
+.ver .shot{background:linear-gradient(180deg,#EEF3FD,#F7F9FE);padding:18px 0 0;display:flex;justify-content:center;height:250px;overflow:hidden}
+.ver .shot img{width:170px;height:auto;border-radius:20px 20px 0 0;box-shadow:0 8px 24px rgba(30,50,90,.18);align-self:flex-start}
+.ver .vb{padding:16px 18px 18px}
+.ver h3{font-size:16px;font-weight:600;color:#23262B;margin:4px 0 6px}
+.ver p{font-size:13.5px}
+.ver .learn{margin-top:10px;font-size:13px;color:var(--ok);background:var(--ok-bg);border-radius:6px;padding:8px 10px}
+.railhint{font-size:12.5px;color:var(--muted);margin-top:4px}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.stat{background:var(--card);box-shadow:var(--e1);border-radius:12px;padding:16px 18px}
+.stat b{display:block;font-size:28px;font-weight:700;letter-spacing:-.02em;color:#23262B;font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--muted)}
+
+/* steps (main path) */
+.steps{counter-reset:s;list-style:none;display:grid;gap:8px}
+.steps li{counter-increment:s;position:relative;padding:10px 14px 10px 48px;background:var(--card);box-shadow:var(--e1);border-radius:10px;font-size:14px}
+.steps li::before{content:counter(s);position:absolute;left:12px;top:9px;width:24px;height:24px;border-radius:50%;background:var(--blue-bg);color:var(--blue-ink);font-size:12.5px;font-weight:600;display:grid;place-items:center}
+
+/* kill cards */
+.kill{border-left:3px solid var(--bad)}
+.kill .num{font-size:30px;font-weight:700;letter-spacing:-.02em;color:#23262B;margin:4px 0}
+
+.foot{grid-column:1/-1;border-top:1px solid var(--line);padding-top:24px;font-size:13.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between}
+
+/* narrow screens: tracker becomes a strip */
+@media (max-width:1000px){
+  .wrap{grid-template-columns:minmax(0,1fr);gap:0}
+  .tracker{display:none}
+  .g3{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .nsm{grid-template-columns:minmax(0,1fr)}
+  .rings{max-width:420px;margin:0 auto}
+  .chains,.chain-h{grid-template-columns:minmax(0,1fr)}
+  .chains .cn .lab{display:block}
+  .chains .cn.ns{grid-column:auto;grid-row:auto}
+  .chains .carw.last{display:none}
+  .chain-h{display:none}
+  .carw{transform:rotate(90deg);height:18px}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:680px){
+  .appbar-in{padding:0 16px}.appbar-t,.appbar-sep{display:none}
+  .wrap{padding:0 16px 80px}
+  .hero{padding-top:36px}.hero h1{font-size:30px}
+  .g2,.g3,.loops{grid-template-columns:minmax(0,1fr)}
+  .kv{grid-template-columns:minmax(0,1fr)}.kv .k{padding-top:12px}.kv > div:nth-child(2){padding-top:2px}.kv > div:nth-child(even){border-top:0;padding-top:2px}
+  .merge{grid-template-columns:minmax(0,1fr)}.marw{transform:rotate(90deg);height:24px}
+  .ps-foot{grid-template-columns:minmax(0,1fr)}.ps-foot > div{border-left:0;border-top:1px solid var(--line)}
+  .st-head h2{font-size:22px}
+  .prog-bar{width:70px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="appbar">
+  <div class="appbar-in">
+    <div class="brand"><img src="/images/sidedoor/sidedoor-logo.png" alt=""><img src="/images/sidedoor/sidedoor-word.svg" alt="SideDoor"></div>
+    <span class="appbar-sep"></span><span class="appbar-t">Research to design</span>
+    <div class="prog" aria-hidden="true"><span id="progT">Stage 1 of 15</span><span class="prog-bar"><i id="progB"></i></span></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="hero">
+    <p class="hero-k">SideDoor · Research to design · Devansh Somvanshi · Sep 2026</p>
+    <h1>Every artefact behind SideDoor, in the order it was made</h1>
+    <p>From how the business makes money to what would prove the design wrong. Every claim points back to a numbered note from the interviews, and says how sure it is.</p>
+    <div class="chips">
+      <span class="chip"><b>2</b> people</span>
+      <span class="chip"><b>4</b> interviews, each person on both sides</span>
+      <span class="chip"><b>91</b> notes</span>
+      <span class="chip"><b>5</b> clusters</span>
+      <span class="chip"><b>3</b> jobs to be done</span>
+      <span class="chip"><b>4</b> products compared</span>
+      <span class="chip"><b>5</b> versions, V2 to V6</span>
+    </div>
+    <p class="honest"><b>How sure, on every card.</b> <span class="tag ok">Saw it</span> means someone said or did it. <span class="tag blue">Worked it out</span> is my reasoning from the notes. <span class="tag warn">Guessing</span> is untested. Nobody has used the design yet.</p>
+  </section>
+
+  <nav class="tracker" aria-label="Stages">
+    <p class="tk-h">Your progress</p>
+    <ol class="tk" id="tk"></ol>
+  </nav>
+
+  <main id="main">
+
+  <!-- 1 -->
+  <section class="stage" id="s-business" data-t="The business lens" data-s="Who pays, and the number">
+    <div class="st-head"><span class="st-n">1</span><div><p class="st-k">Business model, strategy, North Star</p><h2>Referrers are the scarce side, so nothing is ever sold to them</h2><p>A two-sided marketplace, built with the Product Anatomy frameworks: business model, then strategy, then design. Written after the research, from the problem statement, not before it.</p></div></div>
+
+    <div class="grid g3">
+      <div class="card"><p class="lab">Phase 1 · Build both sides</p><h3>Free for everyone</h3><p>A paywall on an empty marketplace blocks the people it needs.</p></div>
+      <div class="card"><p class="lab">Phase 2 · Companies pay</p><h3>For complete, matched referrals</h3><p>Companies already pay for referrals through their bonus schemes (n62, n87). <span class="tag warn">Guessing</span> that they'd pay a platform.</p></div>
+      <div class="card"><p class="lab">Candidates, if ever</p><h3>Only for tools that help them</h3><p>Never to reach, see or jump ahead of a referrer.</p></div>
+    </div>
+
+    <p class="sub">Rejected ways to make money</p>
+    <div class="grid g3">
+      <div class="card"><span class="tag bad">Rejected</span><h3 style="margin-top:10px">Candidates pay to reach referrers</h3><p>Version 2's Premium did this. It sells the scarce side's attention, and paying doesn't change a referrer's rule (n50, n76).</p></div>
+      <div class="card"><span class="tag bad">Rejected</span><h3 style="margin-top:10px">Referrers pay</h3><p>They have the least reason to take part already (C4). Charging them kills supply.</p></div>
+      <div class="card"><span class="tag bad">Rejected</span><h3 style="margin-top:10px">Ads</h3><p>Ads push for time in the app. SideDoor's value is a referral done in minutes.</p></div>
+    </div>
+
+    <p class="sub">The strategy: quality as identity</p>
+    <div class="card">
+      <h3>Every request that reaches a referrer is complete and a real fit</h3>
+      <p>A referrer can open any request and submit it in minutes, without chasing a single detail. That promise is the problem statement turned around: referrers drop requests that hand them the candidate's work (n76), and help when the candidate has done it (n77). <span class="tag blue">Worked it out</span></p>
+      <p><b>What it costs:</b> candidates do more before they can ask, and can ask fewer people. Some will find that slower than a LinkedIn message. Accepted, because a message nobody reads is slower still.</p>
+    </div>
+
+    <p class="sub">North Star</p>
+    <div class="nsm">
+      <svg class="rings" viewBox="0 0 460 460" role="img" aria-label="Three rings: output metrics outside, input metrics in the middle, the North Star at the centre">
+        <defs>
+          <path id="o-t" d="M 54,230 A 176,176 0 0,1 406,230"/><path id="o-b" d="M 34,230 A 196,196 0 0,0 426,230"/>
+          <path id="m-t" d="M 118,230 A 112,112 0 0,1 342,230"/><path id="m-b" d="M 102,230 A 128,128 0 0,0 358,230"/>
+        </defs>
+        <circle cx="230" cy="230" r="216" fill="#F3F6FC" stroke="#DCE4F5"/>
+        <circle cx="230" cy="230" r="150" fill="#E9EFFD" stroke="#C9D7F8"/>
+        <circle cx="230" cy="230" r="86" fill="#2563EB"/>
+        <text font-size="11.5" font-weight="600" fill="#6B7280"><textPath href="#o-t" startOffset="50%" text-anchor="middle">Output metrics, the consequences</textPath></text>
+        <text font-size="12.5" font-weight="500" fill="#3B3F46"><textPath href="#o-b" startOffset="50%" text-anchor="middle">Referral to interview · Time to submission · Referrer retention</textPath></text>
+        <text font-size="11.5" font-weight="600" fill="#1D4ED8"><textPath href="#m-t" startOffset="50%" text-anchor="middle">Input metrics, the levers I own</textPath></text>
+        <text font-size="12.5" font-weight="500" fill="#3B3F46"><textPath href="#m-b" startOffset="50%" text-anchor="middle">Requests arriving complete</textPath></text>
+        <text x="230" y="208" text-anchor="middle" font-size="11.5" font-weight="600" fill="rgba(255,255,255,.8)">North Star</text>
+        <text x="230" y="232" text-anchor="middle" font-size="15" font-weight="600" fill="#fff">Referrals submitted</text>
+        <text x="230" y="252" text-anchor="middle" font-size="15" font-weight="600" fill="#fff">per active referrer</text>
+        <text x="230" y="272" text-anchor="middle" font-size="15" font-weight="600" fill="#fff">per month</text>
+      </svg>
+      <div>
+        <div class="card">
+          <p class="lab">The value exchange</p>
+          <h3>A candidate who fits gets referred by someone they didn't know, and that person didn't have to chase anything</h3>
+          <p>A referral counts when either side confirms it went into the company's portal: the referrer marks it, or the candidate marks the company's email. Per referrer, not total, because the referrer is the scarce side and a total can rise from sign-ups alone.</p>
+        </div>
+        <table class="tbl" style="margin-top:16px">
+          <tr><th>The North Star checklist</th><th>Answer</th></tr>
+          <tr><td>Can it rise while users are unhappy?</td><td>Partly: poor fits could be submitted. Watched by the guardrail</td></tr>
+          <tr><td>Can marketing inflate it?</td><td>No. It's per active referrer</td></tr>
+          <tr><td>Value, not activity?</td><td>Yes. A submission is when both sides get what they came for</td></tr>
+          <tr><td>Would a fall predict trouble?</td><td>Yes. Fewer referrals per referrer means referrers drifting away</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <p class="sub">Looks like a North Star, isn't one</p>
+    <div class="grid g3">
+      <div class="card"><h3>Requests sent</h3><p>Rises when candidates spam, which is the problem SideDoor exists to fix.</p></div>
+      <div class="card"><h3>Swipes and matches</h3><p>Version 2's numbers. A match that never becomes a submission delivered nothing.</p></div>
+      <div class="card"><h3>Messages sent</h3><p>Rises when details are still being chased, which means the product failed.</p></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="stage" id="s-scope" data-t="Scope card" data-s="One moment, one guess">
+    <div class="st-head"><span class="st-n">2</span><div><p class="st-k">The bet</p><h2>One moment: a stranger asks for a referral, until they hear what happened</h2><p>The first scope listed five problems at once. The research picked one, and it wasn't the one the first design was built on.</p></div></div>
+    <div class="card">
+      <div class="kv">
+        <div class="k">The moment</div><div>A candidate asking an employee they don't know for a referral to one job, until the candidate hears what happened to it</div>
+        <div class="k">Who</div><div>Someone a few years into their career who found a job at a company where they know nobody. And the employee who gets the message and has to put them into the company's referral portal</div>
+        <div class="k">The guess</div><div>Employees drop strangers' requests because the request makes them do the candidate's work, not because they won't help a stranger. <span class="tag blue">Worked it out</span> for the cause, <span class="tag warn">Guessing</span> for "referred more often"</div>
+        <div class="k">The number</div><div>% of requests to strangers that the employee submits to their company's portal</div>
+        <div class="k">Guardrail</div><div>Employees who stop accepting referral requests must not rise</div>
+      </div>
+    </div>
+
+    <p class="sub">My mentor said: make it a LinkedIn feature. I kept it separate.</p>
+    <div class="grid g2">
+      <div class="card"><span class="tag ok">Why its own product</span>
+        <ul class="list" style="margin-top:10px">
+          <li><b>The work sits between two systems nobody owns.</b> It starts on LinkedIn and ends in the company's portal. LinkedIn can't see inside that portal either (n46, n57, n59, n60, n71)</li>
+          <li><b>The referrer gets value before anyone else joins,</b> from a link they send to strangers (n66)</li>
+          <li><b>Both people asked for a dedicated place</b> as candidates (n24, n45). Wishes are the weakest evidence</li>
+        </ul>
+        <div class="q"><p>"a link is sent to the candidate to fill out their own personal details, which would cut the referrer's effort by 50%"</p><span>Samarth, as a referrer · n66</span></div>
+      </div>
+      <div class="card"><span class="tag warn">The risk I kept</span>
+        <ul class="list" style="margin-top:10px">
+          <li>Both people ask and get asked on LinkedIn today (n04, n09, n29, n49, n68)</li>
+          <li>Referral communities die quiet: on Fishbowl a message might be seen "next week" (n28)</li>
+          <li>The cold start could fail: a referrer may not send a link, because sending it is already a yes</li>
+        </ul>
+        <p style="margin-top:10px">This answer is reasoning. It hasn't been tested.</p>
+      </div>
+    </div>
+
+    <p class="sub">Not in this project</p>
+    <div class="card"><ul class="list">
+      <li>The company's referral bonus: no product controls it (n62, n87)</li>
+      <li>Connecting to referral portals like Workday: no outside product has access (n46)</li>
+      <li>Interviews and HR decisions after the referral (n86, n88)</li>
+      <li>Candidates who take a referral and don't join (n89, n90)</li>
+      <li>Recruiters: no data from them</li>
+    </ul></div>
+  </section>
+
+  <!-- 3 -->
+  <section class="stage" id="s-research" data-t="Research" data-s="Two people, both sides">
+    <div class="st-head"><span class="st-n">3</span><div><p class="st-k">What was collected</p><h2>Two people, each interviewed twice: once asking, once being asked</h2><p>Both have asked strangers for referrals and both refer people at work, so each could speak for the other side too. Each interview asked about the last real time it happened.</p></div></div>
+    <div class="grid g2">
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:10px"><span class="av s" style="width:36px;height:36px;font-size:14px">S</span><div><h3 style="margin:0">Samarth</h3><p class="lab" style="margin:0">Specialist Programmer, Infosys</p></div></div>
+        <div class="kv" style="margin-top:14px"><div class="k">As a candidate</div><div>26 notes · n01 to n26</div><div class="k">As a referrer</div><div>20 notes · n48 to n67</div></div>
+      </div>
+      <div class="card">
+        <div style="display:flex;align-items:center;gap:10px"><span class="av r" style="width:36px;height:36px;font-size:14px">R</span><div><h3 style="margin:0">Riya</h3><p class="lab" style="margin:0">Refers at Accenture</p></div></div>
+        <div class="kv" style="margin-top:14px"><div class="k">As a candidate</div><div>21 notes · n27 to n47</div><div class="k">As a referrer</div><div>24 notes · n68 to n91</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <p class="lab">Sample and its bias, written before anyone asks</p>
+      <p style="font-size:16px;color:#23262B">Everyone in this sample is one of two tech employees who already refer people, mostly people they know, which means I will not hear from employees who ignore referral requests, from recruiters, from people outside tech, or from candidates who have never asked a stranger.</p>
+      <p style="margin-top:10px">Two people is thin. Where both say something it's a pattern of two. Where one says it, the page says so. Neither is flooded with requests (n61), so anything about referrer overload is a guess.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card"><p class="lab">Also collected</p><h3>Screenshots of 11 products</h3><p>LinkedIn, GetMeReferred, EasyRefer and Instahyre were read at full size (stage 9).</p></div>
+      <div class="card"><p class="lab">Kept off this page</p><h3>Desk research figures</h3><p>Referral hire rates and time to hire, with no source links kept. No market figure goes on the page until the sources are found.</p></div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="stage" id="s-notes" data-t="Atomic notes" data-s="91, nothing deleted">
+    <div class="st-head"><span class="st-n">4</span><div><p class="st-k">One observation per note, in their words</p><h2>91 notes, nothing deleted</h2><p>Filter by person or by side. The coloured edge shows which cluster a note ended up in (stage 5). Grey means out of scope, not a problem, or parked.</p></div></div>
+    <div class="wallbar">
+      <div class="seg" role="group" aria-label="Filter notes" id="segP">
+        <button type="button" data-f="all" aria-pressed="true">All</button>
+        <button type="button" data-f="S" aria-pressed="false">Samarth</button>
+        <button type="button" data-f="R" aria-pressed="false">Riya</button>
+        <button type="button" data-f="cand" aria-pressed="false">As candidates</button>
+        <button type="button" data-f="ref" aria-pressed="false">As referrers</button>
+      </div>
+      <span class="wallcount" id="wallcount"></span>
+      <button type="button" class="clearf" id="clearf">Show all notes</button>
+    </div>
+    <div class="wallwrap" id="wallwrap"><div class="wall" id="wall"></div></div>
+    <button type="button" class="more" id="more">Show all 91 notes</button>
+  </section>
+
+  <!-- 5 -->
+  <section class="stage" id="s-clusters" data-t="Clusters" data-s="Five pains, by side">
+    <div class="st-head"><span class="st-n">5</span><div><p class="st-k">Making sense of it</p><h2>Five clusters, each named from the side that feels it</h2><p>Sorted against the moment on the scope card: 74 notes in five clusters, 13 that describe something working, 3 out of scope, 1 parked. SideDoor has two kinds of user, so each label starts with its side.</p></div></div>
+    <div class="grid g2" id="clusters"></div>
+    <p class="sub">What was merged, and what got lost</p>
+    <div class="card"><ul class="list">
+      <li><b>Silence instead of a no</b> (n18) was going to be its own cluster. Merged into C3: not hearing no and not knowing the status are the same gap from two sides. The emotional cost of silence (n16) now sits in C1.</li>
+      <li><b>Proving fit</b> was merged into C2 first, then split back out as C5. Checking fit is the referrer's pain, but candidates want it too, before they ask. C5 is thin.</li>
+    </ul></div>
+  </section>
+
+  <!-- 6 -->
+  <section class="stage" id="s-jobs" data-t="Jobs to be done" data-s="Five become three">
+    <div class="st-head"><span class="st-n">6</span><div><p class="st-k">Jobs to be done</p><h2>Five jobs became three, because two pairs were one job seen twice</h2><p>C2 is what the referrer's effort is made of, and C4 is why it isn't worth it for a stranger. C1 and C5 are both about spending a few asks well. C3 happens after the ask, so it stays alone.</p></div></div>
+    <div class="merge mrow">
+      <div class="from"><div class="mfrom" style="--cc:var(--c1)"><b>C1</b> Messages to strangers aren't seen</div><div class="mfrom" style="--cc:var(--c5)"><b>C5</b> Can't tell fit before asking</div></div>
+      <div class="marw"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      <div class="mto"><p class="lab">J1 · Asking where it will be read</p><p>When I need a referral at a company where I know nobody, I want to ask someone who is willing, for a role I fit, so my request gets read and has a real chance.</p></div>
+    </div>
+    <div class="merge mrow">
+      <div class="from"><div class="mfrom" style="--cc:var(--c3)"><b>C3</b> Can't tell what happened</div></div>
+      <div class="marw"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      <div class="mto"><p class="lab">J2 · Knowing what happened</p><p>When I've asked someone to refer me, I want to know whether it went in and where it stands, so I can move on or follow up instead of guessing from silence.</p></div>
+    </div>
+    <div class="merge mrow">
+      <div class="from"><div class="mfrom" style="--cc:var(--c2)"><b>C2</b> Requests arrive missing what the portal needs</div><div class="mfrom" style="--cc:var(--c4)"><b>C4</b> Little reason to refer a stranger</div></div>
+      <div class="marw"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      <div class="mto"><p class="lab">J3 · Referring a stranger in minutes, not an evening</p><p>When someone I don't know asks me for a referral, I want everything I need already there, so helping takes minutes and is worth it even if they're never hired.</p></div>
+    </div>
+    <div class="card" style="margin-top:16px"><p class="lab">All three, in one line</p><p style="font-size:16px;color:#23262B">A referral depends on one busy employee's effort, and nothing makes that effort small or lets its result travel back.</p><p style="margin-top:8px">Lost in the merge: n89 and n90, referrers wasting effort on people who take a referral and never join. That's about who gets referred, and it stays visible as out of scope.</p></div>
+  </section>
+
+  <!-- 7 -->
+  <section class="stage" id="s-insights" data-t="Insight statements" data-s="One per job">
+    <div class="st-head"><span class="st-n">7</span><div><p class="st-k">Who struggles with what, because of what, which means what</p><h2>Three insight statements, one per job</h2><p>The segment and problem come from the notes. The root cause and what it means for design are my reading of them.</p></div></div>
+    <div class="grid" style="gap:16px">
+      <div class="card ins"><p class="lab">J1</p><p><span class="hl seg-">Candidates with nobody they know at the company</span> struggle with <span class="hl pr">getting a stranger to even read their request</span>, messaging two or three people on LinkedIn and hearing nothing, because <span class="hl rc">nothing shows which employees are open to referring or how well the candidate fits, so every ask arrives as the same cold message</span>, which means <span class="hl im">the ask has to go to someone who has already said they're willing, and carry the fit with it</span>.</p><p class="ids">n09 n13 n14 n15 n17 n30 · n04 n08 n20 n21 n24 n28 n37 n43 n49 n68 · n11 n22 n23 n29</p></div>
+      <div class="card ins"><p class="lab">J2</p><p><span class="hl seg-">Candidates who have asked for a referral</span> struggle with <span class="hl pr">not knowing whether it was ignored, declined, submitted or rejected</span>, waiting weeks and reading silence as a no, because <span class="hl rc">the status sits in the company's portal and the referrer's inbox, and nobody's job is to tell the candidate</span>, which means <span class="hl im">the status has to reach the candidate through the referrer, without the company sharing its data</span>.</p><p class="ids">n01 n18 n25 n33 n34 n35 n36 n41 n44 n45 n46 n84 n85</p></div>
+      <div class="card ins"><p class="lab">J3</p><p><span class="hl seg-">Referrers asked by people they don't know</span> struggle with <span class="hl pr">requests that cost them rounds of chasing job IDs, cities and dates of birth</span>, for a bonus that is low and only paid if the person is hired, because <span class="hl rc">the request arrives as a message and a resume while their portal needs structured fields, so the referrer ends up doing the candidate's data entry</span>, which means <span class="hl im">the candidate has to supply everything the portal asks for before the referrer is asked to do anything</span>.</p><p class="ids">n57 n59 n60 n66 n67 n70 n71 n73 n74 n75 n76 n77 n78 n79 · n31 n32 n42 n52 n62 n69 n87</p></div>
+    </div>
+    <div class="legend"><span><i style="background:#EDE9FE"></i>Who</span><span><i style="background:#FEE2E2"></i>The problem</span><span><i style="background:#FEF3C7"></i>Why it happens</span><span><i style="background:#D1FAE5"></i>What it means for design</span></div>
+  </section>
+
+  <!-- 8 -->
+  <section class="stage" id="s-problem" data-t="Problem statement" data-s="Chosen from three">
+    <div class="st-head"><span class="st-n">8</span><div><p class="st-k">Chosen from three drafts</p><h2>The request asks the referrer to do the candidate's work, and the answer never travels back</h2><p>Three drafts: one from the referrer's side, one from the candidate's, one holding both. I picked the one that holds both, and narrowed it.</p></div></div>
+    <div class="ps">
+      <div class="ps-top"><p class="lab">Problem statement</p><h3>An employee asked for a referral by someone they don't know has to do the candidate's work before they can say yes. So most don't, and the candidate never finds out.</h3></div>
+      <div class="ps-body">
+        <p>The request arrives as a LinkedIn message and a resume. The company's portal needs the job ID, the city, the date of birth, career gaps and preferred interview locations, none of which are in the resume. So the referrer either chases the candidate for them or drops the request.</p>
+        <p>Meanwhile the status of a submitted referral already exists, in the referrer's portal and emails. It never reaches the candidate, who reads silence as a no.</p>
+        <div class="q"><p>"they don't share the job ID, which irritates me a lot... I will not take the pain and go and check for it"</p><span>Riya, as a referrer · n76</span></div>
+        <div class="q"><p>"whoever did not reply, they did not refer me"</p><span>Riya, as a candidate · n35</span></div>
+      </div>
+      <div class="ps-foot">
+        <div><p class="lab">What happens today</p><span class="tag ok">Saw it</span><p style="margin-top:6px">All four interviews</p></div>
+        <div><p class="lab">That the work is why strangers get dropped</p><span class="tag blue">Worked it out</span><p style="margin-top:6px">Both as referrers, and Riya's rule (n76, n77)</p></div>
+        <div><p class="lab">That a complete request gets referred more</p><span class="tag warn">Guessing</span><p style="margin-top:6px">Nobody was shown one</p></div>
+      </div>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card rej"><span class="tag">Draft A · referrer side</span><h3 style="margin-top:10px">Referring a stranger costs the referrer admin work nobody pays them for, so they don't do it.</h3><p>Lost: it ignores the candidate who never learns what happened, and that's in both candidate interviews.</p></div>
+      <div class="card rej"><span class="tag">Draft B · candidate side</span><h3 style="margin-top:10px">A candidate with nobody at the company has no way to reach a referrer who will read the request, and no way to learn what happened.</h3><p>Lost: it describes what the candidate suffers, not why. Designing for it alone gives the referrer no reason to take part.</p></div>
+    </div>
+    <p class="sub">Walking it back to a note, out loud</p>
+    <div class="card">
+      <div class="walk"><span class="w">Problem statement</span><span class="a">→</span><span class="w">C2 · referrer drops incomplete requests</span><span class="a">→</span><span class="w">a · no job ID, no referral</span><span class="a">→</span><span class="w"><b>n76</b> "I will not take the pain"</span></div>
+      <div class="walk" style="margin-top:10px"><span class="w">Problem statement</span><span class="a">→</span><span class="w">C3 · can't tell what happened</span><span class="a">→</span><span class="w"><b>n35</b> "they did not refer me"</span></div>
+    </div>
+    <p class="sub">What the research killed in the first design</p>
+    <div class="grid g2">
+      <div class="card"><span class="tag bad">Killed</span><h3 style="margin-top:10px">Referrers fear for their reputation</h3><div class="q"><p>"that responsibility should not fall on the referrer"</p><span>Samarth, as a referrer · n55</span></div></div>
+      <div class="card"><span class="tag bad">Killed</span><h3 style="margin-top:10px">Referrers need help deciding</h3><p>Both already have simple rules: a 50 to 70% skill match (n50), or whether the job ID was shared (n76, n81). Their pain is the admin.</p></div>
+      <div class="card"><span class="tag bad">Killed</span><h3 style="margin-top:10px">Referrers are flooded</h3><p>Samarth doesn't get many requests (n61). So request limits can't be justified by spam, only by the guardrail.</p></div>
+      <div class="card"><span class="tag bad">Killed</span><h3 style="margin-top:10px">Trust between strangers is the gap</h3><p>The notes show work and silence. Nobody named trust as the reason they didn't refer.</p></div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="stage" id="s-landscape" data-t="Landscape" data-s="What nobody does">
+    <div class="st-head"><span class="st-n">9</span><div><p class="st-k">Four products, plus no product at all</p><h2>Everyone sends a message and a resume. Nobody sends what the portal needs.</h2><p>Read from my own screenshots at full size. The products may have changed since.</p></div></div>
+    <div class="tscroll"><table class="tbl">
+      <tr><th></th><th>How you ask</th><th>What limits asking</th><th>What the referrer gets</th><th>Who reports status</th></tr>
+      <tr><td>LinkedIn</td><td>A blank message</td><td>Connecting first</td><td>Nothing on screen</td><td>The candidate ("Did you hear back?")</td></tr>
+      <tr><td>GetMeReferred</td><td>Free-text "Referral Message", resume</td><td>Credits bought with money</td><td>Credits for accepting</td><td>Nobody, for referrals</td></tr>
+      <tr><td>EasyRefer</td><td>Form, message, sometimes 50-word answers</td><td>Nothing seen</td><td>Nothing on screen</td><td>The platform, for its own applications</td></tr>
+      <tr><td>Instahyre</td><td>No referral step visible</td><td>A visible penalty for backing out</td><td>No referrer</td><td>The platform, for applications</td></tr>
+      <tr><td>No product</td><td>WhatsApp or LinkedIn, job link, resume</td><td>Nothing</td><td>A bonus, sometimes</td><td>The referrer's portal, only they see it</td></tr>
+      <tr class="me"><td>SideDoor</td><td>A complete request, portal fields included</td><td>A weekly limit, not money</td><td>Fit shown, fields ready to copy</td><td>The referrer, in one tap</td></tr>
+    </table></div>
+    <p class="sub">What nobody does, and why not</p>
+    <div class="grid g2">
+      <div class="card"><h3>Collect the portal's fields before the ask</h3><p>Every portal asks something different. The two portals in the notes overlap a lot but not fully, so a request can carry the common fields plus a short company-specific part. <span class="tag blue">Worked it out</span></p></div>
+      <div class="card"><h3>Show the candidate what happened</h3><p>No outside product can read the company's system (n46). But the referrer already sees it (n58, n83), so they pass it on, if that costs a single tap.</p></div>
+      <div class="card"><h3>Show fit to the referrer</h3><p>Fit scores are sold to candidates. Samarth checks fit by hand (n50) and asked for exactly this (n65). The real opening.</p></div>
+      <div class="card"><h3>Keep asking free and still limit volume</h3><p>GetMeReferred controls volume with price. SideDoor uses a weekly limit and complete-request rules instead.</p></div>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div class="card"><span class="tag bad">Do not inherit</span><ul class="list" style="margin-top:10px"><li>A free-text request box: more writing, still no job ID</li><li>Paying per referrer: sells the scarce side</li><li>Swipe, or Interested / Not interested: one gesture pushes volume</li><li>Stats on the page with no source</li></ul></div>
+      <div class="card"><span class="tag ok">Worth taking</span><ul class="list" style="margin-top:10px"><li>"People you can reach out to": the warm path first, as Samarth does (n03, n04)</li><li>"Did you hear back?": status without the company's data</li><li>"Review time is typically 1 week": sets the wait before it turns into silence</li></ul></div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="stage" id="s-ai" data-t="Where AI belongs" data-s="Two jobs, never more">
+    <div class="st-head"><span class="st-n">10</span><div><p class="st-k">What a model should do here, and what it shouldn't</p><h2>The model does two jobs: reading documents into fields, and ordering requests by fit</h2><p>Everything else is plain product. Nothing moves without a person.</p></div></div>
+    <div class="tscroll"><table class="tbl">
+      <tr><th>What a model can do</th><th>In SideDoor</th><th>Verdict</th></tr>
+      <tr><td>Pull out</td><td>Resume into the fields a portal needs; job description into job ID, city, skills</td><td><span class="tag ok">Yes, the most</span> Samarth types skills into the portal by hand (n60)</td></tr>
+      <tr><td>Sort</td><td>Order a referrer's requests by fit, with the reasons shown</td><td><span class="tag ok">Yes</span> Samarth checks fit by rule (n50) and asked for this (n65)</td></tr>
+      <tr><td>Suggest</td><td>One question per skill for the referrer to ask, from the job description</td><td><span class="tag ok">Yes, tap to use</span> The referrer can write their own</td></tr>
+      <tr><td>Generate</td><td>Write the candidate's message</td><td><span class="tag bad">Harmful</span> Riya acts on the job ID, not the prose (n76)</td></tr>
+      <tr><td>Predict</td><td>"Your chances are high"</td><td><span class="tag">Nothing yet</span> A concept has no outcomes to learn from</td></tr>
+      <tr><td>Act</td><td>Auto-send requests, auto-decline low fits</td><td><span class="tag bad">Harmful</span> Volume, and a decline in the referrer's name they didn't make. Samarth refers borderline people on purpose (n53)</td></tr>
+    </table></div>
+    <p class="sub">How much it does on its own, for the fit order</p>
+    <div class="grid g2">
+      <div class="card"><span class="tag bad">Rejected</span><h3 style="margin-top:10px">Show only matched candidates</h3><p>A hidden request is silence for the candidate, which is C3 again.</p></div>
+      <div class="card"><span class="tag ok">Chosen</span><h3 style="margin-top:10px">Best fit first, lower matches folded and still referable</h3><p>The referrer decides every one. No single score: a count they can check, like "4 of 7 skills", each skill with where it was found.</p></div>
+    </div>
+    <p class="sub">When it's wrong, the words on screen</p>
+    <div class="grid g3">
+      <div class="card"><span class="tag">Not sure</span><p style="margin-top:8px">"Not enough in their resume to judge fit for this job. Read it before you decide."</p></div>
+      <div class="card"><span class="tag">A rule</span><p style="margin-top:8px">"Add the job ID first. It's the first thing a referrer needs."</p></div>
+      <div class="card"><span class="tag">A fault</span><p style="margin-top:8px">"We couldn't read this file. Try a PDF with text you can select, or fill in the details yourself."</p></div>
+    </div>
+    <div class="card" style="margin-top:16px"><p class="lab">The riskiest assumption</p><p>That a resume and a job description hold enough to judge fit the way Samarth does. If most requests land in "Not enough to judge", the ordering helps no one. The cheapest test: five real resumes for one of his roles, with and without the breakdown.</p></div>
+  </section>
+
+  <!-- 11 -->
+  <section class="stage" id="s-brief" data-t="Design brief" data-s="The one page">
+    <div class="st-head"><span class="st-n">11</span><div><p class="st-k">The one-page brief</p><h2>How might we let a stranger's request be acted on in minutes, and the answer travel back for free?</h2></div></div>
+    <div class="card"><div class="kv">
+      <div class="k">Domain and user</div><div>Job referrals in Indian tech hiring. A candidate asking an employee they don't know for a referral to one job, and the employee being asked</div>
+      <div class="k">Job to be done</div><div>When someone I don't know asks me for a referral, I want everything my company's portal needs already there, so referring takes minutes and they find out what happened without me doing more</div>
+      <div class="k">Problem statement</div><div>How might we let a candidate send a referral request a stranger can act on in minutes, and let the answer reach the candidate without asking the referrer for more work?</div>
+      <div class="k">Success metric</div><div>% of requests to strangers the referrer submits. Guardrail: referrers turning off requests must not rise. North Star: referrals submitted per active referrer per month</div>
+    </div></div>
+    <p class="sub">The main path</p>
+    <ol class="steps">
+      <li>A candidate finds a job where someone refers, with their match shown before asking</li>
+      <li>Checks the request. The portal's missing fields are asked once, and Send stays off until it's complete</li>
+      <li>The referrer sees requests ordered by fit, weaker ones folded but still there</li>
+      <li>Opens one: what could stop it first, then each skill with where it was found</li>
+      <li>Taps Refer. Every portal field is ready to copy, or emailed to their work inbox</li>
+      <li>Marks it submitted while the portal is still open</li>
+      <li>The candidate sees Submitted, and what usually comes next</li>
+    </ol>
+  </section>
+
+  <!-- 12 -->
+  <section class="stage" id="s-chain" data-t="The chain and the loops" data-s="Design to North Star">
+    <div class="st-head"><span class="st-n">12</span><div><p class="st-k">Own the input, understand the output, trace the chain</p><h2>Each design decision, traced to the number it should move</h2><p>An input that rises without moving the North Star is noise. More complete requests only matter if referrers submit more of them.</p></div></div>
+    <div class="chain-h"><span>Design decision</span><span></span><span>Input metric, owned</span><span></span><span>Output metric, influenced</span><span></span><span>North Star</span></div>
+    <div class="chains" id="chains"></div>
+    <div class="card" style="margin-top:16px;border-left:3px solid var(--warn)"><p class="lab">Guardrail</p><p><b>Referrers who turn off requests or leave must not rise.</b> A product that makes asking easier can flood the people it depends on. Watched with a second number: requests left unanswered after 7 days must not rise.</p></div>
+    <p class="sub">Which loop each feature belongs to</p>
+    <div class="loops" id="loops"></div>
+  </section>
+
+  <!-- 13 -->
+  <section class="stage" id="s-versions" data-t="Five versions" data-s="V2 to V6">
+    <div class="st-head"><span class="st-n">13</span><div><p class="st-k">Each version kept untouched in Figma</p><h2>From a swipe app to a request that arrives ready</h2><p>Scroll sideways. Each card is one version: what changed, and what I learned.</p></div></div>
+    <div class="rail" id="rail"></div>
+    <p class="railhint">V2 shows its own screen. V3 to V6 show today's screen where that version's change still lives.</p>
+  </section>
+
+  <!-- 14 -->
+  <section class="stage" id="s-attack" data-t="Attacking it" data-s="What broke">
+    <div class="st-head"><span class="st-n">14</span><div><p class="st-k">Stress and craft passes</p><h2>I predicted 1 break out of 13. The rest broke anyway.</h2><p>Empty lists, long names, wrong input and slow networks, thrown at the screens with the expected result written down first.</p></div></div>
+    <div class="stats">
+      <div class="stat"><b>1 of 13</b><span>breaks I predicted on the first two screens</span></div>
+      <div class="stat"><b>2</b><span>blockers across the app, both on the work-email check</span></div>
+      <div class="stat"><b>18</b><span>major breaks across the whole app</span></div>
+      <div class="stat"><b>65</b><span>states you can open in the prototype</span></div>
+    </div>
+    <div class="tscroll" style="margin-top:16px"><table class="tbl">
+      <tr><th>What I threw</th><th>What should happen</th><th>What happened</th><th>How bad</th></tr>
+      <tr><td>A skill 60 characters long</td><td>It wraps. It's the evidence</td><td>Cut to "Human-centred service design ar"</td><td><span class="tag bad">Major</span></td></tr>
+      <tr><td>Date of birth 31/02/1999</td><td>An error under the field, Send stays off</td><td>No field error, so a wrong date reaches the portal</td><td><span class="tag bad">Major</span></td></tr>
+      <tr><td>Refer tapped by mistake</td><td>A few seconds to undo</td><td>Status flips, and the candidate is told something false</td><td><span class="tag bad">Major</span></td></tr>
+      <tr><td>Send tapped twice on a slow network</td><td>"Sending…", and the button turns off</td><td>No in-flight state</td><td><span class="tag bad">Major</span></td></tr>
+      <tr><td>A 300-character note</td><td>It wraps, the card grows</td><td>It wraps, the card grows</td><td><span class="tag ok">Passes</span></td></tr>
+    </table></div>
+    <p style="margin-top:10px;font-size:13.5px;color:var(--muted)">All four majors above were fixed: wrapping, a field error, a 5-second Undo, and a Sending state. On the last pass, three quick taps on Send took requests left from 2 to 0. That's fixed too.</p>
+    <p class="sub">Craft, in numbers</p>
+    <div class="grid g2">
+      <div class="card"><span class="tag ok">Fixed</span><h3 style="margin-top:10px">44 × 44 tap areas</h3><p>Back, bell, edit pencil and link icons were 18 to 24 pt. Each now has a 44 pt hit area.</p></div>
+      <div class="card"><span class="tag ok">Removed</span><h3 style="margin-top:10px">White on brand green, 2.54 : 1</h3><p>The "4 of 7" banner failed the 4.5 : 1 text needs. After seven rounds the banner was deleted, and the evidence moved up by its height.</p></div>
+    </div>
+  </section>
+
+  <!-- 15 -->
+  <section class="stage" id="s-next" data-t="What would prove me wrong" data-s="Kill conditions and tests">
+    <div class="st-head"><span class="st-n">15</span><div><p class="st-k">Written before the test, never changed after</p><h2>What would prove me wrong</h2><p>Nobody has used SideDoor yet. The next real test: 8 referrers in tech who got a stranger's request in the last month, each using their link for two weeks.</p></div></div>
+    <div class="grid g2">
+      <div class="card kill"><span class="tag bad">Dead if</span><p class="num">Fewer than 1 in 5</p><p>complete requests from strangers get submitted to the company portal. Today's cold message gets about 1 reply in 5: "80% of the time they don't reply" (Riya, n30). A complete request has to beat that.</p></div>
+      <div class="card kill"><span class="tag bad">Dead if</span><p class="num">Fewer than 3 of 8</p><p>referrers send their link to anyone in the two weeks. Then referrers won't start the loop alone, and the cold-start bet is dead.</p></div>
+    </div>
+    <p class="sub">First, a usability test</p>
+    <div class="card"><p>Samarth and Riya, one session each, ten tasks: five as a candidate, then five as a referrer. It can show whether two people can finish the main flows and where they get stuck. It can't show whether referrers will submit more. That needs the test above.</p></div>
+    <p class="sub">Open questions a real test would answer</p>
+    <div class="grid g2">
+      <div class="card"><p>How much of a real portal form do the common fields cover?</p></div>
+      <div class="card"><p>Will a referrer pass on the status if it's one tap?</p></div>
+      <div class="card"><p>Does showing fit to the referrer raise how many they submit, or only how fast they decline?</p></div>
+      <div class="card"><p>Are invited candidates referred as often as those who ask on their own?</p></div>
+    </div>
+  </section>
+
+  </main>
+
+  <footer class="foot"><span>SideDoor · Devansh Somvanshi · a concept, not a shipped product</span><span><a href="/work/sidedoor">Back to the case study</a> · <a href="/work/sidedoor/prototype">Open the prototype</a></span></footer>
+</div>
+
+<script>
+// ── Notes: [id, person S/R, side c/r, text, cluster] ──
+var NOTES = [
+["n01","S","c","Their last attempt failed: a Citibank contact reached through mutuals said they would refer them, and didn't. They never learnt why: \"they could not refer me for whatever reason\"","C3"],
+["n02","S","c","Their last success was Adobe: they asked a friend and \"got a confirmation mail that it was referred properly\"","ok"],
+["n03","S","c","\"The first instinct is to look within your circle if you have mutual connections or anyone from your friend circle in that organization. That works out very well.\"","ok"],
+["n04","S","c","Only if that fails: \"searching on LinkedIn using the company filter to look for any mutual connections or employees of that company\"","C1"],
+["n05","S","c","Messaged known contacts on WhatsApp, not LinkedIn: \"Reaching out via a personalized messaging app feels a bit more connected.\"","ok"],
+["n06","S","c","No pitch to people they knew: \"I just forwarded my resume and the contact details they needed to fill in the referral form.\"","ok"],
+["n07","S","c","Always sends the job link: finds the job on LinkedIn, follows it to the company's own portal, and copies that link","C2"],
+["n08","S","c","Knowing \"who is in which company\" from friend circles helps them pick who to ask","C1"],
+["n09","S","c","For Razorpay, they messaged 2 or 3 strangers on LinkedIn with a formal message and resume. Nobody replied: \"My message was not even read.\"","C1"],
+["n10","S","c","Asking a stranger feels \"weird\": \"you don't know how it will be received\"","C1"],
+["n11","S","c","A good request \"should originate from matching skill sets\"","C5"],
+["n12","S","c","Believes some referrers refer \"10-20 profiles blindly\" for the bonus. Their belief, not something they saw","C4"],
+["n13","S","c","Reached out to about 15 to 20 people in total. Heard back from 5. Of those, \"2 or 3 were from my own circle\"","C1"],
+["n14","S","c","People they knew submitted it and they got confirmation emails. Strangers \"either ghosted\"","C1"],
+["n15","S","c","Hardest part: \"Getting noticed. Most of the time, when approaching strangers, the request is not even seen or heard.\"","C1"],
+["n16","S","c","Being ghosted \"felt like a strong rejection\". It made them think they \"should have tried harder to find mutual connections instead\"","C1"],
+["n17","S","c","They may have followed up, \"but the reply rate remained the same\"","C1"],
+["n18","S","c","Most frustrating: silence. \"if someone isn't able to refer you or doesn't want to, there should be clear communication so the candidate can move on\"","C3"],
+["n19","S","c","Has never bulk-messaged: \"At max, I reach out to two or three people at a time.\"","C1"],
+["n20","S","c","Prefers people they know \"because the failure rate with strangers is very high\"","C1"],
+["n21","S","c","Judges whether a stranger might help by their LinkedIn activity: comments, endorsements, recommendations","C1"],
+["n22","S","c","In their pitch: \"my passion and enjoyment for the work I do, and the sense of ownership I take in my projects\"","C5"],
+["n23","S","c","Suggested a match percentage from their resume and the job description to share with the referrer: \"It would give both of us confidence\"","C5"],
+["n24","S","c","Suggested a place \"where you know the other person is open to doing it\"","C1"],
+["n25","S","c","Wants to know \"if my profile was shortlisted, rejected, or if the referral was even successfully made\"","C3"],
+["n26","S","c","Would like updates by email: \"a much more professional approach for job-related updates\"","C3"],
+["n27","R","c","Asks friends directly, cold-messages on LinkedIn, and sometimes uses Fishbowl","C1"],
+["n28","R","c","Fishbowl is quiet: \"if you text me today that I'm looking for a job, I may see that message next week\"","C1"],
+["n29","R","c","Finds a job on the career page, checks it matches their resume, searches LinkedIn for people at that company, cold-messages them, then asks","C5"],
+["n30","R","c","\"You can say 80% of the time they don't reply.\"","C1"],
+["n31","R","c","Hardest part is getting a reply: \"nobody would want to spend their energy and time on someone they don't know\"","C4"],
+["n32","R","c","\"Out of 5 people only maybe 1 person will get finally placed for which you will get incentive or reward. But other 4 times why would you want to spend your energy.\"","C4"],
+["n33","R","c","Often hears nothing until \"after two or three weeks that this was not successful\"","C3"],
+["n34","R","c","\"I would never know what actually happened. If they ever applied in reality or not I'm not sure. Because there is no way to track it.\"","C3"],
+["n35","R","c","Assumes silence means no referral: \"whoever did not reply, they did not refer me\"","C3"],
+["n36","R","c","\"I am completely dependent on the person.\"","C3"],
+["n37","R","c","\"If somebody is not even replying to your first message, then why would they take all this pain going forward.\"","C1"],
+["n38","R","c","Sends a one or two line introduction, the job ID and their updated resume","C2"],
+["n39","R","c","Asks for referrals because HRs won't view a resume \"for even more than 10 seconds\"","out"],
+["n40","R","c","\"I don't have the time to build a connection with everyone. So I just cold message everyone whoever I think will be suitable\"","C1"],
+["n41","R","c","Wants a way to \"see if my application has been submitted in the company's portal\"","C3"],
+["n42","R","c","As a referrer: \"if I'm doing a favor for somebody, if I get something in return I'll do it quite often\". Referring people who don't get placed is \"a mental toll\"","C4"],
+["n43","R","c","On Fishbowl, openings are posted as screenshots: \"you don't even know how old it is\"","C1"],
+["n44","R","c","Keeps track of many requests by checking each chat one by one. No single place","C3"],
+["n45","R","c","Their ideal: one place like Naukri's applied list, where \"I can just see in this company, I asked this person referral for\"","C3"],
+["n46","R","c","Doubts an outside app can show company status: \"this is organization level data and I'm not sure if companies would be ready to share that\"","C3"],
+["n47","R","c","At their own company, a referrer gets Workday emails at each stage and can check the portal","ok"],
+["n48","S","r","Has referred about 10 people: about 8 they knew and 2 strangers","C4"],
+["n49","S","r","People they know ask on WhatsApp. Strangers ask on LinkedIn","C1"],
+["n50","S","r","Same rules for both: \"at least a 50% to 70% skill match\". Matching experience \"is non-negotiable\"","C2"],
+["n51","S","r","The portal asks for experience, so a mismatch \"will just get rejected\"","C2"],
+["n52","S","r","\"I am a little bit more lenient with known people and sometimes go by the luck factor\"","C4"],
+["n53","S","r","Might refer a borderline match \"to see if it works out\"","C2"],
+["n54","S","r","Doesn't ghost: \"if their profile does not match the requirements, I openly give them feedback\"","ok"],
+["n55","S","r","\"if someone turns out to be a bad hire after going through the interview rounds, that responsibility should not fall on the referrer\"","ok"],
+["n56","S","r","Their steps: scan the LinkedIn profile and resume, and if they match, submit on the company portal","C2"],
+["n57","S","r","Fills in resume, contact details, total experience and career gaps. \"I think the process could be simplified further.\"","C2"],
+["n58","S","r","The hiring team contacts the candidate. They can check the status on the referral portal","ok"],
+["n59","S","r","\"a lot of back-and-forth because candidates often fail to provide necessary information like their date of birth, career gaps, and their last employer\"","C2"],
+["n60","S","r","\"having to constantly ask candidates for additional details, as many assume that just sending a resume and phone number is enough\"","C2"],
+["n61","S","r","Does not get too many requests","ok"],
+["n62","S","r","Bonus matters \"but they are not my primary objective\". It needs the hire to stay a year","C4"],
+["n63","S","r","\"The way a candidate first approaches me says a lot about them\"","C2"],
+["n64","S","r","Would refer a complete stranger who meets the criteria and shows integrity","ok"],
+["n65","S","r","Suggested \"an automated matching score or feedback on whether a candidate matches a job profile\"","C2"],
+["n66","S","r","Suggested \"a link is sent to the candidate to fill out their own personal details, which would cut the referrer's effort by 50%\"","C2"],
+["n67","S","r","Candidates rarely give their three preferred interview locations, \"forcing me to ask them manually\"","C2"],
+["n68","R","r","Gets \"a lot of cold messages on LinkedIn\" as well as requests from friends and ex-colleagues","C1"],
+["n69","R","r","\"I do not always respond to the LinkedIn messaging because I don't even know them. For friends, for known people, I always take that pain\"","C4"],
+["n70","R","r","First asks for the job ID: \"it is not practically possible for me to find the job ID\"","C2"],
+["n71","R","r","Submits on Workday and needs the candidate on a call, \"because there are a lot of details that won't be there in the resume\"","C2"],
+["n72","R","r","After they submit, they and the candidate both get automated emails","ok"],
+["n73","R","r","The detail most often missing is the city: people \"not always pay attention to the city of the job role\"","C2"],
+["n74","R","r","Someone referred in the last six months can't apply again, and \"we do not remember\" when they can","C2"],
+["n75","R","r","Also needs country code, an alternate email and any cover letter, which resumes usually lack","C2"],
+["n76","R","r","\"they don't share the job ID, which irritates me a lot... I will not take the pain and go and check for it\"","C2"],
+["n77","R","r","When the job ID is shared: \"I feel a little obligated to refer them into that position because they have taken some pain\"","C2"],
+["n78","R","r","A keyword search shows 15 to 20 openings in Bangalore alone, so they need the exact job ID","C2"],
+["n79","R","r","Doesn't reply to people who only say they're looking in an area. Mostly replies to those who share the job ID","C2"],
+["n80","R","r","Almost every job on the portal is open for referral","ok"],
+["n81","R","r","No solid criteria beyond the job ID and an easy request (agreed with the interviewer's summary)","C2"],
+["n82","R","r","People ask without checking the city or the job description, and \"it just kills both of our time\"","C2"],
+["n83","R","r","Tracks status through links in the automated emails","ok"],
+["n84","R","r","The portal shows three or four stages: submitted, round one, round two, pending with HR","C3"],
+["n85","R","r","For the candidate there is no timeline: \"It can take as much time as it wants. Yes. The candidate has to wait.\"","C3"],
+["n86","R","r","If HR isn't interested, \"even if the interview is cleared, they would still not get anything\"","out"],
+["n87","R","r","The referral bonus is \"very low. It doesn't encourage me to refer.\"","C4"],
+["n88","R","r","A bad referral: the candidate said something on the HR call that got it cancelled","out"],
+["n89","R","r","\"Many people seek referrals, but they take another referral, they go to another higher-paying company.\"","C4"],
+["n90","R","r","Suggested a way to rate candidates on referrals taken versus times they joined","C4"],
+["n91","R","r","Wants \"a good UX\": refer, track status, see messages and check submissions from the first page","park"]
+];
+var CL = {
+  C1:{c:"var(--c1)",side:"Candidate",t:"Their message to a stranger isn't even seen, so the only route that works is people they already know",
+      ten:"The route that works, friends and mutuals, runs out. The route left over, strangers, almost never answers.",
+      so:"A candidate with nobody at the company has no dependable way in. Being a strong candidate doesn't help.",
+      j:"When I don't know anyone at the company, I want my request to reach someone who is willing to look at it, so I'm not sending messages nobody reads."},
+  C2:{c:"var(--c2)",side:"Referrer",t:"They drop or chase a request that doesn't carry what they need to decide and submit",
+      ten:"A referrer helps when the ask costs them little, and most asks arrive missing the job ID, the portal's fields, or any sign of fit.",
+      so:"The referrer's real cost is admin, not judgement. Every missing field is another round of chasing, so good candidates get dropped too.",
+      j:"When someone asks me for a referral, I want everything I need to decide and submit in one go, so referring takes minutes, not days of back-and-forth."},
+  C3:{c:"var(--c3)",side:"Candidate",t:"They can't tell whether their request was ignored, declined, submitted or rejected",
+      ten:"The status already exists inside the company's portal, but only the referrer can see it, and nobody says no.",
+      so:"They can't move on from a no nobody tells them, so they stay stuck on dead requests.",
+      j:"When I've asked someone to refer me, I want to know whether it went in and where it stands, so I can move on or follow up instead of guessing from silence."},
+  C4:{c:"var(--c4)",side:"Referrer",t:"They have little reason to refer someone they don't know",
+      ten:"The effort is certain. The reward is small, late, and only if the person is hired and stays.",
+      so:"For a stranger, the referrer does real work for a reward that rarely arrives, so strangers lose by default.",
+      j:"When a stranger asks me for a referral, I want helping to cost me little enough that it's worth it even if they're never hired."},
+  C5:{c:"var(--c5)",side:"Candidate",thin:1,t:"They can't tell how strong a fit they are before they spend a request",
+      ten:"They judge fit by eye, and have nothing to show the referrer except the resume.",
+      so:"A good fit and a long shot arrive looking the same.",
+      j:"When I find a role I want a referral for, I want to know how well I fit before I ask, so I spend my asks where I have a real chance."}
+};
+var ESC = function(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;")};
+var wall = document.getElementById("wall"), count = document.getElementById("wallcount"), clearf = document.getElementById("clearf");
+wall.innerHTML = NOTES.map(function(n){
+  var c = CL[n[4]] ? CL[n[4]].c : "#C9CBD0";
+  var who = n[1]==="S" ? "Samarth" : "Riya", side = n[2]==="c" ? "as a candidate" : "as a referrer";
+  return '<article class="note" style="--nc:'+c+'" data-p="'+n[1]+'" data-s="'+n[2]+'" data-c="'+n[4]+'"><p>'+ESC(n[3])+'</p><div class="nm"><span class="av '+n[1].toLowerCase()+'">'+n[1]+'</span>'+who+', '+side+'<span class="nid">'+n[0]+'</span></div></article>';
+}).join("");
+var fP = "all", fC = null, open = false, more = document.getElementById("more");
+more.addEventListener("click", function(){ open = true; applyNotes(); });
+function applyNotes(){
+  var shown = 0;
+  wall.querySelectorAll(".note").forEach(function(el){
+    var ok = (fP==="all" || (fP==="S"&&el.dataset.p==="S") || (fP==="R"&&el.dataset.p==="R") || (fP==="cand"&&el.dataset.s==="c") || (fP==="ref"&&el.dataset.s==="r")) && (!fC || el.dataset.c===fC);
+    el.hidden = !ok; if (ok) shown++;
+  });
+  count.textContent = shown + (fC ? " notes in " + fC : " notes");
+  clearf.classList.toggle("on", !!fC || fP!=="all");
+  var clip = !open && fP === "all" && !fC;
+  document.getElementById("wallwrap").classList.toggle("clip", clip); more.classList.toggle("on", clip); more.textContent = "Show all " + shown + " notes";
+}
+document.querySelectorAll("#segP button").forEach(function(b){
+  b.addEventListener("click", function(){
+    fP = b.dataset.f;
+    document.querySelectorAll("#segP button").forEach(function(x){ x.setAttribute("aria-pressed", x===b ? "true" : "false"); });
+    applyNotes();
+  });
+});
+clearf.addEventListener("click", function(){ fP="all"; fC=null; document.querySelectorAll("#segP button").forEach(function(x){ x.setAttribute("aria-pressed", x.dataset.f==="all"?"true":"false"); }); applyNotes(); });
+applyNotes();
+
+// ── Clusters ──
+var byC = {}; NOTES.forEach(function(n){ (byC[n[4]] = byC[n[4]] || []).push(n[0]); });
+document.getElementById("clusters").innerHTML = Object.keys(CL).map(function(k){
+  var c = CL[k], ids = byC[k] || [];
+  return '<div class="card cl" style="--cc:'+c.c+'"><div class="top"><span class="cid">'+k+'</span><span class="tag">'+c.side+'</span><span class="tag blue">'+ids.length+' notes</span>'+(c.thin?'<span class="tag warn">Thin</span>':'')+'</div>'+
+    '<h3>'+c.t+'</h3>'+
+    '<div class="row"><p class="lab">The tension</p><p>'+c.ten+'</p></div>'+
+    '<div class="row"><p class="lab">So what</p><p>'+c.so+'</p></div>'+
+    '<div class="jtbd"><p class="lab">Job to be done</p>'+c.j+'</div>'+
+    '<button type="button" class="shown" data-k="'+k+'">Show its '+ids.length+' notes <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></button></div>';
+}).join("");
+document.querySelectorAll(".shown").forEach(function(b){
+  b.addEventListener("click", function(){ fC = b.dataset.k; fP = "all"; document.querySelectorAll("#segP button").forEach(function(x){ x.setAttribute("aria-pressed", x.dataset.f==="all"?"true":"false"); }); applyNotes(); document.getElementById("s-notes").scrollIntoView({behavior:"smooth"}); });
+});
+
+// ── Chain ──
+var ARW = '<div class="carw"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>';
+var CHAINS = [
+  ["A request can't be sent without the job ID and the portal's fields, filled from the profile","% of requests arriving complete","Request-to-referral rate, time to submission"],
+  ["Requests ordered by fit, each skill with where it was found","% of shown requests a referrer opens","Request-to-referral rate"],
+  ["The status reaches the candidate in one tap, as the last step of Refer","% of requests closed with an answer","Referrer retention; candidates re-asking"],
+  ["A link referrers send to strangers who message them","% of link visitors who send a complete request","New candidates arriving already complete"]
+];
+document.getElementById("chains").innerHTML = CHAINS.map(function(c,i){
+  return '<div class="cn" style="grid-row:'+(i+1)+'"><p class="lab">Design decision</p>'+c[0]+'</div>'+ARW.replace('carw"','carw" style="grid-row:'+(i+1)+'"')+'<div class="cn" style="grid-row:'+(i+1)+'"><p class="lab">Input, owned</p><b>'+c[1]+'</b></div>'+ARW.replace('carw"','carw" style="grid-row:'+(i+1)+'"')+'<div class="cn" style="grid-row:'+(i+1)+'"><p class="lab">Output, influenced</p>'+c[2]+'</div>'+ARW.replace('carw"','carw last" style="grid-row:'+(i+1)+'"');
+}).join("") + '<div class="cn ns"><p class="lab">North Star</p><b>Referrals submitted per active referrer per month</b></div>';
+
+// ── Loops, each drawn as a cycle ──
+function loopSvg(nodes, hi){
+  var cx=210, cy=92, rx=136, ry=62, n=nodes.length, out='';
+  var pts = nodes.map(function(_,i){ var a = -Math.PI/2 + i*2*Math.PI/n; return [cx+rx*Math.cos(a), cy+ry*Math.sin(a)]; });
+  out += '<ellipse cx="'+cx+'" cy="'+cy+'" rx="'+rx+'" ry="'+ry+'" fill="none" stroke="#C9D7F8" stroke-width="2" stroke-dasharray="4 5"/>';
+  pts.forEach(function(p,i){
+    var w = 138, h = 34, on = i===hi;
+    out += '<g><rect x="'+(p[0]-w/2)+'" y="'+(p[1]-h/2)+'" width="'+w+'" height="'+h+'" rx="8" fill="'+(on?"#2563EB":"#fff")+'" stroke="'+(on?"#2563EB":"#DCE4F5")+'"/>'+
+      '<text x="'+p[0]+'" y="'+(p[1]+4)+'" text-anchor="middle" font-family="Inter,sans-serif" font-size="10.5" font-weight="500" fill="'+(on?"#fff":"#3B3F46")+'">'+nodes[i]+'</text></g>';
+  });
+  return '<svg viewBox="0 0 420 186" role="img" aria-label="'+nodes.join(", then ")+'">'+out+'</svg>';
+}
+var LOOPS = [
+  {k:"Acquisition", t:"Candidates arrive through referrers", n:["Stranger messages","Referrer sends link","Fills details once","Complete request","Reuses profile"], hi:1, p:"The link page is seen by someone who has never used the product. If it asks too much, the loop breaks.", m:"Link to completed request", s:"Samarth asked for the link (n66). That referrers will send it is a guess."},
+  {k:"Acquisition", t:"Referrers arrive through candidates", n:["Candidate asks","Referrer gets link","Submits, no chasing","Next one is complete","Joins"], hi:2, p:"The referrer's first request, before they've signed up, has to be as complete as the promise.", m:"Invited referrers who submit, then join", s:"A guess."},
+  {k:"Engagement", t:"The outcome brings both sides back", n:["Referrer submits","Candidate sees status","Candidate checks back","Next request","Referrer's record grows"], hi:1, p:"The status screen and the referrer's record are the loop, not the request form.", m:"Return visits to status without a notification", s:"From C3 (n25, n34, n35, n41) and n58, n83."},
+  {k:"Monetisation, later", t:"Companies pay for the pipeline", n:["Referrals and outcomes","Better matching","Better candidates","More referrals","Companies pay"], hi:4, p:"Only once both sides are on it. Matching has to visibly improve for referrers.", m:"Offer to conversion, for companies", s:"A guess, phase 2."}
+];
+document.getElementById("loops").innerHTML = LOOPS.map(function(l){
+  return '<div class="card loop"><p class="lab">'+l.k+'</p><h3>'+l.t+'</h3>'+loopSvg(l.n,l.hi)+'<p>'+l.p+'</p><p style="margin-top:6px;font-size:13px;color:var(--muted)">'+l.s+'</p><span class="lm">Loop metric: '+l.m+'</span></div>';
+}).join("");
+
+// ── Versions ──
+var V = [
+  {v:"V2",img:"v2_swipe",t:"The first full design",p:"Swipe cards on both sides, a 9.4 Strong Fit score, a six-stage status the referrer updated by hand, \"Referral Accepted\" as the finish, and a Premium that sold access to referrers.",l:"Built for volume. The research said the problem was incomplete requests."},
+  {v:"V3",img:"check",t:"Rebuilt around one problem",p:"Jobs, then a request that won't send until it's complete. Fit as a count with where each skill was found. Refer gives the portal's fields ready to copy. Premium cut. A link page for strangers.",l:"Match the app's patterns, not just its colours and fonts."},
+  {v:"V4",img:"login",t:"Getting people to the value",p:"Value moved from screen 7 to the front. Personal details asked once, on the first request that needs them. A work-email check for referrers. After 7 days with no answer, the request comes back.",l:"Every screen before the value loses people."},
+  {v:"V5",img:"jobs",t:"One borrowed idea",p:"Shared background, like \"Both ex-MakeMyTrip\", from LinkedIn. Sign in with LinkedIn, for familiarity only: it gives a name, email and photo. A full design audit: 41 screens clean.",l:"Cutting a volume pattern isn't a reason to cut the content inside it."},
+  {v:"V6",img:"request",t:"Bringing back what was right",p:"Every V2 element judged again. Experience, projects, salary on cards and status tabs came back. The green banner was deleted after seven rounds. Mark as submitted became the last tap of Refer.",l:"A cut needs a reason, as much as an addition does."}
+];
+document.getElementById("rail").innerHTML = V.map(function(x){
+  return '<article class="ver"><div class="shot"><img src="/images/sidedoor/screens/'+x.img+'.webp" alt="'+x.v+': '+x.t+'" loading="lazy"></div><div class="vb"><span class="tag '+(x.v==="V6"?"blue":"")+'">'+x.v+'</span><h3>'+x.t+'</h3><p>'+x.p+'</p><p class="learn">'+x.l+'</p></div></article>';
+}).join("");
+
+// ── Tracker: fills like the app's status timeline ──
+var stages = Array.prototype.slice.call(document.querySelectorAll(".stage"));
+var tk = document.getElementById("tk");
+tk.innerHTML = stages.map(function(s){ return '<li data-id="'+s.id+'"><span class="dot"></span><a href="#'+s.id+'">'+s.dataset.t+'<small>'+s.dataset.s+'</small></a></li>'; }).join("");
+var items = Array.prototype.slice.call(tk.children), progT = document.getElementById("progT"), progB = document.getElementById("progB");
+function onScroll(){
+  var y = window.innerHeight * 0.35, cur = 0;
+  stages.forEach(function(s,i){ if (s.getBoundingClientRect().top < y) cur = i; });
+  items.forEach(function(li,i){ li.classList.toggle("done", i < cur); li.classList.toggle("now", i === cur); });
+  progT.textContent = "Stage " + (cur+1) + " of " + stages.length;
+  var doc = document.documentElement, max = doc.scrollHeight - window.innerHeight;
+  progB.style.width = (max > 0 ? Math.min(100, window.scrollY / max * 100) : 0) + "%";
+}
+window.addEventListener("scroll", onScroll, {passive:true}); window.addEventListener("resize", onScroll); onScroll();
+</script>
+</body>
+</html>

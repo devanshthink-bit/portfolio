@@ -17,6 +17,8 @@ export const metadata: Metadata = {
 // Every screen is a V6 frame exported from Figma (UI Screens), cropped to one phone screen.
 const scr = (f: string) => `/images/sidedoor/screens/${f}.webp`;
 const PROTO_FULL = "/work/sidedoor/prototype";
+// Every research, business and design artefact, in the order it was made (like RedBus's board).
+const BOARD_URL = "/sidedoor-process.html";
 
 // ── Visuals built in code ────────────────────────────────────────────────────
 function Quotes({ items }: { items: { q: string; who: string }[] }) {
@@ -133,6 +135,7 @@ export default function SidedoorCaseStudy() {
       <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 24 }}>
         <Pill href="#toc-try" primary icon="down">Try the prototype</Pill>
         <Pill href={PROTO_FULL} external>Open every screen and state</Pill>
+        <Pill href={BOARD_URL} external>See the research board</Pill>
       </div>
 
       <section className="cs-inshort-wrap">
@@ -148,7 +151,8 @@ export default function SidedoorCaseStudy() {
         sub={'Samarth has. For a role at Razorpay they messaged two or three people on LinkedIn, with a formal note and a resume. "My message was not even read."'} />
 
       <Beat label="The other side" title="Referrers skip strangers because of the admin."
-        sub="Riya refers people at Accenture, and Samarth at Infosys. Neither worried about a stranger turning out badly. What they described was chasing details: a job ID, a date of birth, the gaps in someone's career, then typing it all into the company portal by hand.">
+        sub="Riya refers people at Accenture, and Samarth at Infosys. Neither worried about a stranger turning out badly. What they described was chasing details: a job ID, a date of birth, the gaps in someone's career, then typing it all into the company portal by hand."
+        caption={<>Two people, 91 notes, five clusters. <a className="inline-link" href={BOARD_URL} target="_blank" rel="noopener noreferrer">See the whole research board</a>, from the business lens to the tests.</>}>
         <Quotes items={[
           { q: "they don't share the job ID, which irritates me a lot... I will not take the pain and go and check for it", who: "Riya, as a referrer" },
           { q: "having to constantly ask candidates for additional details, as many assume that just sending a resume and phone number is enough", who: "Samarth, as a referrer" },
