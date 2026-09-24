@@ -924,6 +924,13 @@ export function Field({
   // a field that filters its own typing trims itself; a browser maxLength would cut a paste
   // like "abc2.5" before the letters were dropped
   const max = rule?.keep ? undefined : rule?.max;
+  const grow = useRef<HTMLTextAreaElement>(null);
+  useLayoutEffect(() => {
+    const t = grow.current;
+    if (!t) return;
+    t.style.height = "auto";
+    t.style.height = `${t.scrollHeight}px`;
+  }, [value]);
   return (
     <div className="sd-field">
       {label && (
@@ -954,6 +961,8 @@ export function Field({
         {lead}
         {multiline ? (
           <textarea
+            // grows with the text, so a long answer is read whole rather than scrolled in a small box
+            ref={grow}
             value={value}
             placeholder={placeholder}
             onChange={(e) => change(e.target.value)}

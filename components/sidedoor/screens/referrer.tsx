@@ -340,18 +340,16 @@ export function ReferralRequest({ id }: { id: string }) {
           {/* Figma's "Not Enough To Judge": the same Window, but with no shared history, no fit
               rows and no projects — just the facts, one line saying why, and the decision. */}
           <div className="sd-card" style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
-              <Fact icon="mappin.and.ellipse">{r.city}</Fact>
-              <Fact icon="calendar">{r.years} years</Fact>
-              <Fact icon="hourglass">{r.notice}</Fact>
+            {/* the same blockers group as a full request: facts, then the 6-month line 12 below */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", gap: 8 }}>
+                <Fact icon="mappin.and.ellipse">{r.city}</Fact>
+                <Fact icon="calendar">{r.years} years</Fact>
+                <Fact icon="hourglass">{r.notice}</Fact>
+              </div>
+              <SixMonths r={six} company={you.company} />
             </div>
-            <SixMonths r={six} company={you.company} />
-            <div style={{ display: "flex", gap: 8 }}>
-              {r.work.map((w) => (
-                <Tag key={w}>{w}</Tag>
-              ))}
-            </div>
-            <Section label="How they match" icon="lightbulb.fill" end={<Tag>Not enough to judge</Tag>}>
+            <Section label={`Fit for ${you.post.title}`} icon="checkmark.circle.fill" end={<Tag>Not enough to judge</Tag>}>
               <p className="t-body muted">
                 Not enough in their resume to judge fit for this job. Read it before you decide.
               </p>
@@ -540,9 +538,9 @@ function TrustRow({ icon, logo, tone, children }: { icon: Parameters<typeof Icon
   return (
     <div style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
       {logo ? (
-        <Image src={logoSrc(logo)} alt="" width={18} height={18} style={{ width: 18, height: 18, marginTop: 1 }} unoptimized />
+        <Image src={logoSrc(logo)} alt="" width={18} height={18} style={{ width: 18, height: 18 }} unoptimized />
       ) : (
-        <Icon name={icon} size={18} color={tone ?? "tone"} style={{ marginTop: 1 }} />
+        <Icon name={icon} size={18} color={tone ?? "tone"} />
       )}
       <span className="t-label muted" style={{ flex: 1 }}>{children}</span>
     </div>
@@ -1003,7 +1001,7 @@ export function ManagePosts() {
 
 export function EditPost({ title }: { title?: string }) {
   const nav = useNav();
-  const { jobId, tips, pausedPosts, you, dispatch } = useStore();
+  const { jobId, tips, question, pausedPosts, you, dispatch } = useStore();
   const name = title ?? you.post.title;
   const paused = pausedPosts.includes(name);
   const done = (msg: string) => {
@@ -1065,6 +1063,19 @@ export function EditPost({ title }: { title?: string }) {
           multiline
           kind="tips"
           demo={DEMO.tips}
+        />
+
+        {/* the same one question as on Check your job post */}
+        <Field
+          label="One question for candidates (optional)"
+          icon="bubble.left.fill"
+          value={question ?? you.post.question}
+          onChange={(v) => dispatch({ t: "question", v })}
+          placeholder="e.g. Tell us about a trade-off you made in a checkout flow."
+          multiline
+          kind="tips"
+          demo={DEMO.question}
+          help="Candidates answer it in two or three lines. You see it on each request."
         />
 
         <FileBox label="Job description" name={you.post.jd} what="file" />

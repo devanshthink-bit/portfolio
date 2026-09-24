@@ -3217,3 +3217,53 @@ DECISION · 2026-09-24 · 14 requests a week, and a no gives it back
   1. The SF/checkmark.circle.fill component has a 1px black stroke, and on the Job screens I had given it a grey colour variable. It showed as a grey circle with a dark outline. The same broken icon was on the 3 "You're all set" welcome cards from earlier. All 10 now use Progress/Step Filled Primary, the blue check the match rows already use (no stroke).
   2. On the request screens, the "No Flipkart referral in the last 6 months" text was cloned with FILL width and centred, so it sat far from its icon. Now it hugs and is left-aligned, gap 4, like the other facts.
 - Checked by numbers, not screenshots: all 10 icons are blue with 0 strokes, and the icon-to-text gaps match the code (8 block header, 4 fact, 12 welcome). Link rows, the Related icon and the warning note were checked the same way. Figma only; the code was already right.
+
+## 24 Sep 2026 · 6-month answer, and the referral request rebuilt for trust
+
+**6-month fact, made honest** (Devansh: "what does it mean and how will Sidedoor know it?")
+- Sidedoor only sees its own referrals, so "No Flipkart referral in 6 months" could be wrong. There are now two sources, and the line always names its source.
+- "Check your request" asks, per company and required: "Referred to or applied at Flipkart in the last 6 months? No / Yes / Not sure". It isn't in the portal block because that block says "saved for your next request", and this answer is per company.
+- Referrer sees one of three things:
+  - "Says no Flipkart referral in 6 months" (their answer);
+  - Sidedoor's own record: "Referred to Flipkart on 12 May. Most portals won't take another referral until 12 Nov.";
+  - for Yes or Not sure: "May have been referred to Flipkart recently. Check with them first."
+- The portal fields gain "Referred in the last 6 months".
+
+**Referral request rebuilt** (Devansh: "looks cluttered… show info in order of priority… filled and unfilled icons confusing… what does 'tap a skill' mean?"). The order is now the order a referrer decides in:
+1. Who they are: a seal by the name when their work email is verified.
+2. What would stop it: city, years, notice, the 6-month line.
+3. Fit for the role: years against your minimum, then skills in plain groups instead of icons. The groups are "Shown in their work" (one line each, company on the right), "Related", "Claimed, no proof" and "Missing".
+4. Your question, and their answer.
+5. Projects: title, Vercel link, result. Skill tags removed.
+6. Experience.
+7. Résumé and links.
+8. Trust: work email verified, Sidedoor track record, common ground (moved down from the top).
+9. Their note.
+10. Refer / Not moving forward.
+- Removed: the work-type tags, and "Tap a skill that isn't really there" with its state. With claimed skills never counting, a referrer doesn't need to strike skills out.
+
+**Built from the "stop gaming the match" list, options 1, 2, 5, 6**
+1. Only skills a job or project shows count. A skill that is only listed is "Claimed, no proof", shown but never counted. Abhinav lists AI-assisted design and it doesn't count. His Job details and "Check your request" show the same groups, with "A claimed skill counts once a job or project shows it".
+2. Candidates can verify their work email (Profile → Where you work: email, code, then "Verified at Blinkit"). Referrers see the seal and "Work email verified at Blinkit"; unverified is neutral ("Work email not verified").
+5. The referrer sets one question on the post ("Check your job post" and "Edit post"; Nithin's: "Tell us about a trade-off you made in a checkout or payment flow."). Candidates answer it on "Check your request" (required when set), and the referrer reads it under Fit.
+6. Track record: "Referred 2 times on Sidedoor · 1 reached interviews", from referrers' own status updates. New people see "No referrals on Sidedoor yet".
+- Not from research: 2, 5 and 6 are my own design calls; the interviews don't cover them. Option 1 rests on n50/n65 and candidate 1's "impact and outside projects".
+
+**Other**
+- Project links moved from Behance/Dribbble to Vercel (Devansh: people build and host on Vercel now). The open-source NeoPOP link stays on GitHub.
+- Multiline fields grow with their text (min 100), so a long answer is read whole.
+- The thin "Not enough to judge" screen uses the same blockers group and "Fit for…" heading, and drops the tags.
+- The typecheck had been silently stopping at a broken generated file in .next. It now runs against components and app only, so earlier "types pass" claims were not real checks until now.
+
+**Figma, V6**
+- Request screen rebuilt: 5247:18762. States rebuilt from it: Profile Updated (5742:31334) and Referred Here Before (5742:31491). Added May Have Been Referred (5742:31653). Deleted Skill Removed.
+- Six "Check your request" screens: the 6-month question block, the skill groups, and Nithin's question. The count went 4→6 (5→6 on the base, 3→4 on Field Error).
+- Four Job screens: skill groups and the claimed note.
+- Two post screens: the question field.
+- After refer ×2: the portal field.
+- Thin screen: blockers, fit heading, no tags.
+- MenuRow gained an optional Detail text. The Profile ×2 row reads "Where you work · Not verified".
+- New screens: Candidate/Where You Work Screen (5747:41683) and /Code Sent (5747:41835).
+- All V6 project links are now on Vercel.
+- Checked by numbers: gaps 24/12/8/16, text heights on 16/20 line multiples, the seal bound to successAA (#15803d), like the code.
+- Checked on localhost (Vercel preview needs a login): every state list entry opens without errors; the request order and groups; the question, verification and 6-month states.
