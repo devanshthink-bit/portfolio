@@ -494,6 +494,10 @@
 .sd-fit-row > .t-h-xs { flex: 1; min-width: 0; }
 .sd-fit-row + .sd-fit-row::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 0.5px; background: var(--sd-border-subtle); }
 .sd-fit-row.is-tap:active { background: var(--sd-n100); }
+/* Suggested questions: iOS pick list, 44+ tall rows, hairline between, a tick on the one in use */
+.sd-suggest-row { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 8px 0; width: 100%; text-align: left; position: relative; }
+.sd-suggest-row + .sd-suggest-row::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 0.5px; background: var(--sd-border-subtle); }
+.sd-suggest-row:active { background: var(--sd-n100); }
 .sd-row-chev { margin-left: auto; display: flex; color: var(--sd-n400); }
 .sd-divider { height: 0.5px; background: rgba(60, 60, 67, 0.2); margin-left: 16px; }
 

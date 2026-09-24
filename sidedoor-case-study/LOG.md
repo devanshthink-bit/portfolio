@@ -5,13 +5,74 @@
 
 ## Where things stand
 
-Bet:        employees drop strangers' referral requests because the request makes them do the candidate's work, not because they won't help (SCOPE v2, draft)
-Evidence:   thin. 4 real interviews with 2 people (each as candidate and as referrer), 1 remembered follow-up, desk research without source links
-Files:      SCOPE.md [x] v2 draft, v1 kept, landscape · BUSINESS.md [x] draft · BRIEF.md [x] AX Spec, plan draft · RESEARCH.md [x] notes, sort, five clusters, jobs, insights, three candidate problem statements · BRIEF.md [ ] · DESIGN_LANGUAGE.md [ ] · build [ ] Figma V2 exists, not a coded build · live [ ]
-Rounds:     1. Mentor's critique (the product and referrer incentive). No change has come from it yet
-Open:       business lens with sources, source links for desk research,
-            live case study still shows AI-sourced quotes and screens that aren't in Figma
-Next:       molades-language
+Updated 2026-09-24.
+
+Bet:        employees drop strangers' referral requests because the request makes them do the candidate's work, not because they won't help (SCOPE v2)
+Evidence:   thin. 4 real interviews with 2 people (Samarth, Riya; each as candidate and as referrer), 1 remembered follow-up (n92), desk research without source links. No usability test run yet
+Built:      Figma V6 (UI Screens, V6 flows + States grid) and a coded prototype of every V6 screen and state (/work/sidedoor/prototype, branch sidedoor). Figma and code change together
+Done:       scope, landscape, research, synthesis, AI spec, brief, business, design language, build V3 → V6, attack (19 and 23 Sep), numbered kill conditions for the next test
+Open:       molades-test (prototype is ready for testers; no test run yet), case study rewrite (molades-case), source links for desk research, merge to main only when Devansh says it's final
+Next:       molades-test, then molades-case
+
+## Key decisions
+
+The decisions an interviewer will ask about, newest thinking only. Each line: what, why, evidence (note numbers are in RESEARCH.md), what was turned down. "Mine" means a design call with no research behind it. The full entry is further down, by date.
+
+**Problem and bet**
+| Decision | Why | Evidence | Turned down |
+|---|---|---|---|
+| The problem: a stranger's request makes the referrer do the candidate's work, so most don't, and the candidate never hears back | Both referrers have simple rules and no fear for their reputation; what stops them is the work a request hands them | n50 n55 n57 n59 n60 n70 n71 n76 n87 | Old "trust gap" bet (contradicted by n50 n55 n76); candidate-only or referrer-only problem statements |
+| Use only the 4 real interviews | The other 6 transcripts in FigJam were AI-generated | LEARNED 2026-09-17 | Keeping them as "illustrative" |
+| Sidedoor is its own product, not a LinkedIn feature | The work sits between LinkedIn and the company portal, which neither owns; the link helps referrers before any network exists | n46 n47 n57–n60 n66 n71; candidates asked for a dedicated place n24 n45 | Mentor's "feature inside LinkedIn". Risk kept: both people ask on LinkedIn today (n04 n29) |
+| Reason to exist: a complete request, status passed back, fit shown to the referrer | LinkedIn and GetMeReferred already do discovery and candidate-side fit | Landscape (screens, pricing page) | Competing on finding referrers |
+| Kill conditions for the next test: under 1 in 5 complete requests submitted, or under 3 of 8 referrers sharing their link in 2 weeks | The research ran without one, so nothing could prove the bet wrong | n30 ("80% don't reply") sets the bar | Back-dating a kill condition to old data |
+
+**Business**
+| Decision | Why | Evidence | Turned down |
+|---|---|---|---|
+| Two-sided marketplace; referrers are the scarce side; free for both at first, companies pay later | Selling referrers' attention breaks the quality promise | n62 n87 (companies already pay bonuses) | Candidates paying to reach referrers (V2 Premium), ads, referrers paying |
+| North Star: referrals submitted per active referrer per month; guardrail: referrers turning off requests | Counts the value, not activity | BUSINESS.md, mentor's NSM checklist | Sign-ups, requests sent, swipes, messages (vanity) |
+
+**The request (candidate side)**
+| Decision | Why | Evidence | Turned down |
+|---|---|---|---|
+| Resume fills the profile; portal-only details (DOB, gaps, notice, locations) asked just in time, on the first request, saved after | Referrers chase these details today; asking at sign-up has no reason attached | n59 n60 n71 | Asking at sign-up (V3); asking twice |
+| Job ID and all portal details travel with every request | The missing job ID is the top irritation | n76 n77 n78 | Free-text DM with a resume |
+| 14 requests a week; a no, a closed role, a withdrawal or 7 days of silence gives it back; being referred earns one | Keeps each request worth answering. Not about spam | Neither person described spam (n19 n61). 14 is Devansh's number | 5 a week (too few to bother); no limit |
+| "Referred or applied here in 6 months?" asked per company; the line always names its source | Portals refuse a second referral within 6 months, and people forget when | n74 | Claiming "no referral" from Sidedoor's own data alone |
+| Shared background shown ("Both ex-MakeMyTrip") but not used for ranking | Asking through people you know is what works | n02 n03 n16 n69 | Ranking by it (would bury fit) |
+
+**Fit and proof (referrer side)**
+| Decision | Why | Evidence | Turned down |
+|---|---|---|---|
+| Fit shown as counts ("4 of 7"), never a single score; lower matches collapsed, not hidden | Referrers want a match check; one referrer refers borderline people on purpose | n50 n53 n65 | A 9.4 score; hiding or auto-declining low fits |
+| A skill counts only when Sidedoor finds it in linked work or the resume; the referrer taps to see the line it read | Skills typed on your own projects can still be gamed | n50 (reads the resume to check); the reading rule is mine | Self-tagged skills counting; peer vouching |
+| "Related" skills shown, not counted | Transferable skills matter to candidates, but the referrer decides | Candidate side (Samarth); "not from a different domain" (n50) | Counting them in the number |
+| The referrer's one question asks about a skill, not a product | The referrer can't know who will apply | Mine | "Tell us about a checkout trade-off" |
+| Work-email check on both sides; track record from referrers' own updates | A tick has to mean something | Mine | A green tick on everyone (V2) |
+| Referrers can see suggested candidates who opted in, and invite them | Waiting only leaves referrers nothing to do; one referrer would refer a stranger who fits | n64 n65 n89 | Browsing everyone (no consent); selling "more bonuses" (n62 n87) |
+
+**Status and after refer**
+| Decision | Why | Evidence | Turned down |
+|---|---|---|---|
+| "Mark as submitted" is the last tap of Refer, not a later chore | Referrers won't come back to update a stranger | Devansh's critique; C4 | A separate update step |
+| Portal details ready to copy, plus "Email to me" (work inbox, resume attached) and "Copy all" | Copying into the portal by hand is the pain both referrers named | n60 n71 | Autofill extension (big build, every portal differs); laptop link (the email covers it) |
+| Thank-yous reach the referrer | The bonus isn't the reason people refer | n62 n87 | Points, badges, leaderboards |
+| No answer after 7 days gives the request back and offers the next referrer | Silence is the first candidate pain | n30 n35 n37 | Auto-sending to someone else |
+
+**AI in the product**
+| Decision | Why | Evidence | Turned down |
+|---|---|---|---|
+| AI reads documents and links into fields (resume, job description, project links); the person checks | Removes typing without making decisions for anyone | AX Spec in BRIEF.md | The model deciding |
+| AI suggests the referrer's question from the job description, one per skill | Stops product-specific questions before they happen | Mine | Writing the candidate's answer (kills the signal); AI deciding who to refer (the referrer's name is on it) |
+| No "AI" in the marketing copy | "AI-curated" promises a black box; the proof rule is the point | Mine | "AI-matched" taglines |
+
+**How we work**
+| Decision | Why |
+|---|---|
+| Figma and the coded prototype change together, every time | Devansh shows the prototype in code; Figma is the design deliverable |
+| V2–V5 are history; V6 is edited in place | The versions show the case study's iterations |
+| Check on localhost, not the Vercel preview | The preview needs a login |
 
 ## Entries
 
@@ -24,7 +85,7 @@ Severity:            blocker
 Layer:               the bet
 Action:              rejected (17 Sep 2026), Devansh's call: Sidedoor stays its own product. Answered with reasoning in SCOPE.md v2, not tested
 
-LEARNED · 17 Sep 2026 · molades-research
+LEARNED · 2026-09-17 · molades-research
 Believed:            The research base was 10 interviews: 2 recruiters, 4 referrers, 4 candidates.
 Found:               Only 4 are real: Candidate 1, Candidate 2, Referrer 1 (Infosys), Referrer 2 (Accenture). The other
                      6 transcripts in FigJam were generated with AI.
@@ -33,7 +94,7 @@ What this made worthless: every recruiter claim; the "40–50 DMs a day" PM; "I 
                      submitted"; "system gets flooded when the bonus goes up"; the claim of 10 interviews on the live
                      case study; the affinity notes in FigJam, which can't be told apart by source.
 
-DECISION · 17 Sep 2026 · molades-research
+DECISION · 2026-09-17 · molades-research
 Decided:             Go ahead with the 4 real interviews and the desk research. No new interviews or survey.
 Rejected:            Collecting more interviews (Devansh has no time); keeping the 6 generated transcripts as
                      "illustrative" (they would be invented evidence).
@@ -41,7 +102,7 @@ Because:             Thin data proceeds with its gaps named. Recruiters and refe
                      data, so anything about them is marked guessing.
 How sure:            saw it
 
-CRITIQUE · 17 Sep 2026 · molades-research · Source: AI
+CRITIQUE · 2026-09-17 · molades-research · Source: AI
 Finding:             The live case study's five solution screens (ranked referrer list, structured request form, four-level
                      recommendation, shared pipeline, request limits and ranked inbox) are not in Figma V2. V2 is a
                      swipe-to-match app: referrers post jobs, both sides swipe, a match opens chat, the referrer updates
@@ -50,7 +111,7 @@ Severity:            blocker
 Layer:               the bet
 Action:              open. Settled in molades-brief, once the problem statement exists
 
-CRITIQUE · 17 Sep 2026 · molades-research · Source: AI
+CRITIQUE · 2026-09-17 · molades-research · Source: AI
 Finding:             Two claims on the live case study walked back. "One PM got 40–50 DMs a day" traces to a generated
                      transcript. "Referrers aren't unwilling, they're uncertain" is contradicted by both real referrers
                      (n50, n55, n76, n77).
@@ -58,7 +119,7 @@ Severity:            major
 Layer:               the bet
 Action:              deferred to molades-case
 
-CRITIQUE · 17 Sep 2026 · molades-research · Source: AI
+CRITIQUE · 2026-09-17 · molades-research · Source: AI
 Finding:             Desk research was done by Devansh with Perplexity, but no original source links were kept. Every
                      figure on the live page (5–10×, 29 days, 46% vs 33%, 15–25%, 191, 92%) will be asked "where is that
                      from?". The live page's "~20% cold DM reply rate" doesn't match the desk research (15–25%).
@@ -66,7 +127,7 @@ Severity:            major
 Layer:               the bet
 Action:              open. Devansh to add the original link for each figure in raw/desk-research.md
 
-DECISION · 17 Sep 2026 · molades-synthesise
+DECISION · 2026-09-17 · molades-synthesise
 Decided:             91 numbered notes, one observation each, in the person's own words, with question numbers.
                      Every quoted phrase checked word for word against its transcript by script (75 phrases, 0 missing
                      after one fix). Participants referred to as "they" because the transcripts don't state gender.
@@ -74,7 +135,7 @@ Rejected:            Reusing the FigJam affinity stickies (no link to a person, 
 Because:             A numbered note in someone's own words is the only thing a problem statement can be walked back to.
 How sure:            saw it
 
-DECISION · 17 Sep 2026 · molades-scope
+DECISION · 2026-09-17 · molades-scope
 Decided:             SCOPE.md v1 written by copying Devansh's FigJam scope, hypotheses and North Star, labelled as
                      reconstructed. Notes sorted against its span: from asking an employee for a referral to knowing
                      what happened, up to the interview stage.
@@ -82,7 +143,7 @@ Rejected:            Writing a fresh v1 now (it would be a scope card made after
 Because:             Sorting needs a moment, and v2 has to be written against what the original bet actually said.
 How sure:            saw it (copied from FigJam)
 
-DECISION · 17 Sep 2026 · molades-synthesise
+DECISION · 2026-09-17 · molades-synthesise
 Decided:             Sort: 75 in scope, 3 out of scope (n39 n86 n88), 13 not a problem. Draft clusters: C1 strangers
                      don't see the request; C2 referrer drops or chases incomplete requests; C3 candidate can't tell
                      what happened; C4 referrer has little reason to refer a stranger. n91 parked. Each cluster has a
@@ -94,7 +155,7 @@ Rejected:            Six clusters, with "silence instead of a no" and "proving f
 Because:             Draft by AI, not yet reviewed by Devansh.
 How sure:            worked it out
 
-CHANGE · 17 Sep 2026 · molades-synthesise
+CHANGE · 2026-09-17 · molades-synthesise
 Changed:             "Proving fit" split back out of C2. Referrer-side fit checks (n50 n51 n53 n56 n63 n65 n82) stay in C2;
                      candidate-side notes (n11 n22 n23 n29) become C5, "Candidate can't tell how strong a fit they are
                      before they spend a request", marked THIN.
@@ -104,7 +165,7 @@ Result:              Five clusters. Devansh also said many candidates tailor res
                      software filters on match. Not in the four transcripts or the desk research, so recorded in C5 as
                      guessing, not used as evidence.
 
-DECISION · 17 Sep 2026 · molades-synthesise
+DECISION · 2026-09-17 · molades-synthesise
 Decided:             Draft jobs: C2 + C4 combine into J3 (referring a stranger for minutes), C1 + C5 into J1 (asking where
                      it will be read), C3 stays as J2 (knowing what happened). One insight statement each. Three
                      candidate problem statements: A referrer side, B candidate side, C both sides.
@@ -114,7 +175,7 @@ Because:             Draft by AI, following the RedBus artefacts page (combine, 
                      The choice between A, B and C is Devansh's.
 How sure:            worked it out
 
-DECISION · 17 Sep 2026 · molades-synthesise
+DECISION · 2026-09-17 · molades-synthesise
 Decided:             Problem statement: an employee asked for a referral by someone they don't know has to do the
                      candidate's work before they can say yes, so most don't, and the candidate never finds out.
                      Primary: the request makes the referrer do the candidate's work. Secondary: the answer never travels back.
@@ -125,7 +186,7 @@ Because:             Devansh: "A, B, C all are true". C holds A and B as its two
 How sure:            saw it (what happens) · worked it out (why) · guessing (that a complete request gets referred more)
 Traces to:           n70 n76 n77 n57 n59 n60 n71 n73 n75 n87 n62 n69 n01 n25 n34 n35 n36 n58 n83 n47 n64
 
-LEARNED · 17 Sep 2026 · molades-scope
+LEARNED · 2026-09-17 · molades-scope
 Believed:            Referrals break because of a trust gap: referrers can't judge strangers and fear for their reputation,
                      so they need match scores, graded recommendations and spam limits (old Sidedoor, FigJam problem statement).
 Found:               The two real referrers already have simple rules and don't fear for their reputation (n50, n55, n76).
@@ -135,7 +196,7 @@ This made worthless: the four-level recommendation screen, request limits, the r
                      the core bet, and swipe matching (no note supports it). The live case study's screens 03 and 05.
 So now I believe:    Employees drop strangers' requests because the request makes them do the candidate's work.
 
-DECISION · 17 Sep 2026 · molades-scope
+DECISION · 2026-09-17 · molades-scope
 Decided:             SCOPE.md v2 (draft): a feature inside LinkedIn. Moment: a candidate asking an employee they don't know
                      for a referral to one job, until they hear what happened. Number: % of those requests the employee
                      submits. Guardrail: employees turning off referral requests must not rise.
@@ -146,7 +207,7 @@ Because:             All four already ask and get asked on LinkedIn (n04 n07 n09
                      critique with the notes.
 How sure:            saw it (where they ask) · guessing (the number and guardrail, no baseline)
 
-CHANGE · 17 Sep 2026 · molades-scope
+CHANGE · 2026-09-17 · molades-scope
 Changed:             SCOPE.md v2 rewritten: Sidedoor is its own product, not a feature inside LinkedIn. Added the
                      cold-start bet (referrers first use a link candidates fill in, n66) and a second kill condition.
 Caused by:           Devansh, 17 Sep 2026: "I don't want it to be just a feature... Let's be confident that it can be a
@@ -155,7 +216,7 @@ Caused by:           Devansh, 17 Sep 2026: "I don't want it to be just a feature
 Result:              The mentor's critique is rejected, and the rejection has to be defended. AI said the risk once:
                      all four people ask on LinkedIn today, and Fishbowl's referral communities are quiet (n28).
 
-DECISION · 17 Sep 2026 · molades-scope
+DECISION · 2026-09-17 · molades-scope
 Decided:             Sidedoor as its own product.
 Rejected:            A feature inside LinkedIn (mentor's suggestion, and the earlier draft of v2).
 Because:             Devansh's call. Supporting reasons: the work sits between LinkedIn and the company portal, which
@@ -163,7 +224,7 @@ Because:             Devansh's call. Supporting reasons: the work sits between L
                      exists (n66); both candidates asked for a dedicated place (n24 n45).
 How sure:            worked it out (the reasons) · guessing (that referrers adopt it)
 
-CRITIQUE · 17 Sep 2026 · molades-scope · Source: self
+CRITIQUE · 2026-09-17 · molades-scope · Source: self
 Finding:             Devansh reports a follow-up conversation with one interviewee, and the mentor's view that there is no
                      new reward for referrers. Proposed: the referrer's incentive is better candidates picked by an AI
                      engine, so they can refer for more roles and earn more bonuses; candidates get request limits and
@@ -174,7 +235,7 @@ Action:              saved as Idea 1–4 in SCOPE.md for molades-ai. Not evidenc
                      (who, and what they said). Checked against the notes: the AI match is backed as a wish (n65, n23);
                      "more bonuses" is in tension with n87; request limits can't rest on spam (n19, n61).
 
-DECISION · 17 Sep 2026 · molades-scope
+DECISION · 2026-09-17 · molades-scope
 Decided:             BUSINESS.md, built with the mentor's Product Anatomy slides (PAM04 L01–L04, PAM05 L03). Business
                      model: two-sided marketplace, referrers are the scarce side. Free for both sides first; companies pay
                      later; candidates may pay only for tools that help themselves. Strategy: quality-as-identity, every
@@ -190,7 +251,7 @@ Because:             Devansh asked for the business side to be decided and inclu
                      input vs output categories, the causal chain, and loop type with touchpoint and metric.
 How sure:            worked it out (model, strategy, metrics) · guessing (that companies pay, and that the loops run)
 
-CRITIQUE · 17 Sep 2026 · molades-scope · Source: AI
+CRITIQUE · 2026-09-17 · molades-scope · Source: AI
 Finding:             Checked Figma V2 against the strategy (L04 "advance, neutral or contradict"). Contradicts: swipe cards
                      (built for volume), Premium paywall (sells access to referrers), referrer updating five stages by hand
                      (adds work to the scarce side). Advances: resume auto-fill, referrer JD upload, candidate tracking.
@@ -199,7 +260,7 @@ Severity:            major
 Layer:               the bet
 Action:              deferred to molades-brief, flow by flow
 
-LEARNED · 17 Sep 2026 · molades-research
+LEARNED · 2026-09-17 · molades-research
 Believed:            The 4 real transcripts were 4 different people: Candidate 1, Candidate 2, Referrer 1, Referrer 2.
 Found:               They are 2 people. The Infosys employee is Candidate 1 and Referrer 1; the Accenture employee is
                      Candidate 2 and Referrer 2. Each was interviewed once as a candidate and once as a referrer.
@@ -210,7 +271,7 @@ Changed:             Every file now names them by company and role ("Infosys (as
 What this made worthless: any claim that a pattern came from four people. The strongest patterns are now "both people".
                      Worth keeping: both have been on both sides of a referral.
 
-CHANGE · 17 Sep 2026 · molades-research
+CHANGE · 2026-09-17 · molades-research
 Changed:             Participants named: Samarth (the Infosys employee, Candidate 1 and Referrer 1) and Riya (the Accenture
                      employee, Candidate 2 and Referrer 2). Labels in RESEARCH, SCOPE, BUSINESS and the raw transcript
                      headers now read "Samarth (as candidate)", "Riya (as referrer)". Earlier LOG entries keep the old labels.
@@ -218,7 +279,7 @@ Caused by:           Devansh, 17 Sep 2026: "You can mention the real name. Samar
                      Riya is candidate 2 and refer 2."
 Result:              Notes use real first names, as the rules ask. Not the same Samarth as in the RedBus research.
 
-DECISION · 17 Sep 2026 · molades-scope
+DECISION · 2026-09-17 · molades-scope
 Decided:             Premium: candidates pay only for tools that help themselves (fit check before asking, profile
                      feedback). Never to reach, see or jump ahead of referrers. V2's Premium screen becomes a candidate tool.
 Rejected:            Candidates paying to see who wants to refer them (V2 as designed); no candidate payment at all.
@@ -228,7 +289,7 @@ Because:             Devansh: "Whatever is correct and has proper reasoning behi
                      raise request quality, which moves the North Star (n23, C5); companies already pay for referrals (n62, n87).
 How sure:            worked it out · guessing (that candidates or companies will pay)
 
-DECISION · 17 Sep 2026 · molades-landscape
+DECISION · 2026-09-17 · molades-landscape
 Decided:             Landscape of LinkedIn, GetMeReferred, EasyRefer, Instahyre and no-product, from Devansh's screenshots
                      at full size plus GetMeReferred's pricing page. Convention: the ask is free text plus a resume; fit is
                      shown to candidates, and sold to them; nobody shows what happened to a referral. Sidedoor pursues
@@ -240,7 +301,7 @@ Rejected:            Competing on discovery and candidate-side fit (LinkedIn alr
 Because:             The skill's question, "what do they know that we don't?", asked of every gap.
 How sure:            saw it (screens) · worked it out (reasons, pricing page)
 
-LEARNED · 17 Sep 2026 · molades-landscape
+LEARNED · 2026-09-17 · molades-landscape
 Believed:            Sidedoor could win on discovery (ranked referrers) and on showing candidates their fit.
 Found:               LinkedIn already puts "People you can reach out to" and "Show match details" on every job, and
                      GetMeReferred already lists willing, verified referrers.
@@ -249,7 +310,7 @@ This made worthless: the old case study's Screen 01 as a differentiator; Idea 4 
 So now I believe:    Sidedoor's reason to exist is what nobody does: a request that arrives complete, status the referrer
                      passes on, and fit shown to the referrer.
 
-DECISION · 17 Sep 2026 · molades-ai
+DECISION · 2026-09-17 · molades-ai
 Decided:             AX Spec draft 1 in BRIEF.md. The model does two jobs: resume and job description into fields (both
                      sides), and ordering a referrer's requests by fit with the reasons shown. Level: the model does it,
                      the person checks, for both. Surface: Idea 6 (list ordered by fit, "Lower match" collapsed but
@@ -263,14 +324,14 @@ Rejected:            The model just does it (hiding or auto-declining low fits: 
 Because:             Draft by AI following the skill; Devansh's n92 idea kept as ordering, not hiding.
 How sure:            worked it out · every material fact guessing
 
-DECISION · 17 Sep 2026 · molades-ai · Source: self
+DECISION · 2026-09-17 · molades-ai · Source: self
 Decided:             Lower-match requests stay visible to the referrer, collapsed under "Lower match", and can still be referred.
 Rejected:            Hiding them completely (Devansh's earlier "only showing curated candidates").
 Because:             Devansh: "visible but collapsed". Reasons given: a hidden request is silence for the candidate (C3),
                      and Samarth refers borderline matches on purpose (n53).
 How sure:            worked it out
 
-DECISION · 17 Sep 2026 · molades-brief
+DECISION · 2026-09-17 · molades-brief
 Decided:             Shape: its own app for both sides, with a no-install link page as the way in for strangers. Words from
                      the interviews: referral request, job ID, portal, match, and five stages (Submitted, In interviews,
                      On hold, Selected, Not selected) in their portals' words. 16 screens; main path 8 steps across two
@@ -282,7 +343,7 @@ Rejected:            The link page alone (can't hold status over weeks, n44 n45)
 Because:             Tied to C2 (complete request), C3 (status back), C4 (referrer effort), and the landscape's gaps.
 How sure:            worked it out
 
-CRITIQUE · 17 Sep 2026 · molades-brief · Source: self
+CRITIQUE · 2026-09-17 · molades-brief · Source: self
 Finding:             Main path step 7, the referrer coming back to tap "I've submitted it on my portal". Devansh: "i think
                      most referrers wont do this. why wud they care to update this for candidate". The status loop
                      depended on the scarce side doing unpaid work (C4).
@@ -1740,7 +1801,7 @@ Checked:   Swept V6 for other link-coloured words inside a sentence: only "5 new
 
 ---
 
-## 20 Sep 2026 · the V6 screens as a working app
+## 2026-09-20 · the V6 screens as a working app
 
 **DECISION · Build the prototype in code, not in Figma's prototype mode**
 Decided: every V6 screen rebuilt as a React app at iPhone 17 size (402 × 874pt), at
@@ -1799,7 +1860,7 @@ tapping as well.
 one job. Other people in the lists are fixed data. Nothing is stored between reloads, and nothing
 here has been in front of a real user yet — that is still `molades-test`.
 
-FIX · 20 Sep 2026 · prototype · Login did not match V6
+FIX · 2026-09-20 · prototype · Login did not match V6
 Found:  `.sd button { font: inherit }` in app.css. Specificity (0,1,1) beat every
         `.sd-btn` rule (0,1,0), so every button in the app lost its font-weight and
         line-height to the inherited body values. Buttons rendered 400 weight at
@@ -1807,7 +1868,7 @@ Found:  `.sd button { font: inherit }` in app.css. Specificity (0,1,1) beat ever
         This was app-wide, not just Login.
 Fixed:  the reset is now `:where(.sd) button`, specificity zero, so a class always wins.
 
-FIX · 20 Sep 2026 · prototype · Login assets and background
+FIX · 2026-09-20 · prototype · Login assets and background
 - Screen fill was #fff. Figma's Login is #f2f2f7. Corrected.
 - Wordmark was a 132x24 PNG. In Figma it is a vector, so the prototype now uses the
   same SVG Figma draws.
@@ -1817,7 +1878,7 @@ FIX · 20 Sep 2026 · prototype · Login assets and background
 - Icons inside buttons are now given explicit sizes rather than letting the file's
   aspect decide.
 
-DECISION · 20 Sep 2026 · prototype · content column left at 306, not 294
+DECISION · 2026-09-20 · prototype · content column left at 306, not 294
 Decided:  keep the 48px side gutters from V6.
 Because:  V6 Login is drawn at 390x844 (iPhone 14). The prototype phone is an
           iPhone 17 at 402x874. Holding the gutters gives a 306 column instead of
@@ -1825,7 +1886,7 @@ Because:  V6 Login is drawn at 390x844 (iPhone 14). The prototype phone is an
           right way round — but it is a real 12px difference and it is not a bug.
 How sure: saw it (measured both).
 
-DECISION · 20 Sep 2026 · prototype · iPhone 17, and the design flexes to it
+DECISION · 2026-09-20 · prototype · iPhone 17, and the design flexes to it
 Decided:  keep the prototype at 402x874 with the real 54pt iOS status bar.
 Rejected: shrinking the app to 390x844 so it would overlay the Figma frames exactly.
 Because:  Devansh: "Designs in figma shud be responsive right? how does it matter
@@ -1840,7 +1901,7 @@ So:       "pixel perfect" here means every colour, type style, radius, asset and
           the screen overlays a 390-wide artboard.
 How sure: saw it (measured every element on Login against its Figma node).
 
-DECISION · 20 Sep 2026 · prototype page · one fixed screen, list left, phone right
+DECISION · 2026-09-20 · prototype page · one fixed screen, list left, phone right
 Decided:  the prototype page fills the window and never scrolls. The state list sits
           on the left in as many columns as fit (CSS `columns: 230px`), the phone on
           the right, and the site's floating dock is hidden on this page.
@@ -1857,7 +1918,7 @@ How:      - html/body get `overflow: hidden` only on this page, via `:has(.proto
 Checked:  1440x900 and 1280x720 — all 38 states on screen, no page scroll, no panel
           scroll, phone fully inside the window.
 
-FIX · 20 Sep 2026 · dev server served stale CSS
+FIX · 2026-09-20 · dev server served stale CSS
 Symptom:  edits to app/globals.css did not reach the browser. The CSS chunk kept the
           same hash across restarts, so the page kept the old layout and I nearly
           chased a bug that was not there.
@@ -2696,7 +2757,7 @@ Still open, and all of it waits on Devansh:
 
 Verified on localhost, not the Vercel preview.
 
-## 23 Sep 2026 — four things Devansh caught in the prototype
+## 2026-09-23 — four things Devansh caught in the prototype
 
 **The unread "2" was italic.** The badge was an `<i>` element, so the browser slanted the
 number. It is a `<span>` now.
@@ -3026,7 +3087,7 @@ Caveat noted: #fafafa fields on white and white fields on #f2f2f7 both have fain
 - Code: removed the role line I had added to "Your referrals" cards; Figma never had it, and the ask was to change layout, not content.
 - Verified on localhost only.
 
-## 23 Sep 2026 · Invite asks first
+## 2026-09-23 · Invite asks first
 - Devansh: inviting a candidate can't be undone, so ask first, the way an iOS app would.
 - **Chose the iOS centred alert, not an action sheet.** It asks one yes/no question about something the person just tapped. The action sheet stays for Log out.
   - Title "Invite Shreya?". Message: "Shreya will be asked to send you a referral request for this job. You can't undo an invite."
@@ -3040,7 +3101,7 @@ Caveat noted: #fafafa fields on white and white fields on #f2f2f7 both have fain
   - Invite on the three screens that show it opens the alert as an overlay. Cancel closes it; Invite goes to the Invited screen.
 - Verified on localhost only: Cancel leaves "Invite"; Invite turns it to "Invited".
 
-## 23 Sep 2026 · Seen it move: pick, then Update
+## 2026-09-23 · Seen it move: pick, then Update
 - Devansh: the tick colour was off, and the sheet should update only after they pick and press a button. No "No change yet"; close with an × or by tapping outside.
 - **Tick:** a copied portal detail turned its icon into a green tick. It's now brand blue like every other icon. The sheet's selection tick was already blue. Figma has no "copied" frame, so this is code only.
 - **Sheet (code + Figma):**
@@ -3056,7 +3117,7 @@ Caveat noted: #fafafa fields on white and white fields on #f2f2f7 both have fain
   - New frame "Update Sheet/Seen It Move/Picked". Tapping In interviews on the sheet swaps to it; its Update closes the sheet and goes to "Your Referrals Screen/Updated".
 - Verified on localhost only.
 
-## 23 Sep 2026 · iOS consistency pass (11 fixes + 2 found on the way)
+## 2026-09-23 · iOS consistency pass (11 fixes + 2 found on the way)
 Devansh asked what still wasn't iOS-like or consistent, then said to fix all of it and keep "Let referrers find me" in Settings only.
 1. **Closing a sheet:** every sheet now has the grey × at the top right. Not moving forward, Share your link, Date of birth and Add your resume lost their Cancel / Not now buttons. Titles get 40 on each side so the × never touches them. Tapping the dim still closes.
 2. **Header time:** "Sent today" on the Referral request header was a grey tag. It's now plain grey text on the name line (13, text/secondaryAA), like the list cards. Figma PersonRow got a "Show time" + "Time" property. Status tags (Referred, Not moving forward) stay tags.
@@ -3078,7 +3139,7 @@ Devansh asked what still wasn't iOS-like or consistent, then said to fix all of 
 - **Slip, fixed:** removing "Not now" in Figma also deleted that tag, because they shared a frame. I rebuilt it.
 - Verified on localhost only.
 
-## 23 Sep 2026 · UI Screens page caught up
+## 2026-09-23 · UI Screens page caught up
 - Devansh: the Profile frames on UI Screens still showed the toggle. **I had edited only the 🔗 V6 Prototype page** and missed 9 changes across ~28 frames on UI Screens (the V6 sections). Component edits had reached both pages; frame-level edits had not.
 - **New rule (Devansh): always change UI Screens.** He shows the prototype in code, not Figma, so UI Screens is the Figma deliverable and Figma click-through wiring isn't needed.
 - Done on UI Screens:
@@ -3189,7 +3250,7 @@ DECISION · 2026-09-24 · 14 requests a week, and a no gives it back
 - Limitation: since switching role keeps the same person, nobody can refer or decline Abhinav during a session. So the "comes back" and "+1" rules are in the store and the copy, but a tester can't trigger them live.
 - Checked on localhost: Job details "Uses 1 of your 14…", Check your request "14 of 14", none-left note, Not moving forward copy.
 
-## 24 Sep 2026 · Related skills, on both sides
+## 2026-09-24 · Related skills, on both sides
 
 - Devansh asked what referrers check, in order, then said interviewees talked about transferable skills and matching. "Build whatever should be there."
 - What the notes show: skill match is strong. Samarth as referrer needs "at least a 50% to 70% skill match", and experience is "non-negotiable" (n50); both wanted a match score (n23, n65). As a candidate, Samarth said past impact and outside projects should count too. "Transferable skills" is not in the notes, and the referrer said experience should not come "from a completely different domain". One referrer only, so this is a small base.
@@ -3201,7 +3262,7 @@ DECISION · 2026-09-24 · 14 requests a week, and a no gives it back
 - Figma, V6: MatchRow gained Status=Related (5729:31903). 3 request screens updated (Explore, Skill Removed, Profile Updated). 4 Job screens got the block (Job Screen, Referred Before, Already Asked, Suggested By Referrer). The job Card is shared with V2–V5, so only the 4 V6 copies were detached; V2–V5 untouched.
 - Checked on localhost: both screens show the three groups (Vercel preview needs a login).
 
-## 24 Sep 2026 · Proof links in projects, the 6-month fact, the match icon
+## 2026-09-24 · Proof links in projects, the 6-month fact, the match icon
 
 - Devansh: "the things we discussed like achievements, u skipped them?" I had. Results with numbers were already in project details, but outside work and proof weren't. Devansh chose: a link inside each project ("proof of work there itself") and the 6-month fact. Not building expected level or "can vouch" (not in the research).
 - Devansh: the "How you match" icon was the lightbulb, the same as "Tips from the referrer", and it was grey in Figma. Now a blue check-in-circle, which matches the "4 of 7 skills match" tag. (Referrer's "How they match" keeps V6's lightbulb: there is no tips block on that screen.)
@@ -3211,14 +3272,14 @@ DECISION · 2026-09-24 · 14 requests a week, and a no gives it back
 - Figma, V6: a new ProjectRow V6 component (5733:31272, with Link and Has link properties). The old ProjectRow is shared with V5, so only the 12 V6 copies were swapped. Project Details got the link line, and Projects Editing got the link field. The 3 request screens got the 6-month line. New States frame "Referrer/Referral Request Screen/Referred Here Before" (5733:43591). The How you match icon was swapped on the 4 Job screens.
 - Checked on localhost (Vercel preview needs a login): the links open the project page and sit left-aligned, both 6-month states render, and the icon is blue.
 
-## 24 Sep 2026 · Fix: check icon and 6-month line in Figma
+## 2026-09-24 · Fix: check icon and 6-month line in Figma
 
 - Devansh caught two Figma bugs I had missed ("why are u not checking things properly"):
   1. The SF/checkmark.circle.fill component has a 1px black stroke, and on the Job screens I had given it a grey colour variable. It showed as a grey circle with a dark outline. The same broken icon was on the 3 "You're all set" welcome cards from earlier. All 10 now use Progress/Step Filled Primary, the blue check the match rows already use (no stroke).
   2. On the request screens, the "No Flipkart referral in the last 6 months" text was cloned with FILL width and centred, so it sat far from its icon. Now it hugs and is left-aligned, gap 4, like the other facts.
 - Checked by numbers, not screenshots: all 10 icons are blue with 0 strokes, and the icon-to-text gaps match the code (8 block header, 4 fact, 12 welcome). Link rows, the Related icon and the warning note were checked the same way. Figma only; the code was already right.
 
-## 24 Sep 2026 · 6-month answer, and the referral request rebuilt for trust
+## 2026-09-24 · 6-month answer, and the referral request rebuilt for trust
 
 **6-month fact, made honest** (Devansh: "what does it mean and how will Sidedoor know it?")
 - Sidedoor only sees its own referrals, so "No Flipkart referral in 6 months" could be wrong. There are now two sources, and the line always names its source.
@@ -3268,7 +3329,7 @@ DECISION · 2026-09-24 · 14 requests a week, and a no gives it back
 - Checked by numbers: gaps 24/12/8/16, text heights on 16/20 line multiples, the seal bound to successAA (#15803d), like the code.
 - Checked on localhost (Vercel preview needs a login): every state list entry opens without errors; the request order and groups; the question, verification and 6-month states.
 
-## 24 Sep 2026 · Login lines 2 and 3
+## 2026-09-24 · Login lines 2 and 3
 
 - Devansh: keep "Get referred by insiders"; make lines 2 and 3 say what the product stands for (quality, curated, no spam).
 - Now: 1 "Get referred by insiders" (who you reach) · 2 "Matched on proof, not keywords" (fit comes from work shown, not skills typed in) · 3 "Fewer asks. Real answers." (the 14-a-week limit, and referrers answer because each ask is chosen).
@@ -3276,7 +3337,7 @@ DECISION · 2026-09-24 · 14 requests a week, and a no gives it back
 - Avoided "AI" in the copy: the matching is the proof rule, and "AI-curated" would promise a black box the product deliberately isn't.
 - All three fit one line at 306 wide (checked on localhost). Figma's login frames show only line 1, so no Figma change.
 
-## 24 Sep 2026 · Proof you can't type in, and one type rule on the request
+## 2026-09-24 · Proof you can't type in, and one type rule on the request
 
 - Devansh: tagging skills on your own projects is still a claim, so it can be gamed. Chosen: **Sidedoor reads the link**. A skill counts only when their linked project page or resume shows it; the referrer taps the skill and sees the line Sidedoor read, with the link to check it.
 - Honest limit: this raises the cost of faking (you need real, specific work behind each skill), it doesn't make faking impossible. The interview is still the last check. The prototype's found lines are written by hand (`FOUND` in data.ts).
@@ -3293,7 +3354,7 @@ DECISION · 2026-09-24 · 14 requests a week, and a no gives it back
 - Candidate side: 4 job cards and 6 Check your request screens now read "Found in your work" / "Listed only"; the note tag reads "A listed skill counts once your linked work or resume shows it". Both project link fields on Projects Editing have the help line.
 - New frame: Referrer/Skill Proof Sheet (5750:42504), cloned from the Add Resume sheet.
 
-## 24 Sep 2026 · The referrer's question asks about a skill, not a product
+## 2026-09-24 · The referrer's question asks about a skill, not a product
 
 - Devansh: the referrer writes the question before anyone applies, so "a trade-off in a checkout or payment flow" shuts out good people without checkout work (transferable skills).
 - Now: "Tell us about a flow you made simpler. What did you cut, and what did it cost?" Same skill (trade-off judgement in a flow); a checkout designer still answers with checkout work, everyone else from theirs.
@@ -3316,3 +3377,16 @@ DECISION · 2026-09-24 · 14 requests a week, and a no gives it back
 - The note was cut to one line (dropped "attached") so it doesn't wrap.
 - Figma: button row added in place on After Refer (Explore) and After Refer/Undo (States); new state frame "After Refer/Emailed" in the States grid (row 7, col 2).
 - Checked on localhost (Vercel preview needs a login).
+
+## 2026-09-24 · AI suggests the referrer's question from the job description
+- Devansh chose this from three AI ideas (portal format matching, question suggestions, vague-answer flag).
+- Why: the referrer doesn't know who will apply, so a product question ("a checkout trade-off") shuts out most candidates. We fixed that question by hand; this stops the mistake before it happens.
+- Built: under "One question for candidates" on Check your job post and Edit your job post, "Suggested from Flipkart_IxDesigner_JD.docx" with three questions, one per skill the job asks for (Interaction design, User research, A/B testing; Blinkit's post has its own three). Tap one and it fills the field; a tick marks the one in use. The field stays editable.
+- Evidence: none from research; a design call (mine). The skills come from the job description Sidedoor already reads.
+- Turned down: AI writing the candidate's answer (it would stop proving anything); a sparkle "AI" badge (the file has no such icon, and the copy avoids "AI", see Login lines).
+- Figma: "Question Group" (field + suggestions) on the post screen (5760:31477) and the edit screen (5760:31582); list rows use the portal Box, label/sm skill, label/md question, blue tick on the first.
+- Checked on localhost (Vercel preview needs a login): tapping the third fills the field and moves the tick.
+
+## 2026-09-24 · Log cleaned up
+- Devansh asked whether the log records every important decision with its reasoning. Mostly yes, but the status at the top was from 17 Sep, recent entries often lacked research note numbers and what was turned down, long Figma change lists buried the decisions, and dates used two formats.
+- Fixed: "Where things stand" rewritten; new "Key decisions" tables at the top (decision, why, evidence, turned down; "mine" where no research backs it); every heading now uses YYYY-MM-DD; the portal entry cites n60 and n71.

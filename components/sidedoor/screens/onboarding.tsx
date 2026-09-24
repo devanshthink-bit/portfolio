@@ -860,7 +860,7 @@ export function AddJob() {
 /* ── Referrer: check your job post ──────────────────────────────────────── */
 export function CheckPost({ title }: { title?: string }) {
   const nav = useNav();
-  const { jobId, tips, question, you, dispatch } = useStore();
+  const { jobId, tips, you, dispatch } = useStore();
   return (
     <Screen
       title="Check your job post"
@@ -922,21 +922,60 @@ export function CheckPost({ title }: { title?: string }) {
 
         {/* One question every candidate answers with the request. A specific answer shows real
             experience in a way an AI-polished resume or note can't (Devansh, 24 Sep). */}
-        <Field
-          label="One question for candidates (optional)"
-          icon="bubble.left.fill"
-          value={question ?? you.post.question}
-          onChange={(v) => dispatch({ t: "question", v })}
-          placeholder="e.g. Tell us about a flow you made simpler. What did you cut, and what did it cost?"
-          multiline
-          kind="tips"
-          demo={DEMO.question}
-          help="Ask about a skill this role needs, not a specific product. Every candidate answers from their own work."
-        />
+        <QuestionField />
 
         <FileBox label="Job description" name={you.post.jd} what="file" />
       </div>
     </Screen>
+  );
+}
+
+/**
+ * The referrer's one question, with three Sidedoor suggests from the job description, one per
+ * skill it asks for. A referrer doesn't know who will apply, so a question about a product only
+ * some candidates worked on is the easy mistake; a suggestion asks about a skill (Devansh, 24 Sep).
+ */
+export function QuestionField() {
+  const { question, you, dispatch } = useStore();
+  const value = question ?? you.post.question;
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      <Field
+        label="One question for candidates (optional)"
+        icon="bubble.left.fill"
+        value={value}
+        onChange={(v) => dispatch({ t: "question", v })}
+        placeholder="e.g. Tell us about a flow you made simpler. What did you cut, and what did it cost?"
+        multiline
+        kind="tips"
+        demo={DEMO.question}
+        help="Ask about a skill this role needs, not a specific product. Every candidate answers from their own work."
+      />
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        <p className="t-label-sm muted">Suggested from {you.post.jd}</p>
+        <Box>
+          {you.post.suggest.map((s) => {
+            const on = value.trim() === s.q;
+            return (
+              <button
+                key={s.q}
+                className="sd-suggest-row"
+                aria-pressed={on}
+                onClick={() => dispatch({ t: "question", v: s.q })}
+              >
+                <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 2, minWidth: 0 }}>
+                  <span className="t-label-sm muted">{s.skill}</span>
+                  <span className="t-label">{s.q}</span>
+                </span>
+                <span style={{ width: 20, flex: "0 0 auto", display: "flex", color: "var(--sd-icon-accent)" }}>
+                  {on && <Icon name="checkmark" size={20} />}
+                </span>
+              </button>
+            );
+          })}
+        </Box>
+      </div>
+    </div>
   );
 }
 

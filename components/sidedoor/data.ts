@@ -473,7 +473,13 @@ export const PEOPLE_ME = {
     workEmail: "abhinav.saxena@blinkit.com",
     resume: "Abhinav_Saxena_Resume.pdf",
     note: "I led the merchant app redesign at Blinkit. Happy to share more.",
-    post: { title: "Product Designer", jobId: "BLK-802", jd: "Blinkit_ProductDesigner_JD.docx", question: "Tell us about a tool you made simpler for people at work." },
+    post: { title: "Product Designer", jobId: "BLK-802", jd: "Blinkit_ProductDesigner_JD.docx", question: "Tell us about a tool you made simpler for people at work.",
+      // Sidedoor reads the job description and suggests one question per skill it asks for
+      suggest: [
+        { skill: "Interaction design", q: "Tell us about a tool you made simpler for people at work." },
+        { skill: "User research", q: "Tell us about research that changed a decision. What did you find, and what changed?" },
+        { skill: "Design system", q: "Tell us about a component you changed for every team. How did you get them to use it?" },
+      ] },
   },
   nithin: {
     id: "nithin" as const,
@@ -485,7 +491,12 @@ export const PEOPLE_ME = {
     workEmail: "nithin.agarwal@flipkart.com",
     resume: "Nithin_Agarwal_Resume.pdf",
     note: "I lead checkout design at Flipkart and want to go deeper on one product. Happy to share more.",
-    post: { title: "Interaction Designer", jobId: "184223", jd: "Flipkart_IxDesigner_JD.docx", question: "Tell us about a flow you made simpler. What did you cut, and what did it cost?" },
+    post: { title: "Interaction Designer", jobId: "184223", jd: "Flipkart_IxDesigner_JD.docx", question: "Tell us about a flow you made simpler. What did you cut, and what did it cost?",
+      suggest: [
+        { skill: "Interaction design", q: "Tell us about a flow you made simpler. What did you cut, and what did it cost?" },
+        { skill: "User research", q: "Tell us about research that changed a decision. What did you find, and what changed?" },
+        { skill: "A/B testing", q: "Tell us about a test that surprised you. What did you expect, and what did you do next?" },
+      ] },
   },
 };
 export type Me = (typeof PEOPLE_ME)["abhinav"] | (typeof PEOPLE_ME)["nithin"];

@@ -1,6 +1,6 @@
 # Sidedoor redo · where we are
 
-Updated 19 Sep 2026.
+Updated 2026-09-24. Key decisions with reasons: LOG.md, top.
 
 ## Molades skills
 
@@ -22,8 +22,8 @@ Updated 19 Sep 2026.
 - [x] **V6 states** · 19 missing states from BRIEF built in "V6 · States Flow"; 4 not built, with reasons (LOG 19 Sep)
 - [x] **V6 prototype** · page "🔗 V6 Prototype", 61 screens, 265 links, 4 starting points
 - [x] **Kill conditions** · numbered, for the next test (SCOPE.md, 19 Sep)
-- [ ] **molades-attack** · break the V3 screens on purpose, then craft and accessibility checks
-- [ ] **molades-build (again)** · fix attack findings one at a time
+- [x] **molades-attack** · run on V6 (19 Sep, whole app) and again on final V6 (23 Sep)
+- [x] **molades-build (again)** · attack findings fixed; coded prototype of every V6 screen and state
 - [ ] **molades-test** · no real tests planned. Write the test script anyway and say plainly it wasn't run
 - [ ] **molades-case** · rewrite the live case study page + interview Q&A
 

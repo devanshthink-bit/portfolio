@@ -32,7 +32,7 @@ import {
   WelcomeCard,
 } from "../ui";
 import { BellButton } from "./candidate";
-import { CompanyRow, FileBox, JdDetails, Project, RulesSection } from "./onboarding";
+import { CompanyRow, FileBox, JdDetails, Project, QuestionField, RulesSection } from "./onboarding";
 import { CANDIDATES, DEMO, POST_SKILLS, SUGGESTED, candidateById, firstName, matchLine, proofOf, roleLine, type Candidate } from "../data";
 
 type Req = Candidate;
@@ -1023,7 +1023,7 @@ export function ManagePosts() {
 
 export function EditPost({ title }: { title?: string }) {
   const nav = useNav();
-  const { jobId, tips, question, pausedPosts, you, dispatch } = useStore();
+  const { jobId, tips, pausedPosts, you, dispatch } = useStore();
   const name = title ?? you.post.title;
   const paused = pausedPosts.includes(name);
   const done = (msg: string) => {
@@ -1087,18 +1087,8 @@ export function EditPost({ title }: { title?: string }) {
           demo={DEMO.tips}
         />
 
-        {/* the same one question as on Check your job post */}
-        <Field
-          label="One question for candidates (optional)"
-          icon="bubble.left.fill"
-          value={question ?? you.post.question}
-          onChange={(v) => dispatch({ t: "question", v })}
-          placeholder="e.g. Tell us about a flow you made simpler. What did you cut, and what did it cost?"
-          multiline
-          kind="tips"
-          demo={DEMO.question}
-          help="Ask about a skill this role needs, not a specific product. Every candidate answers from their own work."
-        />
+        {/* the same one question, and suggestions, as on Check your job post */}
+        <QuestionField />
 
         <FileBox label="Job description" name={you.post.jd} what="file" />
       </div>
