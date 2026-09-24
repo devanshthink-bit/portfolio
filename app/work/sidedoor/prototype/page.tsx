@@ -4,24 +4,12 @@ import Viewer from "@/components/sidedoor/Viewer";
 export const metadata: Metadata = {
   title: "Sidedoor — working prototype",
   description:
-    "The Sidedoor V6 screens, built in code as a working iOS app: both happy paths end to end, every state, on an iPhone 17.",
+    "The Sidedoor V6 screens, built in code as a working iOS app: the referrer and candidate flows end to end, and every state.",
 };
 
 export default function SidedoorPrototypePage() {
   return (
     <main className="proto-page">
-      <header className="proto-head">
-        <p className="proto-eyebrow">Sidedoor · V6</p>
-        <h1>Working prototype</h1>
-        <p className="proto-sub">
-          Every V6 screen, in code. Start as a candidate and you are Abhinav; start as a referrer and you are Nithin.{" "}
-          <b>Profile → Switch role</b> keeps you the same person on the other side. Swipe from the left edge to go back.
-        </p>
-        <p className="proto-sub">
-          Testing it? You never have to type: tap an empty field and it fills itself. Not sure where to go? Tap
-          any blank spot and the next thing to tap blinks blue.
-        </p>
-      </header>
       <Viewer />
     </main>
   );

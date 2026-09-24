@@ -1936,128 +1936,208 @@
 .work-card-panel .wip-phones { flex: 1 1 0; min-height: 0; height: auto; }
 
 /* ── Sidedoor working prototype page (app/work/sidedoor/prototype) ────────
-   One fixed screen: nothing here scrolls the page. The phone sits on the right at
-   whatever size the window height allows; the state list fills the left in two
-   columns and scrolls inside itself only if the window is short.
-   The app itself is styled entirely in components/sidedoor/app.css. */
+   A presentation, laid out like the RedBus one: a panel on the left, the phone on a
+   blue glow on the right, and nothing that scrolls the page. The glow uses the same
+   stops, strength and radius as the case study's stage (.cs-proto-stage.is-blue),
+   so the two read as one thing. The app itself is styled in components/sidedoor/app.css. */
 html:has(.proto-page), body:has(.proto-page) { height: 100%; overflow: hidden; }
 /* the floating dock would sit on top of the phone, and this page is its own tool */
 body:has(.proto-page) .bottom-dock { display: none !important; }
+body:has(.proto-page) { background: linear-gradient(180deg, #ffffff 0%, #f5f8fe 40%, #edf2fd 100%); }
 
 .page-wrapper:has(.proto-page) {
   max-width: none;
   height: 100dvh;
-  padding: calc(var(--nav-h) + 20px) 32px 20px;
+  padding: 0;
   gap: 0;
   overflow: hidden;
 }
 .content-wrapper:has(.proto-page) { height: 100%; min-height: 0; gap: 0; }
+.proto-page { height: 100%; min-height: 0; overflow: hidden; }
 
-/* Two columns, two rows. The head and the list stack in the left column; the phone
-   takes the right column across BOTH rows, so it centres against the whole page
-   height and the space above it matches the space below. */
-.proto-page {
+.pv {
   height: 100%;
-  min-height: 0;
   display: grid;
-  grid-template-columns: clamp(520px, 48vw, 700px) minmax(0, 1fr);
-  grid-template-rows: auto minmax(0, 1fr);
-  column-gap: 36px;
-  row-gap: 18px;
-  overflow: hidden;
+  grid-template-columns: minmax(340px, 400px) minmax(0, 1fr);
+  column-gap: 48px;
+  padding: 0 clamp(32px, 5vw, 72px);
+  position: relative;
+  isolation: isolate;
 }
-.proto-head { grid-column: 1; grid-row: 1; }
-.proto-states { grid-column: 1; grid-row: 2; }
-.proto-stage { grid-column: 2; grid-row: 1 / -1; }
+/* A true circle on the phone, fixed to the window so no box edge cuts it. Viewer.tsx
+   measures the phone and sets --gx, --gy and --gr. */
+.pv::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.6;
+  background: radial-gradient(in oklab circle var(--gr, 720px) at var(--gx, 70%) var(--gy, 50%),
+    rgba(29,78,216,.92) 0%, rgba(37,99,235,.88) 16%, rgba(59,118,240,.72) 32%, rgba(96,145,245,.50) 50%,
+    rgba(130,170,248,.30) 66%, rgba(165,195,250,.14) 80%, rgba(200,220,252,.05) 92%, rgba(220,232,254,0) 100%);
+}
 
-.proto-head { display: flex; flex-direction: column; gap: 6px; }
-.proto-eyebrow { font: 500 12px/16px var(--font-geist-mono), monospace; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
-.proto-head h1 { font: 600 26px/34px var(--font-manrope), sans-serif; letter-spacing: -0.02em; }
-.proto-sub { max-width: 760px; color: var(--text-secondary); font-size: 14px; line-height: 21px; }
+.pv-panel {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  max-height: 100%;
+  padding: 32px 0;
+}
+.pv-head { display: flex; flex-direction: column; }
+.pv-logo { width: 44px; height: 44px; object-fit: contain; margin-bottom: 20px; }
+.pv-eyebrow {
+  font: 500 11px/14px var(--font-geist-mono), monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #2563EB;
+}
+.pv-head h1 {
+  margin-top: 8px;
+  font: 700 32px/38px var(--font-manrope), sans-serif;
+  letter-spacing: -0.03em;
+  color: #0f172a;
+}
+.pv-lede { margin-top: 10px; font-size: 15px; line-height: 23px; color: #475569; }
 
-/* the list on the left, the phone on the right — the wrapper dissolves so its two
-   children land directly in the .proto-page grid above */
-.proto-layout { display: contents; }
-.proto-stage { display: flex; justify-content: center; align-items: center; min-height: 0; }
+/* Referrer | Candidate, a sliding thumb under the chosen side */
+.pv-seg {
+  margin-top: 28px;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 4px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.7);
+  box-shadow: inset 0 0 0 1px rgba(15,23,42,.08);
+  backdrop-filter: blur(8px);
+}
+.pv-seg i {
+  position: absolute;
+  top: 4px; bottom: 4px; left: 4px;
+  width: calc(50% - 4px);
+  border-radius: 9px;
+  background: #2563EB;
+  box-shadow: 0 4px 12px rgba(37,99,235,.28);
+  transition: transform 260ms cubic-bezier(.3,.7,.2,1);
+}
+.pv-seg[data-role="candidate"] i { transform: translateX(100%); }
+.pv-seg button {
+  position: relative;
+  height: 38px;
+  border: 0;
+  background: none;
+  font: 600 14px/1 var(--font-inter), sans-serif;
+  color: #475569;
+  cursor: pointer;
+  transition: color 200ms ease;
+}
+.pv-seg button[aria-selected="true"] { color: #fff; }
+.pv-who { margin-top: 12px; font-size: 13px; line-height: 18px; color: #64748b; }
 
-.proto-states {
+/* the flow: numbered steps joined by a thin line */
+.pv-steps { margin-top: 14px; display: flex; flex-direction: column; position: relative; }
+.pv-steps::before {
+  content: "";
+  position: absolute;
+  left: 15px; top: 18px; bottom: 18px;
+  width: 1px;
+  background: rgba(37,99,235,.18);
+}
+.pv-steps button {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 10px 6px 4px;
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  text-align: left;
+  font-size: 14px;
+  line-height: 20px;
+  color: #334155;
+  cursor: pointer;
+  transition: background 160ms ease, color 160ms ease;
+}
+.pv-steps button:hover { background: rgba(255,255,255,.7); }
+.pv-steps button.is-on { background: #fff; color: #0f172a; font-weight: 600; box-shadow: 0 1px 2px rgba(15,23,42,.06), 0 4px 14px rgba(37,99,235,.10); }
+.pv-n {
+  flex: 0 0 auto;
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font: 600 11px/1 var(--font-geist-mono), monospace;
+  color: #2563EB;
+  background: #eef3fe;
+  box-shadow: 0 0 0 3px #f5f8fe;
+  transition: background 160ms ease, color 160ms ease;
+}
+.pv-steps button.is-on .pv-n { background: #2563EB; color: #fff; box-shadow: 0 0 0 3px #fff; }
+
+/* every other state: one drawer, closed on arrival; inside, one group open at a time */
+.pv-more {
+  margin-top: 16px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.6);
+  box-shadow: inset 0 0 0 1px rgba(15,23,42,.07);
   min-height: 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }
-.proto-states h2 { font: 600 17px/24px var(--font-manrope), sans-serif; }
-/* The scroller is the wrapper, not the multi-column box: a multicol box with a
-   fixed height pushes what doesn't fit into EXTRA columns off to the side, where
-   overflow-y can't reach them. Given a free height it grows downward instead. */
-.proto-scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding-right: 4px; }
-.proto-groups {
-  /* three columns, so the groups balance downward and fill the height instead of
-     spreading into one long row */
-  columns: 3;
-  column-gap: 28px;
-}
-.proto-state-group { break-inside: avoid; display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
-.proto-state-group h3 {
-  font: 500 11px/14px var(--font-geist-mono), monospace;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-.proto-state-group ul { display: flex; flex-direction: column; gap: 1px; }
-.proto-state {
+.pv-more-h {
   display: flex;
   align-items: center;
   gap: 8px;
   width: 100%;
-  text-align: left;
-  padding: 4px 10px;
-  margin-inline: -10px;
-  border-radius: 6px;
-  font-size: 13px;
-  line-height: 19px;
-  color: var(--text-secondary);
+  padding: 12px 14px;
+  border: 0;
   background: none;
+  font: 600 13px/18px var(--font-inter), sans-serif;
+  color: #334155;
+  cursor: pointer;
+}
+.pv-count {
+  font: 500 11px/1 var(--font-geist-mono), monospace;
+  color: #64748b;
+  background: rgba(15,23,42,.05);
+  padding: 4px 6px;
+  border-radius: 6px;
+}
+.pv-more-h svg { margin-left: auto; width: 16px; height: 16px; fill: none; stroke: #64748b; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; transition: transform 200ms ease; }
+.pv-more.is-open .pv-more-h svg { transform: rotate(180deg); }
+.pv-more-b { padding: 0 14px 14px; display: flex; flex-direction: column; gap: 12px; min-height: 0; }
+.pv-groups, .pv-states { display: flex; flex-wrap: wrap; gap: 6px; }
+.pv-groups button, .pv-states button {
   border: 0;
   cursor: pointer;
+  font-size: 12.5px;
+  line-height: 16px;
+  padding: 6px 10px;
+  border-radius: 999px;
   transition: background 140ms ease, color 140ms ease;
 }
-.proto-state:hover { background: rgba(120, 113, 108, 0.08); color: var(--text-primary); }
-.proto-state.is-on { background: rgba(120, 113, 108, 0.12); color: var(--text-primary); font-weight: 500; }
-.proto-role {
-  flex: 0 0 auto;
-  width: 17px;
-  height: 17px;
-  border-radius: 5px;
-  display: grid;
-  place-items: center;
-  font: 600 10px/1 var(--font-geist-mono), monospace;
-}
-.proto-role.is-candidate { background: #dce8ff; color: #2a4a8a; }
-.proto-role.is-referrer { background: #d7f0e4; color: #16603f; }
+.pv-groups button { background: rgba(15,23,42,.05); color: #334155; font-weight: 500; }
+.pv-groups button span { color: #94a3b8; margin-left: 2px; }
+.pv-groups button:hover { background: rgba(15,23,42,.08); }
+.pv-groups button.is-on { background: #0f172a; color: #fff; }
+.pv-groups button.is-on span { color: rgba(255,255,255,.6); }
+.pv-states { padding-top: 12px; border-top: 1px solid rgba(15,23,42,.07); }
+.pv-states button { background: #eef3fe; color: #1e40af; }
+.pv-states button:hover { background: #dfe8fd; }
+.pv-states button.is-on { background: #2563EB; color: #fff; }
 
-/* Short windows: the phone takes more width, so the list gets the narrower slab.
-   The column count stays fixed — an auto-fitting count makes an extra column that
-   spills sideways, where overflow-y can't reach it, and lands behind the phone. */
-@media (max-height: 880px) {
-  .proto-page { grid-template-columns: minmax(0, 1fr) auto; }
-}
+.pv-foot { margin-top: 18px; font-size: 12px; line-height: 18px; color: #94a3b8; }
 
-/* Short windows: tighten the list so every group still lands on screen. */
-@media (max-height: 840px) {
-  .proto-head h1 { font-size: 22px; line-height: 28px; }
-  .proto-sub { font-size: 13px; line-height: 19px; }
-  .proto-states h2 { font-size: 15px; line-height: 21px; }
-  .proto-groups { column-gap: 22px; }
-  .proto-state-group { margin-bottom: 10px; }
-  .proto-state { padding: 3px 8px; margin-inline: -8px; font-size: 12.5px; line-height: 18px; }
-  .proto-role { width: 16px; height: 16px; font-size: 9px; }
-}
+.pv-stage { display: flex; justify-content: center; align-items: center; min-height: 0; }
 
 /* The phone is drawn at a fixed size and scaled as one piece, so --n has to be a
-   number. Step it by window height rather than calc so it stays predictable. */
-/* Each step is the largest frame that still fits at the SHORTEST window in its
-   band: the stage is (window height - 40) tall and the frame is n * 902/430. */
+   number. Each step is the largest frame that still fits at the SHORTEST window in
+   its band: the frame is n * 902/430 tall, with about 40px above and below. */
 .proto-stage .iphone { --n: 500; }
 @media (max-height: 1200px) { .proto-stage .iphone { --n: 498; } }
 @media (max-height: 1100px) { .proto-stage .iphone { --n: 460; } }
@@ -2071,22 +2151,35 @@ body:has(.proto-page) .bottom-dock { display: none !important; }
 @media (max-height: 680px)  { .proto-stage .iphone { --n: 259; } }
 @media (max-height: 600px)  { .proto-stage .iphone { --n: 220; } }
 
-@media (max-width: 1100px) {
-  .proto-page { grid-template-columns: minmax(0, 1fr) auto; column-gap: 24px; }
-  .proto-groups { columns: 2; column-gap: 20px; }
+/* Short windows: tighten the panel so it still fits without scrolling. */
+@media (max-height: 820px) {
+  .pv-logo { width: 36px; height: 36px; margin-bottom: 14px; }
+  .pv-head h1 { font-size: 26px; line-height: 32px; }
+  .pv-lede { font-size: 14px; line-height: 21px; }
+  .pv-seg { margin-top: 20px; }
+  .pv-steps button { padding-block: 4px; font-size: 13px; }
+  .pv-foot { display: none; }
+}
+/* With the drawer open it takes the steps' place, so the states have the room; closing it
+   brings the steps back. */
+.pv-panel:has(.pv-more.is-open) .pv-steps,
+.pv-panel:has(.pv-more.is-open) .pv-foot { display: none; }
+/* If the drawer is open on a short window, it scrolls inside itself; the page never does. */
+.pv-panel:has(.pv-more.is-open) .pv-more { flex: 0 1 auto; }
+.pv-panel:has(.pv-more.is-open) .pv-more-b { overflow-y: auto; }
+
+@media (max-width: 900px) {
+  .pv { grid-template-columns: minmax(300px, 1fr) auto; column-gap: 28px; padding: 0 28px; }
 }
 
-/* Below this the two columns stop fitting side by side, so the page goes back to
-   being an ordinary scrolling page — a phone and a list stacked. */
+/* Phones: an ordinary page, the panel over the phone. */
 @media (max-width: 760px) {
   html:has(.proto-page), body:has(.proto-page) { height: auto; overflow: visible; }
-  body:has(.proto-page) .bottom-dock { display: flex !important; }
-  .page-wrapper:has(.proto-page) { height: auto; padding: calc(var(--nav-h) + 24px) 16px 120px; overflow: visible; }
+  .page-wrapper:has(.proto-page) { height: auto; padding: 24px 16px 48px; overflow: visible; }
   .content-wrapper:has(.proto-page) { height: auto; }
-  .proto-page { height: auto; display: flex; flex-direction: column; gap: 24px; overflow: visible; }
-  .proto-layout { display: flex; flex-direction: column; gap: 24px; }
-  .proto-stage, .proto-states { height: auto; }
-  .proto-scroll { overflow: visible; }
+  .proto-page { height: auto; overflow: visible; }
+  .pv { display: flex; flex-direction: column; gap: 32px; padding: 0; height: auto; }
+  .pv-panel { padding: 0; }
+  .pv-foot { display: block; }
   .proto-stage .iphone { --n: 300; }
 }
-
