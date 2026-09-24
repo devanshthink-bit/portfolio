@@ -76,7 +76,7 @@ export const JOBS: Job[] = [
       "Demonstrate measurable impact through metrics such as conversion, engagement, or scale",
       "Showcase strong collaboration with product managers and engineers across projects",
     ],
-    question: "Tell us about a trade-off you made in a checkout or payment flow.",
+    question: "Tell us about a flow you made simpler. What did you cut, and what did it cost?",
     employer:
       "Flipkart is one of India’s leading e-commerce platforms, serving millions of customers across categories. The company focuses on building scalable, customer-first experiences through technology, design, and innovation.",
   },
@@ -485,7 +485,7 @@ export const PEOPLE_ME = {
     workEmail: "nithin.agarwal@flipkart.com",
     resume: "Nithin_Agarwal_Resume.pdf",
     note: "I lead checkout design at Flipkart and want to go deeper on one product. Happy to share more.",
-    post: { title: "Interaction Designer", jobId: "184223", jd: "Flipkart_IxDesigner_JD.docx", question: "Tell us about a trade-off you made in a checkout or payment flow." },
+    post: { title: "Interaction Designer", jobId: "184223", jd: "Flipkart_IxDesigner_JD.docx", question: "Tell us about a flow you made simpler. What did you cut, and what did it cost?" },
   },
 };
 export type Me = (typeof PEOPLE_ME)["abhinav"] | (typeof PEOPLE_ME)["nithin"];
@@ -493,7 +493,7 @@ export type Me = (typeof PEOPLE_ME)["abhinav"] | (typeof PEOPLE_ME)["nithin"];
 /** What a blank field fills itself with on a tap, so testers never have to type. */
 export const DEMO = {
   answer: "On MakeMyTrip hotel checkout I moved guest details after payment. Fewer fields up front, but a risk of wrong names on bookings, so we added a 10-minute edit window. Drop-off at payment fell 18%.",
-  question: "Tell us about a trade-off you made in a checkout or payment flow.",
+  question: "Tell us about a flow you made simpler. What did you cut, and what did it cost?",
   workEmail: "abhinav.saxena@blinkit.com",
   linkedin: "linkedin.com/in/abhinav-saxena",
   portfolio: "dribbble.com/abhinavsaxena",
@@ -782,7 +782,7 @@ export const CANDIDATES: Candidate[] = [
     id: "sneha",
     verified: true,
     record: { referred: 4, interviews: 3 },
-    answer: "The Gold upsell raised sign-ups but slowed checkout, so we showed it only to repeat buyers and kept 80% of the lift.",
+    answer: "We cut the Gold upsell from checkout for first-time buyers. It cost some sign-ups, but checkout got faster, and showing it to repeat buyers kept 80% of the lift.",
     name: "Sneha Kapoor",
     title: "Senior UX Designer",
     company: "Zomato",
@@ -967,7 +967,7 @@ export const CANDIDATES: Candidate[] = [
   },
   {
     id: "amit",
-    answer: "I haven’t designed a checkout yet. In freelance work I cut a booking form from 12 fields to 6.",
+    answer: "In freelance work I cut a booking form from 12 fields to 6. A few bookings then needed a follow-up call, which the client was happy to trade.",
     name: "Amit Patel",
     title: "Visual Designer",
     company: "Freelance",

@@ -3292,3 +3292,12 @@ DECISION · 2026-09-24 · 14 requests a week, and a no gives it back
 - Figma (UI Screens, V6): Fit rebuilt as the list on the request screen and its three state copies (Profile Updated, Referred Here Before, May Have Been Referred): uppercase label/sm headers, 44-tall rows, heading/xs skill, label/md grey source, 16 chevron in the MenuRow grey, 0.5 border/subtle hairlines, footer line. "Trust" → "Checked by Sidedoor" (seal), work-email row → envelope in tone blue. Question → label/md, gap 8. Note and project detail → text/primary (ProjectRow V6 main too). Company under a job → label/md on all 11 V6 Company Row instances (overrides, so V2–V5 are untouched).
 - Candidate side: 4 job cards and 6 Check your request screens now read "Found in your work" / "Listed only"; the note tag reads "A listed skill counts once your linked work or resume shows it". Both project link fields on Projects Editing have the help line.
 - New frame: Referrer/Skill Proof Sheet (5750:42504), cloned from the Add Resume sheet.
+
+## 24 Sep 2026 · The referrer's question asks about a skill, not a product
+
+- Devansh: the referrer writes the question before anyone applies, so "a trade-off in a checkout or payment flow" shuts out good people without checkout work (transferable skills).
+- Now: "Tell us about a flow you made simpler. What did you cut, and what did it cost?" Same skill (trade-off judgement in a flow); a checkout designer still answers with checkout work, everyone else from theirs.
+- Post field: the placeholder uses that example; help reads "Ask about a skill this role needs, not a specific product. Every candidate answers from their own work."
+- Answers rewritten where they no longer fit: Amit (no longer apologises for having no checkout work) and Sneha (cut the upsell, not added it). The rest already describe a simplification and its cost.
+- Figma: 14 texts on V6 (post screens ×2, Check your request ×6, request screen + 3 states) replaced in place; no text clipped.
+- Checked on localhost (Vercel preview needs a login): the request screen and Check your request show the new question.

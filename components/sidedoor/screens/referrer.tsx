@@ -1058,11 +1058,11 @@ export function EditPost({ title }: { title?: string }) {
           icon="bubble.left.fill"
           value={question ?? you.post.question}
           onChange={(v) => dispatch({ t: "question", v })}
-          placeholder="e.g. Tell us about a trade-off you made in a checkout flow."
+          placeholder="e.g. Tell us about a flow you made simpler. What did you cut, and what did it cost?"
           multiline
           kind="tips"
           demo={DEMO.question}
-          help="Candidates answer it in two or three lines. You see it on each request."
+          help="Ask about a skill this role needs, not a specific product. Every candidate answers from their own work."
         />
 
         <FileBox label="Job description" name={you.post.jd} what="file" />
