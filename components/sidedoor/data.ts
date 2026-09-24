@@ -406,6 +406,17 @@ export const ABHINAV_PROFILE = {
 };
 export type Profile = typeof ABHINAV_PROFILE;
 
+/** Skills Abhinav's resume shows only in a nearby form. They count as "Related", not as a match:
+ *  the referrer weighs them (Samarth as referrer: "at least a 50% to 70% skill match"; as a
+ *  candidate: past impact and outside projects should count too). */
+export const ABHINAV_NEAR: Record<string, string> = {
+  "Design system": "Related · systems design on the Blinkit merchant app",
+  "A/B testing": "Related · ran the A/B test on MakeMyTrip checkout",
+  "Payments UX": "Related · the payment step of MakeMyTrip checkout",
+};
+/** the job's missing skills that Abhinav's resume shows in a nearby form */
+export const nearOf = (j: Job) => j.missing.filter((k) => ABHINAV_NEAR[k]);
+
 /** Nithin's own details, for when he switches to asking. Same shape as Abhinav's. */
 export const NITHIN_PROFILE: Profile = {
   name: "Nithin Agarwal",
@@ -497,6 +508,8 @@ export type Candidate = {
   years: number;
   /** which of the post's skills their resume shows, and where it came from */
   has: Record<string, string>;
+  /** skills their resume shows only in a nearby form, and where */
+  near?: Record<string, string>;
   when: string;
   common?: { logo?: string; icon?: "building.2.fill"; text: string; years?: string };
   city: string;
@@ -525,6 +538,7 @@ export const CANDIDATES: Candidate[] = [
     logo: "blinkit",
     years: 3,
     has: { "Interaction design": from("MakeMyTrip"), Figma: from("Blinkit"), "User research": from("Blinkit"), Prototyping: from("Blinkit") },
+    near: { "Design system": ABHINAV_NEAR["Design system"], "A/B testing": ABHINAV_NEAR["A/B testing"] },
     when: "Today",
     common: { logo: "makemytrip", text: "Both worked at MakeMyTrip", years: "You 2021–22 · Abhinav 2022–23" },
     city: "Bengaluru, KA",

@@ -263,12 +263,14 @@ function RequestCard({ r, onClick, end }: { r: Req; onClick?: () => void; end?: 
 
 /* ── One referral request ───────────────────────────────────────────────── */
 /** The post's skills against what this person's resume shows: matches first, then their years
- *  against the referrer's own rule, then what's missing. */
+ *  against the referrer's own rule, then related skills (shown near, not counted), then what's missing. */
 function fitRows(c: Candidate, minYears: number) {
+  const near = c.near ?? {};
   const ok = POST_SKILLS.filter((k) => c.has[k]).map((k) => ({ name: k, ok: true, source: c.has[k] }));
-  const no = POST_SKILLS.filter((k) => !c.has[k]).map((k) => ({ name: k, ok: false, source: "Not in their resume" }));
+  const rel = POST_SKILLS.filter((k) => !c.has[k] && near[k]).map((k) => ({ name: k, ok: "near", source: near[k] }));
+  const no = POST_SKILLS.filter((k) => !c.has[k] && !near[k]).map((k) => ({ name: k, ok: false, source: "Not in their resume" }));
   const exp = { name: `${c.years} ${c.years === 1 ? "yr" : "yrs"} experience`, ok: c.years >= minYears, source: `You need ${minYears}+`, isExperience: true };
-  return [...ok, exp, ...no] as { name: string; ok: boolean; source: string; isExperience?: boolean }[];
+  return [...ok, exp, ...rel, ...no] as { name: string; ok: boolean | "near"; source: string; isExperience?: boolean }[];
 }
 
 const resumeOf = (name: string) => `${name.replace(/ /g, "_")}_Resume.pdf`;
@@ -305,7 +307,7 @@ export function ReferralRequest({ id }: { id: string }) {
   // the tag counts skills only — the experience row is a separate fact, as in V6
   const skillRows = skills.filter((s) => !s.isExperience);
   // a removed skill stops counting, which is what drops the tag to "3 of 7"
-  const matched = skillRows.filter((s) => s.ok && !removed(s.name)).length;
+  const matched = skillRows.filter((s) => s.ok === true && !removed(s.name)).length;
   const anyRemoved = skillRows.some((s) => removed(s.name));
   const resume = resumeOf(r.name);
 
@@ -425,7 +427,7 @@ export function ReferralRequest({ id }: { id: string }) {
                 row rather than stretching it. */}
             <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
               {skills.map((s) =>
-                s.ok && !s.isExperience ? (
+                s.ok === true && !s.isExperience ? (
                   <button
                     key={s.name}
                     className="sd-hit44"

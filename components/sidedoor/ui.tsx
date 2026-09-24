@@ -668,16 +668,18 @@ export function useFilePick({ name, accept, maxMB, what }: { name: string; accep
 /** Figma MatchRow: a 24px mark, 12px clear of a two-line block whose lines are 2px apart.
  *  Matched draws a filled check in blue and turns its title blue; missing and removed draw
  *  the empty circle in #d1d3d8 and keep the title in ink. */
-export function MatchRow({ ok, children, source }: { ok: boolean; children: ReactNode; source?: string }) {
+export function MatchRow({ ok, children, source }: { ok: boolean | "near"; children: ReactNode; source?: string }) {
+  // three states: in the resume (filled check), related (outlined check, plain name), missing
+  const full = ok === true;
   return (
     <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
       <Icon
-        name={ok ? "checkmark.circle.fill" : "circle"}
+        name={full ? "checkmark.circle.fill" : ok ? "checkmark.circle" : "circle"}
         size={24}
         style={{ color: ok ? "var(--sd-link)" : "var(--sd-border)", flex: "0 0 auto" }}
       />
       <span style={{ flex: "1 1 auto", display: "flex", flexDirection: "column", gap: 2, minWidth: 0 }}>
-        <span className="t-h-xs" style={ok ? { color: "var(--sd-link)" } : undefined}>
+        <span className="t-h-xs" style={full ? { color: "var(--sd-link)" } : undefined}>
           {children}
         </span>
         {source && <span className="t-label-sm muted">{source}</span>}

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useNav } from "../nav";
 import { STAGE_LABEL, WEEKLY_REQUESTS, requestIdFor, stageTag, useStore, type Request, type Stage } from "../store";
-import { DEMO, DESIGN, JOBS, firstName, jobById, matchOf, type Job } from "../data";
+import { DEMO, DESIGN, JOBS, firstName, jobById, matchOf, nearOf, type Job } from "../data";
 import {
   Actions,
   Avatar,
@@ -416,6 +416,9 @@ export function JobDetails({ id = "flipkart" }: { id?: string }) {
             ))}
           </div>
 
+          {/* The same three groups the referrer sees, so a weak match is clear before a request is spent */}
+          {!noResume && <FitSummary j={j} />}
+
           <Block icon="info.circle.fill" title="About the role">
             {j.about}
           </Block>
@@ -479,6 +482,30 @@ function Block({ icon, title, children, end }: { icon: Parameters<typeof Icon>[0
       </span>
       {typeof children === "string" ? <p className="t-body muted">{children}</p> : children}
     </div>
+  );
+}
+
+function FitSummary({ j }: { j: Job }) {
+  const near = nearOf(j);
+  const rows: [string, string[]][] = [
+    ["In your resume", j.skills.filter((k) => !j.missing.includes(k))],
+    ["Related", near],
+    ["Missing", j.missing.filter((k) => !near.includes(k))],
+  ];
+  return (
+    <Block icon="lightbulb.fill" title="How you match">
+      <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingTop: 4 }}>
+        {rows
+          .filter(([, list]) => list.length > 0)
+          .map(([label, list]) => (
+            <p key={label} className="t-body muted">
+              <span className="t-h-xs" style={{ color: "var(--sd-text)" }}>{label}: </span>
+              {list.join(", ")}
+            </p>
+          ))}
+        {near.length > 0 && <Note>Say where you used related skills in your note</Note>}
+      </div>
+    </Block>
   );
 }
 

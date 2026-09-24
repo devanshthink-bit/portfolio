@@ -3188,3 +3188,15 @@ DECISION · 2026-09-24 · 14 requests a week, and a no gives it back
 - Figma, V6: 11 texts updated. 3 Job screens (the new line), 2 Check your request ("14 of 14"), Suggested ("one of your 14"), Track 2 (the extra), Not Moving Forward and Role Closed (the request comes back).
 - Limitation: since switching role keeps the same person, nobody can refer or decline Abhinav during a session. So the "comes back" and "+1" rules are in the store and the copy, but a tester can't trigger them live.
 - Checked on localhost: Job details "Uses 1 of your 14…", Check your request "14 of 14", none-left note, Not moving forward copy.
+
+## 24 Sep 2026 · Related skills, on both sides
+
+- Devansh asked what referrers check, in order, then said interviewees talked about transferable skills and matching. "Build whatever should be there."
+- What the notes show: skill match is strong. Samarth as referrer needs "at least a 50% to 70% skill match", and experience is "non-negotiable" (n50); both wanted a match score (n23, n65). As a candidate, Samarth said past impact and outside projects should count too. "Transferable skills" is not in the notes, and the referrer said experience should not come "from a completely different domain". One referrer only, so this is a small base.
+- Already in the app, so not rebuilt: LinkedIn next to the resume, results in projects, notice period and city, the 6-month note (n74).
+- Built: a third group in the match, "Related". A skill the resume shows only in a nearby form (Design system ← systems design on the Blinkit merchant app; A/B testing ← the A/B test on MakeMyTrip checkout).
+  1. Referrer, One request: related rows sit after experience, before missing. Outlined check, plain name, the reason under it. They don't count in "4 of 7": the referrer decides.
+  2. Candidate, Job details: a "How you match" block under the tags. In your resume / Related / Missing, plus "Say where you used related skills in your note". Hidden when the resume was skipped.
+- Rejected: counting related skills in the tag (it would inflate the number the referrer trusts); expected level and a "can vouch" person (not in the research); salary (too sensitive).
+- Figma, V6: MatchRow gained Status=Related (5729:31903). 3 request screens updated (Explore, Skill Removed, Profile Updated). 4 Job screens got the block (Job Screen, Referred Before, Already Asked, Suggested By Referrer). The job Card is shared with V2–V5, so only the 4 V6 copies were detached; V2–V5 untouched.
+- Checked on localhost: both screens show the three groups (Vercel preview needs a login).
