@@ -108,9 +108,9 @@ export default function SidedoorCaseStudy() {
 
       <div id="toc-intro" style={{ marginBottom: 88 }}>
         <PhoneRow className="hero bare" phones={[
-          { src: scr("check"), alt: "Check your request: Flipkart's portal also asks for four details, still needed.", priority: true },
+          { src: scr("job"), alt: "Job details: How you match, with skills found in his work, related skills and one listed only.", priority: true },
+          { src: scr("login"), alt: "The login screen: the SideDoor logo, Get referred by insiders, and sign in with LinkedIn, Google or Apple.", priority: true },
           { src: scr("request"), alt: "The referrer's view of a request: blockers, then fit skill by skill with where each was found.", priority: true },
-          { src: scr("emailed"), alt: "After Refer: the portal details, emailed to the referrer's work inbox, with Copy all.", priority: true },
         ]} />
       </div>
 
@@ -378,9 +378,9 @@ export default function SidedoorCaseStudy() {
       <Beat label="Keeping" title="What I'm taking to the next project."
         sub="Most of it I learned by getting it wrong first.">
         <Numbered items={[
-          "Check where the research came from before building on it.",
           "A cut needs a reason, as much as an addition does.",
           "If a pattern takes seven rounds to look right, ask whether it should be there.",
+          "Write down what will break before testing. I guessed 1 of 13.",
         ]} />
       </Beat>
 
