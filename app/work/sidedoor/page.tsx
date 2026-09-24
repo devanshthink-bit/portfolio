@@ -10,7 +10,7 @@ import { PhoneRow } from "../../../components/IPhone";
 import PhoneShot from "../../../components/PhoneShot";
 
 export const metadata: Metadata = {
-  title: "SideDoor - A referral request a stranger can say yes to | Devansh Somvanshi",
+  title: "SideDoor - Why strangers ignore your referral request | Devansh Somvanshi",
   description: "A concept for job referrals in Indian tech: the request arrives complete, fit comes with proof, and the answer travels back.",
 };
 
@@ -122,9 +122,9 @@ export default function SidedoorCaseStudy() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/images/sidedoor/sidedoor-logo.png" alt="" aria-hidden width={24} height={31} style={{ height: "1.05em", width: "auto", display: "inline-block", verticalAlign: "-0.2em", marginRight: 10 }} />
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/images/sidedoor/sidedoor-word.svg" alt="SideDoor" width={132} height={24} style={{ height: "0.74em", width: "auto", display: "inline-block", verticalAlign: "-0.02em" }} />: a referral request a stranger can say yes to
+        <img src="/images/sidedoor/sidedoor-word.svg" alt="SideDoor" width={132} height={24} style={{ height: "0.74em", width: "auto", display: "inline-block", verticalAlign: "-0.02em" }} />: why strangers ignore your referral request
       </h1>
-      <p style={T.lede}>Ask a stranger at a company to refer you and you&apos;ll usually hear nothing. The two people I interviewed have been on both sides of that, and they told me why: the request hands the referrer the candidate&apos;s paperwork. SideDoor makes the request arrive complete, shows fit with proof, and sends the answer back.</p>
+      <p style={T.lede}>I started out sure that referrers ignore strangers because they can&apos;t trust them. The two people I interviewed have asked for referrals and given them, and neither of them talked about trust. They talked about the work a request hands them: no job ID, portal questions, fit to check by hand. So I dropped my first design. SideDoor sends the request complete, shows where each skill was found, and tells the candidate how it ended.</p>
 
       <MetaStrip items={[
         { label: "Role", value: "Product designer, solo, self-initiated" },

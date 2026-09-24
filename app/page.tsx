@@ -35,7 +35,7 @@ const recentWork = [
     blurb: "Travellers book one way and leave the return for later, where it often goes to another app. A self-initiated RedBus concept that wins that revenue back by turning one booking into two, in the same checkout.",
   },
   {
-    title: "Sidedoor, a referral request a stranger can say yes to",
+    title: "Sidedoor, why strangers ignore your referral request",
     desc: "View project",
     tag: "Product Design · 0 to 1",
     // Same three colours as before (#d4e2ff, #7aa5fb, #b0caff), as soft glows from the two corners over
@@ -53,9 +53,9 @@ const recentWork = [
     wordmark: "/images/sidedoor/sidedoor-word.svg",
     brand: "SideDoor",
     brandColor: "#ffffff",
-    did: "Designed a referral request that a stranger can say yes to in minutes",
+    did: "I thought referrers ignored strangers out of distrust. They were ignoring the paperwork.",
     tags: ["Careers", "Two-sided", "iOS app", "Concept"],
-    blurb: "Employees ignore referral requests from strangers because each one hands them the candidate's paperwork. A concept where the request arrives complete, every skill comes with proof, and the answer finds its way back.",
+    blurb: "Two people who have asked for referrals and given them told me the same thing: a stranger's request hands the referrer the candidate's work. So I designed one that arrives complete, proves every skill it claims, and tells the candidate how it ended.",
   },
   // Hidden for now at Devansh's request (13 Sep 2026). Kept, not deleted: uncomment to bring back.
   // {

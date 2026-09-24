@@ -3463,3 +3463,7 @@ Because:   Devansh's review of the live page.
 CHANGE · 2026-09-25 · prototype page
 Changed:   /work/sidedoor/prototype rebuilt as a presentation, laid out like the RedBus one. Left panel: logo, one line on what SideDoor does, a Referrer | Candidate switch, and seven main screens per flow. The other 59 states sit in one drawer, closed on arrival, one group open at a time; the drawer takes the steps' place while open, so nothing scrolls at 1440 x 900. The phone stands on the case study's blue glow (same stops, 60% strength, radius 0.94 of the phone's height, centred on the phone).
 Because:   Devansh will present it to stakeholders; the old page listed every state at once.
+
+CHANGE · 2026-09-25 · hook copy
+Changed:   Home card and case study hero now lead with the bet that died. Card: "I thought referrers ignored strangers out of distrust. They were ignoring the paperwork." Hero title: "why strangers ignore your referral request". "In minutes" is gone: nothing measured it.
+Because:   Devansh: the old lines didn't make a recruiter want to open it. The wrong bet is the most surprising true thing in the file (trust gap contradicted by n50 n55 n76; the work is n57 n59 n60 n70 n71).
