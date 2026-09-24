@@ -41,7 +41,7 @@ type Req = Candidate;
 /* ── Referral requests ──────────────────────────────────────────────────── */
 export function ReferralRequests() {
   const nav = useNav();
-  const { handled, invited, unread, jobId, force, rules, live, you, welcome, dispatch } = useStore();
+  const { handled, invited, unread, jobId, force, rules, live, you, welcome, awaiting, dispatch } = useStore();
   const [phase, setPhase] = useState<"loading" | "ok">("loading");
   const [open, setOpen] = useState(false);
   // a request the candidate withdrew leaves the referrer's list, and you never see a request from yourself
@@ -61,6 +61,20 @@ export function ReferralRequests() {
   const outstanding = cleared ? [] : REQUESTS.filter((r) => !isLower(r) && !handled[r.id]);
   const lower = cleared ? [] : REQUESTS.filter((r) => isLower(r) && !handled[r.id]);
   const allHandled = phase === "ok" && outstanding.length === 0 && lower.length === 0;
+  // A job posted a moment ago has no requests yet (Devansh, 24 Sep): the list starts empty with
+  // your link, and the requests come in 5 seconds after you land here.
+  const [arrived, setArrived] = useState(false);
+  useEffect(() => {
+    if (!awaiting || phase !== "ok") return;
+    const t = window.setTimeout(() => {
+      dispatch({ t: "arrive" });
+      setArrived(true);
+      dispatch({ t: "toast", v: `${outstanding.length + lower.length} referral requests came in` });
+      window.setTimeout(() => dispatch({ t: "toast", v: null }), 2600);
+    }, 4100); // plus the 0.9 s load: 5 s from landing
+    return () => clearTimeout(t);
+  }, [awaiting, phase, dispatch, outstanding.length, lower.length]);
+  const empty = force === "reqs.empty" || (awaiting && phase === "ok");
 
   return (
     <Screen largeTitle="Referral requests" right={<BellButton unread={unread} />}>
@@ -108,7 +122,7 @@ export function ReferralRequests() {
             body="Check your connection and try again."
             action={<Button type="secondary" onClick={() => dispatch({ t: "force", v: null })}>Try again</Button>}
           />
-        ) : force === "reqs.empty" ? (
+        ) : empty ? (
           // Figma's empty screen is not the generic Empty block: it is the line, the referrer's
           // link in a 44-tall box, and a Copy link button — and it shows no suggested people.
           <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
@@ -162,7 +176,7 @@ export function ReferralRequests() {
         ) : (
           // Figma's Request List is one 16-gap column: the cards and the "Lower match" row are
           // siblings inside it, which is what puts that row at y618 and ends the list at 650.
-          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          <div className={arrived ? "sd-arrive" : undefined} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {outstanding.map((r) => (
               <RequestCard key={r.id} r={r} onClick={() => { dispatch({ t: "welcome", v: false }); nav.push("referralRequest", { id: r.id }); }} />
             ))}

@@ -3166,3 +3166,11 @@ DECISION · 2026-09-24 · Finishing onboarding feels like arriving
 - Two new jumps in the state list: "Candidate · end of sign-up" and "Referrer · job posted".
 - Figma, V6 · States Flow: new frames "Candidate/Jobs Screen/Welcome" and "Referrer/Referral Requests Screen/Welcome", with the card built from the "Heard From The Company" card style and the library's checkmark.circle.fill. The motion is code only.
 - Checked on localhost: both paths show the app rising in, the old screen fading and the bar rising; the card appears; after Copy link the referrer lands on Referral requests.
+
+DECISION · 2026-09-24 · Requests come in after the job is posted
+- Devansh: the referrer has only just posted, so the requests shouldn't already be there.
+- After "Post job", Referral requests starts empty ("No requests yet", your link, Copy link) with the "Your job is live" card. 5 s after landing (0.9 s load + 4.1 s), the requests come in: the cards fade up one after another, and a toast says "14 referral requests came in".
+- Only after a fresh post. The "Referrer · job posted" jump counts as one. Every other way into the list shows it as before.
+- Figma, V6 · States Flow: new "Referrer/Referral Requests Screen/Just Posted" (the Empty screen plus the welcome card). The Welcome frame is the moment after the requests come in.
+- Known mismatch, not changed: 14 requests arrive although the post's rule says 10 a week. The list has always shown 14.
+- Checked on localhost: the list is empty at 1.5 s, and the cards and toast appear at 5.1 s.

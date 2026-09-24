@@ -959,6 +959,10 @@ export function RulesSection() {
 export function JobLive({ title }: { title?: string }) {
   const nav = useNav();
   const { jobId, you, dispatch } = useStore();
+  // this screen only follows a post, so its requests are still to come (also when jumped to)
+  useEffect(() => {
+    dispatch({ t: "post" });
+  }, [dispatch]);
   return (
     <Screen
       title="Job posted"

@@ -64,6 +64,8 @@ export const requestIdFor = (job: string) => (job === "flipkart" ? "flipkart" : 
 
 type State = {
   role: "candidate" | "referrer" | null;
+  /** a job was just posted: its requests haven't come in yet, so the list starts empty */
+  awaiting: boolean;
   /** onboarding just finished: the first tab says "You're all set" once */
   welcome: boolean;
   /** who you are, set by the first side you choose and kept when you switch */
@@ -117,6 +119,7 @@ const ABHINAV = { candidate: "Abhinav Saxena", candidateRole: "Product Designer,
 const initial: State = {
   role: null,
   welcome: false,
+  awaiting: false,
   me: null,
   resume: null,
   skippedResume: false,
@@ -168,6 +171,7 @@ type Action =
   | { t: "send"; job: string }
   | { t: "withdraw"; id: string }
   | { t: "welcome"; v: boolean }
+  | { t: "arrive" }
   | { t: "profile"; v: Partial<Profile> }
   | { t: "pausePost"; v: string; on: boolean }
   | { t: "postDraft"; v: string }
@@ -233,6 +237,8 @@ function reduce(s: State, a: Action): State {
     }
     case "welcome":
       return { ...s, welcome: a.v };
+    case "arrive":
+      return { ...s, awaiting: false };
     case "withdraw": {
       // BRIEF, Other routes: "A withdrawn request gives the request back"
       const r = s.requests.find((x) => x.id === a.id);
@@ -263,7 +269,7 @@ function reduce(s: State, a: Action): State {
     case "rule":
       return { ...s, rules: { ...s.rules, [a.k]: a.v } };
     case "post":
-      return { ...s, posted: true };
+      return { ...s, posted: true, awaiting: true };
     case "unhandle": {
       const rest = { ...s.handled };
       delete rest[a.id];
