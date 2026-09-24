@@ -7,6 +7,7 @@ written on **2026-09-24**, against:
 - **Figma:** file `8Z12N0tXTI126hj7ZaXnbO`, page UI Screens, the V6 flows and V6 · States Flow, as they
   stood on 2026-09-24. Screens were exported at 2x and cropped to one phone screen (804 × 1748) into
   `public/images/sidedoor/screens/`.
+- **The case study itself:** commit `ec55cc0`
 - **Research and decisions:** LOG.md up to the entry "Usability test plan" (2026-09-24).
 
 Anything that changes after this point has to be checked against the table below, and the beats it
