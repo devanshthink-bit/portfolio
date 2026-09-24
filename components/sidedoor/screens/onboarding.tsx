@@ -43,7 +43,9 @@ function AppleMark() {
 export function Login() {
   const nav = useNav();
   const { force } = useStore();
-  const lines = ["Get referred by insiders", "Refer someone in minutes", "See where your request got to"];
+  // who you reach, why they trust it (fit shown by work, not typed-in skills), and why you ask less
+  // but hear back: the product in three lines (Devansh, 24 Sep)
+  const lines = ["Get referred by insiders", "Matched on proof, not keywords", "Fewer asks. Real answers."];
   // The lines turn over on their own, every 3 seconds, for ever. The track carries a copy of
   // the first line at its end: sliding onto it looks like wrapping round, then it jumps back
   // to the real first line with no animation. A tap on a dot restarts the clock.

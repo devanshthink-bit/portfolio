@@ -3267,3 +3267,11 @@ DECISION · 2026-09-24 · 14 requests a week, and a no gives it back
 - All V6 project links are now on Vercel.
 - Checked by numbers: gaps 24/12/8/16, text heights on 16/20 line multiples, the seal bound to successAA (#15803d), like the code.
 - Checked on localhost (Vercel preview needs a login): every state list entry opens without errors; the request order and groups; the question, verification and 6-month states.
+
+## 24 Sep 2026 · Login lines 2 and 3
+
+- Devansh: keep "Get referred by insiders"; make lines 2 and 3 say what the product stands for (quality, curated, no spam).
+- Now: 1 "Get referred by insiders" (who you reach) · 2 "Matched on proof, not keywords" (fit comes from work shown, not skills typed in) · 3 "Fewer asks. Real answers." (the 14-a-week limit, and referrers answer because each ask is chosen).
+- Replaced: "Refer someone in minutes" (referrer-side, off the candidate pitch) and "See where your request got to" (a feature, not the promise).
+- Avoided "AI" in the copy: the matching is the proof rule, and "AI-curated" would promise a black box the product deliberately isn't.
+- All three fit one line at 306 wide (checked on localhost). Figma's login frames show only line 1, so no Figma change.
