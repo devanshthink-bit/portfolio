@@ -50,8 +50,8 @@ const recentWork = [
     screens: "/images/sidedoor/screens",
     logo: "/images/sidedoor/sidedoor-logo.png",
     logoRaw: true,
-    // The icon is tall and narrow, so it needs more height than the wide redBus bus to look the same size.
-    logoH: "1.15em",
+    // The icon is tall and narrow, so it needs more height than the wide redBus bus to look as big.
+    logoH: "1.5em",
     wordmark: "/images/sidedoor/sidedoor-word.svg",
     brand: "SideDoor",
     brandColor: "#ffffff",
@@ -162,7 +162,7 @@ function WorkCard({ item }: { item: Work }) {
             <div className="work-card-panel-text is-brand-only">
               <p className="work-card-brand" style={{ color: item.brandColor, display: "flex", alignItems: "center", gap: 10 }}>
                 {/* The brand's own logo, unaltered, turned white on the colour panel unless logoRaw keeps its colours */}
-                {item.logo && <img src={item.logo} alt="" aria-hidden width={45} height={30} style={{ height: item.logoH ?? "0.8em", width: "auto", display: "block", filter: item.logoRaw ? undefined : "brightness(0) invert(1)" }} />}
+                {item.logo && <img src={item.logo} alt="" aria-hidden width={45} height={30} style={{ height: item.logoH ?? "1.15em", width: "auto", display: "block", filter: item.logoRaw ? undefined : "brightness(0) invert(1)" }} />}
                 {/* The exact wordmark when there is one, in white; otherwise the name as text */}
                 {item.wordmark
                   ? <img src={item.wordmark} alt={item.brand} width={132} height={24} style={{ height: "0.74em", width: "auto", display: "block", filter: "brightness(0) invert(1)" }} />
