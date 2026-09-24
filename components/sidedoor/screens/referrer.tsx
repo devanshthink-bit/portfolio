@@ -402,9 +402,7 @@ export function ReferralRequest({ id }: { id: string }) {
             <div className="sd-fit">
               {groups.map((g) => (
                 <div key={g.label} className="sd-fit-group">
-                  <span className="sd-fit-head">
-                    {g.label} · {g.rows.length}
-                  </span>
+                  <span className="sd-fit-head">{g.label}</span>
                   {g.rows.map((x) =>
                     x.proof ? (
                       <button key={x.name} className="sd-fit-row is-tap" onClick={() => nav.openSheet("proof", { id: r.id, skill: x.name })}>

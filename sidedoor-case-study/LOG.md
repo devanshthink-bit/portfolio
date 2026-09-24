@@ -3301,3 +3301,9 @@ DECISION · 2026-09-24 · 14 requests a week, and a no gives it back
 - Answers rewritten where they no longer fit: Amit (no longer apologises for having no checkout work) and Sneha (cut the upsell, not added it). The rest already describe a simplification and its cost.
 - Figma: 14 texts on V6 (post screens ×2, Check your request ×6, request screen + 3 states) replaced in place; no text clipped.
 - Checked on localhost (Vercel preview needs a login): the request screen and Check your request show the new question.
+
+## 2026-09-24 · Fit group headers: no "· count"
+- Devansh: no iOS app writes a section header as "RELATED · 2".
+- Now the header is just the name, like an iOS grouped-list header: "FOUND IN THEIR WORK", "RELATED", "LISTED ONLY", "MISSING". The rows show how many; the "4 of 7" tag gives the total.
+- Figma: 12 header texts on V6 (request screen + 3 states) edited in place.
+- Checked on localhost (Vercel preview needs a login).
