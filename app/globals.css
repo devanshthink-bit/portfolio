@@ -204,7 +204,7 @@
     font-family: var(--font-inter), "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Helvetica Neue", Arial, sans-serif;
     font-size: var(--fs-16);
     line-height: 1.6;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.011em;
     -webkit-font-smoothing: antialiased;
     transition: background-color 0.5s ease, color 0.5s ease;
   }
@@ -387,7 +387,7 @@
     font-size: var(--fs-28);
     font-weight: 700;
     letter-spacing: -0.03em;
-    line-height: 1.3;
+    line-height: 1.2;
     color: var(--text-primary);
     margin: 0;
   }
@@ -407,7 +407,7 @@
     font-size: var(--fs-16);
     font-weight: 400;
     line-height: 1.6;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.011em;
     color: var(--text-secondary);
     margin: 0;
   }
@@ -455,7 +455,7 @@
     font-size: var(--fs-16);
     font-weight: 400;
     line-height: 1.6;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.011em;
     color: var(--text-secondary);
     margin: 0 0 8px 0;
   }
@@ -508,7 +508,7 @@
   .work-card-title {
     font-size: var(--fs-14);
     font-weight: 400;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.011em;
     line-height: 1.6;
     color: var(--text-primary);
     margin: 0;
@@ -535,9 +535,9 @@
   .work-card-brand {
     font-family: var(--font-manrope), sans-serif;
     font-size: var(--fs-28);
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: -0.03em;
-    line-height: 1.15;
+    line-height: 1.2;
     margin: 0 0 6px 0;
   }
 
@@ -547,7 +547,7 @@
   .work-card-did {
     font-family: var(--font-manrope), sans-serif;
     font-size: var(--fs-16);
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.4;
     color: var(--text-primary);
@@ -602,8 +602,9 @@
   .work-card-title-lg {
     font-family: var(--font-manrope), sans-serif;
     font-size: var(--fs-20);
-    font-weight: 600;
-    letter-spacing: -0.03em;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -621,17 +622,17 @@
 
   .work-card-blurb {
     font-size: var(--fs-16);
-    line-height: 1.5;
+    line-height: 1.6;
     color: var(--text-muted);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.011em;
     margin: 0;
   }
 
   .work-card-impact {
     font-size: var(--fs-16);
-    line-height: 1.5;
+    line-height: 1.6;
     color: #B7791F;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.011em;
     margin: 0;
   }
 
@@ -809,7 +810,7 @@
     font-size: var(--fs-28);
     font-weight: 700;
     letter-spacing: -0.03em;
-    line-height: 1.3;
+    line-height: 1.2;
     color: var(--text-primary);
     margin: 0;
   }
@@ -829,7 +830,7 @@
     font-family: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
     font-size: var(--fs-14);
     font-weight: 400;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.011em;
     color: var(--text-muted);
     text-decoration: none;
     border-bottom: 1px solid rgba(53, 48, 42, 0.12);
@@ -1107,7 +1108,7 @@
   .phone-note-sub {
     font-family: var(--font-inter), sans-serif;
     font-size: var(--fs-14);
-    line-height: 1.5;
+    line-height: 1.6;
     letter-spacing: -0.011em;
     color: var(--text-muted);
     margin: 3px 0 0;
@@ -1169,6 +1170,7 @@
     font-size: var(--fs-16);
     color: var(--text-primary);
     letter-spacing: -0.02em;
+    line-height: 1.4;
   }
 
   .phone-fig-cap {
@@ -1286,9 +1288,9 @@
   .cs-act-title {
     font-family: var(--font-manrope), sans-serif;
     font-size: var(--fs-28);
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: -0.03em;
-    line-height: 1.15;
+    line-height: 1.2;
     color: var(--text-primary);
     margin: 0 0 12px;
   }
@@ -1335,6 +1337,7 @@
     font-size: var(--fs-14);
     font-weight: 500;
     letter-spacing: -0.011em;
+    line-height: 1.6;
     white-space: nowrap;
     vertical-align: middle;
   }
@@ -1837,7 +1840,7 @@
 .cs-idea-rows li { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 16px; row-gap: 2px; padding: 12px 2px; border-bottom: 1px solid var(--border); }
 .cs-idea-why { font: 700 var(--fs-16)/1.4 var(--font-manrope), sans-serif; letter-spacing: -0.02em; color: var(--text-primary); }
 .cs-idea-count { font: 500 var(--fs-14)/1.4 var(--font-inter), sans-serif; color: var(--text-muted); font-variant-numeric: tabular-nums; align-self: start; padding-top: 2px; }
-.cs-idea-names { grid-column: 1 / -1; font-size: var(--fs-14); line-height: 1.5; color: var(--text-muted); }
+.cs-idea-names { grid-column: 1 / -1; font-size: var(--fs-14); line-height: 1.6; letter-spacing: -0.011em; color: var(--text-muted); }
 @media (max-width: 640px) { .cs-idea-list { grid-template-columns: minmax(0, 1fr); } }
 
 

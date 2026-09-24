@@ -463,9 +463,9 @@ function Bucket({ cat }: { cat: Cat }) {
           )}
           <span style={{
             fontFamily: "var(--font-manrope)",
-            fontSize: 30,
-            fontWeight: 800,
-            letterSpacing: "-0.035em",
+            fontSize: 28,
+            fontWeight: 700,
+            letterSpacing: "-0.03em",
           }}>
             {CAT_LABEL[cat]}
           </span>

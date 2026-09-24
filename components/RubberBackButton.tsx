@@ -65,7 +65,7 @@ export default function RubberBackButton({ plain = true }: { plain?: boolean } =
         fontSize: 14,
         fontWeight: 600,
         color: "var(--text-primary)",
-        letterSpacing: plain ? "-0.02em" : "-0.011em",
+        letterSpacing: "-0.011em",
         textTransform: plain ? "none" : "uppercase",
       }}
     >

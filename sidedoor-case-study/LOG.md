@@ -3467,3 +3467,7 @@ Because:   Devansh will present it to stakeholders; the old page listed every st
 CHANGE · 2026-09-25 · hook copy
 Changed:   Home card and case study hero now lead with the bet that died. Card: "I thought referrers ignored strangers out of distrust. They were ignoring the paperwork." Hero title: "why strangers ignore your referral request". "In minutes" is gone: nothing measured it.
 Because:   Devansh: the old lines didn't make a recruiter want to open it. The wrong bet is the most surprising true thing in the file (trust gap contradicted by n50 n55 n76; the work is n57 n59 n60 n70 n71).
+
+CHANGE · 2026-09-25 · one type scale (portfolio + both case studies)
+Changed:   Inter -0.011em at every size, line height 1.6. Manrope 700 for headings: -0.03em and 1.2 at 28px, -0.02em and 1.3 at 20px, -0.02em and 1.4 at 16 to 18px. Bold inside body text 600. Act titles and the card brand 800 → 700; home card title 600 → 700; the About skills label 30/800 → 28/700. Home card logos match their name's height.
+Because:   Audit of computed styles: two tracking systems (-0.011em in case studies, -0.02em on the portfolio, inherited as px), four line heights on 28px headings, 700 and 800 mixed.

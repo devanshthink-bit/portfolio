@@ -9,19 +9,20 @@ const MANROPE = "var(--font-manrope)";
 const INTER = "var(--font-inter)";
 
 // One small type scale for the whole case study (Devansh, 15 Sep: "Keep the number of variations
-// minimal"). Sizes 12 / 14 / 16 / 18 / 20 / 28, weights 400 / 500 / 700 / 800, four letter-spacings.
+// minimal"). Sizes 12 / 14 / 16 / 18 / 20 / 28, weights 400 / 500 / 700, three letter-spacings
+// (Inter -0.011em; Manrope -0.02em up to 20px, -0.03em at 28px). Body 1.6, headings 1.2 to 1.4.
 export const T = {
-  h1:      { fontFamily: MANROPE, fontSize: "var(--fs-28)", fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.03em", lineHeight: 1.15, margin: "0 0 12px 0" } as React.CSSProperties,
+  h1:      { fontFamily: MANROPE, fontSize: "var(--fs-28)", fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.03em", lineHeight: 1.2, margin: "0 0 12px 0" } as React.CSSProperties,
   lede:    { fontFamily: INTER, fontSize: "var(--fs-18)", fontWeight: 400, color: "var(--text-secondary)", letterSpacing: "-0.011em", lineHeight: 1.6, margin: "0 0 28px 0", maxWidth: 640 } as React.CSSProperties,
   h2:      { fontFamily: MANROPE, fontSize: "var(--fs-20)", fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.02em", lineHeight: 1.3, margin: "0 0 12px 0" } as React.CSSProperties,
   sub:     { fontFamily: INTER, fontSize: "var(--fs-16)", fontWeight: 400, color: "var(--text-secondary)", letterSpacing: "-0.011em", lineHeight: 1.6, margin: 0, maxWidth: 640 } as React.CSSProperties,
-  small:   { fontFamily: INTER, fontSize: "var(--fs-14)", fontWeight: 400, color: "var(--text-muted)", letterSpacing: "-0.011em", lineHeight: 1.5, margin: 0 } as React.CSSProperties,
+  small:   { fontFamily: INTER, fontSize: "var(--fs-14)", fontWeight: 400, color: "var(--text-muted)", letterSpacing: "-0.011em", lineHeight: 1.6, margin: 0 } as React.CSSProperties,
   // A quiet label inside a card: the same as small.
-  eyebrow: { fontFamily: INTER, fontSize: "var(--fs-14)", fontWeight: 400, color: "var(--text-muted)", letterSpacing: "-0.011em", lineHeight: 1.5, margin: 0 } as React.CSSProperties,
+  eyebrow: { fontFamily: INTER, fontSize: "var(--fs-14)", fontWeight: 400, color: "var(--text-muted)", letterSpacing: "-0.011em", lineHeight: 1.6, margin: 0 } as React.CSSProperties,
   cardH:   { fontFamily: MANROPE, fontSize: "var(--fs-16)", fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.02em", lineHeight: 1.4, margin: 0 } as React.CSSProperties,
   body:    { fontFamily: INTER, fontSize: "var(--fs-16)", fontWeight: 400, color: "var(--text-secondary)", letterSpacing: "-0.011em", lineHeight: 1.6, margin: 0 } as React.CSSProperties,
   quote:   { fontFamily: MANROPE, fontSize: "var(--fs-16)", fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.02em", lineHeight: 1.4, margin: 0 } as React.CSSProperties,
-  figure:  { fontFamily: MANROPE, fontSize: "var(--fs-28)", fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 1.15, color: "var(--text-primary)", fontVariantNumeric: "tabular-nums" } as React.CSSProperties,
+  figure:  { fontFamily: MANROPE, fontSize: "var(--fs-28)", fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 1.2, color: "var(--text-primary)", fontVariantNumeric: "tabular-nums" } as React.CSSProperties,
 };
 
 // "Scene 4 · A week later" in the source shows as "SCENE 4 | A WEEK LATER": a thin rule, not a dot.
