@@ -120,7 +120,7 @@ export default function SidedoorCaseStudy() {
       <h1 style={T.h1}>
         {/* The exact logo and wordmark from the app's login screen */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/images/sidedoor/sidedoor-logo.png" alt="" aria-hidden width={24} height={31} style={{ height: "1.05em", width: "auto", display: "inline-block", verticalAlign: "-0.2em", marginRight: 10 }} />
+        <img src="/images/sidedoor/sidedoor-logo.png" alt="" aria-hidden width={24} height={31} style={{ height: "1.4em", width: "auto", display: "inline-block", verticalAlign: "-0.34em", marginRight: 10 }} />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/images/sidedoor/sidedoor-word.svg" alt="SideDoor" width={132} height={24} style={{ height: "0.74em", width: "auto", display: "inline-block", verticalAlign: "-0.02em" }} />: why strangers ignore your referral request
       </h1>
