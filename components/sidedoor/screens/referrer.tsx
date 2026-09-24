@@ -616,6 +616,7 @@ function AfterRefer({ id }: { id: string }) {
   const { jobId, details, profile, force, you, dispatch } = useStore();
   const r = candidateById(id);
   const [copied, setCopied] = useState<string[]>([]);
+  const [emailed, setEmailed] = useState(false);
   const decide = useDecide();
   // Figma "Undo": the app's undo toast does this after a real Refer; the switcher's frozen
   // Undo state draws the same toast here so it stays on screen
@@ -623,6 +624,10 @@ function AfterRefer({ id }: { id: string }) {
   const fields = portalFields(r, details, profile);
   const name = r.name;
   const first = firstName(name);
+  const flash = (v: string) => {
+    dispatch({ t: "toast", v });
+    window.setTimeout(() => dispatch({ t: "toast", v: null }), 1400);
+  };
 
   return (
     <Screen
@@ -662,6 +667,39 @@ function AfterRefer({ id }: { id: string }) {
         <Section label={`Add to ${you.company}’s portal`} icon="arrow.up.right.square" end={<Tag>Job ID {jobId || you.post.jobId}</Tag>}>
           {/* Figma's Portal Details frame: the box, then the hint 8 under it and outside the box. */}
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {/* Everyone we spoke to fills the portal on a laptop, so the list goes to their work
+                inbox with the resume attached, or onto the clipboard in one go. */}
+            <div style={{ display: "flex", gap: 12, width: "100%" }}>
+              <Button
+                type="secondary"
+                inline
+                icon={<Icon name={emailed ? "checkmark" : "envelope.fill"} size={20} style={{ color: "var(--sd-icon-accent)" }} />}
+                onClick={() => {
+                  setEmailed(true);
+                  flash(`Emailed to ${you.workEmail}`);
+                }}
+              >
+                {emailed ? "Emailed" : "Email to me"}
+              </Button>
+              <Button
+                type="secondary"
+                inline
+                icon={<Icon name="doc.on.doc.fill" size={20} style={{ color: "var(--sd-icon-accent)" }} />}
+                onClick={() => {
+                  const text = fields.filter((f) => !f.download).map((f) => `${f.name}: ${f.value}`).join("\n");
+                  setCopied((c) => [...new Set([...c, ...fields.filter((f) => !f.download).map((f) => f.name)])]);
+                  try {
+                    void navigator.clipboard?.writeText(text);
+                  } catch {
+                    // no clipboard in this browser: the ticks still show it was taken
+                  }
+                  flash("All details copied");
+                }}
+              >
+                Copy all
+              </Button>
+            </div>
+            {emailed && <Note style="success" icon="checkmark">{`Sent to ${you.workEmail} with the resume`}</Note>}
             <Box>
               {fields.map((f) => (
                 // Figma stacks the name above the value with 2 between them and puts the copy
@@ -682,8 +720,7 @@ function AfterRefer({ id }: { id: string }) {
                       } catch {
                         // no clipboard in this browser: the tick still shows it was taken
                       }
-                      dispatch({ t: "toast", v: f.download ? "Resume downloaded" : `${f.name} copied` });
-                      window.setTimeout(() => dispatch({ t: "toast", v: null }), 1400);
+                      flash(f.download ? "Resume downloaded" : `${f.name} copied`);
                     }}
                   >
                     <Icon

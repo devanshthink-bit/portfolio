@@ -3307,3 +3307,12 @@ DECISION · 2026-09-24 · 14 requests a week, and a no gives it back
 - Now the header is just the name, like an iOS grouped-list header: "FOUND IN THEIR WORK", "RELATED", "LISTED ONLY", "MISSING". The rows show how many; the "4 of 7" tag gives the total.
 - Figma: 12 header texts on V6 (request screen + 3 states) edited in place.
 - Checked on localhost (Vercel preview needs a login).
+
+## 2026-09-24 · Portal details: Email to me and Copy all
+- Devansh: moving the details from the app into the referral portal is the pain point everyone named. Referrers fill the portal on a laptop.
+- Options offered: email to work inbox, copy all, open on laptop (link/QR), autofill extension. Devansh chose the first two. Open on laptop overlaps with the email; autofill is a big build and every portal is different, so it's for "What's next".
+- "Email to me" sends the list to the referrer's verified work email (where the portal is), in the portal's order, with the resume attached. The button becomes "Emailed" and a note says "Sent to nithin.agarwal@flipkart.com with the resume".
+- "Copy all" puts every detail on the clipboard as "Name: value" lines and ticks every row. Per-field copy stays.
+- The note was cut to one line (dropped "attached") so it doesn't wrap.
+- Figma: button row added in place on After Refer (Explore) and After Refer/Undo (States); new state frame "After Refer/Emailed" in the States grid (row 7, col 2).
+- Checked on localhost (Vercel preview needs a login).
