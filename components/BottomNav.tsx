@@ -201,8 +201,8 @@ export default function BottomNav() {
     }).catch(() => done?.());   // a skipped transition (a hidden tab, say) still switches the theme
   };
 
-  // Hidden on the RedBus case study at Devansh's request: the contents list and Ask Devansh sit there.
-  if (pathname === "/work/redbus") return null;
+  // Hidden on the RedBus and Sidedoor case studies at Devansh's request: the contents list and Ask Devansh sit there.
+  if (pathname === "/work/redbus" || pathname === "/work/sidedoor") return null;
 
   const scrollToWork = (e: React.MouseEvent) => {
     if (pathname === "/") {

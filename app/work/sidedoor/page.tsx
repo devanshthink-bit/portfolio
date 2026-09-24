@@ -184,7 +184,7 @@ export default function SidedoorCaseStudy() {
         sub="How does a candidate know which ask is worth making? Each card says who refers, how well he fits, and whether that person is full this week.">
         <PhoneShot src={scr("jobs")} alt="Jobs: three jobs, each with the person who refers, a skills match and a shared background tag."
           notes={[
-            { box: [3, 18.5, 94, 4.5], title: "Jobs with someone who refers", sub: "no cold DMs to guess at" },
+            { box: [2, 18.5, 96, 4.5], title: "Jobs with someone who refers", sub: "no cold DMs to guess at" },
             { box: [7, 32.2, 84, 4.4], title: "4 of 7 skills, before he asks", sub: "and what he shares with Nithin" },
             { box: [7, 49, 40, 4.2], title: "Full this week", sub: "said up front, not left to silence" },
           ]} />
@@ -195,7 +195,7 @@ export default function SidedoorCaseStudy() {
         <PhoneShot src={scr("job")} alt="Job details: How you match, with skills found in his work, related skills and one listed only."
           notes={[
             { box: [6.5, 32, 88, 19.5], title: "How you match", sub: "found in your work, related, listed only" },
-            { box: [3.5, 76.3, 93, 4.8], title: "Uses 1 of your 14 this week", sub: "referrers answer because each one is chosen" },
+            { box: [2, 76, 96, 5.3], title: "Uses 1 of your 14 this week", sub: "referrers answer because each one is chosen" },
           ]} />
       </Beat>
 
@@ -203,7 +203,7 @@ export default function SidedoorCaseStudy() {
         sub="How does the request arrive complete? It won't send until it is. The details the portal asks for are saved for his next request, and he says whether he was referred to Flipkart in the last six months.">
         <PhoneShot src={scr("check")} alt="Check your request: the four details Flipkart's portal asks for, then the six month question."
           notes={[
-            { box: [3, 28, 94, 6.3], title: "Still needed · 4", sub: "asked once, saved after" },
+            { box: [2, 28, 96, 6.3], title: "Still needed · 4", sub: "asked once, saved after" },
             { box: [3, 83.5, 94, 6.5], title: "Referred here in 6 months?", sub: "most portals refuse a second one" },
           ]} />
       </Beat>
@@ -213,8 +213,8 @@ export default function SidedoorCaseStudy() {
         <PhoneShot src={scr("requests")} alt="Referral requests for one job, ordered by fit, with Lower match folded and Suggested for this job below."
           notes={[
             { box: [7, 31, 86, 4.3], title: "Fit and common ground", sub: "on the card, before he opens it" },
-            { box: [3, 67.5, 94, 4], title: "Lower match, folded", sub: "one tap away" },
-            { box: [3, 73.5, 94, 5.8], title: "Suggested for this job", sub: "people who chose to be found" },
+            { box: [2, 67.6, 96, 3.8], title: "Lower match, folded", sub: "one tap away" },
+            { box: [2, 72.9, 96, 7.4], title: "Suggested for this job", sub: "people who chose to be found" },
           ]} />
       </Beat>
 
@@ -224,7 +224,7 @@ export default function SidedoorCaseStudy() {
           notes={[
             { box: [3.5, 23, 93, 7.5], title: "The blockers", sub: "the six month line names its source" },
             { box: [3.5, 36.5, 93, 22.5], title: "Found in their work", sub: "each skill says where" },
-            { box: [3.5, 75, 93, 6.5], title: "Listed only", sub: "shown, never counted" },
+            { box: [3.5, 75, 93, 6.9], title: "Listed only", sub: "shown, never counted" },
           ]} />
       </Beat>
 
@@ -240,7 +240,7 @@ export default function SidedoorCaseStudy() {
         sub="How does the data get into the portal? Every detail is there in the portal's order, with a copy button each. Or he emails it all to his work inbox, resume attached, and fills the portal in from his laptop.">
         <PhoneShot src={scr("emailed")} alt="After Refer: Emailed and Copy all, then every detail in the portal's order."
           notes={[
-            { box: [3.5, 25.8, 93, 8.8], title: "Email to me, or Copy all", sub: "resume attached" },
+            { box: [2, 25.8, 96, 9.2], title: "Email to me, or Copy all", sub: "resume attached" },
             { box: [3.5, 35.8, 93, 52], title: "In the order the portal asks", sub: "the answers Abhinav gave once" },
           ]} />
       </Beat>
@@ -297,7 +297,7 @@ export default function SidedoorCaseStudy() {
         ]} />
       </Beat>
 
-      <Beat label="Pushing back" title="My mentor said to make it a LinkedIn feature. I didn't."
+      <Beat label="Pushing back" title="Rajat said to make it a LinkedIn feature. I didn't."
         sub="The argument was fair: why would a referrer join a new app? I kept SideDoor separate because the work sits between LinkedIn and the company's portal, and neither owns it. A referrer also gets something on day one, from a link they send to a stranger."
         caption="That's reasoning. It hasn't been tested.">
         <Link />
@@ -326,8 +326,8 @@ export default function SidedoorCaseStudy() {
         sub={<>A referrer can ask every candidate one question. Mine asked about a checkout trade-off, but Nithin can&apos;t know who will apply, and most designers have never worked on checkout. Now it asks about a skill, and SideDoor suggests one question per skill from the job description.</>}>
         <PhoneShot src={scr("post")} alt="Check your job post: one question for candidates, with three suggested from the job description."
           notes={[
-            { box: [3.5, 29.5, 93, 15], title: "Ask about a skill, not a product", sub: "every candidate can answer" },
-            { box: [3.5, 50, 93, 33.5], title: "Suggested from the job description", sub: "one per skill, tap to use" },
+            { box: [3, 32.3, 94, 12.3], title: "Ask about a skill, not a product", sub: "every candidate can answer" },
+            { box: [3, 52.6, 94, 31], title: "Suggested from the job description", sub: "one per skill, tap to use" },
           ]} />
       </Beat>
 

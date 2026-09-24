@@ -885,6 +885,11 @@
     align-items: baseline;
   }
 
+  /* Rows labels ("Rounds 1 to 4") are longer than the kill numbers. */
+  .cs-kill.cs-rows {
+    grid-template-columns: 140px minmax(0, 1fr);
+  }
+
   .cs-proto {
     position: relative;
     width: 100%;
@@ -1715,6 +1720,10 @@
   .cs-kill {
     grid-template-columns: minmax(0, 1fr);
     gap: 8px;
+  }
+
+  .cs-kill.cs-rows {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   /* Testimonial marquee — slow down so perceived speed matches desktop */

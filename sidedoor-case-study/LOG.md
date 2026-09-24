@@ -3455,3 +3455,7 @@ Why:      Devansh: titles start with "Candidate" or "Referrer" only, not "User" 
           left-stripe card (kill conditions, guardrail) and the bar beside quotes "look AI".
 What:     Titles as in RESEARCH.md; the side chip is gone since the title names the side. Kill conditions and guardrail are
           plain cards with their red or amber tag. Quotes are plain text, no bar. No left-stripe card is left on the page.
+
+CHANGE · 2026-09-25 · case study page
+Changed:   "My mentor" is now "Rajat" (case study and research board). The dock is hidden on /work/sidedoor, as on RedBus. The Rows label column is 140px, so "Rounds 1 to 4" no longer runs into its text. Eleven annotation boxes on seven screens moved so no dashed edge sits on text; checked by pixel scan, every edge now at least 11 image px clear.
+Because:   Devansh's review of the live page.

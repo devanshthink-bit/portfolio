@@ -175,7 +175,7 @@ export function Rows({ rows }: { rows: Row[] }) {
   return (
     <div className="cs-stats" style={{ gridTemplateColumns: "1fr" }}>
       {rows.map((r) => (
-        <div key={r.rule} className="cs-kill" style={{ background: "var(--bg)", padding: "16px 20px" }}>
+        <div key={r.rule} className="cs-kill cs-rows" style={{ background: "var(--bg)", padding: "16px 20px" }}>
           <div><Chip tone={r.tone}>{r.s}</Chip></div>
           <p style={T.cardH}>{r.rule}</p>
         </div>
