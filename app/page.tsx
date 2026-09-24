@@ -53,9 +53,9 @@ const recentWork = [
     wordmark: "/images/sidedoor/sidedoor-word.svg",
     brand: "SideDoor",
     brandColor: "#ffffff",
-    did: "I thought referrers ignored strangers out of distrust. They were ignoring the paperwork.",
+    did: "Turned the cold referral DM into a complete request a stranger can say yes to",
     tags: ["Careers", "Two-sided", "iOS app", "Concept"],
-    blurb: "Two people who have asked for referrals and given them told me the same thing: a stranger's request hands the referrer the candidate's work. So I designed one that arrives complete, proves every skill it claims, and tells the candidate how it ended.",
+    blurb: "Referrers don't ignore strangers out of distrust. The two people I interviewed, who have asked for referrals and given them, said it's the paperwork a request hands them. So the request arrives complete, proves every skill it claims, and tells the candidate how it ended.",
   },
   // Hidden for now at Devansh's request (13 Sep 2026). Kept, not deleted: uncomment to bring back.
   // {
