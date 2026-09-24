@@ -36,7 +36,7 @@ function Limits() {
   const rows = [
     "Nobody outside a company can read its referral portal. Not LinkedIn, not me.",
     "Signing in with LinkedIn gives a name, an email and a photo. No work history.",
-    "Two real people, each seen from both sides. Anything only one of them said is marked as one.",
+    "Two people, each seen from both sides. Anything only one of them said is marked as one.",
   ];
   return (
     <Card>
@@ -116,11 +116,11 @@ export default function SidedoorCaseStudy() {
 
       <SectionLabel>Case study · Product design, 0 to 1</SectionLabel>
       <h1 style={T.h1}>
-        <span style={{ color: "var(--sd-blue)" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/sidedoor/sidedoor-logo.png" alt="" aria-hidden width={24} height={31} style={{ height: "1.05em", width: "auto", display: "inline-block", verticalAlign: "-0.2em", marginRight: 10 }} />
-          SideDoor
-        </span>: a referral request a stranger can say yes to
+        {/* The exact logo and wordmark from the app's login screen */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/images/sidedoor/sidedoor-logo.png" alt="" aria-hidden width={24} height={31} style={{ height: "1.05em", width: "auto", display: "inline-block", verticalAlign: "-0.2em", marginRight: 10 }} />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/images/sidedoor/sidedoor-word.svg" alt="SideDoor" width={132} height={24} style={{ height: "0.74em", width: "auto", display: "inline-block", verticalAlign: "-0.02em" }} />: a referral request a stranger can say yes to
       </h1>
       <p style={T.lede}>Ask a stranger at a company to refer you and you&apos;ll usually hear nothing. The two people I interviewed have been on both sides of that, and they told me why: the request hands the referrer the candidate&apos;s paperwork. SideDoor makes the request arrive complete, shows fit with proof, and sends the answer back.</p>
 
@@ -274,18 +274,8 @@ export default function SidedoorCaseStudy() {
       </Beat>
 
       {/* ── ACT 3 ── */}
-      <Act id="toc-behind" n="Act 3 · Behind the scenes" title="The first version stood on interviews that never happened"
+      <Act id="toc-behind" n="Act 3 · Behind the scenes" title="The first version was built on the wrong idea"
         sub="These are the moments that changed the design, roughly in the order they hit me." />
-
-      <Beat label="The surprise" title="Six of my ten interviews were written by AI."
-        sub="When I went back through the research, only four transcripts were real. And those four were two people, each interviewed once as a candidate and once as a referrer. I threw the other six out, with every claim that came from them."
-        caption="Two people is thin. Below, a pattern is one both of them described, and I say so when it was only one.">
-        <Rows rows={[
-          { s: "Thrown out", tone: "red", rule: "6 transcripts generated with AI" },
-          { s: "Kept", tone: "green", rule: "4 interviews: Samarth and Riya, each on both sides" },
-          { s: "Kept", tone: "green", rule: "92 notes, one observation each, in their words" },
-        ]} />
-      </Beat>
 
       <Beat label="The bet that died" title="I thought referrers didn't trust strangers. Both said the problem was work."
         sub={<>The old SideDoor was built on trust: a match score, graded recommendations, spam limits. Samarth said a bad hire after interviews &quot;should not fall on the referrer&quot;. Riya&apos;s rule is just the job ID. And the bonus doesn&apos;t make up for it. Riya called it &quot;very low&quot;.</>}

@@ -3411,3 +3411,9 @@ DECISION · 2026-09-24 · 14 requests a week, and a no gives it back
 - Figma fix found while exporting: "A listed skill counts once your linked work or resume shows it" was cut off on all 4 V6 Job screens (fixed-height tag, truncated text). Now it wraps, left-aligned like the prototype. Code was already right.
 - The case study is pinned to commit 18d4738 and the 24 Sep Figma: sidedoor-case-study/CASE_STUDY_VERSION.md lists every image, its frame and crop, the beats it feeds, and what's pending (tests, sources, polish). Interview questions and the molades bar: CASE_QA.md. The bar fails on "real humans" until the tests run, and the page says so.
 - Checked on localhost (Vercel preview needs a login): every image loads, all section ids exist, the embed responds to taps, no overflow at 375 wide, the accent is blue, dark mode colours switch. The dev server had stale CSS again; fixed by clearing .next (see the 20 Sep FIX entry).
+
+DECISION · 2026-09-24 · Case study · Home card and title show the real brand; AI interviews not mentioned publicly
+Asked:     Devansh: login screen in the middle of the card ("since its playful"), two major screens either side; the logo and "SideDoor" text weren't the real ones; "i dont wanna mention i used ai interviews anywhere".
+Changed:   Card phones Job · Login · Referral request (login exported from Figma 5247:18389). Logo keeps its colours instead of turning white; the name is the SideDoor wordmark SVG (white on the blue panel), not Manrope text. Case study title uses the logo plus the coloured wordmark. Removed the "Six of my ten interviews" beat, the Act 3 title that hinted at it, the word "real" in Limits, and the matching CASE_QA row.
+Rejected:  Wordmark in its own blue and green on the card: the blue part sits on a mid-blue panel and gets hard to read.
+Because:   The page now says what is true without the backstory: two people, each seen from both sides. Nothing on it claims more interviews than that.

@@ -30,13 +30,14 @@ Crops are `header / footer / scroll offset` in 1x points (see the ffmpeg crop in
 
 | Image | Figma frame (V6) | Crop | Used in |
 |---|---|---|---|
+| login.webp | Login/SideDoor Login Screen 5247:18389 | full | Home card (middle) |
 | jobs.webp | Candidate/Jobs Screen 5247:18584 | full | Act 2 Scene 1 |
-| job.webp | Candidate/Job Screen 5247:18687 | 98 / 232 / 300 | Scene 2, home card |
+| job.webp | Candidate/Job Screen 5247:18687 | 98 / 232 / 300 | Scene 2, home card (left) |
 | check.webp | Candidate/Check Your Referral Request Screen 5247:18695 | 98 / 88 / 0 | Hero, Scene 3 |
 | requests.webp | Referrer/Referral Requests Screen 5247:18631 | 146 / 88 / 0 | Scene 4 |
-| request.webp | Referrer/Referral Request Screen 5247:18762 | 98 / 88 / 0 | Hero, Scene 5, Act 3 "Before and after", home card |
+| request.webp | Referrer/Referral Request Screen 5247:18762 | 98 / 88 / 0 | Hero, Scene 5, Act 3 "Before and after", home card (right) |
 | proof.webp | Referrer/Skill Proof Sheet 5750:42504 over request.webp, dimmed 40% | composite | Scene 6 |
-| emailed.webp | Referrer/Referral Request Screen/After Refer/Emailed 5757:31343 | 98 / 88 / 0 | Hero, Scene 7, home card |
+| emailed.webp | Referrer/Referral Request Screen/After Refer/Emailed 5757:31343 | 98 / 88 / 0 | Hero, Scene 7 |
 | marked.webp | Referrer/Referral Request Screen/Marked As Submitted 5247:19055 | full | Scene 8, Act 3 "My mistake" |
 | track.webp | Candidate/Track Details Screen/3 5247:19455 | 98 / 88 / 14 | Scene 8 |
 | link_before.webp | Link Page/Before Upload 5247:20271 | full | Scene 9 |
