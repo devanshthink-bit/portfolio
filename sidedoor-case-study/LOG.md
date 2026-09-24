@@ -3174,3 +3174,17 @@ DECISION · 2026-09-24 · Requests come in after the job is posted
 - Figma, V6 · States Flow: new "Referrer/Referral Requests Screen/Just Posted" (the Empty screen plus the welcome card). The Welcome frame is the moment after the requests come in.
 - Known mismatch, not changed: 14 requests arrive although the post's rule says 10 a week. The list has always shown 14.
 - Checked on localhost: the list is empty at 1.5 s, and the cards and toast appear at 5.1 s.
+
+DECISION · 2026-09-24 · 14 requests a week, and a no gives it back
+- Devansh: 5 a week felt too few for job seekers to bother with the app. Asked for 14.
+- Why a limit at all: not spam (neither interviewee described it, n19 n61). It keeps a request worth answering, and the pitch is "your requests get answered", not "send more". Referrers are also protected by their own weekly cap, one request per job per referrer, and Lower match.
+- Built:
+  1. 14 a week (`WEEKLY_REQUESTS` in store.tsx). No daily cap.
+  2. A request comes back when the referrer says "Not moving forward" or the role closes, as well as when it is withdrawn or gets no answer in 7 days. Track copy: "Reason: …. Your request is back."
+  3. Being referred earns one extra that week, so the week can go to 15 of 15. Track copy on Referred: "You got one extra request this week."
+  4. The reason sits next to the count on Job details: "Uses 1 of your N requests left this week. Referrers answer because each one is chosen."
+  - Suggested requests still don't count (already built).
+- The jumps in the state list now start with the full 14, not Figma's old "2 of 5".
+- Figma, V6: 11 texts updated. 3 Job screens (the new line), 2 Check your request ("14 of 14"), Suggested ("one of your 14"), Track 2 (the extra), Not Moving Forward and Role Closed (the request comes back).
+- Limitation: since switching role keeps the same person, nobody can refer or decline Abhinav during a session. So the "comes back" and "+1" rules are in the store and the copy, but a tester can't trigger them live.
+- Checked on localhost: Job details "Uses 1 of your 14…", Check your request "14 of 14", none-left note, Not moving forward copy.

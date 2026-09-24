@@ -385,7 +385,7 @@ export function SwitchRoleAlert({ leaving }: { leaving?: boolean }) {
 // doesn't cost the candidate a week
 export function WithdrawAlert({ id, leaving }: { id: string; leaving?: boolean }) {
   const nav = useNav();
-  const { requests, requestsLeft, dispatch } = useStore();
+  const { requests, requestsLeft, requestsCap, dispatch } = useStore();
   const r = requests.find((x) => x.id === id);
   const who = r ? r.referrer.split(" ")[0] : "They";
   return (
@@ -396,7 +396,7 @@ export function WithdrawAlert({ id, leaving }: { id: string; leaving?: boolean }
       onConfirm={() => {
         dispatch({ t: "withdraw", id });
         nav.closeSheet();
-        dispatch({ t: "toast", v: `Withdrawn. ${Math.min(5, requestsLeft + 1)} of 5 requests left this week.` });
+        dispatch({ t: "toast", v: `Withdrawn. ${Math.min(requestsCap, requestsLeft + 1)} of ${requestsCap} requests left this week.` });
         window.setTimeout(() => dispatch({ t: "toast", v: null }), 2400);
       }}
       onCancel={nav.closeSheet}

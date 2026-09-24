@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useNav } from "../nav";
-import { STAGE_LABEL, requestIdFor, stageTag, useStore, type Request, type Stage } from "../store";
+import { STAGE_LABEL, WEEKLY_REQUESTS, requestIdFor, stageTag, useStore, type Request, type Stage } from "../store";
 import { DEMO, DESIGN, JOBS, firstName, jobById, matchOf, type Job } from "../data";
 import {
   Actions,
@@ -277,7 +277,7 @@ function Banner({ j }: { j: Job }) {
 
 export function JobDetails({ id = "flipkart" }: { id?: string }) {
   const nav = useNav();
-  const { saved, sentJobs, dispatch, live, force, skippedResume, requests, requestsLeft } = useStore();
+  const { saved, sentJobs, dispatch, live, force, skippedResume, requests, requestsLeft, requestsCap } = useStore();
   const j = jobById(id);
   const who = firstName(j.referrer.name);
   const suggested = force === "job.suggested";
@@ -318,14 +318,15 @@ export function JobDetails({ id = "flipkart" }: { id?: string }) {
           </div>
         ) : noneLeft ? (
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            <Note style="buffer" icon="info.circle.fill">You’ve used this week’s 5 requests. They come back on Monday.</Note>
+            <Note style="buffer" icon="info.circle.fill">You’ve used this week’s {requestsCap} requests. They come back on Monday.</Note>
             <Button disabled>Ask {who} for a referral</Button>
           </div>
         ) : (
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {history && <Note style="buffer" icon="info.circle.fill">{history}</Note>}
             {/* Idea 3: the limit is shown before the ask, so a request feels worth spending */}
-            <p className="t-label-sm muted">Uses 1 of your {requestsLeft} requests left this week.</p>
+            {/* why there is a limit, next to the count: it's the reason referrers answer */}
+            <p className="t-label-sm muted">Uses 1 of your {requestsLeft} requests left this week. Referrers answer because each one is chosen.</p>
             <Button onClick={() => (noResume ? nav.openSheet("addResume", { job: j.id }) : nav.push("checkRequest", { id: j.id }))}>
               Ask {who} for a referral
             </Button>
@@ -340,7 +341,7 @@ export function JobDetails({ id = "flipkart" }: { id?: string }) {
           <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
             <span className="t-h-sm">{who} suggests you for this job</span>
             <span className="t-label muted">
-              Your details are ready. Sending won’t use one of your 5 requests this week.
+              Your details are ready. Sending won’t use one of your {WEEKLY_REQUESTS} requests this week.
             </span>
           </div>
         )}
@@ -495,7 +496,7 @@ function Bullets({ items }: { items: string[] }) {
 /* ── Check your request ─────────────────────────────────────────────────── */
 export function CheckRequest({ id = "flipkart" }: { id?: string }) {
   const nav = useNav();
-  const { details, note, stillNeeded, requestsLeft, force, offline, you, dispatch } = useStore();
+  const { details, note, stillNeeded, requestsLeft, requestsCap, force, offline, you, dispatch } = useStore();
   const j = jobById(id);
   const who = firstName(j.referrer.name);
   const [sending, setSending] = useState(force === "send.sending");
@@ -541,7 +542,7 @@ export function CheckRequest({ id = "flipkart" }: { id?: string }) {
               each replace the weekly line with their own note. */}
           {!sending && !failed && !noneLeft && !offline && (
             // Figma draws this as a plain 12/16 line, not a filled chip.
-            <Note>{requestsLeft} of 5 referral requests left this week</Note>
+            <Note>{requestsLeft} of {requestsCap} referral requests left this week</Note>
           )}
           {/* Figma "Offline": the weekly line becomes the reason Send is off */}
           {offline && !noneLeft && <Note style="buffer" icon="info.circle.fill">You’re offline. Send when you’re back.</Note>}
@@ -828,15 +829,15 @@ const ENDED: Stage[] = ["notselected", "notmoving", "closed", "withdrawn"];
 
 const NOW: Partial<Record<Stage, { line: string; sub: string }>> = {
   sent: { line: "Sent to {who} {when}. No answer yet.", sub: "Changed your mind? Withdraw it and you get the request back." },
-  referred: { line: "{who} referred you {when}.", sub: "Next, {who} adds you on {co}’s portal." },
+  referred: { line: "{who} referred you {when}.", sub: "Next, {who} adds you on {co}’s portal. You got one extra request this week." },
   submitted: { line: "Submitted on {co}’s portal {on}.", sub: "Interviews usually start within 2–3 weeks." },
   interviews: { line: "In interviews at {co}.", sub: "{who} will tell you what they hear." },
   onhold: { line: "On hold at {co}.", sub: "{who} marked it {when}. Nothing for you to do yet." },
   selected: { line: "Congratulations, you’re selected at {co}!", sub: "{who} referred you on {since}." },
   notselected: { line: "Not selected at {co}.", sub: "{who} referred you and it reached interviews." },
-  notmoving: { line: "{who} isn’t moving forward with this one.", sub: "Reason: {reason}." },
+  notmoving: { line: "{who} isn’t moving forward with this one.", sub: "Reason: {reason}. Your request is back." },
   noanswer: { line: "Sent to {who} 7 days ago. No answer.", sub: "Your request is back, so it doesn’t count against this week." },
-  closed: { line: "{co} closed this job.", sub: "Reason: Role is closed. Requests for it close too." },
+  closed: { line: "{co} closed this job.", sub: "Reason: Role is closed. Your request is back." },
   withdrawn: { line: "You withdrew this request {when}.", sub: "{who} won’t see it, and it doesn’t count against this week." },
 };
 

@@ -55,6 +55,9 @@ export type Request = {
   live?: boolean;
 };
 
+/** Requests a candidate can send each week (Devansh, 24 Sep: 5 felt too few to make the app worth it). */
+export const WEEKLY_REQUESTS = 14;
+
 export type Details = { dob: string; gaps: string; locations: string; notice: string };
 /** The rule each portal detail follows. Gaps are stored as years ("0" = none), notice as days. */
 export const DETAIL_KINDS: Record<keyof Details, FieldKind> = { dob: "text", gaps: "years", locations: "cities", notice: "days" };
@@ -76,6 +79,8 @@ type State = {
   details: Details;
   note: string;
   requestsLeft: number;
+  /** extra requests this week, one for each time someone referred you */
+  earned: number;
   requests: Request[];
   /** jobs asked about in this session, so each job says "You asked" once it's sent */
   sentJobs: string[];
@@ -125,8 +130,9 @@ const initial: State = {
   skippedResume: false,
   details: { dob: "", gaps: "", locations: "", notice: "" },
   note: "",
-  // Figma draws "2 of 5"; testers start with all 5 so they can send to several jobs (Devansh, 23 Sep). The state list still opens on Figma's 2.
-  requestsLeft: 5,
+  // testers start with the full week; the state list opens on Figma's "2 of 14"
+  requestsLeft: WEEKLY_REQUESTS,
+  earned: 0,
   // The list on "Your referral requests", exactly as the V6 screen shows it. The Flipkart one is
   // the live request the prototype drives; the rest are history so the list is not a single row.
   requests: [
@@ -245,7 +251,7 @@ function reduce(s: State, a: Action): State {
       const job = r && (r.live ? "flipkart" : r.id.replace(/^ask-/, ""));
       return {
         ...s,
-        requestsLeft: Math.min(5, s.requestsLeft + 1),
+        requestsLeft: Math.min(WEEKLY_REQUESTS + s.earned, s.requestsLeft + 1),
         sentJobs: s.sentJobs.filter((x) => x !== job),
         requests: s.requests.map((x) => (x.id === a.id ? { ...x, stage: "withdrawn", updated: "Just now" } : x)),
       };
@@ -278,14 +284,23 @@ function reduce(s: State, a: Action): State {
     case "handle":
       // the referrer's side only; "tell" moves the candidate's timeline once undo has run out
       return { ...s, handled: { ...s.handled, [a.id]: { stage: a.stage, reason: a.reason } } };
-    case "tell":
-      // the same change reaches the candidate's timeline, which is the whole point of J2
+    case "tell": {
+      // the same change reaches the candidate's timeline, which is the whole point of J2.
+      // The live request is Abhinav's, so only his week changes: a clear no gives the request
+      // back, and being referred earns one extra (Devansh, 24 Sep).
+      const mine = s.me === "abhinav";
+      const back = mine && (a.stage === "notmoving" || a.stage === "closed");
+      const earn = mine && a.stage === "referred";
+      const earned = s.earned + (earn ? 1 : 0);
       return {
         ...s,
+        earned,
+        requestsLeft: back || earn ? Math.min(WEEKLY_REQUESTS + earned, s.requestsLeft + 1) : s.requestsLeft,
         requests: s.requests.map((r) =>
           r.live ? { ...r, stage: a.stage, reason: a.reason, updated: "Just now", waitingDays: a.stage === "submitted" ? 0 : r.waitingDays } : r
         ),
       };
+    }
     case "pend":
       return { ...s, pending: a.v };
     case "offline":
@@ -306,7 +321,7 @@ function reduce(s: State, a: Action): State {
       return { ...s, force: a.v };
     case "jump":
       // start from a clean slate so one state can't leak into the next
-      return { ...initial, requestsLeft: 2, role: a.role, me: a.role === "referrer" ? "nithin" : "abhinav",
+      return { ...initial, role: a.role, me: a.role === "referrer" ? "nithin" : "abhinav",
         profile: a.role === "referrer" ? NITHIN_PROFILE : ABHINAV_PROFILE, force: a.force, offline: a.force === "offline", resume: "Abhinav_Saxena_Resume.pdf", verified: true, jobId: "184223", posted: true,
         // "Skill removed" starts with Prototyping taken off, and can still be undone
         removedSkills: a.force === "req.skill" ? ["abhinav|Prototyping"] : [] };
@@ -325,6 +340,8 @@ type Api = State & {
   stillNeeded: number;
   /** you: name, company, post and link, the same on both sides */
   you: Me;
+  /** this week's requests: the 14 plus any earned */
+  requestsCap: number;
 };
 
 const Ctx = createContext<Api | null>(null);
@@ -338,7 +355,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     [s.details]
   );
   const you = PEOPLE_ME[s.me ?? (s.role === "referrer" ? "nithin" : "abhinav")];
-  const value = useMemo(() => ({ ...s, dispatch, live, stillNeeded, you }), [s, live, stillNeeded, you]);
+  const requestsCap = WEEKLY_REQUESTS + s.earned;
+  const value = useMemo(() => ({ ...s, dispatch, live, stillNeeded, you, requestsCap }), [s, live, stillNeeded, you, requestsCap]);
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
 
