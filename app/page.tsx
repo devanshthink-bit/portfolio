@@ -45,7 +45,7 @@ const recentWork = [
     // Unlike RedBus's fanned trio: the two sides, upright and staggered. The candidate's Job details
     // on the left, the referrer's request raised on the right (V6 screens from Figma).
     phones: ["job", "request"],
-    phonesLayout: "pair",
+    phonesLayout: "pair" as const,
     screens: "/images/sidedoor/screens",
     logo: "/images/sidedoor/sidedoor-logo.png",
     logoRaw: true,
