@@ -88,8 +88,8 @@ ul.list li::marker{color:#A6ABB3}
 .kv > div:nth-child(-n+2){border-top:0;padding-top:0}
 .kv .k{font-size:13px;font-weight:500;color:var(--muted);padding-right:16px}
 
-.q{border-left:2px solid var(--blue);padding:2px 0 2px 14px;margin:12px 0 0}
-.q p{font-size:15.5px;color:var(--strong)}
+.q{margin:14px 0 0}
+.q p{font-size:15.5px;font-weight:500;color:var(--strong)}
 .q span{display:block;font-size:12.5px;color:var(--muted);margin-top:4px}
 
 /* sticky notes */
@@ -120,7 +120,6 @@ ul.list li::marker{color:#A6ABB3}
 .clus{border-radius:14px;padding:18px;background:var(--ct)}
 .ch{display:flex;align-items:center;gap:6px;margin-bottom:10px;flex-wrap:wrap}
 .cid{font-size:11.5px;font-weight:700;background:rgba(20,20,30,.08);border-radius:6px;padding:3px 8px;color:var(--strong)}
-.side{font-size:11.5px;font-weight:600;border-radius:6px;padding:3px 8px;background:rgba(255,255,255,.75);color:var(--muted)}
 .thin{font-size:11px;font-weight:700;background:#FFE0E0;color:#9A2C2C;border-radius:6px;padding:3px 7px}
 .clus h3,.amh h3{font-size:17px;font-weight:700;line-height:1.3;letter-spacing:-.01em;color:var(--strong);margin-bottom:12px}
 .crow{margin-bottom:10px}
@@ -232,7 +231,7 @@ ul.list li::marker{color:#A6ABB3}
 .steps li{counter-increment:s;position:relative;padding:10px 14px 10px 48px;background:var(--page);border:1px solid var(--line);border-radius:10px;font-size:14px}
 .steps li::before{content:counter(s);position:absolute;left:12px;top:9px;width:24px;height:24px;border-radius:50%;background:var(--blue-bg);color:var(--blue-ink);font-size:12.5px;font-weight:600;display:grid;place-items:center}
 
-.kill{border-left:3px solid var(--bad)}
+.kill{background:var(--page)}
 .kill .num{font-size:28px;font-weight:700;letter-spacing:-.02em;color:var(--strong);margin:4px 0}
 
 .foot{border-top:1px solid var(--line);margin-top:32px;padding-top:20px;font-size:13.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between}
@@ -428,7 +427,7 @@ ul.list li::marker{color:#A6ABB3}
 
   <!-- 5 -->
   <section class="stage" id="s-clusters" data-t="Clusters">
-    <div class="st-head"><span class="st-n">5</span><div><p class="st-k">Five pains, each from the user who feels it</p><h2>Five clusters, each with the tension underneath it</h2><p>Sorted against the moment on the scope card: 74 notes in five clusters, 13 that describe something working, 3 out of scope, 1 parked. Each label names a user's pain. The chip says which kind of user: the candidate asking, or the referrer being asked.</p></div></div>
+    <div class="st-head"><span class="st-n">5</span><div><p class="st-k">Five pains, each from the side that feels it</p><h2>Five clusters, each with the tension underneath it</h2><p>Sorted against the moment on the scope card: 74 notes in five clusters, 13 that describe something working, 3 out of scope, 1 parked. SideDoor has two kinds of user, so each label starts with the side that feels it: the candidate asking, or the referrer being asked.</p></div></div>
     <div class="clusgrid" id="clusters"></div>
     <p class="sub">What was merged, and what got lost</p>
     <div class="card"><ul class="list">
@@ -587,7 +586,7 @@ ul.list li::marker{color:#A6ABB3}
     <div class="st-head"><span class="st-n">12</span><div><p class="st-k">Own the input, understand the output, trace the chain</p><h2>Each design decision, traced to the number it should move</h2><p>An input that rises without moving the North Star is noise. More complete requests only matter if referrers submit more of them.</p></div></div>
     <div class="chain-h"><span>Design decision</span><span></span><span>Input metric, owned</span><span></span><span>Output metric, influenced</span><span></span><span>North Star</span></div>
     <div class="chains" id="chains"></div>
-    <div class="card" style="margin-top:16px;border-left:3px solid var(--warn)"><p class="lab">Guardrail</p><p><b>Referrers who turn off requests or leave must not rise.</b> A product that makes asking easier can flood the people it depends on. Watched with a second number: requests left unanswered after 7 days must not rise.</p></div>
+    <div class="card" style="margin-top:16px"><span class="tag warn">Guardrail</span><p style="margin-top:10px"><b>Referrers who turn off requests or leave must not rise.</b> A product that makes asking easier can flood the people it depends on. Watched with a second number: requests left unanswered after 7 days must not rise.</p></div>
     <p class="sub">Which loop each feature belongs to</p>
     <div class="loops" id="loops"></div>
   </section>
@@ -742,31 +741,31 @@ var NOTES = [
 ["n91","R","r","Wants \"a good UX\": refer, track status, see messages and check submissions from the first page","park"]
 ];
 var CL = {
-  C1:{side:"Candidate",t:"User messages strangers and isn't even seen, so the only route that works is people they already know",
+  C1:{side:"Candidate",t:"Candidate's message to a stranger isn't even seen, so the only route that works is people they already know",
       ten:"The route that works, friends and mutuals, runs out. The route left over, strangers, almost never answers.",
       did:"Looked in their own circle first, then cold-messaged two or three strangers per company on LinkedIn and mostly heard nothing. Followed up with no change. Guessed who might help from LinkedIn activity. Samarth and Riya, as candidates. As a referrer, Riya leaves strangers' LinkedIn messages unanswered.",
       so:"A candidate with nobody at the company has no dependable way in. Their request is ignored before anyone can judge whether it's any good, so being a strong candidate doesn't help them.",
       j:"When I don't know anyone at the company, I want my request to reach someone who is willing to look at it, so I'm not sending messages nobody reads.",
       subs:[["a","strangers don't answer","n09 n13 n14 n15 n17 n30"],["b","friends first, strangers only when that runs out","n04 n08 n20 n49 n68"],["c","guessing who might actually help","n21 n24 n28 n37 n43"],["d","being ignored, and what it does to them","n10 n16 n19 n27 n40"]]},
-  C2:{side:"Referrer",t:"User drops or chases a request that doesn't carry what they need to decide and submit",
+  C2:{side:"Referrer",t:"Referrer drops or chases a request that doesn't carry what they need to decide and submit",
       ten:"A referrer helps when the ask costs them little, and most asks arrive missing the job ID, the portal's fields, or any sign of fit.",
       did:"Ignored asks without a job ID. Got candidates on a call to fill in city, date of birth, gaps, country code and preferred locations. Typed skills from the resume into the portal by hand. Read resumes against their own rules. Samarth and Riya, as referrers.",
       so:"The referrer's real cost is admin, not judgement. Every missing field means another round of chasing, so incomplete requests get dropped, including from candidates who would have fit.",
       j:"When someone asks me for a referral, I want everything I need to decide and submit in one go, so referring takes minutes, not days of back-and-forth.",
       subs:[["a","no job ID, no referral","n07 n38 n70 n76 n77 n78 n79 n81"],["b","the portal asks for things a resume doesn't have","n57 n59 n60 n66 n67 n71 n73 n74 n75"],["c","fit, checked by hand","n50 n51 n53 n56 n63 n65 n82"]]},
-  C3:{side:"Candidate",t:"User can't tell whether their request was ignored, declined, submitted or rejected",
+  C3:{side:"Candidate",t:"Candidate can't tell whether their request was ignored, declined, submitted or rejected",
       ten:"The status already exists inside the company's portal, but only the referrer can see it, and nobody says no.",
       did:"Waited two or three weeks. Read silence as \"not referred\". Checked each chat one by one. Samarth kept a promised Citibank referral in mind that never happened. Samarth and Riya, as candidates.",
       so:"The candidate is waiting on information that already sits one person away. They can't move on from a no nobody tells them, so they stay stuck on dead requests instead of trying someone else.",
       j:"When I've asked someone to refer me, I want to know whether it went in and where it stands, so I can move on or follow up instead of guessing from silence.",
       subs:[["a","not knowing if it was even submitted","n01 n25 n34 n35 n36 n41"],["b","silence instead of a no","n18"],["c","waiting with no timeline","n33 n84 n85"],["d","many asks, no one place, and doubts an outside app can see the status","n26 n44 n45 n46"]]},
-  C4:{side:"Referrer",t:"User has little reason to refer someone they don't know",
+  C4:{side:"Referrer",t:"Referrer has little reason to refer someone they don't know",
       ten:"The effort is certain. The reward is small, late, and only if the person is hired and stays.",
       did:"Referred mostly people they knew, about 8 of 10. Helped friends out of a sense of obligation and left strangers unanswered. Called the bonus too low, or not the main reason. Samarth and Riya, as referrers.",
       so:"For a stranger, the referrer does real work for a reward that rarely arrives, so strangers lose by default. Nothing on the referrer's side makes a good stranger worth the effort.",
       j:"When a stranger asks me for a referral, I want helping to cost me little enough that it's worth it even if they're never hired, so it doesn't feel like working for nothing.",
       subs:[["a","the bonus doesn't pay for the effort","n32 n42 n62 n87"],["b","friends feel owed, strangers don't","n31 n48 n52 n69"],["c","effort wasted on people who don't join","n89 n90"],["d","belief that others refer blindly for bonuses (thin: one candidate's belief)","n12"]]},
-  C5:{side:"Candidate",thin:1,t:"User can't tell how strong a fit they are before they spend a request",
+  C5:{side:"Candidate",thin:1,t:"Candidate can't tell how strong a fit they are before they spend a request",
       ten:"They judge fit by eye, reading the job description against their own resume, and have nothing to show the referrer except that resume.",
       did:"Checked the job description against their resume before looking for a referrer. Led the pitch with passion and ownership. Asked for a match percentage to share with the referrer. Samarth and Riya, as candidates.",
       so:"A candidate goes into every ask unsure whether they are really a fit, and with no way to show a referrer that they are, so a good fit and a long shot arrive looking the same.",
@@ -800,7 +799,7 @@ document.querySelectorAll("#segP button").forEach(function(b){
 
 // ── Clusters, affinity maps, and one job per cluster ──
 var CN = Object.keys(CL);
-function chips(k){ var c = CL[k]; return '<div class="ch"><span class="cid">'+k+'</span><span class="side">'+c.side+'</span>'+(c.thin?'<span class="thin">Thin</span>':'')+'</div>'; }
+function chips(k){ var c = CL[k]; return '<div class="ch"><span class="cid">'+k+'</span>'+(c.thin?'<span class="thin">Thin</span>':'')+'</div>'; }
 function ids(k){ return CL[k].subs.map(function(s){ return s[2]; }).join(" "); }
 document.getElementById("clusters").innerHTML = CN.map(function(k){
   var c = CL[k];

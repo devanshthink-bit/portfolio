@@ -3449,3 +3449,9 @@ What:     Back to the 24440f8 content (rings, chain, loops, versions rail, cards
           combines, three final. Insight statements with their job above them.
 Decided:  Cluster titles start with "User", at the mentor's rule, replacing "Candidate/Referrer" at the start of the label
           (RESEARCH.md, Clusters). The side moved to a chip so both kinds of user stay visible.
+
+CHANGE · 2026-09-25 · cluster titles back to Candidate / Referrer; no side-stripe cards
+Why:      Devansh: titles start with "Candidate" or "Referrer" only, not "User" (reverses the call above). And the coloured
+          left-stripe card (kill conditions, guardrail) and the bar beside quotes "look AI".
+What:     Titles as in RESEARCH.md; the side chip is gone since the title names the side. Kill conditions and guardrail are
+          plain cards with their red or amber tag. Quotes are plain text, no bar. No left-stripe card is left on the page.
