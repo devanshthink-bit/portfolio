@@ -35,7 +35,7 @@ const recentWork = [
     blurb: "Travellers book one way and leave the return for later, where it often goes to another app. A self-initiated RedBus concept that wins that revenue back by turning one booking into two, in the same checkout.",
   },
   {
-    title: "Sidedoor, why strangers ignore your referral request",
+    title: "Sidedoor, making job referrals from strangers work for both sides",
     desc: "View project",
     tag: "Product Design · 0 to 1",
     // Same three colours as before (#d4e2ff, #7aa5fb, #b0caff), as soft glows from the two corners over
