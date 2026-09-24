@@ -3438,3 +3438,14 @@ What:     Same words, calmer page. One reading column, thin rules instead of car
           Notes read as a plain two-column list with a small cluster dot. Insight statements split into Who / Struggle / Because / Means rows
           instead of four highlight colours. Chain is a table; loops are a line of steps; versions are rows, not a sideways rail.
           Contents list replaces the status-timeline tracker. Checked: all 91 notes, filters, no overflow at 1440 and 375.
+
+CHANGE · 2026-09-25 · research board rebuilt the RedBus way
+Why:      Devansh disliked the plain-document redesign (e088639): it removed the sticky notes, diagrams and cards, and the left
+          navigation split the view. Asked to keep everything, make it clean, and match the RedBus board.
+What:     Back to the 24440f8 content (rings, chain, loops, versions rail, cards). Left tracker removed. Every section now opens
+          and closes from its row, with Open all. Notes are sticky notes grouped by interview. Clusters follow RedBus:
+          "User ..." title, a Candidate/Referrer chip, Tension, What they did, So what. New affinity-map section: each cluster
+          with its sub-groups (a, b, c...) of sticky notes, from RESEARCH.md; n92 left out as before. JTBDs: five, what
+          combines, three final. Insight statements with their job above them.
+Decided:  Cluster titles start with "User", at the mentor's rule, replacing "Candidate/Referrer" at the start of the label
+          (RESEARCH.md, Clusters). The side moved to a chip so both kinds of user stay visible.
