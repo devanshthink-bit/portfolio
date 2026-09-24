@@ -1987,20 +1987,17 @@ body:has(.proto-page) { background: linear-gradient(180deg, #ffffff 0%, #f5f8fe 
   padding: 32px 0;
 }
 .pv-head { display: flex; flex-direction: column; }
-.pv-logo { width: 44px; height: 44px; object-fit: contain; margin-bottom: 20px; }
+.pv-brand { display: flex; align-items: center; gap: 12px; }
+.pv-logo { width: 60px; height: 60px; object-fit: contain; }
+.pv-word { height: 30px; width: auto; }
 .pv-eyebrow {
+  margin-top: 14px;
   font: 500 11px/14px var(--font-geist-mono), monospace;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #2563EB;
 }
-.pv-head h1 {
-  margin-top: 8px;
-  font: 700 32px/38px var(--font-manrope), sans-serif;
-  letter-spacing: -0.03em;
-  color: #0f172a;
-}
-.pv-lede { margin-top: 10px; font-size: 15px; line-height: 23px; color: #475569; }
+.pv-lede { margin-top: 12px; font-size: 15px; line-height: 23px; color: #475569; }
 
 /* Referrer | Candidate, a sliding thumb under the chosen side */
 .pv-seg {
@@ -2153,8 +2150,8 @@ body:has(.proto-page) { background: linear-gradient(180deg, #ffffff 0%, #f5f8fe 
 
 /* Short windows: tighten the panel so it still fits without scrolling. */
 @media (max-height: 820px) {
-  .pv-logo { width: 36px; height: 36px; margin-bottom: 14px; }
-  .pv-head h1 { font-size: 26px; line-height: 32px; }
+  .pv-logo { width: 48px; height: 48px; }
+  .pv-word { height: 24px; }
   .pv-lede { font-size: 14px; line-height: 21px; }
   .pv-seg { margin-top: 20px; }
   .pv-steps button { padding-block: 4px; font-size: 13px; }

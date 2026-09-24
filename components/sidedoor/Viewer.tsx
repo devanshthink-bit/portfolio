@@ -87,9 +87,11 @@ export default function Viewer() {
     <div className="pv" ref={page}>
       <aside className="pv-panel">
         <header className="pv-head">
-          <img className="pv-logo" src="/images/sidedoor/sidedoor-logo.png" alt="" />
+          <h1 className="pv-brand">
+            <img className="pv-logo" src="/images/sidedoor/sidedoor-logo.png" alt="" />
+            <img className="pv-word" src="/images/sidedoor/sidedoor-word.svg" alt="SideDoor" width={132} height={24} />
+          </h1>
           <p className="pv-eyebrow">Working prototype</p>
-          <h1>SideDoor</h1>
           <p className="pv-lede">
             A candidate asks for a referral with everything the referrer needs. The referrer decides
             from proof and refers in a few taps. Everything on the phone works.
