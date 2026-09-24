@@ -35,7 +35,7 @@ const recentWork = [
     blurb: "Travellers book one way and leave the return for later, where it often goes to another app. A self-initiated RedBus concept that wins that revenue back by turning one booking into two, in the same checkout.",
   },
   {
-    title: "Sidedoor, making job referrals from strangers work for both sides",
+    title: "Sidedoor, reinventing the job referral from both sides",
     desc: "View project",
     tag: "Product Design · 0 to 1",
     // Same three colours as before (#d4e2ff, #7aa5fb, #b0caff), as soft glows from the two corners over
@@ -55,7 +55,7 @@ const recentWork = [
     wordmark: "/images/sidedoor/sidedoor-word.svg",
     brand: "SideDoor",
     brandColor: "#ffffff",
-    did: "Designed a job referral app where candidates send complete requests and referrers decide from proof",
+    did: "Designed a new kind of job referral: complete before it's sent, proven before it's judged, answered after it's submitted",
     tags: ["Careers", "Two-sided", "iOS app", "Concept"],
     blurb: "Referrers don't ignore strangers out of distrust. The two people I interviewed, who have asked for referrals and given them, said it's the paperwork a request hands them. So the request arrives complete, proves every skill it claims, and tells the candidate how it ended.",
   },

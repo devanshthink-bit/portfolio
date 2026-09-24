@@ -10,7 +10,7 @@ import { PhoneRow } from "../../../components/IPhone";
 import PhoneShot from "../../../components/PhoneShot";
 
 export const metadata: Metadata = {
-  title: "SideDoor - Making job referrals from strangers work for both sides | Devansh Somvanshi",
+  title: "SideDoor - Reinventing the job referral from both sides | Devansh Somvanshi",
   description: "A concept for job referrals in Indian tech: the request arrives complete, fit comes with proof, and the answer travels back.",
 };
 
@@ -122,7 +122,7 @@ export default function SidedoorCaseStudy() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/images/sidedoor/sidedoor-logo.png" alt="" aria-hidden width={24} height={31} style={{ height: "1.4em", width: "auto", display: "inline-block", verticalAlign: "-0.34em", marginRight: 10 }} />
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/images/sidedoor/sidedoor-word.svg" alt="SideDoor" width={132} height={24} style={{ height: "0.74em", width: "auto", display: "inline-block", verticalAlign: "-0.02em" }} />: Making job referrals from strangers work for both sides
+        <img src="/images/sidedoor/sidedoor-word.svg" alt="SideDoor" width={132} height={24} style={{ height: "0.74em", width: "auto", display: "inline-block", verticalAlign: "-0.02em" }} />: Reinventing the job referral from both sides
       </h1>
       <p style={T.lede}>I started out sure that referrers ignore strangers because they can&apos;t trust them. The two people I interviewed have asked for referrals and given them, and neither of them talked about trust. They talked about the work a request hands them: no job ID, portal questions, fit to check by hand. So I dropped my first design. SideDoor sends the request complete, shows where each skill was found, and tells the candidate how it ended.</p>
 
