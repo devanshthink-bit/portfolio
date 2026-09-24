@@ -493,7 +493,7 @@ function FitSummary({ j }: { j: Job }) {
     ["Missing", j.missing.filter((k) => !near.includes(k))],
   ];
   return (
-    <Block icon="lightbulb.fill" title="How you match">
+    <Block icon="checkmark.circle.fill" title="How you match">
       <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingTop: 4 }}>
         {rows
           .filter(([, list]) => list.length > 0)

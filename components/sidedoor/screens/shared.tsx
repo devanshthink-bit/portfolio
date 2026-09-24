@@ -1006,9 +1006,9 @@ export function ResumePreview({ file = "Abhinav_Saxena_Resume.pdf", id = "abhina
 
 /** A candidate's LinkedIn, Dribbble or Behance: in the real app this opens in the browser, so
  *  the prototype shows a small preview of that page instead of leaving. */
-export function ProfileLink({ site = "LinkedIn", name = "Abhinav Saxena" }: { site?: string; name?: string }) {
+export function ProfileLink({ site = "LinkedIn", name = "Abhinav Saxena", url: given }: { site?: string; name?: string; url?: string }) {
   const slug = name.toLowerCase().replace(/ /g, site === "LinkedIn" ? "-" : "");
-  const url = site === "LinkedIn" ? `linkedin.com/in/${slug}` : `${site.toLowerCase()}.${site === "Behance" ? "net" : "com"}/${slug}`;
+  const url = given ?? (site === "LinkedIn" ? `linkedin.com/in/${slug}` : `${site.toLowerCase()}.${site === "Behance" ? "net" : "com"}/${slug}`);
   return (
     <Screen title={site} back>
       <div style={{ paddingTop: 24, display: "flex", flexDirection: "column", gap: 24 }}>
@@ -1017,13 +1017,13 @@ export function ProfileLink({ site = "LinkedIn", name = "Abhinav Saxena" }: { si
         </div>
         <Card>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12, textAlign: "center" }}>
-            <Avatar name={name} size={68} />
+            {given ? <Icon name="folder.fill" size={44} color="tone" /> : <Avatar name={name} size={68} />}
             <span className="t-h-md">{name}</span>
-            <span className="t-label muted">{site === "LinkedIn" ? "Designer · 500+ connections" : `${site} portfolio · 12 shots`}</span>
+            <span className="t-label muted">{given ? "Project page" : site === "LinkedIn" ? "Designer · 500+ connections" : `${site} portfolio · 12 shots`}</span>
           </div>
         </Card>
         <p className="t-label-sm muted" style={{ textAlign: "center" }}>
-          In the app this opens {site} in your browser.
+          In the app this opens {given ? "the link" : site} in your browser.
         </p>
       </div>
     </Screen>

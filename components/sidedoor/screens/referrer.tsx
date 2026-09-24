@@ -278,7 +278,7 @@ const yearsFact = (n: number) => (n === 1 ? "1 year" : `${n}+ years`);
 
 export function ReferralRequest({ id }: { id: string }) {
   const nav = useNav();
-  const { handled, removedSkills, profile, note, rules, force, dispatch } = useStore();
+  const { handled, removedSkills, profile, note, rules, force, you, dispatch } = useStore();
   const decide = useDecide();
   const c = candidateById(id);
   // a request from you would carry what you typed and edited (you never see your own, but the rule holds)
@@ -342,6 +342,7 @@ export function ReferralRequest({ id }: { id: string }) {
               <Fact icon="calendar">{r.years} years</Fact>
               <Fact icon="hourglass">{r.notice}</Fact>
             </div>
+            <SixMonths r={force === "req.sixmonths" ? { ...r, referredHere: { on: "12 May", until: "12 Nov" } } : r} company={you.company} />
             <div style={{ display: "flex", gap: 8 }}>
               {r.work.map((w) => (
                 <Tag key={w}>{w}</Tag>
@@ -408,6 +409,7 @@ export function ReferralRequest({ id }: { id: string }) {
             <Fact icon="calendar">{yearsFact(r.years)}</Fact>
             <Fact icon="hourglass">{r.notice}</Fact>
           </div>
+          <SixMonths r={force === "req.sixmonths" ? { ...r, referredHere: { on: "12 May", until: "12 Nov" } } : r} company={you.company} />
           <div style={{ display: "flex", gap: 8 }}>
             {r.work.map((w) => (
               <Tag key={w}>{w}</Tag>
@@ -535,6 +537,18 @@ function PersonHead({ name, role, when, tag }: { name: string; role: string; whe
         </span>
       </div>
     </div>
+  );
+}
+
+/** Most portals refuse a second referral within 6 months. Sidedoor knows its own referrals, so it says so
+ *  before the referrer spends one (Riya, n74). */
+function SixMonths({ r, company }: { r: Candidate; company: string }) {
+  return r.referredHere ? (
+    <Note style="buffer" icon="info.circle.fill">
+      {`Referred to ${company} on ${r.referredHere.on}. Most portals won’t take another referral until ${r.referredHere.until}.`}
+    </Note>
+  ) : (
+    <Fact icon="checkmark.circle.fill">{`No ${company} referral in the last 6 months`}</Fact>
   );
 }
 

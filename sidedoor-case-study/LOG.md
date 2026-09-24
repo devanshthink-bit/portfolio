@@ -3200,3 +3200,13 @@ DECISION · 2026-09-24 · 14 requests a week, and a no gives it back
 - Rejected: counting related skills in the tag (it would inflate the number the referrer trusts); expected level and a "can vouch" person (not in the research); salary (too sensitive).
 - Figma, V6: MatchRow gained Status=Related (5729:31903). 3 request screens updated (Explore, Skill Removed, Profile Updated). 4 Job screens got the block (Job Screen, Referred Before, Already Asked, Suggested By Referrer). The job Card is shared with V2–V5, so only the 4 V6 copies were detached; V2–V5 untouched.
 - Checked on localhost: both screens show the three groups (Vercel preview needs a login).
+
+## 24 Sep 2026 · Proof links in projects, the 6-month fact, the match icon
+
+- Devansh: "the things we discussed like achievements, u skipped them?" I had. Results with numbers were already in project details, but outside work and proof weren't. Devansh chose: a link inside each project ("proof of work there itself") and the 6-month fact. Not building expected level or "can vouch" (not in the research).
+- Devansh: the "How you match" icon was the lightbulb, the same as "Tips from the referrer", and it was grey in Figma. Now a blue check-in-circle, which matches the "4 of 7 skills match" tag. (Referrer's "How they match" keeps V6's lightbulb: there is no tips block on that screen.)
+- Built:
+  1. Every project can carry a link (case study, repo or live product), shown under the title in link blue. Tapping it opens the link page. Profile editing gained "Link to the work (optional)". Abhinav's and Nithin's projects have links, and so do most candidates (one GitHub repo for the open-source NeoPOP work).
+  2. Referral request: under the city, years and notice line, "No Flipkart referral in the last 6 months" (from Sidedoor's own referrals, Riya n74). When there was one, a warning note replaces it: "Referred to Flipkart on 12 May. Most portals won't take another referral until 12 Nov." The state list has "One request · referred here in 6 months" (forced on Abhinav, so it matches the Figma frame).
+- Figma, V6: a new ProjectRow V6 component (5733:31272, with Link and Has link properties). The old ProjectRow is shared with V5, so only the 12 V6 copies were swapped. Project Details got the link line, and Projects Editing got the link field. The 3 request screens got the 6-month line. New States frame "Referrer/Referral Request Screen/Referred Here Before" (5733:43591). The How you match icon was swapped on the 4 Job screens.
+- Checked on localhost (Vercel preview needs a login): the links open the project page and sit left-aligned, both 6-month states render, and the icon is blue.

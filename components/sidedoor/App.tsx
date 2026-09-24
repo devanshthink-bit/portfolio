@@ -128,7 +128,7 @@ const SCREENS: Record<string, (p: any) => ReactNode> = {
   helpArticle: (p) => <HelpArticle id={p.id} />,
   contactSupport: () => <ContactSupport />,
   resume: (p) => <ResumePreview file={p.file} id={p.id} />,
-  profileLink: (p) => <ProfileLink site={p.site} name={p.name} />,
+  profileLink: (p) => <ProfileLink site={p.site} name={p.name} url={p.url} />,
 };
 
 const SHEETS: Record<string, (p: any) => ReactNode> = {

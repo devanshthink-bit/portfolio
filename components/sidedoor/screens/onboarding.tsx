@@ -570,6 +570,7 @@ export function ProjectsBlock({ reading }: { reading?: boolean }) {
                 <ItemHead title={`Project ${i + 1}`} onRemove={() => ed.remove(i)} />
                 <Field label="Project name" value={p.title} onChange={(v) => ed.set(i, { title: v })} kind="text" required demo={DEMO.newProject.title} />
                 <TagInput label="Skills" value={p.skills} onChange={(v) => ed.set(i, { skills: v })} ideas={DEMO.skillIdeas} />
+                <Field label="Link to the work (optional)" value={p.link ?? ""} onChange={(v) => ed.set(i, { link: v })} kind="url" placeholder="Case study, repo or live product" demo={DEMO.newProject.link} />
                 <Field
                   label="What you did (optional)"
                   value={p.detail}
@@ -668,10 +669,20 @@ export function CompanyRow({ logo, role, company, when }: { logo: string; role: 
   );
 }
 
-export function Project({ title, skills, detail }: { title: string; skills: string[]; detail?: string }) {
+export function Project({ title, skills, detail, link }: { title: string; skills: string[]; detail?: string; link?: string }) {
+  const nav = useNav();
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-      <span className="t-h-sm">{title}</span>
+      <span style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        <span className="t-h-sm">{title}</span>
+        {/* the proof sits with the work it proves */}
+        {link && (
+          <button className="sd-hit44" style={{ display: "flex", alignItems: "center", justifyContent: "flex-start", gap: 4, textAlign: "left", minWidth: 0, width: "100%" }} onClick={() => nav.push("profileLink", { site: "Project", name: title, url: link })}>
+            <Icon name="link.line" size={16} color="var(--sd-link)" />
+            <span className="t-label link sd-1line">{link}</span>
+          </button>
+        )}
+      </span>
       {detail && <p className="t-body muted">{detail}</p>}
       <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
         {skills.map((s) => (
@@ -689,7 +700,7 @@ export function Projects({ list }: { list: Proj[] }) {
     <>
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
         {list.map((p, i) => (
-          <Project key={i} title={p.title} skills={p.skills} detail={open ? p.detail || undefined : undefined} />
+          <Project key={i} title={p.title} skills={p.skills} link={p.link} detail={open ? p.detail || undefined : undefined} />
         ))}
       </div>
       {list.some((p) => p.detail) && (

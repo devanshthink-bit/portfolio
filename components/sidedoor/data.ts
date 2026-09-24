@@ -376,7 +376,8 @@ export const firstName = (n: string) => n.split(" ")[0];
 
 /* ── the candidate's own profile (Abhinav) ────────────────────────────────── */
 export type Exp = { logo: string; role: string; company: string; when: string };
-export type Proj = { title: string; skills: string[]; detail: string };
+/** link: where the work can be seen (a case study, a repo, the live product), shown with the project as proof */
+export type Proj = { title: string; skills: string[]; detail: string; link?: string };
 
 export const ABHINAV_PROFILE = {
   name: "Abhinav Saxena",
@@ -392,11 +393,13 @@ export const ABHINAV_PROFILE = {
   projects: [
     {
       title: "Blinkit Merchant App UX Revamp",
+      link: "behance.net/abhinavsaxena/blinkit-merchant-app",
       skills: ["Product strategy", "Systems design", "Prototyping", "User research", "Figma"],
       detail: "Rebuilt order intake for 4,000 dark-store merchants. Cut the time to accept an order from 40s to 12s.",
     },
     {
       title: "MakeMyTrip Booking Experience Redesign",
+      link: "behance.net/abhinavsaxena/mmt-booking",
       skills: ["User research", "Interaction design", "Usability testing", "Figma"],
       detail: "Redesigned hotel checkout from five steps to three. Drop-off at payment fell 18% in the A/B test.",
     },
@@ -432,11 +435,13 @@ export const NITHIN_PROFILE: Profile = {
   projects: [
     {
       title: "Flipkart Checkout Redesign",
+      link: "nithinagarwal.design/flipkart-checkout",
       skills: ["Interaction design", "Design system", "A/B testing", "Figma"],
       detail: "Led a team of six on one-page checkout. Checkout completion rose 9% across 40M monthly buyers.",
     },
     {
       title: "MakeMyTrip Flights Search",
+      link: "nithinagarwal.design/mmt-flights",
       skills: ["User research", "Interaction design", "Prototyping"],
       detail: "Rebuilt fare search and filters. Time to first booking fell from 6 minutes to under 3.",
     },
@@ -490,7 +495,7 @@ export const DEMO = {
   jobId: "184223",
   tips: "Link a portfolio with two end-to-end case studies. Show the problem, your choice and the result.",
   support: "My request to Flipkart still says Sent after a week.",
-  newProject: { title: "Swiggy Instamart Search Redesign", skills: ["Interaction design", "A/B testing"], detail: "Made search results load in under a second and cut empty searches by 30%." },
+  newProject: { title: "Swiggy Instamart Search Redesign", link: "behance.net/abhinavsaxena/instamart-search", skills: ["Interaction design", "A/B testing"], detail: "Made search results load in under a second and cut empty searches by 30%." },
   newJob: { logo: "swiggy", role: "Design Intern", company: "Swiggy", when: "Jan 2022–May 2022" },
   skillIdeas: ["AI-assisted design", "Design system", "A/B testing", "Motion design", "Accessibility"],
 };
@@ -508,6 +513,9 @@ export type Candidate = {
   years: number;
   /** which of the post's skills their resume shows, and where it came from */
   has: Record<string, string>;
+  /** when someone last referred them to this company through Sidedoor (Riya, n74: portals wait
+   *  6 months, and nobody remembers when that was) */
+  referredHere?: { on: string; until: string };
   /** skills their resume shows only in a nearby form, and where */
   near?: Record<string, string>;
   when: string;
@@ -571,7 +579,7 @@ export const CANDIDATES: Candidate[] = [
       { logo: "razorpay", role: "UX Designer", company: "Razorpay", when: "Jul 2020–Feb 2022" },
     ],
     projects: [
-      { title: "Swiggy Instamart Checkout", skills: ["Interaction design", "A/B testing", "Figma"], detail: "Cut checkout from four steps to two. Orders completed rose 9%." },
+      { title: "Swiggy Instamart Checkout", link: "dribbble.com/kavyareddy/swiggy-instamart-checkout", skills: ["Interaction design", "A/B testing", "Figma"], detail: "Cut checkout from four steps to two. Orders completed rose 9%." },
       { title: "Razorpay Payment Links", skills: ["User research", "Prototyping"], detail: "Redesigned links for small sellers. Support tickets fell by a third." },
     ],
     note: "I’ve shipped checkout at Swiggy for 2 years. Would love to do it at Flipkart’s scale.",
@@ -598,7 +606,7 @@ export const CANDIDATES: Candidate[] = [
       { logo: "zomato", role: "Design Intern", company: "Zomato", when: "Jan 2022–Jul 2022" },
     ],
     projects: [
-      { title: "PhonePe Bill Payments", skills: ["Interaction design", "Design system"], detail: "Built one bill-pay flow for 40 billers. Failed payments fell 12%." },
+      { title: "PhonePe Bill Payments", link: "behance.net/rohaniyer/phonepe-bill-payments", skills: ["Interaction design", "Design system"], detail: "Built one bill-pay flow for 40 billers. Failed payments fell 12%." },
       { title: "Zomato Table Booking", skills: ["Prototyping", "Figma"], detail: "Prototyped booking for dine-out. Shipped to 5 cities." },
     ],
     note: "Payments are my thing. Checkout at Flipkart is the next step.",
@@ -622,7 +630,7 @@ export const CANDIDATES: Candidate[] = [
     work: ["Full time", "Hybrid"],
     jobs: [{ role: "Product Designer", company: "Myntra", when: "Jul 2021–Present", logo: "" }],
     projects: [
-      { title: "Myntra Try & Buy", skills: ["User research", "Interaction design"], detail: "Designed try-at-home for fashion. Returns fell 14%." },
+      { title: "Myntra Try & Buy", link: "dribbble.com/arpitasingh/myntra-try-buy", skills: ["User research", "Interaction design"], detail: "Designed try-at-home for fashion. Returns fell 14%." },
       { title: "Myntra Design System", skills: ["Design system", "Figma"], detail: "Built 60 components used by 25 designers." },
     ],
     note: "Myntra checkout taught me a lot about fashion buyers. Happy to share.",
@@ -656,7 +664,7 @@ export const CANDIDATES: Candidate[] = [
       { logo: "makemytrip", role: "UX Designer", company: "MakeMyTrip", when: "Jun 2019–Mar 2021" },
     ],
     projects: [
-      { title: "Zomato AI Menu Search", skills: ["AI-assisted design", "Interaction design"], detail: "Search by craving, not dish name. Used in 1 in 5 searches." },
+      { title: "Zomato AI Menu Search", link: "behance.net/snehakapoor/zomato-ai-menu-search", skills: ["AI-assisted design", "Interaction design"], detail: "Search by craving, not dish name. Used in 1 in 5 searches." },
       { title: "Zomato Gold Checkout", skills: ["A/B testing", "Figma"], detail: "Ran 11 tests on the Gold upsell. Sign-ups up 22%." },
     ],
     note: "Five years in food delivery. Keen to move to commerce checkout.",
@@ -680,8 +688,8 @@ export const CANDIDATES: Candidate[] = [
     work: ["Full time", "On-site"],
     jobs: [{ logo: "cred", role: "Product Designer", company: "CRED", when: "Jan 2022–Present" }],
     projects: [
-      { title: "CRED Pay at Stores", skills: ["Interaction design", "Prototyping"], detail: "Tap-to-pay for offline stores. Live in 3,000 shops." },
-      { title: "NeoPOP Components", skills: ["Design system", "Figma"], detail: "Added 18 components to CRED’s open design system." },
+      { title: "CRED Pay at Stores", link: "dribbble.com/adityajoshi/cred-pay-at-stores", skills: ["Interaction design", "Prototyping"], detail: "Tap-to-pay for offline stores. Live in 3,000 shops." },
+      { title: "NeoPOP Components", link: "github.com/CRED-CLUB/neopop-web", skills: ["Design system", "Figma"], detail: "Added 18 components to CRED’s open design system." },
     ],
     note: "I care about details in payments. Here’s my Dribbble too.",
     email: "aditya.joshi@email.com",
@@ -707,7 +715,7 @@ export const CANDIDATES: Candidate[] = [
       { logo: "groww", role: "Associate UX Designer", company: "Groww", when: "Jun 2020–Apr 2021" },
     ],
     projects: [
-      { title: "Razorpay Checkout Revamp", skills: ["Interaction design", "User research"], detail: "One checkout for cards, UPI and EMI. Success rate up 4 points." },
+      { title: "Razorpay Checkout Revamp", link: "behance.net/aviraldixit/razorpay-checkout-revamp", skills: ["Interaction design", "User research"], detail: "One checkout for cards, UPI and EMI. Success rate up 4 points." },
       { title: "Groww SIP Setup", skills: ["Figma"], detail: "Made starting an SIP a 3-tap flow." },
     ],
     note: "I’ve spent four years on checkout. Happy to walk you through it.",
@@ -740,7 +748,7 @@ export const CANDIDATES: Candidate[] = [
       { logo: "amazon", role: "UX Designer", company: "Amazon", when: "Jul 2019–Jan 2023" },
     ],
     projects: [
-      { title: "Zepto Cafe Ordering", skills: ["Interaction design", "Prototyping"], detail: "Launched hot food inside the grocery app in 8 weeks." },
+      { title: "Zepto Cafe Ordering", link: "dribbble.com/priyanair/zepto-cafe-ordering", skills: ["Interaction design", "Prototyping"], detail: "Launched hot food inside the grocery app in 8 weeks." },
       { title: "Amazon Pay Later", skills: ["User research", "Design system"], detail: "Designed credit onboarding for first-time borrowers." },
     ],
     note: "I’d move to Bengaluru for this role.",
@@ -764,7 +772,7 @@ export const CANDIDATES: Candidate[] = [
     work: ["Full time", "Hybrid"],
     jobs: [{ logo: "google", role: "UX Designer", company: "Google", when: "Aug 2022–Present" }],
     projects: [
-      { title: "Google Pay Bill Reminders", skills: ["Interaction design", "User research"], detail: "Reminders that users trust. Late payments fell 17%." },
+      { title: "Google Pay Bill Reminders", link: "behance.net/varunbhatia/google-pay-bill-reminders", skills: ["Interaction design", "User research"], detail: "Reminders that users trust. Late payments fell 17%." },
       { title: "Maps Offline Areas", skills: ["Prototyping"], detail: "Prototyped offline downloads for low-storage phones." },
     ],
     note: "Looking for a faster team. Checkout would be great.",
@@ -791,7 +799,7 @@ export const CANDIDATES: Candidate[] = [
       { logo: "phonepe", role: "Visual Designer", company: "PhonePe", when: "Jun 2020–Sep 2021" },
     ],
     projects: [
-      { title: "WhatsApp Catalogue", skills: ["Interaction design", "A/B testing"], detail: "Let shops share catalogues in chat. Used by 2M businesses." },
+      { title: "WhatsApp Catalogue", link: "dribbble.com/tanyamehta/whatsapp-catalogue", skills: ["Interaction design", "A/B testing"], detail: "Let shops share catalogues in chat. Used by 2M businesses." },
       { title: "PhonePe Rewards", skills: ["Figma", "Prototyping"], detail: "Redesigned scratch cards and rewards." },
     ],
     note: "Would love to talk about commerce in chat.",
@@ -834,7 +842,7 @@ export const CANDIDATES: Candidate[] = [
     notice: "30 days",
     work: ["Full time", "Hybrid"],
     jobs: [{ logo: "", role: "UI Designer", company: "Urban Company", when: "Jul 2023–Present" }],
-    projects: [{ title: "Urban Company Booking", skills: ["Figma"], detail: "Redesigned slot booking for home services." }],
+    projects: [{ title: "Urban Company Booking", link: "dribbble.com/nisharao/urban-company-booking", skills: ["Figma"], detail: "Redesigned slot booking for home services." }],
     note: "Early in my career but I learn fast.",
     email: "nisha.rao@email.com",
     phone: "+91 96XXX XXX52",
@@ -855,7 +863,7 @@ export const CANDIDATES: Candidate[] = [
     notice: "30 days",
     work: ["Full time", "Remote or hybrid"],
     jobs: [{ logo: "groww", role: "Product Designer", company: "Groww", when: "Jun 2023–Present" }],
-    projects: [{ title: "Groww Stock Alerts", skills: ["Interaction design", "User research"], detail: "Price alerts that don’t spam. Opt-outs fell by half." }],
+    projects: [{ title: "Groww Stock Alerts", link: "behance.net/ishaanmalhotra/groww-stock-alerts", skills: ["Interaction design", "User research"], detail: "Price alerts that don’t spam. Opt-outs fell by half." }],
     note: "I’ve applied twice on the portal with no reply. A referral would help.",
     email: "ishaan.malhotra@email.com",
     phone: "+91 98XXX XXX26",
@@ -876,7 +884,7 @@ export const CANDIDATES: Candidate[] = [
     notice: "60 days",
     work: ["Full time", "Hybrid"],
     jobs: [{ logo: "microsoft", role: "UX Designer", company: "Microsoft", when: "Jul 2024–Present" }],
-    projects: [{ title: "Teams Meeting Recap", skills: ["Figma", "Prototyping"], detail: "Designed AI recap cards for missed meetings." }],
+    projects: [{ title: "Teams Meeting Recap", link: "dribbble.com/diyasharma/teams-meeting-recap", skills: ["Figma", "Prototyping"], detail: "Designed AI recap cards for missed meetings." }],
     note: "First job after IIT Bombay IDC. Keen to grow in consumer products.",
     email: "diya.sharma@email.com",
     phone: "+91 91XXX XXX38",
