@@ -24,6 +24,8 @@ const recentWork = [
     tooltipBg: "#1d1d1d",
     slug: "redbus",
     phones: ["hifi_06a", "hifi_05a", "hifi_16"],
+    screens: "/images/redbus/screens",
+    logo: "/images/redbus/logo.svg",
     // Jahanvi's card anatomy: brand, what I did, tags, image, title + year, one line, impact.
     brand: "RedBus",
     brandColor: "#ffffff",
@@ -32,14 +34,23 @@ const recentWork = [
     blurb: "Travellers book one way and leave the return for later, where it often goes to another app. A self-initiated RedBus concept that wins that revenue back by turning one booking into two, in the same checkout.",
   },
   {
-    title: "Sidedoor — Job referral platform",
-    desc: "0→1 referral platform — research & concept design.",
-    tag: "Product Design · 0→1",
+    title: "Sidedoor, a referral request a stranger can say yes to",
+    desc: "View project",
+    tag: "Product Design · 0 to 1",
     // Same three colours as before (#d4e2ff, #7aa5fb, #b0caff), as soft glows from the two corners over
     // the mid blue, each fading out gradually so no edge shows. A straight three-stop gradient left a dark diagonal line along its darkest point.
     gradient: "radial-gradient(110% 130% at 0% 0%, #d4e2ff 0%, rgba(212,226,255,0.72) 22%, rgba(212,226,255,0.38) 45%, rgba(212,226,255,0.12) 68%, rgba(212,226,255,0) 88%), radial-gradient(110% 130% at 100% 100%, #b0caff 0%, rgba(176,202,255,0.72) 22%, rgba(176,202,255,0.38) 45%, rgba(176,202,255,0.12) 68%, rgba(176,202,255,0) 88%), #7aa5fb",
-    tooltipBg: "#3d6bc4",
+    tooltipBg: "#1d1d1d",
     slug: "sidedoor",
+    // The same card as RedBus: V6 screens from Figma (Job details, the referrer's request, the portal details).
+    phones: ["job", "request", "emailed"],
+    screens: "/images/sidedoor/screens",
+    logo: "/images/sidedoor/sidedoor-logo.png",
+    brand: "SideDoor",
+    brandColor: "#ffffff",
+    did: "Designed a referral request that a stranger can say yes to in minutes",
+    tags: ["Careers", "Two-sided", "iOS app", "Concept"],
+    blurb: "Employees ignore referral requests from strangers because each one hands them the candidate's paperwork. A concept where the request arrives complete, every skill comes with proof, and the answer finds its way back.",
   },
   // Hidden for now at Devansh's request (13 Sep 2026). Kept, not deleted: uncomment to bring back.
   // {
@@ -110,7 +121,7 @@ function StatCounter({ value, unit, label, active, countTo, suffix, startFrom }:
 
 type Work = {
   title: string; desc: string; tag: string; gradient: string; tooltipBg: string; slug: string | null; image?: string;
-  phones?: string[]; brand?: string; brandColor?: string; did?: string; tags?: string[]; year?: string; blurb?: string; impact?: string;
+  phones?: string[]; screens?: string; logo?: string; brand?: string; brandColor?: string; did?: string; tags?: string[]; year?: string; blurb?: string; impact?: string;
 };
 
 function WorkCard({ item }: { item: Work }) {
@@ -143,14 +154,14 @@ function WorkCard({ item }: { item: Work }) {
           <div className="work-card-panel" style={{ background: item.gradient }}>
             <div className="work-card-panel-text is-brand-only">
               <p className="work-card-brand" style={{ color: item.brandColor, display: "flex", alignItems: "center", gap: 10 }}>
-                {/* RedBus logo, the same unaltered path the prototype uses, in brand red */}
-                {item.slug === "redbus" && <img src="/images/redbus/logo.svg" alt="" aria-hidden width={45} height={30} style={{ height: "1.15em", width: "auto", display: "block", filter: "brightness(0) invert(1)" }} />}
+                {/* The brand's own logo, unaltered, turned white on the colour panel */}
+                {item.logo && <img src={item.logo} alt="" aria-hidden width={45} height={30} style={{ height: "1.15em", width: "auto", display: "block", filter: "brightness(0) invert(1)" }} />}
                 {item.brand}
               </p>
             </div>
             {item.phones && (
               <div className="work-card-phones">
-                {item.phones.map((f) => <IPhone key={f} src={`/images/redbus/screens/${f}.webp`} />)}
+                {item.phones.map((f) => <IPhone key={f} src={`${item.screens}/${f}.webp`} />)}
               </div>
             )}
           </div>

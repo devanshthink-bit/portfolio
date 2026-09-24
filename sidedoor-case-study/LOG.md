@@ -3397,3 +3397,17 @@ DECISION · 2026-09-24 · 14 requests a week, and a no gives it back
 - Why these tasks: each one checks a bet in "Key decisions" (proof rule, just-in-time details, status back, the link, portal details, Mark as submitted, question suggestions).
 - Turned down: asking "would you use this?" (people predict yes); telling them about the blue hint (it would lead them).
 - Known limits: both people shaped the app and know Devansh, so they'll be kind; 2 people can show where the flows break, not whether referrers submit more. The kill conditions still need the 8-referrer test.
+
+## 2026-09-24 · Case study written (molades-case)
+- Devansh asked for the whole case study in the portfolio, told like Ishita Sharma's EDGE case study (solution first as a persona story, then the hard decisions, then the messy process), using the mentor's storytelling deck (Manav Madaan: braindump, characters, plots, arc, narrative, open mic) and the mentor's "one heading, one subheading, one image". Consistent with RedBus in look only. Every line through /humanizer. Devansh chose: I write it all, they review; export Figma screens; no unsourced figures until they send links; the prototype live in the page.
+- Decided: Seven Point Plot in four acts. Act 1 the problem in Samarth's and Riya's words, plus the limits. Act 2 Abhinav asks Nithin, ten scenes on real V6 screens with notes, then the live prototype. Act 3 the turns: six AI transcripts, the bet that died, V2 vs V6, the mentor's LinkedIn critique rejected, my own mistake (asking referrers to come back), the proof rule, the question, seven rounds on the green banner, the attack, MoSCoW. Act 4 no users yet, what I'd watch, the kill conditions, the test next.
+- Rejected: a chronological story (it leads with process); the old page's content (Ishaan and Diya, the 10 interviews, the trust bet, screens that never existed); any desk figure without a source; emojis in headings (humanizer).
+- Built:
+  - 21 screens exported from Figma at 2x (804 × 1748) into public/images/sidedoor/screens, tall frames cropped to one phone screen keeping the header and tab bar; the proof sheet composited over the dimmed request.
+  - Shared story parts moved from the RedBus page into components/caseStudy.tsx (Act, InShort, BeforeAfter, Rows, MoSCoW, Closing); RedBus uses them unchanged.
+  - One accent variable (--cs-accent): red on RedBus, blue on Sidedoor, for notes, lines, boxes, numbers and the hero glow.
+  - SidedoorEmbed: the coded app live in a phone on a blue stage, with real cursors (.sd-live).
+  - Home card: the RedBus card generalised (logo and screens paths); Sidedoor now has the logo, three V6 phones, a title, blurb and tags.
+- Figma fix found while exporting: "A listed skill counts once your linked work or resume shows it" was cut off on all 4 V6 Job screens (fixed-height tag, truncated text). Now it wraps, left-aligned like the prototype. Code was already right.
+- The case study is pinned to commit 18d4738 and the 24 Sep Figma: sidedoor-case-study/CASE_STUDY_VERSION.md lists every image, its frame and crop, the beats it feeds, and what's pending (tests, sources, polish). Interview questions and the molades bar: CASE_QA.md. The bar fails on "real humans" until the tests run, and the page says so.
+- Checked on localhost (Vercel preview needs a login): every image loads, all section ids exist, the embed responds to taps, no overflow at 375 wide, the accent is blue, dark mode colours switch. The dev server had stale CSS again; fixed by clearing .next (see the 20 Sep FIX entry).

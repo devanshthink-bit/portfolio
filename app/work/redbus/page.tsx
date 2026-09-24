@@ -5,7 +5,7 @@ import RubberBackButton from "../../../components/RubberBackButton";
 import RedbusTOCClient from "../../../components/RedbusTOCClient";
 import AskDevansh from "../../../components/AskDevansh";
 import ProtoEmbed from "../../../components/ProtoEmbed";
-import { RED, T, SectionLabel, LabelText, Beat, Figure, Card, Chip, Numbered, Pill, MetaStrip } from "../../../components/caseStudy";
+import { RED, T, SectionLabel, Beat, Figure, Card, Chip, Numbered, Pill, MetaStrip, Act, InShort, BeforeAfter, Rows, MoSCoW, Closing, type Row } from "../../../components/caseStudy";
 import { PhoneRow } from "../../../components/IPhone";
 import PhoneShot from "../../../components/PhoneShot";
 
@@ -24,32 +24,12 @@ const BOARD_URL = "https://devanshthink-bit.github.io/redbus-return-capture/arte
 const scr = (f: string) => `/images/redbus/screens/${f}.webp`;
 
 // ── Story furniture ──────────────────────────────────────────────────────────
-function Act({ id, n, title, sub }: { id?: string; n: string; title: string; sub: string }) {
-  return (
-    <header id={id} className="cs-act">
-      <p className="cs-act-kicker"><LabelText text={n} /></p>
-      <h2 className="cs-act-title">{title}</h2>
-      <p className="cs-act-sub">{sub}</p>
-    </header>
-  );
-}
-
-function InShort() {
-  const rows = [
+function Summary() {
+  return <InShort rows={[
     { k: "The problem", v: "The only way to keep a return on RedBus is to buy it, and buying it needs a date. ~74% of travellers I surveyed left it for later." },
     { k: "What I designed", v: "A return you can book without a date. Say how sure you are, pick a day from your window, and move it once if plans change." },
     { k: "Why it matters", v: "Every return booked later is a second commission RedBus can lose. ~26% of the travellers who waited booked it on another app." },
-  ];
-  return (
-    <div className="cs-inshort">
-      {rows.map((r) => (
-        <div key={r.k}>
-          <p style={{ ...T.eyebrow, marginBottom: 8 }}>{r.k}</p>
-          <p style={T.body}>{r.v}</p>
-        </div>
-      ))}
-    </div>
-  );
+  ]} />;
 }
 
 // ── Visuals built in code ────────────────────────────────────────────────────
@@ -210,21 +190,6 @@ function Merit() {
   );
 }
 
-function BeforeAfter({ before, after, beforeLabel = "Before", afterLabel = "After" }: { before: string; after: string; beforeLabel?: string; afterLabel?: string }) {
-  return (
-    <div className="cs-grid-2">
-      <Card warn>
-        <p style={{ ...T.eyebrow, marginBottom: 8 }}>{beforeLabel}</p>
-        <p style={{ ...T.cardH, textDecoration: "line-through", textDecorationColor: "var(--text-muted)" }}>{before}</p>
-      </Card>
-      <Card>
-        <p style={{ ...T.eyebrow, marginBottom: 8 }}>{afterLabel}</p>
-        <p style={T.cardH}>{after}</p>
-      </Card>
-    </div>
-  );
-}
-
 function MentorQA() {
   const qa = [
     { q: "Users get free cancellation with FlexiTicket but not with yours.",
@@ -244,22 +209,6 @@ function MentorQA() {
             <p style={T.body}>{x.a}</p>
           </div>
         </Card>
-      ))}
-    </div>
-  );
-}
-
-type Row = { s: string; tone: "red" | "amber" | "grey" | "green"; rule: string };
-
-// A status and a line, one per row: the kill list, and the options behind two decisions.
-function Rows({ rows }: { rows: Row[] }) {
-  return (
-    <div className="cs-stats" style={{ gridTemplateColumns: "1fr" }}>
-      {rows.map((r) => (
-        <div key={r.rule} className="cs-kill" style={{ background: "var(--bg)", padding: "16px 20px" }}>
-          <div><Chip tone={r.tone}>{r.s}</Chip></div>
-          <p style={T.cardH}>{r.rule}</p>
-        </div>
       ))}
     </div>
   );
@@ -309,23 +258,14 @@ function Quotes() {
   );
 }
 
-function MoSCoW() {
+function Cut() {
   const cols = [
     { h: "Must", tone: "red" as const, items: ["Book without a date", "One change, to any date", "Every rule as a heading", "Failure states"] },
     { h: "Should", tone: "green" as const, items: ["Better buses under your day", "The full cancel flow"] },
     { h: "Could", tone: "amber" as const, items: ["Move a whole group together", "Routes with one bus a day"] },
     { h: "Won't", tone: "grey" as const, items: ["Reminders (0% forgot)", "Hide buses that can't move", "Charge for flexibility", "Return seat and stop screens"] },
   ];
-  return (
-    <div className="cs-moscow">
-      {cols.map((c) => (
-        <Card key={c.h}>
-          <div style={{ marginBottom: 10 }}><Chip tone={c.tone}>{c.h}</Chip></div>
-          {c.items.map((t) => <p key={t} className="cs-moscow-item" style={{ ...T.body, marginBottom: 8 }}>{t}</p>)}
-        </Card>
-      ))}
-    </div>
-  );
+  return <MoSCoW cols={cols} />;
 }
 
 function Watch() {
@@ -344,19 +284,6 @@ function Watch() {
         </Card>
       ))}
     </div>
-  );
-}
-
-function Closing() {
-  return (
-    <section id="toc-credits" className="cs-credits">
-      <h2 className="cs-act-title">Thanks for reading.</h2>
-      <p className="cs-act-sub" style={{ margin: "0 auto 20px" }}>Got a question, or a better idea? I&apos;d love to hear it.</p>
-      <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
-        <Pill href="https://mail.google.com/mail/?view=cm&fs=1&to=devansh.think@gmail.com" primary external>Email me</Pill>
-        <Pill href="https://www.linkedin.com/in/devansh-somvanshi" external>LinkedIn</Pill>
-      </div>
-    </section>
   );
 }
 
@@ -402,7 +329,7 @@ export default function RedbusCaseStudy() {
 
       {/* The quick summary, as its own block under the buttons, so the title area stays light (Devansh, 15 Sep). */}
       <section className="cs-inshort-wrap">
-        <InShort />
+        <Summary />
       </section>
 
       {/* ── ACT 1 ── */}
@@ -636,7 +563,7 @@ export default function RedbusCaseStudy() {
 
       <Beat id="toc-choices" label="What made the cut" title="Six weeks, one designer. Something had to go."
         sub="Looking back, this is what made the cut, sorted must, should, could and won't. Most of the arguments were about the last column.">
-        <MoSCoW />
+        <Cut />
       </Beat>
 
       {/* ── ACT 4 ── */}

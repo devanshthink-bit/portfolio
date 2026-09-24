@@ -12,6 +12,10 @@
     --brand-red: #E81E38;   /* the RedBus name: the brand red (a deeper #B42335 was tried and dropped, 15 Sep) */   /* warm stone, not cool grey (Devansh, 15 Sep) */
     --sd-blue: #2563EB;    /* Sidedoor's brand blue and green: referrers blue, candidates green */
     --sd-green: #10B981;
+    /* The accent of a case study page: RedBus red by default, Sidedoor blue on .is-sidedoor.
+       The notes, dashed boxes, lines, numbers and hero glow all read it. */
+    --cs-accent: #E81E38;
+    --cs-accent-rgb: 232, 30, 56;
     --cs-callout-bg: rgba(0, 0, 0, 0.028);
     --cs-stat-gap: #e8e4df;
     --tag-bg: var(--bg);
@@ -142,14 +146,18 @@
      hides what you are pointing at. The phone gets real cursors — arrow, hand on anything
      tappable, a beam in a field — and CustomCursor keeps its circle out of .proto-stage.
      These live in @layer base because an !important in an earlier layer beats a later one. */
-  .proto-stage, .proto-stage * { cursor: default !important; }
+  /* .sd-live is the same app embedded in the Sidedoor case study. */
+  .proto-stage, .proto-stage *, .sd-live, .sd-live * { cursor: default !important; }
   .proto-stage a, .proto-stage a *,
   .proto-stage button, .proto-stage button *,
-  .proto-stage [role="button"], .proto-stage [role="button"] * { cursor: pointer !important; }
-  .proto-stage input, .proto-stage textarea, .proto-stage [contenteditable="true"] { cursor: text !important; }
+  .proto-stage [role="button"], .proto-stage [role="button"] *,
+  .sd-live a, .sd-live a *, .sd-live button, .sd-live button *,
+  .sd-live [role="button"], .sd-live [role="button"] * { cursor: pointer !important; }
+  .proto-stage input, .proto-stage textarea, .proto-stage [contenteditable="true"],
+  .sd-live input, .sd-live textarea, .sd-live [contenteditable="true"] { cursor: text !important; }
   /* The 44pt tap areas are ::before/::after boxes. "*::after { cursor: none }" above hid the cursor
      over them, so they take their own element's cursor instead. */
-  .proto-stage *::before, .proto-stage *::after { cursor: inherit !important; }
+  .proto-stage *::before, .proto-stage *::after, .sd-live *::before, .sd-live *::after { cursor: inherit !important; }
 
   /* Normal pointer inside the Ask Devansh panel. It has to live in this layer: "cursor: none
      !important" above is a layered important rule, and those beat any unlayered important override. */
@@ -1043,9 +1051,9 @@
     pointer-events: none;
     z-index: 5;
   }
-  .phone-lines path { fill: none; stroke: rgba(232, 30, 56, 0.6); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-  .phone-lines .end-note { fill: #E81E38; }
-  .phone-lines .end-box { fill: #fff; stroke: #E81E38; stroke-width: 1.5; }
+  .phone-lines path { fill: none; stroke: rgba(var(--cs-accent-rgb), 0.6); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .phone-lines .end-note { fill: var(--cs-accent); }
+  .phone-lines .end-box { fill: #fff; stroke: var(--cs-accent); stroke-width: 1.5; }
   html.nerd-mode .phone-lines .end-box { fill: var(--bg); }
   .phone-notes.is-left { justify-self: end; }
   .phone-notes.is-right { justify-self: start; }
@@ -1057,9 +1065,9 @@
   .iphone-mark {
     position: absolute;
     z-index: 4;
-    border: 3px dashed rgba(232, 30, 56, 0.9);
+    border: 3px dashed rgba(var(--cs-accent-rgb), 0.9);
     border-radius: 18px;
-    background: rgba(232, 30, 56, 0.05);
+    background: rgba(var(--cs-accent-rgb), 0.05);
     pointer-events: none;
   }
   .phone-note {
@@ -1073,7 +1081,7 @@
     width: 22px;
     height: 22px;
     border-radius: 50%;
-    background: #E81E38;
+    background: var(--cs-accent);
     color: #fff;
     font: 700 var(--fs-12)/22px var(--font-manrope), sans-serif;
     text-align: center;
@@ -1124,10 +1132,10 @@
   .phone-row.hero::before {
     content: ""; position: absolute; z-index: -1; pointer-events: none;
     left: -8%; right: -8%; top: -12%; bottom: -12%;
-    background: radial-gradient(closest-side, rgba(232, 30, 56, 0.12) 0%, rgba(232, 30, 56, 0.05) 55%, rgba(232, 30, 56, 0) 100%);
+    background: radial-gradient(closest-side, rgba(var(--cs-accent-rgb), 0.12) 0%, rgba(var(--cs-accent-rgb), 0.05) 55%, rgba(var(--cs-accent-rgb), 0) 100%);
   }
   html.nerd-mode .phone-row.hero::before {
-    background: radial-gradient(closest-side, rgba(232, 30, 56, 0.16) 0%, rgba(232, 30, 56, 0.06) 55%, rgba(232, 30, 56, 0) 100%);
+    background: radial-gradient(closest-side, rgba(var(--cs-accent-rgb), 0.16) 0%, rgba(var(--cs-accent-rgb), 0.06) 55%, rgba(var(--cs-accent-rgb), 0) 100%);
   }
   .phone-row.hero .phone-fig { position: relative; }
   .phone-row.hero .phone-fig:nth-child(2) .iphone { --n: 260; }
@@ -1198,6 +1206,19 @@
       rgba(243,132,146,.13) 79%, rgba(246,150,162,.07) 86%, rgba(249,170,180,.025) 93%, rgba(251,190,198,0) 100%);
   }
   html.nerd-mode .cs-proto-stage::before { display: none; }
+  .cs-page.is-sidedoor { --cs-accent: #2563EB; --cs-accent-rgb: 37, 99, 235; }
+  /* Sidedoor's live prototype stands on the same stage in its own blue. */
+  .cs-proto-stage.is-blue { background: linear-gradient(180deg, #ffffff 0%, #f5f8fe 40%, #edf2fd 100%); }
+  .cs-proto-stage.is-blue::before {
+    background: radial-gradient(in oklab circle var(--gr) at 50% var(--gy),
+      rgba(29,78,216,.92) 0%, rgba(37,99,235,.88) 16%, rgba(59,118,240,.72) 32%, rgba(96,145,245,.50) 50%,
+      rgba(130,170,248,.30) 66%, rgba(165,195,250,.14) 80%, rgba(200,220,252,.05) 92%, rgba(220,232,254,0) 100%);
+  }
+  html.nerd-mode .cs-proto-stage.is-blue {
+    background:
+      radial-gradient(circle 520px at 50% 58%, rgba(29, 78, 216, 0.8) 0%, rgba(37, 99, 235, 0.55) 25%, rgba(30, 60, 150, 0.3) 55%, rgba(20, 25, 60, 0) 100%),
+      #1d2130;
+  }
 
   html.nerd-mode .cs-proto-stage {
     background:
@@ -1343,7 +1364,7 @@
   }
   .cs-numbered-n {
     font: 700 var(--fs-16)/1 var(--font-manrope), sans-serif;
-    color: #E81E38;
+    color: var(--cs-accent);
     font-variant-numeric: tabular-nums;
   }
 
@@ -1476,7 +1497,7 @@
   .cs-page h2 { text-wrap: balance; }
   .cs-page p { text-wrap: pretty; }
 
-  .cs-page ::selection { background: rgba(232, 30, 56, 0.18); color: inherit; }
+  .cs-page ::selection { background: rgba(var(--cs-accent-rgb), 0.18); color: inherit; }
 
   .cs-page .cs-stats,
   .cs-page .cs-swatches { font-variant-numeric: tabular-nums; }
@@ -1791,7 +1812,7 @@
 
 /* Ideas: the pick, then the rest grouped by why they died. */
 .cs-idea-list { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 24px; align-items: start; }
-.cs-idea-pick { border-radius: var(--r-md); padding: 20px 22px; background: rgba(232, 30, 56, 0.06); box-shadow: inset 0 0 0 1.5px #E81E38, var(--shadow-md); }
+.cs-idea-pick { border-radius: var(--r-md); padding: 20px 22px; background: rgba(var(--cs-accent-rgb), 0.06); box-shadow: inset 0 0 0 1.5px var(--cs-accent), var(--shadow-md); }
 .cs-idea-rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
 .cs-idea-rows li { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 16px; row-gap: 2px; padding: 12px 2px; border-bottom: 1px solid var(--border); }
 .cs-idea-why { font: 700 var(--fs-16)/1.4 var(--font-manrope), sans-serif; letter-spacing: -0.02em; color: var(--text-primary); }
@@ -1830,7 +1851,7 @@
 .iphone-mark-n { display: none; }
 @media (max-width: 640px) {
   .iphone-mark-n { display: block; position: absolute; top: 0; left: 0; transform: translate(-40%, -40%);
-    width: 20px; height: 20px; border-radius: 50%; background: #E81E38; color: #fff;
+    width: 20px; height: 20px; border-radius: 50%; background: var(--cs-accent); color: #fff;
     font: 700 12px/20px var(--font-manrope), sans-serif; text-align: center; font-variant-numeric: tabular-nums;
     box-shadow: 0 0 0 2px #fff; }
 }

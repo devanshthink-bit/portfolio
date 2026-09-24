@@ -25,7 +25,7 @@ Updated 2026-09-24. Key decisions with reasons: LOG.md, top.
 - [x] **molades-attack** · run on V6 (19 Sep, whole app) and again on final V6 (23 Sep)
 - [x] **molades-build (again)** · attack findings fixed; coded prototype of every V6 screen and state
 - [ ] **molades-test** · TEST_PLAN.md written (2026-09-24): Samarth and Riya, 10 tasks. Not run yet
-- [ ] **molades-case** · rewrite the live case study page + interview Q&A
+- [x] **molades-case** · case study written 2026-09-24 (pinned in CASE_STUDY_VERSION.md); Q&A in CASE_QA.md. Update after the tests
 
 ## Build: screens in V3 (Figma)
 
@@ -50,5 +50,5 @@ Updated 2026-09-24. Key decisions with reasons: LOG.md, top.
 - [x] BUSINESS.md · model, strategy, NSM, metrics, loops
 - [ ] HTML artefacts page, like RedBus (incl. business side)
 - [ ] Source links for desk research and business figures
-- [ ] Live case study page: remove AI-sourced quotes and screens that don't exist (in molades-case)
+- [x] Live case study page rewritten from the correct files (2026-09-24)
 - [ ] Merge to main · only when Devansh says it's final

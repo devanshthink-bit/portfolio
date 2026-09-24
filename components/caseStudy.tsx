@@ -126,3 +126,86 @@ export function MetaStrip({ items }: { items: { label: string; value: string }[]
     </div>
   );
 }
+
+// ── Story furniture shared by the case studies ───────────────────────────────
+// An act opens a part of the story: a small kicker, a title, one line under it.
+export function Act({ id, n, title, sub }: { id?: string; n: string; title: string; sub: string }) {
+  return (
+    <header id={id} className="cs-act">
+      <p className="cs-act-kicker"><LabelText text={n} /></p>
+      <h2 className="cs-act-title">{title}</h2>
+      <p className="cs-act-sub">{sub}</p>
+    </header>
+  );
+}
+
+// The quick summary under the title: three short columns.
+export function InShort({ rows }: { rows: { k: string; v: React.ReactNode }[] }) {
+  return (
+    <div className="cs-inshort">
+      {rows.map((r) => (
+        <div key={r.k}>
+          <p style={{ ...T.eyebrow, marginBottom: 8 }}>{r.k}</p>
+          <p style={T.body}>{r.v}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export function BeforeAfter({ before, after, beforeLabel = "Before", afterLabel = "After" }: { before: string; after: string; beforeLabel?: string; afterLabel?: string }) {
+  return (
+    <div className="cs-grid-2">
+      <Card warn>
+        <p style={{ ...T.eyebrow, marginBottom: 8 }}>{beforeLabel}</p>
+        <p style={{ ...T.cardH, textDecoration: "line-through", textDecorationColor: "var(--text-muted)" }}>{before}</p>
+      </Card>
+      <Card>
+        <p style={{ ...T.eyebrow, marginBottom: 8 }}>{afterLabel}</p>
+        <p style={T.cardH}>{after}</p>
+      </Card>
+    </div>
+  );
+}
+
+export type Row = { s: string; tone: "red" | "amber" | "grey" | "green"; rule: string };
+
+// A status and a line, one per row.
+export function Rows({ rows }: { rows: Row[] }) {
+  return (
+    <div className="cs-stats" style={{ gridTemplateColumns: "1fr" }}>
+      {rows.map((r) => (
+        <div key={r.rule} className="cs-kill" style={{ background: "var(--bg)", padding: "16px 20px" }}>
+          <div><Chip tone={r.tone}>{r.s}</Chip></div>
+          <p style={T.cardH}>{r.rule}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export function MoSCoW({ cols }: { cols: { h: string; tone: "red" | "amber" | "grey" | "green"; items: string[] }[] }) {
+  return (
+    <div className="cs-moscow">
+      {cols.map((c) => (
+        <Card key={c.h}>
+          <div style={{ marginBottom: 10 }}><Chip tone={c.tone}>{c.h}</Chip></div>
+          {c.items.map((t) => <p key={t} className="cs-moscow-item" style={{ ...T.body, marginBottom: 8 }}>{t}</p>)}
+        </Card>
+      ))}
+    </div>
+  );
+}
+
+export function Closing() {
+  return (
+    <section id="toc-credits" className="cs-credits">
+      <h2 className="cs-act-title">Thanks for reading.</h2>
+      <p className="cs-act-sub" style={{ margin: "0 auto 20px" }}>Got a question, or a better idea? I&apos;d love to hear it.</p>
+      <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
+        <Pill href="https://mail.google.com/mail/?view=cm&fs=1&to=devansh.think@gmail.com" primary external>Email me</Pill>
+        <Pill href="https://www.linkedin.com/in/devansh-somvanshi" external>LinkedIn</Pill>
+      </div>
+    </section>
+  );
+}
