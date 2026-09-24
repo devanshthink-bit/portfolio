@@ -26,6 +26,7 @@ const recentWork = [
     phones: ["hifi_06a", "hifi_05a", "hifi_16"],
     screens: "/images/redbus/screens",
     logo: "/images/redbus/logo.svg",
+    logoRaw: true,
     // Jahanvi's card anatomy: brand, what I did, tags, image, title + year, one line, impact.
     brand: "RedBus",
     brandColor: "#ffffff",
