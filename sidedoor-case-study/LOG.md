@@ -3513,3 +3513,8 @@ CHANGE · 2026-09-25 · Case study timeline
 Changed:   Timeline now reads "6 weeks, May to June 2026" (was "An early version, then a full redo in Sep 2026"). It was the only timeline mention on the page. Ask Devansh's knowledge carries the same line, and its prompt says the September dates in the notes are write-up dates, not project dates.
 Because:   Devansh: the project ran in May and June 2026, 6 weeks long.
 Verified:  localhost /work/sidedoor shows the new line and no "Sep 2026".
+
+CHANGE · 2026-09-25 · Timeline: 6 weeks only
+Changed:   Timeline reads "6 weeks", no months. Same in Ask Devansh's knowledge; its prompt says never give months or dates for when the project ran.
+Because:   Devansh: "Don't necessarily mention May to June anywhere. Only mention 6 weeks."
+Verified:  localhost /work/sidedoor.
