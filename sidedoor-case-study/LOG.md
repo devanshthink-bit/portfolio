@@ -3543,3 +3543,7 @@ Changed:
 Not covered: layout, spacing and icon differences. The diff was text only; those need the per-screen node audit.
 Because:   Devansh: two different verification badges, and "Figma still has old DPs... Make Figma screens consistent with the prototype screens."
 Verified:  Figma census and a person-row render; localhost prototype: suggested job, log out sheet, search empty, resume preview.
+
+CHANGE · 2026-09-25 · Case study screens re-exported after the photo and badge fix
+Changed:   10 case study images carried the old Abhinav/Nithin/Advika photos or the old shield: jobs, check, requests, request, emailed, marked, link_before, link_sent, st_offline, and proof (the dimmed request behind the skill sheet). Re-rendered at 2x from Figma (a temporary 2x copy of each frame, deleted after), cut with the same header / footer / offset as CASE_STUDY_VERSION.md, with the old corner colour kept. proof keeps its sheet and gets the new request behind it at the same 60% brightness. job and st_cantsend were checked and left alone: their crops scroll past the photo.
+Verified:  old vs new side by side (only the photo and the badge change); localhost /work/sidedoor, 30 of 30 images load, hero shows the new photo and the seal (after clearing .next, whose image cache kept the old one).
