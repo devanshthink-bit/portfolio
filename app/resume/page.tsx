@@ -11,9 +11,13 @@ export const metadata: Metadata = {
 // not through the Next image optimiser, which shrank it and made it soft.
 // Percent of the sheet: x and width over 794, y over 1123.
 const RESUME_LINKS = [
-  { label: "Portfolio", href: "/", x: 66.88, y: 15.32, w: 8.06 },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/devansh-somvanshi", x: 75.82, y: 15.32, w: 7.81 },
-  { label: "GitHub", href: "https://github.com/devanshthink-bit", x: 84.38, y: 15.32, w: 6.93 },];
+  { label: "Portfolio", href: "/", x: 66.88, y: 13.99, w: 8.06 },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/devansh-somvanshi", x: 75.82, y: 13.99, w: 7.81 },
+  { label: "GitHub", href: "https://github.com/devanshthink-bit", x: 84.38, y: 13.99, w: 6.93 },
+  { label: "Email devansh.think@gmail.com", href: "https://mail.google.com/mail/?view=cm&fs=1&to=devansh.think@gmail.com", x: 66.88, y: 16.13, w: 19.02 },
+  { label: "RedBus case study", href: "/work/redbus", x: 7.05, y: 28.85, w: 24.94 },
+  { label: "SideDoor case study", href: "/work/sidedoor", x: 7.05, y: 40.69, w: 30.6 },
+];
 
 export default function ResumePage() {
   return (
@@ -50,7 +54,7 @@ export default function ResumePage() {
            that fades into the ground, so the space around it feels intended. */
         .resume-img { border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-lg); }
         .resume-img img { display: block; }
-        .resume-link { position: absolute; border-radius: 4px; }
+        .resume-link { position: absolute; border-radius: 4px; cursor: pointer; }
         .resume-link:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 2px; }
         @media (prefers-reduced-motion: reduce) { .resume-btn-label { transition: none; } }
         /* Phones have no room at the side: a row of icons above the résumé, no labels. */
