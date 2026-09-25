@@ -196,7 +196,7 @@ export default function SidedoorCaseStudy() {
         sub="Why spend a request on a bad fit? A skill counts only when his work or resume shows it. He gets 14 requests a week, so each one is a choice.">
         <PhoneShot src={scr("job")} alt="Job details: How you match, with skills found in his work, related skills and one listed only."
           notes={[
-            { box: [6.5, 32, 88, 19.5], title: "How you match", sub: "found in your work, related, listed only" },
+            { box: [6.5, 32, 88, 20.8], title: "How you match", sub: "found in your work, related, listed only" },
             { box: [2, 76, 96, 5.3], title: "Uses 1 of your 14 this week", sub: "referrers answer because each one is chosen" },
           ]} />
       </Beat>
@@ -226,7 +226,7 @@ export default function SidedoorCaseStudy() {
           notes={[
             { box: [3.5, 23, 93, 7.5], title: "The blockers", sub: "the six month line names its source" },
             { box: [3.5, 36.5, 93, 22.5], title: "Found in their work", sub: "each skill says where" },
-            { box: [3.5, 75, 93, 6.9], title: "Listed only", sub: "shown, never counted" },
+            { box: [3.5, 74.2, 93, 8.2], title: "Listed only", sub: "shown, never counted" },
           ]} />
       </Beat>
 

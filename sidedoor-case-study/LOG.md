@@ -3571,3 +3571,8 @@ Code fixed:
   - Jumping from "Job posted" to "Referral requests" showed "No requests yet": the leaving Job posted screen re-marked the post. Only the screen on top does now.
 Result:    after the fixes the 13 main steps match Figma on position (0 px on the rechecked blocks), size, weight and colour; remaining diffs are measurement (a button's box vs its label).
 Not covered: states outside the 13 viewer steps were checked on text only; icons were not diffed.
+
+CHANGE · 2026-09-25 · Case study screens re-exported after the consistency pass
+Changed:   The Figma fixes (24-tall tags, 12px salary tag, grey shared-history chips, request card gap, AA colours, AI-assisted design in Abhinav's skills) touched 15 of the case study's images: jobs, job, check, requests, request, proof, emailed, marked, track, link_before, link_sent, st_noanswer, st_cantsend, st_offline, post. Re-rendered at 2x with the same crops (CASE_STUDY_VERSION.md). For the scrolled crops the content was moved up under the header in a temporary copy, the solid header and its soft shadow kept as before (the V6 header is see-through in a raw render). proof keeps its sheet over the new request at 60%.
+Boxes:     two note boxes nudged to the new layout: Job details "How you match" 19.5 → 20.8 tall (it cut the note's second line), request "Listed only" 75/6.9 → 74.2/8.2.
+Verified:  every annotated beat on localhost; boxes on jobs, job, check, requests, request, emailed and post checked by eye.
