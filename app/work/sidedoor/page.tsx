@@ -299,7 +299,7 @@ export default function SidedoorCaseStudy() {
         ]} />
       </Beat>
 
-      <Beat label="Pushing back" title="Rajat said to make it a LinkedIn feature. I didn't."
+      <Beat label="Pushing back" title="My mentor said to make it a LinkedIn feature. I didn't."
         sub="The argument was fair: why would a referrer join a new app? I kept SideDoor separate because the work sits between LinkedIn and the company's portal, and neither owns it. A referrer also gets something on day one, from a link they send to a stranger."
         caption="That's reasoning. It hasn't been tested.">
         <Link />

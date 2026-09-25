@@ -3528,3 +3528,8 @@ CHANGE · 2026-09-25 · Prototype page opens on the login for both sides
 Changed:   The referrer flow in the prototype viewer now starts with "Sign in" (the login), as the candidate flow does, so the page lands on the login. The login's role choice already leads into the referrer's app (verify work email, add a job).
 Because:   Devansh: "The login screen should open... both flows of candidate and referral will start from login."
 Verified:  localhost /work/sidedoor/prototype at 1440×900 and 1280×720: lands on the login, 8 referrer steps fit, switching to Candidate lands on the login too.
+
+CHANGE · 2026-09-25 · No unexplained names or codes
+Changed:   "Rajat said to make it a LinkedIn feature" is now "My mentor said..." on the page and in Ask Devansh's knowledge. Research note codes like (n76) are stripped from the SideDoor knowledge, and a sample name from the design notes (Himani) is gone. Both Ask Devansh prompts now say: name only people the case study introduces (SideDoor: Samarth, Riya, Abhinav, Nithin), describe anyone else by role, and never use note numbers, file names or process labels.
+Because:   Devansh: Ask Devansh named Rajat to a recruiter with no context. "Check for other things if they are like this."
+Verified:  localhost page shows "My mentor said"; no "Rajat" anywhere in page or knowledge; route builds. Live answers can only be checked on Vercel.
