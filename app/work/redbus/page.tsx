@@ -403,8 +403,8 @@ export default function RedbusCaseStudy() {
         sub="How does she choose without comparing thirty buses? The days stay a short list, and her bus opens right under the day she picks.">
         <PhoneShot src={scr("hifi_06a")} alt="Hi-fi day list with Thu 17 Sep picked and the recommended bus open under it."
           notes={[
-            { box: [3, 5.2, 94, 31.4], title: "The days stay a fixed list", sub: "whether a day has 2 buses or 30" },
-            { box: [3.5, 37.8, 93, 46.6], title: "Her bus sits under her day", sub: "with the ones that beat it on price or rating" },
+            { box: [3, 5.2, 94, 29.7], title: "The days stay a fixed list", sub: "whether a day has 2 buses or 30" },
+            { box: [3.5, 36.1, 93, 46.6], title: "Her bus sits under her day", sub: "with the ones that beat it on price or rating" },
           ]} />
       </Beat>
 
@@ -561,9 +561,9 @@ export default function RedbusCaseStudy() {
         caption="Sai still said he'd use this over today's flow, and wouldn't tap Skip. He had struggled the most.">
         <PhoneShot src={scr("hifi_06b")} alt="The day list with Mon 21 Sep picked: its bus cannot change date, and the button reads Book a fixed date."
           notes={[
-            { box: [3, 25, 94, 13.6], title: "So I made the risk hard to miss", sub: "the day and its bus both say it can't change" },
+            { box: [3, 23.3, 94, 13.6], title: "So I made the risk hard to miss", sub: "the day and its bus both say it can't change" },
             { box: [47.5, 90, 49.5, 7], title: "The button changes", sub: "\"Book a fixed date\", not \"Review trip\"" },
-            { box: [3, 86.6, 90, 3.4], title: "It names her own answer back", sub: "\"You said you were not sure yet\"" },
+            { box: [1.5, 83.3, 97, 5.7], title: "It names her own answer back", sub: "\"You said you were not sure yet\"" },
           ]} />
       </Beat>
 

@@ -3504,3 +3504,7 @@ CHANGE · 2026-09-25 · Ask Devansh on the SideDoor case study
 Changed:   The AI twin now runs on /work/sidedoor too, with its own knowledge (lib/askDevanshSidedoorKnowledge.ts): the published page text, CASE_QA, RESEARCH, BUSINESS, DESIGN_LANGUAGE, TEST_PLAN. Lines about the discarded interviews, n92 and the mentor are dropped; the prompt says two people, both sides, and no results yet.
 Because:   Devansh asked for it, same as RedBus, so recruiters can ask anything about the case study.
 Verified:  localhost with ?ask: panel opens, SideDoor chips, request sends study=sidedoor. No local Gemini key, so real answers only on Vercel.
+
+CHANGE · 2026-09-25 · RedBus case study: new day-list screens
+Changed:   hifi_06a.webp and hifi_06b.webp re-rendered at 2x from the RedBus build after the pay bar's note became a strip (RedBus LOG, same date). Annotation boxes on Scene 2 and "How I · 3" moved up 14px to follow the content; the "names her answer back" box now frames the whole strip.
+Verified:  localhost, both beats and the hero.
