@@ -3495,3 +3495,7 @@ Because:   Devansh: "keep three screens like before, but make it look better". T
 CHANGE · 2026-09-25 · home card
 Changed:   In-progress card: the two placeholder phones slant 6deg outwards like the RedBus card's side phones, the right one in front. Upright on mobile.
 Because:   Devansh: "make these two screens like they are in the first case study card of RedBus, slanted".
+
+CHANGE · 2026-09-25 · RedBus name
+Changed:   "RedBus" beside the logo (home card, case study heading) is now "redBus" in the logo's own letters: public/images/redbus/wordmark.svg, the letter paths cut from logo.svg. White on the card, the heading's red on the case study.
+Because:   Devansh wanted the official redBus lettering and weight, small "r", colours unchanged.

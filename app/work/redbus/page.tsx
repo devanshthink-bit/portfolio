@@ -309,7 +309,13 @@ export default function RedbusCaseStudy() {
           {/* The same unaltered logo the home card uses */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/images/redbus/logo.svg" alt="" aria-hidden width={45} height={30} style={{ height: "1.05em", width: "auto", display: "inline-block", verticalAlign: "-0.2em", marginRight: 10 }} />
-          RedBus
+          {/* The name in redBus's own lettering: the letters cut from the logo file, painted in the
+              heading's red through a mask so the colour stays a token. */}
+          <span role="img" aria-label="redBus" style={{
+            display: "inline-block", height: "0.74em", aspectRatio: "74.35 / 17.38", background: "currentColor",
+            WebkitMask: "url(/images/redbus/wordmark.svg) center / contain no-repeat",
+            mask: "url(/images/redbus/wordmark.svg) center / contain no-repeat",
+          }} />
         </span> - Winning the return ticket at checkout
       </h1>
       <p style={T.lede}>Most travellers book the bus out and leave the way back for later. A quarter of them then book it on another app. I redesigned the moment RedBus asks about the return, so it can be booked in the same checkout, without a date.</p>

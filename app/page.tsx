@@ -27,8 +27,10 @@ const recentWork = [
     screens: "/images/redbus/screens",
     logo: "/images/redbus/logo.svg",
     logoRaw: true,
+    // The letters cut from the logo file itself, so the name is in redBus's own lettering.
+    wordmark: "/images/redbus/wordmark.svg",
     // Jahanvi's card anatomy: brand, what I did, tags, image, title + year, one line, impact.
-    brand: "RedBus",
+    brand: "redBus",
     brandColor: "#ffffff",
     did: "Redesigned RedBus checkout to capture the return trip, even without a date",
     tags: ["Travel", "B2C", "iOS app", "Concept"],
