@@ -426,7 +426,7 @@ export function ProofSheet({ id, skill, leaving }: { id: string; skill: string; 
           {p.quote && <p className="t-body">“{p.quote}”</p>}
           {p.link && (
             <button className="sd-hit44" style={{ display: "flex", alignItems: "center", justifyContent: "flex-start", gap: 4, textAlign: "left", minWidth: 0, width: "100%" }} onClick={open}>
-              <Icon name="link.line" size={16} color="var(--sd-link)" />
+              <Icon name="link" size={16} color="var(--sd-link)" />
               <span className="t-label link sd-1line">{p.link}</span>
             </button>
           )}

@@ -3576,3 +3576,31 @@ CHANGE · 2026-09-25 · Case study screens re-exported after the consistency pas
 Changed:   The Figma fixes (24-tall tags, 12px salary tag, grey shared-history chips, request card gap, AA colours, AI-assisted design in Abhinav's skills) touched 15 of the case study's images: jobs, job, check, requests, request, proof, emailed, marked, track, link_before, link_sent, st_noanswer, st_cantsend, st_offline, post. Re-rendered at 2x with the same crops (CASE_STUDY_VERSION.md). For the scrolled crops the content was moved up under the header in a temporary copy, the solid header and its soft shadow kept as before (the V6 header is see-through in a raw render). proof keeps its sheet over the new request at 60%.
 Boxes:     two note boxes nudged to the new layout: Job details "How you match" 19.5 → 20.8 tall (it cut the note's second line), request "Listed only" 75/6.9 → 74.2/8.2.
 Verified:  every annotated beat on localhost; boxes on jobs, job, check, requests, request, emailed and post checked by eye.
+
+CHANGE · 2026-09-26 · Every remaining state checked against Figma (positions and icons), then images re-exported
+How:       99 more V6 frames paired with their prototype state (65 presets, 34 more reached through temporary presets and taps), texts and icons measured in the browser and diffed inside Figma. The first pass read nothing inside components: use_figma had not loaded the page. With the page loaded, the 13 main steps were re-checked too.
+Figma fixed:
+  - Track Details/1 and Withdraw Alert: the tab bar sat 8 high (content hugged, not filled).
+  - Empty states placed by the component swap sat 8–24 low: Referral requests Empty, All handled, Couldn't load; Jobs Empty, Couldn't load; Track Couldn't load.
+  - Disabled button label was neutral/400 (#9ca3af) in the Button component; the prototype and the AA pass use #5f6671. Component and 5 overrides.
+  - Note icons 12 → 14 (the prototype's 23 Sep rule "notes keep 14"), 14 notes.
+  - Invite / Invited 16 → 14 (code since the 20 Sep match-Figma pass), component and 12 instances.
+  - Resume Preview: 8 above and below the rule and 8 above each heading, as the prototype's paper.
+  - Contact support: the two fields had no label icons (every other form has them).
+  - Where you work (+ Code sent): Send code / Verify pinned to the bottom like every other form.
+  - Emailed and Updated notes use successOnPage (#15803d is 4.49:1 on the grey page).
+  - Referred Before: the frame showed the Flipkart job, but Abhinav was referred at Google, so the prototype shows Google Pay. Frame rebuilt as that job (Ishita, Google wordmark on white, 5 of 7, Missing: Accessibility).
+  - Referral request lists: the prototype has 10 requests, Lower match (4) and 3 suggestions (usability-test data, 23 Sep); Figma had 3, (2) and 2. All 7 list frames now match.
+  - Jobs lists: the third job is Google Pay (Ishita), not Zomato, in all 5 frames.
+Code fixed:
+  - Tab bar hidden on Help, How referrals work, Contact support, Where you work, Settings, Saved, resume and link previews (Figma draws them without it).
+  - Jobs offline note sits under the title, above the sort row (it scrolled under the pinned header).
+  - Login "sign-in was cancelled" note centred.
+  - Project links use SF link (Figma's 17 project rows), not the outline link.
+  - Referrer's Messages: no seal on candidates (the seal marks a verified referrer).
+  - Profile row value to chevron 6, not 14.
+  - Suggested questions on the job post: no 12 gap between rows (rows carry their own padding and hairline).
+Left as is: a 4 px gap above Resume on the thin-profile request; Edit links hidden while the resume is being read; the Referral requests "Flipkart · Submitted" frame vs the prototype's "Sent" (a later moment in the story).
+Images:    re-exported jobs, requests, emailed, st_offline, st_cantsend, post, link_before, st_empty. requests is now a scrolled crop (job row pinned, end of the list) so Lower match and Suggested stay in view; Scene 4 notes moved.
+Verified:  re-measure of the 13 main steps and every changed state; Scene 4 on localhost.
+Rule:      any fix to a screen ships to Figma, the prototype, every case study image that shows it and the home card, in the same change (memory: sidedoor-fix-shows-everywhere).

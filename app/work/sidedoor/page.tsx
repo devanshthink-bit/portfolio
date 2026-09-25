@@ -212,11 +212,11 @@ export default function SidedoorCaseStudy() {
 
       <Beat label="Scene 4 · The referrer's list" title="Nithin sees the best fit first, with the reason on the card."
         sub="How does a referrer decide on a work break? Requests are ordered by fit. The weaker ones are folded away but still there, because Samarth refers borderline people on purpose.">
-        <PhoneShot src={scr("requests")} alt="Referral requests for one job, ordered by fit, with Lower match folded and Suggested for this job below."
+        <PhoneShot src={scr("requests")} alt="The end of Nithin's list of requests for one job, ordered by fit, with Lower match folded and Suggested for this job below."
           notes={[
-            { box: [7, 31, 86, 4.3], title: "Fit and common ground", sub: "on the card, before he opens it" },
-            { box: [2, 67.6, 96, 3.8], title: "Lower match, folded", sub: "one tap away" },
-            { box: [2, 72.9, 96, 7.4], title: "Suggested for this job", sub: "people who chose to be found" },
+            { box: [4, 31.2, 33, 2.9], title: "Fit on every card", sub: "the reason, before he opens it" },
+            { box: [2, 52.2, 96, 2.8], title: "Lower match, folded", sub: "one tap away" },
+            { box: [2, 58.6, 96, 4.8], title: "Suggested for this job", sub: "people who chose to be found" },
           ]} />
       </Beat>
 

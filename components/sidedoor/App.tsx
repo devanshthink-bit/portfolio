@@ -38,6 +38,8 @@ import { SCENARIOS } from "./scenarios";
 const SCREENS_WITHOUT_TABS = new Set([
   "login", "role", "uploadResume", "checkProfile", "verifyEmail", "addJob", "checkPost",
   "jobLive", "chat", "editDetails", "editProfileReferrer", "editPost", "linkPage",
+  // Figma draws the profile's own pages and the document previews without the bar
+  "help", "helpArticle", "contactSupport", "verifyWork", "settings", "saved", "resume", "profileLink",
 ]);
 
 /**

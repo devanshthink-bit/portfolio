@@ -42,7 +42,7 @@ const skillTag = (j: Job) => `${matchOf(j)} of ${j.skills.length} skills · ${yr
 
 export function Jobs() {
   const nav = useNav();
-  const { skippedResume, unread, force, you, welcome, profile, dispatch } = useStore();
+  const { skippedResume, unread, force, you, welcome, profile, offline, dispatch } = useStore();
   const [phase, setPhase] = useState<"loading" | "ok">("loading");
   useEffect(() => {
     if (force === "jobs.loading") return;
@@ -92,6 +92,7 @@ export function Jobs() {
     <Screen
       largeTitle="Jobs"
       right={<BellButton unread={unread} />}
+      ownOffline={showList}
       // the title, the resume prompt and the sort row stay put; only the jobs scroll (Devansh, 23 Sep)
       pinned={
         showList ? (
@@ -104,6 +105,8 @@ export function Jobs() {
               />
             )}
             {prompt}
+            {/* Figma "Jobs · Offline": the note sits under the title, above the sort row */}
+            {offline && <Note style="buffer" icon="info.circle.fill">You’re offline. Showing what was saved.</Note>}
             {sortRow}
           </div>
         ) : (

@@ -115,7 +115,10 @@ export function Login() {
           {/* Figma "Login/Cancelled": backing out of LinkedIn lands here with one plain line —
               not an error, since they chose to leave */}
           {force === "login.cancelled" && (
-            <Note icon="info.circle.fill">LinkedIn sign-in was cancelled.</Note>
+            // centred like everything else on this screen (Figma)
+            <div style={{ alignSelf: "center" }}>
+              <Note icon="info.circle.fill">LinkedIn sign-in was cancelled.</Note>
+            </div>
           )}
           {/* order and the 8 gap are decisions in LOG.md: LinkedIn, Google, Apple */}
           <div style={{ display: "flex", flexDirection: "column", gap: 8, width: "100%" }}>
@@ -680,7 +683,7 @@ export function Project({ title, skills, detail, link }: { title: string; skills
         {/* the proof sits with the work it proves */}
         {link && (
           <button className="sd-hit44" style={{ display: "flex", alignItems: "center", justifyContent: "flex-start", gap: 4, textAlign: "left", minWidth: 0, width: "100%" }} onClick={() => nav.push("profileLink", { site: "Project", name: title, url: link })}>
-            <Icon name="link.line" size={16} color="var(--sd-link)" />
+            <Icon name="link" size={16} color="var(--sd-link)" />
             <span className="t-label link sd-1line">{link}</span>
           </button>
         )}
@@ -956,7 +959,8 @@ export function QuestionField() {
       />
       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         <p className="t-label-sm muted">Suggested from {you.post.jd}</p>
-        <Box>
+        {/* rows carry their own 8 padding and hairline, so no gap between them (Figma "Suggestion List") */}
+        <Box style={{ gap: 0 }}>
           {you.post.suggest.map((s) => {
             const on = value.trim() === s.q;
             return (

@@ -138,7 +138,8 @@ export function Messages() {
                 <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4, minWidth: 0 }}>
                   <span style={{ display: "flex", alignItems: "center", gap: 2, minWidth: 0 }} className="t-h-sm">
                     <span className="sd-1line">{c.name}</span>
-                    <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)" }} />
+                    {/* the seal is a verified referrer's mark: a candidate's list shows it, a referrer's doesn't (Figma) */}
+                    {asTab && <Icon name="checkmark.seal.fill" size={16} style={{ color: "var(--sd-text-success)" }} />}
                   </span>
                   {/* Figma paints an unread preview in the dark text colour and a read one grey */}
                   <span

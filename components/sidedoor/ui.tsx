@@ -534,7 +534,8 @@ export function Row({
       </span>
       {end && <span style={{ marginLeft: "auto" }}>{end}</span>}
       {chevron && (
-        <span className="sd-row-chev" style={{ marginLeft: end ? 6 : "auto" }}>
+        // Figma End group: value and chevron 6 apart; the row gap is 8, so pull back 2
+        <span className="sd-row-chev" style={{ marginLeft: end ? -2 : "auto" }}>
           <Icon name="chevron.right" size={16} style={{ color: "var(--sd-n400)" }} />
         </span>
       )}
