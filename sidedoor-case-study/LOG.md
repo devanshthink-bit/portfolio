@@ -3483,3 +3483,7 @@ Because:   Devansh asked for only these two screens, shown differently from Side
 CHANGE · 2026-09-25 · home card
 Changed:   The in-progress card shows two placeholder phones, upright, level and apart.
 Because:   Devansh asked for two, not three. Level-and-apart keeps it different from RedBus's crossed pair and Sidedoor's staggered pair.
+
+CHANGE · 2026-09-25 · home card
+Changed:   RedBus card: the two phones lean the same way (10deg), one step apart, calendar in front. Replaces the crossed pair.
+Because:   Devansh didn't like the crossed pair: "try something else".
