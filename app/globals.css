@@ -673,12 +673,13 @@
     content: ""; position: absolute; top: 14px; left: 50%; width: 46px; height: 12px;
     transform: translateX(-50%); border-radius: 10px; background: rgba(61, 66, 76, 0.14);
   }
-  .wip-phone:nth-child(1) { transform: translate(28px, 58px) rotate(-8deg); }
-  .wip-phone:nth-child(2) { width: 236px; height: 495px; border-radius: 34px; z-index: 2; background: rgba(255, 255, 255, 0.85); }
-  .wip-phone:nth-child(3) { transform: translate(-28px, 58px) rotate(8deg); }
-  .wip-card:hover .wip-phone:nth-child(1) { transform: translate(14px, 46px) rotate(-11deg); }
-  .wip-card:hover .wip-phone:nth-child(2) { transform: translateY(-10px); }
-  .wip-card:hover .wip-phone:nth-child(3) { transform: translate(-14px, 46px) rotate(11deg); }
+  /* Two phones side by side, level and apart: not RedBus's crossed pair or Sidedoor's staggered
+     one. Hover lifts both and opens the gap a little. */
+  .wip-phones { gap: 24px; }
+  .wip-phone:nth-child(-n+2) { width: 236px; height: 495px; border-radius: 34px; }
+  .wip-phone:nth-child(2) { background: rgba(255, 255, 255, 0.85); }
+  .wip-card:hover .wip-phone:nth-child(1) { transform: translate(-6px, -10px); }
+  .wip-card:hover .wip-phone:nth-child(2) { transform: translate(6px, -10px); }
 
   .wip-bar, .wip-block {
     display: block; height: 10px; border-radius: 6px; flex: none;

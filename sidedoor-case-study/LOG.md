@@ -3479,3 +3479,7 @@ Because:   Devansh: the old titles read like any case study. The novelty is sour
 CHANGE · 2026-09-25 · home card
 Changed:   RedBus card shows two phones (date list, return calendar), crossed and tilted opposite ways.
 Because:   Devansh asked for only these two screens, shown differently from Sidedoor's upright pair.
+
+CHANGE · 2026-09-25 · home card
+Changed:   The in-progress card shows two placeholder phones, upright, level and apart.
+Because:   Devansh asked for two, not three. Level-and-apart keeps it different from RedBus's crossed pair and Sidedoor's staggered pair.

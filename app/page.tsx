@@ -248,7 +248,6 @@ function InProgressCard() {
             <span className="wip-block" />
             {bars([70, 45, 90, 60, 80])}
           </div>
-          <div className="wip-phone">{bars([50, 85, 65, 90, 40, 70])}</div>
         </div>
       </div>
       <div className="work-card-meta">
