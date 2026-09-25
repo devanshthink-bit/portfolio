@@ -3518,3 +3518,8 @@ CHANGE · 2026-09-25 · Timeline: 6 weeks only
 Changed:   Timeline reads "6 weeks", no months. Same in Ask Devansh's knowledge; its prompt says never give months or dates for when the project ran.
 Because:   Devansh: "Don't necessarily mention May to June anywhere. Only mention 6 weeks."
 Verified:  localhost /work/sidedoor.
+
+CHANGE · 2026-09-25 · Contents list shows on more laptops
+Changed:   The left contents list now shows from 1240px wide (was 1360). Below that it is still the bottom pill. Windows laptops at 125–150% scaling report 1280–1536px, so a friend's laptop showed the phone pill. Checked at 1240: the list ends at 160px, the page starts at 186 (SideDoor) and 182 (RedBus). With Ask Devansh open under 1500px the list fades out, since list + panel leave too little room; from 1500 the page still shifts to sit between them.
+Because:   Devansh: the mobile navigation bar showed on a friend's Windows laptop.
+Verified:  localhost at 1240 and 1280, both case studies, Ask panel open and closed.

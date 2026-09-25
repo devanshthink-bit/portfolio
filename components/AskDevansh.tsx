@@ -54,7 +54,7 @@ export default function AskDevansh({ available: onServer = false, study = "redbu
     if (new URLSearchParams(window.location.search).has("ask")) setAvailable(true);
   }, []);
 
-  // The contents pill carries an Ask icon below 1360px and opens the panel through this event.
+  // The contents pill carries an Ask icon below 1240px and opens the panel through this event.
   useEffect(() => {
     const onOpen = () => setOpen(true);
     window.addEventListener("ask:open", onOpen);
@@ -229,14 +229,16 @@ export default function AskDevansh({ available: onServer = false, study = "redbu
         .ask-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text-muted); opacity: .35; animation: ask-pulse 1.2s cubic-bezier(.16,1,.3,1) infinite; }
         @keyframes ask-pulse { 0%, 100% { opacity: .35; } 40% { opacity: 1; } }
         @media (prefers-reduced-motion: reduce) { .ask-dot { animation: none; opacity: .6; } }
-        /* Below 1360 the contents list becomes a pill at bottom centre, so sit above it. */
-        @media (max-width: 1359px) { .ask-trigger { bottom: 84px; } }
+        /* Below 1240 the contents list becomes a pill at bottom centre, so sit above it. */
+        @media (max-width: 1239px) { .ask-trigger { bottom: 84px; } }
         /* Where the contents pill carries the Ask icon, this button is not needed. */
         html.ask-attached .ask-trigger { display: none; }
         /* Push the page aside; where the contents list is fixed on the left, leave room for it too,
            so the page sits centred between the list and the panel. */
         html.ask-open body { padding-right: 420px; }
-        @media (min-width: 1360px) { html.ask-open body { padding-left: 170px; } }
+        @media (min-width: 1500px) { html.ask-open body { padding-left: 170px; } }
+        /* Narrower, the list and the panel leave too little room for the page, so the list steps away. */
+        @media (max-width: 1499px) { html.ask-open .cs-toc-left { opacity: 0; pointer-events: none; } }
         body { transition: padding .6s var(--ease-sheet); }
         @media (max-width: 1099px) { html.ask-open body { padding-right: 0; } }
         @media (max-width: 640px) {

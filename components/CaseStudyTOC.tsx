@@ -34,7 +34,7 @@ function CaseStudyTOCInner({ sections = defaultSections, variant = "right", ask 
   // Track screen width. No delay: the list is rendered on <body>, so it no longer needs to wait
   // out the page's entrance, and it fades in with the page (.fixed-enter).
   useEffect(() => {
-    const check = () => setIsWide(window.innerWidth >= 1360);
+    const check = () => setIsWide(window.innerWidth >= 1240);
     check();
     setReady(true);
     window.addEventListener("resize", check);
@@ -92,8 +92,8 @@ function CaseStudyTOCInner({ sections = defaultSections, variant = "right", ask 
   // ── Desktop sidebar, left (Jahanvi's): under Back, plain words, a dot on the current one ──
   if (isWide && variant === "left") {
     return (
-      <nav aria-label="Table of contents" style={{
-        position: "fixed", left: 24, top: 150, zIndex: 50,
+      <nav aria-label="Table of contents" className="cs-toc-left" style={{
+        position: "fixed", left: 24, top: 150, zIndex: 50, transition: "opacity .3s var(--ease-out)",
         display: "flex", flexDirection: "column", gap: 2,
       }}>
         {sections.map(({ id, label }) => {
