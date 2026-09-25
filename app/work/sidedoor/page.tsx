@@ -130,7 +130,7 @@ export default function SidedoorCaseStudy() {
 
       <MetaStrip items={[
         { label: "Role", value: "Product designer, solo, self-initiated" },
-        { label: "Timeline", value: "An early version, then a full redo in Sep 2026" },
+        { label: "Timeline", value: "6 weeks, May to June 2026" },
         { label: "Platform", value: "iOS app, plus a web page for strangers" },
         { label: "Tools", value: "Figma, FigJam, Claude Code" },
       ]} />

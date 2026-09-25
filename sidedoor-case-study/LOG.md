@@ -3508,3 +3508,8 @@ Verified:  localhost with ?ask: panel opens, SideDoor chips, request sends study
 CHANGE · 2026-09-25 · RedBus case study: new day-list screens
 Changed:   hifi_06a.webp and hifi_06b.webp re-rendered at 2x from the RedBus build after the pay bar's note became a strip (RedBus LOG, same date). Annotation boxes on Scene 2 and "How I · 3" moved up 14px to follow the content; the "names her answer back" box now frames the whole strip.
 Verified:  localhost, both beats and the hero.
+
+CHANGE · 2026-09-25 · Case study timeline
+Changed:   Timeline now reads "6 weeks, May to June 2026" (was "An early version, then a full redo in Sep 2026"). It was the only timeline mention on the page. Ask Devansh's knowledge carries the same line, and its prompt says the September dates in the notes are write-up dates, not project dates.
+Because:   Devansh: the project ran in May and June 2026, 6 weeks long.
+Verified:  localhost /work/sidedoor shows the new line and no "Sep 2026".
