@@ -997,11 +997,11 @@ export function ManagePosts() {
                   </p>
                   <div style={{ height: 12 }} />
                   {/* Figma PostCard activity row: Inter Medium 14/20, 20 tall */}
-                  {/* Figma: what is new reads blue, the rest #6b7280; a quiet post is all #636a75.
-                      A draft has no activity, just "Finish" at the left. */}
+                  {/* What is new reads blue, the rest is the AA grey #636a75 (Figma had the old
+                      #6b7280 until 25 Sep). A draft has no activity, just "Finish" at the left. */}
                   <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                     {!draft && (
-                      <span className="t-label" style={{ flex: 1, color: p.news ? "var(--sd-icon-2)" : "var(--sd-text-2)" }}>
+                      <span className="t-label" style={{ flex: 1, color: "var(--sd-text-2)" }}>
                         {p.news && <span style={{ color: "var(--sd-link)" }}>{p.news}</span>}
                         {p.activity || "No requests yet"}
                       </span>

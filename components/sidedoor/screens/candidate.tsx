@@ -111,7 +111,7 @@ export function Jobs() {
         )
       }
     >
-      <div style={{ paddingTop: prompt ? 0 : 8, display: "flex", flexDirection: "column", gap: 24 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
         {/* Figma drops the section label and the sort row while loading, when empty and on the
             error — the state is the only thing on the page */}
         {phase === "loading" ? (

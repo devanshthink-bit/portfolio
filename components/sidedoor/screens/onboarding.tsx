@@ -709,7 +709,10 @@ export function Projects({ list }: { list: Proj[] }) {
         ))}
       </div>
       {list.some((p) => p.detail) && (
-        <TextButton onClick={() => setOpen((o) => !o)}>{open ? "Hide project details" : "Show project details"}</TextButton>
+        // left-aligned under the projects, as in Figma; in the Box's column it would stretch and centre
+        <div style={{ alignSelf: "flex-start" }}>
+          <TextButton onClick={() => setOpen((o) => !o)}>{open ? "Hide project details" : "Show project details"}</TextButton>
+        </div>
       )}
     </>
   );
@@ -1028,10 +1031,12 @@ export function RulesSection() {
 export function JobLive({ title }: { title?: string }) {
   const nav = useNav();
   const { jobId, you, dispatch } = useStore();
-  // this screen only follows a post, so its requests are still to come (also when jumped to)
+  // this screen only follows a post, so its requests are still to come (also when jumped to).
+  // Not from the copy drawn while it slides away: that would mark a fresh jump as just posted.
+  const onTop = nav.top.key === "jobLive";
   useEffect(() => {
-    dispatch({ t: "post" });
-  }, [dispatch]);
+    if (onTop) dispatch({ t: "post" });
+  }, [dispatch, onTop]);
   return (
     <Screen
       title="Job posted"

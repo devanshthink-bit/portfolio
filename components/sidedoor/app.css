@@ -803,7 +803,7 @@
 /* Figma AppHeader Type=Logo: 48 tall, padding 12/16, contents spread with the wordmark
    centred. */
 .sd-web-bar { height: 48px; flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between;
-  gap: 12px; padding: 12px 16px; margin-bottom: 16px; }
+  gap: 12px; padding: 12px 16px; margin-bottom: 14px; }
 
 /* login: the three lines slide by on their own and the blue dot follows (Devansh, 23 Sep) */
 .sd-carousel { width: 100%; overflow: hidden; }

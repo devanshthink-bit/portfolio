@@ -3553,3 +3553,21 @@ Changed:   Checked the history after Devansh asked. Search with no results and t
 Kept:      the suggested-job button and the Log out wording (Figma was the designed version there), and the fix that shows Abhinav's own resume to a referrer.
 Learned:   before calling Figma or code "right", check which side changed last (git log -S, LOG dates). "Figma wins" is only true when Figma is the newer one.
 Verified:  Figma screenshots of both frames; localhost prototype renders the same text.
+
+CHANGE · 2026-09-25 · Figma and prototype consistency pass (text, then positions)
+How:       (1) Every V6 Figma string against the prototype, with placeholders as wildcards: clean except data the prototype fills in. (2) Every UI string in the prototype's screens against Figma: the rest is code-only by design (12 jobs and 14 candidates, toasts, tester aids, states Figma never drew). (3) Positions, sizes, weights and colours of every text on the 13 main viewer steps, measured in the browser and diffed inside Figma. For each difference, the side changed last won (git log -S, LOG dates).
+Figma fixed (prototype was newer or Figma had broken its own rule):
+  - 7 one-line empty states → the EmptyState component with the prototype's icon, title, line and button (Manage posts, Jobs, Your requests, Messages ×2, Notifications ×2). Measured: same positions as code to the pixel.
+  - 114 texts still bound to the pre-AA colours: 78 required asterisks #ef4444 → errorAA, 35 secondary texts #6b7280 → secondaryAA, 1 success #22c55e → successAA.
+  - Shared-history chips ("Both worked at MakeMyTrip"): 40 instances overrode the Plain tag's grey label with dark ink; back to the component's grey, as in code.
+  - Tags: 23 Sep made every tag 24 tall, but 545 screen instances and 53 inside 20 components kept a fixed 22, and 9 salary tags kept 14px text. All now 24 / 12px. Multi-line tags (the "A listed skill counts…" note and three 6-month notes) hug their height.
+  - RequestCard: 54 instances overrode the text block gap to 4; back to the component's 0, the list-card rule.
+  - Abhinav's listed skills gain "AI-assisted design" (code, 24 Sep: the listed-only skill) on 6 + 3 frames.
+Code fixed:
+  - Jobs: the list started 16 under "Jobs with someone who refers" (8 in Figma and the section-label rule), left over from pinning the sort row on 23 Sep.
+  - Post card activity used #6b7280 for "· 8 referred"; now the AA grey.
+  - "Show project details" sat centred; now left like Figma.
+  - Link page header 134 → 130 (Figma AppHeader Type=Logo: 14, status bar, logo bar, 14).
+  - Jumping from "Job posted" to "Referral requests" showed "No requests yet": the leaving Job posted screen re-marked the post. Only the screen on top does now.
+Result:    after the fixes the 13 main steps match Figma on position (0 px on the rechecked blocks), size, weight and colour; remaining diffs are measurement (a button's box vs its label).
+Not covered: states outside the 13 viewer steps were checked on text only; icons were not diffed.
