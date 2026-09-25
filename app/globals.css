@@ -1496,6 +1496,14 @@
   .work-card:hover .work-card-phones.is-pair .iphone:nth-child(1) { transform: translate(12px, 64px); }
   .work-card:hover .work-card-phones.is-pair .iphone:nth-child(2) { transform: translate(-12px, -10px); }
 
+  /* RedBus's card: two phones crossed, both tilted the opposite way, so it reads apart from
+     Sidedoor's upright pair. The date list behind on the left, the calendar in front. */
+  .work-card-phones.is-tilt { padding-top: 34px; }
+  .work-card-phones.is-tilt .iphone:nth-child(1) { --n: 214; z-index: 1; transform: translate(36px, 44px) rotate(-9deg); }
+  .work-card-phones.is-tilt .iphone:nth-child(2) { --n: 244; z-index: 2; transform: translate(-36px, 0) rotate(6deg); }
+  .work-card:hover .work-card-phones.is-tilt .iphone:nth-child(1) { transform: translate(20px, 38px) rotate(-12deg); }
+  .work-card:hover .work-card-phones.is-tilt .iphone:nth-child(2) { transform: translate(-20px, -8px) rotate(4deg); }
+
   /* Warning ink, redBus's amber. Lighter on the dark theme so it keeps its contrast. */
   .cs-warn {
     color: #A45729;
@@ -1783,6 +1791,9 @@
   .work-card-panel-text.is-brand-only .work-card-brand { font-size: 24px; }
   .work-card-phones .iphone:nth-child(2) { --n: 190; }
   .work-card-phones.is-pair { margin-top: 0; }
+  .work-card-phones.is-tilt { padding-top: 18px; }
+  .work-card-phones.is-tilt .iphone:nth-child(2),
+  .work-card:hover .work-card-phones.is-tilt .iphone:nth-child(2) { --n: 190; transform: rotate(4deg); }
   .work-card-phones.is-pair .iphone:nth-child(2),
   .work-card:hover .work-card-phones.is-pair .iphone:nth-child(2) { --n: 190; transform: none; }
   .phone-row.hero { padding-bottom: 0; }

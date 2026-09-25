@@ -23,7 +23,8 @@ const recentWork = [
     gradient: "linear-gradient(135deg, #fcc3cb 0%, #fb7a8b 45%, #ffb0ba 100%)",
     tooltipBg: "#1d1d1d",
     slug: "redbus",
-    phones: ["hifi_06a", "hifi_05a", "hifi_16"],
+    phones: ["hifi_06a", "hifi_05a"],
+    phonesLayout: "tilt" as const,
     screens: "/images/redbus/screens",
     logo: "/images/redbus/logo.svg",
     logoRaw: true,
@@ -128,7 +129,7 @@ function StatCounter({ value, unit, label, active, countTo, suffix, startFrom }:
 
 type Work = {
   title: string; desc: string; tag: string; gradient: string; tooltipBg: string; slug: string | null; image?: string;
-  phones?: string[]; phonesLayout?: "pair"; screens?: string; logo?: string; logoRaw?: boolean; logoH?: string; wordmark?: string; brand?: string; brandColor?: string; did?: string; tags?: string[]; year?: string; blurb?: string; impact?: string;
+  phones?: string[]; phonesLayout?: "pair" | "tilt"; screens?: string; logo?: string; logoRaw?: boolean; logoH?: string; wordmark?: string; brand?: string; brandColor?: string; did?: string; tags?: string[]; year?: string; blurb?: string; impact?: string;
 };
 
 function WorkCard({ item }: { item: Work }) {

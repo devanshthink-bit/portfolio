@@ -3475,3 +3475,7 @@ Because:   Audit of computed styles: two tracking systems (-0.011em in case stud
 CHANGE · 2026-09-25 · titles
 Changed:   Card: "Designed a new kind of job referral: complete before it's sent, proven before it's judged, answered after it's submitted". Case study: "SideDoor: Reinventing the job referral from both sides".
 Because:   Devansh: the old titles read like any case study. The novelty is sourced: none of the four products in the landscape collects the portal fields, shows fit to the referrer, or passes status back (SCOPE.md, "What nobody does").
+
+CHANGE · 2026-09-25 · home card
+Changed:   RedBus card shows two phones (date list, return calendar), crossed and tilted opposite ways.
+Because:   Devansh asked for only these two screens, shown differently from Sidedoor's upright pair.
