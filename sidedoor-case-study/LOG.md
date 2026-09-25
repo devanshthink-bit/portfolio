@@ -3523,3 +3523,8 @@ CHANGE · 2026-09-25 · Contents list shows on more laptops
 Changed:   The left contents list now shows from 1240px wide (was 1360). Below that it is still the bottom pill. Windows laptops at 125–150% scaling report 1280–1536px, so a friend's laptop showed the phone pill. Checked at 1240: the list ends at 160px, the page starts at 186 (SideDoor) and 182 (RedBus). With Ask Devansh open under 1500px the list fades out, since list + panel leave too little room; from 1500 the page still shifts to sit between them.
 Because:   Devansh: the mobile navigation bar showed on a friend's Windows laptop.
 Verified:  localhost at 1240 and 1280, both case studies, Ask panel open and closed.
+
+CHANGE · 2026-09-25 · Prototype page opens on the login for both sides
+Changed:   The referrer flow in the prototype viewer now starts with "Sign in" (the login), as the candidate flow does, so the page lands on the login. The login's role choice already leads into the referrer's app (verify work email, add a job).
+Because:   Devansh: "The login screen should open... both flows of candidate and referral will start from login."
+Verified:  localhost /work/sidedoor/prototype at 1440×900 and 1280×720: lands on the login, 8 referrer steps fit, switching to Candidate lands on the login too.

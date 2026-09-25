@@ -13,6 +13,8 @@ const FLOWS: Record<Role, { who: string; steps: { id: string; t: string }[] }> =
   referrer: {
     who: "You are Nithin, a design manager at Flipkart.",
     steps: [
+      // Both sides start at the login; picking "I refer" there leads into the referrer's app.
+      { id: "start", t: "Sign in" },
       { id: "ref.posts", t: "Your job posts" },
       { id: "ref.live", t: "Job posted, link to share" },
       { id: "ref.reqs", t: "Referral requests, best fit first" },
