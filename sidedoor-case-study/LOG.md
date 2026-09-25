@@ -3491,3 +3491,7 @@ Because:   Devansh didn't like the crossed pair: "try something else".
 CHANGE · 2026-09-25 · home card
 Changed:   RedBus card back to three phones, refined: calendar 252 upright with a soft red shadow; the two side phones 212, tilted 6deg and tucked closer behind it.
 Because:   Devansh: "keep three screens like before, but make it look better". The two-phone lean was rejected.
+
+CHANGE · 2026-09-25 · home card
+Changed:   In-progress card: the two placeholder phones slant 6deg outwards like the RedBus card's side phones, the right one in front. Upright on mobile.
+Because:   Devansh: "make these two screens like they are in the first case study card of RedBus, slanted".
