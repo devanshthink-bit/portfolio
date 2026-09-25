@@ -1482,12 +1482,14 @@
      Hover lifts the middle phone and fans the side ones a little further. */
   .work-card-phones { gap: 0; align-items: flex-start; }
   .work-card-phones .iphone { position: relative; }
-  .work-card-phones .iphone:nth-child(1) { --n: 196; z-index: 1; transform: translate(28px, 58px) rotate(-8deg); }
-  .work-card-phones .iphone:nth-child(2) { --n: 236; z-index: 2; }
-  .work-card-phones .iphone:nth-child(3) { --n: 196; z-index: 1; transform: translate(-28px, 58px) rotate(8deg); }
-  .work-card:hover .work-card-phones .iphone:nth-child(1) { transform: translate(14px, 46px) rotate(-11deg); }
-  .work-card:hover .work-card-phones .iphone:nth-child(2) { transform: translateY(-10px); }
-  .work-card:hover .work-card-phones .iphone:nth-child(3) { transform: translate(-14px, 46px) rotate(11deg); }
+  .work-card-phones .iphone:nth-child(1) { --n: 212; z-index: 1; transform: translate(64px, 64px) rotate(-6deg); }
+  .work-card-phones .iphone:nth-child(2) { --n: 252; z-index: 2; }
+  /* a soft red shadow under the calendar, so it stands in front of the two it holds */
+  .work-card-phones:not(.is-pair) .iphone:nth-child(2) { filter: drop-shadow(0 24px 40px rgba(120, 12, 30, 0.28)); }
+  .work-card-phones .iphone:nth-child(3) { --n: 212; z-index: 1; transform: translate(-64px, 64px) rotate(6deg); }
+  .work-card:hover .work-card-phones .iphone:nth-child(1) { transform: translate(40px, 56px) rotate(-9deg); }
+  .work-card:hover .work-card-phones .iphone:nth-child(2) { transform: translateY(-12px); }
+  .work-card:hover .work-card-phones .iphone:nth-child(3) { transform: translate(-40px, 56px) rotate(9deg); }
 
   /* Sidedoor's card: a pair, not RedBus's fan. Both upright and centred: the referrer's request
      lower and behind on the left, the login raised in front on the right. Hover draws them apart. */
@@ -1496,14 +1498,6 @@
   .work-card-phones.is-pair .iphone:nth-child(2) { --n: 248; z-index: 2; transform: translateX(-24px); }
   .work-card:hover .work-card-phones.is-pair .iphone:nth-child(1) { transform: translate(12px, 64px); }
   .work-card:hover .work-card-phones.is-pair .iphone:nth-child(2) { transform: translate(-12px, -10px); }
-
-  /* RedBus's card: two phones leaning the same way, one step apart, like a product shot: the date
-     list behind and lower on the left, the calendar in front. Sidedoor's pair stands upright. */
-  .work-card-phones.is-tilt { padding-top: 40px; }
-  .work-card-phones.is-tilt .iphone:nth-child(1) { --n: 236; z-index: 1; transform: translate(40px, 70px) rotate(10deg); }
-  .work-card-phones.is-tilt .iphone:nth-child(2) { --n: 236; z-index: 2; transform: translate(-40px, 6px) rotate(10deg); }
-  .work-card:hover .work-card-phones.is-tilt .iphone:nth-child(1) { transform: translate(28px, 66px) rotate(8deg); }
-  .work-card:hover .work-card-phones.is-tilt .iphone:nth-child(2) { transform: translate(-28px, -4px) rotate(8deg); }
 
   /* Warning ink, redBus's amber. Lighter on the dark theme so it keeps its contrast. */
   .cs-warn {
@@ -1792,9 +1786,6 @@
   .work-card-panel-text.is-brand-only .work-card-brand { font-size: 24px; }
   .work-card-phones .iphone:nth-child(2) { --n: 190; }
   .work-card-phones.is-pair { margin-top: 0; }
-  .work-card-phones.is-tilt { padding-top: 18px; }
-  .work-card-phones.is-tilt .iphone:nth-child(2),
-  .work-card:hover .work-card-phones.is-tilt .iphone:nth-child(2) { --n: 190; transform: rotate(4deg); }
   .work-card-phones.is-pair .iphone:nth-child(2),
   .work-card:hover .work-card-phones.is-pair .iphone:nth-child(2) { --n: 190; transform: none; }
   .phone-row.hero { padding-bottom: 0; }
