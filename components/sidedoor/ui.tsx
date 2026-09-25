@@ -401,6 +401,18 @@ export function Tag({
   );
 }
 
+/** A line of copy about work Sidedoor's model did (read a document, suggested something),
+ *  led by the AI mark. `cls` is the text style the line had before it carried the mark. */
+export function AiLine({ children, cls = "t-label muted", style }: { children: ReactNode; cls?: string; style?: CSSProperties }) {
+  return (
+    // the mark sits on the first line: 16 beside 14/20 text, 14 beside the 12/16 small label
+    <p className={cls} style={{ display: "flex", alignItems: "flex-start", gap: 6, ...style }}>
+      <Icon name="sparkles" size={cls.includes("-sm") ? 14 : 16} style={{ marginTop: cls.includes("-sm") ? 1 : 2 }} />
+      <span style={{ minWidth: 0 }}>{children}</span>
+    </p>
+  );
+}
+
 /** A note is a Tag, not a coloured box (V2 pattern). Always above the thing it explains. */
 export function Note({ children, style: kind = "neutral", icon }: { children: ReactNode; style?: TagStyle; icon?: IconName }) {
   return (

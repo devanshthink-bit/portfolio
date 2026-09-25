@@ -522,7 +522,7 @@ function FitSummary({ j }: { j: Job }) {
     <Block icon="checkmark.circle.fill" title="How you match">
       <div style={{ display: "flex", flexDirection: "column", gap: 8, paddingTop: 4 }}>
         <FitLines rows={fitRows(j)} />
-        {claimedOf(j).length > 0 && <Note>A listed skill counts once your linked work or resume shows it</Note>}
+        {claimedOf(j).length > 0 && <Note icon="sparkles">A listed skill counts once your linked work or resume shows it</Note>}
       </div>
     </Block>
   );

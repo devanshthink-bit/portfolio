@@ -6,6 +6,7 @@ import { useRef, useState, type ReactNode } from "react";
 import { useNav } from "../nav";
 import { STAGE_LABEL, stageTag, useStore } from "../store";
 import {
+  AiLine,
   logoSrc,
   Actions,
   Avatar,
@@ -906,7 +907,7 @@ export function LinkPage() {
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           <DocUpload what="resume" file={file} onUpload={upload} />
           {!file && (
-            <p className="t-label-sm muted">We fill in the details {you.company}’s portal needs. You check them before sending.</p>
+            <AiLine cls="t-label-sm muted">We fill in the details {you.company}’s portal needs. You check them before sending.</AiLine>
           )}
         </div>
       </Section>
@@ -918,7 +919,7 @@ export function LinkPage() {
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               <Icon name="person.fill" size={16} color="tone" />
               <span className="t-h-xs" style={{ width: 130 }}>Your details</span>
-              <Tag>Filled from your resume</Tag>
+              <Tag icon="sparkles">Filled from your resume</Tag>
               <span style={{ marginLeft: "auto" }}>{ed.button}</span>
             </div>
             {reading ? <ReadingBox /> : ed.body}

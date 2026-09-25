@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useNav } from "../nav";
 import { STAGE_LABEL, stageTag, useDecide, useStore, type Stage } from "../store";
 import {
+  AiLine,
   Actions,
   Avatar,
   Box,
@@ -206,7 +207,7 @@ export function ReferralRequests() {
         {/* Figma's "Suggested For This Job" frame carries 16 of top padding, and the empty
             screen does not show it at all. */}
         {phase === "ok" && !failed && !allHandled && force !== "reqs.empty" && (
-          <Section label="Suggested for this job" icon="lightbulb.fill" style={{ paddingTop: 16 }}>
+          <Section label="Suggested for this job" icon="sparkles" style={{ paddingTop: 16 }}>
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               <p className="t-label muted">They match this job and chose to be found.</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -418,7 +419,7 @@ export function ReferralRequest({ id }: { id: string }) {
                   )}
                 </div>
               ))}
-              <p className="t-label-sm muted">A skill counts only when their linked work or resume shows it.</p>
+              <AiLine cls="t-label-sm muted">A skill counts only when their linked work or resume shows it.</AiLine>
             </div>
           </Section>
 

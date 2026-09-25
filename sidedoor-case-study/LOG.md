@@ -64,7 +64,8 @@ The decisions an interviewer will ask about, newest thinking only. Each line: wh
 | Decision | Why | Evidence | Turned down |
 |---|---|---|---|
 | AI reads documents and links into fields (resume, job description, project links); the person checks | Removes typing without making decisions for anyone | AX Spec in BRIEF.md | The model deciding |
-| AI suggests the referrer's question from the job description, one per skill | Stops product-specific questions before they happen | Mine | Writing the candidate's answer (kills the signal); AI deciding who to refer (the referrer's name is on it) |
+| AI suggests the referrer's question from the job description, one per skill, only when asked (26 Sep: the field starts empty, suggestions sit behind "Stuck? Suggest questions") | Stops product-specific questions before they happen, without turning the question into a pick from three | Mine (Devansh, 26 Sep) | Writing the candidate's answer (kills the signal); AI deciding who to refer (the referrer's name is on it); suggestions shown up front (Devansh: "we are forcing the user to select from these three") |
+| One AI mark (sparkles, blue to violet) on every line where the model read or suggested something | People can tell what Sidedoor worked out from what someone typed | Devansh, 26 Sep | No mark at all (24 Sep); marking every match number (too loud) |
 | No "AI" in the marketing copy | "AI-curated" promises a black box; the proof rule is the point | Mine | "AI-matched" taglines |
 
 **How we work**
@@ -3604,3 +3605,12 @@ Left as is: a 4 px gap above Resume on the thin-profile request; Edit links hidd
 Images:    re-exported jobs, requests, emailed, st_offline, st_cantsend, post, link_before, st_empty. requests is now a scrolled crop (job row pinned, end of the list) so Lower match and Suggested stay in view; Scene 4 notes moved.
 Verified:  re-measure of the 13 main steps and every changed state; Scene 4 on localhost.
 Rule:      any fix to a screen ships to Figma, the prototype, every case study image that shows it and the home card, in the same change (memory: sidedoor-fix-shows-everywhere).
+
+CHANGE · 2026-09-26 · The referrer writes the question first; one AI mark wherever the model works
+Asked:     Devansh: hide the suggested questions, let the referrer type first, offer suggestions when stuck; one icon for every AI thing in the app.
+Supersedes: 24 Sep "a sparkle AI badge" turned down. The login and marketing copy still say nothing about AI.
+Question:  Check your job post starts with an empty field ("What do you want every candidate to answer?"). Under the help line, "Stuck? Suggest questions from the job description" (44 tall, link blue). Tapped, it opens "Suggested from <JD>" with Hide and the three questions; a tap fills the field. Edit your job post keeps the post's question, suggestions folded.
+AI mark:   SF/sparkles (5872:32552), drawn for Sidedoor, gradient #2563EB to #9333EA, never recoloured. Code: Icon "sparkles", AiLine for lines. Placed on: the question suggestions, "We fill in…" on Upload resume, Add a job, the link page and the resume sheet; "What we'll auto fill" (AutofillInfo component); "Filled from your resume" / "Filled from <JD>"; "Reading your resume"; the fit footnote on a request and the note on Job details; the proof sheet line; "Suggested for this job" (was a lightbulb). Not on match counts or the order of requests (the fit lines already explain them).
+Figma:     both question groups rebuilt (Ask Row, Head Row, list folded); new state frame "Post A Job From Its Description Screen/Suggestions Open" (5872:43344); 17 lines wrapped as "AI Line" rows; 5 tags and 6 section labels swapped to the mark.
+Images:    request, job, requests, link_before, proof, post re-exported. post now shows the open state (98 / 0 / 1004) with new notes; requests offset is 1026 (the frame is shorter than when 1222 was measured).
+Verified:  localhost: the field starts empty, the Stuck row opens the list, a tap fills it; marks on request, proof and post; tsc clean, lint only the 2 old App.tsx errors.

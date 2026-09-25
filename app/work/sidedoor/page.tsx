@@ -325,11 +325,11 @@ export default function SidedoorCaseStudy() {
       </Beat>
 
       <Beat label="The question" title="Nithin's one question shut out most people who'd apply."
-        sub={<>A referrer can ask every candidate one question. Mine asked about a checkout trade-off, but Nithin can&apos;t know who will apply, and most designers have never worked on checkout. Now it asks about a skill, and SideDoor suggests one question per skill from the job description.</>}>
-        <PhoneShot src={scr("post")} alt="Check your job post: one question for candidates, with three suggested from the job description."
+        sub={<>A referrer can ask every candidate one question. Mine asked about a checkout trade-off, but Nithin can&apos;t know who will apply, and most designers have never worked on checkout. Now it asks about a skill. The field starts empty so the question is his own, and if he gets stuck SideDoor suggests one per skill from the job description.</>}>
+        <PhoneShot src={scr("post")} alt="Check your job post: an empty field for the one question, and below it three questions SideDoor suggested from the job description, opened on request."
           notes={[
-            { box: [3, 32.3, 94, 12.3], title: "Ask about a skill, not a product", sub: "every candidate can answer" },
-            { box: [3, 52.6, 94, 31], title: "Suggested from the job description", sub: "one per skill, tap to use" },
+            { box: [3, 13.3, 94, 19.2], title: "His question, written first", sub: "ask about a skill, not a product" },
+            { box: [3, 33.8, 94, 33.4], title: "Suggestions only when asked", sub: "one per skill, marked as AI" },
           ]} />
       </Beat>
 

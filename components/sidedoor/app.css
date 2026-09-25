@@ -498,6 +498,9 @@
 .sd-suggest-row { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 8px 0; width: 100%; text-align: left; position: relative; }
 .sd-suggest-row + .sd-suggest-row::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 0.5px; background: var(--sd-border-subtle); }
 .sd-suggest-row:active { background: var(--sd-n100); }
+/* "Stuck? Suggest questions": a quiet link row with the AI mark, 44 tall, under the field */
+.sd-ai-ask { display: flex; align-items: center; gap: 6px; min-height: 44px; margin-top: -12px; width: 100%; text-align: left; color: var(--sd-link); }
+.sd-ai-ask:active { opacity: 0.6; }
 .sd-row-chev { margin-left: auto; display: flex; color: var(--sd-n400); }
 .sd-divider { height: 0.5px; background: rgba(60, 60, 67, 0.2); margin-left: 16px; }
 

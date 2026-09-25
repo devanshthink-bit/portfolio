@@ -6,6 +6,7 @@ import { useNav } from "../nav";
 import { useStore } from "../store";
 import { DEMO, type Proj } from "../data";
 import {
+  AiLine,
   Actions,
   Button,
   Field,
@@ -299,7 +300,10 @@ export function DocUpload({
 function AutofillInfo({ items }: { items: string[] }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-      <p className="t-h-xs">What we’ll auto fill</p>
+      <p className="t-h-xs" style={{ display: "flex", alignItems: "center", gap: 6 }}>
+        <Icon name="sparkles" size={16} />
+        What we’ll auto fill
+      </p>
       {/* Figma Frame 224: two 179-wide columns 12 apart, rows 12 apart, each row a 24x24
           outline check 8 from a Medium 14/20 label in --sd-text-2. The second column's rows
           hug their content and sit against the right edge. */}
@@ -360,7 +364,7 @@ export function UploadResume() {
       }
     >
       <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
-        <p className="t-label muted">We fill in your details, you check them.</p>
+        <AiLine>We fill in your details, you check them.</AiLine>
         <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
           <DocUpload
             what="resume"
@@ -416,11 +420,11 @@ export function CheckProfile() {
       }
     >
       <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
-        <p className="t-label muted">
+        <AiLine>
           {reading
             ? "Reading your resume. You can fill the rest while it works."
             : "Filled from your resume. Check these before you send anything."}
-        </p>
+        </AiLine>
 
         <ResumeDetails />
         <ExperienceBlock reading={reading} />
@@ -834,9 +838,7 @@ export function AddJob() {
       }
     >
       <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
-        <p className="t-label muted">
-          Paste its link from your careers page, or upload the description. We fill in the rest.
-        </p>
+        <AiLine>Paste its link from your careers page, or upload the description. We fill in the rest.</AiLine>
         <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
           <DocUpload
             what="job description"
@@ -891,7 +893,7 @@ export function CheckPost({ title }: { title?: string }) {
       }
     >
       <div style={{ paddingTop: 32, display: "flex", flexDirection: "column", gap: 24 }}>
-        <p className="t-label muted">Filled from {you.post.jd}. Check it before you post.</p>
+        <AiLine>Filled from {you.post.jd}. Check it before you post.</AiLine>
 
         <Section
           label="Job ID"
@@ -928,7 +930,7 @@ export function CheckPost({ title }: { title?: string }) {
 
         {/* One question every candidate answers with the request. A specific answer shows real
             experience in a way an AI-polished resume or note can't (Devansh, 24 Sep). */}
-        <QuestionField />
+        <QuestionField fresh />
 
         <FileBox label="Job description" name={you.post.jd} what="file" />
       </div>
@@ -937,13 +939,17 @@ export function CheckPost({ title }: { title?: string }) {
 }
 
 /**
- * The referrer's one question, with three Sidedoor suggests from the job description, one per
- * skill it asks for. A referrer doesn't know who will apply, so a question about a product only
- * some candidates worked on is the easy mistake; a suggestion asks about a skill (Devansh, 24 Sep).
+ * The referrer's one question. They write it first; Sidedoor's three suggestions from the job
+ * description, one per skill it asks for, stay folded behind a button until asked for, so the
+ * question is theirs and the list is help when stuck, not a menu (Devansh, 26 Sep). A referrer
+ * doesn't know who will apply, so a question about a product only some candidates worked on is
+ * the easy mistake; a suggestion asks about a skill (Devansh, 24 Sep).
+ * `fresh`: a new post starts with an empty question; editing a post shows the one it has.
  */
-export function QuestionField() {
+export function QuestionField({ fresh }: { fresh?: boolean }) {
   const { question, you, dispatch } = useStore();
-  const value = question ?? you.post.question;
+  const value = question ?? (fresh ? "" : you.post.question);
+  const [open, setOpen] = useState(false);
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
       <Field
@@ -951,37 +957,48 @@ export function QuestionField() {
         icon="bubble.left.fill"
         value={value}
         onChange={(v) => dispatch({ t: "question", v })}
-        placeholder="e.g. Tell us about a flow you made simpler. What did you cut, and what did it cost?"
+        placeholder="What do you want every candidate to answer?"
         multiline
         kind="tips"
         demo={DEMO.question}
-        help="Ask about a skill this role needs, not a specific product. Every candidate answers from their own work."
+        help="Ask about a skill, not a specific product. Every candidate answers from their own work."
       />
-      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-        <p className="t-label-sm muted">Suggested from {you.post.jd}</p>
-        {/* rows carry their own 8 padding and hairline, so no gap between them (Figma "Suggestion List") */}
-        <Box style={{ gap: 0 }}>
-          {you.post.suggest.map((s) => {
-            const on = value.trim() === s.q;
-            return (
-              <button
-                key={s.q}
-                className="sd-suggest-row"
-                aria-pressed={on}
-                onClick={() => dispatch({ t: "question", v: s.q })}
-              >
-                <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 2, minWidth: 0 }}>
-                  <span className="t-label-sm muted">{s.skill}</span>
-                  <span className="t-label">{s.q}</span>
-                </span>
-                <span style={{ width: 20, flex: "0 0 auto", display: "flex", color: "var(--sd-icon-accent)" }}>
-                  {on && <Icon name="checkmark" size={20} />}
-                </span>
-              </button>
-            );
-          })}
-        </Box>
-      </div>
+      {!open ? (
+        <button className="sd-ai-ask" onClick={() => setOpen(true)}>
+          <Icon name="sparkles" size={16} />
+          <span className="t-label">Stuck? Suggest questions from the job description</span>
+        </button>
+      ) : (
+        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+            <Icon name="sparkles" size={14} />
+            <p className="t-label-sm muted" style={{ flex: 1, minWidth: 0 }}>Suggested from {you.post.jd}</p>
+            <button className="t-label-sm link sd-hit44" onClick={() => setOpen(false)}>Hide</button>
+          </div>
+          {/* rows carry their own 8 padding and hairline, so no gap between them (Figma "Suggestion List") */}
+          <Box style={{ gap: 0 }}>
+            {you.post.suggest.map((s) => {
+              const on = value.trim() === s.q;
+              return (
+                <button
+                  key={s.q}
+                  className="sd-suggest-row"
+                  aria-pressed={on}
+                  onClick={() => dispatch({ t: "question", v: s.q })}
+                >
+                  <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 2, minWidth: 0 }}>
+                    <span className="t-label-sm muted">{s.skill}</span>
+                    <span className="t-label">{s.q}</span>
+                  </span>
+                  <span style={{ width: 20, flex: "0 0 auto", display: "flex", color: "var(--sd-icon-accent)" }}>
+                    {on && <Icon name="checkmark" size={20} />}
+                  </span>
+                </button>
+              );
+            })}
+          </Box>
+        </div>
+      )}
     </div>
   );
 }

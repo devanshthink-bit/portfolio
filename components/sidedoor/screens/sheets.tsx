@@ -6,7 +6,7 @@ import { useNav } from "../nav";
 import { STAGE_LABEL, useDecide, useStore, type Stage } from "../store";
 import { DocUpload } from "./onboarding";
 import { candidateById, firstName, jobById, proofOf } from "../data";
-import { ActionSheet, Alert, Avatar, Button, Card, Field, Icon, Note, RadioList, RadioOption, Sheet, Tag, TextButton, WheelDate } from "../ui";
+import { AiLine, ActionSheet, Alert, Avatar, Button, Card, Field, Icon, Note, RadioList, RadioOption, Sheet, Tag, TextButton, WheelDate } from "../ui";
 
 function SheetPerson({ name, role, tag }: { name: string; role: string; tag?: React.ReactNode }) {
   return (
@@ -295,9 +295,9 @@ export function AddResumeSheet({ leaving, job = "flipkart" }: { leaving?: boolea
   return (
     <Sheet title={`Add your resume to ask ${firstName(j.referrer.name)}`} onClose={nav.closeSheet} leaving={leaving} closeButton>
       <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-        <p className="t-body muted">
+        <AiLine cls="t-body muted">
           {j.company}’s portal asks for it. We fill in your details from it, and you check them before anything is sent.
-        </p>
+        </AiLine>
         <DocUpload what="resume" file={null} onUpload={upload} />
         <span>
           <Tag>Saved for your next requests too</Tag>
@@ -432,9 +432,9 @@ export function ProofSheet({ id, skill, leaving }: { id: string; skill: string; 
           )}
         </div>
       </Card>
-      <p className="t-label-sm muted" style={{ marginTop: 12 }}>
+      <AiLine cls="t-label-sm muted" style={{ marginTop: 12 }}>
         {p.link ? "Sidedoor read this on their page. Open it to check." : "Sidedoor read this in their resume."}
-      </p>
+      </AiLine>
     </Sheet>
   );
 }

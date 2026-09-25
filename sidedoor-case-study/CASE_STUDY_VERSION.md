@@ -34,7 +34,7 @@ Crops are `header / footer / scroll offset` in 1x points. Where the offset is no
 | jobs.webp | Candidate/Jobs Screen 5247:18584 | full | Act 2 Scene 1 |
 | job.webp | Candidate/Job Screen 5247:18687 | 98 / 232 / 300 | Hero, Scene 2, home card (left) |
 | check.webp | Candidate/Check Your Referral Request Screen 5247:18695 | 98 / 88 / 0 | Scene 3 |
-| requests.webp | Referrer/Referral Requests Screen 5247:18631 | 196 / 88 / 1222 (job row pinned; the end of the 10-request list) | Scene 4 |
+| requests.webp | Referrer/Referral Requests Screen 5247:18631 | 196 / 88 / 1026 (job row pinned; the end of the 10-request list) | Scene 4 |
 | request.webp | Referrer/Referral Request Screen 5247:18762 | 98 / 88 / 0 | Hero, Scene 5, Act 3 "Before and after", home card (right) |
 | proof.webp | Referrer/Skill Proof Sheet 5750:42504 over request.webp, dimmed 40% | composite | Scene 6 |
 | emailed.webp | Referrer/Referral Request Screen/After Refer/Emailed 5757:31343 | 98 / 88 / 0 | Scene 7 |
@@ -45,7 +45,7 @@ Crops are `header / footer / scroll offset` in 1x points. Where the offset is no
 | st_noanswer.webp | Candidate/Track Details Screen/No Answer After 7 Days 5247:19634 | 98 / 88 / 114 | Scene 10 |
 | st_cantsend.webp | Candidate/Check Your Referral Request Screen/Couldn't Send 5287:24479 | 98 / 88 / 752 | Scene 10 |
 | st_offline.webp | Candidate/Jobs Screen/Offline 5618:28401 | full | Scene 10 |
-| post.webp | Referrer/Post A Job From Its Description Screen 5247:18441 | 98 / 0 / 860 | Act 3 "The question" |
+| post.webp | Referrer/Post A Job From Its Description Screen/Suggestions Open 5872:43344 | 98 / 0 / 1004 | Act 3 "The question" |
 | v2_swipe.webp | V2 Referrer/Candidate Screen/1 882:6094 | full (780 × 1688) | Act 3 "Before and after" |
 | v2_update.webp | V2 Referrer/Update Preview Screen/1 1210:6447 | full (780 × 1688) | Act 3 "My mistake" |
 | st_loading, st_empty, st_thin | 5311:38885, 5247:18943, 5247:19007 | full | exported, not used yet |
@@ -58,6 +58,7 @@ If any of these change in the design, the sentence changes too.
 - Fit groups: Found in their work / Related / Listed only / Missing (Scenes 2, 5, Act 3 "Proof")
 - Portal details: Email to me, Copy all (Scene 7)
 - Mark as submitted as the last step of Refer (Scene 8, Act 3 "My mistake")
-- The referrer's question and its suggestions (Act 3 "The question")
+- The referrer's question and its suggestions, folded until asked for (Act 3 "The question")
+- The AI mark (sparkles) on every line where Sidedoor's model read or suggested something (request, job, proof, requests, link, post images)
 - 65 prototype states (Scene 10, Act 3 "Attacking it")
 - Kill conditions: 1 in 5, 3 of 8 (Act 4)
