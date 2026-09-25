@@ -3533,3 +3533,13 @@ CHANGE · 2026-09-25 · No unexplained names or codes
 Changed:   "Rajat said to make it a LinkedIn feature" is now "My mentor said..." on the page and in Ask Devansh's knowledge. Research note codes like (n76) are stripped from the SideDoor knowledge, and a sample name from the design notes (Himani) is gone. Both Ask Devansh prompts now say: name only people the case study introduces (SideDoor: Samarth, Riya, Abhinav, Nithin), describe anyone else by role, and never use note numbers, file names or process labels.
 Because:   Devansh: Ask Devansh named Rajat to a recruiter with no context. "Check for other things if they are like this."
 Verified:  localhost page shows "My mentor said"; no "Rajat" anywhere in page or knowledge; route builds. Live answers can only be checked on Vercel.
+
+CHANGE · 2026-09-25 · Figma and prototype brought back in step (badge, photos, wording)
+Changed:
+  - Figma: the PersonRow component (5301:574) still held the old check-shield, so 4 V6 screens showed a shield next to the name while every other place showed the seal. Swapped to SF/checkmark.seal.fill in the component; 0 shields left in V6 on either page.
+  - Figma: the three photos replaced in code on 23 Sep (Nithin, Abhinav, Advika; Pexels) were never put in Figma. Uploaded the prototype's files and swapped them on every V6 screen: 57 layers on UI Screens, 44 on 🔗 V6 Prototype. V2–V5 left as history.
+  - Text diff, every V6 Figma string against the text the prototype renders in all 74 viewer states plus its source. 302 raw misses came down to 41, and most of those are in code but in states the viewer can't jump to. Four were real, and the prototype now follows Figma: the suggested-job button reads "Send my request to Nithin" with no "Uses 1 of your 14" line; the Log out sheet says "Log out of SideDoor? You can log back in with the same account."; search with no results says "No chats match “Rahul”."; the resume preview gives each job its one-line summary, with no email line or separate projects list, the resume's own skills line, and 2022.
+  - Bug found on the way: a referrer opening Abhinav's resume saw their own name and jobs (the preview took "Abhinav" to mean the signed-in person, wrong since each side got its own profile on 24 Sep). It now compares against who is signed in.
+Not covered: layout, spacing and icon differences. The diff was text only; those need the per-screen node audit.
+Because:   Devansh: two different verification badges, and "Figma still has old DPs... Make Figma screens consistent with the prototype screens."
+Verified:  Figma census and a person-row render; localhost prototype: suggested job, log out sheet, search empty, resume preview.

@@ -112,7 +112,7 @@ export function Messages() {
           />
         ) : shown.length === 0 ? (
           q ? (
-            <Empty icon="magnifyingglass" title={`No results for “${q}”`} body="Check the spelling or try a new search." />
+            <Empty icon="magnifyingglass" title={`No chats match “${q}”.`} />
           ) : (
             <Empty
               icon="bubble.left.fill"
@@ -1041,31 +1041,28 @@ export function ContactSupport() {
 export function ResumePreview({ file = "Abhinav_Saxena_Resume.pdf", id = "abhinav" }: { file?: string; id?: string }) {
   const { profile } = useStore();
   const c = candidateById(id);
-  const me = c.id === "abhinav";
+  // your own resume shows your edits; anyone else's (a referrer opening Abhinav's) shows theirs
+  const me = c.name === profile.name;
   const jobs = me ? profile.jobs : c.jobs;
-  const projects = me ? profile.projects : c.projects;
   return (
     <Screen title={file} back>
       <div style={{ paddingTop: 24 }}>
         <div className="sd-paper">
           <span className="t-h-md">{me ? profile.name : c.name}</span>
           <span className="t-label-sm muted">{c.title} · {c.city}</span>
-          <span className="t-label-sm muted">{me ? profile.email : c.email}</span>
           <hr />
           <span className="t-h-xs">Experience</span>
+          {/* Figma: each job with the one line the resume gives it, no separate projects list */}
           {jobs.map((j) => (
-            <p key={j.role + j.company} className="t-label-sm">{j.role}, {j.company} · {j.when}</p>
-          ))}
-          {projects.length > 0 && <span className="t-h-xs">Projects</span>}
-          {projects.map((p) => (
-            <p key={p.title} className="t-label-sm muted">
-              <b style={{ color: "var(--sd-text)", fontWeight: 600 }}>{p.title}.</b> {p.detail}
-            </p>
+            <div key={j.role + j.company}>
+              <p className="t-label-sm">{j.role}, {j.company} · {j.when}</p>
+              {j.note && <p className="t-label-sm muted">{j.note}</p>}
+            </div>
           ))}
           <span className="t-h-xs">Skills</span>
-          <p className="t-label-sm muted">{me ? profile.skills : Object.keys(c.has).join(", ") || "Visual design, Illustration"}</p>
+          <p className="t-label-sm muted">{me ? profile.skills : c.resumeSkills ?? (Object.keys(c.has).join(", ") || "Visual design, Illustration")}</p>
           <span className="t-h-xs">Education</span>
-          <p className="t-label-sm muted">B.Des, Interaction Design · NID Ahmedabad · {2025 - c.years - 1}</p>
+          <p className="t-label-sm muted">B.Des, Interaction Design · NID Ahmedabad · {2025 - c.years}</p>
         </div>
       </div>
     </Screen>

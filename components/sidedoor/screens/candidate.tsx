@@ -326,9 +326,10 @@ export function JobDetails({ id = "flipkart" }: { id?: string }) {
             {history && <Note style="buffer" icon="info.circle.fill">{history}</Note>}
             {/* Idea 3: the limit is shown before the ask, so a request feels worth spending */}
             {/* why there is a limit, next to the count: it's the reason referrers answer */}
-            <p className="t-label-sm muted">Uses 1 of your {requestsLeft} requests left this week. Referrers answer because each one is chosen.</p>
+            {/* a suggested request doesn't use one of the week's requests, so Figma drops the line */}
+            {!suggested && <p className="t-label-sm muted">Uses 1 of your {requestsLeft} requests left this week. Referrers answer because each one is chosen.</p>}
             <Button onClick={() => (noResume ? nav.openSheet("addResume", { job: j.id }) : nav.push("checkRequest", { id: j.id }))}>
-              Ask {who} for a referral
+              {suggested ? `Send my request to ${who}` : `Ask ${who} for a referral`}
             </Button>
           </div>
         )

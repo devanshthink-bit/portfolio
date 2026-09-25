@@ -378,7 +378,8 @@ export const matchOf = (j: Job) => j.skills.length - j.missing.length;
 export const firstName = (n: string) => n.split(" ")[0];
 
 /* ── the candidate's own profile (Abhinav) ────────────────────────────────── */
-export type Exp = { logo: string; role: string; company: string; when: string };
+/** note: the one line the resume gives this job (Figma Resume Preview) */
+export type Exp = { logo: string; role: string; company: string; when: string; note?: string };
 /** link: where the work can be seen (a case study, a repo, the live product), shown with the project as proof */
 export type Proj = { title: string; skills: string[]; detail: string; link?: string };
 
@@ -390,8 +391,8 @@ export const ABHINAV_PROFILE = {
   experience: "3 yrs total · 3 yrs relevant",
   skills: "Product strategy, Systems thinking, User research, Interaction design, Figma, AI-assisted design",
   jobs: [
-    { logo: "blinkit", role: "Product Designer", company: "Blinkit", when: "Sep 2023–Present" },
-    { logo: "makemytrip", role: "Associate Product Designer", company: "MakeMyTrip", when: "Jun 2022–Aug 2023" },
+    { logo: "blinkit", role: "Product Designer", company: "Blinkit", when: "Sep 2023–Present", note: "Merchant app: order intake for 4,000 dark stores." },
+    { logo: "makemytrip", role: "Associate Product Designer", company: "MakeMyTrip", when: "Jun 2022–Aug 2023", note: "Hotel checkout, five steps to three." },
   ] as Exp[],
   projects: [
     {
@@ -537,6 +538,8 @@ export type Candidate = {
   years: number;
   /** which of the post's skills their resume shows, and where it came from */
   has: Record<string, string>;
+  /** the skills line as written on the resume itself (Figma Resume Preview), when it differs from `has` */
+  resumeSkills?: string;
   /** when someone last referred them to this company through Sidedoor (Riya, n74: portals wait
    *  6 months, and nobody remembers when that was) */
   referredHere?: { on: string; until: string };
@@ -694,6 +697,8 @@ export const CANDIDATES: Candidate[] = [
     work: ["Full time", "Remote or hybrid"],
     jobs: ABHINAV_PROFILE.jobs,
     projects: ABHINAV_PROFILE.projects,
+    // AI-assisted design is only listed on his profile, so his resume doesn't carry it
+    resumeSkills: "Product strategy, Systems thinking, User research, Interaction design, Figma",
     note: "I led the merchant app redesign at Blinkit. Happy to share more.",
     email: "abhinav.saxena@email.com",
     phone: "+91 98XXX XXX21",

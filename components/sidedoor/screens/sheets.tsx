@@ -313,7 +313,7 @@ export function LogoutSheet() {
   const { dispatch } = useStore();
   return (
     <ActionSheet
-      message="You’ll need to sign in again. Your requests stay where they are."
+      message="Log out of SideDoor? You can log back in with the same account."
       options={[
         {
           label: "Log out",
