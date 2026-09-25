@@ -855,6 +855,7 @@
   .cs-meta-strip {
     display: flex;
     justify-content: space-between;
+    gap: 32px;
   }
 
   /* redBus case study */
