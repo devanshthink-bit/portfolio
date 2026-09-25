@@ -4,6 +4,7 @@
 import type { Metadata } from "next";
 import RubberBackButton from "../../../components/RubberBackButton";
 import SidedoorTOCClient from "../../../components/SidedoorTOCClient";
+import AskDevansh from "../../../components/AskDevansh";
 import SidedoorEmbed from "../../../components/SidedoorEmbed";
 import { T, SectionLabel, Beat, Card, Chip, Numbered, Pill, MetaStrip, Act, InShort, BeforeAfter, Rows, MoSCoW, Closing } from "../../../components/caseStudy";
 import { PhoneRow } from "../../../components/IPhone";
@@ -105,7 +106,8 @@ function Watch() {
 export default function SidedoorCaseStudy() {
   return (
     <main className="cs-page is-sidedoor" style={{ padding: "40px 0 96px" }}>
-      <SidedoorTOCClient />
+      <SidedoorTOCClient ask={!!process.env.GEMINI_API_KEY?.trim()} />
+      <AskDevansh available={!!process.env.GEMINI_API_KEY?.trim()} study="sidedoor" />
       <RubberBackButton plain />
 
       <div id="toc-intro" style={{ marginBottom: 88 }}>

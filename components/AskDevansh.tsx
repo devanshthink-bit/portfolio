@@ -7,11 +7,18 @@ import { createPortal } from "react-dom";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
-const SUGGESTIONS = [
-  "Tell me more about you.",
-  "Why not just use FlexiTicket?",
-  "What surprised you during this project?",
-];
+const SUGGESTIONS = {
+  redbus: [
+    "Tell me more about you.",
+    "Why not just use FlexiTicket?",
+    "What surprised you during this project?",
+  ],
+  sidedoor: [
+    "Tell me more about you.",
+    "Why not make it a LinkedIn feature?",
+    "What surprised you during this project?",
+  ],
+};
 
 // The site's two faces: Manrope for buttons and headings, Inter for everything you read.
 const FONT = "var(--font-manrope), system-ui, sans-serif";
@@ -28,7 +35,7 @@ const ArrowUp = () => <svg {...ic(16)}><path d="m5 12 7-7 7 7" /><path d="M12 19
 
 // `available` comes from the page, which knows on the server whether chat is set up, so the
 // button needs no network check and shows as soon as the page starts.
-export default function AskDevansh({ available: onServer = false }: { available?: boolean } = {}) {
+export default function AskDevansh({ available: onServer = false, study = "redbus" }: { available?: boolean; study?: "redbus" | "sidedoor" } = {}) {
   const [available, setAvailable] = useState(onServer);
   const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
@@ -94,7 +101,7 @@ export default function AskDevansh({ available: onServer = false }: { available?
       const res = await fetch("/api/ask-devansh", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: next }),
+        body: JSON.stringify({ messages: next, study }),
       });
       const data = await res.json();
       setMessages((p) => [...p, { role: "assistant", content: data.content }]);
@@ -160,7 +167,7 @@ export default function AskDevansh({ available: onServer = false }: { available?
               )}
               {messages.length === 0 && (
                 <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 10 }}>
-                  {SUGGESTIONS.map((s) => <button key={s} className="ask-chip" onClick={() => send(s)}>{s}</button>)}
+                  {SUGGESTIONS[study].map((s) => <button key={s} className="ask-chip" onClick={() => send(s)}>{s}</button>)}
                 </div>
               )}
             </div>

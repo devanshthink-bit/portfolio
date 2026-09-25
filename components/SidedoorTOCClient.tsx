@@ -13,6 +13,6 @@ const sidedoorSections = [
   { id: "toc-next",    label: "What's Next" },
 ];
 
-export default function SidedoorTOCClient() {
-  return <CaseStudyTOC sections={sidedoorSections} variant="left" />;
+export default function SidedoorTOCClient({ ask = false }: { ask?: boolean }) {
+  return <CaseStudyTOC sections={sidedoorSections} variant="left" ask={ask} />;
 }

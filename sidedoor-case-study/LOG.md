@@ -3499,3 +3499,8 @@ Because:   Devansh: "make these two screens like they are in the first case stud
 CHANGE · 2026-09-25 · RedBus name
 Changed:   "RedBus" beside the logo (home card, case study heading) is now "redBus" in the logo's own letters: public/images/redbus/wordmark.svg, the letter paths cut from logo.svg. White on the card, the heading's red on the case study.
 Because:   Devansh wanted the official redBus lettering and weight, small "r", colours unchanged.
+
+CHANGE · 2026-09-25 · Ask Devansh on the SideDoor case study
+Changed:   The AI twin now runs on /work/sidedoor too, with its own knowledge (lib/askDevanshSidedoorKnowledge.ts): the published page text, CASE_QA, RESEARCH, BUSINESS, DESIGN_LANGUAGE, TEST_PLAN. Lines about the discarded interviews, n92 and the mentor are dropped; the prompt says two people, both sides, and no results yet.
+Because:   Devansh asked for it, same as RedBus, so recruiters can ask anything about the case study.
+Verified:  localhost with ?ask: panel opens, SideDoor chips, request sends study=sidedoor. No local Gemini key, so real answers only on Vercel.
