@@ -679,8 +679,11 @@
   .wip-phone:nth-child(-n+2) { width: 236px; height: 495px; border-radius: 34px; }
   .wip-phone:nth-child(1) { transform: translate(14px, 40px) rotate(-6deg); }
   .wip-phone:nth-child(2) { z-index: 2; background: rgba(255, 255, 255, 0.85); transform: translate(-14px, 40px) rotate(6deg); }
-  .wip-card:hover .wip-phone:nth-child(1) { transform: translate(-2px, 34px) rotate(-9deg); }
-  .wip-card:hover .wip-phone:nth-child(2) { transform: translate(2px, 34px) rotate(9deg); }
+  /* Only where there is a real hover; on touch screens the phones stay put. */
+  @media (hover: hover) {
+    .wip-card:hover .wip-phone:nth-child(1) { transform: translate(-2px, 34px) rotate(-9deg); }
+    .wip-card:hover .wip-phone:nth-child(2) { transform: translate(2px, 34px) rotate(9deg); }
+  }
 
   .wip-bar, .wip-block {
     display: block; height: 10px; border-radius: 6px; flex: none;
@@ -1516,17 +1519,21 @@
   /* a soft red shadow under the calendar, so it stands in front of the two it holds */
   .work-card-phones:not(.is-pair) .iphone:nth-child(2) { filter: drop-shadow(0 24px 40px rgba(120, 12, 30, 0.28)); }
   .work-card-phones .iphone:nth-child(3) { --n: 212; z-index: 1; transform: translate(-64px, 64px) rotate(6deg); }
-  .work-card:hover .work-card-phones .iphone:nth-child(1) { transform: translate(40px, 56px) rotate(-9deg); }
-  .work-card:hover .work-card-phones .iphone:nth-child(2) { transform: translateY(-12px); }
-  .work-card:hover .work-card-phones .iphone:nth-child(3) { transform: translate(-40px, 56px) rotate(9deg); }
+  @media (hover: hover) {
+    .work-card:hover .work-card-phones .iphone:nth-child(1) { transform: translate(40px, 56px) rotate(-9deg); }
+    .work-card:hover .work-card-phones .iphone:nth-child(2) { transform: translateY(-12px); }
+    .work-card:hover .work-card-phones .iphone:nth-child(3) { transform: translate(-40px, 56px) rotate(9deg); }
+  }
 
   /* Sidedoor's card: a pair, not RedBus's fan. Both upright and centred: the referrer's request
      lower and behind on the left, the login raised in front on the right. Hover draws them apart. */
   .work-card-phones.is-pair { margin-top: -48px; }
   .work-card-phones.is-pair .iphone:nth-child(1) { --n: 248; z-index: 1; transform: translate(24px, 72px); }
   .work-card-phones.is-pair .iphone:nth-child(2) { --n: 248; z-index: 2; transform: translateX(-24px); }
-  .work-card:hover .work-card-phones.is-pair .iphone:nth-child(1) { transform: translate(12px, 64px); }
-  .work-card:hover .work-card-phones.is-pair .iphone:nth-child(2) { transform: translate(-12px, -10px); }
+  @media (hover: hover) {
+    .work-card:hover .work-card-phones.is-pair .iphone:nth-child(1) { transform: translate(12px, 64px); }
+    .work-card:hover .work-card-phones.is-pair .iphone:nth-child(2) { transform: translate(-12px, -10px); }
+  }
 
   /* Warning ink, redBus's amber. Lighter on the dark theme so it keeps its contrast. */
   .cs-warn {
@@ -1679,10 +1686,6 @@
     background: none;
   }
 
-  .phone-row.hero .phone-fig:not(:nth-child(2)) {
-    display: none;
-  }
-
   .phone-shot {
     flex-direction: column;
     gap: 28px;
@@ -1790,10 +1793,12 @@
   .phone-lines { display: none; }
 }
 
-/* Phones: the case study hero shows only the middle screen of its trio. */
+/* Phones: the case study hero keeps all three screens, as on the laptop, at about 0.42 of the size
+   (Devansh, 26 Sep 2026). */
 @media (max-width: 640px) {
-  .phone-row.hero { padding-bottom: 0; }
-  .phone-row.hero .phone-fig:nth-child(2) .iphone { --n: 272; }
+  .phone-row.hero { gap: 12px; padding: 24px 0 0; }
+  .phone-row.hero .phone-fig:nth-child(2) .iphone { --n: 110; }
+  .phone-row.hero .phone-fig:not(:nth-child(2)) .iphone { --n: 100; }
 }
 
 .dock-burger, .dock-menu, .dock-scrim { display: none; }
