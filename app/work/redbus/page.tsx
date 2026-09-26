@@ -5,7 +5,7 @@ import RubberBackButton from "../../../components/RubberBackButton";
 import RedbusTOCClient from "../../../components/RedbusTOCClient";
 import AskDevansh from "../../../components/AskDevansh";
 import ProtoEmbed from "../../../components/ProtoEmbed";
-import { RED, T, SectionLabel, Beat, Figure, Card, Chip, Numbered, Pill, MetaStrip, Act, InShort, BeforeAfter, Rows, MoSCoW, Closing, type Row } from "../../../components/caseStudy";
+import { RED, T, SectionLabel, Beat, Figure, Card, Chip, Numbered, Pill, MetaStrip, Act, InShort, BeforeAfter, Rows, MoSCoW, Closing, NextCase, type Row } from "../../../components/caseStudy";
 import { PhoneRow } from "../../../components/IPhone";
 import PhoneShot from "../../../components/PhoneShot";
 
@@ -592,6 +592,11 @@ export default function RedbusCaseStudy() {
 
 
       <Closing />
+      <NextCase
+        href="/work/sidedoor"
+        gradient="radial-gradient(110% 130% at 0% 0%, #d4e2ff 0%, rgba(212,226,255,0.72) 22%, rgba(212,226,255,0.38) 45%, rgba(212,226,255,0.12) 68%, rgba(212,226,255,0) 88%), radial-gradient(110% 130% at 100% 100%, #b0caff 0%, rgba(176,202,255,0.72) 22%, rgba(176,202,255,0.38) 45%, rgba(176,202,255,0.12) 68%, rgba(176,202,255,0) 88%), #7aa5fb"
+        logo="/images/sidedoor/sidedoor-logo.png" logoH="1.5em" wordmark="/images/sidedoor/sidedoor-word.svg" brand="SideDoor"
+        did="Designed SideDoor, a referral app where no request is left on read" />
     </main>
   );
 }

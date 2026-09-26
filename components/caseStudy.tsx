@@ -198,6 +198,30 @@ export function MoSCoW({ cols }: { cols: { h: string; tone: "red" | "amber" | "g
   );
 }
 
+// Under the closing: a link to the other case study, a short version of its home card
+// (the same gradient panel, logo and white wordmark, then the "what I did" line).
+export function NextCase({ href, gradient, logo, logoH = "1.15em", wordmark, brand, did }: {
+  href: string; gradient: string; logo: string; logoH?: string; wordmark: string; brand: string; did: string;
+}) {
+  return (
+    <a href={href} className="cs-next">
+      <p className="cs-next-k">Next case study</p>
+      <div className="cs-next-panel" style={{ background: gradient }}>
+        <span className="cs-next-brand">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={logo} alt="" aria-hidden style={{ height: logoH }} />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={wordmark} alt={brand} style={{ height: "0.74em", filter: "brightness(0) invert(1)" }} />
+        </span>
+        <span className="cs-next-arrow" aria-hidden>
+          <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M4 12H20M14 6L20 12L14 18" /></svg>
+        </span>
+      </div>
+      <p className="cs-next-did">{did}</p>
+    </a>
+  );
+}
+
 export function Closing() {
   return (
     <section id="toc-credits" className="cs-credits">

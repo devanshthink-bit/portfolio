@@ -244,6 +244,7 @@ export default function PlaygroundToy() {
     };
 
     const draw = (time: number) => {
+      if (!rig.current) return; // a frame can land after the page has moved on
       const moving = clamp(Math.abs(v) / 90, 0, 1);
       const bob = hopY === 0 ? -Math.abs(Math.sin(phase)) * 1.2 * moving : 0;
       rig.current!.style.transform = `translate(${x}px, ${sink}px)`;

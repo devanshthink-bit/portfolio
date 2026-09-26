@@ -6,7 +6,7 @@ import RubberBackButton from "../../../components/RubberBackButton";
 import SidedoorTOCClient from "../../../components/SidedoorTOCClient";
 import AskDevansh from "../../../components/AskDevansh";
 import SidedoorEmbed from "../../../components/SidedoorEmbed";
-import { T, SectionLabel, Beat, Card, Chip, Numbered, Pill, MetaStrip, Act, InShort, BeforeAfter, Rows, MoSCoW, Closing } from "../../../components/caseStudy";
+import { T, SectionLabel, Beat, Card, Chip, Numbered, Pill, MetaStrip, Act, InShort, BeforeAfter, Rows, MoSCoW, Closing, NextCase } from "../../../components/caseStudy";
 import { PhoneRow } from "../../../components/IPhone";
 import PhoneShot from "../../../components/PhoneShot";
 
@@ -391,6 +391,11 @@ export default function SidedoorCaseStudy() {
       </Beat>
 
       <Closing />
+      <NextCase
+        href="/work/redbus"
+        gradient="linear-gradient(135deg, #fcc3cb 0%, #fb7a8b 45%, #ffb0ba 100%)"
+        logo="/images/redbus/logo.svg" wordmark="/images/redbus/wordmark.svg" brand="redBus"
+        did="Redesigned RedBus checkout to capture the return trip, even without a date" />
     </main>
   );
 }
