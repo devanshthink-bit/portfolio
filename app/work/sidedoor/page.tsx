@@ -306,7 +306,7 @@ export default function SidedoorCaseStudy() {
       </Beat>
 
       <Beat label="My mistake" title="I asked referrers to come back later and update a stranger."
-        sub="My first plan had the referrer return to mark each referral as submitted. Then I asked why they'd bother. Version 2 even had six stages to update by hand. Now Mark as submitted is the last tap of referring, and the candidate can mark it from the company's email if the referrer never does.">
+        sub={`My first plan had the referrer return to mark each referral as submitted. Then I asked why they'd bother. Version 2 went further, with six stages to update by hand. Now Submitted, the update the candidate waits for, is the last tap of referring. The later stages are optional. Once a week the referrer is asked "Seen it move?", and the candidate can mark a stage from the company's email.`}>
         <PhoneRow phones={[
           { src: scr("v2_update"), label: "Version 2", caption: "A list of people to update, stage by stage", alt: "Version 2: Update Referrals, a list with an Update button on each person." },
           { src: scr("marked"), label: "Version 6", caption: "One tap, while the portal is still open", alt: "Version 6: Marked as submitted." },
