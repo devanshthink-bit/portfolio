@@ -14,6 +14,13 @@ export default function SmoothScroll() {
     // Every page opens at its top, even on a refresh: the browser's own scroll restoring would
     // otherwise put the reader back wherever they last were (a case study opened mid-way).
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    // A refresh opens at the top too, even when the address still carries a section from the menu's
+    // Work link (/#recent-work): a phone refresh used to land on the case studies, not the hero
+    // (Devansh, 26 Sep 2026). A link followed to a section still lands there.
+    const nav = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+    if (nav?.type === "reload" && window.location.hash) {
+      history.replaceState(history.state, "", window.location.pathname + window.location.search);
+    }
     if (!window.location.hash) window.scrollTo(0, 0);
 
     // Anyone who asked for less motion keeps the browser's plain scrolling.

@@ -2216,7 +2216,8 @@ body:has(.proto-page) { background: linear-gradient(180deg, #ffffff 0%, #f5f8fe 
    phones, where the hero text alone is taller, the hero keeps its own height. The web is untouched. */
 @media (max-width: 640px) {
   .stack-hero { min-height: calc(100svh - 175px); }
-  .stack-hero-inner { padding-bottom: 40px; }
+  /* 64px under the numbers before the sheet's edge (was 40; Devansh, 26 Sep 2026: more gap). */
+  .stack-hero-inner { padding-bottom: 64px; }
   .intro-craft { display: none; }
 }
 
