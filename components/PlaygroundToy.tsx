@@ -1,15 +1,16 @@
 "use client";
 import { useEffect, useRef } from "react";
 
-// The Claude Code crab riding the ChatGPT logo like a tyre, playing ball with the Cursor logo,
-// on the baseline of the "Side projects" label. On its own it chases the Cursor cube and kicks
-// it; on hover it rolls after the cursor (and can still kick the cube). Its eyes watch the
-// cube, dart around, squint happily after a kick and follow the cursor. Click to make it hop.
+// The Claude Code crab riding the Codex logo like a tyre, playing ball with the Cursor logo,
+// on the baseline of the "Side projects" label. It plays on its own: chases the Cursor cube and
+// kicks it, and when the cube is stuck at an end it flicks it back over its head. While the
+// cursor moves over it, it rolls after the cursor instead (and can still kick the cube). Its eyes
+// watch the cube, dart around, squint happily after a kick and follow the cursor. Click to hop.
 // All motion is one rAF loop that writes transforms straight to the DOM.
 
-// OpenAI blossom (the ChatGPT logo) and the Cursor cube, from @lobehub/icons.
-const OPENAI =
-  "M9.205 8.658v-2.26c0-.19.072-.333.238-.428l4.543-2.616c.619-.357 1.356-.523 2.117-.523 2.854 0 4.662 2.212 4.662 4.566 0 .167 0 .357-.024.547l-4.71-2.759a.797.797 0 00-.856 0l-5.97 3.473zm10.609 8.8V12.06c0-.333-.143-.57-.429-.737l-5.97-3.473 1.95-1.118a.433.433 0 01.476 0l4.543 2.617c1.309.76 2.189 2.378 2.189 3.948 0 1.808-1.07 3.473-2.76 4.163zM7.802 12.703l-1.95-1.142c-.167-.095-.239-.238-.239-.428V5.899c0-2.545 1.95-4.472 4.591-4.472 1 0 1.927.333 2.712.928L8.23 5.067c-.285.166-.428.404-.428.737v6.898zM12 15.128l-2.795-1.57v-3.33L12 8.658l2.795 1.57v3.33L12 15.128zm1.796 7.23c-1 0-1.927-.332-2.712-.927l4.686-2.712c.285-.166.428-.404.428-.737v-6.898l1.974 1.142c.167.095.238.238.238.428v5.233c0 2.545-1.974 4.472-4.614 4.472zm-5.637-5.303l-4.544-2.617c-1.308-.761-2.188-2.378-2.188-3.948A4.482 4.482 0 014.21 6.327v5.423c0 .333.143.571.428.738l5.947 3.449-1.95 1.118a.432.432 0 01-.476 0zm-.262 3.9c-2.688 0-4.662-2.021-4.662-4.519 0-.19.024-.38.047-.57l4.686 2.71c.286.167.571.167.856 0l5.97-3.448v2.26c0 .19-.07.333-.237.428l-4.543 2.616c-.619.357-1.356.523-2.117.523zm5.899 2.83a5.947 5.947 0 005.827-4.756C22.287 18.339 24 15.84 24 13.296c0-1.665-.713-3.282-1.998-4.448.119-.5.19-.999.19-1.498 0-3.401-2.759-5.947-5.946-5.947-.642 0-1.26.095-1.88.31A5.962 5.962 0 0010.205 0a5.947 5.947 0 00-5.827 4.757C1.713 5.447 0 7.945 0 10.49c0 1.666.713 3.283 1.998 4.448-.119.5-.19 1-.19 1.499 0 3.401 2.759 5.946 5.946 5.946.642 0 1.26-.095 1.88-.309a5.96 5.96 0 004.162 1.713z";
+// The Codex logo and the Cursor cube, from @lobehub/icons.
+const CODEX =
+  "M8.086.457a6.105 6.105 0 013.046-.415c1.333.153 2.521.72 3.564 1.7a.117.117 0 00.107.029c1.408-.346 2.762-.224 4.061.366l.063.03.154.076c1.357.703 2.33 1.77 2.918 3.198.278.679.418 1.388.421 2.126a5.655 5.655 0 01-.18 1.631.167.167 0 00.04.155 5.982 5.982 0 011.578 2.891c.385 1.901-.01 3.615-1.183 5.14l-.182.22a6.063 6.063 0 01-2.934 1.851.162.162 0 00-.108.102c-.255.736-.511 1.364-.987 1.992-1.199 1.582-2.962 2.462-4.948 2.451-1.583-.008-2.986-.587-4.21-1.736a.145.145 0 00-.14-.032c-.518.167-1.04.191-1.604.185a5.924 5.924 0 01-2.595-.622 6.058 6.058 0 01-2.146-1.781c-.203-.269-.404-.522-.551-.821a7.74 7.74 0 01-.495-1.283 6.11 6.11 0 01-.017-3.064.166.166 0 00.008-.074.115.115 0 00-.037-.064 5.958 5.958 0 01-1.38-2.202 5.196 5.196 0 01-.333-1.589 6.915 6.915 0 01.188-2.132c.45-1.484 1.309-2.648 2.577-3.493.282-.188.55-.334.802-.438.286-.12.573-.22.861-.304a.129.129 0 00.087-.087A6.016 6.016 0 015.635 2.31C6.315 1.464 7.132.846 8.086.457zm-.804 7.85a.848.848 0 00-1.473.842l1.694 2.965-1.688 2.848a.849.849 0 001.46.864l1.94-3.272a.849.849 0 00.007-.854l-1.94-3.393zm5.446 6.24a.849.849 0 000 1.695h4.848a.849.849 0 000-1.696h-4.848z";
 const CURSOR =
   "M22.106 5.68L12.5.135a.998.998 0 00-.998 0L1.893 5.68a.84.84 0 00-.419.726v11.186c0 .3.16.577.42.727l9.607 5.547a.999.999 0 00.998 0l9.608-5.547a.84.84 0 00.42-.727V6.407a.84.84 0 00-.42-.726zm-.603 1.176L12.228 22.92c-.063.108-.228.064-.228-.061V12.34a.59.59 0 00-.295-.51l-9.11-5.26c-.107-.062-.063-.228.062-.228h18.55c.264 0 .428.286.296.514z";
 
@@ -22,6 +23,7 @@ const MIN_D = R + HEX - 2; // centre distance at which the tyre touches the cube
 const LEGS = [4.487, 7.488, 15, 18]; // x of each Claude Code leg, in logo units
 const EYE = { y: 8.102, w: 1.488, h: 2.847, xs: [6, 16.51] };
 const EYE_Y = H - 2 * R - 15 * U + (9.5 - 5) * U; // eye height in the stage, px
+const STEPS = 180; // rotation samples for the Codex outline
 
 const clamp = (n: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, n));
 const rand = (a: number, b: number) => a + Math.random() * (b - a);
@@ -30,6 +32,7 @@ export default function PlaygroundToy() {
   const stage = useRef<HTMLDivElement>(null);
   const rig = useRef<HTMLDivElement>(null);
   const tyre = useRef<SVGSVGElement>(null);
+  const tyrePath = useRef<SVGPathElement>(null);
   const crab = useRef<SVGSVGElement>(null);
   const shadow = useRef<HTMLSpanElement>(null);
   const cube = useRef<SVGSVGElement>(null);
@@ -43,6 +46,33 @@ export default function PlaygroundToy() {
     const el = stage.current;
     if (!el) return;
     const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // The Codex logo is a bumpy cloud, not a circle. For each rotation, find how far its lowest
+    // and highest points are from the centre, so it rises and dips on its bumps as it rolls and
+    // the crab rides the bumps on top.
+    const below = new Float32Array(STEPS).fill(R), above = new Float32Array(STEPS).fill(R);
+    const path = tyrePath.current;
+    if (path) {
+      const len = path.getTotalLength(), s = (2 * R) / 24, pts: [number, number][] = [];
+      for (let i = 0; i < 240; i++) {
+        const p = path.getPointAtLength((i / 240) * len);
+        pts.push([(p.x - 12) * s, (p.y - 12) * s]);
+      }
+      for (let k = 0; k < STEPS; k++) {
+        const a = (k / STEPS) * Math.PI * 2, sin = Math.sin(a), cos = Math.cos(a);
+        let lo = 0, hi = 0;
+        for (const [px, py] of pts) {
+          const y = px * sin + py * cos;
+          if (y > lo) lo = y;
+          if (-y > hi) hi = -y;
+        }
+        below[k] = lo; above[k] = hi;
+      }
+    }
+    const sample = (t: Float32Array, a: number) => {
+      const f = ((((a / (Math.PI * 2)) % 1) + 1) % 1) * STEPS, i = Math.floor(f) % STEPS;
+      return t[i] + (t[(i + 1) % STEPS] - t[i]) * (f - Math.floor(f));
+    };
 
     // Keep both toys right of the label text.
     let start = 0;
@@ -58,30 +88,37 @@ export default function PlaygroundToy() {
     // Tyre and crab
     let x = start + R + 10, v = 0, prevV = 0, acc = 0, spin = 0;
     let tilt = 0, tiltV = 0, hopY = 0, hopV = 0, squash = 1, squashV = 0, phase = 0;
-    let target = x, hovering = false, chasing = false, chaseFor = 0, rest = 1.2;
+    let target = x, hovering = false, steering = false, chasing = false, chaseFor = 0, rest = 1;
     // Cursor cube
-    let cx = x + 120, cv = 0, turn = Math.PI / 6, cy = 0, cyV = 0;
+    let cx = x + 120, cv = 0, turn = Math.PI / 6, cy = 0, cyV = 0, flying = false, airSpin = 0;
     // Eyes
-    let lookX = 0, lookY = 0, blinkIn = 2.5, blink = 0, happy = 0, wide = 0;
+    let duck = 0, lookX = 0, lookY = 0, blinkIn = 2.5, blink = 0, happy = 0, wide = 0;
     let glance = 0, glanceIn = 1.5, gx = 0, gy = 0;
     let ptr: { x: number; y: number } | null = null, ptrAge = 99;
     let raf = 0, last = 0, visible = true;
 
+    const cubeLift = () => {
+      // The hexagon rests on a flat side and rises onto a corner as it tips over.
+      const phi = ((((turn - Math.PI / 6) % (Math.PI / 3)) + Math.PI / 3) % (Math.PI / 3)) - Math.PI / 6;
+      return HEX * Math.cos(phi);
+    };
+
     const draw = (time: number) => {
       const moving = clamp(Math.abs(v) / 90, 0, 1);
       const bob = hopY === 0 ? -Math.abs(Math.sin(phase)) * 1.2 * moving : 0;
-      rig.current!.style.transform = `translateX(${x}px)`;
+      const sink = R - sample(below, spin); // the tyre dips when a hollow is at the bottom
+      const ride = R - sample(above, spin); // and the crab drops into a hollow on top
+      rig.current!.style.transform = `translate(${x}px, ${sink}px)`;
       tyre.current!.style.transform = `rotate(${(spin * 180) / Math.PI}deg)`;
       crab.current!.style.transform =
-        `translateY(${hopY + bob}px) rotate(${tilt}deg) scale(${2 - squash}, ${squash})`;
+        `translateY(${ride + hopY + bob}px) rotate(${tilt}deg) scale(${2 - squash}, ${squash})`;
       shadow.current!.style.transform = `translateX(${x}px) scaleX(${1 - Math.min(0.3, -hopY / 80)})`;
 
-      // The hexagon rests on a flat side and rises onto a corner as it tips over.
-      const phi = ((((turn - Math.PI / 6) % (Math.PI / 3)) + Math.PI / 3) % (Math.PI / 3)) - Math.PI / 6;
-      const lift = HEX * Math.cos(phi);
       cube.current!.style.transform =
-        `translate(${cx}px, ${-lift + cy}px) rotate(${(turn * 180) / Math.PI}deg)`;
-      cubeShadow.current!.style.transform = `translateX(${cx}px) scaleX(${1 - Math.min(0.4, -cy / 60)})`;
+        `translate(${cx}px, ${-cubeLift() + cy}px) rotate(${(turn * 180) / Math.PI}deg)`;
+      cubeShadow.current!.style.transform =
+        `translateX(${cx}px) scaleX(${1 - Math.min(0.6, -cy / 90)})`;
+      cubeShadow.current!.style.opacity = String(1 - Math.min(0.7, -cy / 110));
 
       // Walk: the tyre's top slides under the crab, so it steps against it, pairs alternating.
       legs.current.forEach((leg, i) => {
@@ -107,6 +144,19 @@ export default function PlaygroundToy() {
       });
     };
 
+    // Scoop the cube up and over its head, back into open space.
+    const flick = (d: number) => {
+      flying = true;
+      cyV = -rand(490, 520);
+      cy = -0.5;
+      cv = -d * rand(150, 200);
+      airSpin = -d * rand(9, 14);
+      duck = 0.45; // it ducks so the cube clears its head
+      tiltV -= d * 90;
+      happy = 0; wide = 0.5;
+      chasing = false; target = x; rest = rand(0.9, 1.4);
+    };
+
     const step = (time: number) => {
       const dt = Math.min(0.033, last ? (time - last) / 1000 : 0.016);
       last = time;
@@ -114,14 +164,20 @@ export default function PlaygroundToy() {
       const lo = start + R, hi = w - R - 4;
       const cLo = start + HEX, cHi = w - HEX - 4;
 
-      // On its own: rest, then roll at the cube from whichever side it is on and kick it.
-      if (!hovering) {
+      // The cursor steers only while it moves. When it rests, the crab goes back to playing.
+      ptrAge += dt;
+      const nowSteering = hovering && ptrAge < 1.2;
+      if (steering && !nowSteering) { rest = rand(0.3, 0.8); target = x; }
+      steering = nowSteering;
+
+      // On its own: a short rest, then roll at the cube from whichever side it is on and kick it.
+      if (!steering) {
         if (chasing) {
           const d = Math.sign(cx - x) || 1;
           target = cx + d * 40;
           chaseFor += dt;
-          if (chaseFor > 5) { chasing = false; target = x; rest = rand(1, 2); }
-        } else if (Math.abs(v) < 10) {
+          if (chaseFor > 4) { chasing = false; target = x; rest = rand(0.3, 0.8); }
+        } else if (Math.abs(v) < 20 && !flying) {
           rest -= dt;
           if (rest <= 0) { chasing = true; chaseFor = 0; }
         }
@@ -129,31 +185,44 @@ export default function PlaygroundToy() {
       target = clamp(target, lo, hi);
 
       // Spring towards the target, capped speed: it speeds up, cruises, and brakes.
-      const k = hovering ? 20 : 7;
-      const vmax = hovering ? 480 : 240;
+      const k = steering ? 20 : 7;
+      const vmax = steering ? 480 : 240;
       v += clamp(k * (target - x) - 2 * Math.sqrt(k) * 0.9 * v, -1300, 1300) * dt;
       v = clamp(v, -vmax, vmax);
       x = clamp(x + v * dt, lo, hi);
 
-      // The cube rolls corner over corner, slows down, and settles on a flat side.
-      cv *= Math.exp(-1.1 * dt);
-      cv += -260 * Math.sin(6 * (turn - Math.PI / 6)) * dt;
+      // The cube rolls corner over corner, slows down, and settles on a flat side. In the air it
+      // just spins and falls.
+      if (flying) {
+        turn += airSpin * dt;
+        cv *= Math.exp(-0.2 * dt);
+      } else {
+        cv *= Math.exp(-1.1 * dt);
+        cv += -260 * Math.sin(6 * (turn - Math.PI / 6)) * dt;
+        turn += (cv * dt) / (HEX * 0.93);
+      }
       cx += cv * dt;
-      turn += (cv * dt) / (HEX * 0.93);
       if (cx < cLo) { cx = cLo; cv = Math.abs(cv) * 0.45; }
       if (cx > cHi) { cx = cHi; cv = -Math.abs(cv) * 0.45; }
       if (cy < 0 || cyV < 0) {
         cyV += 1400 * dt;
         cy += cyV * dt;
-        if (cy >= 0) { cy = 0; cyV = cyV > 120 ? -cyV * 0.3 : 0; }
+        if (cy >= 0) {
+          cy = 0;
+          if (cyV > 140) { cyV = -cyV * 0.32; cv *= 0.8; } // bounce
+          else { cyV = 0; if (flying) { flying = false; happy = 0.7; } }
+        }
       }
 
-      // Bump: a heavy tyre and a light cube, a little bounce.
+      // Bump: a heavy tyre and a light cube, a little bounce. Nothing to bump while it flies.
       const gap = cx - x;
-      if (Math.abs(gap) < MIN_D) {
+      if (!flying && cy > -20 && Math.abs(gap) < MIN_D) {
         const d = Math.sign(gap) || 1;
         const closing = (v - cv) * d;
-        if (closing > 0) {
+        const stuck = (d > 0 ? cHi - cx : cx - cLo) < 10;
+        if (stuck && closing > -20) {
+          flick(d);
+        } else if (closing > 0) {
           const M = 3, e = 0.55;
           const nv = (M * v + cv - e * (v - cv)) / (M + 1);
           const ncv = (M * v + cv + M * e * (v - cv)) / (M + 1);
@@ -161,14 +230,16 @@ export default function PlaygroundToy() {
           if (closing > 70) {
             cyV = -Math.min(260, closing * 0.7);
             cy = Math.min(cy, -0.1);
-            if (!hovering) { chasing = false; target = x; rest = rand(1.2, 3); }
+            if (!steering) { chasing = false; target = x; rest = rand(0.4, 1.4); }
             happy = 0.7; wide = 0;
           }
         } else if (closing < -70) {
           wide = 0.45; // the cube came back at it
         }
-        cx = x + d * MIN_D;
-        if (cx < cLo || cx > cHi) { cx = clamp(cx, cLo, cHi); x = cx - d * MIN_D; }
+        if (!flying) {
+          cx = x + d * MIN_D;
+          if (cx < cLo || cx > cHi) { cx = clamp(cx, cLo, cHi); x = cx - d * MIN_D; }
+        }
       }
 
       spin += (v * dt) / R; // rolls without slipping
@@ -186,12 +257,12 @@ export default function PlaygroundToy() {
         hopY += hopV * dt;
         if (hopY >= 0) { hopY = 0; hopV = 0; squash = 0.78; }
       }
-      squashV += (260 * (1 - squash) - 14 * squashV) * dt;
+      if (duck > 0) duck -= dt;
+      squashV += (260 * ((duck > 0 ? 0.62 : 1) - squash) - 14 * squashV) * dt;
       squash += squashV * dt;
 
-      // Where the eyes go: the cursor while you're near, a quick glance around now and then,
-      // otherwise the cube it's playing with.
-      ptrAge += dt;
+      // Where the eyes go: the cursor while it moves nearby, a quick glance around now and then,
+      // otherwise the cube it's playing with (up in the air too).
       glanceIn -= dt;
       if (glance > 0) glance -= dt;
       if (glanceIn <= 0) {
@@ -204,8 +275,8 @@ export default function PlaygroundToy() {
       const r = el.getBoundingClientRect();
       const px = ptr ? ptr.x - (r.left + x) : 0, py = ptr ? ptr.y - (r.top + EYE_Y) : 0;
       if (ptr && ptrAge < 1.5 && (hovering || Math.hypot(px, py) < 420)) { dx = px; dy = py; }
-      else if (glance > 0) { dx = gx * 100; dy = gy * 100; }
-      else { dx = cx - x; dy = H - HEX - EYE_Y; }
+      else if (glance > 0 && !flying) { dx = gx * 100; dy = gy * 100; }
+      else { dx = cx - x; dy = H - cubeLift() + cy - EYE_Y; }
       const dist = Math.max(1, Math.hypot(dx, dy));
       const reach = Math.min(1, dist / 30);
       lookX += ((dx / dist) * 1.5 * reach - lookX) * Math.min(1, dt * 18);
@@ -229,10 +300,10 @@ export default function PlaygroundToy() {
     const onMove = (e: PointerEvent) => { ptr = { x: e.clientX, y: e.clientY }; ptrAge = 0; };
     const follow = (e: PointerEvent) => { target = e.clientX - el.getBoundingClientRect().left; };
     const enter = (e: PointerEvent) => { if (e.pointerType === "mouse") { hovering = true; chasing = false; follow(e); } };
-    const leave = () => { hovering = false; rest = 0.8; target = x; };
+    const leave = () => { hovering = false; };
     const down = (e: PointerEvent) => {
       if (hopY === 0) { hopV = -330; squash = 0.85; }
-      if (e.pointerType !== "mouse") { chasing = false; rest = 2; follow(e); }
+      if (e.pointerType !== "mouse") { chasing = false; rest = 1.5; follow(e); }
     };
     const hoverMove = (e: PointerEvent) => { if (hovering) follow(e); };
 
@@ -271,7 +342,15 @@ export default function PlaygroundToy() {
       </svg>
       <div ref={rig} className="pg-toy-rig">
         <svg ref={tyre} className="pg-toy-tyre" viewBox="0 0 24 24" width={R * 2} height={R * 2}>
-          <path d={OPENAI} fill="currentColor" fillRule="evenodd" />
+          {/* The Codex app icon's purple-to-blue gradient */}
+          <defs>
+            <linearGradient id="pg-codex" gradientUnits="userSpaceOnUse" x1="12" x2="12" y1="0" y2="24">
+              <stop stopColor="#B1A7FF" />
+              <stop offset=".5" stopColor="#7A9DFF" />
+              <stop offset="1" stopColor="#3941FF" />
+            </linearGradient>
+          </defs>
+          <path ref={tyrePath} d={CODEX} fill="url(#pg-codex)" fillRule="evenodd" clipRule="evenodd" />
         </svg>
         {/* Claude Code logo, drawn in parts so the legs, arms and eyes can move. */}
         <svg ref={crab} className="pg-toy-crab" viewBox="0 5 24 15" width={24 * U} height={15 * U}>
