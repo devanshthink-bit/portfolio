@@ -28,7 +28,7 @@ function Summary() {
   return <InShort rows={[
     { k: "The problem", v: "The only way to keep a return on RedBus is to buy it, and buying it needs a date. ~74% of travellers I surveyed left it for later." },
     { k: "What I designed", v: "A return you can book without a date. Say how sure you are, pick a day from your window, and move it once if plans change." },
-    { k: "Why it matters", v: "Every return booked later is a second commission RedBus can lose. ~26% of the travellers who waited booked it on another app." },
+    { k: "Why it matters", v: "Every return booked later is a second commission RedBus can lose. ~26% of the travellers I surveyed had booked a later return on another app." },
   ]} />;
 }
 
@@ -229,7 +229,7 @@ function WhyNotFlexi() {
     <div className="cs-grid-2">
       <Card>
         <div style={T.figure}>39.1%</div>
-        <p style={{ ...T.body, marginTop: 6 }}>of travellers who knew their return date still booked it separately</p>
+        <p style={{ ...T.body, marginTop: 6 }}>of travellers said that even with a fixed return date, they still book it separately</p>
       </Card>
       <Card>
         <p style={T.quote}>&quot;I know there is an option but I just prefer okay this option doesn&apos;t exist&quot;</p>
@@ -271,7 +271,7 @@ function Cut() {
 function Watch() {
   const rows = [
     { h: "Returns added before paying", b: "The number this should move", tone: "green" as const, t: "Goal" },
-    { h: "Outbound bookings, at least 95%", b: "Must not drop", tone: "red" as const, t: "Limit" },
+    { h: "Outbound bookings, at least 95% of today's", b: "Must not drop below that", tone: "red" as const, t: "Limit" },
     { h: "Free Cancellation sales", b: "Might dip, so watch it", tone: "amber" as const, t: "Risk" },
   ];
   return (
@@ -318,7 +318,7 @@ export default function RedbusCaseStudy() {
           }} />
         </span> - Winning the return ticket at checkout
       </h1>
-      <p style={T.lede}>Most travellers book the bus out and leave the way back for later. A quarter of them then book it on another app. I redesigned the moment RedBus asks about the return, so it can be booked in the same checkout, without a date.</p>
+      <p style={T.lede}>Most travellers book the bus out and leave the way back for later. About a quarter of the travellers I surveyed had booked it on another app. I redesigned the moment RedBus asks about the return, so it can be booked in the same checkout, without a date.</p>
 
       <MetaStrip items={[
         { label: "Role", value: "Product designer, solo, self-initiated" },
@@ -382,7 +382,7 @@ export default function RedbusCaseStudy() {
 
       <Beat label="The limits" title="I couldn't hold a seat, set a fare or change a rule."
         sub="Someone who doesn't know their return date has no way to hold a return on RedBus. Since RedBus sells other companies' buses, I could only change what the app asks and when."
-        caption="My own limit: adding a step must keep at least 95% of people finishing the booking they came for.">
+        caption="My own limit: with the new step, finished outbound bookings must stay at 95% or more of what they are today.">
         <Rules />
       </Beat>
 
@@ -395,7 +395,7 @@ export default function RedbusCaseStudy() {
         <PhoneShot src={scr("hifi_05")} alt="Hi-fi return calendar with 'I'm not sure yet' selected and a fare under every day."
           notes={[
             { box: [3.5, 28.3, 93, 6.6], title: "Opens on \"I'm not sure yet\"", sub: "people who know their date lose one tap" },
-            { box: [7.5, 59, 85, 27], title: "Every day shows its cheapest fare", sub: "so price is visible before she commits" },
+            { box: [7.5, 59, 85, 27], title: "Every day shows its fare", sub: "the cheapest bus that can still change date" },
           ]} />
       </Beat>
 
@@ -490,11 +490,11 @@ export default function RedbusCaseStudy() {
         caption="I fixed it on the screens after payment first, and missed the one where people form the belief.">
         <BeforeAfter beforeLabel="Version 1 said" afterLabel="Now it says"
           before={"\"You cannot move it to a later day.\""}
-          after={"\"Earlier days, in one tap. For a later day, use Change date in My Bookings.\""} />
+          after={"\"Move your return to any date, earlier or later.\""} />
       </Beat>
 
-      <Beat label="The demo" title="Rajat asked three questions I couldn't answer."
-        sub="Rajat reviewed my work. In the demo I argued how it differed from FlexiTicket before admitting it was the same, and lost the argument. Two of his questions rested on facts I had in screenshots and never wrote down. Now I start by agreeing: it is FlexiTicket underneath, and what changes is what the app asks for.">
+      <Beat label="The demo" title="My mentor asked three questions I couldn't answer."
+        sub="My mentor reviewed my work. In the demo I argued how it differed from FlexiTicket before admitting it was the same, and lost the argument. Two of his questions rested on facts I had in screenshots and never wrote down. Now I start by agreeing: it is FlexiTicket underneath, and what changes is what the app asks for.">
         <MentorQA />
       </Beat>
 
@@ -528,7 +528,7 @@ export default function RedbusCaseStudy() {
           ]} />
       </Beat>
 
-      <Beat label="Pushing back" title="Then Rajat asked: isn't FlexiTicket better?"
+      <Beat label="Pushing back" title="Then my mentor asked: isn't FlexiTicket better?"
         sub="It moves you to any date, and mine capped you at a week. I kept the week, because it's how you book without a date. I just stopped it from limiting the ticket."
         caption="Both paths now reach 29 days.">
         <BeforeAfter
@@ -549,7 +549,7 @@ export default function RedbusCaseStudy() {
 
       <Beat label="How I · 2" title="How I made the calendar ask first."
         sub={<>Two answers sit above the calendar: &quot;I know my date&quot; and &quot;I&apos;m not sure yet&quot;. I borrowed the shape from Swiggy&apos;s &quot;When?&quot; toggle and kept one line under it, because two words alone is how Sai misread &quot;tap two days&quot;.</>}
-        caption="Rajat spotted this problem three weeks before testing. It took three testers for me to see it.">
+        caption="My mentor spotted this problem three weeks before testing. It took three testers for me to see it.">
         <PhoneRow phones={[
           { src: scr("lofi_v3"), lofi: true, label: "Before: v3", caption: "\"Tap two days\" read as two days in a row", alt: "Version 3 calendar with 'Tap two days instead'." },
           { src: scr("lofi_v4"), lofi: true, label: "After: v4", caption: "Ask first. The calendar stays right under it.", alt: "Version 4 asking 'I know my date' or 'I'm not sure yet'." },
