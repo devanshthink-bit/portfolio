@@ -10,7 +10,7 @@
 
 /* The Claude Code crab on a rolling Codex tyre, playing with the Cursor cube. The stage's
    bottom edge sits on the baseline of the "Side projects" label (15px down), so that is the ground. */
-.pg-toy { position: absolute; left: 0; width: calc(100% / 0.9); top: -85px; height: 100px; transform: scale(0.9); transform-origin: 0 100%; touch-action: pan-y; user-select: none; }
+.pg-toy { --s: 0.9; position: absolute; left: 0; width: calc(100% / var(--s)); top: -85px; height: 100px; transform: scale(var(--s)); transform-origin: 0 100%; touch-action: pan-y; user-select: none; }
 .pg-toy-rig { position: absolute; left: 0; top: 0; width: 0; height: 100%; will-change: transform; }
 .pg-toy-tyre { position: absolute; left: -25px; top: 50px; color: var(--text-primary); will-change: transform; }
 .pg-toy-crab { position: absolute; left: -24px; top: 20px; overflow: visible; transform-origin: 50% 100%; will-change: transform; }
@@ -91,6 +91,7 @@ html.nerd-mode .pg-bar em { background: rgba(255, 255, 255, 0.06); }
 @media (max-width: 640px) {
   .pg-grid { grid-template-columns: 1fr; gap: 28px; }
   .pg-head h2 { font-size: 24px; }
+  .pg-toy { --s: 0.78; }   /* a little smaller on phones (Devansh, 26 Sep 2026) */
 }
 
 /* A tap is not a hover: no "Try it" label on touch screens. */

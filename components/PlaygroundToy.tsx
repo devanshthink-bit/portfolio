@@ -17,9 +17,9 @@ const CODEX =
 const CURSOR =
   "M22.106 5.68L12.5.135a.998.998 0 00-.998 0L1.893 5.68a.84.84 0 00-.419.726v11.186c0 .3.16.577.42.727l9.607 5.547a.999.999 0 00.998 0l9.608-5.547a.84.84 0 00.42-.727V6.407a.84.84 0 00-.42-.726zm-.603 1.176L12.228 22.92c-.063.108-.228.064-.228-.061V12.34a.59.59 0 00-.295-.51l-9.11-5.26c-.107-.062-.063-.228.062-.228h18.55c.264 0 .428.286.296.514z";
 
-// The whole toy is drawn at 90% (Devansh, 26 Sep: "a little smaller"); .pg-toy scales it in CSS,
-// so screen distances are divided by S to get back to the toy's own pixels.
-const S = 0.9;
+// The whole toy is drawn at 90% (Devansh, 26 Sep: "a little smaller"), a little less on phones;
+// .pg-toy scales it in CSS by --s, so screen distances are divided by S to get back to the toy's own pixels.
+let S = 0.9;
 const H = 100; // stage height; its bottom edge is the label's baseline (the ground)
 const R = 25; // tyre radius, px
 const U = 2; // px per Claude Code logo unit
@@ -87,6 +87,7 @@ export default function PlaygroundToy() {
     const measure = () => {
       const label = el.parentElement?.querySelector(".section-title");
       if (!label) return;
+      S = parseFloat(getComputedStyle(el).getPropertyValue("--s")) || 0.9;
       const range = document.createRange();
       range.selectNodeContents(label);
       start = (range.getBoundingClientRect().right - el.getBoundingClientRect().left) / S + 24;
