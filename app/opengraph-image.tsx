@@ -43,8 +43,8 @@ export default async function Image() {
       <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", gap: 64, padding: "0 80px", background: "#fafafa" }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={photo} width={470} height={470} alt="" style={{ borderRadius: 24, objectFit: "cover", boxShadow: "0 20px 48px rgba(29, 29, 29, 0.16)" }} />
-        {/* The name at the photo's top edge, the role at its bottom edge: two lines, nothing else. */}
-        <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", flex: 1, height: 470, padding: "6px 0" }}>
+        {/* The name, then the role right under it, centred against the photo. */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 24, flex: 1 }}>
           <div style={{ display: "flex", flexDirection: "column", fontFamily: "Manrope", fontWeight: 700, fontSize: 76, letterSpacing: "-0.04em", lineHeight: 1.02, color: "#1d1d1d" }}>
             <span>Devansh</span>
             <span>Somvanshi</span>
