@@ -87,7 +87,7 @@ html.nerd-mode .pg-bar em { background: rgba(255, 255, 255, 0.06); }
 @media (max-width: 640px) {
   .pg-grid { grid-template-columns: 1fr; gap: 28px; }
   .pg-head h2 { font-size: 24px; }
-  .pg-toy { --s: 0.78; }   /* a little smaller on phones (Devansh, 26 Sep 2026) */
+  .pg-toy { --s: 0.7; }   /* smaller on phones: 0.78, then 0.7 (Devansh, 26 Sep 2026) */
 }
 
 /* A tap is not a hover: no "Try it" label on touch screens. */
