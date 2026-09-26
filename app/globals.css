@@ -693,12 +693,6 @@
   @media (prefers-reduced-motion: reduce) {
     .wip-dot::after, .wip-bar, .wip-block { animation: none; }
   }
-  @media (max-width: 640px) {
-    .wip-phones { height: 300px; }   /* the RedBus card's 300px on phones */
-    /* Like the RedBus card on phones: only the middle phone, 190 wide. */
-    .wip-phone:not(:nth-child(2)) { display: none; }
-    .wip-phone:nth-child(2), .wip-card:hover .wip-phone:nth-child(2) { width: 190px; height: 399px; border-radius: 27px; transform: none; }
-  }
 
   /* Home hero + case-study overlay — breaks out of .page-wrapper to full viewport width */
   .home-stack {
@@ -1685,18 +1679,6 @@
     background: none;
   }
 
-  .work-card-panel-text {
-    padding: 20px 20px 4px;
-  }
-
-  .work-card-phones {
-    height: 300px;
-    gap: 0;
-  }
-
-  .work-card-phones .iphone { --n: 170; }
-
-  .work-card-phones .iphone:not(:nth-child(2)),
   .phone-row.hero .phone-fig:not(:nth-child(2)) {
     display: none;
   }
@@ -1725,10 +1707,6 @@
   }
 
   .cs-proto-stage .iphone { --n: 300; }
-
-  .work-card-brand {
-    font-size: var(--fs-24);
-  }
 
   .work-card-did {
     font-size: var(--fs-16);
@@ -1812,16 +1790,8 @@
   .phone-lines { display: none; }
 }
 
-/* Phones show only the middle screen of each trio, at a size that fits. */
+/* Phones: the case study hero shows only the middle screen of its trio. */
 @media (max-width: 640px) {
-  /* Phones: no logo and name in the RedBus card, but their row keeps its space so the card
-     stays the same height. */
-  .work-card-panel-text.is-brand-only { visibility: hidden; }
-  .work-card-panel-text.is-brand-only .work-card-brand { font-size: 24px; }
-  .work-card-phones .iphone:nth-child(2) { --n: 190; }
-  .work-card-phones.is-pair { margin-top: 0; }
-  .work-card-phones.is-pair .iphone:nth-child(2),
-  .work-card:hover .work-card-phones.is-pair .iphone:nth-child(2) { --n: 190; transform: none; }
   .phone-row.hero { padding-bottom: 0; }
   .phone-row.hero .phone-fig:nth-child(2) .iphone { --n: 272; }
 }
@@ -1980,7 +1950,10 @@
 /* Every case study card on the home page has the same panel height, on every screen (Devansh, 17 Sep 2026).
    The panel is a fixed height; the phones fill whatever is left under the brand or status line. */
 :root { --work-card-h: 460px; }
-@media (max-width: 640px) { :root { --work-card-h: 364px; } }
+/* Phones: the desktop panel, every screen in it, scaled down to a landscape card (Devansh, 26 Sep 2026). */
+@media (max-width: 640px) {
+  .work-card-panel { --z: 0.4; zoom: var(--z); border-radius: calc(var(--r-lg) / var(--z)); }
+}
 .work-card-panel,
 .work-card-media { height: var(--work-card-h); aspect-ratio: auto; }
 .work-card-panel .work-card-phones,
