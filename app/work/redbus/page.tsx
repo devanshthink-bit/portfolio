@@ -422,13 +422,13 @@ export default function RedbusCaseStudy() {
         <PhoneShot src={scr("hifi_13")} alt="Hi-fi Change day screen: the booking, the note that a changed ticket can't be cancelled, and a calendar with the cost of each day."
           notes={[
             { box: [7, 29.6, 86, 11.6], title: "The rule, before the choice", sub: "once she changes, no cancelling" },
-            { box: [55, 93.6, 37, 6.2], title: "Every day says what the move costs", sub: "+₹170, None, Full" },
+            { box: [55, 93.6, 37, 6.2], title: "Every day says what the move costs", sub: "+₹140, None, Full" },
           ]} />
       </Beat>
 
       <Beat label="Scene 5 · Done" title="The app tells her what changed, and what she gave up."
-        sub="The new day is ₹30 cheaper and she doesn't get that back. I kept celebration out of payment, so the good news waits for this screen.">
-        <PhoneShot src={scr("hifi_16")} alt="Hi-fi Date changed screen: return moved to Tue 15 Sep, ₹30 cheaper and not refunded, and a note that this was the one change."
+        sub="The new day is ₹60 cheaper and she doesn't get that back. I kept celebration out of payment, so the good news waits for this screen.">
+        <PhoneShot src={scr("hifi_16")} alt="Hi-fi Date changed screen: return moved to Tue 15 Sep, ₹60 cheaper and not refunded, and a note that this was the one change."
           notes={[
             { box: [3, 49.8, 94, 12.8], title: "What moved, and what it cost", sub: "even when the answer is \"nothing back\"" },
             { box: [3, 63.3, 94, 9.3], title: "That was her one change", sub: "said plainly, where it happens" },
