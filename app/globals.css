@@ -1759,10 +1759,6 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  /* Testimonial marquee — slow down so perceived speed matches desktop */
-  .testimonial-track {
-    animation-duration: 70s !important;
-  }
   } /* end @media mobile */
 
   /* ── Tablet (641px–1024px) ── */
@@ -2233,4 +2229,42 @@ body:has(.proto-page) { background: linear-gradient(180deg, #ffffff 0%, #f5f8fe 
   .footer-socials .footer-link { display: none; }
   .footer-icon { display: flex; padding: 3px; margin: -3px; color: var(--text-muted); transition: color 0.3s var(--ease-out); }
   .footer-icon:hover { color: var(--text-primary); }
+}
+
+/* Phones: the hero's content is hidden while the work sheet covers it (app/page.tsx), so a fast
+   fling can't flash the photo through the sheet (Devansh, 26 Sep 2026). */
+@media (max-width: 640px) {
+  .home-stack.is-covered .stack-hero-inner { visibility: hidden; }
+}
+
+/* Annotation motion, both case studies (Devansh, 26 Sep 2026: "when it comes into view, it gets
+   highlighted smoothly, and annotation lines emanate and text gets written very smoothly").
+   PhoneShot adds .ann-ready once it runs, then .ann-in the first time the phone is in view.
+   Each note waits --d (0.5s per note, in number order), then: the box lights up (0 to 0.5s), the line
+   draws from the box to the note (0.35 to 1.05s), the number pops in (0.9s) and the words write in
+   one after another (from 1s, 45ms apart). Phones have no lines, so the rest keeps its timing. */
+.ann-ready .iphone-mark { opacity: 0; transform: scale(0.96); }
+.ann-ready .phone-lines path { stroke-dasharray: 1; stroke-dashoffset: -1; }
+.ann-ready .phone-lines circle,
+.ann-ready .phone-note-n { opacity: 0; transform: scale(0.5); transform-box: fill-box; transform-origin: center; }
+.ann-ready .iphone-mark-n { opacity: 0; transform: translate(-40%, -40%) scale(0.5); }
+.ann-ready .pn-w { opacity: 0; filter: blur(4px); display: inline-block; transform: translateY(3px); white-space: pre; }
+
+.ann-in .iphone-mark { opacity: 1; transform: none; animation: ann-glow 1.4s var(--ease-out) var(--d) both;
+  transition: opacity 0.5s var(--ease-out) var(--d), transform 0.5s var(--ease-out) var(--d); }
+.ann-in .phone-lines path { stroke-dashoffset: 0; transition: stroke-dashoffset 0.7s cubic-bezier(0.65, 0, 0.35, 1) calc(var(--d) + 0.35s); }
+.ann-in .phone-lines .end-box { opacity: 1; transform: none; transition: opacity 0.2s ease calc(var(--d) + 0.3s), transform 0.35s var(--ease-out) calc(var(--d) + 0.3s); }
+.ann-in .phone-lines .end-note { opacity: 1; transform: none; transition: opacity 0.2s ease calc(var(--d) + 1s), transform 0.35s var(--ease-out) calc(var(--d) + 1s); }
+.ann-in .phone-note-n,
+.ann-in .iphone-mark-n { opacity: 1; transform: none; transition: opacity 0.25s ease calc(var(--d) + 0.9s), transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) calc(var(--d) + 0.9s); }
+.ann-in .iphone-mark-n { transform: translate(-40%, -40%); transition-delay: calc(var(--d) + 0.2s); }
+.ann-in .pn-w { opacity: 1; filter: none; transform: none;
+  transition: opacity 0.45s ease, filter 0.45s ease, transform 0.45s var(--ease-out);
+  transition-delay: calc(var(--d) + 1s + var(--w) * 45ms); }
+
+/* The box's highlight: its tint swells, then settles back to the resting 5%. */
+@keyframes ann-glow {
+  0% { background: rgba(var(--cs-accent-rgb), 0.05); box-shadow: 0 0 0 0 rgba(var(--cs-accent-rgb), 0); }
+  40% { background: rgba(var(--cs-accent-rgb), 0.16); box-shadow: 0 0 0 6px rgba(var(--cs-accent-rgb), 0.12); }
+  100% { background: rgba(var(--cs-accent-rgb), 0.05); box-shadow: 0 0 0 0 rgba(var(--cs-accent-rgb), 0); }
 }

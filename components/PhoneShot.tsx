@@ -1,9 +1,9 @@
 "use client";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { IPhone, PhoneNote, type Mark, type PhoneProps } from "./IPhone";
 
 type Note = { title: string; sub?: string; box?: Mark["box"] };
-type Line = { d: string; a: [number, number]; b: [number, number] };
+type Line = { n: number; d: string; a: [number, number]; b: [number, number] };
 
 // One phone in the middle, its notes on either side, and a thin curve from each note to the dashed
 // box around the part of the screen it describes. A note sits on the side its box leans to (wide
@@ -69,7 +69,7 @@ export default function PhoneShot({ notes = [], ...phone }: Omit<PhoneProps, "ma
         const d = dy === 0 || r < 1
           ? `M${ax},${ay} H${mx} V${by} H${bx}`
           : `M${ax},${ay} H${mx - dx * r} Q${mx},${ay} ${mx},${ay + dy * r} V${by - dy * r} Q${mx},${by} ${mx + dx * r},${by} H${bx}`;
-        out.push({ d, a: [ax, ay], b: [bx, by] });
+        out.push({ n: Number(n), d, a: [ax, ay], b: [bx, by] });
       });
       setLines(out);
     };
@@ -80,6 +80,26 @@ export default function PhoneShot({ notes = [], ...phone }: Omit<PhoneProps, "ma
     window.addEventListener("resize", draw);
     return () => { ro.disconnect(); window.removeEventListener("resize", draw); };
   }, [notes]);
+
+  // Motion (Devansh, 26 Sep 2026): the first time the phone comes into view, each note plays in its
+  // number order. Its dashed box lights up, the line draws out from the box to the note, the number
+  // pops in and the note writes itself in word by word (globals.css, .ann-*). --d staggers the notes.
+  // Set up only once JS runs and only without reduced motion, so the notes are never stuck hidden.
+  useEffect(() => {
+    const el = root.current;
+    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    el.querySelectorAll<HTMLElement>("[data-note], [data-mark]").forEach((x) => {
+      x.style.setProperty("--d", `${(Number(x.dataset.note ?? x.dataset.mark) - 1) * 0.5}s`);
+    });
+    el.classList.add("ann-ready");
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      el.classList.add("ann-in");
+      io.disconnect();
+    }, { threshold: 0.35 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   return (
     <div className="phone-shot" ref={root}>
@@ -92,8 +112,8 @@ export default function PhoneShot({ notes = [], ...phone }: Omit<PhoneProps, "ma
       </div>
       <svg className="phone-lines" aria-hidden="true">
         {lines.map((l, i) => (
-          <g key={i}>
-            <path d={l.d} />
+          <g key={i} style={{ "--d": `${(l.n - 1) * 0.5}s` } as React.CSSProperties}>
+            <path d={l.d} pathLength={1} />
             <circle cx={l.a[0]} cy={l.a[1]} r={3.5} className="end-note" />
             <circle cx={l.b[0]} cy={l.b[1]} r={3} className="end-box" />
           </g>

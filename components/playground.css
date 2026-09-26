@@ -29,10 +29,6 @@ html.nerd-mode .pg-toy-shadow { background: radial-gradient(closest-side, rgba(0
 }
 .pg-head h2 span { color: inherit; }
 .pg-head h2 .pg-script { font-family: var(--font-script), cursive; font-style: normal; font-weight: 400; font-size: 1.05em; letter-spacing: 0.01em; -webkit-text-stroke: 0.035em currentColor; }
-/* "tinkering" in a pastel violet, so the AI section's word stands out softly against the black heading (Devansh, 26 Sep 2026).
-   #8467E6 on #fafafa is about 4.3:1, softer than a full violet but not washed out; the dark theme gets a lighter lavender. */
-.pg-head h2 .pg-script { color: #8467E6; }
-html.nerd-mode .pg-head h2 .pg-script { color: #C9B8FF; }
 .pg-head p { font-size: 16px; line-height: 1.6; color: var(--text-muted); letter-spacing: -0.011em; margin: 0; }
 
 .pg-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 24px; align-items: start; }

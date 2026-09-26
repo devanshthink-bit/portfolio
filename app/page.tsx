@@ -281,6 +281,19 @@ export default function Home() {
     return () => obs.disconnect();
   }, []);
 
+  // Once the work sheet has slid over the whole hero, the hero's content is hidden (globals.css, phones).
+  // On a fast fling iPhone Safari can't paint the sheet in time and the pinned hero, photo and all,
+  // flickered through it (Devansh, 26 Sep 2026). It comes back as soon as the sheet uncovers it.
+  useEffect(() => {
+    const stack = document.querySelector(".home-stack");
+    const sheet = document.querySelector(".stack-overlay");
+    if (!stack || !sheet) return;
+    const check = () => stack.classList.toggle("is-covered", sheet.getBoundingClientRect().top < 0);
+    check();
+    window.addEventListener("scroll", check, { passive: true });
+    return () => window.removeEventListener("scroll", check);
+  }, []);
+
   // Home page base background is gray (like the hero) so only the overlay panel is white
   useEffect(() => {
     document.body.classList.add("home-page");

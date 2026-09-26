@@ -52,13 +52,19 @@ export function IPhone({ src, alt = "", lofi, n, className, priority, marks, chi
 }
 
 // A note beside a phone: a small red number, a line, and a quieter line under it.
+// Each word is its own span so PhoneShot can write the note in word by word; --w is the word's place.
 export function PhoneNote({ n, title, sub }: { n?: number; title: string; sub?: string }) {
+  const titleWords = title.split(" ");
+  const words = (text: string, from: number) =>
+    text.split(" ").map((w, i) => (
+      <span key={i} className="pn-w" style={{ "--w": from + i } as React.CSSProperties}>{w}{" "}</span>
+    ));
   return (
     <div className="phone-note">
       {n != null && <span className="phone-note-n" aria-hidden="true">{n}</span>}
       <div>
-        <p className="phone-note-title">{title}</p>
-        {sub && <p className="phone-note-sub">{sub}</p>}
+        <p className="phone-note-title">{words(title, 0)}</p>
+        {sub && <p className="phone-note-sub">{words(sub, titleWords.length)}</p>}
       </div>
     </div>
   );
