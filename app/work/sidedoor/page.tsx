@@ -126,7 +126,7 @@ export default function SidedoorCaseStudy() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/images/sidedoor/sidedoor-word.svg" alt="SideDoor" width={132} height={24} style={{ height: "0.74em", width: "auto", display: "inline-block", verticalAlign: "-0.02em" }} />: A referral request built to be answered
       </h1>
-      <p style={T.lede}>Most referral asks are a LinkedIn DM with a resume attached, and most go unanswered. Before a referrer can help, they have to chase the job ID, the date of birth and the career gaps, and the candidate never learns what happened. SideDoor is an iOS app for both sides. Candidates see only jobs someone will refer them for, and how well they fit, skill by skill, before they spend one of their 14 weekly requests. The referrer gets a request that already holds what the company portal asks for, with the line that proves each skill. They refer, copy it all in one tap and mark it submitted, so the candidate sees where it stands.</p>
+      <p style={T.lede}>Referral DMs to strangers mostly go unanswered. The referrer has to chase the job ID and portal details, and the candidate never hears back. SideDoor, an iOS app for both sides, shows candidates their fit before they ask. Referrers get a request that&apos;s complete and proven, and mark it submitted in one tap.</p>
 
       <MetaStrip items={[
         { label: "Role", value: "Product designer, solo, self-initiated" },
