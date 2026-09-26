@@ -14,7 +14,7 @@
 .pg-toy-rig { position: absolute; left: 0; top: 0; width: 0; height: 100%; will-change: transform; }
 .pg-toy-tyre { position: absolute; left: -25px; top: 50px; color: var(--text-primary); will-change: transform; }
 .pg-toy-crab { position: absolute; left: -24px; top: 20px; overflow: visible; transform-origin: 50% 100%; will-change: transform; }
-.pg-toy-cube { position: absolute; z-index: 1; left: -15px; top: 85px; color: var(--text-primary); will-change: transform; }
+.pg-toy-cube { position: absolute; left: -15px; top: 85px; color: var(--text-primary); will-change: transform; }
 .pg-toy-shadow {
   position: absolute; left: -22px; top: 97px; width: 44px; height: 5px; border-radius: 50%;
   background: radial-gradient(closest-side, rgba(0, 0, 0, 0.16), transparent);

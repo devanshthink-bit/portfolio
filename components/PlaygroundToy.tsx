@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 // on the baseline of the "Side projects" label. It plays on its own: chases the Cursor cube and
 // kicks it, and when the cube is stuck at an end it flicks it back over its head. While the
 // cursor moves over it, it rolls after the cursor instead (and can still kick the cube). Its eyes
-// watch the cube, dart around, squint happily after a kick and follow the cursor. Click to hop.
+// watch the cube, dart around and follow the cursor. Click to hop.
 // All motion is one rAF loop that writes transforms straight to the DOM.
 
 // The Codex logo and the Cursor cube, from @lobehub/icons.
@@ -87,12 +87,12 @@ export default function PlaygroundToy() {
 
     // Tyre and crab
     let x = start + R + 10, v = 0, prevV = 0, acc = 0, spin = 0;
-    let tilt = 0, tiltV = 0, hopY = 0, hopV = 0, squash = 1, squashV = 0, phase = 0;
+    let tilt = 0, tiltV = 0, hopY = 0, hopV = 0, phase = 0;
     let target = x, hovering = false, steering = false, chasing = false, chaseFor = 0, rest = 1;
     // Cursor cube
     let cx = x + 120, cv = 0, turn = Math.PI / 6, cy = 0, cyV = 0, flying = false, airSpin = 0;
     // Eyes
-    let duck = 0, lookX = 0, lookY = 0, blinkIn = 2.5, blink = 0, happy = 0, wide = 0;
+    let lookX = 0, lookY = 0, blinkIn = 2.5, blink = 0, happy = 0;
     let glance = 0, glanceIn = 1.5, gx = 0, gy = 0;
     let ptr: { x: number; y: number } | null = null, ptrAge = 99;
     let raf = 0, last = 0, visible = true;
@@ -111,7 +111,7 @@ export default function PlaygroundToy() {
       rig.current!.style.transform = `translate(${x}px, ${sink}px)`;
       tyre.current!.style.transform = `rotate(${(spin * 180) / Math.PI}deg)`;
       crab.current!.style.transform =
-        `translateY(${ride + hopY + bob}px) rotate(${tilt}deg) scale(${2 - squash}, ${squash})`;
+        `translateY(${ride + hopY + bob}px) rotate(${tilt}deg)`;
       shadow.current!.style.transform = `translateX(${x}px) scaleX(${1 - Math.min(0.3, -hopY / 80)})`;
 
       cube.current!.style.transform =
@@ -131,29 +131,25 @@ export default function PlaygroundToy() {
       armL.current?.setAttribute("transform", `rotate(${base + Math.max(0, tilt) * 2.5 + wave} 3 12.5)`);
       armR.current?.setAttribute("transform", `rotate(${-(base + Math.max(0, -tilt) * 2.5 - wave)} 21 12.5)`);
 
-      // Eyes: blink, squint happily (a thin raised line), or go wide when the cube hits back.
-      const h = blink > 0 ? 0.3 : happy > 0 ? 0.9 : wide > 0 ? 3.6 : EYE.h;
-      const w = wide > 0 ? 1.9 : EYE.w;
-      const up = happy > 0 ? -0.9 : 0;
+      // Eyes keep their size and shape; they only move (and blink).
+      const h = blink > 0 ? 0.3 : EYE.h;
       eyes.current.forEach((eye, i) => {
         if (!eye) return;
-        eye.setAttribute("x", String(EYE.xs[i] + (EYE.w - w) / 2 + lookX));
-        eye.setAttribute("y", String(EYE.y + (EYE.h - h) / 2 + lookY + up));
-        eye.setAttribute("width", String(w));
+        eye.setAttribute("x", String(EYE.xs[i] + lookX));
+        eye.setAttribute("y", String(EYE.y + (EYE.h - h) / 2 + lookY));
         eye.setAttribute("height", String(h));
       });
     };
 
-    // Scoop the cube up and over its head, back into open space.
+    // Scoop the cube up and over its head (it passes behind the crab), back into open space.
     const flick = (d: number) => {
       flying = true;
       cyV = -rand(490, 520);
       cy = -0.5;
       cv = -d * rand(150, 200);
       airSpin = -d * rand(9, 14);
-      duck = 0.45; // it ducks so the cube clears its head
       tiltV -= d * 90;
-      happy = 0; wide = 0.5;
+      happy = 0;
       chasing = false; target = x; rest = rand(0.9, 1.4);
     };
 
@@ -231,10 +227,8 @@ export default function PlaygroundToy() {
             cyV = -Math.min(260, closing * 0.7);
             cy = Math.min(cy, -0.1);
             if (!steering) { chasing = false; target = x; rest = rand(0.4, 1.4); }
-            happy = 0.7; wide = 0;
+            happy = 0.7;
           }
-        } else if (closing < -70) {
-          wide = 0.45; // the cube came back at it
         }
         if (!flying) {
           cx = x + d * MIN_D;
@@ -255,11 +249,8 @@ export default function PlaygroundToy() {
       if (hopY < 0 || hopV < 0) {
         hopV += 1300 * dt;
         hopY += hopV * dt;
-        if (hopY >= 0) { hopY = 0; hopV = 0; squash = 0.78; }
+        if (hopY >= 0) { hopY = 0; hopV = 0; }
       }
-      if (duck > 0) duck -= dt;
-      squashV += (260 * ((duck > 0 ? 0.62 : 1) - squash) - 14 * squashV) * dt;
-      squash += squashV * dt;
 
       // Where the eyes go: the cursor while it moves nearby, a quick glance around now and then,
       // otherwise the cube it's playing with (up in the air too).
@@ -285,7 +276,6 @@ export default function PlaygroundToy() {
       blinkIn -= dt;
       if (blink > 0) blink -= dt;
       if (happy > 0) happy -= dt;
-      if (wide > 0) wide -= dt;
       if (blinkIn <= 0) {
         blink = 0.12;
         blinkIn = Math.random() < 0.2 ? 0.25 : rand(2, 5);
@@ -302,7 +292,7 @@ export default function PlaygroundToy() {
     const enter = (e: PointerEvent) => { if (e.pointerType === "mouse") { hovering = true; chasing = false; follow(e); } };
     const leave = () => { hovering = false; };
     const down = (e: PointerEvent) => {
-      if (hopY === 0) { hopV = -330; squash = 0.85; }
+      if (hopY === 0) hopV = -330;
       if (e.pointerType !== "mouse") { chasing = false; rest = 1.5; follow(e); }
     };
     const hoverMove = (e: PointerEvent) => { if (hovering) follow(e); };
