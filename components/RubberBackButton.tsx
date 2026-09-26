@@ -48,7 +48,7 @@ export default function RubberBackButton({ plain = true }: { plain?: boolean } =
   return createPortal(
     <Link
       href="/"
-      className="fixed-enter"
+      className="fixed-enter cs-back"
       onClick={playRubber}
       style={{
         position: "fixed",
@@ -59,8 +59,9 @@ export default function RubberBackButton({ plain = true }: { plain?: boolean } =
         display: "flex",
         alignItems: "center",
         gap: 6,
-        padding: pill ? "8px 14px 8px 11px" : "6px 4px",
-        ...(pill ? { background: "var(--raised)", borderRadius: 100, boxShadow: "var(--shadow-float)" } : {}),
+        padding: "7px 14px 7px 10px",
+        borderRadius: 100,
+        ...(pill ? { background: "var(--raised)", boxShadow: "var(--shadow-float)" } : {}),
         fontFamily: plain ? "var(--font-manrope), sans-serif" : "var(--font-geist-mono), monospace",
         fontSize: 14,
         fontWeight: 600,
@@ -69,9 +70,9 @@ export default function RubberBackButton({ plain = true }: { plain?: boolean } =
         textTransform: plain ? "none" : "uppercase",
       }}
     >
-      <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 6 }}>
-        <line x1="19" y1="12" x2="5" y2="12" />
-        <polyline points="12 19 5 12 12 5" />
+      {/* Solar arrow-left-linear, the dock's icon set, at the dock's stroke of 2 */}
+      <svg className="cs-back-arrow" width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+        <path d="M20 12H4M10 18L4 12L10 6" />
       </svg>
       Back
     </Link>,

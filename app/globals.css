@@ -852,11 +852,18 @@
     border-bottom-color: rgba(245, 243, 239, 0.35);
   }
 
+  /* Equal columns, so the four facts line up on one grid (was space-between, uneven gaps) */
   .cs-meta-strip {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 32px;
   }
+
+  /* Back: a quiet pill that fills on hover, and the arrow steps left */
+  .cs-back { transition: background-color 0.2s ease; }
+  .cs-back:hover { background-color: rgba(120, 113, 108, 0.1); }
+  .cs-back-arrow { transition: transform 0.25s cubic-bezier(0.3, 0.7, 0.4, 1); }
+  .cs-back:hover .cs-back-arrow { transform: translateX(-3px); }
 
   /* redBus case study */
   .cs-beat {
@@ -1715,9 +1722,8 @@
   }
 
   .cs-meta-strip {
-    flex-wrap: wrap;
-    gap: 16px 40px;
-    justify-content: flex-start;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 24px;
   }
 
   .cs-meta-strip > div {

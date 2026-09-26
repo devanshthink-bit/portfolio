@@ -11,7 +11,7 @@ import { PhoneRow } from "../../../components/IPhone";
 import PhoneShot from "../../../components/PhoneShot";
 
 export const metadata: Metadata = {
-  title: "SideDoor - Reinventing the job referral from both sides | Devansh Somvanshi",
+  title: "SideDoor - A referral request built to be answered | Devansh Somvanshi",
   description: "A concept for job referrals in Indian tech: the request arrives complete, fit comes with proof, and the answer travels back.",
 };
 
@@ -124,9 +124,9 @@ export default function SidedoorCaseStudy() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/images/sidedoor/sidedoor-logo.png" alt="" aria-hidden width={24} height={31} style={{ height: "1.4em", width: "auto", display: "inline-block", verticalAlign: "-0.34em", marginRight: 10 }} />
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/images/sidedoor/sidedoor-word.svg" alt="SideDoor" width={132} height={24} style={{ height: "0.74em", width: "auto", display: "inline-block", verticalAlign: "-0.02em" }} />: Reinventing the job referral from both sides
+        <img src="/images/sidedoor/sidedoor-word.svg" alt="SideDoor" width={132} height={24} style={{ height: "0.74em", width: "auto", display: "inline-block", verticalAlign: "-0.02em" }} />: A referral request built to be answered
       </h1>
-      <p style={T.lede}>I started out sure that referrers ignore strangers because they can&apos;t trust them. The two people I interviewed have asked for referrals and given them, and neither of them talked about trust. They talked about the work a request hands them: no job ID, portal questions, fit to check by hand. So I dropped my first design. SideDoor sends the request complete, shows where each skill was found, and tells the candidate how it ended.</p>
+      <p style={T.lede}>Most referral asks are a LinkedIn DM with a resume attached, and most go unanswered. Before a referrer can help, they have to chase the job ID, the date of birth and the career gaps, and the candidate never learns what happened. SideDoor is an iOS app for both sides. Candidates see only jobs someone will refer them for, and how well they fit, skill by skill, before they spend one of their 14 weekly requests. The referrer gets a request that already holds what the company portal asks for, with the line that proves each skill. They refer, copy it all in one tap and mark it submitted, so the candidate sees where it stands.</p>
 
       <MetaStrip items={[
         { label: "Role", value: "Product designer, solo, self-initiated" },

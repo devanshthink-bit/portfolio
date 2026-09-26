@@ -37,7 +37,7 @@ const recentWork = [
     blurb: "Travellers book one way and leave the return for later, where it often goes to another app. A self-initiated RedBus concept that wins that revenue back by turning one booking into two, in the same checkout.",
   },
   {
-    title: "Sidedoor, reinventing the job referral from both sides",
+    title: "SideDoor, a referral request built to be answered",
     desc: "View project",
     tag: "Product Design · 0 to 1",
     // Same three colours as before (#d4e2ff, #7aa5fb, #b0caff), as soft glows from the two corners over
@@ -57,9 +57,9 @@ const recentWork = [
     wordmark: "/images/sidedoor/sidedoor-word.svg",
     brand: "SideDoor",
     brandColor: "#ffffff",
-    did: "Designed a new kind of job referral: complete before it's sent, proven before it's judged, answered after it's submitted",
+    did: "Designed SideDoor, a referral app where no request is left on read",
     tags: ["Careers", "Two-sided", "iOS app", "Concept"],
-    blurb: "Referrers don't ignore strangers out of distrust. The two people I interviewed, who have asked for referrals and given them, said it's the paperwork a request hands them. So the request arrives complete, proves every skill it claims, and tells the candidate how it ended.",
+    blurb: "Asking a stranger for a referral usually means a LinkedIn DM and silence. SideDoor shows candidates only jobs someone will refer them for, with their fit proven skill by skill. Each request reaches the referrer with the job ID and portal details already in it, and the candidate sees when it's submitted. A self-initiated iOS concept, designed for both sides.",
   },
   // Hidden for now at Devansh's request (13 Sep 2026). Kept, not deleted: uncomment to bring back.
   // {
