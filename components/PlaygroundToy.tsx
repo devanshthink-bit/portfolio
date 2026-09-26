@@ -5,9 +5,10 @@ import { useEffect, useRef } from "react";
 // baseline of the "Side projects" label. On its own it picks a game at random: a tap, a power
 // kick with a run-up, dribbling, keepy-uppies on its head, carrying the cube on its head, or
 // flicking it over its head (also what it does when the cube is stuck at an end). After a good
-// one it celebrates: hops, a flip, a wave at you, or a little dance. While the cursor moves over
-// it, it rolls after the cursor instead. Its eyes watch the cube, glance around and follow the
-// cursor. Click to hop. Nothing stretches, and the eyes only move and blink.
+// one it celebrates: hops, a little dance, a wave at you, or (rarely) a flip. Bring the cursor
+// near and it plays with you instead: waves hello, follows the cursor, and jumps to boop it when
+// it hovers above its head. Its eyes watch the cube, glance around and follow the cursor, and
+// turn into ^ ^ when it's happy. Click to hop. Nothing stretches.
 // All motion is one rAF loop that writes transforms straight to the DOM.
 
 // The Codex logo and the Cursor cube, from @lobehub/icons.
@@ -44,6 +45,7 @@ export default function PlaygroundToy() {
   const joy = useRef<(SVGPathElement | null)[]>([]);
   const armL = useRef<SVGRectElement>(null);
   const armR = useRef<SVGRectElement>(null);
+  const heart = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
     const el = stage.current;
@@ -100,7 +102,8 @@ export default function PlaygroundToy() {
     let lookX = 0, lookY = 0, blinkIn = 2.5, blink = 0, atYou = 0;
     let glance = 0, glanceIn = 1.5, gx = 0, gy = 0;
     let ptr: { x: number; y: number } | null = null, ptrAge = 99;
-    let hovering = false, steering = false, touchT = 0;
+    let hovering = false, steering = false, touchT = 0, clock = 0, lastFlip = -99;
+    let greet = 0, reachIn = 0, heartT = 0, heartX = 0, heartY = 0;
     let raf = 0, last = 0, visible = true;
 
     // What it's playing right now. Each game runs in stages; a party is how it celebrates.
@@ -118,9 +121,13 @@ export default function PlaygroundToy() {
 
     const setMode = (m: Mode) => { mode = m; beat = 0; t = 0; };
     const rest = (s: number) => { setMode("rest"); restFor = s; };
+    // Flips are a rare treat: at most one every 25 s, and less likely than the rest.
     const celebrate = (p?: Party) => {
-      const all: Party[] = ["hops", "flip", "wave", "dance"];
-      party = p ?? all[Math.floor(Math.random() * all.length)];
+      const all: [Party, number][] = [["hops", 3], ["dance", 3], ["wave", 2], ["flip", clock - lastFlip > 25 ? 0.6 : 0]];
+      let r = Math.random() * all.reduce((sum, [, w]) => sum + w, 0);
+      party = p ?? "hops";
+      if (!p) for (const [q, w] of all) { r -= w; if (r <= 0) { party = q; break; } }
+      if (party === "flip") lastFlip = clock;
       setMode("party");
       x0 = x;
       happy = party === "wave" ? 0 : 1.2;
@@ -262,6 +269,8 @@ export default function PlaygroundToy() {
       // Eyes keep their size and shape; they only move and blink. When it's happy they turn
       // into little ^ ^.
       const glad = happy > 0 || mode === "party";
+      heart.current!.style.opacity = String(Math.max(0, heartT));
+      heart.current!.style.transform = `translate(${heartX - 7}px, ${heartY - 22 - (1 - heartT) * 26}px)`;
       const h = blink > 0 ? 0.3 : EYE.h;
       eyes.current.forEach((eye, i) => {
         if (!eye) return;
@@ -283,15 +292,43 @@ export default function PlaygroundToy() {
       const lo = start + R, hi = w - R - 4;
       const cLo = start + HEX, cHi = w - HEX - 4;
 
-      // The cursor steers only while it moves. When it rests, the crab goes back to playing.
+      // Your cursor: while it's over the stage (and moved in the last 3 s) the crab plays with it
+      // instead of the cube. It waves hello, follows it, and jumps to boop it when it hovers above
+      // its head; a boop pops a heart. Leave the cursor still and it goes back to its own games.
+      clock += dt;
       ptrAge += dt;
       if (touchT > 0) touchT -= dt;
-      const nowSteering = (hovering || touchT > 0) && ptrAge < 1.2;
-      if (nowSteering && !steering && onHead) { onHead = false; flying = true; cyV = -200; cv = 0; }
+      const r = el.getBoundingClientRect();
+      // "Near" reaches 70px above the stage too, so there is room to hold the cursor over its head.
+      if (ptr && !touchT) hovering = ptr.x > r.left && ptr.x < r.right && ptr.y > r.top - 70 && ptr.y < r.bottom;
+      const nowSteering = (hovering || touchT > 0) && ptrAge < 3;
+      if (nowSteering && !steering) {
+        if (onHead) { onHead = false; flying = true; cyV = -200; cv = 0; }
+        greet = 1.1; happy = 1.1;
+      }
       if (steering && !nowSteering) rest(rand(0.3, 0.8));
       steering = nowSteering;
-      if (steering) { k = 20; vmax = 480; armL0 = armR0 = 0; lean = 0; if (mode !== "rest") rest(0.5); }
-      else brain(dt, lo, hi, cLo, cHi);
+      if (steering && ptr) {
+        if (mode !== "rest") rest(0.5);
+        const pxs = ptr.x - r.left, pys = ptr.y - r.top;
+        const top = 20 + sink + ride; // top of the crab's head, standing
+        const under = Math.abs(pxs - x) < 26;
+        target = under ? x + (pxs - x) * 0.4 : pxs;
+        k = 14; vmax = 380; lean = 0;
+        armL0 = 0; armR0 = 0;
+        if (greet > 0) { greet -= dt; armR0 = 55 + Math.sin(clock * 14) * 28; }
+        else if (under && pys < top - 6) armL0 = armR0 = 45; // reaching up for it
+        reachIn -= dt;
+        if (under && pys < top - 6 && pys > top - 110 && hopY === 0 && reachIn <= 0) {
+          hopV = -Math.min(520, Math.sqrt(2 * 1300 * Math.max(10, top - pys)) + 30);
+          reachIn = rand(0.6, 1.1);
+        }
+        // Boop: the top of its head touches the cursor.
+        if (hopY < 0 && heartT <= 0 && Math.hypot(pxs - x, pys - (top + hopY)) < 16) {
+          heartT = 1; heartX = pxs; heartY = pys; happy = 1.2;
+        }
+      } else brain(dt, lo, hi, cLo, cHi);
+      if (heartT > 0) heartT -= dt * 1.1;
       target = clamp(target, lo, hi);
 
       // Spring towards the target, capped speed: it speeds up, cruises, and brakes.
@@ -374,7 +411,7 @@ export default function PlaygroundToy() {
           if (closing > 70 && mode !== "dribble") {
             cyV = -Math.min(260, closing * 0.7);
             cy = Math.min(cy, -0.1);
-            if (mode === "kick" || mode === "power") celebrate(mode === "power" && Math.random() < 0.5 ? "flip" : undefined);
+            if (mode === "kick" || mode === "power") celebrate();
             else happy = 0.7;
           }
         }
@@ -402,9 +439,8 @@ export default function PlaygroundToy() {
         gy = rand(-1, 0.4);
       }
       let dx: number, dy: number;
-      const r = el.getBoundingClientRect();
       const px = ptr ? ptr.x - (r.left + x) : 0, py = ptr ? ptr.y - (r.top + EYE_Y) : 0;
-      if (ptr && ptrAge < 1.5 && (hovering || Math.hypot(px, py) < 420)) { dx = px; dy = py; }
+      if (ptr && (steering || (ptrAge < 1.5 && Math.hypot(px, py) < 420))) { dx = px; dy = py; }
       else if (atYou > 0) { dx = 0; dy = 0; }
       else if (glance > 0 && !flying && mode === "rest") { dx = gx * 100; dy = gy * 100; }
       else { dx = cx - x; dy = H - cubeLift() + cy - EYE_Y; }
@@ -428,19 +464,13 @@ export default function PlaygroundToy() {
 
     const onMove = (e: PointerEvent) => { ptr = { x: e.clientX, y: e.clientY }; ptrAge = 0; };
     const follow = (e: PointerEvent) => { target = e.clientX - el.getBoundingClientRect().left; };
-    const enter = (e: PointerEvent) => { if (e.pointerType === "mouse") { hovering = true; follow(e); } };
-    const leave = () => { hovering = false; };
     const down = (e: PointerEvent) => {
       if (hopY === 0) hopV = -330;
       if (e.pointerType !== "mouse") { touchT = 1.2; onMove(e); follow(e); } // a tap steers it there
     };
-    const hoverMove = (e: PointerEvent) => { if (hovering) follow(e); };
 
     window.addEventListener("pointermove", onMove, { passive: true });
     window.addEventListener("resize", measure);
-    el.addEventListener("pointerenter", enter);
-    el.addEventListener("pointermove", hoverMove);
-    el.addEventListener("pointerleave", leave);
     el.addEventListener("pointerdown", down);
 
     const io = new IntersectionObserver(([entry]) => {
@@ -455,9 +485,6 @@ export default function PlaygroundToy() {
       io.disconnect();
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("resize", measure);
-      el.removeEventListener("pointerenter", enter);
-      el.removeEventListener("pointermove", hoverMove);
-      el.removeEventListener("pointerleave", leave);
       el.removeEventListener("pointerdown", down);
     };
   }, []);
@@ -466,6 +493,10 @@ export default function PlaygroundToy() {
     <div ref={stage} className="pg-toy" aria-hidden>
       <span ref={shadow} className="pg-toy-shadow" />
       <span ref={cubeShadow} className="pg-toy-shadow is-cube" />
+      {/* A pixel heart, in the Claude Code orange, when it boops your cursor */}
+      <svg ref={heart} className="pg-toy-heart" viewBox="0 0 7 6" width={14} height={12}>
+        <path d="M1 0h2v1h1V0h2v1h1v2h-1v1h-1v1h-1v1h-1v-1h-1v-1h-1v-1H0V1h1z" fill="#D97757" />
+      </svg>
       <svg ref={cube} className="pg-toy-cube" viewBox="0 0 24 24" width={CUBE} height={CUBE}>
         <path d={CURSOR} fill="currentColor" fillRule="evenodd" />
       </svg>

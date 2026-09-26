@@ -20,6 +20,7 @@
   background: radial-gradient(closest-side, rgba(0, 0, 0, 0.16), transparent);
 }
 .pg-toy-shadow.is-cube { left: -14px; width: 28px; }
+.pg-toy-heart { position: absolute; left: 0; top: 0; opacity: 0; pointer-events: none; }
 html.nerd-mode .pg-toy-shadow { background: radial-gradient(closest-side, rgba(0, 0, 0, 0.5), transparent); }
 .pg-head { display: flex; flex-direction: column; gap: 12px; margin: 0 0 28px; }
 .pg-head h2 {
