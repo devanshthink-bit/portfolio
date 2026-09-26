@@ -59,7 +59,7 @@ const recentWork = [
     brandColor: "#ffffff",
     did: "Designed SideDoor, a referral app where no request is left on read",
     tags: ["Careers", "Two-sided", "iOS app", "Concept"],
-    blurb: "Asking a stranger for a referral usually means a LinkedIn DM and silence. SideDoor shows candidates only jobs someone will refer them for, with their fit proven skill by skill. Each request reaches the referrer with the job ID and portal details already in it, and the candidate sees when it's submitted. A self-initiated iOS concept, designed for both sides.",
+    blurb: "Referral DMs to strangers usually end in silence. A self-initiated iOS concept where each request arrives with the job ID and portal details filled in, and the candidate sees when it's submitted.",
   },
   // Hidden for now at Devansh's request (13 Sep 2026). Kept, not deleted: uncomment to bring back.
   // {
