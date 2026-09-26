@@ -31,15 +31,14 @@ button{font:inherit}
 .page{max-width:1120px;margin:0 auto;padding:40px 24px 96px}
 
 /* masthead */
-.masthead{background:var(--blue);color:#fff;border-radius:16px;padding:28px 32px 30px;position:relative;overflow:hidden;margin-bottom:16px}
+.masthead{background:var(--blue);color:#fff;border-radius:16px;padding:30px 32px 32px;position:relative;overflow:hidden;margin-bottom:16px}
 .masthead::after{content:"";position:absolute;right:-60px;top:-70px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.08)}
 .masthead::before{content:"";position:absolute;right:70px;bottom:-120px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.06)}
-.brand{display:flex;align-items:center;gap:8px;margin-bottom:20px;position:relative}
-.brand img:first-child{height:26px;width:auto;background:#fff;border-radius:6px;padding:3px}
-.brand img:last-child{height:15px;width:auto;filter:brightness(0) invert(1)}
-.masthead h1{font-size:32px;line-height:1.15;font-weight:700;letter-spacing:-.02em;max-width:760px;position:relative}
-.masthead p{font-size:16px;color:rgba(255,255,255,.88);margin-top:10px;max-width:760px;position:relative}
-.masthead .meta{font-size:14px;color:rgba(255,255,255,.8);margin-top:16px}
+.brand{display:inline-flex;align-items:center;gap:10px;vertical-align:-0.2em}
+.brand img:first-child{height:1.15em;width:auto}
+.brand img:last-child{height:0.74em;width:auto;filter:brightness(0) invert(1)}
+.masthead h1{font-size:34px;line-height:1.15;font-weight:700;letter-spacing:-.015em;position:relative}
+.masthead p{font-size:16px;color:rgba(255,255,255,.88);margin-top:8px;max-width:760px;line-height:1.5;position:relative}
 .bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin:0 0 16px;padding:0 4px}
 .key{font-size:13.5px;color:var(--muted)}
 .key .tag{margin:0 2px}
@@ -269,17 +268,15 @@ ul.list li::marker{color:#A6ABB3}
 <body>
 <div class="page">
 <header class="masthead">
-  <div class="brand"><img src="/images/sidedoor/sidedoor-logo.png" alt=""><img src="/images/sidedoor/sidedoor-word.svg" alt="SideDoor"></div>
-  <h1>Every artefact behind SideDoor, in the order it was made</h1>
-  <p>From how the business makes money to what would prove the design wrong. Every claim points back to a numbered note from the interviews, and says how sure it is.</p>
-  <p class="meta">2 people &middot; 4 interviews, each person on both sides &middot; 91 notes &middot; 5 clusters &middot; 3 jobs to be done &middot; 4 products compared &middot; 5 versions, V2 to V6 &middot; Devansh Somvanshi, Sep 2026</p>
+  <h1><span class="brand"><img src="/images/sidedoor/sidedoor-logo.png" alt=""><img src="/images/sidedoor/sidedoor-word.svg" alt="SideDoor"></span>, A referral request built to be answered</h1>
+  <p>Every artefact from the business model to the test plan, in the order it was made. 2 people, each interviewed as candidate and referrer &middot; 91 notes &middot; 5 clusters &middot; 3 jobs to be done.</p>
 </header>
-<div class="bar"><p class="key"><span class="tag ok">Saw it</span> someone said or did it. <span class="tag blue">Worked it out</span> my reasoning from the notes. <span class="tag warn">Guessing</span> untested. Nobody has used the design yet.</p><button type="button" class="all" id="all">Open all</button></div>
+<div class="bar"><p class="key"><span class="tag ok">Saw it</span> in the notes <span class="tag blue">Worked it out</span> my reading <span class="tag warn">Guessing</span> untested</p><button type="button" class="all" id="all">Open all</button></div>
 <main id="main">
 
   <!-- 1 -->
   <section class="stage" id="s-business" data-t="The business lens" data-s="Who pays, and the number">
-    <div class="st-head"><span class="st-n">1</span><div><p class="st-k">Business model, strategy, North Star</p><h2>Referrers are the scarce side, so nothing is ever sold to them</h2><p>A two-sided marketplace, built with the Product Anatomy frameworks: business model, then strategy, then design. Written after the research, from the problem statement, not before it.</p></div></div>
+    <div class="st-head"><span class="st-n">1</span><div><p class="st-k">Business model, strategy, North Star</p><h2>Referrers are the scarce side, so nothing is ever sold to them</h2><p>Written after the research, from the problem statement.</p></div></div>
 
     <div class="grid g3">
       <div class="card"><p class="lab">Phase 1 · Build both sides</p><h3>Free for everyone</h3><p>A paywall on an empty marketplace blocks the people it needs.</p></div>
@@ -357,7 +354,7 @@ ul.list li::marker{color:#A6ABB3}
       </div>
     </div>
 
-    <p class="sub">Rajat said: make it a LinkedIn feature. I kept it separate.</p>
+    <p class="sub">My mentor said: make it a LinkedIn feature. I kept it separate.</p>
     <div class="grid g2">
       <div class="card"><span class="tag ok">Why its own product</span>
         <ul class="list" style="margin-top:10px">
@@ -373,7 +370,7 @@ ul.list li::marker{color:#A6ABB3}
           <li>Referral communities die quiet: on Fishbowl a message might be seen "next week" (n28)</li>
           <li>The cold start could fail: a referrer may not send a link, because sending it is already a yes</li>
         </ul>
-        <p style="margin-top:10px">This answer is reasoning. It hasn't been tested.</p>
+        <p style="margin-top:10px"><span class="tag warn">Guessing</span></p>
       </div>
     </div>
 
@@ -403,7 +400,7 @@ ul.list li::marker{color:#A6ABB3}
     <div class="card">
       <p class="lab">Sample and its bias, written before anyone asks</p>
       <p style="font-size:16px;color:#23262B">Everyone in this sample is one of two tech employees who already refer people, mostly people they know, which means I will not hear from employees who ignore referral requests, from recruiters, from people outside tech, or from candidates who have never asked a stranger.</p>
-      <p style="margin-top:10px">Two people is thin. Where both say something it's a pattern of two. Where one says it, the page says so. Neither is flooded with requests (n61), so anything about referrer overload is a guess.</p>
+      <p style="margin-top:10px">Two people is thin: where only one says it, the page says so. Neither is flooded with requests (n61), so anything about overload is a guess.</p>
     </div>
     <div class="grid g2">
       <div class="card"><p class="lab">Also collected</p><h3>Screenshots of 11 products</h3><p>LinkedIn, GetMeReferred, EasyRefer and Instahyre were read at full size (stage 10).</p></div>
@@ -413,7 +410,7 @@ ul.list li::marker{color:#A6ABB3}
 
   <!-- 4 -->
   <section class="stage" id="s-notes" data-t="Atomic notes">
-    <div class="st-head"><span class="st-n">4</span><div><p class="st-k">One observation per note, in their words</p><h2>91 notes, nothing deleted</h2><p>Grouped by interview, in the order they were said. The corner of each note says where it went: a cluster, not a problem, out of scope, or parked.</p></div></div>
+    <div class="st-head"><span class="st-n">4</span><div><p class="st-k">One observation per note, in their words</p><h2>91 notes, nothing deleted</h2><p>Grouped by interview, in the order they were said. Each note's corner says where it went.</p></div></div>
     <div class="sortbar"><span class="pill in">74 in five clusters</span><span class="pill np">13 not a problem, this worked</span><span class="pill">3 out of scope, a different moment</span><span class="pill">1 parked</span></div>
     <div class="segs" role="group" aria-label="Filter notes" id="segP">
       <button type="button" data-f="all" aria-pressed="true">All</button>
@@ -427,7 +424,7 @@ ul.list li::marker{color:#A6ABB3}
 
   <!-- 5 -->
   <section class="stage" id="s-clusters" data-t="Clusters">
-    <div class="st-head"><span class="st-n">5</span><div><p class="st-k">Five pains, each from the side that feels it</p><h2>Five clusters, each with the tension underneath it</h2><p>Sorted against the moment on the scope card: 74 notes in five clusters, 13 that describe something working, 3 out of scope, 1 parked. SideDoor has two kinds of user, so each label starts with the side that feels it: the candidate asking, or the referrer being asked.</p></div></div>
+    <div class="st-head"><span class="st-n">5</span><div><p class="st-k">Five pains, each from the side that feels it</p><h2>Five clusters, each with the tension underneath it</h2><p>Each label starts with the side that feels it: the candidate asking, or the referrer being asked.</p></div></div>
     <div class="clusgrid" id="clusters"></div>
     <p class="sub">What was merged, and what got lost</p>
     <div class="card"><ul class="list">
@@ -438,7 +435,7 @@ ul.list li::marker{color:#A6ABB3}
 
   <!-- 6 -->
   <section class="stage" id="s-affinity" data-t="Affinity maps">
-    <div class="st-head"><span class="st-n">6</span><div><p class="st-k">Every note under its cluster</p><h2>Each cluster, with its notes sorted into smaller groups</h2><p>Every cluster at the same level: one label, one So what?, one job to be done, and the notes underneath it.</p></div></div>
+    <div class="st-head"><span class="st-n">6</span><div><p class="st-k">Every note under its cluster</p><h2>Each cluster, with its notes sorted into smaller groups</h2></div></div>
     <div class="sortbar"><span class="pill key sc">Samarth, as a candidate</span><span class="pill key rc">Riya, as a candidate</span><span class="pill key sr">Samarth, as a referrer</span><span class="pill key rr">Riya, as a referrer</span></div>
     <div id="amaps"></div>
   </section>
@@ -476,7 +473,7 @@ ul.list li::marker{color:#A6ABB3}
 
   <!-- 8 -->
   <section class="stage" id="s-problem" data-t="Problem statement" data-s="Chosen from three">
-    <div class="st-head"><span class="st-n">8</span><div><p class="st-k">Chosen from three drafts</p><h2>The request asks the referrer to do the candidate's work, and the answer never travels back</h2><p>Three drafts: one from the referrer's side, one from the candidate's, one holding both. I picked the one that holds both, and narrowed it.</p></div></div>
+    <div class="st-head"><span class="st-n">9</span><div><p class="st-k">Chosen from three drafts</p><h2>The request asks the referrer to do the candidate's work, and the answer never travels back</h2><p>Three drafts: one from the referrer's side, one from the candidate's, one holding both. I picked the one that holds both, and narrowed it.</p></div></div>
     <div class="ps">
       <div class="ps-top"><p class="lab">Problem statement</p><h3>An employee asked for a referral by someone they don't know has to do the candidate's work before they can say yes. So most don't, and the candidate never finds out.</h3></div>
       <div class="ps-body">
@@ -511,7 +508,7 @@ ul.list li::marker{color:#A6ABB3}
 
   <!-- 9 -->
   <section class="stage" id="s-landscape" data-t="Landscape" data-s="What nobody does">
-    <div class="st-head"><span class="st-n">9</span><div><p class="st-k">Four products, plus no product at all</p><h2>Everyone sends a message and a resume. Nobody sends what the portal needs.</h2><p>Read from my own screenshots at full size. The products may have changed since.</p></div></div>
+    <div class="st-head"><span class="st-n">10</span><div><p class="st-k">Four products, plus no product at all</p><h2>Everyone sends a message and a resume. Nobody sends what the portal needs.</h2><p>From my own screenshots. The products may have changed since.</p></div></div>
     <div class="tscroll"><table class="tbl">
       <tr><th></th><th>How you ask</th><th>What limits asking</th><th>What the referrer gets</th><th>Who reports status</th></tr>
       <tr><td>LinkedIn</td><td>A blank message</td><td>Connecting first</td><td>Nothing on screen</td><td>The candidate ("Did you hear back?")</td></tr>
@@ -536,7 +533,7 @@ ul.list li::marker{color:#A6ABB3}
 
   <!-- 10 -->
   <section class="stage" id="s-ai" data-t="Where AI belongs" data-s="Two jobs, never more">
-    <div class="st-head"><span class="st-n">10</span><div><p class="st-k">What a model should do here, and what it shouldn't</p><h2>The model does two jobs: reading documents into fields, and ordering requests by fit</h2><p>Everything else is plain product. Nothing moves without a person.</p></div></div>
+    <div class="st-head"><span class="st-n">11</span><div><p class="st-k">What a model should do here, and what it shouldn't</p><h2>The model does two jobs: reading documents into fields, and ordering requests by fit</h2><p>Everything else is plain product. Nothing moves without a person.</p></div></div>
     <div class="tscroll"><table class="tbl">
       <tr><th>What a model can do</th><th>In SideDoor</th><th>Verdict</th></tr>
       <tr><td>Pull out</td><td>Resume into the fields a portal needs; job description into job ID, city, skills</td><td><span class="tag ok">Yes, the most</span> Samarth types skills into the portal by hand (n60)</td></tr>
@@ -562,7 +559,7 @@ ul.list li::marker{color:#A6ABB3}
 
   <!-- 11 -->
   <section class="stage" id="s-brief" data-t="Design brief" data-s="The one page">
-    <div class="st-head"><span class="st-n">11</span><div><p class="st-k">The one-page brief</p><h2>How might we let a stranger's request be acted on in minutes, and the answer travel back for free?</h2></div></div>
+    <div class="st-head"><span class="st-n">12</span><div><p class="st-k">The one-page brief</p><h2>How might we let a stranger's request be acted on in minutes, and the answer travel back for free?</h2></div></div>
     <div class="card"><div class="kv">
       <div class="k">Domain and user</div><div>Job referrals in Indian tech hiring. A candidate asking an employee they don't know for a referral to one job, and the employee being asked</div>
       <div class="k">Job to be done</div><div>When someone I don't know asks me for a referral, I want everything my company's portal needs already there, so referring takes minutes and they find out what happened without me doing more</div>
@@ -583,7 +580,7 @@ ul.list li::marker{color:#A6ABB3}
 
   <!-- 12 -->
   <section class="stage" id="s-chain" data-t="The chain and the loops" data-s="Design to North Star">
-    <div class="st-head"><span class="st-n">12</span><div><p class="st-k">Own the input, understand the output, trace the chain</p><h2>Each design decision, traced to the number it should move</h2><p>An input that rises without moving the North Star is noise. More complete requests only matter if referrers submit more of them.</p></div></div>
+    <div class="st-head"><span class="st-n">13</span><div><p class="st-k">Own the input, understand the output, trace the chain</p><h2>Each design decision, traced to the number it should move</h2><p>An input that rises without moving the North Star is noise. More complete requests only matter if referrers submit more of them.</p></div></div>
     <div class="chain-h"><span>Design decision</span><span></span><span>Input metric, owned</span><span></span><span>Output metric, influenced</span><span></span><span>North Star</span></div>
     <div class="chains" id="chains"></div>
     <div class="card" style="margin-top:16px"><span class="tag warn">Guardrail</span><p style="margin-top:10px"><b>Referrers who turn off requests or leave must not rise.</b> A product that makes asking easier can flood the people it depends on. Watched with a second number: requests left unanswered after 7 days must not rise.</p></div>
@@ -593,14 +590,14 @@ ul.list li::marker{color:#A6ABB3}
 
   <!-- 13 -->
   <section class="stage" id="s-versions" data-t="Five versions" data-s="V2 to V6">
-    <div class="st-head"><span class="st-n">13</span><div><p class="st-k">Each version kept untouched in Figma</p><h2>From a swipe app to a request that arrives ready</h2><p>Scroll sideways. Each card is one version: what changed, and what I learned.</p></div></div>
+    <div class="st-head"><span class="st-n">14</span><div><p class="st-k">Each version kept untouched in Figma</p><h2>From a swipe app to a request that arrives ready</h2><p>Scroll sideways: what each version changed, and what I learned.</p></div></div>
     <div class="rail" id="rail"></div>
-    <p class="railhint">V2 shows its own screen. V3 to V6 show today's screen where that version's change still lives.</p>
+    <p class="railhint">V3 to V6 show today's screen where that change still lives.</p>
   </section>
 
   <!-- 14 -->
   <section class="stage" id="s-attack" data-t="Attacking it" data-s="What broke">
-    <div class="st-head"><span class="st-n">14</span><div><p class="st-k">Stress and craft passes</p><h2>I predicted 1 break out of 13. The rest broke anyway.</h2><p>Empty lists, long names, wrong input and slow networks, thrown at the screens with the expected result written down first.</p></div></div>
+    <div class="st-head"><span class="st-n">15</span><div><p class="st-k">Stress and craft passes</p><h2>I predicted 1 break out of 13. The rest broke anyway.</h2><p>Empty lists, long names, wrong input and slow networks, thrown at the screens with the expected result written down first.</p></div></div>
     <div class="stats">
       <div class="stat"><b>1 of 13</b><span>breaks I predicted on the first two screens</span></div>
       <div class="stat"><b>2</b><span>blockers across the app, both on the work-email check</span></div>
@@ -625,7 +622,7 @@ ul.list li::marker{color:#A6ABB3}
 
   <!-- 15 -->
   <section class="stage" id="s-next" data-t="What would prove me wrong" data-s="Kill conditions and tests">
-    <div class="st-head"><span class="st-n">15</span><div><p class="st-k">Written before the test, never changed after</p><h2>What would prove me wrong</h2><p>Nobody has used SideDoor yet. The next real test: 8 referrers in tech who got a stranger's request in the last month, each using their link for two weeks.</p></div></div>
+    <div class="st-head"><span class="st-n">16</span><div><p class="st-k">Written before the test, never changed after</p><h2>What would prove me wrong</h2><p>Nobody has used SideDoor yet. The next real test: 8 referrers in tech who got a stranger's request in the last month, each using their link for two weeks.</p></div></div>
     <div class="grid g2">
       <div class="card kill"><span class="tag bad">Dead if</span><p class="num">Fewer than 1 in 5</p><p>complete requests from strangers get submitted to the company portal. Today's cold message gets about 1 reply in 5: "80% of the time they don't reply" (Riya, n30). A complete request has to beat that.</p></div>
       <div class="card kill"><span class="tag bad">Dead if</span><p class="num">Fewer than 3 of 8</p><p>referrers send their link to anyone in the two weeks. Then referrers won't start the loop alone, and the cold-start bet is dead.</p></div>
