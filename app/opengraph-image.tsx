@@ -51,7 +51,7 @@ export default async function Image() {
           </div>
           <div style={{ display: "flex", alignItems: "baseline", fontFamily: "Manrope", fontWeight: 700, fontSize: 34, letterSpacing: "-0.02em", color: "#4a4948" }}>
             Designer
-            <span style={{ fontFamily: "Instrument Serif", fontStyle: "italic", fontWeight: 400, fontSize: 48, color: "#918e89", margin: "0 10px" }}>&amp;</span>
+            <span style={{ fontFamily: "Instrument Serif", fontStyle: "italic", fontWeight: 400, fontSize: 48, color: "#918e89", margin: "0 10px", position: "relative", top: 4 }}>&amp;</span>
             Developer.
           </div>
         </div>
