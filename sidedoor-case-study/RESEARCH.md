@@ -400,8 +400,8 @@ can move on or follow up instead of guessing from silence.
 ### C4 · Referrer has little reason to refer someone they don't know
 
 **Tension:** the effort is certain; the reward is small, late, and only if the person is hired and stays.
-**What they did:** referred mostly people they knew (about 8 of 10); helped friends out of a sense of obligation and
-left strangers unanswered; counted the bonus as too low or not the main reason. Both people, the Infosys and Riya, as
+**What they did:** referred mostly people they knew (Samarth: about 8 of 10); treated friends differently and left
+strangers unanswered; Samarth, Riya and Atishya counted the bonus as too low or not a strong reason. All four, as
 referrers (Riya also said it in their candidate interview, n32 n42).
 **So what?** For a stranger, the referrer does real work for a reward that rarely arrives, so strangers lose by
 default. Nothing on the referrer's side makes a good stranger worth the effort.

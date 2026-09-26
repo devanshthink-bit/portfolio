@@ -3639,3 +3639,13 @@ Finding:   Every sentence, note and image on the page was checked against the tr
            - My mistake: "the last tap" read as if referrers never update again. Now says later stages are optional.
            - SCOPE.md credited the "80%" quote to Samarth. It's Riya (n30).
            - Ask Devansh knowledge regenerated from the live page (it still had the old title and 65 states).
+
+CRITIQUE · 2026-09-26 · Source: Devansh ("check the research board of both the case studies")
+Finding:   The board (public/sidedoor-process.html), static and script-drawn parts, checked against RESEARCH.md, the notes
+           array and the transcripts; every cited note id read against its text. Wrong and fixed:
+           - 65 states in the attack stats. 73.
+           - C4 "What they did" credited "Samarth and Riya, as referrers", but holds all four referrers' notes, and
+             "about 8 of 10" is Samarth's count only. Now says so; Akash never gave a bonus reason, so he isn't in that
+             line. RESEARCH.md matches.
+           Everything else held: note ranges per person add to 162, the killed-bets ids, the chain, the loops, the
+           versions strip, the kill conditions (Riya, n30), and "best matches first" is now true.
