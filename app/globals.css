@@ -2213,3 +2213,24 @@ body:has(.proto-page) { background: linear-gradient(180deg, #ffffff 0%, #f5f8fe 
   .pv-foot { display: block; }
   .proto-stage .iphone { --n: 300; }
 }
+
+/* Home hero on phones (Devansh, 26 Sep 2026): no craft line, and the first work card peeks in at the
+   bottom of the first view, a little more than half of it (Devansh: "the whole of it should not be
+   visible"). 175px = the sheet's 65px down to the card's image plus 60% of its 184px height. On short
+   phones, where the hero text alone is taller, the hero keeps its own height. The web is untouched. */
+@media (max-width: 640px) {
+  .stack-hero { min-height: calc(100svh - 175px); }
+  .stack-hero-inner { padding-bottom: 40px; }
+  .intro-craft { display: none; }
+}
+
+/* Footer socials on phones: icons, one grey, darker on hover, on the email's line at the right
+   (Devansh, 26 Sep 2026). The web keeps its text links. */
+.footer-icon { display: none; }
+@media (max-width: 640px) {
+  .footer-links { flex-direction: row; justify-content: space-between; align-items: flex-end; gap: 16px; }
+  .footer-socials { gap: 14px; align-items: center; margin-bottom: 3px; }
+  .footer-socials .footer-link { display: none; }
+  .footer-icon { display: flex; padding: 3px; margin: -3px; color: var(--text-muted); transition: color 0.3s var(--ease-out); }
+  .footer-icon:hover { color: var(--text-primary); }
+}
