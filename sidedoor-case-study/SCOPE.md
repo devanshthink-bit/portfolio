@@ -32,12 +32,13 @@ to be wrong.
   for exactly this: "a link is sent to the candidate to fill out their own personal details, which would cut the
   referrer's effort by 50%" (n66). A referrer can use that with candidates who have never heard of Sidedoor. So the
   supply side has a reason to come that doesn't depend on the network already existing. **worked it out**
-- **Both people, as candidates, asked for a dedicated place.** Samarth (as candidate): a place "where you know the other person is open to
+- **All four, as candidates, asked for a dedicated place.** Samarth (as candidate): a place "where you know the other person is open to
   doing it" (n24). Riya (as candidate): one place where "I can just see in this company, I asked this person referral for" (n45).
+  Akash (n113) and Atishya (n151): a place where employees say they are open to referring.
   **saw it**, as wishes, which are the weakest kind of evidence
 
 **The risk, stated before anyone asks:**
-- Both people ask and get asked on LinkedIn today (n04, n07, n09, n29, n49, n68, n69). Sidedoor has to pull that
+- All four ask and get asked on LinkedIn today (n04, n07, n09, n29, n49, n68, n69, n117, n142, n156). Sidedoor has to pull that
   moment out of LinkedIn, or start from a link shared inside it
 - Riya (as candidate) says the referral communities on Fishbowl are so quiet a message might be seen "next week" (n28). A
   separate place for referrals can die empty. Sidedoor has to answer why it won't
@@ -139,7 +140,7 @@ GetMeReferred's public page, fetched 17 Sep 2026. No store reviews were collecte
 
 **The job:** a candidate gets an employee at a company to refer them for one job, and finds out what happened.
 
-**Picked, and why:** LinkedIn (where both Samarth and Riya actually ask and get asked), GetMeReferred (the closest
+**Picked, and why:** LinkedIn (where all four people actually ask and get asked), GetMeReferred (the closest
 product: candidates reach employees who say they are willing to refer), EasyRefer (the other model: employees post jobs
 and candidates apply to them, the same model as Sidedoor V2), Instahyre (shows candidates a fit score, and puts a cost
 on backing out). Plus what people do without any product.
@@ -189,7 +190,7 @@ Cutshort, Wellfound, TalentPool, Naukri, ReferMe, Reddit/Discord: not read at fu
 - Activity: Viewed, Contacted, Not Shortlisted; "Go Premium"
 - Companies and their sourcers reach the candidate. No employee referral visible
 
-**No product · what Samarth and Riya do** · saw it, from the interviews
+**No product · what the four people do** · saw it, from the interviews
 - Ask friends and mutuals first, on WhatsApp; strangers on LinkedIn (n03 n04 n05 n49)
 - Send the job link or job ID and a resume (n06 n07 n38)
 - Referrer types it into Workday or the company portal and sees the status there (n57 n58 n71 n83)

@@ -14,7 +14,7 @@ behind it, like RedBus's own 42KB BRIEF.md.
 
 | | |
 |---|---|
-| **Domain + user segment** | Job referrals in Indian tech hiring · a candidate asking an employee they don't know for a referral to one job, and the employee being asked. Two people interviewed, each from both sides |
+| **Domain + user segment** | Job referrals in Indian tech hiring · a candidate asking an employee they don't know for a referral to one job, and the employee being asked. Four people interviewed, each from both sides |
 | **JTBD** | When someone I don't know asks me for a referral, I want everything my company's portal needs already there, so referring takes minutes and they find out what happened without me doing more |
 | **Problem statement** | How might we let a candidate send a referral request a stranger can act on in minutes, and let the answer reach the candidate without asking the referrer for more work? |
 | **Success metric** | Referral rate on requests to strangers: % the referrer submits. Guardrail: referrers turning off referral requests must not rise. Concept targets; no live baseline. North Star: referrals submitted per active referrer per month (BUSINESS.md) |

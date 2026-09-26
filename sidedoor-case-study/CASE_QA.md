@@ -12,7 +12,7 @@ Ratings: **answerable** (the files back it), **partly** (reasoning, not evidence
 |---|---|---|---|
 | Referrers skip strangers because of the admin | Which referrer, and what did they say? | Riya (n76): no job ID "irritates me a lot... I will not take the pain". Samarth (n59, n60): chasing date of birth, gaps, last employer, copying into the portal by hand | answerable |
 | "80% of the time they don't reply" | Out of how many? | It's Riya's own estimate as a candidate (n30), not a count. Say so | partly |
-| Two people | Isn't that too few? | Yes, it's thin. Both were seen from both sides, so it's four conversations. Every pattern on the page is "both said it", and one-person claims are marked | answerable |
+| Four people | Isn't that too few? | Yes, it's thin. Each was seen from both sides, so it's eight conversations. One-person claims are marked | answerable |
 
 ## The design
 

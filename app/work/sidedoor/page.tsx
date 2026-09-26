@@ -39,7 +39,7 @@ function Limits() {
   const rows = [
     "Nobody outside a company can read its referral portal. Not LinkedIn, not me.",
     "Signing in with LinkedIn gives a name, an email and a photo. No work history.",
-    "Two people, each seen from both sides. Anything only one of them said is marked as one.",
+    "Four people, each seen from both sides. Anything only one of them said is marked as one.",
   ];
   return (
     <Card>
@@ -154,7 +154,7 @@ export default function SidedoorCaseStudy() {
 
       <Beat label="The other side" title="Referrers skip strangers because of the admin."
         sub="Riya refers people at Accenture, and Samarth at Infosys. Neither worried about a stranger turning out badly. What they described was chasing details: a job ID, a date of birth, the gaps in someone's career, then typing it all into the company portal by hand."
-        caption={<>Two people, 91 notes, five clusters. <a className="inline-link" href={BOARD_URL} target="_blank" rel="noopener noreferrer">See the whole research board</a>, from the business lens to the tests.</>}>
+        caption={<>Eight interviews, 170 notes, five clusters. <a className="inline-link" href={BOARD_URL} target="_blank" rel="noopener noreferrer">See the whole research board</a>, from the business lens to the tests.</>}>
         <Quotes items={[
           { q: "they don't share the job ID, which irritates me a lot... I will not take the pain and go and check for it", who: "Riya, as a referrer" },
           { q: "having to constantly ask candidates for additional details, as many assume that just sending a resume and phone number is enough", who: "Samarth, as a referrer" },
@@ -162,7 +162,7 @@ export default function SidedoorCaseStudy() {
       </Beat>
 
       <Beat label="The candidate" title="And the candidate reads silence as a no."
-        sub="Nothing comes back, so they guess. The same two people, asking for referrals themselves, described it from the other end.">
+        sub="Nothing comes back, so they guess. The same people, asking for referrals themselves, described it from the other end.">
         <Quotes items={[
           { q: "You can say 80% of the time they don't reply.", who: "Riya, as a candidate" },
           { q: "I would never know what actually happened. If they ever applied in reality or not I'm not sure.", who: "Riya again" },
@@ -283,7 +283,7 @@ export default function SidedoorCaseStudy() {
       <Act id="toc-behind" n="Act 3 · Behind the scenes" title="The first version was built on the wrong idea"
         sub="These are the moments that changed the design, roughly in the order they hit me." />
 
-      <Beat label="The bet that died" title="I thought referrers didn't trust strangers. Both said the problem was work."
+      <Beat label="The bet that died" title="I thought referrers didn't trust strangers. They said the problem was work."
         sub={<>The old SideDoor was built on trust: a match score, graded recommendations, spam limits. Samarth said a bad hire after interviews &quot;should not fall on the referrer&quot;. Riya&apos;s rule is just the job ID. And the bonus doesn&apos;t make up for it. Riya called it &quot;very low&quot;.</>}
         caption="That made the score screen, the ranked inbox and the swipe cards worthless.">
         <BeforeAfter beforeLabel="What I believed" afterLabel="What they told me"

@@ -8,7 +8,7 @@
 Updated 2026-09-24.
 
 Bet:        employees drop strangers' referral requests because the request makes them do the candidate's work, not because they won't help (SCOPE v2)
-Evidence:   thin. 4 real interviews with 2 people (Samarth, Riya; each as candidate and as referrer), 1 remembered follow-up (n92), desk research without source links. No usability test run yet
+Evidence:   thin. 8 interviews with 4 people (Samarth, Riya, Akash, Atishya; each as candidate and as referrer), 1 remembered follow-up (n92), desk research without source links. No usability test run yet
 Built:      Figma V6 (UI Screens, V6 flows + States grid) and a coded prototype of every V6 screen and state (/work/sidedoor/prototype, branch sidedoor). Figma and code change together
 Done:       scope, landscape, research, synthesis, AI spec, brief, business, design language, build V3 → V6, attack (19 and 23 Sep), numbered kill conditions for the next test
 Open:       molades-test (prototype is ready for testers; no test run yet), case study rewrite (molades-case), source links for desk research, merge to main only when Devansh says it's final
@@ -22,7 +22,7 @@ The decisions an interviewer will ask about, newest thinking only. Each line: wh
 | Decision | Why | Evidence | Turned down |
 |---|---|---|---|
 | The problem: a stranger's request makes the referrer do the candidate's work, so most don't, and the candidate never hears back | Both referrers have simple rules and no fear for their reputation; what stops them is the work a request hands them | n50 n55 n57 n59 n60 n70 n71 n76 n87 | Old "trust gap" bet (contradicted by n50 n55 n76); candidate-only or referrer-only problem statements |
-| Use only the 4 real interviews | The other 6 transcripts in FigJam were AI-generated | LEARNED 2026-09-17 | Keeping them as "illustrative" |
+| Use only the 8 real interviews | The 2 recruiter transcripts in FigJam were AI-generated | LEARNED 2026-09-17 | Keeping them as "illustrative" |
 | Sidedoor is its own product, not a LinkedIn feature | The work sits between LinkedIn and the company portal, which neither owns; the link helps referrers before any network exists | n46 n47 n57–n60 n66 n71; candidates asked for a dedicated place n24 n45 | Mentor's "feature inside LinkedIn". Risk kept: both people ask on LinkedIn today (n04 n29) |
 | Reason to exist: a complete request, status passed back, fit shown to the referrer | LinkedIn and GetMeReferred already do discovery and candidate-side fit | Landscape (screens, pricing page) | Competing on finding referrers |
 | Kill conditions for the next test: under 1 in 5 complete requests submitted, or under 3 of 8 referrers sharing their link in 2 weeks | The research ran without one, so nothing could prove the bet wrong | n30 ("80% don't reply") sets the bar | Back-dating a kill condition to old data |

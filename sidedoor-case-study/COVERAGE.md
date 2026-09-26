@@ -54,5 +54,5 @@ Settings, Help, Your links to share) are outside the problem statement.
 ## What "correct" means here
 
 Every screen traces to a job, a cluster and a logged decision. That makes it the right design **for the research we
-had**: 2 people, interviewed as both candidate and referrer. Whether a complete request actually gets referred more
+had**: 4 people, each interviewed as both candidate and referrer. Whether a complete request actually gets referred more
 (kill condition 1) and whether referrers send their link (kill condition 2) is untested.
