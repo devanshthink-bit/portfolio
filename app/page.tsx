@@ -58,7 +58,7 @@ const recentWork = [
     brand: "SideDoor",
     brandColor: "#ffffff",
     did: "Designed SideDoor, a referral app where no request is left on read",
-    tags: ["Careers", "Two-sided", "iOS app", "Concept"],
+    tags: ["Hiring", "Two-sided marketplace", "iOS app", "0 to 1"],
     blurb: "Referral DMs to strangers usually end in silence. A self-initiated iOS concept where each request arrives with the job ID and portal details filled in, and the candidate sees when it's submitted.",
   },
   // Hidden for now at Devansh's request (13 Sep 2026). Kept, not deleted: uncomment to bring back.
