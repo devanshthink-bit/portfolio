@@ -1,11 +1,13 @@
 "use client";
 import { useEffect, useRef } from "react";
 
-// The Claude Code crab riding the Codex logo like a tyre, playing ball with the Cursor logo,
-// on the baseline of the "Side projects" label. It plays on its own: chases the Cursor cube and
-// kicks it, and when the cube is stuck at an end it flicks it back over its head. While the
-// cursor moves over it, it rolls after the cursor instead (and can still kick the cube). Its eyes
-// watch the cube, dart around and follow the cursor. Click to hop.
+// The Claude Code crab riding the Codex logo like a tyre, playing with the Cursor logo, on the
+// baseline of the "Side projects" label. On its own it picks a game at random: a tap, a power
+// kick with a run-up, dribbling, keepy-uppies on its head, carrying the cube on its head, or
+// flicking it over its head (also what it does when the cube is stuck at an end). After a good
+// one it celebrates: hops, a flip, a wave at you, or a little dance. While the cursor moves over
+// it, it rolls after the cursor instead. Its eyes watch the cube, glance around and follow the
+// cursor. Click to hop. Nothing stretches, and the eyes only move and blink.
 // All motion is one rAF loop that writes transforms straight to the DOM.
 
 // The Codex logo and the Cursor cube, from @lobehub/icons.
@@ -39,6 +41,7 @@ export default function PlaygroundToy() {
   const cubeShadow = useRef<HTMLSpanElement>(null);
   const legs = useRef<(SVGRectElement | null)[]>([]);
   const eyes = useRef<(SVGRectElement | null)[]>([]);
+  const joy = useRef<(SVGPathElement | null)[]>([]);
   const armL = useRef<SVGRectElement>(null);
   const armR = useRef<SVGRectElement>(null);
 
@@ -85,39 +88,164 @@ export default function PlaygroundToy() {
     };
     measure();
 
-    // Tyre and crab
-    let x = start + R + 10, v = 0, prevV = 0, acc = 0, spin = 0;
-    let tilt = 0, tiltV = 0, hopY = 0, hopV = 0, phase = 0;
-    let target = x, hovering = false, steering = false, chasing = false, chaseFor = 0, rest = 1;
+    // Tyre
+    let x = start + R + 10, v = 0, prevV = 0, acc = 0, spin = 0, sink = 0, ride = 0;
+    let target = x, k = 7, vmax = 240;
+    // Crab
+    let tilt = 0, tiltV = 0, lean = 0, hopY = 0, hopV = 0, flip = 0, flipV = 0, phase = 0;
+    let armL0 = 0, armR0 = 0, happy = 0;
     // Cursor cube
-    let cx = x + 120, cv = 0, turn = Math.PI / 6, cy = 0, cyV = 0, flying = false, airSpin = 0;
+    let cx = x + 120, cv = 0, turn = Math.PI / 6, cy = 0, cyV = 0, flying = false, airSpin = 0, onHead = false;
     // Eyes
-    let lookX = 0, lookY = 0, blinkIn = 2.5, blink = 0, happy = 0;
+    let lookX = 0, lookY = 0, blinkIn = 2.5, blink = 0, atYou = 0;
     let glance = 0, glanceIn = 1.5, gx = 0, gy = 0;
     let ptr: { x: number; y: number } | null = null, ptrAge = 99;
+    let hovering = false, steering = false, touchT = 0;
     let raf = 0, last = 0, visible = true;
+
+    // What it's playing right now. Each game runs in stages; a party is how it celebrates.
+    type Mode = "rest" | "kick" | "power" | "dribble" | "juggle" | "carry" | "flick" | "watch" | "party";
+    type Party = "hops" | "flip" | "wave" | "dance";
+    let mode: Mode = "rest", party: Party = "hops", beat = 0, t = 0, restFor = 1, d = 1, n = 0, goal = 0, x0 = 0;
+    let lastGame: Mode = "rest";
 
     const cubeLift = () => {
       // The hexagon rests on a flat side and rises onto a corner as it tips over.
       const phi = ((((turn - Math.PI / 6) % (Math.PI / 3)) + Math.PI / 3) % (Math.PI / 3)) - Math.PI / 6;
       return HEX * Math.cos(phi);
     };
+    const headCy = () => 20 + sink + ride + hopY - H; // cube offset that puts it on the crab's head
+
+    const setMode = (m: Mode) => { mode = m; beat = 0; t = 0; };
+    const rest = (s: number) => { setMode("rest"); restFor = s; };
+    const celebrate = (p?: Party) => {
+      const all: Party[] = ["hops", "flip", "wave", "dance"];
+      party = p ?? all[Math.floor(Math.random() * all.length)];
+      setMode("party");
+      x0 = x;
+      happy = party === "wave" ? 0 : 1.2;
+    };
+    const nextGame = () => {
+      const games: [Mode, number][] = [["kick", 3], ["power", 2], ["dribble", 2], ["juggle", 3], ["carry", 2], ["flick", 1.5]];
+      const pool = games.filter(([g]) => g !== lastGame);
+      let r = Math.random() * pool.reduce((s, [, w]) => s + w, 0);
+      let pick: Mode = pool[0][0];
+      for (const [g, w] of pool) { r -= w; if (r <= 0) { pick = g; break; } }
+      lastGame = pick;
+      setMode(pick);
+      d = Math.sign(cx - x) || 1;
+    };
+    // Tap the cube straight up, a little back towards the crab so it drops onto its head.
+    const pop = (up: number) => {
+      flying = true; cyV = -up; cy = Math.min(cy, -0.5); cv = -d * 60; airSpin = rand(-6, 6);
+    };
+    // Scoop the cube up and over its head (it passes behind the crab), back into open space.
+    const flick = (dir: number) => {
+      flying = true; onHead = false;
+      cyV = -rand(490, 520); cy = -0.5;
+      cv = -dir * rand(150, 200);
+      airSpin = -dir * rand(9, 14);
+      tiltV -= dir * 90;
+      setMode("watch");
+    };
+
+    const brain = (dt: number, lo: number, hi: number, cLo: number, cHi: number) => {
+      t += dt;
+      armL0 = 0; armR0 = 0; lean = 0;
+      k = 7; vmax = 240;
+      const near = Math.abs(cx - x) <= MIN_D + 3;
+      switch (mode) {
+        case "rest":
+          target = x;
+          if (t > restFor && !flying) nextGame();
+          break;
+        case "kick": // roll at it and give it a good tap
+          target = cx + d * 40; vmax = 230;
+          if (t > 4) rest(0.4);
+          break;
+        case "power": // back up, wind up, then charge
+          if (beat === 0) {
+            target = clamp(cx - d * (MIN_D + 90), lo, hi); k = 9; vmax = 260;
+            if ((Math.abs(x - target) < 4 && Math.abs(v) < 15) || t > 2.5) { beat = 1; t = 0; }
+          } else if (beat === 1) {
+            target = x; lean = -d * 9; armL0 = armR0 = 25;
+            if (t > 0.5) { beat = 2; t = 0; }
+          } else {
+            target = cx + d * 60; k = 30; vmax = 470;
+            if (t > 3) rest(0.4);
+          }
+          break;
+        case "dribble": // little taps, keeping the cube just ahead
+          target = cx + d * 6; k = 10; vmax = 120;
+          if (t > 3.2) celebrate("dance");
+          break;
+        case "flick": // walk up to it and flip it over its head
+          target = cx - d * (MIN_D - 3); vmax = 150;
+          if (t > 3) rest(0.4);
+          break;
+        case "juggle":
+        case "carry":
+          if (beat === 0) { // walk up gently, then pop it up
+            target = cx - d * (MIN_D - 1); k = 9; vmax = 150;
+            if ((near && Math.abs(v) < 70) || t > 3) {
+              if (!near) { rest(0.4); break; }
+              pop(mode === "juggle" ? 580 : 555); // the head is ~80px up
+              beat = 1; t = 0; n = 0; goal = Math.floor(rand(3, 6));
+            }
+          } else if (beat === 1) { // keep under it; bounces are handled with the cube
+            target = cx + cv * 0.12; k = 22; vmax = 320; armL0 = armR0 = 18;
+            if (!flying && !onHead) { atYou = 0.9; rest(0.7); } // dropped it: look at you, try again
+          } else { // carrying it on its head
+            target = goal; k = 6; vmax = 150; armL0 = armR0 = 30;
+            if (Math.abs(x - goal) < 6) goal = rand(lo, hi);
+            if (t > 3.5) { // toss it off
+              onHead = false; flying = true; cyV = -330; cv = (Math.sign(v) || d) * 190; airSpin = rand(8, 12) * (Math.sign(cv) || 1);
+              setMode("watch");
+            }
+          }
+          break;
+        case "watch":
+          target = x;
+          if (!flying && t > 0.2) celebrate();
+          break;
+        case "party":
+          if (party === "hops") {
+            target = x; armL0 = armR0 = 35;
+            if (beat === 0 && hopY === 0) { hopV = -260; beat = 1; }
+            else if (beat === 1 && t > 0.45 && hopY === 0) { hopV = -300; beat = 2; }
+            if (t > 1.2) rest(rand(0.3, 0.9));
+          } else if (party === "flip") {
+            target = x; armL0 = armR0 = 40;
+            if (beat === 0 && hopY === 0) { hopV = -430; flipV = (Math.random() < 0.5 ? -1 : 1) * 360 / (860 / 1300); beat = 1; }
+            if (beat === 1 && t > 0.2 && hopY === 0) rest(rand(0.4, 0.9));
+          } else if (party === "wave") {
+            target = x; atYou = 0.2;
+            armR0 = 55 + Math.sin(t * 14) * 28;
+            if (t > 1.4) rest(rand(0.2, 0.7));
+          } else { // dance: rock the tyre back and forth, arms swinging
+            target = x0 + Math.sin(t * 10) * 9; k = 40; vmax = 200;
+            armL0 = 20 + Math.sin(t * 10) * 22; armR0 = 20 - Math.sin(t * 10) * 22;
+            if (t > 1.7) rest(rand(0.3, 0.8));
+          }
+          break;
+      }
+      target = clamp(target, lo, hi);
+      if (!flying && (cx <= cLo + 1 || cx >= cHi - 1) && mode === "dribble" && near) flick(Math.sign(cx - x) || d);
+    };
 
     const draw = (time: number) => {
       const moving = clamp(Math.abs(v) / 90, 0, 1);
       const bob = hopY === 0 ? -Math.abs(Math.sin(phase)) * 1.2 * moving : 0;
-      const sink = R - sample(below, spin); // the tyre dips when a hollow is at the bottom
-      const ride = R - sample(above, spin); // and the crab drops into a hollow on top
       rig.current!.style.transform = `translate(${x}px, ${sink}px)`;
       tyre.current!.style.transform = `rotate(${(spin * 180) / Math.PI}deg)`;
+      // Tilt pivots on its feet; the flip turns it round its middle.
       crab.current!.style.transform =
-        `translateY(${ride + hopY + bob}px) rotate(${tilt}deg)`;
+        `translateY(${ride + hopY + bob}px) rotate(${tilt}deg) translateY(-15px) rotate(${flip}deg) translateY(15px)`;
       shadow.current!.style.transform = `translateX(${x}px) scaleX(${1 - Math.min(0.3, -hopY / 80)})`;
 
       cube.current!.style.transform =
         `translate(${cx}px, ${-cubeLift() + cy}px) rotate(${(turn * 180) / Math.PI}deg)`;
-      cubeShadow.current!.style.transform =
-        `translateX(${cx}px) scaleX(${1 - Math.min(0.6, -cy / 90)})`;
+      cubeShadow.current!.style.transform = `translateX(${cx}px) scaleX(${1 - Math.min(0.6, -cy / 90)})`;
       cubeShadow.current!.style.opacity = String(1 - Math.min(0.7, -cy / 110));
 
       // Walk: the tyre's top slides under the crab, so it steps against it, pairs alternating.
@@ -125,32 +253,27 @@ export default function PlaygroundToy() {
         const up = hopY < 0 ? 0.9 : Math.max(0, Math.sin(phase + (i % 2) * Math.PI)) * 1.5 * moving;
         leg?.setAttribute("transform", `translate(0 ${-up})`);
       });
-      // Arms go up to balance, and right up after a good kick.
+      // Arms balance while it rolls, go up when it's happy, and do whatever the game asks.
       const wave = Math.sin(time / 90) * 6 * moving;
-      const base = 6 + moving * 14 + (hopY < 0 ? 22 : 0) + (happy > 0 ? 30 + Math.sin(time / 60) * 10 : 0);
-      armL.current?.setAttribute("transform", `rotate(${base + Math.max(0, tilt) * 2.5 + wave} 3 12.5)`);
-      armR.current?.setAttribute("transform", `rotate(${-(base + Math.max(0, -tilt) * 2.5 - wave)} 21 12.5)`);
+      const base = 6 + moving * 14 + (hopY < 0 ? 22 : 0) + (happy > 0 ? 26 + Math.sin(time / 60) * 10 : 0);
+      armL.current?.setAttribute("transform", `rotate(${base + armL0 + Math.max(0, tilt) * 2.5 + wave} 3 12.5)`);
+      armR.current?.setAttribute("transform", `rotate(${-(base + armR0 + Math.max(0, -tilt) * 2.5 - wave)} 21 12.5)`);
 
-      // Eyes keep their size and shape; they only move (and blink).
+      // Eyes keep their size and shape; they only move and blink. When it's happy they turn
+      // into little ^ ^.
+      const glad = happy > 0 || mode === "party";
       const h = blink > 0 ? 0.3 : EYE.h;
       eyes.current.forEach((eye, i) => {
         if (!eye) return;
         eye.setAttribute("x", String(EYE.xs[i] + lookX));
         eye.setAttribute("y", String(EYE.y + (EYE.h - h) / 2 + lookY));
         eye.setAttribute("height", String(h));
+        eye.setAttribute("opacity", glad ? "0" : "1");
       });
-    };
-
-    // Scoop the cube up and over its head (it passes behind the crab), back into open space.
-    const flick = (d: number) => {
-      flying = true;
-      cyV = -rand(490, 520);
-      cy = -0.5;
-      cv = -d * rand(150, 200);
-      airSpin = -d * rand(9, 14);
-      tiltV -= d * 90;
-      happy = 0;
-      chasing = false; target = x; rest = rand(0.9, 1.4);
+      joy.current.forEach((j) => {
+        j?.setAttribute("transform", `translate(${lookX * 0.6} ${lookY * 0.5})`);
+        j?.setAttribute("opacity", glad ? "1" : "0");
+      });
     };
 
     const step = (time: number) => {
@@ -162,100 +285,116 @@ export default function PlaygroundToy() {
 
       // The cursor steers only while it moves. When it rests, the crab goes back to playing.
       ptrAge += dt;
-      const nowSteering = hovering && ptrAge < 1.2;
-      if (steering && !nowSteering) { rest = rand(0.3, 0.8); target = x; }
+      if (touchT > 0) touchT -= dt;
+      const nowSteering = (hovering || touchT > 0) && ptrAge < 1.2;
+      if (nowSteering && !steering && onHead) { onHead = false; flying = true; cyV = -200; cv = 0; }
+      if (steering && !nowSteering) rest(rand(0.3, 0.8));
       steering = nowSteering;
-
-      // On its own: a short rest, then roll at the cube from whichever side it is on and kick it.
-      if (!steering) {
-        if (chasing) {
-          const d = Math.sign(cx - x) || 1;
-          target = cx + d * 40;
-          chaseFor += dt;
-          if (chaseFor > 4) { chasing = false; target = x; rest = rand(0.3, 0.8); }
-        } else if (Math.abs(v) < 20 && !flying) {
-          rest -= dt;
-          if (rest <= 0) { chasing = true; chaseFor = 0; }
-        }
-      }
+      if (steering) { k = 20; vmax = 480; armL0 = armR0 = 0; lean = 0; if (mode !== "rest") rest(0.5); }
+      else brain(dt, lo, hi, cLo, cHi);
       target = clamp(target, lo, hi);
 
       // Spring towards the target, capped speed: it speeds up, cruises, and brakes.
-      const k = steering ? 20 : 7;
-      const vmax = steering ? 480 : 240;
-      v += clamp(k * (target - x) - 2 * Math.sqrt(k) * 0.9 * v, -1300, 1300) * dt;
+      v += clamp(k * (target - x) - 2 * Math.sqrt(k) * 0.9 * v, -1600, 1600) * dt;
       v = clamp(v, -vmax, vmax);
       x = clamp(x + v * dt, lo, hi);
+      spin += (v * dt) / R; // rolls without slipping
+      sink = R - sample(below, spin); // the tyre dips when a hollow is at the bottom
+      ride = R - sample(above, spin); // and the crab drops into a hollow on top
+      phase += (Math.abs(v) * dt) / 7;
+      acc += (((v - prevV) / Math.max(dt, 0.001)) - acc) * Math.min(1, dt * 10);
+      prevV = v;
 
-      // The cube rolls corner over corner, slows down, and settles on a flat side. In the air it
-      // just spins and falls.
-      if (flying) {
-        turn += airSpin * dt;
-        cv *= Math.exp(-0.2 * dt);
-      } else {
-        cv *= Math.exp(-1.1 * dt);
-        cv += -260 * Math.sin(6 * (turn - Math.PI / 6)) * dt;
-        turn += (cv * dt) / (HEX * 0.93);
+      // Crab hops (and flips while in the air).
+      if (hopY < 0 || hopV < 0) {
+        hopV += 1300 * dt;
+        hopY += hopV * dt;
+        flip += flipV * dt;
+        if (hopY >= 0) { hopY = 0; hopV = 0; flip = 0; flipV = 0; }
       }
-      cx += cv * dt;
-      if (cx < cLo) { cx = cLo; cv = Math.abs(cv) * 0.45; }
-      if (cx > cHi) { cx = cHi; cv = -Math.abs(cv) * 0.45; }
-      if (cy < 0 || cyV < 0) {
-        cyV += 1400 * dt;
-        cy += cyV * dt;
-        if (cy >= 0) {
-          cy = 0;
-          if (cyV > 140) { cyV = -cyV * 0.32; cv *= 0.8; } // bounce
-          else { cyV = 0; if (flying) { flying = false; happy = 0.7; } }
+
+      // The cube: on its head, in the air, or rolling corner over corner until it settles flat.
+      if (onHead) {
+        cx = x + clamp(tilt, -15, 15) * 0.4;
+        cy = headCy(); cyV = 0; cv = v;
+        const flat = Math.PI / 6 + Math.round((turn - Math.PI / 6) / (Math.PI / 3)) * (Math.PI / 3);
+        turn += (flat - turn) * Math.min(1, dt * 10);
+      } else {
+        if (flying) {
+          turn += airSpin * dt;
+          cv *= Math.exp(-0.2 * dt);
+        } else {
+          cv *= Math.exp(-1.1 * dt);
+          cv += -260 * Math.sin(6 * (turn - Math.PI / 6)) * dt;
+          turn += (cv * dt) / (HEX * 0.93);
+        }
+        cx += cv * dt;
+        if (cx < cLo) { cx = cLo; cv = Math.abs(cv) * 0.45; }
+        if (cx > cHi) { cx = cHi; cv = -Math.abs(cv) * 0.45; }
+        if (cy < 0 || cyV < 0) {
+          const before = cy;
+          cyV += 1400 * dt;
+          cy += cyV * dt;
+          // Headers and catches: the cube comes down onto the crab's head.
+          const head = headCy();
+          if ((mode === "juggle" || mode === "carry") && beat === 1 && cyV > 0 && before <= head + 2 && cy >= head && Math.abs(cx - x) < 26) {
+            cy = head;
+            if (mode === "carry") { onHead = true; flying = false; beat = 2; t = 0; goal = rand(lo, hi); }
+            else if (++n >= goal) { // last one: head it away and celebrate
+              const away = Math.random() < 0.5 ? -1 : 1;
+              cyV = -rand(360, 420); cv = away * rand(150, 210); airSpin = away * rand(8, 12);
+              hopV = -160; happy = 0.8;
+              setMode("watch");
+            } else {
+              cyV = -rand(330, 400); cv = (x - cx) * 2 + rand(-35, 35); airSpin = rand(-8, 8);
+              hopV = -120;
+            }
+          }
+          if (cy >= 0) {
+            cy = 0;
+            if (cyV > 140) { cyV = -cyV * 0.32; cv *= 0.8; } // bounce
+            else { cyV = 0; flying = false; }
+          }
         }
       }
 
-      // Bump: a heavy tyre and a light cube, a little bounce. Nothing to bump while it flies.
+      // Bump on the ground: a heavy tyre and a light cube, a little bounce.
       const gap = cx - x;
-      if (!flying && cy > -20 && Math.abs(gap) < MIN_D) {
-        const d = Math.sign(gap) || 1;
-        const closing = (v - cv) * d;
-        const stuck = (d > 0 ? cHi - cx : cx - cLo) < 10;
-        if (stuck && closing > -20) {
-          flick(d);
+      if (!flying && !onHead && cy > -20 && Math.abs(gap) < MIN_D) {
+        const dir = Math.sign(gap) || 1;
+        const closing = (v - cv) * dir;
+        const stuck = (dir > 0 ? cHi - cx : cx - cLo) < 10;
+        if ((stuck && closing > -20 && !steering) || (mode === "flick" && closing > -20)) {
+          flick(dir);
         } else if (closing > 0) {
           const M = 3, e = 0.55;
           const nv = (M * v + cv - e * (v - cv)) / (M + 1);
           const ncv = (M * v + cv + M * e * (v - cv)) / (M + 1);
           v = nv; cv = ncv;
-          if (closing > 70) {
+          if (closing > 70 && mode !== "dribble") {
             cyV = -Math.min(260, closing * 0.7);
             cy = Math.min(cy, -0.1);
-            if (!steering) { chasing = false; target = x; rest = rand(0.4, 1.4); }
-            happy = 0.7;
+            if (mode === "kick" || mode === "power") celebrate(mode === "power" && Math.random() < 0.5 ? "flip" : undefined);
+            else happy = 0.7;
           }
         }
         if (!flying) {
-          cx = x + d * MIN_D;
-          if (cx < cLo || cx > cHi) { cx = clamp(cx, cLo, cHi); x = cx - d * MIN_D; }
+          cx = x + dir * MIN_D;
+          if (cx < cLo || cx > cHi) { cx = clamp(cx, cLo, cHi); x = cx - dir * MIN_D; }
         }
       }
 
-      spin += (v * dt) / R; // rolls without slipping
-      phase += (Math.abs(v) * dt) / 7;
-      acc += (((v - prevV) / Math.max(dt, 0.001)) - acc) * Math.min(1, dt * 10);
-      prevV = v;
-
       // The crab lags when the tyre speeds up and pitches forward when it brakes, then wobbles back.
       const idle = Math.abs(v) < 10 ? Math.sin(time / 600) * 1.5 : 0;
-      tiltV += (70 * (clamp(-acc * 0.014, -18, 18) + idle - tilt) - 6 * tiltV) * dt;
+      tiltV += (70 * (clamp(-acc * 0.014, -18, 18) + idle + lean - tilt) - 6 * tiltV) * dt;
       tilt += tiltV * dt;
+      if (happy > 0) happy -= dt;
 
-      if (hopY < 0 || hopV < 0) {
-        hopV += 1300 * dt;
-        hopY += hopV * dt;
-        if (hopY >= 0) { hopY = 0; hopV = 0; }
-      }
-
-      // Where the eyes go: the cursor while it moves nearby, a quick glance around now and then,
-      // otherwise the cube it's playing with (up in the air too).
+      // Where the eyes go: the cursor while it moves nearby, at you when it wants to show off or
+      // has just dropped the cube, a quick glance around now and then, otherwise the cube.
       glanceIn -= dt;
       if (glance > 0) glance -= dt;
+      if (atYou > 0) atYou -= dt;
       if (glanceIn <= 0) {
         glance = rand(0.35, 0.8);
         glanceIn = rand(1.2, 3.2);
@@ -266,7 +405,8 @@ export default function PlaygroundToy() {
       const r = el.getBoundingClientRect();
       const px = ptr ? ptr.x - (r.left + x) : 0, py = ptr ? ptr.y - (r.top + EYE_Y) : 0;
       if (ptr && ptrAge < 1.5 && (hovering || Math.hypot(px, py) < 420)) { dx = px; dy = py; }
-      else if (glance > 0 && !flying) { dx = gx * 100; dy = gy * 100; }
+      else if (atYou > 0) { dx = 0; dy = 0; }
+      else if (glance > 0 && !flying && mode === "rest") { dx = gx * 100; dy = gy * 100; }
       else { dx = cx - x; dy = H - cubeLift() + cy - EYE_Y; }
       const dist = Math.max(1, Math.hypot(dx, dy));
       const reach = Math.min(1, dist / 30);
@@ -275,7 +415,6 @@ export default function PlaygroundToy() {
 
       blinkIn -= dt;
       if (blink > 0) blink -= dt;
-      if (happy > 0) happy -= dt;
       if (blinkIn <= 0) {
         blink = 0.12;
         blinkIn = Math.random() < 0.2 ? 0.25 : rand(2, 5);
@@ -289,11 +428,11 @@ export default function PlaygroundToy() {
 
     const onMove = (e: PointerEvent) => { ptr = { x: e.clientX, y: e.clientY }; ptrAge = 0; };
     const follow = (e: PointerEvent) => { target = e.clientX - el.getBoundingClientRect().left; };
-    const enter = (e: PointerEvent) => { if (e.pointerType === "mouse") { hovering = true; chasing = false; follow(e); } };
+    const enter = (e: PointerEvent) => { if (e.pointerType === "mouse") { hovering = true; follow(e); } };
     const leave = () => { hovering = false; };
     const down = (e: PointerEvent) => {
       if (hopY === 0) hopV = -330;
-      if (e.pointerType !== "mouse") { chasing = false; rest = 1.5; follow(e); }
+      if (e.pointerType !== "mouse") { touchT = 1.2; onMove(e); follow(e); } // a tap steers it there
     };
     const hoverMove = (e: PointerEvent) => { if (hovering) follow(e); };
 
@@ -354,6 +493,14 @@ export default function PlaygroundToy() {
           </g>
           {EYE.xs.map((ex, i) => (
             <rect key={ex} ref={(n) => { eyes.current[i] = n; }} x={ex} y={EYE.y} width={EYE.w} height={EYE.h} rx={0.2} fill="#1d1d1d" />
+          ))}
+          {EYE.xs.map((ex, i) => (
+            <path
+              key={`joy${ex}`}
+              ref={(n) => { joy.current[i] = n; }}
+              d={`M${ex - 0.5} ${EYE.y + 2} L${ex + EYE.w / 2} ${EYE.y + 0.6} L${ex + EYE.w + 0.5} ${EYE.y + 2}`}
+              fill="none" stroke="#1d1d1d" strokeWidth={0.8} strokeLinecap="round" strokeLinejoin="round" opacity={0}
+            />
           ))}
         </svg>
       </div>
