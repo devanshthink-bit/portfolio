@@ -154,7 +154,7 @@ export default function SidedoorCaseStudy() {
 
       <Beat label="The other side" title="Referrers skip strangers because of the admin."
         sub="Riya refers people at Accenture, and Samarth at Infosys. Neither worried about a stranger turning out badly. What they described was chasing details: a job ID, a date of birth, the gaps in someone's career, then typing it all into the company portal by hand."
-        caption={<>Eight interviews, 170 notes, five clusters. <a className="inline-link" href={BOARD_URL} target="_blank" rel="noopener noreferrer">See the whole research board</a>, from the business lens to the tests.</>}>
+        caption={<>Eight interviews, 162 notes, five clusters. <a className="inline-link" href={BOARD_URL} target="_blank" rel="noopener noreferrer">See the whole research board</a>, from the business lens to the tests.</>}>
         <Quotes items={[
           { q: "they don't share the job ID, which irritates me a lot... I will not take the pain and go and check for it", who: "Riya, as a referrer" },
           { q: "having to constantly ask candidates for additional details, as many assume that just sending a resume and phone number is enough", who: "Samarth, as a referrer" },

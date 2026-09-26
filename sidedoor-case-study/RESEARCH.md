@@ -47,8 +47,7 @@ needs. **A limit worth stating:** four people is a small base, and every claim b
 ## Spot-check: two claims on the live case study, walked back
 
 1. *"One PM I interviewed got 40–50 DMs a day whenever their company posted a public listing."*
-   Traces to Atishya as a referrer (n154), but misquoted: 40 or 50 DMs came "in just a few days" after a public post,
-   not a day. **Fix the wording if it's used.**
+   Not in the notes. **Must come off the page.**
 2. *"Referrers aren't unwilling: they're uncertain."* (Screen 03 of the live page)
    Samarth and Riya, as referrers, contradict it: Samarth (as referrer) has fixed rules (n50) and says the risk is not theirs (n55);
    Riya (as referrer)'s rule is whether the job ID was sent (n76, n77). **Not supported. Change or cut.**
@@ -57,7 +56,7 @@ needs. **A limit worth stating:** four people is a small base, and every claim b
 
 ## Notes
 
-One observation per note, in the person's own words where possible. Nothing deleted.
+One observation per note, in the person's own words where possible.
 `Q` is the question number in the transcript. Marks (in scope / out of scope / not a problem) come next, in
 molades-synthesise step 2, against the scope card.
 
@@ -205,73 +204,65 @@ People are named by first name and the side they were speaking from. Names used 
 
 | # | Note | Q |
 |---|---|---|
-| n115 | Senior backend developer at a finance startup. Gets one or two requests a month in a slow market, and 15 to 20 in hiring season, "bit too much to manage" | 1, 2 |
-| n116 | Prefers people they know; refers a stranger only when the resume is about a 90% match for the job description | 3 |
-| n117 | People they know ask on WhatsApp or a call. Strangers ask "100%" on LinkedIn | 4 |
-| n118 | Checks the job title and tech stack first. A mismatch, "I instantly close it" | 5 |
-| n119 | Feels their reputation is on the line: a referral who underperforms in the interview "reflects on me" | 6 |
-| n120 | On the portal: finding the job ID "is a pain to search", the resume parser fails, and they type the name, email and phone by hand | 7 |
-| n121 | A mandatory "Recommendation Reason" box; for a stranger they make up "something generic" | 8 |
-| n122 | Chases candidates for location, notice period and a GitHub link: "It breaks my own focus" | 9 |
-| n123 | Most often missing: the notice period and the job ID. Without the ID, they "go digging around searching for it" | 10 |
-| n124 | After submitting, one "Thanks for submitting" email; checks the portal themselves for the result | 11 |
-| n125 | Doesn't tell a stranger when a referral fails, "I don't have time"; only if they ask | 12 |
-| n126 | The bonus for a senior role "is a lot of money" and one of the main reasons they submit, though not for a poor candidate | 13 |
-| n127 | Deletes requests with no job link: "If you make me do all the work, I'm just gonna ignore you" | 14 |
-| n128 | A friend's bad resume gets a call to fix it. A stranger's gets closed | 15 |
-| n129 | Red flags: spelling mistakes, a Word file, a LinkedIn profile and resume that don't match | 16 |
-| n130 | Won't refer strangers outside tech: doesn't know what a good marketing resume looks like | 17 |
-| n131 | Suggested "a form or link which I can send them" so the candidate types everything, then a yes or no: "stop making me do all the typing" | 18 |
-| n132 | The ideal message: shared people, the job ID with the link, the main skills, a PDF, and "I don't have to reply and ask for more stuff" | 19 |
-| n133 | The referral software "feels like it's from 15 years ago" | 20 |
+| n115 | Prefers people they know; refers a stranger only when the resume is about a 90% match for the job description | 3 |
+| n116 | People they know ask on WhatsApp or a call. Strangers ask "100%" on LinkedIn | 4 |
+| n117 | Checks the job title and tech stack first. A mismatch, "I instantly close it" | 5 |
+| n118 | On the portal: finding the job ID "is a pain to search", the resume parser fails, and they type the name, email and phone by hand | 7 |
+| n119 | A mandatory "Recommendation Reason" box; for a stranger they make up "something generic" | 8 |
+| n120 | Chases candidates for location, notice period and a GitHub link: "It breaks my own focus" | 9 |
+| n121 | Most often missing: the notice period and the job ID. Without the ID, they "go digging around searching for it" | 10 |
+| n122 | After submitting, one "Thanks for submitting" email; checks the portal themselves for the result | 11 |
+| n123 | Doesn't tell a stranger when a referral fails, "I don't have time"; only if they ask | 12 |
+| n124 | Deletes requests with no job link: "If you make me do all the work, I'm just gonna ignore you" | 14 |
+| n125 | A friend's bad resume gets a call to fix it. A stranger's gets closed | 15 |
+| n126 | Red flags: spelling mistakes, a Word file, a LinkedIn profile and resume that don't match | 16 |
+| n127 | Won't refer strangers outside tech: doesn't know what a good marketing resume looks like | 17 |
+| n128 | Suggested "a form or link which I can send them" so the candidate types everything, then a yes or no: "stop making me do all the typing" | 18 |
+| n129 | The ideal message: shared people, the job ID with the link, the main skills, a PDF, and "I don't have to reply and ask for more stuff" | 19 |
+| n130 | The referral software "feels like it's from 15 years ago" | 20 |
 
 ### Atishya (as candidate) · `raw/candidate-4.md`
 
 | # | Note | Q |
 |---|---|---|
-| n134 | Messaged about 40 people in two months. 8 or 9 replied; 3 or 4 put the resume in | 2, 3 |
-| n135 | Being ignored hurts at first; "after the 20th time someone ignores you, you just become numb to it" | 5 |
-| n136 | No bulk tools: 3 or 4 personalised messages a day | 6 |
-| n137 | Prefers people they know: better success, and they'll warn you if the company is a bad place to work | 7 |
-| n138 | Scans phone contacts and Instagram mutuals first, then LinkedIn by company | 8 |
-| n139 | Picks strangers by their feed: posts that help juniors, kind comments | 9, 10 |
-| n140 | Puts one hard number in the message to look like "less of a risk" to refer | 11 |
-| n141 | Believes a clear fit means the referrer isn't "risking their own reputation" (their belief) | 12 |
-| n142 | For a PM role at Atlassian, asked four or five PMs. Two didn't accept, two ignored, one said "Sure, send it" and disappeared | 13-18 |
-| n143 | Used ChatGPT a little to fit LinkedIn's character limit, then reworded it | 15 |
-| n144 | Stopped following up: after a week "I just cross them off my mental list" | 19 |
-| n145 | "You feel like a telemarketer interrupting their day" | 20 |
-| n146 | After a stranger submits: "Done, good luck", then an automated email that sometimes never arrives | 21 |
-| n147 | The CRED referral worked: a college senior's Instagram story, then WhatsApp, "zero pitching" | 22-26 |
-| n148 | Always sends the exact job link from the company's career page: "You have to decrease their work load" | 27, 28 |
-| n149 | Most annoying: "The silence... You don't get a rejection, you don't get feedback" | 29 |
-| n150 | Believes employees "refer literally anyone" for bonuses (their belief) | 30 |
-| n151 | Wants a place where employees say "I am open to referring for this job role" | 31, 32 |
-| n152 | Wants a verified match score on skills, notice period and salary: "I wouldn't feel like I was begging" | 33 |
-| n153 | Wants a status tracker: "I don't want to have to check my email 50 times a day" | 34 |
+| n131 | Messaged about 40 people in two months. 8 or 9 replied; 3 or 4 put the resume in | 2, 3 |
+| n132 | Being ignored hurts at first; "after the 20th time someone ignores you, you just become numb to it" | 5 |
+| n133 | No bulk tools: 3 or 4 personalised messages a day | 6 |
+| n134 | Prefers people they know: better success, and they'll warn you if the company is a bad place to work | 7 |
+| n135 | Scans phone contacts and Instagram mutuals first, then LinkedIn by company | 8 |
+| n136 | Picks strangers by their feed: posts that help juniors, kind comments | 9, 10 |
+| n137 | Puts one hard number in the message to look like "less of a risk" to refer | 11 |
+| n138 | For a PM role at Atlassian, asked four or five PMs. Two didn't accept, two ignored, one said "Sure, send it" and disappeared | 13-18 |
+| n139 | Used ChatGPT a little to fit LinkedIn's character limit, then reworded it | 15 |
+| n140 | Stopped following up: after a week "I just cross them off my mental list" | 19 |
+| n141 | "You feel like a telemarketer interrupting their day" | 20 |
+| n142 | After a stranger submits: "Done, good luck", then an automated email that sometimes never arrives | 21 |
+| n143 | The CRED referral worked: a college senior's Instagram story, then WhatsApp, "zero pitching" | 22-26 |
+| n144 | Always sends the exact job link from the company's career page: "You have to decrease their work load" | 27, 28 |
+| n145 | Most annoying: "The silence... You don't get a rejection, you don't get feedback" | 29 |
+| n146 | Believes employees "refer literally anyone" for bonuses (their belief) | 30 |
+| n147 | Wants a place where employees say "I am open to referring for this job role" | 31, 32 |
+| n148 | Wants a verified match score on skills, notice period and salary: "I wouldn't feel like I was begging" | 33 |
+| n149 | Wants a status tracker: "I don't want to have to check my email 50 times a day" | 34 |
 
 ### Atishya (as referrer) · `raw/referrer-4.md`
 
 | # | Note | Q |
 |---|---|---|
-| n154 | Senior product manager, consumer tech, Gurgaon. Gets 10 to 20 referral messages a day, and 40 or 50 in a few days after a public job post | 1-3 |
-| n155 | Turns off LinkedIn notifications to see messages from colleagues | 4 |
-| n156 | About 95% are strangers, sending the same copied message to every PM on the team | 5, 6 |
-| n157 | "I ghost people all the time... There's just not enough time in the day to reply to everyone" | 7 |
-| n158 | Skips a "Dear Sir" message with a life story: "It takes too much time to read all that" | 8 |
-| n159 | No job link: "If you make me do the detective work to figure out where you fit, Sorry but I'm not going to reply" | 9 |
-| n160 | Refers strangers only for product, design or tech, where they can judge past work | 10 |
-| n161 | A good message: short, about their team, "here is the exact job ID", three bullets and a resume. "I will refer them right away" | 11, 12 |
-| n162 | Treats friends differently: "Oh yeah, for sure" | 13 |
-| n163 | The bonus is "a gamble": 4 or 5 rounds, an accepted offer, six months' stay. For a stranger "the money isn't a strong reason to refer" | 14, 15 |
-| n164 | The portal: log in, approve on the phone, a slow jobs tab, then search for the job number | 16, 17 |
-| n165 | The parser mixes up fields, so they type the name, phone and email by hand, then a mandatory quiz: "10 or 15 minutes per person" | 18 |
-| n166 | "If it was just a one-click thing, I'd probably refer way more people" | 19 |
-| n167 | Candidates forget location, relocation and notice period; while they wait for a reply, the portal logs them out | 20, 21 |
-| n168 | After submitting, an automated email "and then... nothing". The status says "Under Review" for months, then "Rejected" | 22, 23 |
-| n169 | Candidates ask them for updates, and they "have no idea why it's stuck"; recruiters rarely reply | 24, 25 |
-| n170 | Wants their own referral link: the candidate fills everything, then they click "Approve", "few seconds instead of 15 minutes" | 28, 29 |
-| n171 | Wants to see where each referral is, and rejection reasons sent to the candidate and the referrer | 30, 31 |
+| n150 | Skips a "Dear Sir" message with a life story: "It takes too much time to read all that" | 8 |
+| n151 | No job link: "If you make me do the detective work to figure out where you fit, Sorry but I'm not going to reply" | 9 |
+| n152 | Refers strangers only for product, design or tech, where they can judge past work | 10 |
+| n153 | A good message: short, about their team, "here is the exact job ID", three bullets and a resume. "I will refer them right away" | 11, 12 |
+| n154 | Treats friends differently: "Oh yeah, for sure" | 13 |
+| n155 | The bonus is "a gamble": 4 or 5 rounds, an accepted offer, six months' stay. For a stranger "the money isn't a strong reason to refer" | 14, 15 |
+| n156 | The portal: log in, approve on the phone, a slow jobs tab, then search for the job number | 16, 17 |
+| n157 | The parser mixes up fields, so they type the name, phone and email by hand, then a mandatory quiz: "10 or 15 minutes per person" | 18 |
+| n158 | "If it was just a one-click thing, I'd probably refer way more people" | 19 |
+| n159 | Candidates forget location, relocation and notice period; while they wait for a reply, the portal logs them out | 20, 21 |
+| n160 | After submitting, an automated email "and then... nothing". The status says "Under Review" for months, then "Rejected" | 22, 23 |
+| n161 | Candidates ask them for updates, and they "have no idea why it's stuck"; recruiters rarely reply | 24, 25 |
+| n162 | Wants their own referral link: the candidate fills everything, then they click "Approve", "few seconds instead of 15 minutes" | 28, 29 |
+| n163 | Wants to see where each referral is, and rejection reasons sent to the candidate and the referrer | 30, 31 |
 
 ### Follow-up conversation with Samarth · remembered, not recorded
 
@@ -312,7 +303,7 @@ happened to it, up to the interview stage.
 
 ## Sort
 
-**171 notes: 151 in scope · 3 out of scope · 17 not a problem.** (n92 is remembered.) Nothing is deleted.
+**163 notes: 143 in scope · 3 out of scope · 17 not a problem.** (n92 is remembered.)
 
 ### Out of scope · real problems, different moment (3)
 
@@ -338,8 +329,8 @@ happened to it, up to the interview stage.
 - n83 Riya (as referrer): tracks status through links in those emails
 - n94 Akash (as candidate): the Noida studio referral through a former colleague, confirmed the next day
 - n96 Akash (as candidate): WhatsApp with close contacts cuts through the noise
-- n124 Akash (as referrer): checks the portal themselves for the result
-- n147 Atishya (as candidate): the CRED referral through a college senior, "zero pitching"
+- n122 Akash (as referrer): checks the portal themselves for the result
+- n143 Atishya (as candidate): the CRED referral through a college senior, "zero pitching"
 
 ## Clusters
 
@@ -355,10 +346,10 @@ candidates. On the other side, Riya and Atishya (as referrers) leave strangers' 
 **So what?** A candidate with nobody at the company has no dependable way in. Their request is ignored before anyone
 can judge whether it's any good, so being a strong candidate doesn't help them.
 
-- **a · strangers don't answer** n09 n13 n14 n15 n17 n30 n100 n104 n106 n108 n134 n142 n144
-- **b · friends first, strangers only when that runs out** n04 n08 n20 n49 n68 n95 n117 n137 n138
-- **c · guessing who might actually help** n21 n24 n28 n37 n43 n111 n113 n139 n151
-- **d · being ignored, and what it does to them** n10 n16 n19 n27 n40 n99 n101 n107 n110 n135 n136 n143 n145
+- **a · strangers don't answer** n09 n13 n14 n15 n17 n30 n100 n104 n106 n108 n131 n138 n140
+- **b · friends first, strangers only when that runs out** n04 n08 n20 n49 n68 n95 n116 n134 n135
+- **c · guessing who might actually help** n21 n24 n28 n37 n43 n111 n113 n136 n147
+- **d · being ignored, and what it does to them** n10 n16 n19 n27 n40 n99 n101 n107 n110 n132 n133 n139 n141
 
 What they're trying to get done: reach someone at the company who will actually look at their request.
 What gets in the way: nothing tells them who is open to it, so they message strangers who never read it.
@@ -377,9 +368,9 @@ Atishya, as candidates.
 **So what?** The referrer's real cost is admin, not judgement. Every missing field means another round of chasing, so
 incomplete requests get dropped, including from candidates who would have fit.
 
-- **a · no job ID, no referral** n07 n38 n70 n76 n77 n78 n79 n81 n97 n98 n123 n127 n132 n148 n158 n159 n161
-- **b · the portal asks for things a resume doesn't have** n57 n59 n60 n66 n67 n71 n73 n74 n75 n120 n121 n122 n131 n133 n164 n165 n166 n167 n170
-- **c · fit, checked by hand** n50 n51 n53 n56 n63 n65 n82 n118 n129 n130 n160
+- **a · no job ID, no referral** n07 n38 n70 n76 n77 n78 n79 n81 n97 n98 n121 n124 n129 n144 n150 n151 n153
+- **b · the portal asks for things a resume doesn't have** n57 n59 n60 n66 n67 n71 n73 n74 n75 n118 n119 n120 n128 n130 n156 n157 n158 n159 n162
+- **c · fit, checked by hand** n50 n51 n53 n56 n63 n65 n82 n117 n126 n127 n152
 
 What they're trying to get done: refer someone without spending an evening on it.
 What gets in the way: the request arrives incomplete, so every referral turns into chasing details and retyping them.
@@ -395,10 +386,10 @@ a promised Citibank referral in mind that never happened. All four, as candidate
 **So what?** The candidate is waiting on information that already sits one person away. They can't move on from a
 "no" nobody tells them, so they stay stuck on dead requests instead of trying someone else.
 
-- **a · not knowing if it was even submitted** n01 n25 n34 n35 n36 n41 n93 n105 n146
-- **b · silence instead of a no** n18 n109 n125 n149
-- **c · waiting with no timeline** n33 n84 n85 n168 n169
-- **d · many asks, no one place, and doubts an outside app can see the status** n26 n44 n45 n46 n114 n153 n171
+- **a · not knowing if it was even submitted** n01 n25 n34 n35 n36 n41 n93 n105 n142
+- **b · silence instead of a no** n18 n109 n123 n145
+- **c · waiting with no timeline** n33 n84 n85 n160 n161
+- **d · many asks, no one place, and doubts an outside app can see the status** n26 n44 n45 n46 n114 n149 n163
 
 What they're trying to get done: know where each request stands so they can move on or follow up.
 What gets in the way: status lives in the company's portal and the referrer's inbox, never with the candidate.
@@ -415,12 +406,12 @@ referrers (Riya also said it in their candidate interview, n32 n42).
 **So what?** For a stranger, the referrer does real work for a reward that rarely arrives, so strangers lose by
 default. Nothing on the referrer's side makes a good stranger worth the effort.
 
-- **a · the bonus doesn't pay for the effort** n32 n42 n62 n87 n163
-- **b · friends feel owed, strangers don't** n31 n48 n52 n69 n116 n128 n157 n162
+- **a · the bonus doesn't pay for the effort** n32 n42 n62 n87 n155
+- **b · friends feel owed, strangers don't** n31 n48 n52 n69 n115 n125 n154
 - **c · effort wasted on people who don't join** n89 n90
 - **e · a possible reason to refer: better-matched candidates** n92 `REMEMBERED`: one person, not recorded. It is also
   the same person who said the bonus is not their main reason (n62), so "earn more bonuses" is in tension with their own interview
-- **d · belief that others refer blindly for bonuses** n12 n103 n150 `THIN`: one candidate's belief, nobody saw it happen
+- **d · belief that others refer blindly for bonuses** n12 n103 n146 `THIN`: one candidate's belief, nobody saw it happen
 
 What they're trying to get done: help without doing unpaid work for people who never turn up.
 What gets in the way: the only reward is a bonus that is low and depends on a hire they don't control.
@@ -438,7 +429,7 @@ with passion and ownership; asked for a match percentage they could share with t
 that they are, so a good fit and a long shot arrive looking the same.
 
 - **a · checking fit by eye before asking** n11 n29 n102
-- **b · wanting a way to show it** n22 n23 n112 n140 n141 n152
+- **b · wanting a way to show it** n22 n23 n112 n137 n148
 
 `THIN`: nine notes, and most of them are wishes (a pitch, a suggested match score).
 
@@ -456,12 +447,6 @@ state it. To use it, it needs a sourced figure or a quote.
 
 - n91 Riya (as referrer) wants to refer, track, see messages and check submissions from the first page. It's a wish for a
   whole product, not a problem in one moment. Comes back at the brief
-- n115 n154 n155 n156 · referrer volume. Akash gets 15 to 20 requests a month in hiring season; Atishya 10 to 20 a day and
-  turns off notifications. Samarth doesn't get many (n61). No cluster is about volume. **Open:** this cuts against
-  "Referrers are flooded" under What the research killed
-- n119 · Akash feels their reputation is on the line. **Open:** cuts against "Referrers fear for their reputation"
-- n126 · Akash says the bonus for a senior role is one of the main reasons to submit. Riya (n87) and Atishya (n163) say
-  it isn't. **Open:** C4 a is written from the other side
 
 ## What was merged, and what got lost
 
@@ -593,7 +578,7 @@ n58 n83 n47 (status already exists on the referrer's side) · n64 (would refer a
 
 **How sure:**
 - What happens today: **saw it**. All eight interviews, four people
-- That the work in the request is why strangers get dropped: **worked it out**. All four as referrers, Riya's own rule (n76, n77), and Atishya: "If it was just a one-click thing, I'd probably refer way more people" (n166)
+- That the work in the request is why strangers get dropped: **worked it out**. All four as referrers, Riya's own rule (n76, n77), and Atishya: "If it was just a one-click thing, I'd probably refer way more people" (n158)
 - That a complete request would get referred more often: **guessing**. Nobody was shown one
 
 **Leaves out:**

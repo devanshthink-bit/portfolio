@@ -7,7 +7,7 @@ Updated 2026-09-24. Key decisions with reasons: LOG.md, top.
 - [x] **molades-start** · its job is done (LOG.md exists, route set), though it wasn't run as a separate step
 - [x] **molades-scope** · SCOPE.md (v2: its own product)
 - [x] **molades-landscape** · SCOPE.md, Landscape section
-- [x] **molades-research** · RESEARCH.md, 171 notes from Samarth, Riya, Akash and Atishya + desk research
+- [x] **molades-research** · RESEARCH.md, 163 notes from Samarth, Riya, Akash and Atishya + desk research
 - [x] **molades-synthesise** · RESEARCH.md, clusters C1–C5, problem statement C
 - [x] **molades-ai** · BRIEF.md, AX Spec (this was the ideation round, Ideas 5–12)
 - [—] **molades-ideate** · not run, on purpose. molades-ai says run it *instead of* ideate when the idea has a model in it, and "never run both"

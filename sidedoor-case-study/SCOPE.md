@@ -34,11 +34,11 @@ to be wrong.
   supply side has a reason to come that doesn't depend on the network already existing. **worked it out**
 - **All four, as candidates, asked for a dedicated place.** Samarth (as candidate): a place "where you know the other person is open to
   doing it" (n24). Riya (as candidate): one place where "I can just see in this company, I asked this person referral for" (n45).
-  Akash (n113) and Atishya (n151): a place where employees say they are open to referring.
+  Akash (n113) and Atishya (n147): a place where employees say they are open to referring.
   **saw it**, as wishes, which are the weakest kind of evidence
 
 **The risk, stated before anyone asks:**
-- All four ask and get asked on LinkedIn today (n04, n07, n09, n29, n49, n68, n69, n117, n142, n156). Sidedoor has to pull that
+- All four ask and get asked on LinkedIn today (n04, n07, n09, n29, n49, n68, n69, n116, n138). Sidedoor has to pull that
   moment out of LinkedIn, or start from a link shared inside it
 - Riya (as candidate) says the referral communities on Fishbowl are so quiet a message might be seen "next week" (n28). A
   separate place for referrals can die empty. Sidedoor has to answer why it won't
