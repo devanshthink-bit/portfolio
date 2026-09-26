@@ -29,10 +29,10 @@ html.nerd-mode .pg-toy-shadow { background: radial-gradient(closest-side, rgba(0
 }
 .pg-head h2 span { color: inherit; }
 .pg-head h2 .pg-script { font-family: var(--font-script), cursive; font-style: normal; font-weight: 400; font-size: 1.05em; letter-spacing: 0.01em; -webkit-text-stroke: 0.035em currentColor; }
-/* "tinkering" in violet so the AI section's word pops against the black heading (Devansh, 26 Sep 2026).
-   #7C3AED on #fafafa is 5.4:1; the lighter violet keeps it readable on the dark theme. */
-.pg-head h2 .pg-script { color: #7C3AED; }
-html.nerd-mode .pg-head h2 .pg-script { color: #B794FF; }
+/* "tinkering" in a pastel violet, so the AI section's word stands out softly against the black heading (Devansh, 26 Sep 2026).
+   #A48BF2 on #fafafa is about 2.9:1, fine for a 29px display word; the dark theme gets a lighter lavender. */
+.pg-head h2 .pg-script { color: #A48BF2; }
+html.nerd-mode .pg-head h2 .pg-script { color: #C9B8FF; }
 .pg-head p { font-size: 16px; line-height: 1.6; color: var(--text-muted); letter-spacing: -0.011em; margin: 0; }
 
 .pg-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 24px; align-items: start; }

@@ -241,13 +241,15 @@ export default function About() {
               alignItems: "stretch",   // every card as tall as the tallest, names on one line
               gap: CARD_GAP,
               width: "max-content",
-              animation: "ticker-left 36s linear infinite",
+              // Loops by exactly one set of cards, in px: a % of a max-content track left a gap on phones.
+              ["--loop" as string]: `-${testimonials.length * (320 + CARD_GAP)}px`,
+              animation: "testimonial-loop 36s linear infinite",
               willChange: "transform",
             }}
-            onMouseEnter={e => { e.currentTarget.style.animationPlayState = "paused"; }}
+            onMouseEnter={e => { if (window.matchMedia("(hover: hover)").matches) e.currentTarget.style.animationPlayState = "paused"; }}
             onMouseLeave={e => { e.currentTarget.style.animationPlayState = "running"; }}
           >
-            {[...testimonials, ...testimonials].map((tc, i) => (
+            {[...testimonials, ...testimonials, ...testimonials].map((tc, i) => (
               <div key={i} style={{ flex: `0 0 320px`, background: "var(--card-bg)", boxShadow: "var(--shadow-md)", borderRadius: "var(--r-md)", padding: 20, display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 40 }}>
                 <div style={{ display: "flex", flexDirection: "column" }}>
                   <p style={{ fontFamily: "var(--font-inter)", fontStyle: "normal", fontSize: "var(--fs-14)", fontWeight: 400, lineHeight: 1.6, letterSpacing: "-0.011em", color: "var(--text-secondary)", margin: 0 }}>{tc.quote}</p>

@@ -19,7 +19,6 @@ const ALL_ITEMS: { id: string; label: string; cat: Cat; src?: string }[] = [
   { id: "figjam",     label: "FigJam",                     cat: "design",      src: "/icons/figjam.svg" },
   { id: "framer",     label: "Framer",                     cat: "design",      src: "/icons/framer.svg" },
   { id: "notion",     label: "Notion",                     cat: "design",      src: "/icons/notion.svg" },
-  { id: "ga",         label: "Google Analytics",           cat: "design",      src: "/icons/googleanalytics.svg" },
   { id: "figmamake",  label: "Figma Make",                 cat: "design",      src: "/icons/figmamake.svg" },
   { id: "visual",     label: "Visual Design",              cat: "design" },
   { id: "access",     label: "Accessibility",              cat: "design" },
@@ -30,9 +29,7 @@ const ALL_ITEMS: { id: string; label: string; cat: Cat; src?: string }[] = [
   { id: "proto",      label: "Rapid Prototyping",          cat: "design" },
   { id: "ix",         label: "Interaction Design",         cat: "design" },
   { id: "pt",         label: "Product Thinking",           cat: "design" },
-  { id: "context",    label: "Context Design",             cat: "design" },
-  { id: "workflow",   label: "Design Workflow Automation", cat: "design" },
-  { id: "d2c",        label: "Design-to-Code Workflows",   cat: "design" },
+  { id: "d2c",        label: "Canvas-to-Code",             cat: "design" },
   { id: "airesearch", label: "Research Synthesis",         cat: "design" },
   // Engineering — dev stack and AI coding tools
   { id: "claudecode", label: "Claude Code",                cat: "engineering", src: "/icons/claudecode.svg" },
