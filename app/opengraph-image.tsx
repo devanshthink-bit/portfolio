@@ -11,14 +11,12 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 const NAME = "Devansh Somvanshi";
-const HEAD = "Designer & Developer.";
-const URL = "devanshsomvanshi.com";
 
 // Google Fonts serves a TTF subset for just these characters; Satori can't read woff2.
 // If the fetch fails the image still builds, in the default font.
-async function font(family: string, weight: number, text: string) {
+async function font(spec: string, text: string) {
   try {
-    const css = await (await fetch(`https://fonts.googleapis.com/css2?family=${family}:wght@${weight}&text=${encodeURIComponent(text)}`)).text();
+    const css = await (await fetch(`https://fonts.googleapis.com/css2?family=${spec}&text=${encodeURIComponent(text)}`)).text();
     const src = css.match(/src: url\((.+?)\) format\('(opentype|truetype)'\)/)?.[1];
     if (!src) return null;
     return await (await fetch(src)).arrayBuffer();
@@ -31,13 +29,13 @@ export default async function Image() {
   const avatar = await readFile(path.join(process.cwd(), "public", "images", "avatar.jpg"));
   const photo = `data:image/jpeg;base64,${avatar.toString("base64")}`;
 
-  const [manrope, mono] = await Promise.all([
-    font("Manrope", 700, NAME + HEAD),
-    font("Geist+Mono", 500, URL.toUpperCase()),
+  const [manrope, serif] = await Promise.all([
+    font("Manrope:wght@700", NAME + "Designer Developer."),
+    font("Instrument+Serif:ital@1", "&"),
   ]);
   const fonts = [
     manrope && { name: "Manrope", data: manrope, weight: 700 as const, style: "normal" as const },
-    mono && { name: "Geist Mono", data: mono, weight: 500 as const, style: "normal" as const },
+    serif && { name: "Instrument Serif", data: serif, weight: 400 as const, style: "italic" as const },
   ].filter((f): f is NonNullable<typeof f> => !!f);
 
   return new ImageResponse(
@@ -45,10 +43,17 @@ export default async function Image() {
       <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", gap: 64, padding: "0 80px", background: "#fafafa" }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={photo} width={470} height={470} alt="" style={{ borderRadius: 24, objectFit: "cover", boxShadow: "0 20px 48px rgba(29, 29, 29, 0.16)" }} />
-        <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
-          <div style={{ fontFamily: "Manrope", fontSize: 60, letterSpacing: "-0.03em", lineHeight: 1.1, color: "#1d1d1d" }}>{NAME}</div>
-          <div style={{ fontFamily: "Manrope", fontSize: 32, letterSpacing: "-0.02em", color: "#918e89", marginTop: 14 }}>{HEAD}</div>
-          <div style={{ fontFamily: "Geist Mono", fontSize: 18, letterSpacing: "0.08em", color: "#918e89", marginTop: 56 }}>{URL.toUpperCase()}</div>
+        {/* The name at the photo's top edge, the role at its bottom edge: two lines, nothing else. */}
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", flex: 1, height: 470, padding: "6px 0" }}>
+          <div style={{ display: "flex", flexDirection: "column", fontFamily: "Manrope", fontWeight: 700, fontSize: 76, letterSpacing: "-0.04em", lineHeight: 1.02, color: "#1d1d1d" }}>
+            <span>Devansh</span>
+            <span>Somvanshi</span>
+          </div>
+          <div style={{ display: "flex", alignItems: "baseline", fontFamily: "Manrope", fontWeight: 700, fontSize: 34, letterSpacing: "-0.02em", color: "#4a4948" }}>
+            Designer
+            <span style={{ fontFamily: "Instrument Serif", fontStyle: "italic", fontWeight: 400, fontSize: 48, color: "#918e89", margin: "0 10px" }}>&amp;</span>
+            Developer.
+          </div>
         </div>
       </div>
     ),
