@@ -82,6 +82,13 @@ ul.list li::marker{color:#A6ABB3}
 .tag.ok{background:var(--ok-bg);color:var(--ok)} .tag.warn{background:var(--warn-bg);color:var(--warn)}
 .tag.bad{background:var(--bad-bg);color:var(--bad)} .tag.blue{background:var(--blue-bg);color:var(--blue-ink)}
 
+.scard{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:grid;grid-template-columns:190px minmax(0,1fr)}
+.scard > div{padding:14px 18px;border-top:1px solid var(--line);font-size:15px;color:var(--strong)}
+.scard > div:nth-child(-n+2){border-top:0}
+.scard .k{background:var(--page);font-size:13px;font-weight:600;color:var(--muted)}
+.chain3{display:grid;grid-template-columns:minmax(0,1fr) 28px minmax(0,1fr) 28px minmax(0,1fr);align-items:stretch}
+.chain3 .arw{display:grid;place-items:center;color:var(--muted);font-size:16px}
+@media (max-width:640px){.scard{grid-template-columns:1fr}.scard .k{border-top:1px solid var(--line);padding-bottom:6px}.scard > div:not(.k){border-top:0;padding-top:4px}.scard > div:first-child{border-top:0}.chain3{grid-template-columns:1fr}.chain3 .arw{transform:rotate(90deg);height:28px}}
 .kv{display:grid;grid-template-columns:190px minmax(0,1fr)}
 .kv > div{padding:12px 0;border-top:1px solid var(--line)}
 .kv > div:nth-child(-n+2){border-top:0;padding-top:0}
@@ -269,7 +276,7 @@ ul.list li::marker{color:#A6ABB3}
 <div class="page">
 <header class="masthead">
   <h1><span class="brand"><img src="/images/sidedoor/sidedoor-logo.png" alt=""><img src="/images/sidedoor/sidedoor-word.svg" alt="SideDoor"></span>, A referral request built to be answered</h1>
-  <p>Every artefact from the business model to the test plan, in the order it was made. 2 people, each interviewed as candidate and referrer &middot; 91 notes &middot; 5 clusters &middot; 3 jobs to be done.</p>
+  <p>Every artefact from the first bet to the test plan. 2 people, each interviewed as candidate and referrer &middot; 91 notes &middot; 5 clusters &middot; 3 jobs to be done.</p>
 </header>
 <main id="main">
 
@@ -277,6 +284,16 @@ ul.list li::marker{color:#A6ABB3}
   <section class="stage" id="s-business" data-t="The business lens" data-s="Who pays, and the number">
     <div class="st-head"><span class="st-n">1</span><div><p class="st-k">Business model, strategy, North Star</p><h2>Referrers are the scarce side, so nothing is ever sold to them</h2><p>Written after the research, from the problem statement.</p></div></div>
 
+    <p class="sub" style="margin-top:0">Business model &rarr; strategy &rarr; design pressure</p>
+    <div class="chain3">
+      <div class="card"><p class="lab">Business model</p><h3>A two-sided marketplace</h3><p>Candidates on one side, employees who refer on the other. Far more people ask than refer, so the referrer is the scarce side, and every business call protects them first. <span class="tag blue">Worked it out</span></p></div>
+      <div class="arw" aria-hidden="true">&rarr;</div>
+      <div class="card"><p class="lab">Strategy: quality as identity</p><h3>Every request that reaches a referrer is complete and a real fit</h3><p>The problem statement turned around: referrers drop requests that hand them the candidate's work (n76), and help when the candidate has done it (n77). <b>What it costs:</b> candidates do more before they ask, and can ask fewer people.</p></div>
+      <div class="arw" aria-hidden="true">&rarr;</div>
+      <div class="card"><p class="lab">Design pressure this creates</p><h3>Fewer, complete requests</h3><p>A request can't be sent incomplete. Referrers see the best matches first. Candidates get a limited number of requests. The outcome travels back at almost no extra work.</p></div>
+    </div>
+
+    <p class="sub">Who pays</p>
     <div class="grid g3">
       <div class="card"><p class="lab">Phase 1 · Build both sides</p><h3>Free for everyone</h3><p>A paywall on an empty marketplace blocks the people it needs.</p></div>
       <div class="card"><p class="lab">Phase 2 · Companies pay</p><h3>For complete, matched referrals</h3><p>Companies already pay for referrals through their bonus schemes (n62, n87). <span class="tag warn">Guessing</span> that they'd pay a platform.</p></div>
@@ -288,13 +305,6 @@ ul.list li::marker{color:#A6ABB3}
       <div class="card"><span class="tag bad">Rejected</span><h3 style="margin-top:10px">Candidates pay to reach referrers</h3><p>Version 2's Premium did this. It sells the scarce side's attention, and paying doesn't change a referrer's rule (n50, n76).</p></div>
       <div class="card"><span class="tag bad">Rejected</span><h3 style="margin-top:10px">Referrers pay</h3><p>They have the least reason to take part already (C4). Charging them kills supply.</p></div>
       <div class="card"><span class="tag bad">Rejected</span><h3 style="margin-top:10px">Ads</h3><p>Ads push for time in the app. SideDoor's value is a referral done in minutes.</p></div>
-    </div>
-
-    <p class="sub">The strategy: quality as identity</p>
-    <div class="card">
-      <h3>Every request that reaches a referrer is complete and a real fit</h3>
-      <p>A referrer can open any request and submit it in minutes, without chasing a single detail. That promise is the problem statement turned around: referrers drop requests that hand them the candidate's work (n76), and help when the candidate has done it (n77). <span class="tag blue">Worked it out</span></p>
-      <p><b>What it costs:</b> candidates do more before they can ask, and can ask fewer people. Some will find that slower than a LinkedIn message. Accepted, because a message nobody reads is slower still.</p>
     </div>
 
     <p class="sub">North Star</p>
@@ -341,16 +351,25 @@ ul.list li::marker{color:#A6ABB3}
   </section>
 
   <!-- 2 -->
-  <section class="stage" id="s-scope" data-t="Scope card" data-s="One moment, one guess">
-    <div class="st-head"><span class="st-n">2</span><div><p class="st-k">The bet</p><h2>One moment: a stranger asks for a referral, until they hear what happened</h2><p>The first scope listed five problems at once. The research picked one, and it wasn't the one the first design was built on.</p></div></div>
-    <div class="card">
-      <div class="kv">
-        <div class="k">The moment</div><div>A candidate asking an employee they don't know for a referral to one job, until the candidate hears what happened to it</div>
-        <div class="k">Who</div><div>Someone a few years into their career who found a job at a company where they know nobody. And the employee who gets the message and has to put them into the company's referral portal</div>
-        <div class="k">The guess</div><div>Employees drop strangers' requests because the request makes them do the candidate's work, not because they won't help a stranger. <span class="tag blue">Worked it out</span> for the cause, <span class="tag warn">Guessing</span> for "referred more often"</div>
-        <div class="k">The number</div><div>% of requests to strangers that the employee submits to their company's portal</div>
-        <div class="k">Guardrail</div><div>Employees who stop accepting referral requests must not rise</div>
-      </div>
+  <section class="stage" id="s-scope" data-t="Scope card" data-s="The bet, before and after the research">
+    <div class="st-head"><span class="st-n">2</span><div><p class="st-k">The bet, placed before any user contact</p><h2>Five problems at once, then one moment and one guess</h2><p>The first card is copied from the FigJam made before the interviews. The research kept one of its five problems.</p></div></div>
+    <div class="scard">
+      <div class="k">Industry + Product</div><div>Hiring &amp; careers, SideDoor, Type C: a whole new product. A referral platform for Indian tech hiring, 0 to 1, mobile first</div>
+      <div class="k">Target user</div><div>Job seekers asking for referrals, 0 to 5 years into their career, and employees willing to refer, mid-level, in tech roles. Recruiters second</div>
+      <div class="k">AARRR stage</div><div>Not set on the first card</div>
+      <div class="k">Feature / flow</div><div>Not one moment but four: finding referrers &rarr; the referral request &rarr; the referrer's decision and submission &rarr; shared tracking, up to the interview stage</div>
+      <div class="k">Provisional metric</div><div>Accepted referral requests per active user</div>
+      <div class="k">Provisional hypothesis</div><div>Fourteen hypotheses, none tested, and a problem statement naming five problems: trust, decisions, a broken flow, no visibility and spam. The first design was built on two of them: referrers don't trust strangers, and need help deciding, <i>to test in research</i></div>
+    </div>
+
+    <p class="sub">Rewritten after the research: one moment, one guess</p>
+    <div class="scard">
+      <div class="k">The moment</div><div>A candidate asking an employee they don't know for a referral to one job, until the candidate hears what happened to it</div>
+      <div class="k">Target user</div><div>Someone a few years into their career who found a job at a company where they know nobody. And the employee who gets the message and has to put them into the company's referral portal</div>
+      <div class="k">AARRR stage</div><div>Engagement (primary): requests that referrers act on</div>
+      <div class="k">Metric</div><div>% of requests to strangers that the employee submits to their company's portal</div>
+      <div class="k">Guardrail</div><div>Employees who stop accepting referral requests must not rise</div>
+      <div class="k">Hypothesis</div><div>Employees drop strangers' requests because the request makes them do the candidate's work, not because they won't help a stranger. <span class="tag blue">Worked it out</span> for the cause, <span class="tag warn">Guessing</span> that a complete request gets referred more often</div>
     </div>
 
     <p class="sub">My mentor said: make it a LinkedIn feature. I kept it separate.</p>
@@ -385,7 +404,17 @@ ul.list li::marker{color:#A6ABB3}
 
   <!-- 3 -->
   <section class="stage" id="s-research" data-t="Research" data-s="Two people, both sides">
-    <div class="st-head"><span class="st-n">3</span><div><p class="st-k">What was collected</p><h2>Two people, each interviewed twice: once asking, once being asked</h2><p>Both have asked strangers for referrals and both refer people at work, so each could speak for the other side too. Each interview asked about the last real time it happened.</p></div></div>
+    <div class="st-head"><span class="st-n">3</span><div><p class="st-k">What was collected</p><h2>Two people, each interviewed twice: once asking, once being asked</h2><p>Both have asked strangers for referrals and both refer people at work, so each could speak for the other side too.</p></div></div>
+    <div class="stats" style="margin-bottom:16px">
+      <div class="stat"><b>2</b><span>people</span></div>
+      <div class="stat"><b>4</b><span>interviews, each person on both sides</span></div>
+      <div class="stat"><b>91</b><span>notes</span></div>
+      <div class="stat"><b>11</b><span>products screenshotted</span></div>
+    </div>
+    <div class="scard" style="margin-bottom:16px">
+      <div class="k">Primary method + why</div><div>1:1 interviews about the last real time it happened, because the question is why people act the way they do</div>
+      <div class="k">Secondary</div><div>Screenshots of 11 products, and desk research that is kept off this page (below)</div>
+    </div>
     <div class="grid g2">
       <div class="card">
         <div style="display:flex;align-items:center;gap:10px"><span class="av s" style="width:36px;height:36px;font-size:14px">S</span><div><h3 style="margin:0">Samarth</h3><p class="lab" style="margin:0">Specialist Programmer, Infosys</p></div></div>
@@ -476,8 +505,9 @@ ul.list li::marker{color:#A6ABB3}
     <div class="ps">
       <div class="ps-top"><p class="lab">Problem statement</p><h3>An employee asked for a referral by someone they don't know has to do the candidate's work before they can say yes. So most don't, and the candidate never finds out.</h3></div>
       <div class="ps-body">
-        <p>The request arrives as a LinkedIn message and a resume. The company's portal needs the job ID, the city, the date of birth, career gaps and preferred interview locations, none of which are in the resume. So the referrer either chases the candidate for them or drops the request.</p>
+        <p>The request arrives as a LinkedIn message and a resume. The company's portal needs the job ID, the city, the date of birth, career gaps and preferred interview locations, none of which are in the resume. So the referrer either chases the candidate for them or drops the request. The only reward is a bonus that is low and paid only if the person is hired.</p>
         <p>Meanwhile the status of a submitted referral already exists, in the referrer's portal and emails. It never reaches the candidate, who reads silence as a no.</p>
+        <p>The barrier is not that referrers won't help strangers. Samarth would refer a complete stranger who fits, and Riya feels "a little obligated" once a candidate has shared the job ID. It is that the request hands the referrer the work, and nothing hands the answer back.</p>
         <div class="q"><p>"they don't share the job ID, which irritates me a lot... I will not take the pain and go and check for it"</p><span>Riya, as a referrer · n76</span></div>
         <div class="q"><p>"whoever did not reply, they did not refer me"</p><span>Riya, as a candidate · n35</span></div>
       </div>
@@ -486,6 +516,11 @@ ul.list li::marker{color:#A6ABB3}
         <div><p class="lab">That the work is why strangers get dropped</p><span class="tag blue">Worked it out</span><p style="margin-top:6px">Both as referrers, and Riya's rule (n76, n77)</p></div>
         <div><p class="lab">That a complete request gets referred more</p><span class="tag warn">Guessing</span><p style="margin-top:6px">Nobody was shown one</p></div>
       </div>
+    </div>
+    <div class="scard" style="margin-top:16px">
+      <div class="k">Short form</div><div>The request asks the referrer to do the candidate's work, and the answer never travels back.</div>
+      <div class="k">Traces to</div><div>n70 n76 n77 n57 n59 n60 n71 n73 n75 n87 n62 n69 (referrer) &middot; n01 n25 n34 n35 n36 (candidate) &middot; n58 n83 n47 (the status already exists) &middot; n64 (would refer a stranger)</div>
+      <div class="k">Leaves out</div><div>People who take a referral and don't join (n89, n90). The company's bonus scheme (n87, n62). HR not telling rejected candidates (n86). Recruiters, with no data. Knowing your fit before asking (C5) stays inside the design, as "fit already shown"</div>
     </div>
     <div class="grid g2" style="margin-top:16px">
       <div class="card rej"><span class="tag">Draft A · referrer side</span><h3 style="margin-top:10px">Referring a stranger costs the referrer admin work nobody pays them for, so they don't do it.</h3><p>Lost: it ignores the candidate who never learns what happened, and that's in both candidate interviews.</p></div>
@@ -611,7 +646,7 @@ ul.list li::marker{color:#A6ABB3}
       <tr><td>Send tapped twice on a slow network</td><td>"Sending…", and the button turns off</td><td>No in-flight state</td><td><span class="tag bad">Major</span></td></tr>
       <tr><td>A 300-character note</td><td>It wraps, the card grows</td><td>It wraps, the card grows</td><td><span class="tag ok">Passes</span></td></tr>
     </table></div>
-    <p style="margin-top:10px;font-size:13.5px;color:var(--muted)">All four majors above were fixed: wrapping, a field error, a 5-second Undo, and a Sending state. On the last pass, three quick taps on Send took requests left from 2 to 0. That's fixed too.</p>
+    <p style="margin-top:10px;font-size:13.5px;color:var(--muted)">All four majors above were fixed: wrapping, a date picker so a wrong date can't be entered, a 5-second Undo, and a Sending state. On the last pass, three quick taps on Send took requests left from 2 to 0. That's fixed too.</p>
     <p class="sub">Craft, in numbers</p>
     <div class="grid g2">
       <div class="card"><span class="tag ok">Fixed</span><h3 style="margin-top:10px">44 × 44 tap areas</h3><p>Back, bell, edit pencil and link icons were 18 to 24 pt. Each now has a 44 pt hit area.</p></div>
