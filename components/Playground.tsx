@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import "./playground.css";
+import PlaygroundToy from "./PlaygroundToy";
 
 // Things Devansh designs and builds with AI. To add one, add an entry here and drop a
 // 1600px-wide screenshot in public/images/playground/. Newest first.
@@ -65,6 +66,7 @@ function BuildCard({ b }: { b: Build }) {
 export default function Playground() {
   return (
     <section id="playground" className="section pg">
+      <PlaygroundToy />
       <h3 className="section-title">Side projects</h3>
       <div className="pg-head">
         <h2>When not working, <span>I love <em className="pg-script">tinkering</em> with AI.</span></h2>
