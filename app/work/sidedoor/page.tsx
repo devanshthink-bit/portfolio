@@ -126,7 +126,7 @@ export default function SidedoorCaseStudy() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/images/sidedoor/sidedoor-word.svg" alt="SideDoor" width={132} height={24} style={{ height: "0.74em", width: "auto", display: "inline-block", verticalAlign: "-0.02em" }} />: A referral request built to be answered
       </h1>
-      <p style={T.lede}>Referral DMs to strangers mostly go unanswered. The referrer has to chase the job ID and portal details, and the candidate never hears back. SideDoor, an iOS app for both sides, shows candidates their fit before they ask. Referrers get a request that&apos;s complete and proven, and mark it submitted in one tap.</p>
+      <p style={T.lede}>Referral DMs to strangers mostly go unanswered. The referrer has to chase the job ID and portal details, and the candidate never hears back. SideDoor, an iOS app for both sides, shows candidates their fit before they ask. Referrers get a request that&apos;s complete and proven, and candidates track each one until it&apos;s submitted.</p>
 
       <MetaStrip items={[
         { label: "Role", value: "Product designer, solo, self-initiated" },
