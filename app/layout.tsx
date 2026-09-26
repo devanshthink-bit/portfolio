@@ -16,8 +16,11 @@ const script = Schoolbell({ subsets: ["latin"], weight: "400", variable: "--font
 const instrument = Instrument_Serif({ subsets: ["latin"], weight: "400", style: "italic", variable: "--font-instrument" });
 
 export const metadata: Metadata = {
-  title: "Devansh Somvanshi | Product Designer",
-  description: "Designer & Developer",
+  metadataBase: new URL("https://www.devanshsomvanshi.com"),
+  title: "Devansh Somvanshi",
+  description: "Designer & Developer. A product designer with three years in engineering, shipping products used by millions.",
+  openGraph: { title: "Devansh Somvanshi", description: "Designer & Developer. A product designer with three years in engineering, shipping products used by millions.", url: "/", siteName: "Devansh Somvanshi", type: "website" },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({
