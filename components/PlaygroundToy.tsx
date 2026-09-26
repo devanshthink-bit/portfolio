@@ -93,14 +93,14 @@ export default function PlaygroundToy() {
     };
     measure();
 
-    // Tyre
-    let x = start + R + 10, v = 0, prevV = 0, acc = 0, spin = 0, sink = 0, ride = 0;
+    // Tyre: starts at the right edge
+    let x = el.clientWidth - R - 4, v = 0, prevV = 0, acc = 0, spin = 0, sink = 0, ride = 0;
     let target = x, k = 7, vmax = 240;
     // Crab
     let tilt = 0, tiltV = 0, lean = 0, hopY = 0, hopV = 0, flip = 0, flipV = 0, phase = 0;
     let armL0 = 0, armR0 = 0, happy = 0;
     // Cursor cube
-    let cx = x + 120, cv = 0, turn = Math.PI / 6, cy = 0, cyV = 0, flying = false, airSpin = 0, onHead = false;
+    let cx = x - 120, cv = 0, turn = Math.PI / 6, cy = 0, cyV = 0, flying = false, airSpin = 0, onHead = false;
     // Eyes
     let lookX = 0, lookY = 0, blinkIn = 2.5, blink = 0, atYou = 0;
     let glance = 0, glanceIn = 1.5, gx = 0, gy = 0;
