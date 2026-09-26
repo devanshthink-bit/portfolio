@@ -17,6 +17,9 @@ const CODEX =
 const CURSOR =
   "M22.106 5.68L12.5.135a.998.998 0 00-.998 0L1.893 5.68a.84.84 0 00-.419.726v11.186c0 .3.16.577.42.727l9.607 5.547a.999.999 0 00.998 0l9.608-5.547a.84.84 0 00.42-.727V6.407a.84.84 0 00-.42-.726zm-.603 1.176L12.228 22.92c-.063.108-.228.064-.228-.061V12.34a.59.59 0 00-.295-.51l-9.11-5.26c-.107-.062-.063-.228.062-.228h18.55c.264 0 .428.286.296.514z";
 
+// The whole toy is drawn at 90% (Devansh, 26 Sep: "a little smaller"); .pg-toy scales it in CSS,
+// so screen distances are divided by S to get back to the toy's own pixels.
+const S = 0.9;
 const H = 100; // stage height; its bottom edge is the label's baseline (the ground)
 const R = 25; // tyre radius, px
 const U = 2; // px per Claude Code logo unit
@@ -86,7 +89,7 @@ export default function PlaygroundToy() {
       if (!label) return;
       const range = document.createRange();
       range.selectNodeContents(label);
-      start = range.getBoundingClientRect().right - el.getBoundingClientRect().left + 24;
+      start = (range.getBoundingClientRect().right - el.getBoundingClientRect().left) / S + 24;
     };
     measure();
 
@@ -310,7 +313,7 @@ export default function PlaygroundToy() {
       steering = nowSteering;
       if (steering && ptr) {
         if (mode !== "rest") rest(0.5);
-        const pxs = ptr.x - r.left, pys = ptr.y - r.top;
+        const pxs = (ptr.x - r.left) / S, pys = (ptr.y - r.top) / S;
         const top = 20 + sink + ride; // top of the crab's head, standing
         const under = Math.abs(pxs - x) < 26;
         target = under ? x + (pxs - x) * 0.4 : pxs;
@@ -439,7 +442,7 @@ export default function PlaygroundToy() {
         gy = rand(-1, 0.4);
       }
       let dx: number, dy: number;
-      const px = ptr ? ptr.x - (r.left + x) : 0, py = ptr ? ptr.y - (r.top + EYE_Y) : 0;
+      const px = ptr ? (ptr.x - r.left) / S - x : 0, py = ptr ? (ptr.y - r.top) / S - EYE_Y : 0;
       if (ptr && (steering || (ptrAge < 1.5 && Math.hypot(px, py) < 420))) { dx = px; dy = py; }
       else if (atYou > 0) { dx = 0; dy = 0; }
       else if (glance > 0 && !flying && mode === "rest") { dx = gx * 100; dy = gy * 100; }
@@ -463,7 +466,7 @@ export default function PlaygroundToy() {
     if (still) { draw(0); return; }
 
     const onMove = (e: PointerEvent) => { ptr = { x: e.clientX, y: e.clientY }; ptrAge = 0; };
-    const follow = (e: PointerEvent) => { target = e.clientX - el.getBoundingClientRect().left; };
+    const follow = (e: PointerEvent) => { target = (e.clientX - el.getBoundingClientRect().left) / S; };
     const down = (e: PointerEvent) => {
       if (hopY === 0) hopV = -330;
       if (e.pointerType !== "mouse") { touchT = 1.2; onMove(e); follow(e); } // a tap steers it there
