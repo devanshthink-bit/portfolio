@@ -53,7 +53,7 @@ Ratings: **answerable** (the files back it), **partly** (reasoning, not evidence
 | Cost | Partly. Fit-as-count and the proof rule name their cost; add one for Email to me after testing |
 | Rounds | Pass. Mentor (LinkedIn feature), Devansh (referrers won't update), the attack passes, the question critique |
 | How sure | Pass. Research-backed, reasoning and "my call" are said apart on the page |
-| States | Pass. 65 states, switchable in the prototype |
+| States | Pass. 73 states, switchable in the prototype |
 | Real humans | **Fails.** Nobody has used it. The page says so; the tests with Samarth and Riya fix it |
 | It opens | Pass. The prototype runs in the page and on its own page |
 | Traceability | Pass. Problem statement back to n70, n76, n59, n60 and others |

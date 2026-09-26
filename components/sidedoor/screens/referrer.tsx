@@ -58,8 +58,9 @@ export function ReferralRequests() {
   // Lower match follows the referrer's own rule: fewer years than they asked for, or a resume
   // too thin to judge
   const isLower = (r: Req) => !!r.thin || r.years < rules.minYears;
-  const outstanding = cleared ? [] : REQUESTS.filter((r) => !isLower(r) && !handled[r.id]);
-  const lower = cleared ? [] : REQUESTS.filter((r) => isLower(r) && !handled[r.id]);
+  // best fit first: more skills found, then more years; ties keep the newest first
+  const outstanding = cleared ? [] : byFit(REQUESTS.filter((r) => !isLower(r) && !handled[r.id]));
+  const lower = cleared ? [] : byFit(REQUESTS.filter((r) => isLower(r) && !handled[r.id]));
   const allHandled = phase === "ok" && outstanding.length === 0 && lower.length === 0;
   // A job posted a moment ago has no requests yet (Devansh, 24 Sep): the list starts empty with
   // your link, and the requests come in 5 seconds after you land here.
@@ -211,7 +212,7 @@ export function ReferralRequests() {
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               <p className="t-label muted">They match this job and chose to be found.</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                {SUGGESTED.map((r) => (
+                {byFit(SUGGESTED).map((r) => (
                   <RequestCard
                     key={r.id}
                     r={r}
@@ -233,6 +234,9 @@ export function ReferralRequests() {
     </Screen>
   );
 }
+
+const skillsOf = (r: Req) => (r.thin ? -1 : Object.keys(r.has).length);
+const byFit = (list: Req[]) => [...list].sort((a, b) => skillsOf(b) - skillsOf(a) || b.years - a.years);
 
 function RequestCard({ r, onClick, end }: { r: Req; onClick?: () => void; end?: React.ReactNode }) {
   return (

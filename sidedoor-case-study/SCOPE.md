@@ -87,7 +87,7 @@ Each uses their Sidedoor link for 2 weeks with whoever messages them.
 
 1. **Main guess.** If fewer than 1 in 5 complete requests from strangers gets submitted to the company portal, a
    complete request doesn't beat today's cold message, and the main guess is dead. Back to the scope card.
-   Why 1 in 5: Samarth (as candidate) says strangers don't reply "80% of the time" (n30), so today's best case is about
+   Why 1 in 5: Riya (as candidate) says strangers don't reply "80% of the time" (n30), so today's best case is about
    1 in 5 replies, before any referral.
 2. **Cold start.** If fewer than 3 of the 8 referrers send their link to anyone in the 2 weeks, referrers won't
    start the loop alone, and the cold-start bet is dead.

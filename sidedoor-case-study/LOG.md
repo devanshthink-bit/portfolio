@@ -3614,3 +3614,28 @@ AI mark:   SF/sparkles (5872:32552), drawn for Sidedoor, gradient #2563EB to #93
 Figma:     both question groups rebuilt (Ask Row, Head Row, list folded); new state frame "Post A Job From Its Description Screen/Suggestions Open" (5872:43344); 17 lines wrapped as "AI Line" rows; 5 tags and 6 section labels swapped to the mark.
 Images:    request, job, requests, link_before, proof, post re-exported. post now shows the open state (98 / 0 / 1004) with new notes; requests offset is 1026 (the frame is shorter than when 1222 was measured).
 Verified:  localhost: the field starts empty, the Stuck row opens the list, a tap fills it; marks on request, proof and post; tsc clean, lint only the 2 old App.tsx errors.
+
+## 2026-09-26 · Requests ordered by fit, and a claim-by-claim check of the case study
+
+CHANGE · 2026-09-26 · Source: Devansh
+Cause:     Scene 4 said "best fit first", and the prototype's welcome card said "best match first", but the list was
+           newest first. Devansh saw 3 of 7 above 4 of 7 in the case study image.
+Changed:   Referral requests are now ordered by fit: more skills found first, then more years, newest first on a tie.
+           Same for Lower match and Suggested for this job. Figma: 7 V6 frames on UI Screens reordered (the V6
+           Prototype page frames were already in this order). Code: byFit in screens/referrer.tsx. requests.webp
+           re-exported with the same crop, and Scene 4 now says it shows the end of the list.
+           Advika Singh showed 5 of 7 in code and 4 of 7 in Figma (she copied Kavya's skills); code now matches Figma.
+
+CRITIQUE · 2026-09-26 · Source: Devansh ("check everything written wrong like this")
+Finding:   Every sentence, note and image on the page was checked against the transcripts, the docs, Figma and the
+           prototype. Wrong and fixed:
+           - Scene 7 said the portal form is "already filled in". SideDoor can't reach the portal. Now "every detail the
+             portal asks for is ready to copy".
+           - Scene 3 note said "most portals refuse a second one". Only Riya's company was described. Now says so.
+           - 65 states on the page (Scene 10 and the attack stats). The prototype has 73. Fixed.
+           - The Link card said "Both of them ask on LinkedIn". Four people. Fixed.
+           - "The bet that died" called the ranked inbox worthless, but the list is ranked by fit now. Dropped.
+           - The lede said candidates track a request "until it's submitted". They see every stage. Fixed.
+           - My mistake: "the last tap" read as if referrers never update again. Now says later stages are optional.
+           - SCOPE.md credited the "80%" quote to Samarth. It's Riya (n30).
+           - Ask Devansh knowledge regenerated from the live page (it still had the old title and 65 states).

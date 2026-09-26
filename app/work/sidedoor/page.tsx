@@ -58,7 +58,7 @@ function Link() {
       </Card>
       <Card warn>
         <p style={{ ...T.cardH, color: "#A45729" }}>The risk I kept</p>
-        <p style={{ ...T.body, marginTop: 4 }}>Both of them ask for referrals on LinkedIn today. If referrers won&apos;t send the link there, this whole bet fails.</p>
+        <p style={{ ...T.body, marginTop: 4 }}>All four people I interviewed ask for referrals on LinkedIn today. If referrers won&apos;t send the link there, this whole bet fails.</p>
       </Card>
     </div>
   );
@@ -69,7 +69,7 @@ function AttackStats() {
     { n: "1 of 13", l: "breaks I predicted on the first two screens" },
     { n: "2", l: "blockers across the app, both on work-email checks" },
     { n: "18", l: "major breaks across the whole app" },
-    { n: "65", l: "states you can open in the prototype" },
+    { n: "73", l: "states you can open in the prototype" },
   ];
   return (
     <div className="cs-stats">
@@ -126,7 +126,7 @@ export default function SidedoorCaseStudy() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/images/sidedoor/sidedoor-word.svg" alt="SideDoor" width={132} height={24} style={{ height: "0.74em", width: "auto", display: "inline-block", verticalAlign: "-0.02em" }} />: A referral request built to be answered
       </h1>
-      <p style={T.lede}>Referral DMs to strangers mostly go unanswered. The referrer has to chase the job ID and portal details, and the candidate never hears back. SideDoor, an iOS app for both sides, shows candidates their fit before they ask. Referrers get a request that&apos;s complete and proven, and candidates track each one until it&apos;s submitted.</p>
+      <p style={T.lede}>Referral DMs to strangers mostly go unanswered. The referrer has to chase the job ID and portal details, and the candidate never hears back. SideDoor, an iOS app for both sides, shows candidates their fit before they ask. Referrers get a request that&apos;s complete and proven, and candidates can see where each one stands.</p>
 
       <MetaStrip items={[
         { label: "Role", value: "Product designer, solo, self-initiated" },
@@ -206,12 +206,13 @@ export default function SidedoorCaseStudy() {
         <PhoneShot src={scr("check")} alt="Check your request: the four details Flipkart's portal asks for, then the six month question."
           notes={[
             { box: [2, 28, 96, 6.3], title: "Still needed · 4", sub: "asked once, saved after" },
-            { box: [3, 83.5, 94, 6.5], title: "Referred here in 6 months?", sub: "most portals refuse a second one" },
+            { box: [3, 83.5, 94, 6.5], title: "Referred here in 6 months?", sub: "Riya's company refuses a second one" },
           ]} />
       </Beat>
 
       <Beat label="Scene 4 · The referrer's list" title="Nithin sees the best fit first, with the reason on the card."
-        sub="How does a referrer decide on a work break? Requests are ordered by fit. The weaker ones are folded away but still there, because Samarth refers borderline people on purpose.">
+        sub="How does a referrer decide on a work break? Requests are ordered by fit, most skills first. Anyone under his minimum years is folded away but still there, because Samarth refers borderline people on purpose."
+        caption="This is the end of his list. It starts with Sneha, at 6 of 7 skills.">
         <PhoneShot src={scr("requests")} alt="The end of Nithin's list of requests for one job, ordered by fit, with Lower match folded and Suggested for this job below."
           notes={[
             { box: [4, 31.2, 33, 2.9], title: "Fit on every card", sub: "the reason, before he opens it" },
@@ -238,7 +239,7 @@ export default function SidedoorCaseStudy() {
           ]} />
       </Beat>
 
-      <Beat label="Scene 7 · Referring" title="He refers, and the portal form is already filled in."
+      <Beat label="Scene 7 · Referring" title="He refers, and every detail the portal asks for is ready to copy."
         sub="How does the data get into the portal? Every detail is there in the portal's order, with a copy button each. Or he emails it all to his work inbox, resume attached, and fills the portal in from his laptop.">
         <PhoneShot src={scr("emailed")} alt="After Refer: Emailed and Copy all, then every detail in the portal's order."
           notes={[
@@ -265,7 +266,7 @@ export default function SidedoorCaseStudy() {
       </Beat>
 
       <Beat label="Scene 10 · When it breaks" title="When something goes wrong, it says what's still safe."
-        sub="There are 65 states in the prototype. Three of them: nobody answered, the request didn't send, and the phone is offline.">
+        sub="There are 73 states in the prototype. Three of them: nobody answered, the request didn't send, and the phone is offline.">
         <PhoneRow phones={[
           { src: scr("st_noanswer"), label: "No answer", caption: "The request comes back, and others at Zepto refer", alt: "No answer after 7 days, with Ask someone else at Zepto." },
           { src: scr("st_cantsend"), label: "Error", caption: "\"Couldn't send. Your details are saved.\"", alt: "Couldn't send, with Try again." },
@@ -285,7 +286,7 @@ export default function SidedoorCaseStudy() {
 
       <Beat label="The bet that died" title="I thought referrers didn't trust strangers. They said the problem was work."
         sub={<>The old SideDoor was built on trust: a match score, graded recommendations, spam limits. Samarth said a bad hire after interviews &quot;should not fall on the referrer&quot;. Riya&apos;s rule is just the job ID. And the bonus doesn&apos;t make up for it. Riya called it &quot;very low&quot;.</>}
-        caption="That made the score screen, the ranked inbox and the swipe cards worthless.">
+        caption="That made the score screen and the swipe cards worthless.">
         <BeforeAfter beforeLabel="What I believed" afterLabel="What they told me"
           before="Referrers can't judge strangers, so they need scores"
           after="The request makes them do the candidate's work" />

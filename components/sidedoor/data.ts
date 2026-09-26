@@ -1089,7 +1089,8 @@ export const SUGGESTED: Candidate[] = [
       "Design system": from("CRED"),
     },
   },
-  { ...CANDIDATES[1], id: "advika", name: "Advika Singh", title: "Product Designer", company: "Meesho", logo: undefined, years: 3, when: "", common: undefined },
+  // Figma: 4 of 7 skills · 3 yrs, so she carries Abhinav's four skills, not Kavya's five
+  { ...CANDIDATES[1], id: "advika", name: "Advika Singh", title: "Product Designer", company: "Meesho", logo: undefined, years: 3, when: "", common: undefined, has: CANDIDATES[0].has },
   { ...CANDIDATES[2], id: "manav", name: "Manav Gupta", title: "Interaction Designer", company: "Amazon", logo: "amazon", years: 5, when: "", common: undefined },
 ];
 

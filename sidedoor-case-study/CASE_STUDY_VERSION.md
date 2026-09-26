@@ -34,7 +34,7 @@ Crops are `header / footer / scroll offset` in 1x points. Where the offset is no
 | jobs.webp | Candidate/Jobs Screen 5247:18584 | full | Act 2 Scene 1 |
 | job.webp | Candidate/Job Screen 5247:18687 | 98 / 232 / 300 | Hero, Scene 2, home card (left) |
 | check.webp | Candidate/Check Your Referral Request Screen 5247:18695 | 98 / 88 / 0 | Scene 3 |
-| requests.webp | Referrer/Referral Requests Screen 5247:18631 | 196 / 88 / 1026 (job row pinned; the end of the 10-request list) | Scene 4 |
+| requests.webp | Referrer/Referral Requests Screen 5247:18631 | 196 / 88 / 1026 (job row pinned; the end of the 10-request list, ordered by fit since 26 Sep: most skills, then years, newest first on a tie) | Scene 4 |
 | request.webp | Referrer/Referral Request Screen 5247:18762 | 98 / 88 / 0 | Hero, Scene 5, Act 3 "Before and after", home card (right) |
 | proof.webp | Referrer/Skill Proof Sheet 5750:42504 over request.webp, dimmed 40% | composite | Scene 6 |
 | emailed.webp | Referrer/Referral Request Screen/After Refer/Emailed 5757:31343 | 98 / 88 / 0 | Scene 7 |
@@ -60,5 +60,5 @@ If any of these change in the design, the sentence changes too.
 - Mark as submitted as the last step of Refer (Scene 8, Act 3 "My mistake")
 - The referrer's question and its suggestions, folded until asked for (Act 3 "The question")
 - The AI mark (sparkles) on every line where Sidedoor's model read or suggested something (request, job, proof, requests, link, post images)
-- 65 prototype states (Scene 10, Act 3 "Attacking it")
+- 73 prototype states (Scene 10, Act 3 "Attacking it")
 - Kill conditions: 1 in 5, 3 of 8 (Act 4)
