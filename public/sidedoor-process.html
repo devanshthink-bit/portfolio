@@ -31,7 +31,7 @@ button{font:inherit}
 .page{max-width:1120px;margin:0 auto;padding:40px 24px 96px}
 
 /* masthead */
-.masthead{background:var(--blue);color:#fff;border-radius:16px;padding:30px 32px 32px;position:relative;overflow:hidden;margin-bottom:16px}
+.masthead{background:var(--blue);color:#fff;border-radius:16px;padding:30px 32px 32px;position:relative;overflow:hidden;margin-bottom:32px}
 .masthead::after{content:"";position:absolute;right:-60px;top:-70px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.08)}
 .masthead::before{content:"";position:absolute;right:70px;bottom:-120px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.06)}
 .brand{display:inline-flex;align-items:center;gap:10px;vertical-align:-0.2em}
@@ -271,7 +271,6 @@ ul.list li::marker{color:#A6ABB3}
   <h1><span class="brand"><img src="/images/sidedoor/sidedoor-logo.png" alt=""><img src="/images/sidedoor/sidedoor-word.svg" alt="SideDoor"></span>, A referral request built to be answered</h1>
   <p>Every artefact from the business model to the test plan, in the order it was made. 2 people, each interviewed as candidate and referrer &middot; 91 notes &middot; 5 clusters &middot; 3 jobs to be done.</p>
 </header>
-<div class="bar"><p class="key"><span class="tag ok">Saw it</span> in the notes <span class="tag blue">Worked it out</span> my reading <span class="tag warn">Guessing</span> untested</p><button type="button" class="all" id="all">Open all</button></div>
 <main id="main">
 
   <!-- 1 -->
@@ -639,7 +638,6 @@ ul.list li::marker{color:#A6ABB3}
   </section>
 
   </main>
-  <footer class="foot"><span>SideDoor · Devansh Somvanshi · a concept, not a shipped product</span><span><a href="/work/sidedoor">Back to the case study</a> · <a href="/work/sidedoor/prototype">Open the prototype</a></span></footer>
 </div>
 
 <script>
@@ -887,8 +885,8 @@ function setOpen(f, open, scroll){
   syncAll();
 }
 var allBtn = document.getElementById("all");
-function syncAll(){ allBtn.textContent = stages.every(function(f){ return f.classList.contains("open"); }) ? "Close all" : "Open all"; }
-allBtn.addEventListener("click", function(){ var open = allBtn.textContent === "Open all"; stages.forEach(function(f){ setOpen(f, open, false); }); });
+function syncAll(){ if (!allBtn) return; allBtn.textContent = stages.every(function(f){ return f.classList.contains("open"); }) ? "Close all" : "Open all"; }
+if (allBtn) allBtn.addEventListener("click", function(){ var open = allBtn.textContent === "Open all"; stages.forEach(function(f){ setOpen(f, open, false); }); });
 function openHash(){ var f = location.hash && document.querySelector(location.hash); if (f && f.classList.contains("stage")) { setOpen(f, true, false); f.scrollIntoView(); } }
 window.addEventListener("hashchange", openHash); openHash();
 
